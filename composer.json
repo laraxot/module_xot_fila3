@@ -1,0 +1,25 @@
+{
+    "name": "laraxot/module_xot",
+    "description": "",
+    "authors": [
+        {
+            "name": "Marco Xot",
+            "email": "marco.sottana@gmail.com"
+        }
+    ],
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Modules\\Xot\\Providers\\XotServiceProvider"
+            ],
+            "aliases": {
+                
+            }
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "Modules\\Xot\\": ""
+        }
+    }
+}
