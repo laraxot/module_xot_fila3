@@ -124,4 +124,35 @@ class ArrayService {
         File::makeDirectory(dirname($filename), 0775, true, true);
         File::put($filename, $content);
     }
+
+    /**
+     * Undocumented function.
+     *
+     * @param array|object $arrObjData
+     * @param array        $arrSkipIndices
+     *
+     * @return array
+     */
+    public static function fromObjects($arrObjData, $arrSkipIndices = []) {
+        $arrData = [];
+
+        // if input is object, convert into array
+        if (is_object($arrObjData)) {
+            $arrObjData = get_object_vars($arrObjData);
+        }
+
+        if (is_array($arrObjData)) {
+            foreach ($arrObjData as $index => $value) {
+                if (is_object($value) || is_array($value)) {
+                    $value = ArrayService::fromObjects($value, $arrSkipIndices); // recursive call
+                }
+                if (in_array($index, $arrSkipIndices)) {
+                    continue;
+                }
+                $arrData[$index] = $value;
+            }
+        }
+
+        return $arrData;
+    }
 }
