@@ -39,7 +39,7 @@ class PanelFormService {
      *
      * @return string
      */
-    public function formCreate($params = []) {
+    public function formCreate(array $params = []) {
         $fields = $this->createFields();
         $row = $this->panel->row;
         $res = '';
@@ -64,7 +64,7 @@ class PanelFormService {
      *
      * @return string
      */
-    public function formEdit($params = []) {
+    public function formEdit(array $params = []) {
         $submit_btn = '<p class="form-submit">
             <input name="submit" type="submit" id="submit" value="Post your answer" class="button small color">
         </p>';
@@ -87,7 +87,7 @@ class PanelFormService {
     }
 
     /*
-    public function btnDelete($params = []) {
+    public function btnDelete(array $params = []) {
         $class = 'btn-primary mb-2';
         extract($params);
         //dddx($params);
@@ -103,7 +103,7 @@ class PanelFormService {
         return view('formx::includes.components.btn.'.$act)->with($parz);
     }
 
-    public function btnDetach($params = []) {
+    public function btnDetach(array $params = []) {
         $class = 'btn-primary mb-2';
         extract($params);
         $act = 'detach';
@@ -123,7 +123,7 @@ class PanelFormService {
      *
      * @return string
      */
-    public function btnCrud($params = []) {
+    public function btnCrud(array $params = []) {
         extract($params);
         $acts = ['edit', 'destroy', 'show'];
         if (is_object($this->panel->row->pivot)) {
@@ -251,7 +251,7 @@ class PanelFormService {
     }
     */
     /* deprecated
-    public function btnSubmit($params = []) {
+    public function btnSubmit(array $params = []) {
         return Form::bsSubmit(trans('xot::buttons.save'));
     }
     */
@@ -261,7 +261,7 @@ class PanelFormService {
      *
      * @return array
      */
-    public function exceptFields($params = []) {
+    public function exceptFields(array $params = []) {
         $act = 'show';
         $panel = $this->panel;
         extract($params);

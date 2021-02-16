@@ -233,7 +233,7 @@ abstract class XotBasePanel {
     }
     //*/
 
-    public function rules($params = []) {
+    public function rules(array $params = []) {
         $act = '';
         extract($params);
         if ('' == $act) {
@@ -362,7 +362,7 @@ abstract class XotBasePanel {
         return null;
     }
 
-    public function getActions($params = []) {
+    public function getActions(array $params = []) {
         $panel = $this;
         $filters = [];
         extract($params);
@@ -392,13 +392,13 @@ abstract class XotBasePanel {
         return $actions;
     }
 
-    public function containerActions($params = []) {
+    public function containerActions(array $params = []) {
         $params['filters']['onContainer'] = true;
 
         return $this->getActions($params);
     }
 
-    public function itemActions($params = []) {
+    public function itemActions(array $params = []) {
         $params['filters']['onItem'] = true;
 
         return $this->getActions($params);
@@ -476,7 +476,7 @@ abstract class XotBasePanel {
         return $query;
     }
 
-   
+
 
     public function applyJoin($query) {
         $model = $query->getModel();
@@ -784,7 +784,7 @@ abstract class XotBasePanel {
         return $query;
     }
 
-    public function formCreate($params = []) {
+    public function formCreate(array $params = []) {
         $fields = $this->createFields();
         $row = $this->row;
         $res = '';
@@ -804,7 +804,7 @@ abstract class XotBasePanel {
         return $res;
     }
 
-    public function formEdit($params = []) {
+    public function formEdit(array $params = []) {
         $submit_btn = '<p class="form-submit">
             <input name="submit" type="submit" id="submit" value="Post your answer" class="button small color">
         </p>';
@@ -826,7 +826,7 @@ abstract class XotBasePanel {
         return $res;
     }
 
-    public function exceptFields($params = []) {
+    public function exceptFields(array $params = []) {
         extract($params);
         $excepts = collect([]);
         if (is_object($this->rows)) {
@@ -1045,7 +1045,7 @@ abstract class XotBasePanel {
         return Form::bsSubmit(trans('xot::buttons.save'));
     }
 
-    public function btnDelete($params = []) {
+    public function btnDelete(array $params = []) {
         $class = 'btn-primary mb-2';
         extract($params);
         //dddx($params);
@@ -1061,7 +1061,7 @@ abstract class XotBasePanel {
         return view('formx::includes.components.btn.'.$act)->with($parz);
     }
 
-    public function btnDetach($params = []) {
+    public function btnDetach(array $params = []) {
         $class = 'btn-primary mb-2';
         extract($params);
         $act = 'detach';
@@ -1075,7 +1075,7 @@ abstract class XotBasePanel {
         return view('formx::includes.components.btn.'.$act)->with($parz);
     }
 
-    public function btnCrud($params = []) {
+    public function btnCrud(array $params = []) {
         extract($params);
         $acts = ['edit', 'destroy', 'show'];
         if (is_object($this->row->panel)) {
@@ -1364,7 +1364,7 @@ abstract class XotBasePanel {
         return $panel;
     }
 
-    public function url($params = []) {
+    public function url(array $params = []) {
         $act = 'show';
         extract($params);
 
@@ -1756,11 +1756,11 @@ abstract class XotBasePanel {
         return $out;
     }
 
-    public function out($params = []) {
+    public function out(array $params = []) {
         return $this->view();
     }
 
-    public function out_old($params = []) {
+    public function out_old(array $params = []) {
         //--- default vars ---//
         $is_ajax = false;
         $method = 'GET';
@@ -1825,7 +1825,7 @@ abstract class XotBasePanel {
         return $html;
     }
 
-    public function pdfFilename($params = []) {
+    public function pdfFilename(array $params = []) {
         $fields = ['matr', 'cognome', 'nome', 'anno'];
         extract($params);
         $filename_arr = [];
@@ -1847,7 +1847,7 @@ abstract class XotBasePanel {
         return $filename;
     }
 
-    public function pdf($params = []) {
+    public function pdf(array $params = []) {
         if (! isset($params['view_params'])) {
             $params['view_params'] = [];
         }

@@ -600,7 +600,7 @@ trait CrudSimpleTrait {
     }
 
     /*
-    public static function getView($params = [])
+    public static function getView(array $params = [])
     {
         return ThemeService::getView($params);
 

@@ -244,7 +244,7 @@ trait CrudBindTrait {
         */
     }
 
-    public static function getView($params = []) {
+    public static function getView(array $params = []) {
         \extract($params);
         $tmp = \Route::currentRouteAction();
         //echo '<h3>'.$tmp.'</h3>';

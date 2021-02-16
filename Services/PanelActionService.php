@@ -24,7 +24,7 @@ class PanelActionService {
      *
      * @return \Illuminate\Support\Collection
      */
-    public function getActions($params = []) {
+    public function getActions(array $params = []) {
         $panel = $this->panel;
 
         extract($params);
@@ -62,7 +62,7 @@ class PanelActionService {
      *
      * @return \Illuminate\Support\Collection
      */
-    public function containerActions($params = []) {
+    public function containerActions(array $params = []) {
         $params['filters']['onContainer'] = true;
 
         return $this->getActions($params);
@@ -73,7 +73,7 @@ class PanelActionService {
      *
      * @return \Illuminate\Support\Collection
      */
-    public function itemActions($params = []) {
+    public function itemActions(array $params = []) {
         $params['filters']['onItem'] = true;
 
         return $this->getActions($params);

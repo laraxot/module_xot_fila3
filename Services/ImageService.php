@@ -38,7 +38,7 @@ class ImageService {
      *
      * @return ImageService|null
      */
-    public static function getInstance($params = []) {
+    public static function getInstance(array $params = []) {
         if (null === self::$instance) {
             self::$instance = new self($params);
         }
@@ -51,7 +51,7 @@ class ImageService {
      *
      * @param array $params
      */
-    public function __construct($params = []) {
+    public function __construct(array $params = []) {
         $this->init($params);
     }
 
@@ -291,7 +291,7 @@ class ImageService {
     /**
      * @param array $params
      */
-    public static function save($params = []): self {
+    public static function save(array $params = []): self {
         //extract($params);
         $info = pathinfo(self::$src);
         //dddx($info);
@@ -326,7 +326,7 @@ class ImageService {
      *
      * @return mixed
      */
-    public static function out($params = []) {
+    public static function out(array $params = []) {
         return self::$img->encode('jpg', 60);
     }
 
@@ -335,7 +335,7 @@ class ImageService {
      *
      * @return string|string[]
      */
-    public static function src($params = []) {
+    public static function src(array $params = []) {
         $src = '/'.str_replace(public_path('/'), '', self::$filename);
         $src = str_replace('//', '/', $src);
 

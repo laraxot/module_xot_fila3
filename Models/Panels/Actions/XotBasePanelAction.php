@@ -126,7 +126,7 @@ abstract class XotBasePanelAction {
      *
      * @return string
      */
-    public function getUrl($params = []) {
+    public function getUrl(array $params = []) {
         if (isset($this->onItem) && $this->onItem) {
             return $this->urlItem($params);
         }
@@ -157,7 +157,7 @@ abstract class XotBasePanelAction {
      *
      * @return string|void|null
      */
-    public function btn($params = []) {
+    public function btn(array $params = []) {
         extract($params);
         if (isset($row)) {
             $this->setRow($row);
@@ -177,7 +177,7 @@ abstract class XotBasePanelAction {
      *
      * @return string
      */
-    public function url($params = []) {
+    public function url(array $params = []) {
         if (isset($this->onItem) && $this->onItem) {
             return $this->urlItem($params);
         }

@@ -501,7 +501,7 @@ abstract class XotBasePanel implements PanelContract {
      *
      * @return \Illuminate\Support\Collection
      */
-    public function getActions($params = []) {
+    public function getActions(array $params = []) {
         return (new PanelActionService($this))->getActions($params);
     }
 
@@ -510,7 +510,7 @@ abstract class XotBasePanel implements PanelContract {
      *
      * @return \Illuminate\Support\Collection
      */
-    public function containerActions($params = []) {
+    public function containerActions(array $params = []) {
         return (new PanelActionService($this))->containerActions($params);
     }
 
@@ -519,7 +519,7 @@ abstract class XotBasePanel implements PanelContract {
      *
      * @return \Illuminate\Support\Collection
      */
-    public function itemActions($params = []) {
+    public function itemActions(array $params = []) {
         return (new PanelActionService($this))->itemActions($params);
     }
 
@@ -783,7 +783,7 @@ abstract class XotBasePanel implements PanelContract {
      *
      * @return mixed
      */
-    public function formCreate($params = []) {
+    public function formCreate(array $params = []) {
         return $this->form->formCreate($params);
     }
 
@@ -792,12 +792,12 @@ abstract class XotBasePanel implements PanelContract {
      *
      * @return mixed
      */
-    public function formEdit($params = []) {
+    public function formEdit(array $params = []) {
         return $this->form->formEdit($params);
     }
 
     /* -- to panelformservice
-    public function exceptFields($params = []) {
+    public function exceptFields(array $params = []) {
         extract($params);
         $excepts = collect([]);
         if (is_object($this->rows)) {
@@ -1423,7 +1423,7 @@ abstract class XotBasePanel implements PanelContract {
      *
      * @return mixed
      */
-    public function out($params = []) {
+    public function out(array $params = []) {
         //return $this->view();
         return $this->presenter->out();
     }
@@ -1433,7 +1433,7 @@ abstract class XotBasePanel implements PanelContract {
      *
      * @return string
      */
-    public function pdfFilename($params = []) {
+    public function pdfFilename(array $params = []) {
         $fields = ['matr', 'cognome', 'nome', 'anno'];
         extract($params);
         $filename_arr = [];
@@ -1460,7 +1460,7 @@ abstract class XotBasePanel implements PanelContract {
      *
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|string|void
      */
-    public function pdf($params = []) {
+    public function pdf(array $params = []) {
         //return (new PdfPresenter($this))->out($params); //da fare
 
         if (! isset($params['view_params'])) {

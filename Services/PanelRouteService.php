@@ -36,7 +36,7 @@ class PanelRouteService {
      *
      * @return array|bool|mixed
      */
-    public static function inAdmin($params = []) {
+    public static function inAdmin(array $params = []) {
         if (isset($params['in_admin'])) {
             return $params['in_admin'];
         }
@@ -268,7 +268,7 @@ class PanelRouteService {
      *
      * @return string
      */
-    public static function urlLang($params = []) {
+    public static function urlLang(array $params = []) {
         extract($params);
 
         return '?';

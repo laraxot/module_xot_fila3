@@ -145,7 +145,7 @@ if (! \function_exists('in_admin')) {
      *
      * @return array|bool|mixed
      */
-    function in_admin($params = []) {
+    function in_admin(array $params = []) {
         return inAdmin($params);
     }
 }
@@ -155,7 +155,7 @@ if (! \function_exists('inAdmin')) {
      *
      * @return array|bool|mixed
      */
-    function inAdmin($params = []) {
+    function inAdmin(array $params = []) {
         return RouteService::inAdmin($params);
     }
 }
@@ -445,8 +445,8 @@ if (! \function_exists('transFields')) {
         if(is_object($model)){
             $module_name = getModuleNameFromModel($model);
         }
-            
-        
+
+
         $ns = Str::lower($module_name);
         $trans_root = $ns.'::'.Str::snake(class_basename($model));
         //dddx() );
