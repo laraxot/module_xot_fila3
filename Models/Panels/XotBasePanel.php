@@ -497,8 +497,6 @@ abstract class XotBasePanel implements PanelContract {
     }
 
     /**
-     * @param array $params
-     *
      * @return \Illuminate\Support\Collection
      */
     public function getActions(array $params = []) {
@@ -506,8 +504,6 @@ abstract class XotBasePanel implements PanelContract {
     }
 
     /**
-     * @param array $params
-     *
      * @return \Illuminate\Support\Collection
      */
     public function containerActions(array $params = []) {
@@ -515,8 +511,6 @@ abstract class XotBasePanel implements PanelContract {
     }
 
     /**
-     * @param array $params
-     *
      * @return \Illuminate\Support\Collection
      */
     public function itemActions(array $params = []) {
@@ -609,6 +603,7 @@ abstract class XotBasePanel implements PanelContract {
      */
     public function applyFilter($query, array $filters) {
         //https://github.com/spatie/laravel-query-builder
+
         $lang = app()->getLocale();
         $filters_fields = $this->filters();
 
@@ -779,8 +774,6 @@ abstract class XotBasePanel implements PanelContract {
     */
 
     /**
-     * @param array $params
-     *
      * @return mixed
      */
     public function formCreate(array $params = []) {
@@ -788,8 +781,6 @@ abstract class XotBasePanel implements PanelContract {
     }
 
     /**
-     * @param array $params
-     *
      * @return mixed
      */
     public function formEdit(array $params = []) {
@@ -1419,8 +1410,6 @@ abstract class XotBasePanel implements PanelContract {
     }
 
     /**
-     * @param array $params
-     *
      * @return mixed
      */
     public function out(array $params = []) {
@@ -1429,8 +1418,6 @@ abstract class XotBasePanel implements PanelContract {
     }
 
     /**
-     * @param array $params
-     *
      * @return string
      */
     public function pdfFilename(array $params = []) {
@@ -1456,8 +1443,6 @@ abstract class XotBasePanel implements PanelContract {
     }
 
     /**
-     * @param array $params
-     *
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|string|void
      */
     public function pdf(array $params = []) {

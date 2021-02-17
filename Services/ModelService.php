@@ -80,6 +80,21 @@ class ModelService {
         }
     }
 
+    public static function fieldExists($model, string $field_name): bool {
+        return \Schema::connection($model->getConnectionName())->hasColumn($model->getTable(), $field_name);
+    }
+
+    public static function addField($model, string $field_name, string $field_type, array $attrs = []) {
+        if (! \Schema::connection($model->getConnectionName())->hasColumn($model->getTable(), $field_name)) {
+            \Schema::connection($model->getConnectionName())
+                ->table($model->getTable(),
+                    function ($table) use ($field_name,$field_type) {
+                        $table->{$field_type}($field_name);
+                    }
+                );
+        }
+    }
+
     /*
     public static function indexIfNotExistsStatic($index, $tbl = null, $conn = null) { //viene chiamato all'interno di filtertrait che e' static ..
         if (null == $tbl) {
