@@ -57,6 +57,9 @@ abstract class XotBaseJob implements ShouldQueue {
             if (method_exists($this, $func)) {
                 static::$func($model, $v->name, $v->data);
             }
+            else{
+                //dddx(['error'=>$func.' is missing']);
+            }
         }
         if (isset($data['pivot'])) {
             $func = $act.'Relationships'.'Pivot';

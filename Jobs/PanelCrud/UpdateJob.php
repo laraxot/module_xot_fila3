@@ -22,6 +22,7 @@ class UpdateJob extends XotBaseJob {
     public function handle(): PanelContract {
         $row = $this->panel->row;
         $data = $this->data;
+        //dddx($data);
         $ris = $row->update($data);
         $this->manageRelationships($row, $data, 'update');
         \Session::flash('status', 'aggiornato! ['.$row->getKey().']!'); //.implode(',',$row->getChanges())
@@ -95,14 +96,51 @@ class UpdateJob extends XotBaseJob {
      */
     public function updateRelationshipsBelongsToMany($model, string $name, array $data): void {
         //$model->$name()->syncWithoutDetaching($data);
+        
+        if(in_array('to',array_keys($data)) || in_array('from',array_keys($data))){
+           
+        /*    
+            $parent=$this->panel->getParent();
+            if($parent!=null){
+                $parent_id=$parent->row->getKey();
+                $parent_key=$parent->postType().'_'.$parent->row->getKeyName();
+                $data1=[];
+                foreach($data['to'] as $v){
+                    $data1[$v]=[$parent_key=>$parent_id];
+                }
+                $model->$name()->attach($data1);    
+                return ;
+            }
+            $model->$name()->sync($data['to']);    
+            return ;
+        */
+         $this->saveMultiselectTwoSides($model,$name,$data);
+         return ;
+        }
         $model->$name()->sync($data);
     }
 
     //end updateRelationshipsBelongsToMany
 
     /*    hasOneThrough     */
-    /*    hasManyThrough    */
+    
     /*    morphTo           */
+
+
+    /**
+     * ManyThrough.
+     *
+     * @param ModelContract|Model $model
+     */
+    public function updateRelationshipsHasManyThrough($model, string $name, array $data): void {
+        if(isset($data['to'])){
+            $rows=$model->$name();
+            dddx(get_class_methods($rows));
+            //$this->saveMultiselectTwoSides($model,$name,$data);
+        }
+        ddd(['wip']);
+    }
+
 
     /**
      * morphOne.
@@ -223,6 +261,7 @@ class UpdateJob extends XotBaseJob {
         //$items_key = $container_obj->getKeyName();
         $items_key = $related->getKeyName();
         $items_0 = $items->get()->pluck($items_key);
+        
 
         if (! isset($data['to'])) {
             $data['to'] = [];
@@ -230,13 +269,59 @@ class UpdateJob extends XotBaseJob {
         $items_1 = collect($data['to']);
         $items_add = $items_1->diff($items_0);
         $items_sub = $items_0->diff($items_1);
-        $items->detach($items_sub->all());
-        /* da risolvere Column not found: 1054 Unknown column 'related_type' liveuser_area_admin_areas */
-        try {
-            $items->attach($items_add->all(), ['related_type' => $container]);
-        } catch (\Exception $e) {
-            $items->attach($items_add->all());
+        /*
+        dddx([
+            'items_0'=>$items_0,
+            'items_1'=>$items_1,
+            'items_add'=>$items_add,
+            'items_sub'=>$items_sub,
+
+        ]);
+            */
+
+        $ids=$items_sub->all();
+        $parent=$this->panel->getParent();
+        if($parent!=null){
+            $parent_id=$parent->row->getKey();
+            $parent_key=$parent->postType().'_'.$parent->row->getKeyName();
+            /*
+            $data1=[];
+            foreach($ids as $v){
+                $data1[$v]=[
+                    //'job_role_id'=>$v,
+                    $parent_key=>$parent_id
+                ];
+            }
+            */
+            //dddx($data1);
+            //echo '<pre>'.print_r($data1,true).'</pre>';
+            //$model->$name()->where($parent_key,$parent_id)->detach($ids);    
+            //dddx(get_class_methods($model->$name())) ;//->detach($data1);
+            $model->$name()->wherePivot($parent_key,$parent_id)->detach($ids);
+            //return ;
+        }else{
+            $items->detach($ids);
         }
+        /* da risolvere Column not found: 1054 Unknown column 'related_type' liveuser_area_admin_areas */
+        //try {
+        //    $items->attach($items_add->all(), ['related_type' => $container]);
+        //} catch (\Exception $e) {
+            $ids=$items_add->all();
+            
+            $parent=$this->panel->getParent();
+            if($parent!=null){
+                $parent_id=$parent->row->getKey();
+                $parent_key=$parent->postType().'_'.$parent->row->getKeyName();
+                $data1=[];
+                foreach($ids as $v){
+                    $data1[$v]=[$parent_key=>$parent_id];
+                }
+                $model->$name()->attach($data1);    
+                
+            }else{
+                $items->attach($ids);
+            }
+        //}
         $status = 'collegati ['.\implode(', ', $items_add->all()).'] scollegati ['.\implode(', ', $items_sub->all()).']';
         \Session::flash('status', $status);
     }
