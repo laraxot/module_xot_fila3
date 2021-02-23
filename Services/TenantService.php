@@ -80,7 +80,7 @@ class TenantService {
      */
     public static function config(string $key) {
         $group = implode('.', array_slice(explode('.', $key), 0, 2));
-        /*
+        //*
         if (in_admin() && Str::startsWith($key, 'xra.model')) {
             $module_name = \Request::segment(2);
             $models = getModuleModels($module_name);
