@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <?php
 
 namespace Modules\Xot\Repositories;
@@ -12,3 +13,19 @@ class TranslationRepository extends XotBaseRepository {
      */
     protected $model = 'Modules\Xot\Models\Translation';
 }
+=======
+<?php
+
+namespace Modules\Xot\Repositories;
+
+//---base
+
+class TranslationRepository extends XotBaseRepository {
+    /**
+     * Specify Model class name.
+     *
+     * @return string
+     */
+    protected $model = 'Modules\Xot\Models\Translation';
+}
+>>>>>>> 3c97c308c85924a62f31c89c71edfe23450749f0

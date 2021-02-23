@@ -17,7 +17,11 @@ use Modules\LU\Models\User;
 use Tests\TestCase;
 
 class HomeControllerTest extends TestCase {
+<<<<<<< HEAD
     //use RefreshDatabase;
+=======
+    use RefreshDatabase;
+>>>>>>> 3c97c308c85924a62f31c89c71edfe23450749f0
 
     /** @test */
     public function index_returns_a_view() {

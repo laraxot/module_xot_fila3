@@ -385,4 +385,8 @@ abstract class XotBasePanelAction {
         */
         return $this->panel->pdf($params);
     }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> 3c97c308c85924a62f31c89c71edfe23450749f0

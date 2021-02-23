@@ -64,13 +64,20 @@ class HomeController extends Controller {
 
             return $panel->callItemActionWithGate($request->_act);
         }
+<<<<<<< HEAD
 
+=======
+>>>>>>> 3c97c308c85924a62f31c89c71edfe23450749f0
         try {
             $home = Tenant::modelEager('home');
             $home = $home->firstOrCreate(['id' => 1]);
         } catch (\Exception $e) {
+<<<<<<< HEAD
             //dddx(['exception' => $e, 'model' => $home]);
             dddx(['message' => $e->getMessage()]);
+=======
+            dddx(['exception' => $e, 'model' => $home]);
+>>>>>>> 3c97c308c85924a62f31c89c71edfe23450749f0
         }
         $panel = Panel::get($home);
 
@@ -83,4 +90,8 @@ class HomeController extends Controller {
     public function redirect(Request $request) {
         return redirect($request->url);
     }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> 3c97c308c85924a62f31c89c71edfe23450749f0

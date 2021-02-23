@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 https://www.magutti.com/
 
 https://laravelarticle.com/laravel-option-framework
@@ -10,3 +11,11 @@ https://github.com/AnowarCST/laravel-vue-crud-starter
 
 
 
+=======
+https://www.magutti.com/
+
+https://laravelarticle.com/laravel-option-framework
+
+
+
+>>>>>>> 3c97c308c85924a62f31c89c71edfe23450749f0

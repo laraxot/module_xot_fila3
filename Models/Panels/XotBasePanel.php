@@ -221,7 +221,11 @@ abstract class XotBasePanel implements PanelContract {
     //funzione/flag da settare a true ad ogni pannello/modello che abbia le traduzioni
 
     /**
+<<<<<<< HEAD
      * @return bool
+=======
+     * @return false
+>>>>>>> 3c97c308c85924a62f31c89c71edfe23450749f0
      */
     public function hasLang() {
         return false;
@@ -483,7 +487,11 @@ abstract class XotBasePanel implements PanelContract {
     }
 
     /**
+<<<<<<< HEAD
      * @return bool|mixed
+=======
+     * @return false|mixed
+>>>>>>> 3c97c308c85924a62f31c89c71edfe23450749f0
      */
     public function getXotModelName() {
         return collect(config('xra.model'))->search(static::$model);
@@ -603,6 +611,10 @@ abstract class XotBasePanel implements PanelContract {
      */
     public function applyFilter($query, array $filters) {
         //https://github.com/spatie/laravel-query-builder
+<<<<<<< HEAD
+=======
+
+>>>>>>> 3c97c308c85924a62f31c89c71edfe23450749f0
         $lang = app()->getLocale();
         $filters_fields = $this->filters();
 
@@ -907,9 +919,12 @@ abstract class XotBasePanel implements PanelContract {
 
     public function imgSrc(array $params): string { //usare PanelImageService
         $row = $this->row;
+<<<<<<< HEAD
         if (! is_object($row)) {
             return '';
         }
+=======
+>>>>>>> 3c97c308c85924a62f31c89c71edfe23450749f0
         $src = $row->image_src;
 
         $str0 = '/laravel-filemanager/';
@@ -1165,7 +1180,11 @@ abstract class XotBasePanel implements PanelContract {
     }*/
 
     /**
+<<<<<<< HEAD
      * @return bool|mixed|string
+=======
+     * @return false|mixed|string
+>>>>>>> 3c97c308c85924a62f31c89c71edfe23450749f0
      */
     public function postType() {
         $post_type = collect(config('xra.model'))->search(get_class($this->row));
@@ -1619,15 +1638,21 @@ abstract class XotBasePanel implements PanelContract {
      * @return mixed
      */
     public function update($data) {
+<<<<<<< HEAD
         /*
+=======
+>>>>>>> 3c97c308c85924a62f31c89c71edfe23450749f0
         $func = '\Modules\Xot\Jobs\Crud\\'.Str::studly(__FUNCTION__).'Job';
         $panel = $func::dispatchNow($data, $this);
 
         return $panel;
+<<<<<<< HEAD
         */
         $func = '\Modules\Xot\Jobs\PanelCrud\\'.Str::studly(__FUNCTION__).'Job';
         $panel = $func::dispatchNow($data, $this);
 
         return $panel;
+=======
+>>>>>>> 3c97c308c85924a62f31c89c71edfe23450749f0
     }
 }

@@ -90,12 +90,20 @@ class PanelTabService {
             }
             $tabs = $panel->tabs();
             $row = [];
+<<<<<<< HEAD
             /*
+=======
+            //*
+>>>>>>> 3c97c308c85924a62f31c89c71edfe23450749f0
             if (0 == $k) {
                 if (Gate::allows('index', $panel)) {
                     $tmp = new \stdClass();
                     $tmp->title = '<< Back '; //.'['.get_class($item).']';
+<<<<<<< HEAD
                     $tmp->url = $panel->url(['act' => 'index']);
+=======
+                    $tmp->url = $panel->indexUrl();
+>>>>>>> 3c97c308c85924a62f31c89c71edfe23450749f0
                     $tmp->active = false;
                     $row[] = $tmp;
                 }
@@ -108,6 +116,16 @@ class PanelTabService {
                 }
                 $tmp->url = $url;
                 $tmp->title = 'Content '; //.'['.request()->url().']['.$url.']';
+<<<<<<< HEAD
+=======
+                /*
+                if ($url_test = 1) {
+                    $tmp->active = request()->url() == $url;
+                } else {
+                    $tmp->active = request()->routeIs('admin.container0.'.$act);
+                }
+                */
+>>>>>>> 3c97c308c85924a62f31c89c71edfe23450749f0
                 $tmp->active = request()->url() == $url;
                 if (null != $panel->guid()) {
                     $row[] = $tmp;

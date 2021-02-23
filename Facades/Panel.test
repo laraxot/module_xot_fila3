@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <?php
 
 namespace Modules\Xot\Facades;
@@ -12,3 +13,19 @@ class Panel extends Facade {
         return 'panel';
     }
 }
+=======
+<?php
+
+namespace Modules\Xot\Facades;
+
+class Panel extends Facade {
+    /**
+     * Get the registered name of the component.
+     *
+     * @return string
+     */
+    protected static function getFacadeAccessor() {
+        return 'panel';
+    }
+}
+>>>>>>> 3c97c308c85924a62f31c89c71edfe23450749f0

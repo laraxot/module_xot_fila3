@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <?php
 
 namespace DummyNamespace;
@@ -15,3 +16,22 @@ class RouteServiceProvider extends XotBaseRouteServiceProvider {
     protected string $module_dir = __DIR__;
     protected string $module_ns = __NAMESPACE__;
 }
+=======
+<?php
+
+namespace DummyNamespace;
+
+//--- bases ---
+use Modules\Xot\Providers\XotBaseRouteServiceProvider;
+
+class RouteServiceProvider extends XotBaseRouteServiceProvider {
+    /**
+     * The module namespace to assume when generating URLs to actions.
+     *
+     * @var string
+     */
+    protected string $moduleNamespace = 'DummyControllerNamespace';
+    protected string $module_dir = __DIR__;
+    protected string $module_ns = __NAMESPACE__;
+}
+>>>>>>> 3c97c308c85924a62f31c89c71edfe23450749f0

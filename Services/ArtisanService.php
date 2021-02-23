@@ -102,7 +102,11 @@ class ArtisanService {
                 */
             //case 'spatiecache-clear1': return ArtisanService::exe('responsecache:clear'); //The command "responsecache:clear" does not exist.
 
+<<<<<<< HEAD
             default: return 'cmd not Recognized !';
+=======
+            default: return '';
+>>>>>>> 3c97c308c85924a62f31c89c71edfe23450749f0
         }
 
         return '';
@@ -163,4 +167,8 @@ class ArtisanService {
             return '<br/>'.$command.' non effettuato';
         }*/
     }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> 3c97c308c85924a62f31c89c71edfe23450749f0

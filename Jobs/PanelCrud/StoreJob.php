@@ -29,10 +29,15 @@ class StoreJob extends XotBaseJob {
         if (! isset($data['lang']) && in_array('lang', $row->getFillable())) {
             $data['lang'] = app()->getLocale();
         }
+<<<<<<< HEAD
         if (! isset($data['auth_user_id'])
             && in_array('auth_user_id', $row->getFillable())
             && $row->getKeyName()!='auth_user_id') {
                 $data['auth_user_id'] = \Auth::id();
+=======
+        if (! isset($data['auth_user_id']) && in_array('auth_user_id', $row->getFillable())) {
+            $data['auth_user_id'] = \Auth::id();
+>>>>>>> 3c97c308c85924a62f31c89c71edfe23450749f0
         }
 
         $row = $row->fill($data);
@@ -360,4 +365,8 @@ class StoreJob extends XotBaseJob {
         $status = 'collegati ['.\implode(', ', $items_add->all()).'] scollegati ['.\implode(', ', $items_sub->all()).']';
         \Session::flash('status', $status);
     }
+<<<<<<< HEAD
 }//end storeJob
+=======
+}//end storeJob
+>>>>>>> 3c97c308c85924a62f31c89c71edfe23450749f0

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 {
     "name": "Xot",
     "alias": "xot",
@@ -12,3 +13,19 @@
     "files": [],
     "requires": []
 }
+=======
+{
+    "name": "Xot",
+    "alias": "xot",
+    "description": "",
+    "keywords": [],
+    "active": 1,
+    "order": 2,
+    "providers": [
+        "Modules\\Xot\\Providers\\XotServiceProvider"
+    ],
+    "aliases": {},
+    "files": [],
+    "requires": []
+}
+>>>>>>> 3c97c308c85924a62f31c89c71edfe23450749f0

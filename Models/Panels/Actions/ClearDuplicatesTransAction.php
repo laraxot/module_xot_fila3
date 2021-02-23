@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <?php
 
 declare(strict_types=1);
@@ -47,3 +48,54 @@ class ClearDuplicatesTransAction extends XotBasePanelAction {
         }
     }
 }
+=======
+<?php
+
+declare(strict_types=1);
+
+namespace Modules\Xot\Models\Panels\Actions;
+
+use Illuminate\Support\Facades\File;
+use Modules\Xot\Services\ArrayService;
+use Nwidart\Modules\Facades\Module;
+
+/**
+ * Class ClearDuplicatesTransAction.
+ */
+class ClearDuplicatesTransAction extends XotBasePanelAction {
+    public bool $onContainer = true;
+
+    public string $icon = '<i class="fas fa-hammer"></i>';
+
+    public function handle(): void {
+        //return 'qui';
+        $modules = Module::all();
+        foreach ($modules as $module) {
+            //echo '<br/>'.$module->getPath('Resources/lang');
+            //dddx(get_class_methods($module));
+            $lang_path = $module->getPath().'/Resources/lang';
+            $lang_path = str_replace(['/', '\\'], [DIRECTORY_SEPARATOR, DIRECTORY_SEPARATOR], $lang_path);
+            echo '<br/>'.$lang_path;
+            $files = File::allFiles($lang_path);
+            $this->fixFiles($files);
+        }
+    }
+
+    public function fixFiles(array $files): void {
+        foreach ($files as $file) {
+            $path = $file->getRealPath();
+            try {
+                $trads = include $path;
+                ArrayService::save(['data' => $trads, 'filename' => $path]);
+            } catch (\Exception $e) {
+                $err = [
+                    'err' => $e->getMessage(),
+                    'filename' => $path,
+                ];
+                echo '<pre>'.print_r($err, true).'</pre>';
+            }
+            echo '<br>'.$path;
+        }
+    }
+}
+>>>>>>> 3c97c308c85924a62f31c89c71edfe23450749f0

@@ -316,9 +316,18 @@ if (! \function_exists('getModuleFromModel')) {
 }
 
 if (! \function_exists('getModuleNameFromModel')) {
+<<<<<<< HEAD
     function getModuleNameFromModel(object $model): string {
         if (! is_object($model)) {
             dddx(['model' => $model]);
+=======
+    /**
+     * @param object $model
+     */
+    function getModuleNameFromModel(object $model): string {
+        if (! is_object($model)) {
+            dddx(['model'=>$model]);
+>>>>>>> 3c97c308c85924a62f31c89c71edfe23450749f0
             throw new \Exception('model is not an object');
         }
         $class = get_class($model);
@@ -438,18 +447,30 @@ if (! \function_exists('transFields')) {
     function transFields($params) {
         $name = 'not-set';
         $model = Form::getModel();
+<<<<<<< HEAD
         $module_name = '';
         if (is_object($model)) {
             $module_name = getModuleNameFromModel($model);
         }
 
+=======
+        $module_name ='';
+        if(is_object($model)){
+            $module_name = getModuleNameFromModel($model);
+        }
+
+
+>>>>>>> 3c97c308c85924a62f31c89c71edfe23450749f0
         $ns = Str::lower($module_name);
         $trans_root = $ns.'::'.Str::snake(class_basename($model));
         //dddx() );
         //debug_getter_obj(['obj'=>$module]);
         //dddx($module_name->getNamespace());
         $view = 'unknown';
+<<<<<<< HEAD
         $attributes = $params;
+=======
+>>>>>>> 3c97c308c85924a62f31c89c71edfe23450749f0
         extract($params);
         //dddx($params);
         if (isset($attributes)) {
@@ -498,18 +519,27 @@ if (! \function_exists('transFields')) {
             $ris->help = '';
         }
 
+<<<<<<< HEAD
         //if ($stop) {
         //    dddx([$attributes, $params]);
         //}
 
         //$attributes = $params;
+=======
+        $attributes = $params;
+>>>>>>> 3c97c308c85924a62f31c89c71edfe23450749f0
         $attrs_default = ['class' => 'form-control', 'placeholder' => $ris->placeholder];
         if (! isset($params['attributes'])) {
             $params['attributes'] = [];
         }
+<<<<<<< HEAD
         $attributes = array_merge($attrs_default, $attributes, $params['attributes']);
 
         $ris->attributes = collect($attributes)
+=======
+
+        $ris->attributes = collect(array_merge($attrs_default, $attributes, $params['attributes']))
+>>>>>>> 3c97c308c85924a62f31c89c71edfe23450749f0
                         ->filter(function ($item, $key) {
                             return in_array($key, ['style', 'class', 'placeholder', 'readonly', 'id', 'value', 'name']) || Str::startsWith($key, 'data-');
                         })

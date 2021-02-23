@@ -73,12 +73,18 @@ abstract class XotBaseContainerController extends Controller {
             return $this->notAuthorized($method, $panel);
         }
 
+<<<<<<< HEAD
         //$request = XotRequest::capture();
         $request = request(); //xotrequest non riesce a prelevare dai test
         $controller = $this->getController();
         $data = $request->all();
         //$data= request()->all();
         //dd(['data' => $data, __LINE__, __FILE__]);
+=======
+        $request = XotRequest::capture();
+        $controller = $this->getController();
+        $data = $request->all();
+>>>>>>> 3c97c308c85924a62f31c89c71edfe23450749f0
 
         $panel = app($controller)->$method($data, $panel);
 
