@@ -80,14 +80,7 @@ class TenantService {
      */
     public static function config(string $key) {
         $group = implode('.', array_slice(explode('.', $key), 0, 2));
-
-<<<<<<< HEAD
-        //*
-=======
         /*
-         * in amministrazione devo poter gestire tutti i modelli
-         */
->>>>>>> 3c97c308c85924a62f31c89c71edfe23450749f0
         if (in_admin() && Str::startsWith($key, 'xra.model')) {
             $module_name = \Request::segment(2);
             $models = getModuleModels($module_name);
@@ -98,11 +91,7 @@ class TenantService {
             $merge_conf = array_merge($original_conf, $models);
             \Config::set('xra.model', $merge_conf);
         }
-<<<<<<< HEAD
         //*/
-=======
-
->>>>>>> 3c97c308c85924a62f31c89c71edfe23450749f0
         $tenant_name = self::getName();
         $extra_conf = config(str_replace('/', '.', $tenant_name).'.'.$group); // ...
 

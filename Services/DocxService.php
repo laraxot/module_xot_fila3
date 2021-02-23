@@ -81,11 +81,8 @@ class DocxService {
     }
 
     /**
-<<<<<<< HEAD
-=======
      * @param array $params
      *
->>>>>>> 3c97c308c85924a62f31c89c71edfe23450749f0
      * @throws \PhpOffice\PhpWord\Exception\CopyFileException
      * @throws \PhpOffice\PhpWord\Exception\CreateTemporaryFileException
      *
@@ -93,13 +90,7 @@ class DocxService {
      */
     public function out(array $params = []) {
         extract($params);
-<<<<<<< HEAD
-        $autoload = __DIR__.'/vendor/autoload.php';
-        $autoload = str_replace(['/', '\\'], [DIRECTORY_SEPARATOR, DIRECTORY_SEPARATOR], $autoload);
-        include $autoload; //carico la mia libreria che uso solo qui..
-=======
         include __DIR__.'/vendor/autoload.php'; //carico la mia libreria che uso solo qui..
->>>>>>> 3c97c308c85924a62f31c89c71edfe23450749f0
 
         //return response()->download($this->docx_input);
         $tpl = new TemplateProcessor($this->docx_input);

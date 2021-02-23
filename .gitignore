@@ -1,9 +1,2 @@
 *.lock
 *.phar
-<<<<<<< HEAD
-*.log
-.git-rewrite
-node_modules
-package-lock.json
-=======
->>>>>>> 3c97c308c85924a62f31c89c71edfe23450749f0

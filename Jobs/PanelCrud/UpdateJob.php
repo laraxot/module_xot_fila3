@@ -22,15 +22,10 @@ class UpdateJob extends XotBaseJob {
     public function handle(): PanelContract {
         $row = $this->panel->row;
         $data = $this->data;
-<<<<<<< HEAD
         //https://medium.com/@taylorotwell/tap-tap-tap-1fc6fc1f93a6
         $row = tap($row)->update($data);
         //dd([/*'row' => $row, */'data' => $data, 'ris' => $ris, __LINE__, __FILE__]);
 
-=======
-        //dddx($data);
-        $ris = $row->update($data);
->>>>>>> 3c97c308c85924a62f31c89c71edfe23450749f0
         $this->manageRelationships($row, $data, 'update');
         \Session::flash('status', 'aggiornato! ['.$row->getKey().']!'); //.implode(',',$row->getChanges())
 
@@ -103,57 +98,35 @@ class UpdateJob extends XotBaseJob {
      */
     public function updateRelationshipsBelongsToMany($model, string $name, array $data): void {
         //$model->$name()->syncWithoutDetaching($data);
-<<<<<<< HEAD
-        if (isset($data['to'])) {
+
+        if (in_array('to', array_keys($data)) || in_array('from', array_keys($data))) {
+            /*
+                $parent=$this->panel->getParent();
+                if($parent!=null){
+                    $parent_id=$parent->row->getKey();
+                    $parent_key=$parent->postType().'_'.$parent->row->getKeyName();
+                    $data1=[];
+                    foreach($data['to'] as $v){
+                        $data1[$v]=[$parent_key=>$parent_id];
+                    }
+                    $model->$name()->attach($data1);
+                    return ;
+                }
+                $model->$name()->sync($data['to']);
+                return ;
+            */
             $this->saveMultiselectTwoSides($model, $name, $data);
 
             return;
         }
-        try {
-            $model->$name()->sync($data);
-        } catch (\Exception $e) {
-            echo '<hr/>'.$e->getMessage().'<br/>
-                line:'.__LINE__.'<br/>
-                file:'.__FILE__.'
-                </hr>';
-        }
-=======
-        
-        if(in_array('to',array_keys($data)) || in_array('from',array_keys($data))){
-           
-        /*    
-            $parent=$this->panel->getParent();
-            if($parent!=null){
-                $parent_id=$parent->row->getKey();
-                $parent_key=$parent->postType().'_'.$parent->row->getKeyName();
-                $data1=[];
-                foreach($data['to'] as $v){
-                    $data1[$v]=[$parent_key=>$parent_id];
-                }
-                $model->$name()->attach($data1);    
-                return ;
-            }
-            $model->$name()->sync($data['to']);    
-            return ;
-        */
-         $this->saveMultiselectTwoSides($model,$name,$data);
-         return ;
-        }
         $model->$name()->sync($data);
->>>>>>> 3c97c308c85924a62f31c89c71edfe23450749f0
     }
 
     //end updateRelationshipsBelongsToMany
 
     /*    hasOneThrough     */
-<<<<<<< HEAD
-    /*    hasManyThrough    */
-    /*    morphTo           */
 
-=======
-    
     /*    morphTo           */
-
 
     /**
      * ManyThrough.
@@ -161,16 +134,14 @@ class UpdateJob extends XotBaseJob {
      * @param ModelContract|Model $model
      */
     public function updateRelationshipsHasManyThrough($model, string $name, array $data): void {
-        if(isset($data['to'])){
-            $rows=$model->$name();
+        if (isset($data['to'])) {
+            $rows = $model->$name();
             dddx(get_class_methods($rows));
             //$this->saveMultiselectTwoSides($model,$name,$data);
         }
         ddd(['wip']);
     }
 
-
->>>>>>> 3c97c308c85924a62f31c89c71edfe23450749f0
     /**
      * morphOne.
      *
@@ -290,10 +261,6 @@ class UpdateJob extends XotBaseJob {
         //$items_key = $container_obj->getKeyName();
         $items_key = $related->getKeyName();
         $items_0 = $items->get()->pluck($items_key);
-<<<<<<< HEAD
-=======
-        
->>>>>>> 3c97c308c85924a62f31c89c71edfe23450749f0
 
         if (! isset($data['to'])) {
             $data['to'] = [];
@@ -301,19 +268,6 @@ class UpdateJob extends XotBaseJob {
         $items_1 = collect($data['to']);
         $items_add = $items_1->diff($items_0);
         $items_sub = $items_0->diff($items_1);
-<<<<<<< HEAD
-        $items->detach($items_sub->all());
-        /* da risolvere Column not found: 1054 Unknown column 'related_type' liveuser_area_admin_areas */
-        try {
-            $items->attach($items_add->all(), ['related_type' => $container]);
-        } catch (\Exception $e) {
-            $items->attach($items_add->all());
-        }
-        $status = 'collegati ['.\implode(', ', $items_add->all()).'] scollegati ['.\implode(', ', $items_sub->all()).']';
-        \Session::flash('status', $status);
-    }
-}
-=======
         /*
         dddx([
             'items_0'=>$items_0,
@@ -324,11 +278,11 @@ class UpdateJob extends XotBaseJob {
         ]);
             */
 
-        $ids=$items_sub->all();
-        $parent=$this->panel->getParent();
-        if($parent!=null){
-            $parent_id=$parent->row->getKey();
-            $parent_key=$parent->postType().'_'.$parent->row->getKeyName();
+        $ids = $items_sub->all();
+        $parent = $this->panel->getParent();
+        if (null != $parent) {
+            $parent_id = $parent->row->getKey();
+            $parent_key = $parent->postType().'_'.$parent->row->getKeyName();
             /*
             $data1=[];
             foreach($ids as $v){
@@ -340,35 +294,33 @@ class UpdateJob extends XotBaseJob {
             */
             //dddx($data1);
             //echo '<pre>'.print_r($data1,true).'</pre>';
-            //$model->$name()->where($parent_key,$parent_id)->detach($ids);    
+            //$model->$name()->where($parent_key,$parent_id)->detach($ids);
             //dddx(get_class_methods($model->$name())) ;//->detach($data1);
-            $model->$name()->wherePivot($parent_key,$parent_id)->detach($ids);
-            //return ;
-        }else{
+            $model->$name()->wherePivot($parent_key, $parent_id)->detach($ids);
+        //return ;
+        } else {
             $items->detach($ids);
         }
         /* da risolvere Column not found: 1054 Unknown column 'related_type' liveuser_area_admin_areas */
         //try {
         //    $items->attach($items_add->all(), ['related_type' => $container]);
         //} catch (\Exception $e) {
-            $ids=$items_add->all();
-            
-            $parent=$this->panel->getParent();
-            if($parent!=null){
-                $parent_id=$parent->row->getKey();
-                $parent_key=$parent->postType().'_'.$parent->row->getKeyName();
-                $data1=[];
-                foreach($ids as $v){
-                    $data1[$v]=[$parent_key=>$parent_id];
-                }
-                $model->$name()->attach($data1);    
-                
-            }else{
-                $items->attach($ids);
+        $ids = $items_add->all();
+
+        $parent = $this->panel->getParent();
+        if (null != $parent) {
+            $parent_id = $parent->row->getKey();
+            $parent_key = $parent->postType().'_'.$parent->row->getKeyName();
+            $data1 = [];
+            foreach ($ids as $v) {
+                $data1[$v] = [$parent_key => $parent_id];
             }
+            $model->$name()->attach($data1);
+        } else {
+            $items->attach($ids);
+        }
         //}
         $status = 'collegati ['.\implode(', ', $items_add->all()).'] scollegati ['.\implode(', ', $items_sub->all()).']';
         \Session::flash('status', $status);
     }
 }
->>>>>>> 3c97c308c85924a62f31c89c71edfe23450749f0

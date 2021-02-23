@@ -83,10 +83,7 @@ class PanelMiddleware {
             try {
                 $rows = $row_prev->{$types}();
             } catch (\Exception $e) {
-<<<<<<< HEAD
-=======
                 //abort(404, $e->getMessage());
->>>>>>> 3c97c308c85924a62f31c89c71edfe23450749f0
                 $data = [
                     'message' => $e->getMessage(),
                     'lang' => \App::getLocale(),
@@ -126,8 +123,4 @@ class PanelMiddleware {
 
         return $next($request);
     }
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> 3c97c308c85924a62f31c89c71edfe23450749f0

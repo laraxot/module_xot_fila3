@@ -2,39 +2,3 @@ ultimo commit 2018
 https://github.com/VisualPHPUnit/VisualPHPUnit
 
 
-<<<<<<< HEAD
-https://stackoverflow.com/questions/36195480/laravel-5-and-phpunit-tests-fail-because-of-undefined-index-remote-addr
-
-<?php
-
-#class TestCase extends Illuminate\Foundation\Testing\TestCase
-abstract class TestCase extends Illuminate\Foundation\Testing\TestCase
-{
-    /**
-     * The base URL to use while testing the application.
-     *
-     * @var string
-     */
-    protected $baseUrl = 'http://localhost';
-
-    /**
-     * Creates the application.
-     *
-     * @return \Illuminate\Foundation\Application
-     */
-    public function createApplication()
-    {
-        $app = require __DIR__.'/../bootstrap/app.php';
-
-        $app->make(Illuminate\Contracts\Console\Kernel::class)->bootstrap();
-
-        return $app;
-    }
-}
-
-
-
-
-
-=======
->>>>>>> 3c97c308c85924a62f31c89c71edfe23450749f0

@@ -154,10 +154,7 @@ class PanelService {
             try {
                 $rows = $row_prev->{$types}();
             } catch (\Exception $e) {
-<<<<<<< HEAD
-=======
                 //abort(404, $e->getMessage());
->>>>>>> 3c97c308c85924a62f31c89c71edfe23450749f0
                 $data = [
                     'message' => $e->getMessage(),
                     'lang' => \App::getLocale(),
@@ -166,10 +163,7 @@ class PanelService {
 
                 return response()->view('pub_theme::errors.404', $data, 404);
             } catch (\Error $e) {
-<<<<<<< HEAD
-=======
                 //return response("User can't perform this action.", 404);
->>>>>>> 3c97c308c85924a62f31c89c71edfe23450749f0
                 $data = [
                     'message' => $e->getMessage(),
                     'lang' => \App::getLocale(),
@@ -308,8 +302,4 @@ class PanelService {
         $panel_stub = Str::replaceLast('}', $func_stub.chr(13).chr(10).'}', $panel_stub);
         File::put($panel_file, $panel_stub);
     }
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> 3c97c308c85924a62f31c89c71edfe23450749f0

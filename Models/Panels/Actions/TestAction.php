@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 <?php
 
 namespace Modules\Xot\Models\Panels\Actions;
@@ -31,37 +30,3 @@ class TestAction extends XotBasePanelAction {
         return $this->panel->view();
     }
 }
-=======
-<?php
-
-namespace Modules\Xot\Models\Panels\Actions;
-
-//-------- models -----------
-
-//-------- services --------
-use Modules\Xot\Models\Panels\Actions\XotBasePanelAction;
-
-//-------- bases -----------
-
-/**
- * Class TestAction
- * @package Modules\Xot\Models\Panels\Actions
- */
-class TestAction extends XotBasePanelAction {
-    /**
-     * @var bool
-     */
-    public bool $onItem = true;
-    /**
-     * @var bool
-     */
-    public bool $onContainer = true;
-
-    /**
-     * @return mixed
-     */
-    public function handle() {
-        return $this->panel->view();
-    }
-}
->>>>>>> 3c97c308c85924a62f31c89c71edfe23450749f0

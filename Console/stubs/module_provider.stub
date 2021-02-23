@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 <?php
 namespace DummyNamespace;
 
@@ -14,20 +13,3 @@ class DummyClass extends XotBaseServiceProvider{
     protected string $module_ns =__NAMESPACE__;
     public string $module_name ='dummy_name';
 }
-=======
-<?php
-namespace DummyNamespace;
-
-use Illuminate\Support\ServiceProvider;
-use Illuminate\Database\Eloquent\Factory;
-use Illuminate\Foundation\AliasLoader;
-
-//---- bases ----
-use Modules\Xot\Providers\XotBaseServiceProvider;
-
-class DummyClass extends XotBaseServiceProvider{
-	protected string $module_dir = __DIR__;
-    protected string $module_ns =__NAMESPACE__;
-    public string $module_name ='dummy_name';
-}
->>>>>>> 3c97c308c85924a62f31c89c71edfe23450749f0

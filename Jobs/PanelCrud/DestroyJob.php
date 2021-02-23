@@ -14,7 +14,6 @@ use Modules\Xot\Contracts\PanelContract;
  */
 class DestroyJob extends XotBaseJob {
     public function handle(): PanelContract {
-<<<<<<< HEAD
         //per cancellare tabelle collegare esempio se cancello "profilo" voglio cancellare anche "utente"
         if (method_exists($this->panel, 'destroyCallback')) {
             $this->panel->destroyCallback();
@@ -31,11 +30,3 @@ class DestroyJob extends XotBaseJob {
         return $this->panel;
     }
 }
-=======
-        $this->panel->row->delete();
-        \Session::flash('status', 'eliminato');
-
-        return $this->panel;
-    }
-}
->>>>>>> 3c97c308c85924a62f31c89c71edfe23450749f0

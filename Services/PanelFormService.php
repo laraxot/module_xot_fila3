@@ -34,47 +34,9 @@ class PanelFormService {
         return $this;
     }
 
-<<<<<<< HEAD
-    public function formHtml(array $params = []) {
-        $act = 'create';
-        $form_act = 'store';
-        extract($params);
-        $fields = [];
-
-        switch ($act) {
-            case 'create':
-                $fields = $this->createFields();
-                $form_act = 'store';
-                break;
-            case 'edit':
-                $fields = $this->editFields();
-                $form_act = 'update';
-                break;
-        }
-
-        $row = $this->panel->row;
-        $res = '';
-        $res .= Form::bsOpenPanel($this->panel, $form_act);
-        $res .= '<div class="clearfix">';
-        foreach ($fields as $field) {
-            $res .= ThemeService::inputHtml(['row' => $row, 'field' => $field]);
-        }
-        $res .= '</div>';
-
-        $res .= '<p class="form-submit">
-            <input name="submit" type="submit" class="button small color">
-        </p>';
-        $res .= Form::close();
-
-        return $res;
-    }
-
-    /**
-=======
     /**
      * @param array $params
      *
->>>>>>> 3c97c308c85924a62f31c89c71edfe23450749f0
      * @return string
      */
     public function formCreate(array $params = []) {
@@ -82,11 +44,7 @@ class PanelFormService {
         $row = $this->panel->row;
         $res = '';
         //$res.='<h3>'.$this->storeUrl().'</h3>'; //4 debug
-<<<<<<< HEAD
-        $res .= Form::bsOpenPanel($this->panel, 'store');
-=======
         $res .= Form::bsOpenPanel($this, 'store');
->>>>>>> 3c97c308c85924a62f31c89c71edfe23450749f0
         $res .= '<div class="clearfix">';
         foreach ($fields as $field) {
             $res .= ThemeService::inputHtml(['row' => $row, 'field' => $field]);
@@ -102,11 +60,8 @@ class PanelFormService {
     }
 
     /**
-<<<<<<< HEAD
-=======
      * @param array $params
      *
->>>>>>> 3c97c308c85924a62f31c89c71edfe23450749f0
      * @return string
      */
     public function formEdit(array $params = []) {
@@ -117,12 +72,8 @@ class PanelFormService {
         $fields = $this->editFields();
         $row = $this->panel->row;
         $res = '';
-<<<<<<< HEAD
-        $res .= Form::bsOpenPanel($this->panel, 'update');
-=======
         //$res.='<h3>'.$this->storeUrl().'</h3>'; //4 debug
         $res .= Form::bsOpenPanel($this, 'update');
->>>>>>> 3c97c308c85924a62f31c89c71edfe23450749f0
         $res .= '<div class="clearfix">';
         foreach ($fields as $field) {
             $res .= ThemeService::inputHtml(['row' => $row, 'field' => $field]);
@@ -168,11 +119,8 @@ class PanelFormService {
     */
 
     /**
-<<<<<<< HEAD
-=======
      * @param array $params
      *
->>>>>>> 3c97c308c85924a62f31c89c71edfe23450749f0
      * @return string
      */
     public function btnCrud(array $params = []) {
@@ -210,21 +158,13 @@ class PanelFormService {
 
         if (! isset($params['tooltip'])) {
             $row = $this->panel->row;
-<<<<<<< HEAD
-            $module_name_low = (string) strtolower((string) getModuleNameFromModel($row));
-=======
             $module_name_low = (string)strtolower((string)getModuleNameFromModel($row));
->>>>>>> 3c97c308c85924a62f31c89c71edfe23450749f0
             $params['tooltip'] = trans($module_name_low.'::'.strtolower(class_basename($row)).'.act.'.$params['method']);
         }
 
         if (! isset($params['title'])) {
             $row = $this->panel->row;
-<<<<<<< HEAD
-            $module_name_low = strtolower((string) getModuleNameFromModel($row));
-=======
             $module_name_low = strtolower((string)getModuleNameFromModel($row));
->>>>>>> 3c97c308c85924a62f31c89c71edfe23450749f0
 
             $trans_key = $module_name_low.'::'.strtolower(class_basename($row)).'.act.'.$params['method'];
             $trans = trans($trans_key);
@@ -261,11 +201,7 @@ class PanelFormService {
 
         if (true === $params['title']) {
             $row = $this->panel->row;
-<<<<<<< HEAD
-            $module_name_low = strtolower((string) getModuleNameFromModel($row));
-=======
             $module_name_low = strtolower((string)getModuleNameFromModel($row));
->>>>>>> 3c97c308c85924a62f31c89c71edfe23450749f0
             $parent = $this->panel->getParent();
             if (null != $parent) {
                 $tmp = [];
@@ -321,11 +257,8 @@ class PanelFormService {
     */
 
     /**
-<<<<<<< HEAD
-=======
      * @param array $params
      *
->>>>>>> 3c97c308c85924a62f31c89c71edfe23450749f0
      * @return array
      */
     public function exceptFields(array $params = []) {
@@ -405,8 +338,4 @@ class PanelFormService {
 
         return $fields;
     }
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> 3c97c308c85924a62f31c89c71edfe23450749f0
