@@ -26,7 +26,7 @@
         "spipu/html2pdf": "^5.2",
         "symfony/dom-crawler": "^5.2",
         "twig/twig": "^3.3",
-        "wrklst/docxmustache": "^0.0.33"
+        "wrklst/docxmustache": "^0.0.34"
     },
     "config": {
         "preferred-install": "dist",
