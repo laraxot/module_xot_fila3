@@ -1,4 +1,7 @@
 <?php
+/**
+ *
+ */
 
 namespace Modules\Xot\Models\Panels\Actions;
 
