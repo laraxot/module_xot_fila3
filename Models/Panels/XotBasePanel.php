@@ -497,8 +497,6 @@ abstract class XotBasePanel implements PanelContract {
     }
 
     /**
-     * @param array $params
-     *
      * @return \Illuminate\Support\Collection
      */
     public function getActions(array $params = []) {
@@ -506,8 +504,6 @@ abstract class XotBasePanel implements PanelContract {
     }
 
     /**
-     * @param array $params
-     *
      * @return \Illuminate\Support\Collection
      */
     public function containerActions(array $params = []) {
@@ -515,8 +511,6 @@ abstract class XotBasePanel implements PanelContract {
     }
 
     /**
-     * @param array $params
-     *
      * @return \Illuminate\Support\Collection
      */
     public function itemActions(array $params = []) {
@@ -709,7 +703,6 @@ abstract class XotBasePanel implements PanelContract {
                 //return $repo;
                 break;
             case 2:
-
                 break;
         } //end switch
 
@@ -779,8 +772,6 @@ abstract class XotBasePanel implements PanelContract {
     */
 
     /**
-     * @param array $params
-     *
      * @return mixed
      */
     public function formCreate(array $params = []) {
@@ -788,8 +779,6 @@ abstract class XotBasePanel implements PanelContract {
     }
 
     /**
-     * @param array $params
-     *
      * @return mixed
      */
     public function formEdit(array $params = []) {
@@ -1357,7 +1346,7 @@ abstract class XotBasePanel implements PanelContract {
 
         $method = request()->getMethod();
         if ('GET' == $method) {
-            return  $action->handle();
+            return $action->handle();
         } else {
             return $action->postHandle();
         }
@@ -1419,8 +1408,6 @@ abstract class XotBasePanel implements PanelContract {
     }
 
     /**
-     * @param array $params
-     *
      * @return mixed
      */
     public function out(array $params = []) {
@@ -1429,8 +1416,6 @@ abstract class XotBasePanel implements PanelContract {
     }
 
     /**
-     * @param array $params
-     *
      * @return string
      */
     public function pdfFilename(array $params = []) {
@@ -1456,8 +1441,6 @@ abstract class XotBasePanel implements PanelContract {
     }
 
     /**
-     * @param array $params
-     *
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|string|void
      */
     public function pdf(array $params = []) {
@@ -1632,7 +1615,9 @@ abstract class XotBasePanel implements PanelContract {
      * @return mixed
      */
     public function update($data) {
-        $func = '\Modules\Xot\Jobs\Crud\\'.Str::studly(__FUNCTION__).'Job';
+        //$func = '\Modules\Xot\Jobs\Crud\\'.Str::studly(__FUNCTION__).'Job';
+        $func = '\Modules\Xot\Jobs\PanelCrud\\'.Str::studly(__FUNCTION__).'Job';
+
         $panel = $func::dispatchNow($data, $this);
 
         return $panel;
