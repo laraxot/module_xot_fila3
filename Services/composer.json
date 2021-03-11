@@ -20,7 +20,7 @@
         "natxet/cssmin": "^3.0",
         "patchwork/jsqueeze": "^2.0",
         "phpoffice/phpspreadsheet": "^1.16",
-        "phpoffice/phpword": "^0.18.0",
+        "phpoffice/phpword": "^0.18.1",
         "ptachoire/cssembed": "^1.0",
         "scssphp/scssphp": "^1.4",
         "spipu/html2pdf": "^5.2",
