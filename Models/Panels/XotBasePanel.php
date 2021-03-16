@@ -18,6 +18,7 @@ use Modules\Theme\Services\ThemeService;
 use Modules\Xot\Contracts\ModelContract;
 use Modules\Xot\Contracts\PanelContract;
 use Modules\Xot\Contracts\PanelPresenterContract;
+use Modules\Xot\Presenters\PdfPanelPresenter;
 use Modules\Xot\Services\ChainService;
 use Modules\Xot\Services\HtmlService;
 use Modules\Xot\Services\ImageService;
@@ -1444,8 +1445,12 @@ abstract class XotBasePanel implements PanelContract {
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|string|void
      */
     public function pdf(array $params = []) {
-        //return (new PdfPresenter($this))->out($params); //da fare
+        $presenter = new PdfPanelPresenter();
+        $presenter->setPanel($this);
+        //dddx($this->rows()->get()->count());
 
+        return $presenter->out($params);
+        /*
         if (! isset($params['view_params'])) {
             $params['view_params'] = [];
         }
@@ -1467,6 +1472,7 @@ abstract class XotBasePanel implements PanelContract {
         $params['html'] = (string) $html;
 
         return HtmlService::toPdf($params);
+        */
     }
 
     //Method Modules\Xot\Models\Panels\XotBasePanel::related() should return Modules\Xot\Models\Panels\XotBasePanel but returns Modules\Xot\Contracts\PanelContract|null.
