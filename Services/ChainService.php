@@ -10,7 +10,7 @@ namespace Modules\Xot\Services;
  * @param string $primary_field
  * @param string $parent_field
  * @param string $sort_field
- * @param array  $rows
+ * @param object $rows
  * @param int    $root_id
  * @param int    $maxlevel
  *
@@ -54,7 +54,7 @@ class ChainService {
      * @param string $primary_field
      * @param string $parent_field
      * @param string $sort_field
-     * @param array  $rows
+     * @param object $rows
      * @param int    $root_id
      * @param int    $maxlevel
      */
