@@ -51,6 +51,8 @@ abstract class XotBaseJob implements ShouldQueue {
     }
 
     /**
+     * manage the relationships.
+     *
      * @param ModelContract|Model $model
      */
     public function manageRelationships($model, array $data, string $act): void {
