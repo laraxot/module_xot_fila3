@@ -10,7 +10,7 @@ namespace Modules\Xot\Services;
  * @param string $primary_field
  * @param string $parent_field
  * @param string $sort_field
- * @param object $rows
+ * @param array  $rows
  * @param int    $root_id
  * @param int    $maxlevel
  *
