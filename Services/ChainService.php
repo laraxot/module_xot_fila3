@@ -38,7 +38,7 @@ function chain($primary_field, $parent_field, $sort_field, $rows, $root_id = 0, 
 class ChainService {
     public array $table;
 
-    public array $rows;
+    public \Illuminate\Database\Eloquent\Collection $rows;
 
     public array $chain_table;
 
