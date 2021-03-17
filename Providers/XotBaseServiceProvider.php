@@ -156,10 +156,14 @@ abstract class XotBaseServiceProvider extends ServiceProvider {
             if (false === $content) {
                 throw new Exception('can not decode json');
             }
-            $old_content = File::get($components_json);
+            $old_content='';
+            if (File::exists($components_json)) {
+                $old_content = File::get($components_json);
+            }
             if ($old_content != $content) {
                 File::put($components_json, $content);
             }
+
         }
         //dddx($comps);
         if (class_exists("Livewire\Livewire")) {

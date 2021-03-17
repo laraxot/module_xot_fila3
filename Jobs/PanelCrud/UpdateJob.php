@@ -21,7 +21,9 @@ class UpdateJob extends XotBaseJob {
      */
     public function handle(): PanelContract {
         $row = $this->panel->row;
+        $this->data = $this->prepareAndValidate($this->data, $this->panel);
         $data = $this->data;
+
         //https://medium.com/@taylorotwell/tap-tap-tap-1fc6fc1f93a6
         $row = tap($row)->update($data);
         //dd([/*'row' => $row, */'data' => $data, 'ris' => $ris, __LINE__, __FILE__]);

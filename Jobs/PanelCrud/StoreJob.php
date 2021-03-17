@@ -23,6 +23,7 @@ class StoreJob extends XotBaseJob {
     public function handle(): PanelContract {
         //dd('['.__LINE__.']['.__FILE__.']');
         $row = $this->panel->row;
+        $this->data = $this->prepareAndValidate($this->data, $this->panel);
         $data = $this->data;
 
         //---------------------------
