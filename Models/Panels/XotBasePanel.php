@@ -390,7 +390,13 @@ abstract class XotBasePanel implements PanelContract {
             )->all();
         }
 
-        //dddx($fields);
+        foreach ($fields as $field) {
+            if (in_array($field->type, ['Cell', 'CellLabel'])) {
+                foreach ($field->fields as $sub_field) {
+                    $fields[] = $sub_field;
+                }
+            }
+        }
 
         $rules = collect($fields)->map(
             function ($item) {
