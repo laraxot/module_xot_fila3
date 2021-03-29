@@ -95,6 +95,17 @@ class ModelService {
         }
     }
 
+    /**
+     * execute a query.
+     *
+     * @param [type] $model
+     *
+     * @return void
+     */
+    public static function query($model, string $sql) {
+        $model->getConnection()->statement($sql);
+    }
+
     /*
     public static function indexIfNotExistsStatic($index, $tbl = null, $conn = null) { //viene chiamato all'interno di filtertrait che e' static ..
         if (null == $tbl) {
