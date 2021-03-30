@@ -7,6 +7,7 @@ namespace Modules\Xot\Services;
 use Exception;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Str;
 
 if (! defined('STDIN')) {
     define('STDIN', fopen('php://stdin', 'r'));
@@ -58,7 +59,6 @@ class ArtisanService {
             case 'routeclear': return ArtisanService::exe('route:clear');
             case 'viewclear': return ArtisanService::exe('view:clear');
             case 'configcache': return ArtisanService::exe('config:cache');
-
             //-------------------------------------------------------------------
             case 'debugbar:clear':
                 self::debugbarClear();
@@ -157,8 +157,26 @@ class ArtisanService {
             return $output;  // dato che mi carico solo le route minime menufull.delete non esiste.. impostare delle route comuni.
         } catch (Exception $e) {
             //dddx(get_class_methods($e));
+            $vendor_dir = (realpath(LARAVEL_DIR.'/vendor'));
 
-            return '<br/>'.$command.' non effettuato '.$e->getMessage().'<br/>Code: '.$e->getCode().'<br/>File: '.$e->getFile().' <br/>Line: '.$e->getLine();
+            $my = collect($e->getTrace())->filter(
+                function ($item) use ($vendor_dir) {
+                    return isset($item['file']) && ! Str::startsWith($item['file'], $vendor_dir);
+                }
+            );
+
+            //dddx([LARAVEL_DIR, $e->getTrace(), $e->getPrevious()]);
+            //dddx($my);
+            $msg = '<br/>'.$command.' non effettuato '.$e->getMessage().
+                '<br/>Code: '.$e->getCode().
+                '<br/>File: '.$e->getFile().
+                '<br/>Line: '.$e->getLine();
+            foreach ($my as $v) {
+                $msg .= '<br/>My File :'.$v['file'].
+                '<br/>My Line :'.$v['line'];
+            }
+
+            return $msg;
         } /*
         //Dead catch - Symfony\Component\Console\Exception\CommandNotFoundException is already caught by Exception above.
         catch (\Symfony\Component\Console\Exception\CommandNotFoundException $e) {
