@@ -79,8 +79,8 @@ class TenantService {
      * @return \Illuminate\Config\Repository|\Illuminate\Contracts\Foundation\Application|mixed
      */
     public static function config(string $key) {
-        $group = implode('.', array_slice(explode('.', $key), 0, 2));
-        //*
+        $tenant_name = self::getName();
+
         if (in_admin() && Str::startsWith($key, 'xra.model')) {
             $module_name = \Request::segment(2);
             $models = getModuleModels($module_name);
@@ -91,24 +91,62 @@ class TenantService {
             $merge_conf = array_merge($original_conf, $models);
             \Config::set('xra.model', $merge_conf);
         }
-        //*/
-        $tenant_name = self::getName();
-        $extra_conf = config(str_replace('/', '.', $tenant_name).'.'.$group); // ...
+
+        $group = collect(explode('.', $key))->first();
 
         $original_conf = config($group);
+        $extra_conf = config($tenant_name.'.'.$group);
 
         if (! is_array($original_conf)) {
             $original_conf = [];
         }
+
         if (! is_array($extra_conf)) {
             $extra_conf = [];
         }
+
         $merge_conf = array_merge($original_conf, $extra_conf); //_recursive
 
-        Config::set($group, $merge_conf);  // non so se metterlo ..
+        Config::set($group, $merge_conf);
+        //$value = config($tenant_name.'.'.$key);
 
         return config($key);
     }
+
+    /*
+    public static function config(string $key) {
+       $group = implode('.', array_slice(explode('.', $key), 0, 2));
+
+
+       if (in_admin() && Str::startsWith($key, 'xra.model')) {
+           $module_name = \Request::segment(2);
+           $models = getModuleModels($module_name);
+           $original_conf = config('xra.model');
+           if (! is_array($original_conf)) {
+               $original_conf = [];
+           }
+           $merge_conf = array_merge($original_conf, $models);
+           \Config::set('xra.model', $merge_conf);
+       }
+
+       $tenant_name = self::getName();
+       $extra_conf = config(str_replace('/', '.', $tenant_name).'.'.$group); // ...
+
+       $original_conf = config($group);
+
+       if (! is_array($original_conf)) {
+           $original_conf = [];
+       }
+       if (! is_array($extra_conf)) {
+           $extra_conf = [$extra_conf];
+       }
+       $merge_conf = array_merge($original_conf, $extra_conf); //_recursive
+
+       Config::set($group, $merge_conf);  // non so se metterlo ..
+
+       return config($key);
+    }
+    */
 
     public static function saveConfig(array $params): void {
         $name = 'xra';
