@@ -86,7 +86,8 @@ class TenantService {
             if (! is_array($original_conf)) {
                 $original_conf = [];
             }
-            $merge_conf = array_merge($original_conf, $models);
+            //$merge_conf = array_merge($original_conf, $models);
+            $merge_conf = collect($original_conf)->merge($models)->all();
 
             \Config::set('xra.model', $merge_conf);
 
@@ -108,7 +109,8 @@ class TenantService {
             $extra_conf = [];
         }
 
-        $merge_conf = array_merge($original_conf, $extra_conf); //_recursive
+        //$merge_conf = array_merge($original_conf, $extra_conf); //_recursive
+        $merge_conf = collect($original_conf)->merge($extra_conf)->all();
 
         Config::set($group, $merge_conf);
 
