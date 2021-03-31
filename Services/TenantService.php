@@ -79,8 +79,6 @@ class TenantService {
      * @return \Illuminate\Config\Repository|\Illuminate\Contracts\Foundation\Application|mixed
      */
     public static function config(string $key) {
-        $tenant_name = self::getName();
-
         if (in_admin() && Str::startsWith($key, 'xra.model')) {
             $module_name = \Request::segment(2);
             $models = getModuleModels($module_name);
@@ -89,12 +87,17 @@ class TenantService {
                 $original_conf = [];
             }
             $merge_conf = array_merge($original_conf, $models);
+
             \Config::set('xra.model', $merge_conf);
+
+            return config($key);
         }
 
         $group = collect(explode('.', $key))->first();
 
         $original_conf = config($group);
+        $tenant_name = self::getName();
+
         $extra_conf = config($tenant_name.'.'.$group);
 
         if (! is_array($original_conf)) {
@@ -108,7 +111,6 @@ class TenantService {
         $merge_conf = array_merge($original_conf, $extra_conf); //_recursive
 
         Config::set($group, $merge_conf);
-        //$value = config($tenant_name.'.'.$key);
 
         return config($key);
     }
