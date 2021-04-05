@@ -99,7 +99,7 @@ class TenantService {
         $original_conf = config($group);
         $tenant_name = self::getName();
 
-        $extra_conf = config($tenant_name.'.'.$group);
+        $extra_conf = config(str_replace('/', '.', $tenant_name).'.'.$group);
 
         if (! is_array($original_conf)) {
             $original_conf = [];

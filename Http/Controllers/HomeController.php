@@ -58,6 +58,7 @@ class HomeController extends Controller {
      */
     public function show(Request $request) {
         $home = null;
+
         if ('' != $request->_act) {
             $home = Tenant::model('home');
             $panel = Panel::get($home);

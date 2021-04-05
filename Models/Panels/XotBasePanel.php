@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Cookie;
 //----------  SERVICES --------------------------
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Str;
@@ -28,6 +29,7 @@ use Modules\Xot\Services\PanelRouteService;
 use Modules\Xot\Services\PanelService;
 use Modules\Xot\Services\PanelService as Panel;
 use Modules\Xot\Services\PanelTabService;
+use Modules\Xot\Services\PolicyService;
 use Modules\Xot\Services\RouteService;
 use Modules\Xot\Services\StubService;
 
@@ -1327,8 +1329,25 @@ abstract class XotBasePanel implements PanelContract {
     public function callItemActionWithGate($act) {
         //$actions = $this->actions();
         //dddx([get_class($this), $actions]);
+        $method_act = Str::camel($act);
+        $authorized = Gate::allows($method_act, $this);
+
+        if (! $authorized) {
+            return $this->notAuthorized($method_act);
+        }
 
         return $this->callItemAction($act);
+    }
+
+    public function notAuthorized(string $method) {
+        $policy_class = PolicyService::get($this)->createIfNotExists()->getClass();
+        $msg = 'Auth Id ['.\Auth::id().'] not can ['.$method.'] on ['.$policy_class.']';
+
+        if (! view()->exists('pub_theme::errors.403')) {
+            return '<h3> Aggiungere la view : pub_theme::errors.403<br/>pub_theme: '.config('xra.pub_theme').'</h3>';
+        }
+
+        return response()->view('pub_theme::errors.403', ['msg' => $msg], 403);
     }
 
     /**
@@ -1371,7 +1390,12 @@ abstract class XotBasePanel implements PanelContract {
         $action = $this->itemActions()
             ->firstWhere('name', $act);
         if (! is_object($action)) {
-            return null;
+            $msg = '<h3>['.$act.'] not exists in ['.get_class($this).']</h3>Actions Avaible are :';
+            foreach ($this->itemActions() as $act) {
+                $msg .= '<br/>'.$act->getName();
+            }
+
+            return $msg;
         }
         $action->setRow($this->row);
         $action->setPanel($this);
