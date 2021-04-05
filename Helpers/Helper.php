@@ -931,3 +931,23 @@ if (! function_exists('isJson')) {
         return is_string($string) && is_array(json_decode($string, true)) ? true : false;
     }
 }
+
+if (! function_exists('getExcerpt')) {
+public function getExcerpt(string $str,?int $length = 225) {
+
+
+    $cleaned = strip_tags(
+        preg_replace(['/<pre>[\w\W]*?<\/pre>/', '/<h\d>[\w\W]*?<\/h\d>/'], '', $str),
+        '<code>'
+    );
+    $truncated = substr($cleaned, 0, $length);
+
+    if (substr_count($truncated, '<code>') > substr_count($truncated, '</code>')) {
+        $truncated .= '</code>';
+    }
+
+    return strlen($cleaned) > $length
+        ? preg_replace('/\s+?(\S+)?$/', '', $truncated).'...'
+        : $cleaned;
+}
+}
