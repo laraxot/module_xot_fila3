@@ -933,7 +933,7 @@ if (! function_exists('isJson')) {
 }
 
 if (! function_exists('getExcerpt')) {
-public function getExcerpt(string $str,?int $length = 225) {
+function getExcerpt(string $str,?int $length = 225) {
 
 
     $cleaned = strip_tags(
