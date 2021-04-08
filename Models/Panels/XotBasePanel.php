@@ -1188,7 +1188,10 @@ abstract class XotBasePanel implements PanelContract {
     /**
      * @return mixed|string|null
      */
-    public function guid() {
+    public function guid(?bool $is_admin = null) {
+        if (isset($is_admin) && $is_admin) {
+            return $this->row->getKey();
+        }
         $row = $this->row;
         $key = $row->getRouteKeyName();
         $msg = [
@@ -1622,11 +1625,13 @@ abstract class XotBasePanel implements PanelContract {
     /**
      * @return string
      */
-    public function id() {
+    public function id(?bool $is_admin = null) {
         $curr = $this;
         $data = collect([]);
         while (null != $curr) {
-            $data->prepend($curr->postType().'-'.$curr->guid());
+            //$data->prepend($curr->postType().'-'.$curr->guid($is_admin));
+            $data->prepend($curr->postType().'-'.$curr->row->getKey());
+
             $curr = $curr->getParent();
         }
 
