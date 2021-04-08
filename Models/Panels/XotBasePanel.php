@@ -265,6 +265,10 @@ abstract class XotBasePanel implements PanelContract {
         return $row->matr.' ['.$row->email.']['.$row->ha_diritto.'] '.$row->cognome.' '.$row->cognome.' ';
     }
 
+    public function title() {
+        return optional($this->row)->title;
+    }
+
     /**
      * @return array
      */
