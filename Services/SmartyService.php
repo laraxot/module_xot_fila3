@@ -2,6 +2,9 @@
 /**
  * https://pear.php.net/package/HTML_Template_Flexy/docs/latest/__filesource/fsource_HTML_Template_Flexy__HTML_Template_Flexy-1.3.13HTMLTemplateFlexyCompilerSmartyConvertor.php.html.
  */
+
+// https://github.com/OXID-eSales/smarty-to-twig-converter
+
 declare(strict_types=1);
 
 namespace Modules\Xot\Services;
@@ -32,7 +35,15 @@ class SmartyService {
         $content = '\t{if $isMobile}
       \t{include file="../templates/interno/header_mobile.tpl"}
       \t{/if}';
-      */
+      //*/
+
+        /* solo per test 2
+        // https://stackoverflow.com/questions/17097499/convert-smarty-to-normal-php
+
+        $content = '{if $error != ""}
+<div class="short_error">{$error}</div>
+{/if}';
+        //*/
 
         $leftq = preg_quote('{', '!');
         $rightq = preg_quote('}', '!');
@@ -107,7 +118,7 @@ class SmartyService {
                 $var = $this->convertVar('$'.$matches[1]);
 
                 //return '{if:'.substr($var, 1);
-                return '@if('.substr($var, 1, -1).')'.'['.__LINE__.']';
+                return '@if('.substr($var, 1, -1).')'; //'['.__LINE__.']';
 
             case preg_match('/^if #(\S+)#$/', $str, $matches):
             case preg_match('/^if #(\S+)#\sne\s""$/', $str, $matches):
@@ -120,7 +131,7 @@ class SmartyService {
                 $var = $this->convertConfigVar('#'.$matches[1].'#');
 
                 //return '{if:'.substr($var, 1);
-                return '@if('.substr($var, 1).')'.'['.__LINE__.']';
+                return '@if('.substr($var, 1).')'; //.'['.__LINE__.']';//4 debug
 
             // negative matches
 
@@ -154,6 +165,15 @@ class SmartyService {
 
                 //return '{end:}';
                 return '@endif';
+            case preg_match('/^if \((\S+)\)$/', $str, $matches):
+               $this->stack['if']++;
+
+                $var = $this->convertVar('$'.$matches[1]);
+
+                return '@if('.substr($var, 1, -1).')';
+
+            //case preg_match($this->getOpeningTagPattern('if'), $str, $matches):
+            //    dddx($matches);
             case 'php' == $str:
                 return '@php';
             case '/php' == $str:
@@ -165,6 +185,20 @@ class SmartyService {
         }
 
         return "<!--   UNSUPPORTED TAG: $str FOUND -->";
+    }
+
+    /**
+     * Get opening tag patterns like:
+     *   [{tagName other stuff}]
+     *   [{foreach $myColors as $color}].
+     *
+     * Matching this pattern will give these results:
+     *   $matches[0] contains a string with full matched tag i.e.'[{tagName foo="bar" something="somevalue"}]'
+     *   $matches[1] should contain a string with all other configuration coming with a tag i.e.
+     *   'foo = "bar" something="somevalue"'
+     */
+    public function getOpeningTagPattern(string $tagName): string {
+        return sprintf("#\[\{\s*%s\b\s*((?:(?!\[\{|\}\]).(?<!\[\{)(?<!\}\]))+)?\}\]#is", preg_quote($tagName, '#'));
     }
 
     /**
