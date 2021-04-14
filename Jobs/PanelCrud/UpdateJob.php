@@ -21,7 +21,10 @@ class UpdateJob extends XotBaseJob {
      */
     public function handle(): PanelContract {
         $row = $this->panel->row;
+
         $this->data = $this->prepareAndValidate($this->data, $this->panel);
+        //dddx($this->data);
+
         $data = $this->data;
 
         //https://medium.com/@taylorotwell/tap-tap-tap-1fc6fc1f93a6
@@ -193,7 +196,7 @@ class UpdateJob extends XotBaseJob {
         //dddx([$name, Arr::isAssoc($data)]);
         if (! Arr::isAssoc($data)) {
             $data = collect($data)->map(
-                function ($item) use ($model,$name) {
+                function ($item) use ($model, $name) {
                     if (is_numeric($item)) {
                         return $item;
                     }

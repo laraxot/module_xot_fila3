@@ -109,9 +109,10 @@ abstract class XotBaseJob implements ShouldQueue {
      */
     public function prepareAndValidate($data, $panel) {
         $data = $this->prepareForValidation($data, $panel);
+
         $act = '';
         $rules = $panel->rules(['act' => $act]);
-        //dddx($rules);
+        //dddx(['data' => $data, 'rules' => $rules, 'panel_class' => get_class($panel)]);
 
         $validator = Validator::make($data, $rules);
 

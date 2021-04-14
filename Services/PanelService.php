@@ -111,6 +111,25 @@ class PanelService {
         return self::panel()->tabs();
     }
 
+    public static function getById(string $id) {
+        $piece = explode('-', $id);
+        $route_params = [];
+        $j = 0;
+        for ($i = 0; $i < count($piece); ++$i) {
+            if (0 == $i % 2) {
+                $route_params['container'.$j] = $piece[$i];
+            } else {
+                $route_params['item'.$j] = $piece[$i];
+                ++$j;
+            }
+        }
+        //[$containers, $items] = params2ContainerItem($route_params);
+        //dddx([$route_params, $containers, $items]);
+        $route_params['in_admin'] = true;
+
+        return self::getByParams($route_params);
+    }
+
     /**
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\Response|mixed|null
      */
