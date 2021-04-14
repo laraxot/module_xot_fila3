@@ -63,7 +63,8 @@ class SmartyService {
         }
         $data .= $text[$i];
 
-        dddx(['original' => $content, 'converted' => $data]);
+        //dddx(['original' => $content, 'converted' => $data]);
+        echo '<table border="1"><tr><td><pre>'.htmlspecialchars($content).'</pre></td><td><pre>'.htmlspecialchars($data).'</pre></td></tr></table>';
     }
 
     public function compileTag($str) {
