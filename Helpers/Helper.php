@@ -141,8 +141,6 @@ if (! \function_exists('req_uri')) {
 
 if (! \function_exists('in_admin')) {
     /**
-     * @param array $params
-     *
      * @return array|bool|mixed
      */
     function in_admin(array $params = []) {
@@ -151,8 +149,6 @@ if (! \function_exists('in_admin')) {
 }
 if (! \function_exists('inAdmin')) {
     /**
-     * @param array $params
-     *
      * @return array|bool|mixed
      */
     function inAdmin(array $params = []) {
@@ -316,12 +312,9 @@ if (! \function_exists('getModuleFromModel')) {
 }
 
 if (! \function_exists('getModuleNameFromModel')) {
-    /**
-     * @param object $model
-     */
     function getModuleNameFromModel(object $model): string {
         if (! is_object($model)) {
-            dddx(['model'=>$model]);
+            dddx(['model' => $model]);
             throw new \Exception('model is not an object');
         }
         $class = get_class($model);
@@ -439,13 +432,16 @@ if (! \function_exists('transFields')) {
      * @return mixed|stdClass
      */
     function transFields($params) {
+        $params_orig = $params;
+        if (! isset($params_orig['attributes'])) {
+            $params_orig['attributes'] = [];
+        }
         $name = 'not-set';
         $model = Form::getModel();
-        $module_name ='';
-        if(is_object($model)){
+        $module_name = '';
+        if (is_object($model)) {
             $module_name = getModuleNameFromModel($model);
         }
-
 
         $ns = Str::lower($module_name);
         $trans_root = $ns.'::'.Str::snake(class_basename($model));
@@ -506,8 +502,13 @@ if (! \function_exists('transFields')) {
         if (! isset($params['attributes'])) {
             $params['attributes'] = [];
         }
-
-        $ris->attributes = collect(array_merge($attrs_default, $attributes, $params['attributes']))
+        $attributes = array_merge($attrs_default, $attributes, $params['attributes'], $params_orig['attributes']);
+        /*
+        if (! empty($params_orig['attributes'])) {
+            dddx($attributes);
+        }
+        */
+        $ris->attributes = collect($attributes)
                         ->filter(function ($item, $key) {
                             return in_array($key, ['style', 'class', 'placeholder', 'readonly', 'id', 'value', 'name']) || Str::startsWith($key, 'data-');
                         })
@@ -933,21 +934,19 @@ if (! function_exists('isJson')) {
 }
 
 if (! function_exists('getExcerpt')) {
-function getExcerpt(string $str,?int $length = 225) {
-
-
-    $cleaned = strip_tags(
+    function getExcerpt(string $str, ?int $length = 225) {
+        $cleaned = strip_tags(
         preg_replace(['/<pre>[\w\W]*?<\/pre>/', '/<h\d>[\w\W]*?<\/h\d>/'], '', $str),
         '<code>'
     );
-    $truncated = substr($cleaned, 0, $length);
+        $truncated = substr($cleaned, 0, $length);
 
-    if (substr_count($truncated, '<code>') > substr_count($truncated, '</code>')) {
-        $truncated .= '</code>';
-    }
+        if (substr_count($truncated, '<code>') > substr_count($truncated, '</code>')) {
+            $truncated .= '</code>';
+        }
 
-    return strlen($cleaned) > $length
+        return strlen($cleaned) > $length
         ? preg_replace('/\s+?(\S+)?$/', '', $truncated).'...'
         : $cleaned;
-}
+    }
 }
