@@ -111,6 +111,9 @@ class PanelService {
         return self::panel()->tabs();
     }
 
+    //esempio parametro stringa 'area-1-menu-1'
+    //rilascia il pannello dell'ultimo container (nell'esempio menu),
+    //con parent il pannello del precedente container (nell'esempio area)
     public static function getById(string $id) {
         $piece = explode('-', $id);
         $route_params = [];
