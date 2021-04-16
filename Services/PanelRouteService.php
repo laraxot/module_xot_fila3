@@ -32,8 +32,6 @@ class PanelRouteService {
     }
 
     /**
-     * @param array $params
-     *
      * @return array|bool|mixed
      */
     public static function inAdmin(array $params = []) {
@@ -67,6 +65,7 @@ class PanelRouteService {
 
     public function urlPanel(array $params = []): string {
         $panel = $this->panel;
+
         $act = 'show'; //default
         extract($params);
         $parents = $panel->getParents();
@@ -80,11 +79,20 @@ class PanelRouteService {
         if (isset($in_admin)) {
             $parz['in_admin'] = $in_admin;
         }
-        $route_name = self::getRoutenameN($parz);
+        if (isset($panel->in_admin)) {
+            $parz['in_admin'] = $panel->in_admin;
+        }
 
+        //dddx($panel);
+        $route_name = self::getRoutenameN($parz);
+        /*
         $route_current = Route::current();
         $route_params = is_object($route_current) ? $route_current->parameters() : [];
-
+        if (isset($params['route_params']) && is_array($params['route_params'])) {
+            $route_params = array_merge($params['route_params'], $route_params);
+        }
+        */
+        $route_params = $panel->getRouteParams();
         $i = 0;
         foreach ($parents as $parent) {
             $route_params['container'.($n + $i)] = $parent->postType();
@@ -120,8 +128,8 @@ class PanelRouteService {
         try {
             $route = route($route_name, $route_params, false);
         } catch (\Exception $e) {
-            if (request()->input('debug', false)) {
-                dddx(
+            //if (request()->input('debug', false)) {
+            dddx(
                 ['e' => $e->getMessage(),
                     'params' => $params,
                     'route_name' => $route_name,
@@ -136,7 +144,7 @@ class PanelRouteService {
                     //'routes' => \Route::getRoutes(),
                 ]
             );
-            }
+            //}
 
             return '#['.__LINE__.']['.__FILE__.']['.$e->getMessage().']';
         }
@@ -264,8 +272,6 @@ class PanelRouteService {
     }
 
     /**
-     * @param array $params
-     *
      * @return string
      */
     public static function urlLang(array $params = []) {

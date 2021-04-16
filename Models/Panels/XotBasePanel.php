@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Cookie;
 //----------  SERVICES --------------------------
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Str;
@@ -63,6 +64,8 @@ abstract class XotBasePanel implements PanelContract {
     public ?PanelContract $parent = null;
 
     public ?bool $in_admin = null;
+
+    public array $route_params = [];
 
     public PanelPresenterContract $presenter;
 
@@ -193,6 +196,23 @@ abstract class XotBasePanel implements PanelContract {
      */
     public function optionId(object $row) {
         return $row->getKey();
+    }
+
+    public function setInAdmin(bool $in_admin) {
+        $this->in_admin = $in_admin;
+    }
+
+    public function setRouteParams(array $route_params) {
+        $this->route_params = $route_params;
+    }
+
+    public function getRouteParams(): array {
+        $route_current = Route::current();
+        $route_params = is_object($route_current) ? $route_current->parameters() : [];
+
+        $route_params = array_merge($route_params, $this->route_params);
+
+        return $route_params;
     }
 
     public function setItem(string $guid): self {
@@ -1051,6 +1071,9 @@ abstract class XotBasePanel implements PanelContract {
         $act = 'show';
         extract($params);
         $act = Str::snake($act);
+        if (! isset($route_params)) {
+            $route_params = null;
+        }
 
         return $this->route->urlPanel(['panel' => $this, 'act' => $act]);
     }

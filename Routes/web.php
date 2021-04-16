@@ -70,7 +70,7 @@ Route::group(
     }
 );
 
-if (inAdmin()) {
+//if (inAdmin()) {
     //require_once(__DIR__.'/web_admin.php');  //WEB GENERICO
     $areas_adm = [
         //$item1,
@@ -96,4 +96,4 @@ if (inAdmin()) {
             RouteDynService::dynamic_route($areas_adm, null, $namespace);
         }
     );
-}
+//}
