@@ -198,10 +198,16 @@ abstract class XotBasePanel implements PanelContract {
         return $row->getKey();
     }
 
+    /*
+     * @return void
+     */
     public function setInAdmin(bool $in_admin) {
         $this->in_admin = $in_admin;
     }
 
+    /*
+     * @return void
+     */
     public function setRouteParams(array $route_params) {
         $this->route_params = $route_params;
     }
