@@ -12,7 +12,6 @@ class TreeService {
         return $coll->map(
                 function ($item) use ($parent,$in_admin, $route_params) {
                     $panel = PanelService::get($item)->setParent($parent);
-                    //$panel->in_admin = true;
                     $panel->setInAdmin(true);
                     $panel->setRouteParams($route_params);
                     $acts = [
@@ -32,6 +31,7 @@ class TreeService {
                         $acts[] = $act;
                     }
                     */
+
                     return  [
                         'id' => $panel->id(),
                         'title' => $panel->title(),

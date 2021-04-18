@@ -206,6 +206,13 @@ abstract class XotBasePanel implements PanelContract {
     }
 
     /*
+     * @return bool|null
+     */
+    public function getInAdmin() {
+        return $this->in_admin;
+    }
+
+    /*
      * @return void
      */
     public function setRouteParams(array $route_params) {
@@ -1081,7 +1088,7 @@ abstract class XotBasePanel implements PanelContract {
             $route_params = null;
         }
 
-        return $this->route->urlPanel(['panel' => $this, 'act' => $act]);
+        return $this->route->urlPanel([/*'panel' => $this,*/ 'act' => $act]);
     }
 
     /**
@@ -1219,6 +1226,9 @@ abstract class XotBasePanel implements PanelContract {
      */
     public function guid(?bool $is_admin = null) {
         if (isset($is_admin) && $is_admin) {
+            return $this->row->getKey();
+        }
+        if ($this->getInAdmin()!==null && $this->getInAdmin()) {
             return $this->row->getKey();
         }
         $row = $this->row;
