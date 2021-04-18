@@ -15,7 +15,7 @@ class SmartyService {
     /**
      * stack for conditional and closers.
      */
-    public array $stack = ['if' => 0];
+    public array $stack = ['if' => 0,'foreach' => 0];
 
     /**
      * The core work of parsing a smarty template and converting it into flexy.
@@ -47,6 +47,7 @@ class SmartyService {
 
         $leftq = preg_quote('{', '!');
         $rightq = preg_quote('}', '!');
+
         preg_match_all('!'.$leftq."\s*(.*?)\s*".$rightq.'!s', $content, $matches);
         $tags = $matches[1];
         // find all the tags/text...
@@ -73,7 +74,7 @@ class SmartyService {
             return '';
         }
         switch ($str[0]) {
-            case '$': return $this->convertVar($str); // its a var
+            case '$': return '{'.$this->convertVarToObject($str).'}'; // its a var
             case '#': return $this->convertConfigVar($str); // its a config var
             case '%': return "<!-- what is this? $str -->"; // wtf does this do
         }
@@ -116,10 +117,10 @@ class SmartyService {
 
                 $this->stack['if']++;
 
-                $var = $this->convertVar('$'.$matches[1]);
+                $var = $this->convertVarToObject('$'.$matches[1]);
 
-                //return '{if:'.substr($var, 1);
-                return '@if('.substr($var, 1, -1).')'; //'['.__LINE__.']';
+                return '@if('.$var.')';
+                //return '@if('.substr($var, 1, -1).')'; //'['.__LINE__.']';
 
             case preg_match('/^if #(\S+)#$/', $str, $matches):
             case preg_match('/^if #(\S+)#\sne\s""$/', $str, $matches):
@@ -172,6 +173,27 @@ class SmartyService {
                 $var = $this->convertVar('$'.$matches[1]);
 
                 return '@if('.substr($var, 1, -1).')';
+
+            case preg_match('/^foreach from=(\S+) item=(\S+)$/', $str, $matches):
+                $this->stack['foreach']++;
+
+                //dddx($matches);
+
+                $var = $this-> convertVarToObject($matches[1]);
+
+                $var2 = '$'.$this-> convertVarToObject($matches[2]);
+
+                return '@foreach('.$var.' as '.$var2.')';
+
+            case '/foreach' == $str:
+                if (! $this->stack['foreach']) {
+                    break;
+                    }
+
+                --$this->stack['foreach'];
+
+                //return '{end:}';
+                return '@endforeach';
 
             //case preg_match($this->getOpeningTagPattern('if'), $str, $matches):
             //    dddx($matches);
@@ -245,6 +267,28 @@ class SmartyService {
         }
 
         return '{'.$var.'}'.$mods;
+    }
+
+    /**
+     * convert a smarty var into a $index->value type.
+     *
+     * @param   string       the inside of the smart tag
+     *
+     * @return string a flexy version of it
+     */
+    public function convertVarToObject($str) {
+
+        $var= $str; // strip $
+
+        $bits = explode('.', $var);
+
+        $var = array_shift($bits);
+
+        foreach ($bits as $k) {
+            $var .= '->'.$k;
+        }
+
+        return $var;
     }
 
     /**
