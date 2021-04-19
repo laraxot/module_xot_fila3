@@ -15,7 +15,7 @@ class SmartyService {
     /**
      * stack for conditional and closers.
      */
-    public array $stack = ['if' => 0,'foreach' => 0];
+    public array $stack = ['if' => 0, 'foreach' => 0];
 
     /**
      * The core work of parsing a smarty template and converting it into flexy.
@@ -65,7 +65,9 @@ class SmartyService {
         $data .= $text[$i];
 
         //dddx(['original' => $content, 'converted' => $data]);
-        echo '<table border="1"><tr><td><pre>'.htmlspecialchars($content).'</pre></td><td><pre>'.htmlspecialchars($data).'</pre></td></tr></table>';
+        echo '<table border="1"><tr><td><pre>'.htmlspecialchars($content).'</pre></td>
+            <td><pre>'.htmlspecialchars($data).'</pre></td></tr>
+            </table>';
     }
 
     public function compileTag($str) {
@@ -74,7 +76,7 @@ class SmartyService {
             return '';
         }
         switch ($str[0]) {
-            case '$': return '{'.$this->convertVarToObject($str).'}'; // its a var
+            case '$': return '{{ '.$this->convertVarToObject($str).' }}'; //.'['.__LINE__.']'; // its a var
             case '#': return $this->convertConfigVar($str); // its a config var
             case '%': return "<!-- what is this? $str -->"; // wtf does this do
         }
@@ -179,16 +181,31 @@ class SmartyService {
 
                 //dddx($matches);
 
-                $var = $this-> convertVarToObject($matches[1]);
+                $var = $this->convertVarToObject($matches[1]);
 
-                $var2 = '$'.$this-> convertVarToObject($matches[2]);
+                $var2 = '$'.$this->convertVarToObject($matches[2]);
 
                 return '@foreach('.$var.' as '.$var2.')';
+
+            case preg_match('/^foreach from=(\S+) item=(\S+) key=(\S+) name=(\S+)$/', $str, $matches):
+                $this->stack['foreach']++;
+
+                //dddx($matches);
+
+                $from = $this->convertVarToObject($matches[1]);
+
+                $item = '$'.$this->convertVarToObject($matches[2]);
+
+                $key = '$'.$this->convertVarToObject($matches[3]);
+
+                $name = '$'.$this->convertVarToObject($matches[4]);
+
+                return '@foreach('.$from.' as '.$key.'=>'.$item.')';
 
             case '/foreach' == $str:
                 if (! $this->stack['foreach']) {
                     break;
-                    }
+                }
 
                 --$this->stack['foreach'];
 
@@ -205,9 +222,13 @@ class SmartyService {
                 return '@verbatim';
             case '/literal' == $str:
                 return '@endverbatim';
+            case 'strip' == $str:
+                return '';
+            case '/strip' == $str:
+                return '';
         }
 
-        return "<!--   UNSUPPORTED TAG: $str FOUND -->";
+        return "<!--   UNSUPPORTED TAG: [$str] FOUND -->";
     }
 
     /**
@@ -266,7 +287,7 @@ class SmartyService {
             return '{plugin(#smartyModifiers#,'.$var.',#'.$mods.'#):h}';
         }
 
-        return '{'.$var.'}'.$mods;
+        return '{'.$var.'}'.$mods.'['.__LINE__.']';
     }
 
     /**
@@ -277,8 +298,7 @@ class SmartyService {
      * @return string a flexy version of it
      */
     public function convertVarToObject($str) {
-
-        $var= $str; // strip $
+        $var = $str; // strip $
 
         $bits = explode('.', $var);
 
