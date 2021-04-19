@@ -35,6 +35,7 @@ class TreeService {
                         'id' => $panel->id(),
                         'title' => $panel->title(),
                         'acts' => $acts,
+                        'open' => false,
                     ];
                 }
             );
