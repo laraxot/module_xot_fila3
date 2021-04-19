@@ -176,7 +176,7 @@ class SmartyService {
 
                 return '@if('.substr($var, 1, -1).')';
 
-            case preg_match('/^if \(\s*([a-zA-Z0-9]+)[ ]*(\S+)[ ]*(\S+)\)$/', $str, $matches):
+            case preg_match('/^if \((\S+) (\S+) (\S+)\)$/', $str, $matches):
                 ++$this->stack['if'];
                 $var1 = $this->convertVar('$'.$matches[1]);
                 $op = $matches[2];
