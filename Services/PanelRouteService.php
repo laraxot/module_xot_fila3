@@ -128,8 +128,8 @@ class PanelRouteService {
         try {
             $route = route($route_name, $route_params, false);
         } catch (\Exception $e) {
-            //if (request()->input('debug', false)) {
-            dddx(
+            if (request()->input('debug', false)) {
+                dddx(
                 ['e' => $e->getMessage(),
                     'params' => $params,
                     'route_name' => $route_name,
@@ -144,7 +144,7 @@ class PanelRouteService {
                     //'routes' => \Route::getRoutes(),
                 ]
             );
-            //}
+            }
 
             return '#['.__LINE__.']['.__FILE__.']['.$e->getMessage().']';
         }

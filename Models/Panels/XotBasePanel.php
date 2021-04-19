@@ -120,11 +120,20 @@ abstract class XotBasePanel implements PanelContract {
     }
 
     /**
+     * get Rows.
+     *
+     * @return object|Model
+     */
+    public function getRows() {
+        return $this->rows;
+    }
+
+    /**
      * @return $this
      */
-    public function initRows() {
+    public function initRows(): self {
         $this->rows = $this->rows();
-        $this->rows = $this->rows;
+        //$this->rows = $this->rows; ??
 
         return $this;
     }
@@ -1228,7 +1237,7 @@ abstract class XotBasePanel implements PanelContract {
         if (isset($is_admin) && $is_admin) {
             return $this->row->getKey();
         }
-        if ($this->getInAdmin()!==null && $this->getInAdmin()) {
+        if (null !== $this->getInAdmin() && $this->getInAdmin()) {
             return $this->row->getKey();
         }
         $row = $this->row;
@@ -1335,19 +1344,13 @@ abstract class XotBasePanel implements PanelContract {
         }
 
         //dddx(get_class($this));
-        $with = $this->with();
-        if (! is_array($with)) {
-            $msg = [
-                'class' => get_class($this),
-                'with' => $with,
-            ];
-            dddx($with);
-        }
-        $query = $query->with($with);
-        /**
+        //$with = $this->with();
+        //$query = $query->with($with); //Method Illuminate\Database\Eloquent\Collection::with does not exist.
+        /*
          * se prendo il builder perdo il modello.
          */
-        //$query = $query->getQuery(); //per prendere il builder
+        //$query = $query->getQuery(); //per prendere il Illuminate\Database\Query\Builder
+
         $query = $this->indexQuery($data, $query);
 
         //$query=$query->withPost('a');
@@ -1364,6 +1367,7 @@ abstract class XotBasePanel implements PanelContract {
         $query=$query->paginate(20);
         return $query;
         */
+
         return $query;
     }
 
