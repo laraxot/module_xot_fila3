@@ -176,6 +176,15 @@ class SmartyService {
 
                 return '@if('.substr($var, 1, -1).')';
 
+            case preg_match('/^if \(\s*([a-zA-Z0-9]+)[ ]*(\S+)[ ]*(\S+)\)$/', $str, $matches):
+                ++$this->stack['if'];
+                $var1 = $this->convertVar('$'.$matches[1]);
+                $op = $matches[2];
+
+                $var2 = $this->convertVar('$'.$matches[3]);
+
+                return '@if('.substr($var1, 1, -1).' '.$op.' '.substr($var2, 1, -1).')';
+
             case preg_match('/^foreach from=(\S+) item=(\S+)$/', $str, $matches):
                 $this->stack['foreach']++;
 
@@ -215,7 +224,7 @@ class SmartyService {
             //case preg_match($this->getOpeningTagPattern('if'), $str, $matches):
             //    dddx($matches);
             case 'php' == $str:
-                return '@php';
+                return '@php ';
             case '/php' == $str:
                 return '@endphp';
             case 'literal' == $str:
@@ -274,20 +283,21 @@ class SmartyService {
         $var = array_shift($bits);
 
         foreach ($bits as $k) {
-            $var .= '['.$k.']';
+            //$var .= '['.$k.']';
+            $var .= '->'.$k;
         }
-
+        /*
         $bits = explode('->', $var);
 
         $var = implode('.', $bits);
-
+        */
         $mods = implode('|', $mods);
 
         if (strlen($mods)) {
             return '{plugin(#smartyModifiers#,'.$var.',#'.$mods.'#):h}';
         }
 
-        return '{'.$var.'}'.$mods.'['.__LINE__.']';
+        return '{'.$var.'}'.$mods; //.'['.__LINE__.']';
     }
 
     /**
