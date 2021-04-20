@@ -5,6 +5,47 @@
 
 // https://github.com/OXID-eSales/smarty-to-twig-converter
 
+/* non funzionanti
+{if $page.element|@count>0} rilascia
+@if($page->element|@count>0)
+
+{foreach from=$page.element item=element name="frp"} rilascia
+<!--   UNSUPPORTED TAG: [foreach from=$page.element item=element name="frp"] FOUND -->
+
+{if $smarty.foreach.frp.iteration!=$page.element|@count} rilascia
+@if($smarty->foreach->frp->iteration!=$page->element|@count)
+
+{if $smarty.foreach.obj_form.iteration > 6}
+<!--   UNSUPPORTED TAG: [if $smarty.foreach.obj_form.iteration > 6] FOUND -->
+
+{$element.title|escape}
+{{ $element->title|escape }}
+
+{$option.label|truncate:77:"..."}
+{{ $option->label|truncate:77:"->->->" }}
+
+{elseif $field.type=='selectm'}
+<!--   UNSUPPORTED TAG: [elseif $field.type=='selectm'] FOUND -->
+
+{if isset($input.type)}
+<!--   UNSUPPORTED TAG: [if isset($input.type)] FOUND -->
+
+{if isset($s.subchilds)}
+<!--   UNSUPPORTED TAG: [if isset($s.subchilds)] FOUND -->
+
+{if $input.type == "text"}
+<!--   UNSUPPORTED TAG: [if $input.type == "text"] FOUND -->
+
+{if $input.required == 1}
+<!--   UNSUPPORTED TAG: [if $input.required == 1] FOUND -->
+
+pattern="[0-9]{literal}{4}{/literal}"
+pattern="[0-9]@verbatim<!--   UNSUPPORTED TAG: [4] FOUND -->@endverbatim"
+
+
+
+*/
+
 declare(strict_types=1);
 
 namespace Modules\Xot\Services;
