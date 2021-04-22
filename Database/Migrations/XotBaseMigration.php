@@ -29,7 +29,7 @@ abstract class XotBaseMigration extends Migration {
     //*/
 
     public function getModel(): string {
-        if($this->model_class!=null){
+        if (null != $this->model_class) {
             return $this->model_class;
         }
         //ddd(class_basename($this));//CreateDevicesTable
@@ -119,8 +119,12 @@ abstract class XotBaseMigration extends Migration {
     /**
      * @return bool
      */
-    public function tableExists() {
-        return $this->getConn()->hasTable($this->getTable());
+    public function tableExists($table = null) {
+        if (null == $table) {
+            $table = $this->getTable();
+        }
+
+        return $this->getConn()->hasTable($table);
     }
 
     /**
