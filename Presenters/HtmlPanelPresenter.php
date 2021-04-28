@@ -118,6 +118,6 @@ class HtmlPanelPresenter implements PanelPresenterContract {
         ];
 
         //return view($view_work)->with($view_params);
-        return view()->make($view_work, $view_params);
+        return view()->make($view_work, $view_params)->render();
     }
 }
