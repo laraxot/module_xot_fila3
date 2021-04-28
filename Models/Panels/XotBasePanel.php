@@ -725,9 +725,10 @@ abstract class XotBasePanel implements PanelContract {
                 if (0 == count($search_fields)) { //se non gli passo nulla, cerco in tutti i fillable
                     $search_fields = with(new $this::$model())->getFillable();
                 }
+
                 $table = with(new $this::$model())->getTable();
                 if (strlen($q) > 1) {
-                    $query->where(function ($subquery) use ($search_fields, $q/*, $table*/) {
+                    $query = $query->where(function ($subquery) use ($search_fields, $q) {
                         foreach ($search_fields as $k => $v) {
                             /*
                             if (! Str::contains($v, '.')) {
@@ -737,18 +738,19 @@ abstract class XotBasePanel implements PanelContract {
                             if (Str::contains($v, '.')) {
                                 [$rel, $rel_field] = explode('.', $v);
                                 //dddx([$rel, $rel_field, $q]);
-                                $subquery->orWhereHas(
+                                $subquery = $subquery->orWhereHas(
                                     $rel,
                                     function (Builder $subquery1) use ($rel_field, $q) {
                                         $subquery1->where($rel_field, 'like', '%'.$q.'%');
                                     }
                                 );
                             } else {
-                                $subquery->orWhere($v, 'like', '%'.$q.'%');
+                                $subquery = $subquery->orWhere($v, 'like', '%'.$q.'%');
                             }
                         }
                     });
                 }
+                //dddx(['q' => $q, 'sql' => $query->toSql()]);
 
                 return $query;
                // break;
@@ -1356,10 +1358,14 @@ abstract class XotBasePanel implements PanelContract {
         //$query=$query->withPost('a');
         //$query = $this->applyJoin($query);
         $query = $this->applyFilter($query, $filters);
+
         $query = $this->applySearch($query, $q);
+
         $query = $this->applySort($query, $sort);
+
         $page = isset($data['page']) ? $data['page'] : 1;
         Cache::forever('page', $page);
+
         /*
         $this->callAction($query, $act);
 
@@ -1492,7 +1498,8 @@ abstract class XotBasePanel implements PanelContract {
      * @return mixed
      */
     public function out(array $params = []) {
-        //return $this->view();
+        //dddx(get_class($this->presenter));//Modules\Xot\Presenters\HtmlPanelPresenter
+
         return $this->presenter->out();
     }
 
