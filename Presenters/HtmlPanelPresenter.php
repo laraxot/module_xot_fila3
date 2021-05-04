@@ -118,6 +118,6 @@ class HtmlPanelPresenter implements PanelPresenterContract {
         ];
 
         //return view($view_work)->with($view_params);
-        return view()->make($view_work, $view_params)->render();
+        return view()->make($view_work, $view_params); //->render(); //se metto render , non mi prende piu' i parametri passati con with
     }
 }
