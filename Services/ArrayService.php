@@ -192,8 +192,12 @@ class ArrayService {
     public static function diff_assoc_recursive($arr_1, $arr_2): array {
         $coll_1 = collect($arr_1);
         $coll_2 = collect($arr_2);
-        $ris = $coll_1->filter(function ($value, $key) use ($arr_2,$coll_2) {
-            return ! in_array($value, $arr_2);
+        $ris = $coll_1->filter(function ($value, $key) use ($arr_2) {
+            try {
+                return ! in_array($value, $arr_2);
+            } catch (\Exception $e) {
+                dddx(['err' => $e->getMessage(), 'value' => $value, 'key' => $key, 'arr_2' => $arr_2]);
+            }
         });
 
         return $ris->all();
