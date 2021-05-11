@@ -36,7 +36,7 @@ class HomeController extends Controller {
             return $home_panel->callItemActionWithGate($request->_act);
         }
 
-        return  ThemeService::view('pub_theme::home.index')
+        return ThemeService::view('pub_theme::home.index')
             ->with('home', $home)
             ->with('_panel', $home_panel)
             ;

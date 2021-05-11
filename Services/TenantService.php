@@ -21,7 +21,9 @@ use Modules\Xot\Services\PanelService as Panel;
  */
 class TenantService {
     public static function getName(array $params = []): string {
-        $default = 'localhost';
+        //$default = 'localhost';
+        $default = env('APP_URL');
+
         $server_name = $default;
         if (isset($_SERVER['SERVER_NAME']) && '127.0.0.1' != $_SERVER['SERVER_NAME']) {
             $server_name = $_SERVER['SERVER_NAME'];
@@ -60,8 +62,13 @@ class TenantService {
         [$subdomain] = explode('.', request()->getHost(), PHP_URL_HOST);
         dd([$subdomain, request()->getHost(), PHP_URL_HOST]);
         */
+        $default = Str::after($default, '//');
+        $default = str_replace('.', '-', $default);
+        if (file_exists(base_path('config/'.$default))) {
+            return $default;
+        }
 
-        return $default;
+        return 'localhost';
     }
 
     //end function
