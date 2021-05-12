@@ -281,7 +281,7 @@ class FileService {
         if (! File::exists($filename_from)) {
             //dddx('['.$filename_from.'] not exists');
             //ddd($msg);
-            return '['.$filename_from.']['.__LINE__.']['.__FILE__.'] not exists';
+            return '['.$filename_from.']['.__LINE__.']['.basename(__FILE__).'] not exists';
         }
         if (! File::exists($filename_to)) {
             try {
