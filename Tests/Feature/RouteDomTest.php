@@ -17,28 +17,28 @@ class RouteDomTest extends TestCase {
      * @return void
      */
     public function testRoutes() {
-        //dddx('/'.App::getlocale().'/home');
-
         $urls = [
             '/',
             //'/'.App::getlocale().'/home', //questo url mi da errore
         ];
-
-        echo PHP_EOL;
+        //dd(get_class_methods($this));
         $this->checkLinks($urls);
     }
 
     public function checkLinks($urls, $depth = 0) {
         $base_url = env('APP_URL');
 
-        if ($depth > 0) {
+        if ($depth > 1) {
             return;
         }
         $i = 0;
+
         foreach ($urls as $url) {
+            /*
             if ($i++ > 3) {
                 return;
             }
+            */
             $url = str_replace('index.php', '', $url);
             $response = $this->get($url);
             $html = $response->getContent();
@@ -46,8 +46,8 @@ class RouteDomTest extends TestCase {
             //dd($response->streamedContent());The response is not a streamed response
             if (200 !== (int) $response->status()) {
                 echo $base_url.$url.' (FAILED) did not return a 200 ['.$response->status().'].'.chr(13);
-            //dd($base_url.$url);
-                //$this->assertTrue(false);
+                //dd($base_url.$url);
+                $this->assertTrue(false);
             } else {
                 echo $base_url.$url.' (success ?)'.chr(13);
                 $this->assertTrue(true);
@@ -55,17 +55,21 @@ class RouteDomTest extends TestCase {
             echo PHP_EOL;
             $dom = $this->dom($html);
             //$links = $dom->filter('a')->links();
-            $links = $dom->filter('a')->each(function ($node) {
-                return $node->attr('href');
-            });
-            $links = collect($links)->filter(function ($item) {
-                return ! Str::startsWith($item, 'mailto:') &&
-                    ! Str::startsWith($item, 'https://mail.') &&
-                    Str::startsWith($item, '/')
-                    ;
-            })->all();
+            $links = $dom->filter('a')->each(
+                function ($node) {
+                    return $node->attr('href');
+                }
+            );
+            $links = collect($links)->filter(
+                function ($item) {
+                    return ! Str::startsWith($item, 'mailto:') &&
+                        ! Str::startsWith($item, 'https://mail.') &&
+                        Str::startsWith($item, '/')
+                        ;
+                }
+            )->all();
 
-            $this->checkLinks($links, $depth++);
+            $this->checkLinks($links, $depth + 1);
         }
     }
 
