@@ -14,12 +14,24 @@ use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
 use Modules\Xot\Contracts\ModelContract;
-use Modules\Xot\Services\PanelService as Panel;
 
 /**
  * Class TenantService.
  */
 class TenantService {
+    //public static $panel;
+
+    /*
+    public function TenantService() {
+        dddx('b');
+    }
+    */
+    /*
+    public function __construct(Panel $panel) {
+        static::$panel = $panel;
+    }
+    */
+
     public static function getName(array $params = []): string {
         //$default = 'localhost';
         $default = env('APP_URL');
@@ -240,7 +252,7 @@ class TenantService {
             //return null;
             throw new \Exception('model is null');
         }
-        $panel = Panel::get($model);
+        $panel = PanelService::get($model);
         if (null == $panel) {
             //return null;
             throw new \Exception('panel is null');

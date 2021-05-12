@@ -21,6 +21,7 @@ use Modules\Xot\Contracts\ModelContract;
 use Modules\Xot\Contracts\PanelContract;
 use Modules\Xot\Contracts\PanelPresenterContract;
 use Modules\Xot\Presenters\PdfPanelPresenter;
+use Modules\Xot\Presenters\XlsPanelPresenter;
 use Modules\Xot\Services\ChainService;
 use Modules\Xot\Services\HtmlService;
 use Modules\Xot\Services\ImageService;
@@ -1526,6 +1527,14 @@ abstract class XotBasePanel implements PanelContract {
         }
 
         return $filename;
+    }
+
+    public function xls(array $params = []) {
+        $presenter = new XlsPanelPresenter();
+        $presenter->setPanel($this);
+        //dddx($this->rows()->get()->count());
+
+        return $presenter->out($params);
     }
 
     /**

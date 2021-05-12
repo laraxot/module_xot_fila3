@@ -24,26 +24,45 @@ class PanelService {
 
     private static ?PanelContract $panel;
 
+    private array $route_params;
+
     /*
     public function __construct($model){
     $this->model=$model;
     }
      */
 
+    public function __construct(array $route_params) {
+        $this->route_params = $route_params;
+        //static::$panel = $this->getByRouteParams($route_params);
+    }
+
     public static function getInstance(): self {
         if (null === self::$_instance) {
-            self::$_instance = new self();
+            $route_params = request()->route()->parameters();
+            self::$_instance = new self($route_params);
         }
 
         return self::$_instance;
     }
 
+    /*
+    public function test() {
+        return static::$panel;
+    }
+    */
     public static function setRequestPanel(?PanelContract $panel): void {
-        self::$panel = $panel;
+        $inst = self::getInstance();
+        $inst::$panel = $panel;
     }
 
     public static function getRequestPanel(): ?PanelContract {
-        return self::$panel;
+        $inst = self::getInstance();
+        try {
+            return $inst::$panel;
+        } catch (\Exception $e) {
+            return null;
+        }
     }
 
     /**

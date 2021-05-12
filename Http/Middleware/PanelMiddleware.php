@@ -9,7 +9,6 @@ use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Modules\Xot\Services\PanelService;
-use Modules\Xot\Services\TenantService;
 
 //use Illuminate\Http\Response;
 
@@ -45,11 +44,6 @@ class PanelMiddleware {
         [$containers, $items] = params2ContainerItem($parameters);
 
         if (0 == count($containers)) {
-            /*
-            $row = TenantService::model('home');
-            $panel = PanelService::get($row);
-            PanelService::setRequestPanel($panel);
-            */
             PanelService::setRequestPanel(null);
 
             return $next($request);
