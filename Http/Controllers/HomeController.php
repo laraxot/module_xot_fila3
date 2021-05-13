@@ -58,6 +58,12 @@ class HomeController extends Controller {
      */
     public function show(Request $request) {
         $home = null;
+        $home = Tenant::model('home');
+        $mod_name = Panel::get($home)->getModuleName();
+        $home_controller = '\Modules\\'.$mod_name.'\Http\Controllers\HomeController';
+        if (class_exists($home_controller)) {
+            return app($home_controller)->show($request);
+        }
 
         if ('' != $request->_act) {
             $home = Tenant::model('home');
