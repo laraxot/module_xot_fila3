@@ -190,6 +190,23 @@ abstract class XotBasePanel implements PanelContract {
         return $parents;
     }
 
+    // questa funzione rilascia un array dei guid dell'url attuale
+    public function getParentsGuid(): array {
+        $parents = $this->getParents();
+        $parent_first = $parents->first();
+        while (null != $parent_first->row->parent) {
+            $parent_first = Panel::get($parent_first->row->parent);
+            $parents->prepend($parent_first);
+        }
+        $parents_guid = $parents
+        ->map(function ($item) {
+            return $item->row->guid;
+        })
+        ->all();
+
+        return $parents_guid;
+    }
+
     /**
      * @return mixed
      */

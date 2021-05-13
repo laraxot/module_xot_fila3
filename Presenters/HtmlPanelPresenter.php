@@ -64,6 +64,7 @@ class HtmlPanelPresenter implements PanelPresenterContract {
                 $trad = implode('.', array_slice(explode('.', $view), 0, -1));
                 \View::share('trad', $trad);
                 \View::share('lang', \App::getLocale());
+                \View::share('_panel', $this->panel);
                 //\View::share('mod_trad', $mod_trad);
             }
         );
