@@ -61,7 +61,8 @@ class HomeController extends Controller {
         $home = Tenant::model('home');
         $mod_name = Panel::get($home)->getModuleName();
         $home_controller = '\Modules\\'.$mod_name.'\Http\Controllers\HomeController';
-        if (class_exists($home_controller)) {
+
+        if (class_exists($home_controller) && $mod_name!='Xot') {
             return app($home_controller)->show($request);
         }
 
