@@ -28,7 +28,7 @@ if (! config('xra.disable_frontend_dynamic_route')) {
                 //'lang' => 'it|en',
             ],
         ],
-        function () use ($areas_prgs, $namespace) {
+        function () use ($areas_prgs, $namespace): void {
             RouteDynService::dynamic_route($areas_prgs, null, $namespace);
             Route::get('/', 'HomeController@show')->name('home');
             Route::get('/home', 'HomeController@show')->name('home');
@@ -46,7 +46,7 @@ if (! config('xra.disable_frontend_dynamic_route')) {
             'middleware' => $middleware,
             'namespace' => $namespace,
         ],
-        function () {
+        function (): void {
             Route::get('/', 'HomeController@show')->name('home'); //show o index ? homecontrller@show o pagecontroller@home ?
             Route::get('/home', 'HomeController@show')->name('home'); //togliere o tenere ?
             Route::get('/redirect', 'HomeController@redirect')->name('redirect');
@@ -64,7 +64,7 @@ Route::group(
         'middleware' => $middleware,
         'namespace' => $namespace.'\Admin',
     ],
-    function () {
+    function (): void {
         Route::get('/', 'BackendController@dashboard')->name('admin');
         //RouteTrait::dynamic_route($areas_prgs);
     }
@@ -92,7 +92,7 @@ Route::group(
             'middleware' => $middleware,
             'namespace' => $namespace,
         ],
-        function () use ($areas_adm, $namespace) {
+        function () use ($areas_adm, $namespace): void {
             RouteDynService::dynamic_route($areas_adm, null, $namespace);
         }
     );
