@@ -27,10 +27,8 @@ abstract class XotBaseServiceProvider extends ServiceProvider {
 
     /**
      * Boot the application events.
-     *
-     * @return void
      */
-    public function boot() {
+    public function boot(): void {
         //echo '<h3>Time :'.class_basename($this).' '.(microtime(true) - LARAVEL_START).'</h3>';
 
         $this->registerTranslations();
@@ -48,7 +46,7 @@ abstract class XotBaseServiceProvider extends ServiceProvider {
     /**
      * Register the service provider.
      */
-    public function register() {
+    public function register(): void {
         //dd($this->module_name.' '.RouteServiceProvider::class);
         //dd(dirname(get_class($this))); //Modules\Backend\Providers\BackendServiceProvider
         //dd(__NAMESPACE__);
@@ -156,14 +154,13 @@ abstract class XotBaseServiceProvider extends ServiceProvider {
             if (false === $content) {
                 throw new Exception('can not decode json');
             }
-            $old_content='';
+            $old_content = '';
             if (File::exists($components_json)) {
                 $old_content = File::get($components_json);
             }
             if ($old_content != $content) {
                 File::put($components_json, $content);
             }
-
         }
         //dddx($comps);
         if (class_exists("Livewire\Livewire")) {
