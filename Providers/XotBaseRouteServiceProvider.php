@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace Modules\Xot\Providers;
 
-use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider; // per dizionario morph
+use Illuminate\Foundation\Support\Providers\RouteServiceProvider;
 use Illuminate\Support\Facades\Route;
 
 /**
  * Class XotBaseRouteServiceProvider.
  */
-abstract class XotBaseRouteServiceProvider extends ServiceProvider {
+abstract class XotBaseRouteServiceProvider extends RouteServiceProvider {
     /**
      * The module namespace to assume when generating URLs to actions.
      */
