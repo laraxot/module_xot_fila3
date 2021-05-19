@@ -62,16 +62,17 @@ class HomeController extends Controller {
         $mod_name = Panel::get($home)->getModuleName();
         $home_controller = '\Modules\\'.$mod_name.'\Http\Controllers\HomeController';
 
-        if (class_exists($home_controller) && $mod_name!='Xot') {
-            return app($home_controller)->show($request);
-        }
-
         if ('' != $request->_act) {
             $home = Tenant::model('home');
             $panel = Panel::get($home);
 
             return $panel->callItemActionWithGate($request->_act);
         }
+
+        if (class_exists($home_controller) && 'Xot' != $mod_name) {
+            return app($home_controller)->show($request);
+        }
+
         try {
             $home = Tenant::modelEager('home');
             $home = $home->firstOrCreate(['id' => 1]);
