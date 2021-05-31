@@ -7,6 +7,7 @@ namespace Modules\Xot\Services;
 use Collective\Html\FormFacade as Form;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Str;
+use Modules\FormX\Services\FieldService;
 use Modules\FormX\Services\FormXService;
 use Modules\Theme\Services\ThemeService;
 use Modules\Xot\Contracts\PanelContract;
@@ -35,8 +36,6 @@ class PanelFormService {
     }
 
     /**
-     * @param array $params
-     *
      * @return string
      */
     public function formCreate(array $params = []) {
@@ -60,8 +59,6 @@ class PanelFormService {
     }
 
     /**
-     * @param array $params
-     *
      * @return string
      */
     public function formEdit(array $params = []) {
@@ -119,8 +116,6 @@ class PanelFormService {
     */
 
     /**
-     * @param array $params
-     *
      * @return string
      */
     public function btnCrud(array $params = []) {
@@ -158,13 +153,13 @@ class PanelFormService {
 
         if (! isset($params['tooltip'])) {
             $row = $this->panel->row;
-            $module_name_low = (string)strtolower((string)getModuleNameFromModel($row));
+            $module_name_low = (string) strtolower((string) getModuleNameFromModel($row));
             $params['tooltip'] = trans($module_name_low.'::'.strtolower(class_basename($row)).'.act.'.$params['method']);
         }
 
         if (! isset($params['title'])) {
             $row = $this->panel->row;
-            $module_name_low = strtolower((string)getModuleNameFromModel($row));
+            $module_name_low = strtolower((string) getModuleNameFromModel($row));
 
             $trans_key = $module_name_low.'::'.strtolower(class_basename($row)).'.act.'.$params['method'];
             $trans = trans($trans_key);
@@ -201,7 +196,7 @@ class PanelFormService {
 
         if (true === $params['title']) {
             $row = $this->panel->row;
-            $module_name_low = strtolower((string)getModuleNameFromModel($row));
+            $module_name_low = strtolower((string) getModuleNameFromModel($row));
             $parent = $this->panel->getParent();
             if (null != $parent) {
                 $tmp = [];
@@ -257,8 +252,6 @@ class PanelFormService {
     */
 
     /**
-     * @param array $params
-     *
      * @return array
      */
     public function exceptFields(array $params = []) {
@@ -326,6 +319,16 @@ class PanelFormService {
      */
     public function editFields() {
         $fields = $this->exceptFields(['act' => 'edit']);
+
+        return $fields;
+    }
+
+    public function editObjFields() {
+        $fields = collect($this->editFields())->map(function ($field) {
+            return FieldService::make($field->name)
+                ->type($field->type)
+                ;
+        })->all();
 
         return $fields;
     }

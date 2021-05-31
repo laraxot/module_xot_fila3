@@ -933,6 +933,13 @@ abstract class XotBasePanel implements PanelContract {
     /**
      * @return mixed
      */
+    public function editObjFields() {
+        return $this->form->{__FUNCTION__}();
+    }
+
+    /**
+     * @return mixed
+     */
     public function indexEditFields() {
         //return  $this->exceptFields(['act' => 'index_edit']);
 
