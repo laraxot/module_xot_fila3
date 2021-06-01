@@ -92,9 +92,9 @@ class PanelService {
      */
     public static function panel(): PanelContract {
         if (! is_object(self::$model)) {
-            dddx(['model' => self::$model, 'message' => 'is not an object']);
+            //dddx(['model' => self::$model, 'message' => 'is not an object', 'url' => url()->current()]);
             //return null;
-            throw new \Exception('model is not an object');
+            throw new \Exception('model is not an object url:'.url()->current());
         }
         $class_full = get_class(self::$model);
         $class_name = class_basename(self::$model);

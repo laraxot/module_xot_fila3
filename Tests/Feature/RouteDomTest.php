@@ -44,8 +44,9 @@ class RouteDomTest extends TestCase {
             $html = $response->getContent();
             //dd(get_class_methods($response));
             //dd($response->streamedContent());The response is not a streamed response
-            if (200 !== (int) $response->status()) {
-                echo $base_url.$url.' (FAILED) did not return a 200 ['.$response->status().'].'.chr(13);
+            $status = (int) $response->status();
+            if (! in_array($status, [200, 302])) {
+                echo $base_url.$url.' (FAILED) did not return a 200 or 302 ['.$response->status().'].'.chr(13);
                 //dd($base_url.$url);
                 $this->assertTrue(false);
             } else {
