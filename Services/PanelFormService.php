@@ -146,6 +146,7 @@ class PanelFormService {
         $params['panel'] = $this->panel;
         //$params['url'] = RouteService::urlPanel($params);
         $params['url'] = $this->panel->route->urlPanel($params);
+        //dddx([$this->panel->route, $params['panel'], $params['url']]);
         $params['method'] = Str::camel($params['act']);
         if ('index_order' == $params['act']) {
             //  dddx($params);
