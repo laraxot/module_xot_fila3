@@ -61,7 +61,7 @@ class TenantService {
         } else {
             $server_name = Str::slug($domain).'-'.$ext;
         }
-        if (file_exists(base_path('config/'.$server_name))) {
+        if (file_exists(base_path('config/'.$server_name)) && '' != $server_name) {
             if (null != $subdomain && file_exists(base_path('config/'.$server_name.'/'.$subdomain))) {
                 return $server_name.'/'.$subdomain;
             }
@@ -75,7 +75,7 @@ class TenantService {
         */
         $default = Str::after($default, '//');
         $default = str_replace('.', '-', $default);
-        if (file_exists(base_path('config/'.$default))) {
+        if (file_exists(base_path('config/'.$default)) && '' != $default) {
             return $default;
         }
 

@@ -144,7 +144,11 @@ abstract class XotBaseJob implements ShouldQueue {
         if (null == $value) {
             return $value;
         }
-        $value_new = Carbon::createFromFormat('d/m/Y H:i', $value);
+        try {
+            $value_new = Carbon::createFromFormat('d/m/Y H:i', $value);
+        } catch (\Exception $e) {
+            return $value;
+        }
 
         return $value_new;
     }
