@@ -201,10 +201,10 @@ abstract class XotBasePanel implements PanelContract {
             }
         }
         $parents_guid = $parents
-        ->map(function ($item) {
-            return $item->row->guid;
-        })
-        ->all();
+            ->map(function ($item) {
+                return $item->row->guid;
+            })
+            ->all();
 
         return $parents_guid;
     }
@@ -230,7 +230,7 @@ abstract class XotBasePanel implements PanelContract {
     /*
      * @return void
      */
-    public function setInAdmin(bool $in_admin) {
+    public function setInAdmin(bool $in_admin): void {
         $this->in_admin = $in_admin;
     }
 
@@ -244,7 +244,7 @@ abstract class XotBasePanel implements PanelContract {
     /*
      * @return void
      */
-    public function setRouteParams(array $route_params) {
+    public function setRouteParams(array $route_params): void {
         $this->route_params = $route_params;
     }
 
@@ -271,7 +271,7 @@ abstract class XotBasePanel implements PanelContract {
         if ('guid' == $pk_full) {
             $rows = $rows->whereHas(
                 'post',
-                function (Builder $query) use ($value) {
+                function (Builder $query) use ($value): void {
                     $query->where('guid', $value);
                 }
             );
@@ -296,7 +296,7 @@ abstract class XotBasePanel implements PanelContract {
         $model = $this->row;
         $res = $model::whereHas(
             'post',
-            function (Builder $query) use ($label) {
+            function (Builder $query) use ($label): void {
                 $query->where('title', 'like', $label);
             }
         )->first();
@@ -691,7 +691,7 @@ abstract class XotBasePanel implements PanelContract {
                     return [$item->param_name => $item->rules];
                 }
             )->collapse()
-        ->all();
+            ->all();
 
         $validator = Validator::make($filters, $filters_rules);
         if ($validator->fails()) {
@@ -748,7 +748,7 @@ abstract class XotBasePanel implements PanelContract {
 
                 $table = with(new $this::$model())->getTable();
                 if (strlen($q) > 1) {
-                    $query = $query->where(function ($subquery) use ($search_fields, $q) {
+                    $query = $query->where(function ($subquery) use ($search_fields, $q): void {
                         foreach ($search_fields as $k => $v) {
                             /*
                             if (! Str::contains($v, '.')) {
@@ -760,7 +760,7 @@ abstract class XotBasePanel implements PanelContract {
                                 //dddx([$rel, $rel_field, $q]);
                                 $subquery = $subquery->orWhereHas(
                                     $rel,
-                                    function (Builder $subquery1) use ($rel_field, $q) {
+                                    function (Builder $subquery1) use ($rel_field, $q): void {
                                         $subquery1->where($rel_field, 'like', '%'.$q.'%');
                                     }
                                 );
@@ -1444,7 +1444,9 @@ abstract class XotBasePanel implements PanelContract {
         $action = $this->getActions()
             ->firstWhere('name', $act);
         if (! is_object($action)) {
-            abort(403, 'action '.$act.' not recognized for ['.get_class($this).']');
+            $msg = 'action '.$act.' not recognized for ['.get_class($this).']';
+            //abort(403, $msg);
+            return response()->view('pub_theme::errors.403', ['msg' => $msg], 403);
         }
 
         $action->setRow($this->row);
