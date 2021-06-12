@@ -19,6 +19,10 @@ class TreeService {
                             'title' => 'modifica',
                             'url' => $panel->url(['act' => 'edit']),
                         ],
+                        [
+                            'title' => 'crea',
+                            'url' => $panel->url(['act' => 'create']),
+                        ],
                     ];
                     //*
                     foreach ($panel->itemActions() as $action) {
