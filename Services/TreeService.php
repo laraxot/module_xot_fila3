@@ -14,16 +14,22 @@ class TreeService {
                     $panel = PanelService::get($item)->setParent($parent);
                     $panel->setInAdmin(true);
                     $panel->setRouteParams($route_params);
-                    $acts = [
-                        [
-                            'title' => 'modifica',
-                            'url' => $panel->url(['act' => 'edit']),
-                        ],
-                        [
-                            'title' => 'crea',
-                            'url' => $panel->url(['act' => 'create']),
-                        ],
-                    ];
+                    //dddx($panel->getXotModelName());
+
+                    if (method_exists($panel, 'getActs')) {
+                        $acts = $panel->getActs();
+                    } else {
+                        $acts = [
+                            [
+                                'title' => 'modifica',
+                                'url' => $panel->url(['act' => 'edit']),
+                            ],
+                            [
+                                'title' => 'crea '.$panel->getXotModelName(),
+                                'url' => $panel->url(['act' => 'create']),
+                            ],
+                        ];
+                    }
                     //*
                     foreach ($panel->itemActions() as $action) {
                         //$action->btnHtml(['title' => true, 'class' => 'dropdown-item','in_admin'=>$in_admin])
