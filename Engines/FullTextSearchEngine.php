@@ -175,4 +175,46 @@ class FullTextSearchEngine extends Engine {
         //$index = $this->algolia->initIndex($model->searchableAs());
         //$index->clearObjects();
     }
+
+    /*
+    contains 3 abstract methods and must therefore be declared abstract or 
+    implement the remaining methods (Laravel\Scout\Engines\Engine::lazyMap, 
+    Laravel\Scout\Engines\Engine::createIndex, 
+    Laravel\Scout\Engines\Engine::deleteIndex)
+    */
+
+    /**
+     * Map the given results to instances of the given model via a lazy collection.
+     *
+     * @param  \Laravel\Scout\Builder  $builder
+     * @param  mixed  $results
+     * @param  \Illuminate\Database\Eloquent\Model  $model
+     * @return \Illuminate\Support\LazyCollection
+     */
+     public function lazyMap(Builder $builder, $results, $model){
+
+     }
+
+      /**
+     * Create a search index.
+     *
+     * @param  string  $name
+     * @param  array  $options
+     * @return mixed
+     */
+    public function createIndex($name, array $options = []){
+
+    }
+
+    /**
+     * Delete a search index.
+     *
+     * @param  string  $name
+     * @return mixed
+     */
+     public function deleteIndex($name){
+         
+     }
+
+
 }//end
