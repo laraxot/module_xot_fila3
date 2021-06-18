@@ -256,7 +256,9 @@ class PanelFormService {
      * @return array
      */
     public function exceptFields(array $params = []) {
-        $act = 'show';
+        //dddx($params);
+        //$act = 'show';
+        extract($params);
         $panel = $this->panel;
         extract($params);
         $excepts = collect([]);
@@ -279,8 +281,8 @@ class PanelFormService {
                 }
             }
         }
+        //dddx($excepts);
         $excepts = $excepts->unique()->all();
-
         $fields = collect($panel->fields())
             ->filter(
                 function ($item) use ($excepts, $act) {
