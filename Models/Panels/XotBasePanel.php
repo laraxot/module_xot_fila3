@@ -365,12 +365,13 @@ abstract class XotBasePanel implements PanelContract {
     }
 
     public function optionsTree(array $data = []): array {
-        if (null == $data) {
+        if (null == $data /*|| empty($data)*/) {
             $data = request()->all();
         }
         $rows = $this->rows($data)->get();
         $primary_field = $this->row->getKeyName();
         $c = new ChainService($primary_field, 'parent_id', 'pos', $rows);
+
         $options = collect($c->chain_table)->map(
             function ($item) {
                 //Parameter #2 $multiplier of function str_repeat expects int, float|int given.

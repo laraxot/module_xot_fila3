@@ -63,6 +63,7 @@ class ChainService {
         $this->primary_field = $primary_field;
         $this->parent_field = $parent_field;
         $this->sort_field = $sort_field;
+        $this->chain_table = [];
         $this->buildChain($root_id, $maxlevel);
     }
 
@@ -72,6 +73,14 @@ class ChainService {
      */
     public function buildChain($rootcatid, $maxlevel): void {
         foreach ($this->rows as $row) {
+            //considerando che ChainService viene utilizzato da XotBasePanel->optionsTree()
+            //che a sua volta viene utilizzato in FormX\Resources\views\collective\fields\select\field_parent.blade.php
+            //che vuole parent_id (radice) uguale a 0
+            //controllo che la row radice non abbia parent_id uguale a null, in caso...
+            if (null == $row[$this->parent_field]) {
+                $row[$this->parent_field] = 0;
+                $row->save();
+            }
             $this->table[$row[$this->parent_field]][$row[$this->primary_field]] = $row;
         }
         $this->makeBranch($rootcatid, 0, $maxlevel);
@@ -86,6 +95,7 @@ class ChainService {
         if (! is_array($this->table)) {
             $this->table = [];
         }
+        //dddx([$this->table, $parent_id]);
         if (! array_key_exists($parent_id, $this->table)) {
             return;
         }
