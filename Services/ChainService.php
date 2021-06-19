@@ -64,6 +64,8 @@ class ChainService {
         $this->parent_field = $parent_field;
         $this->sort_field = $sort_field;
         $this->chain_table = [];
+        $this->table = [];
+
         $this->buildChain($root_id, $maxlevel);
     }
 
