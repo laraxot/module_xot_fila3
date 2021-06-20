@@ -21,7 +21,7 @@ class TreeService {
                     } else {
                         $acts = [
                             [
-                                'title' => 'modifica',
+                                'title' => 'modifica '.$panel->getXotModelName(),
                                 'url' => $panel->url(['act' => 'edit']),
                             ],
                             [
