@@ -40,12 +40,14 @@ class TreeService {
                         $acts[] = $act;
                     }
                     //*/
+                    //dddx($panel);
 
                     return [
                         'id' => $panel->id(),
                         'title' => $panel->title(),
                         'acts' => $acts,
                         'open' => false,
+                        'subsIconMenuAdmin' => $panel->subsIconMenuAdmin(), //mi dice se ha figli oppure no, per visualizzare (o no) l'icona freccetta delle sottovoci
                     ];
                 }
             );
