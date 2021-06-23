@@ -22,6 +22,7 @@ class StoreJob extends XotBaseJob {
      */
     public function handle(): PanelContract {
         //dd('['.__LINE__.']['.__FILE__.']');
+
         $row = $this->panel->row;
         $this->data = $this->prepareAndValidate($this->data, $this->panel);
         $data = $this->data;
@@ -37,6 +38,7 @@ class StoreJob extends XotBaseJob {
         }
 
         $row = $row->fill($data);
+
         $row->save();
         $parent = $this->panel->getParent();
         if (is_object($parent)) {
@@ -258,7 +260,7 @@ class StoreJob extends XotBaseJob {
 
         if (! Arr::isAssoc($data)) {
             $data = collect($data)->map(
-                function ($item) use ($model,$name) {
+                function ($item) use ($model, $name) {
                     if (is_numeric($item)) {
                         return $item;
                     }

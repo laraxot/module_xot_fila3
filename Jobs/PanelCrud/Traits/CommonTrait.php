@@ -43,7 +43,7 @@ trait CommonTrait {
      *
      * @param array $params
      */
-    public function manageRelationships($params) {
+    public function manageRelationships($params): void {
         $act = 'show';
         extract($params);
         if (! isset($model)) {
@@ -71,7 +71,7 @@ trait CommonTrait {
         //dddx($params);
         $data1 = collect($data)->filter(function ($item, $key) use ($methods) {
             return in_array($key, $methods);
-        })->map(function ($v, $k) use ($model,$data) {
+        })->map(function ($v, $k) use ($model, $data) {
             if (! is_string($k)) {
                 dddx([$k, $v, $data]);
             }
@@ -167,7 +167,9 @@ trait CommonTrait {
      * @return array
      */
     public function prepareAndValidate($data, $panel) {
+        //$data0 = $data;
         $data = $this->prepareForValidation($data, $panel);
+        //dddx($data0, $data);
         $act = '';
         $rules = $panel->rules(['act' => $act]);
 

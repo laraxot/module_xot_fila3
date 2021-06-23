@@ -23,7 +23,6 @@ class UpdateJob extends XotBaseJob {
         $row = $this->panel->row;
 
         $this->data = $this->prepareAndValidate($this->data, $this->panel);
-        //dddx($this->data);
 
         $data = $this->data;
 
