@@ -6,6 +6,7 @@ namespace Modules\Xot\Providers;
 
 //use Illuminate\Database\Eloquent\Factory;
 use Exception;
+use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\ServiceProvider;
@@ -40,6 +41,7 @@ abstract class XotBaseServiceProvider extends ServiceProvider {
             $this->bootCallback();
         }
         $this->registerLivewireComponents();
+        $this->registerBladeComponents();
         //echo '<h3>Time :'.class_basename($this).' '.(microtime(true) - LARAVEL_START).'</h3>';
     }
 
@@ -119,6 +121,11 @@ abstract class XotBaseServiceProvider extends ServiceProvider {
         if (! app()->environment('production')) {
             //app(Factory::class)->load($this->module_dir.'/../Database/factories');
         }
+    }
+
+    public function registerBladeComponents(): void {
+        dddx($this->getName());
+        Blade::componentNamespace('Modules\FormX\View\Components', $this->module_name);
     }
 
     public function registerLivewireComponents(): void {
