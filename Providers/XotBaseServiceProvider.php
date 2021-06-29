@@ -124,7 +124,7 @@ abstract class XotBaseServiceProvider extends ServiceProvider {
     }
 
     public function registerBladeComponents(): void {
-        dddx($this->getName());
+        dddx($this);
         Blade::componentNamespace('Modules\FormX\View\Components', $this->module_name);
     }
 
