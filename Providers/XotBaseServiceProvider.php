@@ -146,7 +146,11 @@ abstract class XotBaseServiceProvider extends ServiceProvider {
 
         Blade::componentNamespace('Modules\FormX\View\Components', $this->module_name);
         */
-        Blade::componentNamespace($module->getPath().'/View/Components', $module->getLowerName());
+        $namespace = 'Modules\\'.$module->getName().'\View\Components';
+
+        Blade::componentNamespace($namespace, $module->getLowerName());
+
+        //Blade::componentNamespace($module->getPath().'/View/Components', $module->getLowerName());
     }
 
     public function registerLivewireComponents(): void {

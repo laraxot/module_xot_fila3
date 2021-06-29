@@ -473,7 +473,9 @@ if (! \function_exists('transFields')) {
 
         $pattern = '/\.[0-9]+\./m';
         $ris->name_dot = preg_replace($pattern, '.', $ris->name_dot);
-
+        if (! Str::contains($view, '::')) {
+            $view = 'pub_theme::'.$view;
+        }
         list($ns, $key) = explode('::', $view);
         if (null == $module_name) {
             $trans_root = $ns.'::'.implode('.', array_slice(explode('.', $key), $start, -1));
@@ -509,11 +511,11 @@ if (! \function_exists('transFields')) {
         }
         */
         $ris->attributes = collect($attributes)
-                        ->filter(function ($item, $key) {
-                            return in_array($key, ['style', 'class', 'placeholder', 'readonly', 'id', 'value', 'name']) || Str::startsWith($key, 'data-');
-                        })
+            ->filter(function ($item, $key) {
+                return in_array($key, ['style', 'class', 'placeholder', 'readonly', 'id', 'value', 'name']) || Str::startsWith($key, 'data-');
+            })
                         //->only('class','placeholder','readonly')
-                        ->all();
+            ->all();
         $ris->params = $params;
 
         if (! isset($ris->col_bs_size)) {

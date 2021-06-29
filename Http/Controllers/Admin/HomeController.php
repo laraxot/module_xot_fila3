@@ -42,6 +42,11 @@ class HomeController extends Controller {
         //dddx(PanelService::getRequestPanel());//null
         $module_name = collect($params)->get('module');
         $module = Module::find($module_name);
+        if (! is_object($module)) {
+            $data = ['message' => 'module ['.$module_name.'] is unknown '];
+
+            return response()->view('adm_theme::errors.404', $data, 404);
+        }
         //dddx(get_class_methods($module));
         //dddx($module->getName());
         $_panel = null;

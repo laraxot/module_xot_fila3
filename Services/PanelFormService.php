@@ -70,9 +70,17 @@ class PanelFormService {
         $row = $this->panel->row;
         $res = '';
         //$res.='<h3>'.$this->storeUrl().'</h3>'; //4 debug
-        $res .= Form::bsOpenPanel($this, 'update');
-        $res .= '<div class="clearfix">';
+        $res .= Form::bsOpenPanel($this->panel, 'update');
+
+        $col_size = 0;
+
+        $res .= '<div class="row clearfix">';
         foreach ($fields as $field) {
+            if ($col_size >= 12) {
+                echo '</div><div class="row">';
+                $col_size = 0;
+            }
+            $col_size += $field->col_bs_size ?? 12;
             $res .= ThemeService::inputHtml(['row' => $row, 'field' => $field]);
         }
         $res .= '</div>';
@@ -81,6 +89,27 @@ class PanelFormService {
         $res .= Form::close();
 
         return $res;
+    }
+
+    public function formLivewireEdit(array $params = []): string {
+        $fields = $this->editObjFields();
+
+        $col_size = 0;
+        $html = '<div class="row clearfix">';
+        foreach ($fields as $field) {
+            if ($col_size >= 12) {
+                echo '</div><div class="row">';
+                $col_size = 0;
+            }
+            $col_size += $field->col_size ?? 12;
+            //$res .= ThemeService::inputHtml(['row' => $row, 'field' => $field]);
+            $html .= $field->toHtml();
+        }
+        $html .= '</div>';
+        //$res.=Form::bsSubmit('save');
+        //$html .= $submit_btn;
+        //$html .= Form::close();
+        return $html;
     }
 
     /*
@@ -330,6 +359,7 @@ class PanelFormService {
         $fields = collect($this->editFields())->map(function ($field) {
             return FieldService::make($field->name)
                 ->type($field->type)
+                ->setColSize($field->col_bs_size ?? 12)
                 ;
         })->all();
 
