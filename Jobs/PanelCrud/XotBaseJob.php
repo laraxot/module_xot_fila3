@@ -120,6 +120,10 @@ abstract class XotBaseJob implements ShouldQueue {
         return $validator->validate(); //fa tutto da solo
     }
 
+    public function ConvDateList($field, $value) {
+        return $value;
+    }
+
     /**
      * @param $field
      * @param mixed $value
