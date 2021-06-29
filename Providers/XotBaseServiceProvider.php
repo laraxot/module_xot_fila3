@@ -130,7 +130,11 @@ abstract class XotBaseServiceProvider extends ServiceProvider {
         echo '<table border="1">';
         foreach ($methods as $method) {
             if (Str::startsWith($method, 'get')) {
-                echo '<tr><td>'.$method.'</td><td>'.print_r($module->{$method}(), true).'</td></tr>';
+                try {
+                    echo '<tr><td>'.$method.'</td><td>'.print_r($module->{$method}(), true).'</td></tr>';
+                } catch (\Exception $e) {
+                    echo '<tr><td>'.$method.'</td><td>'.$e->getMessage().'</td></tr>';
+                }
             }
         }
         echo '</table>';
