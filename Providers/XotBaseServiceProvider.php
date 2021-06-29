@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Str;
+use Nwidart\Modules\Facades\Module;
 
 //use Modules;
 
@@ -124,7 +125,7 @@ abstract class XotBaseServiceProvider extends ServiceProvider {
     }
 
     public function registerBladeComponents(): void {
-        dddx($this);
+        dddx(Module::find($this->module_name));
         Blade::componentNamespace('Modules\FormX\View\Components', $this->module_name);
     }
 
