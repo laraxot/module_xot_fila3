@@ -127,6 +127,7 @@ abstract class XotBaseServiceProvider extends ServiceProvider {
 
     public function registerBladeComponents(): void {
         $module = Module::find($this->module_name);
+        /*
         $methods = get_class_methods($module);
         echo '<table border="1">';
         foreach ($methods as $method) {
@@ -144,6 +145,8 @@ abstract class XotBaseServiceProvider extends ServiceProvider {
         dddx('a');
 
         Blade::componentNamespace('Modules\FormX\View\Components', $this->module_name);
+        */
+        Blade::componentNamespace($module->getPath().'/View/Components', $module->getLowerName());
     }
 
     public function registerLivewireComponents(): void {
