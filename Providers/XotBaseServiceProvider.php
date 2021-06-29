@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Str;
 use Nwidart\Modules\Facades\Module;
+use TypeError;
 
 //use Modules;
 
@@ -133,6 +134,8 @@ abstract class XotBaseServiceProvider extends ServiceProvider {
                 try {
                     echo '<tr><td>'.$method.'</td><td>'.print_r($module->{$method}(), true).'</td></tr>';
                 } catch (\Exception $e) {
+                    echo '<tr><td>'.$method.'</td><td>'.$e->getMessage().'</td></tr>';
+                } catch (TypeError $e) {
                     echo '<tr><td>'.$method.'</td><td>'.$e->getMessage().'</td></tr>';
                 }
             }
