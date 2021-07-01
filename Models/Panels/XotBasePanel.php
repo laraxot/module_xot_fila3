@@ -403,7 +403,12 @@ abstract class XotBasePanel implements PanelContract {
         return 'matr';
     }
 
-    public function search(): array {
+    /**
+     * inserisco i campi dove si applicherà la funzione di ricerca testuale (solo nel pannello admin?)
+     * se il pannello interessato rilascia un array vuoto, fa la ricerca tra i fillable del modello
+     * esempio post.title, post.subtitle.
+     */
+    public function search(): Array {
         return [];
     }
 
@@ -758,6 +763,7 @@ abstract class XotBasePanel implements PanelContract {
 
         switch ($tipo) {
             case 0:
+                //dddx($this->search());
                 $search_fields = $this->search(); //campi di ricerca
                 if (0 == count($search_fields)) { //se non gli passo nulla, cerco in tutti i fillable
                     $search_fields = with(new $this::$model())->getFillable();
