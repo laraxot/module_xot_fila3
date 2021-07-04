@@ -338,6 +338,7 @@ abstract class XotBasePanel implements PanelContract {
         $opts = [];
         $rows = $this->rows;
         if (null == $rows) {
+            //dddx($this);
             $rows = $this->options();
         }
 
@@ -360,6 +361,7 @@ abstract class XotBasePanel implements PanelContract {
         if (null == $data) {
             $data = request()->all();
         }
+        //dddx($this->rows()->get());
 
         return $this->rows($data)->get();
     }
@@ -408,7 +410,7 @@ abstract class XotBasePanel implements PanelContract {
      * se il pannello interessato rilascia un array vuoto, fa la ricerca tra i fillable del modello
      * esempio post.title, post.subtitle.
      */
-    public function search(): Array {
+    public function search(): array {
         return [];
     }
 
@@ -820,7 +822,12 @@ abstract class XotBasePanel implements PanelContract {
         if (! is_array($sort)) {
             return $query;
         }
-        $column = $sort['by'];
+        //dddx([$query, $sort]);
+        if (isset($sort['by'])) {
+            $column = $sort['by'];
+        } else {
+            $column = '';
+        }
         /*
         * valutare se mettere controllo se colonna e' sortable
         **/
@@ -1403,8 +1410,8 @@ abstract class XotBasePanel implements PanelContract {
         //$with = $this->with();
         //$query = $query->with($with); //Method Illuminate\Database\Eloquent\Collection::with does not exist.
         /*
-         * se prendo il builder perdo il modello.
-         */
+        * se prendo il builder perdo il modello.
+        */
         //$query = $query->getQuery(); //per prendere il Illuminate\Database\Query\Builder
 
         $query = $this->indexQuery($data, $query);
@@ -1415,7 +1422,14 @@ abstract class XotBasePanel implements PanelContract {
 
         $query = $this->applySearch($query, $q);
 
-        $query = $this->applySort($query, $sort);
+        //dddx(Route::is('*edit*'));
+        //controllo se la pagina su cui devo andare è un edit,
+        //in caso tolgo i sort che rompono le scatole
+        //magari meglio fare helper?
+        if (! Route::is('*edit*')) {
+            $query = $this->applySort($query, $sort);
+        }
+        //$query = $this->applySort($query, $sort);
 
         $page = isset($data['page']) ? $data['page'] : 1;
         Cache::forever('page', $page);
