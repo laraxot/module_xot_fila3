@@ -76,6 +76,7 @@ class PanelRouteService {
         }
         $n = 0;
         $parz = ['n' => $n + $parents->count(), 'act' => $act];
+        //dddx($parz);
         if (isset($in_admin)) {
             $parz['in_admin'] = $in_admin;
         }
