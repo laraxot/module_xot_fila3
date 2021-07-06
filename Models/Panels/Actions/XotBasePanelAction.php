@@ -153,11 +153,9 @@ abstract class XotBasePanelAction {
     }
 
     /**
-     * @param array $params
-     *
      * @return string|void|null
      */
-    public function btn($params = []) {
+    public function btn(array $params = []) {
         extract($params);
         if (isset($row)) {
             $this->setRow($row);
