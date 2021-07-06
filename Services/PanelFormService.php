@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Modules\Xot\Services;
 
 use Collective\Html\FormFacade as Form;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Str;
 use Modules\FormX\Services\FieldService;
@@ -110,6 +111,28 @@ class PanelFormService {
         //$html .= $submit_btn;
         //$html .= Form::close();
         return $html;
+    }
+
+    public function getFormData(array $params = []): array {
+        $form_data = [];
+        $fields = $this->getFields($params);
+        $row = isset($params['row']) ? $params['row'] : $this->panel->row;
+        foreach ($fields as $field) {
+            $value = Arr::get($row, $field->name);
+            if (is_object($value)) {
+                switch (get_class($value)) {
+                    case 'Illuminate\Support\Carbon':
+                        $value = $value->format('Y-m-d\TH:i');
+                        break;
+                    default:
+                        dddx(get_class($value));
+                    break;
+                }
+            }
+            Arr::set($form_data, $field->name, $value);
+        }
+
+        return $form_data;
     }
 
     /*
@@ -351,6 +374,17 @@ class PanelFormService {
      */
     public function editFields() {
         $fields = $this->exceptFields(['act' => 'edit']);
+
+        return $fields;
+    }
+
+    /**
+     * @return array
+     */
+    public function getFields(array $params = []) {
+        $act = isset($params['act']) ? $params['act'] : 'index';
+
+        $fields = $this->exceptFields(['act' => $act]);
 
         return $fields;
     }

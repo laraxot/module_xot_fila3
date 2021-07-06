@@ -896,6 +896,10 @@ abstract class XotBasePanel implements PanelContract {
         return $this->form->formLivewireEdit($params);
     }
 
+    public function getFormData(array $params = []) {
+        return $this->form->{__FUNCTION__}($params);
+    }
+
     /* -- to panelformservice
     public function exceptFields(array $params = []) {
         extract($params);

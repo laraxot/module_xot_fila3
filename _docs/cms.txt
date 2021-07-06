@@ -3,4 +3,9 @@ https://www.magutti.com/
 https://laravelarticle.com/laravel-option-framework
 
 
+https://minaammunir.gitbook.io/speed-admin/quick-start-tutorial/products-crud
+
+
+
+
 
