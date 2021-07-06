@@ -133,7 +133,6 @@ abstract class XotBaseContainerController extends Controller {
         }
         $msg = 'Auth Id ['.\Auth::id().'] not can ['.$method.'] on ['.get_class($panel).']';
 
-        //abort(403, $msg);
         return response()->view('pub_theme::errors.403', ['msg' => $msg], 403);
     }
 }

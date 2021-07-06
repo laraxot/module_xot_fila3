@@ -107,19 +107,19 @@ abstract class XotBasePanel implements PanelContract {
         return [];
     }
 
-    public function setName(string $name):self{
-        $this->name=$name;
+    public function setName(string $name): self {
+        $this->name = $name;
+
         return $this;
     }
 
-    public function getName():string{
-        if($this->name!=null){
+    public function getName(): string {
+        if (null != $this->name) {
             return $this->name;
-        }else{
+        } else {
             return $this->postType();
         }
     }
-
 
     /**
      * @param object $row
@@ -210,8 +210,9 @@ abstract class XotBasePanel implements PanelContract {
     }
 
     public function getBreads(): \Illuminate\Support\Collection {
-        $breads=$this->getParents();
+        $breads = $this->getParents();
         $breads->add($this);
+
         return $breads;
     }
 
@@ -1515,7 +1516,7 @@ abstract class XotBasePanel implements PanelContract {
             ->firstWhere('name', $act);
         if (! is_object($action)) {
             $msg = 'action '.$act.' not recognized for ['.get_class($this).']';
-            //abort(403, $msg);
+
             return response()->view('pub_theme::errors.403', ['msg' => $msg], 403);
         }
 

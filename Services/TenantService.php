@@ -215,8 +215,6 @@ class TenantService {
         if ('' == $class) {
             $models = getAllModulesModels();
             if (! isset($models[$name])) {
-                //abort(403, 'Unauthorized path '.$name);
-                //return null;
                 throw new Exception('model unknown ['.$name.']');
             }
             $class = $models[$name];

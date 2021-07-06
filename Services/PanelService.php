@@ -196,7 +196,6 @@ class PanelService {
             try {
                 $rows = $row_prev->{$types}();
             } catch (\Exception $e) {
-                //abort(404, $e->getMessage());
                 $data = [
                     'message' => $e->getMessage(),
                     'lang' => \App::getLocale(),

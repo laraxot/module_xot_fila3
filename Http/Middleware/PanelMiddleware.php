@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Modules\Xot\Http\Middleware;
 
-use App;
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
@@ -64,7 +63,6 @@ class PanelMiddleware {
             try {
                 $rows = $row_prev->{$types}();
             } catch (\Exception $e) {
-                //abort(404, $e->getMessage());
                 $data = [
                     'message' => $e->getMessage(),
                     'lang' => \App::getLocale(),
