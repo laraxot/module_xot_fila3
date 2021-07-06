@@ -6,10 +6,13 @@ namespace Modules\Xot\Providers;
 
 //use Illuminate\Database\Eloquent\Factory;
 use Exception;
+use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Str;
+use Nwidart\Modules\Facades\Module;
+use TypeError;
 
 //use Modules;
 
@@ -27,10 +30,8 @@ abstract class XotBaseServiceProvider extends ServiceProvider {
 
     /**
      * Boot the application events.
-     *
-     * @return void
      */
-    public function boot() {
+    public function boot(): void {
         //echo '<h3>Time :'.class_basename($this).' '.(microtime(true) - LARAVEL_START).'</h3>';
 
         $this->registerTranslations();
@@ -42,13 +43,14 @@ abstract class XotBaseServiceProvider extends ServiceProvider {
             $this->bootCallback();
         }
         $this->registerLivewireComponents();
+        $this->registerBladeComponents();
         //echo '<h3>Time :'.class_basename($this).' '.(microtime(true) - LARAVEL_START).'</h3>';
     }
 
     /**
      * Register the service provider.
      */
-    public function register() {
+    public function register(): void {
         //dd($this->module_name.' '.RouteServiceProvider::class);
         //dd(dirname(get_class($this))); //Modules\Backend\Providers\BackendServiceProvider
         //dd(__NAMESPACE__);
@@ -123,6 +125,34 @@ abstract class XotBaseServiceProvider extends ServiceProvider {
         }
     }
 
+    public function registerBladeComponents(): void {
+        $module = Module::find($this->module_name);
+        /*
+        $methods = get_class_methods($module);
+        echo '<table border="1">';
+        foreach ($methods as $method) {
+            if (Str::startsWith($method, 'get')) {
+                try {
+                    echo '<tr><td>'.$method.'</td><td>'.print_r($module->{$method}(), true).'</td></tr>';
+                } catch (\Exception $e) {
+                    echo '<tr><td>'.$method.'</td><td>'.$e->getMessage().'</td></tr>';
+                } catch (TypeError $e) {
+                    echo '<tr><td>'.$method.'</td><td>'.$e->getMessage().'</td></tr>';
+                }
+            }
+        }
+        echo '</table>';
+        dddx('a');
+
+        Blade::componentNamespace('Modules\FormX\View\Components', $this->module_name);
+        */
+        $namespace = 'Modules\\'.$module->getName().'\View\Components';
+
+        Blade::componentNamespace($namespace, $module->getLowerName());
+
+        //Blade::componentNamespace($module->getPath().'/View/Components', $module->getLowerName());
+    }
+
     public function registerLivewireComponents(): void {
         $components_json = $this->module_dir.'/../Http/Livewire/_components.json';
         //$force_recreate = request()->input('force_recreate', true);
@@ -156,7 +186,10 @@ abstract class XotBaseServiceProvider extends ServiceProvider {
             if (false === $content) {
                 throw new Exception('can not decode json');
             }
-            $old_content = File::get($components_json);
+            $old_content = '';
+            if (File::exists($components_json)) {
+                $old_content = File::get($components_json);
+            }
             if ($old_content != $content) {
                 File::put($components_json, $content);
             }

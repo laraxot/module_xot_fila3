@@ -183,7 +183,7 @@ trait Getter {
      *
      * @return mixed|null
      */
-    public function __getVars($params = []) {
+    public function __getVars(array $params = []) {
         $vars = $this->vars;
         $vars['smarty'] = '';
         unset($vars['smarty']);

@@ -24,26 +24,45 @@ class PanelService {
 
     private static ?PanelContract $panel;
 
+    private array $route_params;
+
     /*
     public function __construct($model){
     $this->model=$model;
     }
      */
 
+    public function __construct(array $route_params) {
+        $this->route_params = $route_params;
+        //static::$panel = $this->getByRouteParams($route_params);
+    }
+
     public static function getInstance(): self {
         if (null === self::$_instance) {
-            self::$_instance = new self();
+            $route_params = request()->route()->parameters();
+            self::$_instance = new self($route_params);
         }
 
         return self::$_instance;
     }
 
+    /*
+    public function test() {
+        return static::$panel;
+    }
+    */
     public static function setRequestPanel(?PanelContract $panel): void {
-        self::$panel = $panel;
+        $inst = self::getInstance();
+        $inst::$panel = $panel;
     }
 
     public static function getRequestPanel(): ?PanelContract {
-        return self::$panel;
+        $inst = self::getInstance();
+        try {
+            return $inst::$panel;
+        } catch (\Exception $e) {
+            return null;
+        }
     }
 
     /**
@@ -73,9 +92,9 @@ class PanelService {
      */
     public static function panel(): PanelContract {
         if (! is_object(self::$model)) {
-            dddx(['model' => self::$model, 'message' => 'is not an object']);
+            //dddx(['model' => self::$model, 'message' => 'is not an object', 'url' => url()->current()]);
             //return null;
-            throw new \Exception('model is not an object');
+            throw new \Exception('model is not an object url:'.url()->current());
         }
         $class_full = get_class(self::$model);
         $class_name = class_basename(self::$model);
@@ -111,6 +130,28 @@ class PanelService {
         return self::panel()->tabs();
     }
 
+    //esempio parametro stringa 'area-1-menu-1'
+    //rilascia il pannello dell'ultimo container (nell'esempio menu),
+    //con parent il pannello del precedente container (nell'esempio area)
+    public static function getById(string $id) {
+        $piece = explode('-', $id);
+        $route_params = [];
+        $j = 0;
+        for ($i = 0; $i < count($piece); ++$i) {
+            if (0 == $i % 2) {
+                $route_params['container'.$j] = $piece[$i];
+            } else {
+                $route_params['item'.$j] = $piece[$i];
+                ++$j;
+            }
+        }
+        //[$containers, $items] = params2ContainerItem($route_params);
+        //dddx([$route_params, $containers, $items]);
+        $route_params['in_admin'] = true;
+
+        return self::getByParams($route_params);
+    }
+
     /**
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\Response|mixed|null
      */
@@ -141,6 +182,7 @@ class PanelService {
             return response()->view('pub_theme::errors.404', $data, 404);
         }
         $panel->setRows($row);
+        $panel->setName($containers[0]);
         if (isset($items[0])) {
             $panel->in_admin = $in_admin;
             $panel->setItem($items[0]);
@@ -176,6 +218,7 @@ class PanelService {
 
             $panel = PanelService::get($row);
             $panel->setRows($rows);
+            $panel->setName($types);
             $panel->setParent($panel_parent);
 
             if (isset($items[$i])) {

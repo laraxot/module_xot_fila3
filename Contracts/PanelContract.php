@@ -12,51 +12,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOneOrMany;
 use Modules\Xot\Services\PanelRouteService;
 
-//use Illuminate\Support\Facades\Request;
 
-//use Illuminate\Contracts\Auth\UserProvider;
-
-//prop Collection|BelongsToMany|HasOneOrMany|ModelContract[] $rows
-
-/**
- * Modules\Xot\Contracts\PanelContract.
- *
- * @property ModelContract                      $row
- * @property bool                               $in_admin
- * @property PanelRouteService                  $route
- * @property HasMany|BelongsToMany|HasOneOrMany $rows
- *
- * @method mixed                          findParentType($type)
- * @method string                         imgSrc($params)
- * @method \Illuminate\Support\Collection getParents()
- * @method string                         postType()
- * @method string                         guid()
- * @method string                         pdfFilename()
- * @method array                          with()
- * @method mixed                          pdf($params)
- * @method PanelContract|null             getParent()
- * @method array                          fields()
- * @method array                          actions()
- * @method Builder                        rows()
- * @method string                         getModuleNameLow()
- * @method bool                           isSuperAdmin()
- * @method mixed                          itemAction()
- * @method string|string[]|void           relatedUrl()
- * @method string                         url($params)
- * @method self                           setRow($row)
- * @method self                           update($data)
- * @method mixed                          out($data=null)
- * @method mixed                          callItemActionWithGate($act)
- * @method mixed                          rules($params=[])
- * @method array                          rulesMessages()
- * @method array                          areas()
- * @method array                          indexFields()
- * @method mixed                          relatedName($params)
- * @method string                         showUrl()
- * @method array                          tabs()
- * @method string                         getModuleName()
- * @method mixed                          callAction($act)
- */
 interface PanelContract {
     /**
      * Undocumented function.
@@ -128,7 +84,7 @@ interface PanelContract {
 
     public function orderBy();
 
-    public function rules($params = []);
+    public function rules(array $params = []);
 
     public function pivotRules($params);
 
@@ -140,11 +96,11 @@ interface PanelContract {
 
     public function indexNav();
 
-    public function getActions($params = []);
+    public function getActions(array $params = []);
 
-    public function containerActions($params = []);
+    public function containerActions(array $params = []);
 
-    public function itemActions($params = []);
+    public function itemActions(array $params = []);
 
     public function itemAction($act);
 
@@ -174,11 +130,11 @@ interface PanelContract {
 
     public function indexRows(Request $request, $query);
 
-    public function formCreate($params = []);
+    public function formCreate(array $params = []);
 
-    public function formEdit($params = []);
+    public function formEdit(array $params = []);
 
-    public function exceptFields($params = []);
+    public function exceptFields(array $params = []);
 
     public function indexFields();
 
@@ -198,11 +154,11 @@ interface PanelContract {
 
     public function btnSubmit();
 
-    public function btnDelete($params = []);
+    public function btnDelete(array $params = []);
 
-    public function btnDetach($params = []);
+    public function btnDetach(array $params = []);
 
-    public function btnCrud($params = []);
+    public function btnCrud(array $params = []);
 
     public function btnHtml($params);
 
@@ -224,7 +180,7 @@ interface PanelContract {
 
     public function relatedName($name, $id = null);
 
-    public function url($params = []);
+    public function url(array $params = []);
 
     public function indexUrl();
 
@@ -266,11 +222,11 @@ interface PanelContract {
 
     public function callContainerAction($act);
 
-    public function out($params = []);
+    public function out(array $params = []);
 
-    public function pdfFilename($params = []);
+    public function pdfFilename(array $params = []);
 
-    public function pdf($params = []);
+    public function pdf(array $params = []);
 
     public static function getInstance();
 

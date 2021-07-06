@@ -22,18 +22,23 @@ class StoreJob extends XotBaseJob {
      */
     public function handle(): PanelContract {
         //dd('['.__LINE__.']['.__FILE__.']');
+
         $row = $this->panel->row;
+        $this->data = $this->prepareAndValidate($this->data, $this->panel);
         $data = $this->data;
 
         //---------------------------
         if (! isset($data['lang']) && in_array('lang', $row->getFillable())) {
             $data['lang'] = app()->getLocale();
         }
-        if (! isset($data['auth_user_id']) && in_array('auth_user_id', $row->getFillable())) {
+        if (! isset($data['auth_user_id'])
+            && in_array('auth_user_id', $row->getFillable())
+            && 'auth_user_id' != $row->getKeyName()) {
             $data['auth_user_id'] = \Auth::id();
         }
 
         $row = $row->fill($data);
+
         $row->save();
         $parent = $this->panel->getParent();
         if (is_object($parent)) {
@@ -255,7 +260,7 @@ class StoreJob extends XotBaseJob {
 
         if (! Arr::isAssoc($data)) {
             $data = collect($data)->map(
-                function ($item) use ($model,$name) {
+                function ($item) use ($model, $name) {
                     if (is_numeric($item)) {
                         return $item;
                     }

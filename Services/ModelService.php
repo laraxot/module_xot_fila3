@@ -31,7 +31,7 @@ class ModelService {
                 return in_array($key, $methods);
             }
             )->map(
-                function ($v, $k) use ($model,$data) {
+                function ($v, $k) use ($model, $data) {
                     if (! is_string($k)) {
                         dddx([$k, $v, $data]);
                     }
@@ -58,7 +58,7 @@ class ModelService {
     /**
      * @param array|string $index
      */
-    public static function indexIfNotExists(ModelContract $model, $index): void {
+    public static function indexIfNotExists(Model $model, $index): void {
         if (\is_array($index)) {
             foreach ($index as $i) {
                 self::indexIfNotExists($model, $i);
@@ -78,6 +78,32 @@ class ModelService {
                 );
             }
         }
+    }
+
+    public static function fieldExists(Model $model, string $field_name): bool {
+        return \Schema::connection($model->getConnectionName())->hasColumn($model->getTable(), $field_name);
+    }
+
+    public static function addField(Model $model, string $field_name, string $field_type, array $attrs = []) {
+        if (! \Schema::connection($model->getConnectionName())->hasColumn($model->getTable(), $field_name)) {
+            \Schema::connection($model->getConnectionName())
+                ->table($model->getTable(),
+                    function ($table) use ($field_name, $field_type) {
+                        $table->{$field_type}($field_name);
+                    }
+                );
+        }
+    }
+
+    /**
+     * execute a query.
+     *
+     * @param [type] $model
+     *
+     * @return void
+     */
+    public static function query($model, string $sql) {
+        $model->getConnection()->statement($sql);
     }
 
     /*

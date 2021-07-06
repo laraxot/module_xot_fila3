@@ -126,7 +126,7 @@ abstract class XotBasePanelAction {
      *
      * @return string
      */
-    public function getUrl($params = []) {
+    public function getUrl(array $params = []) {
         if (isset($this->onItem) && $this->onItem) {
             return $this->urlItem($params);
         }
@@ -175,7 +175,7 @@ abstract class XotBasePanelAction {
      *
      * @return string
      */
-    public function url($params = []) {
+    public function url(array $params = []) {
         if (isset($this->onItem) && $this->onItem) {
             return $this->urlItem($params);
         }
@@ -379,7 +379,7 @@ abstract class XotBasePanelAction {
             }
         }
         $panel = Panel::get($this->row);
-        $panel->setRows($this->rows);
+        $panel->setRowzs($this->rows);
         */
         return $this->panel->pdf($params);
     }

@@ -16,6 +16,7 @@ use Illuminate\Support\Str;
  */
 abstract class XotBaseMigration extends Migration {
     protected ?Model $model = null;
+    protected ?string $model_class = null;
 
     //*
     public function __construct() {
@@ -28,6 +29,9 @@ abstract class XotBaseMigration extends Migration {
     //*/
 
     public function getModel(): string {
+        if (null != $this->model_class) {
+            return $this->model_class;
+        }
         //ddd(class_basename($this));//CreateDevicesTable
         //ddd(get_class($this));
         $name = class_basename($this);
@@ -115,8 +119,12 @@ abstract class XotBaseMigration extends Migration {
     /**
      * @return bool
      */
-    public function tableExists() {
-        return $this->getConn()->hasTable($this->getTable());
+    public function tableExists($table = null) {
+        if (null == $table) {
+            $table = $this->getTable();
+        }
+
+        return $this->getConn()->hasTable($table);
     }
 
     /**

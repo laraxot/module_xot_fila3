@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Modules\Xot\Jobs\PanelCrud\Traits;
 
 use Carbon\Carbon;
@@ -12,8 +14,7 @@ use Modules\Xot\Http\Requests\XotRequest;
 use Modules\Xot\Services\PanelService as Panel;
 
 /**
- * Trait CommonTrait
- * @package Modules\Xot\Jobs\PanelCrud\Traits
+ * Trait CommonTrait.
  */
 trait CommonTrait {
     /**
@@ -39,9 +40,10 @@ trait CommonTrait {
     /**
      * https://hackernoon.com/eloquent-relationships-cheat-sheet-5155498c209
      * https://laracasts.com/discuss/channels/eloquent/cleanest-way-to-save-model-and-relationships.
+     *
      * @param array $params
      */
-    public function manageRelationships($params) {
+    public function manageRelationships($params): void {
         $act = 'show';
         extract($params);
         if (! isset($model)) {
@@ -69,7 +71,7 @@ trait CommonTrait {
         //dddx($params);
         $data1 = collect($data)->filter(function ($item, $key) use ($methods) {
             return in_array($key, $methods);
-        })->map(function ($v, $k) use ($model,$data) {
+        })->map(function ($v, $k) use ($model, $data) {
             if (! is_string($k)) {
                 dddx([$k, $v, $data]);
             }
@@ -129,8 +131,9 @@ trait CommonTrait {
     }
 
     /**
-     * @param array $data
+     * @param array         $data
      * @param PanelContract $panel
+     *
      * @return mixed
      */
     public function prepareForValidation($data, $panel) {
@@ -156,13 +159,17 @@ trait CommonTrait {
     }
 
     /**
-     * @param array $data
+     * @param array         $data
      * @param PanelContract $panel
-     * @return array
+     *
      * @throws \Illuminate\Validation\ValidationException
+     *
+     * @return array
      */
     public function prepareAndValidate($data, $panel) {
+        //$data0 = $data;
         $data = $this->prepareForValidation($data, $panel);
+        //dddx($data0, $data);
         $act = '';
         $rules = $panel->rules(['act' => $act]);
 
@@ -174,6 +181,7 @@ trait CommonTrait {
     /**
      * @param $field
      * @param mixed $value
+     *
      * @return Carbon|false|null
      */
     public function ConvDate($field, $value) {
@@ -188,6 +196,7 @@ trait CommonTrait {
     /**
      * @param $field
      * @param mixed $value
+     *
      * @return Carbon|false|null
      */
     public function ConvDateTime($field, $value) {
@@ -202,6 +211,7 @@ trait CommonTrait {
     /**
      * @param $field
      * @param mixed $value
+     *
      * @return Carbon|false|null
      */
     public function ConvDateTime2Fields($field, $value) {

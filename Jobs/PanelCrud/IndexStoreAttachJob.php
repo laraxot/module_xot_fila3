@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Modules\Xot\Jobs\PanelCrud;
 
+use Illuminate\Support\Str;
 use Modules\Xot\Contracts\PanelContract;
 
 //----------- Requests ----------
@@ -17,7 +18,9 @@ class IndexStoreAttachJob extends XotBaseJob {
         //dddx([$this->panel, $this->data]);
         //$this->panel->rows->attach($this->data['groups']['to']);
         //return 'preso';
-        $to = $this->data['groups']['to'];
+        $name = Str::plural($this->panel->postType());
+
+        $to = $this->data[$name]['to'];
         if (! is_array($to)) {
             $to = [];
         }

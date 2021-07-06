@@ -22,13 +22,18 @@ abstract class XotBasePanelPolicy {
      *
      * @return bool|null
      */
+    //*
     public function before($user, $ability) {
+        //*
         if (is_object($user) && Panel::get($user)->isSuperAdmin()) {
             return true;
         }
+        //*/
 
         return null;
     }
+
+    //*/
 
     public function index(?UserContract $user, PanelContract $panel): bool {
         return true;

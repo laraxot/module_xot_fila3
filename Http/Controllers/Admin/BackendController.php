@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Modules\Xot\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
@@ -12,12 +14,10 @@ use Modules\Theme\Services\ThemeService;
 use Modules\Xot\Services\ArtisanService;
 
 /**
- * Class BackendController
- * @package Modules\Xot\Http\Controllers\Admin
+ * Class BackendController.
  */
 class BackendController extends Controller {
     /**
-     * @param Request $request
      * @return mixed|string
      */
     public function index(Request $request) {
@@ -37,6 +37,15 @@ class BackendController extends Controller {
         */
         //return view('adm_theme::admin.dashboard');
         //return ThemeService::view('adm_theme::admin.dashboard');
-        return view()->make('adm_theme::admin.dashboard');
+        $view = 'adm_theme::admin.dashboard';
+        if (! view()->exists($view)) {
+            dddx([
+                'err' => 'view not exists',
+                'view' => $view,
+                'adm_theme' => config('xra.adm_theme'),
+            ]);
+        }
+
+        return view()->make($view);
     }
 }

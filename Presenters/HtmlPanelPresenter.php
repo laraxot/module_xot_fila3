@@ -64,6 +64,7 @@ class HtmlPanelPresenter implements PanelPresenterContract {
                 $trad = implode('.', array_slice(explode('.', $view), 0, -1));
                 \View::share('trad', $trad);
                 \View::share('lang', \App::getLocale());
+                \View::share('_panel', $this->panel);
                 //\View::share('mod_trad', $mod_trad);
             }
         );
@@ -79,6 +80,7 @@ class HtmlPanelPresenter implements PanelPresenterContract {
 
         //*
         $rows_err = '';
+
         try {
             //dddx($this->panel->rows());
             $rows = $this->panel->rows()->paginate(20);
@@ -104,6 +106,7 @@ class HtmlPanelPresenter implements PanelPresenterContract {
             'view_work' => $view_work,
             'views' => $views,
             '_panel' => $this->panel,
+            '_panel_name' => $this->panel->getName(),
             'row' => $this->panel->row,
             'rows' => $rows,
             'rows_err' => $rows_err,
@@ -118,6 +121,6 @@ class HtmlPanelPresenter implements PanelPresenterContract {
         ];
 
         //return view($view_work)->with($view_params);
-        return view()->make($view_work, $view_params);
+        return view()->make($view_work, $view_params); //->render(); //se metto render , non mi prende piu' i parametri passati con with
     }
 }

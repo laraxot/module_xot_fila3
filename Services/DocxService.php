@@ -88,7 +88,7 @@ class DocxService {
      *
      * @return \Symfony\Component\HttpFoundation\BinaryFileResponse
      */
-    public function out($params = []) {
+    public function out(array $params = []) {
         extract($params);
         include __DIR__.'/vendor/autoload.php'; //carico la mia libreria che uso solo qui..
 

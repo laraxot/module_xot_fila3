@@ -312,7 +312,7 @@ if (! \function_exists('getModuleModels')) {
 }
 /*
 if (! \function_exists('tenantName')) {
-    function tenantName($params = []) {
+    function tenantName(array $params = []) {
         if (! isset($_SERVER['SERVER_NAME']) || '127.0.0.1' == $_SERVER['SERVER_NAME']) {
             $_SERVER['SERVER_NAME'] = 'localhost';
         }

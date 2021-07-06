@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Modules\Xot\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
@@ -8,6 +10,7 @@ use Illuminate\Routing\Controller;
 use Modules\Theme\Services\ThemeService;
 use Modules\Xot\Services\PanelService;
 use Modules\Xot\Services\TenantService;
+use Nwidart\Modules\Facades\Module;
 
 //use Modules\Xot\Services\ArtisanService;
 
@@ -35,9 +38,26 @@ class HomeController extends Controller {
         if (null != $route_current) {
             $params = $route_current->parameters();
         }
-        $home_view = collect($params)->get('module').'::admin.index';
+
+        //dddx(PanelService::getRequestPanel());//null
+        $module_name = collect($params)->get('module');
+        $module = Module::find($module_name);
+        if (! is_object($module)) {
+            $data = ['message' => 'module ['.$module_name.'] is unknown '];
+
+            return response()->view('adm_theme::errors.404', $data, 404);
+        }
+        //dddx(get_class_methods($module));
+        //dddx($module->getName());
+        $_panel = null;
+        $home_panel_class = 'Modules\\'.$module->getName().'\Models\Panels\HomePanel';
+        if (class_exists($home_panel_class)) {
+            $_panel = app($home_panel_class);
+        }
+
+        $home_view = $module_name.'::admin.index';
         if (\View::exists($home_view)) {
-            return ThemeService::view($home_view);
+            return ThemeService::view($home_view)->with('_panel', $_panel);
         }
 
         return ThemeService::view('xot::admin.home');

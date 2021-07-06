@@ -141,21 +141,17 @@ if (! \function_exists('req_uri')) {
 
 if (! \function_exists('in_admin')) {
     /**
-     * @param array $params
-     *
      * @return array|bool|mixed
      */
-    function in_admin($params = []) {
+    function in_admin(array $params = []) {
         return inAdmin($params);
     }
 }
 if (! \function_exists('inAdmin')) {
     /**
-     * @param array $params
-     *
      * @return array|bool|mixed
      */
-    function inAdmin($params = []) {
+    function inAdmin(array $params = []) {
         return RouteService::inAdmin($params);
     }
 }
@@ -316,12 +312,9 @@ if (! \function_exists('getModuleFromModel')) {
 }
 
 if (! \function_exists('getModuleNameFromModel')) {
-    /**
-     * @param object $model
-     */
     function getModuleNameFromModel(object $model): string {
         if (! is_object($model)) {
-            dddx(['model'=>$model]);
+            dddx(['model' => $model]);
             throw new \Exception('model is not an object');
         }
         $class = get_class($model);
@@ -439,14 +432,17 @@ if (! \function_exists('transFields')) {
      * @return mixed|stdClass
      */
     function transFields($params) {
+        $params_orig = $params;
+        if (! isset($params_orig['attributes'])) {
+            $params_orig['attributes'] = [];
+        }
         $name = 'not-set';
         $model = Form::getModel();
-        $module_name ='';
-        if(is_object($model)){
+        $module_name = '';
+        if (is_object($model)) {
             $module_name = getModuleNameFromModel($model);
         }
-            
-        
+
         $ns = Str::lower($module_name);
         $trans_root = $ns.'::'.Str::snake(class_basename($model));
         //dddx() );
@@ -477,7 +473,9 @@ if (! \function_exists('transFields')) {
 
         $pattern = '/\.[0-9]+\./m';
         $ris->name_dot = preg_replace($pattern, '.', $ris->name_dot);
-
+        if (! Str::contains($view, '::')) {
+            $view = 'pub_theme::'.$view;
+        }
         list($ns, $key) = explode('::', $view);
         if (null == $module_name) {
             $trans_root = $ns.'::'.implode('.', array_slice(explode('.', $key), $start, -1));
@@ -506,13 +504,18 @@ if (! \function_exists('transFields')) {
         if (! isset($params['attributes'])) {
             $params['attributes'] = [];
         }
-
-        $ris->attributes = collect(array_merge($attrs_default, $attributes, $params['attributes']))
-                        ->filter(function ($item, $key) {
-                            return in_array($key, ['style', 'class', 'placeholder', 'readonly', 'id', 'value', 'name']) || Str::startsWith($key, 'data-');
-                        })
+        $attributes = array_merge($attrs_default, $attributes, $params['attributes'], $params_orig['attributes']);
+        /*
+        if (! empty($params_orig['attributes'])) {
+            dddx($attributes);
+        }
+        */
+        $ris->attributes = collect($attributes)
+            ->filter(function ($item, $key) {
+                return in_array($key, ['style', 'class', 'placeholder', 'readonly', 'id', 'value', 'name']) || Str::startsWith($key, 'data-');
+            })
                         //->only('class','placeholder','readonly')
-                        ->all();
+            ->all();
         $ris->params = $params;
 
         if (! isset($ris->col_bs_size)) {
@@ -929,5 +932,23 @@ if (! function_exists('isJson')) {
      */
     function isJson($string) {
         return is_string($string) && is_array(json_decode($string, true)) ? true : false;
+    }
+}
+
+if (! function_exists('getExcerpt')) {
+    function getExcerpt(string $str, ?int $length = 225) {
+        $cleaned = strip_tags(
+        preg_replace(['/<pre>[\w\W]*?<\/pre>/', '/<h\d>[\w\W]*?<\/h\d>/'], '', $str),
+        '<code>'
+    );
+        $truncated = substr($cleaned, 0, $length);
+
+        if (substr_count($truncated, '<code>') > substr_count($truncated, '</code>')) {
+            $truncated .= '</code>';
+        }
+
+        return strlen($cleaned) > $length
+        ? preg_replace('/\s+?(\S+)?$/', '', $truncated).'...'
+        : $cleaned;
     }
 }

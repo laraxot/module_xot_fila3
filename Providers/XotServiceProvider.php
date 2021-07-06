@@ -5,20 +5,22 @@ declare(strict_types=1);
 namespace Modules\Xot\Providers;
 
 use Illuminate\Cache\TagSet;
+use Illuminate\Contracts\Container\Container;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Foundation\AliasLoader;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Schema;
+//use Illuminate\Http\Request;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\View;
-//use Illuminate\Http\Request;
-use Illuminate\Translation\Translator;
-use Laravel\Scout\EngineManager;
 //use Modules\Xot\Engines\Opcache;
 //--- services ---
+use Illuminate\Translation\Translator;
+use Laravel\Scout\EngineManager;
 use Modules\Xot\Contracts\PanelPresenterContract;
 use Modules\Xot\Engines\FullTextSearchEngine;
 use Modules\Xot\Http\View\Composers\XotComposer;
@@ -95,9 +97,33 @@ class XotServiceProvider extends XotBaseServiceProvider {
 
         //$this->registerLivewireComponents();
         $this->registerViewComposers();
+
+        //$this->registerPanel();
     }
 
     //end bootCallback
+
+    private function registerPanel(): void {
+        //dddx(get_class_methods($this->app['request']));
+        //dddx(get_class_methods($this->app['route']));
+        //dddx(request()->route()->paremeters());
+        //$request->route()->parameters()
+        //{{ URL::toCurrentRouteWithParameters(['language' => 'az']) }}
+        //dddx(\Route::current()->parameters());
+        //dddx(request()->route()->parameters());
+        /*
+        $this->app->singleton(
+            Panel::class,
+            function (Container $app) {
+                return new Panel(
+                    $app['events'],
+                    $app['route'],
+                    $app
+                );
+            }
+        );
+        */
+    }
 
     private function registerViewComposers(): void {
         //Factory $view
@@ -142,6 +168,8 @@ class XotServiceProvider extends XotBaseServiceProvider {
             //HtmlPanelPresenter::class,
             $response,
         );
+
+        //$this->registerPanel();
     }
 
     public function loadHelpersFrom(string $path): void {

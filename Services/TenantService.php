@@ -9,19 +9,32 @@ use Exception;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Arr;
-//---- services ----
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
 use Modules\Xot\Contracts\ModelContract;
-use Modules\Xot\Services\PanelService as Panel;
 
 /**
  * Class TenantService.
  */
 class TenantService {
+    //public static $panel;
+
+    /*
+    public function TenantService() {
+        dddx('b');
+    }
+    */
+    /*
+    public function __construct(Panel $panel) {
+        static::$panel = $panel;
+    }
+    */
+
     public static function getName(array $params = []): string {
-        $default = 'localhost';
+        //$default = 'localhost';
+        $default = env('APP_URL');
+
         $server_name = $default;
         if (isset($_SERVER['SERVER_NAME']) && '127.0.0.1' != $_SERVER['SERVER_NAME']) {
             $server_name = $_SERVER['SERVER_NAME'];
@@ -48,7 +61,7 @@ class TenantService {
         } else {
             $server_name = Str::slug($domain).'-'.$ext;
         }
-        if (file_exists(base_path('config/'.$server_name))) {
+        if (file_exists(base_path('config/'.$server_name)) && '' != $server_name) {
             if (null != $subdomain && file_exists(base_path('config/'.$server_name.'/'.$subdomain))) {
                 return $server_name.'/'.$subdomain;
             }
@@ -60,8 +73,13 @@ class TenantService {
         [$subdomain] = explode('.', request()->getHost(), PHP_URL_HOST);
         dd([$subdomain, request()->getHost(), PHP_URL_HOST]);
         */
+        $default = Str::after($default, '//');
+        $default = str_replace('.', '-', $default);
+        if (file_exists(base_path('config/'.$default)) && '' != $default) {
+            return $default;
+        }
 
-        return $default;
+        return 'localhost';
     }
 
     //end function
@@ -79,8 +97,6 @@ class TenantService {
      * @return \Illuminate\Config\Repository|\Illuminate\Contracts\Foundation\Application|mixed
      */
     public static function config(string $key) {
-        $group = implode('.', array_slice(explode('.', $key), 0, 2));
-        /*
         if (in_admin() && Str::startsWith($key, 'xra.model')) {
             $module_name = \Request::segment(2);
             $models = getModuleModels($module_name);
@@ -88,27 +104,71 @@ class TenantService {
             if (! is_array($original_conf)) {
                 $original_conf = [];
             }
-            $merge_conf = array_merge($original_conf, $models);
+            //$merge_conf = array_merge($original_conf, $models);
+            $merge_conf = collect($original_conf)->merge($models)->all();
+
             \Config::set('xra.model', $merge_conf);
+
+            return config($key);
         }
-        //*/
-        $tenant_name = self::getName();
-        $extra_conf = config(str_replace('/', '.', $tenant_name).'.'.$group); // ...
+
+        $group = collect(explode('.', $key))->first();
 
         $original_conf = config($group);
+        $tenant_name = self::getName();
+
+        $extra_conf = config(str_replace('/', '.', $tenant_name).'.'.$group);
 
         if (! is_array($original_conf)) {
             $original_conf = [];
         }
+
         if (! is_array($extra_conf)) {
             $extra_conf = [];
         }
-        $merge_conf = array_merge($original_conf, $extra_conf); //_recursive
 
-        Config::set($group, $merge_conf);  // non so se metterlo ..
+        //$merge_conf = array_merge($original_conf, $extra_conf); //_recursive
+        $merge_conf = collect($original_conf)->merge($extra_conf)->all();
+
+        Config::set($group, $merge_conf);
 
         return config($key);
     }
+
+    /*
+    public static function config(string $key) {
+       $group = implode('.', array_slice(explode('.', $key), 0, 2));
+
+
+       if (in_admin() && Str::startsWith($key, 'xra.model')) {
+           $module_name = \Request::segment(2);
+           $models = getModuleModels($module_name);
+           $original_conf = config('xra.model');
+           if (! is_array($original_conf)) {
+               $original_conf = [];
+           }
+           $merge_conf = array_merge($original_conf, $models);
+           \Config::set('xra.model', $merge_conf);
+       }
+
+       $tenant_name = self::getName();
+       $extra_conf = config(str_replace('/', '.', $tenant_name).'.'.$group); // ...
+
+       $original_conf = config($group);
+
+       if (! is_array($original_conf)) {
+           $original_conf = [];
+       }
+       if (! is_array($extra_conf)) {
+           $extra_conf = [$extra_conf];
+       }
+       $merge_conf = array_merge($original_conf, $extra_conf); //_recursive
+
+       Config::set($group, $merge_conf);  // non so se metterlo ..
+
+       return config($key);
+    }
+    */
 
     public static function saveConfig(array $params): void {
         $name = 'xra';
@@ -191,7 +251,7 @@ class TenantService {
             //return null;
             throw new \Exception('model is null');
         }
-        $panel = Panel::get($model);
+        $panel = PanelService::get($model);
         if (null == $panel) {
             //return null;
             throw new \Exception('panel is null');

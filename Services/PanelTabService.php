@@ -94,7 +94,8 @@ class PanelTabService {
             if (0 == $k) {
                 if (Gate::allows('index', $panel)) {
                     $tmp = new \stdClass();
-                    $tmp->title = '<< Back '; //.'['.get_class($item).']';
+                    //$tmp->title = '<< Back '; //.'['.get_class($item).']';
+                    $tmp->title = 'Back'; //.'['.get_class($item).']';
                     $tmp->url = $panel->indexUrl();
                     $tmp->active = false;
                     $row[] = $tmp;
@@ -107,7 +108,7 @@ class PanelTabService {
                     $url = $panel->showUrl();
                 }
                 $tmp->url = $url;
-                $tmp->title = 'Content '; //.'['.request()->url().']['.$url.']';
+                $tmp->title = 'Content'; //.'['.request()->url().']['.$url.']';
                 /*
                 if ($url_test = 1) {
                     $tmp->active = request()->url() == $url;

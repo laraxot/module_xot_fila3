@@ -124,4 +124,82 @@ class ArrayService {
         File::makeDirectory(dirname($filename), 0775, true, true);
         File::put($filename, $content);
     }
+
+    /**
+     * Undocumented function.
+     *
+     * @param array|object $arrObjData
+     * @param array        $arrSkipIndices
+     *
+     * @return array
+     */
+    public static function fromObjects($arrObjData, $arrSkipIndices = []) {
+        $arrData = [];
+
+        // if input is object, convert into array
+        if (is_object($arrObjData)) {
+            $arrObjData = get_object_vars($arrObjData);
+        }
+
+        if (is_array($arrObjData)) {
+            foreach ($arrObjData as $index => $value) {
+                if (is_object($value) || is_array($value)) {
+                    $value = ArrayService::fromObjects($value, $arrSkipIndices); // recursive call
+                }
+                if (in_array($index, $arrSkipIndices)) {
+                    continue;
+                }
+                $arrData[$index] = $value;
+            }
+        }
+
+        return $arrData;
+    }
+
+    /**
+     * Undocumented function.
+     *
+     * @param int $a0
+     * @param int $b0
+     * @param int $a1
+     * @param int $b1
+     *
+     * @return array|bool
+     */
+    public static function rangeIntersect($a0, $b0, $a1, $b1) {
+        if ($a1 >= $a0 && $a1 <= $b0 && $b0 <= $b1) {
+            return [$a1, $b0];
+        }
+        if ($a0 >= $a1 && $a0 <= $b0 && $b0 <= $b1) {
+            return [$a0, $b0];
+        }
+        if ($a1 >= $a0 && $a1 <= $b1 && $b1 <= $b0) {
+            return [$a1, $b1];
+        }
+        if ($a0 >= $a1 && $a0 <= $b1 && $b1 <= $b0) {
+            return [$a0, $b1];
+        }
+
+        return false;
+    }
+
+    /**
+     * Undocumented function.
+     *
+     * @param array $arr_1
+     * @param array $arr_2
+     */
+    public static function diff_assoc_recursive($arr_1, $arr_2): array {
+        $coll_1 = collect($arr_1);
+        $coll_2 = collect($arr_2);
+        $ris = $coll_1->filter(function ($value, $key) use ($arr_2) {
+            try {
+                return ! in_array($value, $arr_2);
+            } catch (\Exception $e) {
+                dddx(['err' => $e->getMessage(), 'value' => $value, 'key' => $key, 'arr_2' => $arr_2]);
+            }
+        });
+
+        return $ris->all();
+    }
 }

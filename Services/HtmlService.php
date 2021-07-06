@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Modules\Xot\Services;
 
 //use Maatwebsite\Excel\Facades\Excel;
@@ -18,12 +20,12 @@ TableException
 use Spipu\Html2Pdf\Html2Pdf;
 
 /**
- * Class HtmlService
- * @package Modules\Xot\Services
+ * Class HtmlService.
  */
 class HtmlService {
     /**
      * @param array $params
+     *
      * @return string|void
      */
     public static function toPdf($params) {
@@ -46,8 +48,11 @@ class HtmlService {
             $html2pdf->setTestTdInOnePage(false);
             $html2pdf->WriteHTML($html);
 
-            if ('content_PDF' == $out) {
-                return $html2pdf->Output($filename.'.pdf', 'S');
+            switch ($out) {
+                case 'content_PDF':return $html2pdf->Output($filename.'.pdf', 'S');
+                case 'file': $html2pdf->Output($filename.'.pdf', 'F');
+
+                return $filename;
             }
 
             return $html2pdf->Output();

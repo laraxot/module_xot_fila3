@@ -5,8 +5,10 @@ declare(strict_types=1);
 namespace Modules\Xot\Services;
 
 use Collective\Html\FormFacade as Form;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Str;
+use Modules\FormX\Services\FieldService;
 use Modules\FormX\Services\FormXService;
 use Modules\Theme\Services\ThemeService;
 use Modules\Xot\Contracts\PanelContract;
@@ -35,11 +37,9 @@ class PanelFormService {
     }
 
     /**
-     * @param array $params
-     *
      * @return string
      */
-    public function formCreate($params = []) {
+    public function formCreate(array $params = []) {
         $fields = $this->createFields();
         $row = $this->panel->row;
         $res = '';
@@ -60,11 +60,9 @@ class PanelFormService {
     }
 
     /**
-     * @param array $params
-     *
      * @return string
      */
-    public function formEdit($params = []) {
+    public function formEdit(array $params = []) {
         $submit_btn = '<p class="form-submit">
             <input name="submit" type="submit" id="submit" value="Post your answer" class="button small color">
         </p>';
@@ -73,9 +71,17 @@ class PanelFormService {
         $row = $this->panel->row;
         $res = '';
         //$res.='<h3>'.$this->storeUrl().'</h3>'; //4 debug
-        $res .= Form::bsOpenPanel($this, 'update');
-        $res .= '<div class="clearfix">';
+        $res .= Form::bsOpenPanel($this->panel, 'update');
+
+        $col_size = 0;
+
+        $res .= '<div class="row clearfix">';
         foreach ($fields as $field) {
+            if ($col_size >= 12) {
+                echo '</div><div class="row">';
+                $col_size = 0;
+            }
+            $col_size += $field->col_bs_size ?? 12;
             $res .= ThemeService::inputHtml(['row' => $row, 'field' => $field]);
         }
         $res .= '</div>';
@@ -86,8 +92,51 @@ class PanelFormService {
         return $res;
     }
 
+    public function formLivewireEdit(array $params = []): string {
+        $fields = $this->editObjFields();
+
+        $col_size = 0;
+        $html = '<div class="row clearfix">';
+        foreach ($fields as $field) {
+            if ($col_size >= 12) {
+                echo '</div><div class="row">';
+                $col_size = 0;
+            }
+            $col_size += $field->col_size ?? 12;
+            //$res .= ThemeService::inputHtml(['row' => $row, 'field' => $field]);
+            $html .= $field->toHtml();
+        }
+        $html .= '</div>';
+        //$res.=Form::bsSubmit('save');
+        //$html .= $submit_btn;
+        //$html .= Form::close();
+        return $html;
+    }
+
+    public function getFormData(array $params = []): array {
+        $form_data = [];
+        $fields = $this->getFields($params);
+        $row = isset($params['row']) ? $params['row'] : $this->panel->row;
+        foreach ($fields as $field) {
+            $value = Arr::get($row, $field->name);
+            if (is_object($value)) {
+                switch (get_class($value)) {
+                    case 'Illuminate\Support\Carbon':
+                        $value = $value->format('Y-m-d\TH:i');
+                        break;
+                    default:
+                        dddx(get_class($value));
+                    break;
+                }
+            }
+            Arr::set($form_data, $field->name, $value);
+        }
+
+        return $form_data;
+    }
+
     /*
-    public function btnDelete($params = []) {
+    public function btnDelete(array $params = []) {
         $class = 'btn-primary mb-2';
         extract($params);
         //dddx($params);
@@ -103,7 +152,7 @@ class PanelFormService {
         return view('formx::includes.components.btn.'.$act)->with($parz);
     }
 
-    public function btnDetach($params = []) {
+    public function btnDetach(array $params = []) {
         $class = 'btn-primary mb-2';
         extract($params);
         $act = 'detach';
@@ -119,11 +168,9 @@ class PanelFormService {
     */
 
     /**
-     * @param array $params
-     *
      * @return string
      */
-    public function btnCrud($params = []) {
+    public function btnCrud(array $params = []) {
         extract($params);
         $acts = ['edit', 'destroy', 'show'];
         if (is_object($this->panel->row->pivot)) {
@@ -148,9 +195,11 @@ class PanelFormService {
     }
 
     public function btnHtml(array $params): ?string {
-        $params['panel'] = $this->panel;
+        //$params['panel'] = $this->panel;
         //$params['url'] = RouteService::urlPanel($params);
-        $params['url'] = $this->panel->route->urlPanel($params);
+        //$params['url'] = $this->panel->route->urlPanel($params);
+        $params['url'] = $this->panel->url($params);
+        //dddx([$this->panel->route, $params['panel'], $params['url']]);
         $params['method'] = Str::camel($params['act']);
         if ('index_order' == $params['act']) {
             //  dddx($params);
@@ -158,13 +207,13 @@ class PanelFormService {
 
         if (! isset($params['tooltip'])) {
             $row = $this->panel->row;
-            $module_name_low = (string)strtolower((string)getModuleNameFromModel($row));
+            $module_name_low = (string) strtolower((string) getModuleNameFromModel($row));
             $params['tooltip'] = trans($module_name_low.'::'.strtolower(class_basename($row)).'.act.'.$params['method']);
         }
 
         if (! isset($params['title'])) {
             $row = $this->panel->row;
-            $module_name_low = strtolower((string)getModuleNameFromModel($row));
+            $module_name_low = strtolower((string) getModuleNameFromModel($row));
 
             $trans_key = $module_name_low.'::'.strtolower(class_basename($row)).'.act.'.$params['method'];
             $trans = trans($trans_key);
@@ -201,7 +250,7 @@ class PanelFormService {
 
         if (true === $params['title']) {
             $row = $this->panel->row;
-            $module_name_low = strtolower((string)getModuleNameFromModel($row));
+            $module_name_low = strtolower((string) getModuleNameFromModel($row));
             $parent = $this->panel->getParent();
             if (null != $parent) {
                 $tmp = [];
@@ -217,7 +266,7 @@ class PanelFormService {
                 $params['title'] = trans($module_name_low.'::'.strtolower(class_basename($row)).'.act.'.$params['method']);
             }
         }
-
+        $params['panel'] = $this->panel;
         return FormXService::btnHtml($params);
     }
 
@@ -251,18 +300,18 @@ class PanelFormService {
     }
     */
     /* deprecated
-    public function btnSubmit($params = []) {
+    public function btnSubmit(array $params = []) {
         return Form::bsSubmit(trans('xot::buttons.save'));
     }
     */
 
     /**
-     * @param array $params
-     *
      * @return array
      */
-    public function exceptFields($params = []) {
-        $act = 'show';
+    public function exceptFields(array $params = []) {
+        //dddx($params);
+        //$act = 'show';
+        extract($params);
         $panel = $this->panel;
         extract($params);
         $excepts = collect([]);
@@ -285,8 +334,8 @@ class PanelFormService {
                 }
             }
         }
+        //dddx($excepts);
         $excepts = $excepts->unique()->all();
-
         $fields = collect($panel->fields())
             ->filter(
                 function ($item) use ($excepts, $act) {
@@ -326,6 +375,28 @@ class PanelFormService {
      */
     public function editFields() {
         $fields = $this->exceptFields(['act' => 'edit']);
+
+        return $fields;
+    }
+
+    /**
+     * @return array
+     */
+    public function getFields(array $params = []) {
+        $act = isset($params['act']) ? $params['act'] : 'index';
+
+        $fields = $this->exceptFields(['act' => $act]);
+
+        return $fields;
+    }
+
+    public function editObjFields() {
+        $fields = collect($this->editFields())->map(function ($field) {
+            return FieldService::make($field->name)
+                ->type($field->type)
+                ->setColSize($field->col_bs_size ?? 12)
+                ;
+        })->all();
 
         return $fields;
     }

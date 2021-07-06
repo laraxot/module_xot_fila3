@@ -36,7 +36,7 @@ class HomeController extends Controller {
             return $home_panel->callItemActionWithGate($request->_act);
         }
 
-        return  ThemeService::view('pub_theme::home.index')
+        return ThemeService::view('pub_theme::home.index')
             ->with('home', $home)
             ->with('_panel', $home_panel)
             ;
@@ -58,12 +58,21 @@ class HomeController extends Controller {
      */
     public function show(Request $request) {
         $home = null;
+        $home = Tenant::model('home');
+        $mod_name = Panel::get($home)->getModuleName();
+        $home_controller = '\Modules\\'.$mod_name.'\Http\Controllers\HomeController';
+
         if ('' != $request->_act) {
             $home = Tenant::model('home');
             $panel = Panel::get($home);
 
             return $panel->callItemActionWithGate($request->_act);
         }
+
+        if (class_exists($home_controller) && 'Xot' != $mod_name) {
+            return app($home_controller)->show($request);
+        }
+
         try {
             $home = Tenant::modelEager('home');
             $home = $home->firstOrCreate(['id' => 1]);
