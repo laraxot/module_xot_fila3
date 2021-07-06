@@ -62,6 +62,8 @@ abstract class XotBasePanel implements PanelContract {
      */
     public $rows = null;
 
+    public ?string $name = null;
+
     public ?PanelContract $parent = null;
 
     public ?bool $in_admin = null;
@@ -76,11 +78,14 @@ abstract class XotBasePanel implements PanelContract {
 
     public function __construct(PanelPresenterContract $presenter, PanelRouteService $route) {
         //$this->row = $model;
-        $this->presenter = $presenter;
-        $this->presenter->setPanel($this);
+        //$this->presenter = $presenter;
+        //$this->presenter->setPanel($this);
+        $this->presenter = $presenter->setPanel($this);
+        //$this->presenter->setPanel($this);
         $this->row = app($this::$model);
         $this->form = app(PanelFormService::class)->setPanel($this);
         $this->route = $route->setPanel($this);
+        //$this->name = 'TEST';
     }
 
     /*
@@ -101,6 +106,20 @@ abstract class XotBasePanel implements PanelContract {
     public function with(): array {
         return [];
     }
+
+    public function setName(string $name):self{
+        $this->name=$name;
+        return $this;
+    }
+
+    public function getName():string{
+        if($this->name!=null){
+            return $this->name;
+        }else{
+            return $this->postType();
+        }
+    }
+
 
     /**
      * @param object $row
@@ -188,6 +207,12 @@ abstract class XotBasePanel implements PanelContract {
         }
 
         return $parents;
+    }
+
+    public function getBreads(): \Illuminate\Support\Collection {
+        $breads=$this->getParents();
+        $breads->add($this);
+        return $breads;
     }
 
     // questa funzione rilascia un array dei guid dell'url attuale

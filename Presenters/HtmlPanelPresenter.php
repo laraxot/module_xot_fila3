@@ -80,6 +80,7 @@ class HtmlPanelPresenter implements PanelPresenterContract {
 
         //*
         $rows_err = '';
+
         try {
             //dddx($this->panel->rows());
             $rows = $this->panel->rows()->paginate(20);
@@ -105,6 +106,7 @@ class HtmlPanelPresenter implements PanelPresenterContract {
             'view_work' => $view_work,
             'views' => $views,
             '_panel' => $this->panel,
+            '_panel_name' => $this->panel->getName(),
             'row' => $this->panel->row,
             'rows' => $rows,
             'rows_err' => $rows_err,

@@ -182,6 +182,7 @@ class PanelService {
             return response()->view('pub_theme::errors.404', $data, 404);
         }
         $panel->setRows($row);
+        $panel->setName($containers[0]);
         if (isset($items[0])) {
             $panel->in_admin = $in_admin;
             $panel->setItem($items[0]);
@@ -217,6 +218,7 @@ class PanelService {
 
             $panel = PanelService::get($row);
             $panel->setRows($rows);
+            $panel->setName($types);
             $panel->setParent($panel_parent);
 
             if (isset($items[$i])) {

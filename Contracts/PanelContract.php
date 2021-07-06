@@ -12,51 +12,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOneOrMany;
 use Modules\Xot\Services\PanelRouteService;
 
-//use Illuminate\Support\Facades\Request;
 
-//use Illuminate\Contracts\Auth\UserProvider;
-
-//prop Collection|BelongsToMany|HasOneOrMany|ModelContract[] $rows
-
-/**
- * Modules\Xot\Contracts\PanelContract.
- *
- * @property ModelContract                      $row
- * @property bool                               $in_admin
- * @property PanelRouteService                  $route
- * @property HasMany|BelongsToMany|HasOneOrMany $rows
- *
- * @method mixed                          findParentType($type)
- * @method string                         imgSrc($params)
- * @method \Illuminate\Support\Collection getParents()
- * @method string                         postType()
- * @method string                         guid()
- * @method string                         pdfFilename()
- * @method array                          with()
- * @method mixed                          pdf($params)
- * @method PanelContract|null             getParent()
- * @method array                          fields()
- * @method array                          actions()
- * @method Builder                        rows()
- * @method string                         getModuleNameLow()
- * @method bool                           isSuperAdmin()
- * @method mixed                          itemAction()
- * @method string|string[]|void           relatedUrl()
- * @method string                         url($params)
- * @method self                           setRow($row)
- * @method self                           update($data)
- * @method mixed                          out($data=null)
- * @method mixed                          callItemActionWithGate($act)
- * @method mixed                          rules($params=[])
- * @method array                          rulesMessages()
- * @method array                          areas()
- * @method array                          indexFields()
- * @method mixed                          relatedName($params)
- * @method string                         showUrl()
- * @method array                          tabs()
- * @method string                         getModuleName()
- * @method mixed                          callAction($act)
- */
 interface PanelContract {
     /**
      * Undocumented function.

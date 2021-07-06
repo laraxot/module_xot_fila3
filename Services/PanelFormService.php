@@ -195,9 +195,10 @@ class PanelFormService {
     }
 
     public function btnHtml(array $params): ?string {
-        $params['panel'] = $this->panel;
+        //$params['panel'] = $this->panel;
         //$params['url'] = RouteService::urlPanel($params);
-        $params['url'] = $this->panel->route->urlPanel($params);
+        //$params['url'] = $this->panel->route->urlPanel($params);
+        $params['url'] = $this->panel->url($params);
         //dddx([$this->panel->route, $params['panel'], $params['url']]);
         $params['method'] = Str::camel($params['act']);
         if ('index_order' == $params['act']) {
@@ -265,7 +266,7 @@ class PanelFormService {
                 $params['title'] = trans($module_name_low.'::'.strtolower(class_basename($row)).'.act.'.$params['method']);
             }
         }
-
+        $params['panel'] = $this->panel;
         return FormXService::btnHtml($params);
     }
 

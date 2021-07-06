@@ -27,20 +27,6 @@ class PanelMiddleware {
      */
     public function handle(Request $request, Closure $next) {
         $parameters = request()->route()->parameters();
-        //if (! isset($parameters['lang'])) {
-        //$lang = substr($request->server('HTTP_ACCEPT_LANGUAGE'), 0, 2);
-        //$lang = config('xra.lang', 'it');
-        //App::setLocale($lang);
-        //}
-
-        //dddx($parameters);
-        /*
-        * "module" => "lu"
-        * "lang" => "it"
-        * "container0" => "user"
-        *
-        *
-        */
         [$containers, $items] = params2ContainerItem($parameters);
 
         if (0 == count($containers)) {
@@ -66,6 +52,7 @@ class PanelMiddleware {
         }
 
         $panel->setRows($row);
+        $panel->setName($containers[0]);
         if (isset($items[0])) {
             $panel->setItem($items[0]);
         }
@@ -105,6 +92,7 @@ class PanelMiddleware {
 
             $panel = PanelService::get($row);
             $panel->setRows($rows);
+            $panel->setName($types);
             $panel->setParent($panel_parent);
 
             if (isset($items[$i])) {

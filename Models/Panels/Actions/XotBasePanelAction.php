@@ -381,7 +381,7 @@ abstract class XotBasePanelAction {
             }
         }
         $panel = Panel::get($this->row);
-        $panel->setRows($this->rows);
+        $panel->setRowzs($this->rows);
         */
         return $this->panel->pdf($params);
     }
