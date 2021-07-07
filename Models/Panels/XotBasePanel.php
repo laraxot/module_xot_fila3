@@ -687,6 +687,12 @@ abstract class XotBasePanel implements PanelContract {
         return (new PanelActionService($this))->btnItemAction($act);
     }
 
+    //-- nella registrazione 1 tasto, nelle modifiche 3
+    //public function btnSubmit() {
+    //return Form::bsSubmit('save');
+    //    return Form::bsSubmit(trans('xot::buttons.save'));
+    //}
+
     /**
      * Build an "index" query for the given resource.
      *
