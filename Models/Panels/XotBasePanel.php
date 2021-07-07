@@ -1053,7 +1053,10 @@ abstract class XotBasePanel implements PanelContract {
     }
 
     public function imgSrc(array $params): string { //usare PanelImageService
-        $row = optional($this->row);
+        $row = $this->row;
+        if (! is_object($row)) {
+            return null;
+        }
         $src = $row->image_src;
 
         $str0 = '/laravel-filemanager/';
