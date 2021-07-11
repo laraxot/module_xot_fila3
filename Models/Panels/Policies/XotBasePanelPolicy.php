@@ -35,6 +35,10 @@ abstract class XotBasePanelPolicy {
 
     //*/
 
+    public function artisan(?UserContract $user, PanelContract $panel): bool {
+        return false;
+    }
+
     public function index(?UserContract $user, PanelContract $panel): bool {
         return true;
     }
