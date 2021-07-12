@@ -6,6 +6,7 @@ namespace Modules\Xot\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Str;
 use Modules\Xot\Services\PanelService;
 
@@ -26,6 +27,19 @@ class PanelMiddleware {
      */
     public function handle(Request $request, Closure $next) {
         $parameters = request()->route()->parameters();
+        $res=PanelService::getByParams($parameters);
+
+        if(class_basename($res)=='Response'){
+            return $res;
+        }
+        PanelService::setRequestPanel($res);
+        return $next($request);
+    }
+
+    public function handle_old(Request $request, Closure $next) {
+        $parameters = request()->route()->parameters();
+
+
         [$containers, $items] = params2ContainerItem($parameters);
 
         if (0 == count($containers)) {
@@ -59,7 +73,9 @@ class PanelMiddleware {
 
         for ($i = 1; $i < count($containers); ++$i) {
             $row_prev = $panel_parent->row;
-            $types = Str::camel(Str::plural($containers[$i]));
+            $types=$containers[$i];
+            //$types=Str::plural($types);
+            $types = Str::camel($types);
             try {
                 $rows = $row_prev->{$types}();
             } catch (\Exception $e) {
@@ -74,7 +90,6 @@ class PanelMiddleware {
 
                 return response()->view('pub_theme::errors.404', $data, 404);
             } catch (\Error $e) {
-                //return response("User can't perform this action.", 404);
                 $data = [
                     'message' => $e->getMessage(),
                     'lang' => \App::getLocale(),

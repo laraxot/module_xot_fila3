@@ -5,10 +5,13 @@ declare(strict_types=1);
 namespace Modules\Xot\Services;
 
 //----------- Requests ----------
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\Relation;
+use ErrorException;
+use ReflectionClass;
+use ReflectionMethod;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Database\Eloquent\Model;
 use Modules\Xot\Contracts\ModelContract;
+use Illuminate\Database\Eloquent\Relations\Relation;
 
 // per dizionario morph
 //------------ services ----------
@@ -54,6 +57,72 @@ class ModelService {
 
         return $data;
     }
+
+    /**
+     * Undocumented function
+     * funziona leggendo o il "commento" prima della funzione o quello che si dichiara come returnType
+     * @param [type] $model
+     * @return void
+     */
+    public static function getRelations($model){
+        $reflector = new ReflectionClass($model);
+        $relations = [];
+        $methods=$reflector->getMethods();
+
+        foreach ($methods as $method) {
+            $returnType = $method->getReturnType();
+            $doc = $method->getDocComment();
+            $res=$method->getName();
+
+            if($method->getNumberOfRequiredParameters()==0 && $method->class == get_class($model)){
+                if ($returnType && strpos($returnType->getName(),'\\Relations\\') !== false) {
+                    //if (in_array(class_basename($returnType->getName()), ['HasOne', 'HasMany', 'BelongsTo', 'BelongsToMany', 'MorphToMany', 'MorphTo'])) {
+                        $relations[] = $res;
+                }elseif($doc && strpos($doc, '\\Relations\\') !== false){
+                    $relations[] = $res;
+                }
+            }
+
+        }
+
+        return $relations;
+    }
+
+    /**
+     * Undocumented function
+     * questa funzione va ad esequire e prende il risultato, buona per controllare le 2 funzioni che devono dare lo stesso numero, questa funzione molto piu' lenta (da controllare)
+     * @param [type] $model
+     * @return void
+     * https://laracasts.com/discuss/channels/eloquent/get-all-model-relationships
+     */
+    public static function getRelationships($model){
+        $relationships = [];
+
+        foreach((new ReflectionClass($model))->getMethods(ReflectionMethod::IS_PUBLIC) as $method) {
+            if ($method->class != get_class($model) ||
+                !empty($method->getParameters()) ||
+                $method->getName() == __FUNCTION__) {
+                continue;
+            }
+
+            try {
+                $return = $method->invoke($model);
+
+                if ($return instanceof Relation) {
+                    $relationships[$method->getName()] = [
+                        'name' => $method->getName(),
+                        'type' => (new ReflectionClass($return))->getShortName(),
+                        'model' => (new ReflectionClass($return->getRelated()))->getName()
+                    ];
+                }
+            } catch(ErrorException $e) {}
+        }
+
+        return $relationships;
+    }
+
+
+
 
     /**
      * @param array|string $index
