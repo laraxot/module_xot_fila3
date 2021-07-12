@@ -167,6 +167,13 @@ abstract class XotBasePanel implements PanelContract {
         return $this;
     }
 
+    public function setBrother(?PanelContract $panel): self {
+        $this->setParent($panel->getParent());
+        $this->setName($panel->getName());
+
+        return $this;
+    }
+
     // se uso in rows() getQuery il dato ottenuto e' una collezione di items non di modelli
     public function getHydrate(object $data): PanelContract {
         if ('stdClass' == get_class($data)) {
@@ -1404,18 +1411,18 @@ abstract class XotBasePanel implements PanelContract {
      * @return array[]
      */
     public function getItemTabs() {
-        return (new PanelTabService($this))->getItemTabs();
+        return (new PanelTabService($this))->{__FUNCTION__}();
     }
 
     /**
      * @return array
      */
     public function getRowTabs() {
-        return (new PanelTabService($this))->getRowTabs();
+        return (new PanelTabService($this))->{__FUNCTION__}();
     }
 
     public function getTabs(): array {
-        return (new PanelTabService($this))->getTabs();
+        return (new PanelTabService($this))->{__FUNCTION__}();
     }
 
     /**

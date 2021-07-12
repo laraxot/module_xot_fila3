@@ -164,11 +164,11 @@ class PanelService {
         if (0 == count($containers)) {
             PanelService::setRequestPanel(null);
 
-            //return $next($request);
             return null;
         }
 
-        $row = xotModel($containers[0]);
+        //$row = xotModel($containers[0]);
+        $row = TenantService::model($containers[0]);
         try {
             $panel = PanelService::get($row);
         } catch (\Exception $e) {
@@ -192,7 +192,7 @@ class PanelService {
 
         for ($i = 1; $i < count($containers); ++$i) {
             $row_prev = $panel_parent->row;
-            $types=$containers[$i];
+            $types = $containers[$i];
             //$types=Str::plural($types);
             $types = Str::camel($types);
             try {

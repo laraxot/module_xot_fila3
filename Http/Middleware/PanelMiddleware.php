@@ -6,8 +6,8 @@ namespace Modules\Xot\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Response;
-use Illuminate\Support\Str;
+//use Illuminate\Support\Facades\Response;
+//use Illuminate\Support\Str;
 use Modules\Xot\Services\PanelService;
 
 //use Illuminate\Http\Response;
@@ -37,6 +37,7 @@ class PanelMiddleware {
         return $next($request);
     }
 
+    /*
     public function handle_old(Request $request, Closure $next) {
         $parameters = request()->route()->parameters();
 
@@ -118,4 +119,5 @@ class PanelMiddleware {
 
         return $next($request);
     }
+    */
 }
