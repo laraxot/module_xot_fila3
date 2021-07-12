@@ -363,7 +363,13 @@ class FileService {
             try {
                 File::copy($filename_from, $filename_to);
             } catch (Exception $e) {
-                dddx(['Caught exception: '.$e->getMessage()]);
+                dddx(
+                    [
+                        'message' => $e->getMessage(),
+                        'filename_from' => $filename_from,
+                        'filename_to' => $filename_to,
+                    ]
+                );
             }
         } else {
             //if (! File::exists($filename_from)) {

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * https://devdojo.com/devdojo/simple-laravel-route-testing.
  */
@@ -28,7 +30,7 @@ class RouteDomTest extends TestCase {
     public function checkLinks($urls, $depth = 0) {
         $base_url = env('APP_URL');
 
-        if ($depth > 1) {
+        if ($depth > 2) {
             return;
         }
         $i = 0;
