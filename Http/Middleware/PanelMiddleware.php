@@ -27,18 +27,18 @@ class PanelMiddleware {
      */
     public function handle(Request $request, Closure $next) {
         $parameters = request()->route()->parameters();
-        $res=PanelService::getByParams($parameters);
+        $res = PanelService::getByParams($parameters);
 
-        if(class_basename($res)=='Response'){
+        if ('Response' == class_basename($res)) {
             return $res;
         }
         PanelService::setRequestPanel($res);
+
         return $next($request);
     }
 
     public function handle_old(Request $request, Closure $next) {
         $parameters = request()->route()->parameters();
-
 
         [$containers, $items] = params2ContainerItem($parameters);
 
@@ -73,7 +73,7 @@ class PanelMiddleware {
 
         for ($i = 1; $i < count($containers); ++$i) {
             $row_prev = $panel_parent->row;
-            $types=$containers[$i];
+            $types = $containers[$i];
             //$types=Str::plural($types);
             $types = Str::camel($types);
             try {
