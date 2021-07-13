@@ -30,7 +30,7 @@ class RouteDomTest extends TestCase {
     public function checkLinks($urls, $depth = 0) {
         $base_url = env('APP_URL');
 
-        if ($depth > 2) {
+        if ($depth > 1) {
             return;
         }
         $i = 0;
