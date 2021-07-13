@@ -72,7 +72,12 @@ class PanelService {
      * @throws \ReflectionException
      */
     public static function get($model): PanelContract {
-        return self::setModel($model)->panel();
+        $panel = self::setModel($model)->panel();
+        $post_type = $panel->postType();
+        $name = Str::plural($post_type);
+        $panel->setName($name);
+
+        return $panel;
     }
 
     /**
