@@ -800,6 +800,7 @@ abstract class XotBasePanel implements PanelContract {
      * https://github.com/spatie/laravel-query-builder/issues/452.
      * https://forum.laravel-livewire.com/t/anybody-using-spatie-laravel-query-builder-with-livewire/299/5
      * https://github.com/spatie/laravel-query-builder/issues/243.
+     * https://github.com/spatie/laravel-query-builder/pull/223.
      *
      * @param \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Query\Builder $query
      *
