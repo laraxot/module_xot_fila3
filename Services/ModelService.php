@@ -6,12 +6,12 @@ namespace Modules\Xot\Services;
 
 //----------- Requests ----------
 use ErrorException;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\Relation;
+use Illuminate\Support\Facades\Schema;
+use Modules\Xot\Contracts\ModelContract;
 use ReflectionClass;
 use ReflectionMethod;
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Eloquent\Model;
-use Modules\Xot\Contracts\ModelContract;
-use Illuminate\Database\Eloquent\Relations\Relation;
 
 // per dizionario morph
 //------------ services ----------
@@ -60,29 +60,30 @@ class ModelService {
 
     /**
      * Undocumented function
-     * funziona leggendo o il "commento" prima della funzione o quello che si dichiara come returnType
+     * funziona leggendo o il "commento" prima della funzione o quello che si dichiara come returnType.
+     *
      * @param [type] $model
+     *
      * @return void
      */
-    public static function getRelations($model){
+    public static function getRelations($model) {
         $reflector = new ReflectionClass($model);
         $relations = [];
-        $methods=$reflector->getMethods();
+        $methods = $reflector->getMethods();
 
         foreach ($methods as $method) {
             $returnType = $method->getReturnType();
             $doc = $method->getDocComment();
-            $res=$method->getName();
+            $res = $method->getName();
 
-            if($method->getNumberOfRequiredParameters()==0 && $method->class == get_class($model)){
-                if ($returnType && strpos($returnType->getName(),'\\Relations\\') !== false) {
+            if (0 == $method->getNumberOfRequiredParameters() && $method->class == get_class($model)) {
+                if ($returnType && false !== strpos($returnType->getName(), '\\Relations\\')) {
                     //if (in_array(class_basename($returnType->getName()), ['HasOne', 'HasMany', 'BelongsTo', 'BelongsToMany', 'MorphToMany', 'MorphTo'])) {
-                        $relations[] = $res;
-                }elseif($doc && strpos($doc, '\\Relations\\') !== false){
+                    $relations[] = $res;
+                } elseif ($doc && false !== strpos($doc, '\\Relations\\')) {
                     $relations[] = $res;
                 }
             }
-
         }
 
         return $relations;
@@ -90,18 +91,20 @@ class ModelService {
 
     /**
      * Undocumented function
-     * questa funzione va ad esequire e prende il risultato, buona per controllare le 2 funzioni che devono dare lo stesso numero, questa funzione molto piu' lenta (da controllare)
+     * questa funzione va ad esequire e prende il risultato, buona per controllare le 2 funzioni che devono dare lo stesso numero, questa funzione molto piu' lenta (da controllare).
+     *
      * @param [type] $model
+     *
      * @return void
-     * https://laracasts.com/discuss/channels/eloquent/get-all-model-relationships
+     *              https://laracasts.com/discuss/channels/eloquent/get-all-model-relationships
      */
-    public static function getRelationships($model){
+    public static function getRelationships($model) {
         $relationships = [];
 
-        foreach((new ReflectionClass($model))->getMethods(ReflectionMethod::IS_PUBLIC) as $method) {
+        foreach ((new ReflectionClass($model))->getMethods(ReflectionMethod::IS_PUBLIC) as $method) {
             if ($method->class != get_class($model) ||
-                !empty($method->getParameters()) ||
-                $method->getName() == __FUNCTION__) {
+                ! empty($method->getParameters()) ||
+                __FUNCTION__ == $method->getName()) {
                 continue;
             }
 
@@ -112,17 +115,26 @@ class ModelService {
                     $relationships[$method->getName()] = [
                         'name' => $method->getName(),
                         'type' => (new ReflectionClass($return))->getShortName(),
-                        'model' => (new ReflectionClass($return->getRelated()))->getName()
+                        'model' => (new ReflectionClass($return->getRelated()))->getName(),
                     ];
                 }
-            } catch(ErrorException $e) {}
+            } catch (ErrorException $e) {
+            }
         }
 
         return $relationships;
     }
 
+    public static function getNameRelationships($model): array {
+        $relations = self::getRelationships($model);
+        $names = collect($relations)->map(
+            function ($item) {
+                return $item['name'];
+            }
+        )->values()->all();
 
-
+        return $names;
+    }
 
     /**
      * @param array|string $index
@@ -141,7 +153,7 @@ class ModelService {
             if (! $doctrineTable->hasIndex($tbl.'_'.$index.'_index')) {
                 Schema::connection($conn->getName())->table(
                     $tbl,
-                    function ($table) use ($index) {
+                    function ($table) use ($index): void {
                         $table->index($index);
                     }
                 );
@@ -153,11 +165,11 @@ class ModelService {
         return \Schema::connection($model->getConnectionName())->hasColumn($model->getTable(), $field_name);
     }
 
-    public static function addField(Model $model, string $field_name, string $field_type, array $attrs = []) {
+    public static function addField(Model $model, string $field_name, string $field_type, array $attrs = []): void {
         if (! \Schema::connection($model->getConnectionName())->hasColumn($model->getTable(), $field_name)) {
             \Schema::connection($model->getConnectionName())
                 ->table($model->getTable(),
-                    function ($table) use ($field_name, $field_type) {
+                    function ($table) use ($field_name, $field_type): void {
                         $table->{$field_type}($field_name);
                     }
                 );
@@ -168,10 +180,8 @@ class ModelService {
      * execute a query.
      *
      * @param [type] $model
-     *
-     * @return void
      */
-    public static function query($model, string $sql) {
+    public static function query($model, string $sql): void {
         $model->getConnection()->statement($sql);
     }
 
