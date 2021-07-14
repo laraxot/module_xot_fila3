@@ -20,7 +20,7 @@ use Illuminate\Support\Facades\View;
 //use Modules\Xot\Engines\Opcache;
 //--- services ---
 use Illuminate\Translation\Translator;
-use Laravel\Scout\EngineManager;
+//use Laravel\Scout\EngineManager;
 use Modules\Xot\Contracts\PanelPresenterContract;
 use Modules\Xot\Engines\FullTextSearchEngine;
 use Modules\Xot\Http\View\Composers\XotComposer;
@@ -91,10 +91,11 @@ class XotServiceProvider extends XotBaseServiceProvider {
         $this->registerTranslator();
         //$this->registerCacheOPCache();
         //*/
-        resolve(EngineManager::class)->extend('fulltext', function () {
+        /* --- Scout lo ho tolto per ora
+        resolve(\Laravel\Scout\EngineManager::class)->extend('fulltext', function () {
             return new FullTextSearchEngine();
         });
-
+        */
         //$this->registerLivewireComponents();
         $this->registerViewComposers();
 
