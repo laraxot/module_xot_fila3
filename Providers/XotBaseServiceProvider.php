@@ -37,7 +37,7 @@ abstract class XotBaseServiceProvider extends ServiceProvider {
         $this->registerTranslations();
         $this->registerConfig();
         $this->registerViews();
-        $this->registerFactories();
+        //$this->registerFactories();
         $this->loadMigrationsFrom($this->module_dir.'/../Database/Migrations');
         if (method_exists($this, 'bootCallback')) {
             $this->bootCallback();
