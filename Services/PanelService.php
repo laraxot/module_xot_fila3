@@ -71,8 +71,13 @@ class PanelService {
      * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
      * @throws \ReflectionException
      */
-    public static function get($model): PanelContract {
-        return self::setModel($model)->panel();
+    public static function get(Model $model): PanelContract {
+        $panel = self::setModel($model)->panel();
+        $post_type = $panel->postType();
+        $name = Str::plural($post_type);
+        $panel->setName($name);
+
+        return $panel;
     }
 
     /**
@@ -164,11 +169,11 @@ class PanelService {
         if (0 == count($containers)) {
             PanelService::setRequestPanel(null);
 
-            //return $next($request);
             return null;
         }
 
-        $row = xotModel($containers[0]);
+        //$row = xotModel($containers[0]);
+        $row = TenantService::model($containers[0]);
         try {
             $panel = PanelService::get($row);
         } catch (\Exception $e) {
@@ -192,7 +197,9 @@ class PanelService {
 
         for ($i = 1; $i < count($containers); ++$i) {
             $row_prev = $panel_parent->row;
-            $types = Str::camel(Str::plural($containers[$i]));
+            $types = $containers[$i];
+            //$types=Str::plural($types);
+            $types = Str::camel($types);
             try {
                 $rows = $row_prev->{$types}();
             } catch (\Exception $e) {

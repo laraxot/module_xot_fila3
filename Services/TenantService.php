@@ -210,6 +210,7 @@ class TenantService {
      * @return ModelContract|Model
      */
     public static function model(string $name) {
+        $name = Str::singular($name);
         $name = Str::snake($name);
         $class = self::config('xra.model.'.$name);
         if ('' == $class) {

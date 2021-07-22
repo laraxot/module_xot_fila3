@@ -34,6 +34,9 @@ use Modules\Xot\Services\PanelTabService;
 use Modules\Xot\Services\PolicyService;
 use Modules\Xot\Services\RouteService;
 use Modules\Xot\Services\StubService;
+use Spatie\QueryBuilder\AllowedFilter;
+use Spatie\QueryBuilder\Filters\Filter;
+use Spatie\QueryBuilder\QueryBuilder;
 
 /**
  * Class XotBasePanel.
@@ -163,6 +166,13 @@ abstract class XotBasePanel implements PanelContract {
     //        Modules\Xot\Contracts\PanelContract|null given.
     public function setParent(?PanelContract $parent): self {
         $this->parent = $parent;
+
+        return $this;
+    }
+
+    public function setBrother(?PanelContract $panel): self {
+        $this->setParent($panel->getParent());
+        $this->setName($panel->getName());
 
         return $this;
     }
@@ -785,6 +795,13 @@ abstract class XotBasePanel implements PanelContract {
     }
 
     /**
+     * https://lyften.com/projects/laravel-repository/doc/searching.html.
+     * https://spatie.be/docs/laravel-query-builder/v3/features/filtering
+     * https://github.com/spatie/laravel-query-builder/issues/452.
+     * https://forum.laravel-livewire.com/t/anybody-using-spatie-laravel-query-builder-with-livewire/299/5
+     * https://github.com/spatie/laravel-query-builder/issues/243.
+     * https://github.com/spatie/laravel-query-builder/pull/223.
+     *
      * @param \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Query\Builder $query
      *
      * @return \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Query\Builder
@@ -793,28 +810,34 @@ abstract class XotBasePanel implements PanelContract {
         if (! isset($q)) {
             return $query;
         }
-        $tipo = 0; //0 a mano , 1 repository, 2 = scout
+        /*
+        $test = QueryBuilder::for($query)
+            //->allowedFilters(Filter::FiltersExact('q', 'matr'))
+            ->allowedFilters([AllowedFilter::exact('q', 'matr'), AllowedFilter::exact('q', 'ente')])
+            // ->allowedIncludes('posts')
+            //->allowedFilters('matr')
+            ->get();
+        */
+        /*
+            ->allowedFilters([
+                Filter::search('q', ['first_name', 'last_name', 'address.city', 'address.country']),
+            ]);
+        */
+        //dddx($test);
 
+        $tipo = 0; //0 a mano , 1 repository, 2 = scout
         switch ($tipo) {
             case 0:
-                //dddx($this->search());
                 $search_fields = $this->search(); //campi di ricerca
                 if (0 == count($search_fields)) { //se non gli passo nulla, cerco in tutti i fillable
                     $search_fields = with(new $this::$model())->getFillable();
                 }
-
                 $table = with(new $this::$model())->getTable();
                 if (strlen($q) > 1) {
                     $query = $query->where(function ($subquery) use ($search_fields, $q): void {
                         foreach ($search_fields as $k => $v) {
-                            /*
-                            if (! Str::contains($v, '.')) {
-                                $v = $table.'.'.$v;
-                            }
-                            */
                             if (Str::contains($v, '.')) {
                                 [$rel, $rel_field] = explode('.', $v);
-                                //dddx([$rel, $rel_field, $q]);
                                 $subquery = $subquery->orWhereHas(
                                     $rel,
                                     function (Builder $subquery1) use ($rel_field, $q): void {
@@ -1404,18 +1427,18 @@ abstract class XotBasePanel implements PanelContract {
      * @return array[]
      */
     public function getItemTabs() {
-        return (new PanelTabService($this))->getItemTabs();
+        return (new PanelTabService($this))->{__FUNCTION__}();
     }
 
     /**
      * @return array
      */
     public function getRowTabs() {
-        return (new PanelTabService($this))->getRowTabs();
+        return (new PanelTabService($this))->{__FUNCTION__}();
     }
 
     public function getTabs(): array {
-        return (new PanelTabService($this))->getTabs();
+        return (new PanelTabService($this))->{__FUNCTION__}();
     }
 
     /**
@@ -1446,8 +1469,9 @@ abstract class XotBasePanel implements PanelContract {
         }
 
         //dddx(get_class($this));
-        //$with = $this->with();
-        //$query = $query->with($with); //Method Illuminate\Database\Eloquent\Collection::with does not exist.
+        $with = $this->with();
+        //dddx($with);
+        $query = $query->with($with); //Method Illuminate\Database\Eloquent\Collection::with does not exist.
         /*
         * se prendo il builder perdo il modello.
         */

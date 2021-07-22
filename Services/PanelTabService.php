@@ -46,10 +46,16 @@ class PanelTabService {
 
     public function getRowTabs(): array {
         $data = [];
+
         foreach ($this->panel->tabs() as $tab) {
             $tmp = (object) [];
-            $tmp->title = $tab;
+            $tmp->title = trans($this->panel->getModuleNameLow().'::'.class_basename($this->panel->row).'.tab.'.$tab);
             $tmp->url = $this->panel->relatedUrl(['related_name' => $tab, 'act' => 'index']);
+            /*
+            if ('#' != $tmp->url[0]) {
+                dddx(['tmp' => $tmp, 'panel' => $this->panel]);
+            }
+            */
             $tmp->index_edit_url = $this->panel->relatedUrl(['related_name' => $tab, 'act' => 'index_edit']);
             $tmp->create_url = $this->panel->relatedUrl(['related_name' => $tab, 'act' => 'create']);
             $tmp->active = false;

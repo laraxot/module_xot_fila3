@@ -425,6 +425,17 @@ if (! \function_exists('xotModel')) {
     }
 }
 
+if (! \function_exists('xotModelEager')) {
+    /**
+     * @param string $name
+     *
+     * @return array|false|mixed
+     */
+    function xotModelEager($name) {
+        return Tenant::modelEager($name);
+    }
+}
+
 if (! \function_exists('transFields')) {
     /**
      * @param array $params

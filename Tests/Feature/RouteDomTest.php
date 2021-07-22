@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * https://devdojo.com/devdojo/simple-laravel-route-testing.
  */
@@ -13,10 +15,8 @@ use Tests\TestCase;
 class RouteDomTest extends TestCase {
     /**
      * A basic test example.
-     *
-     * @return void
      */
-    public function testRoutes() {
+    public function testRoutes(): void {
         $urls = [
             '/',
             //'/'.App::getlocale().'/home', //questo url mi da errore
@@ -25,10 +25,10 @@ class RouteDomTest extends TestCase {
         $this->checkLinks($urls);
     }
 
-    public function checkLinks($urls, $depth = 0) {
+    public function checkLinks($urls, $depth = 0): void {
         $base_url = env('APP_URL');
 
-        if ($depth > 1) {
+        if ($depth > 5) {
             return;
         }
         $i = 0;

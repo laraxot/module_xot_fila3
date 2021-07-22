@@ -10,15 +10,12 @@ use Closure;
 use Illuminate\Support\Facades\URL;
 
 /**
- * Class SetDefaultLocaleForUrlsMiddleware
- * @package Modules\Xot\Http\Middleware
+ * Class SetDefaultLocaleForUrlsMiddleware.
  */
 class SetDefaultLocaleForUrlsMiddleware {
     /**
      * Handle the incoming request.
      *
-     * @param \Illuminate\Http\Request $request
-     * @param Closure $next
      * @return \Illuminate\Http\Response
      */
     public function handle(\Illuminate\Http\Request $request, Closure $next) {
