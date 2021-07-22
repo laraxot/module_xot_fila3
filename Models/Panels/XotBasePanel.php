@@ -306,13 +306,30 @@ abstract class XotBasePanel implements PanelContract {
         $value = Str::slug($guid); //retrocompatibilita'
         if ('guid' == $pk_full) {
             $rows = $rows->whereHas(
-                'post',
+                'posts',
                 function (Builder $query) use ($value): void {
                     $query->where('guid', $value);
                 }
             );
         } else {
             $rows = $rows->where([$pk_full => $value]);
+        }
+
+        if ($rows->count() > 1) {
+            $row_last = $rows->latest()->first();
+            if ('guid' == $pk_full) {
+                $guid_old = $row_last->post->guid;
+                $row_last->post->update(['guid' => $guid_old.'-1']);
+            }
+            //*
+            dddx(
+                [
+                    'error' => 'multiple',
+                    'rows' => $rows->get(),
+                    'row_last' => $row_last,
+                ]
+            );
+            //*/
         }
         $this->row = $rows->first();
 

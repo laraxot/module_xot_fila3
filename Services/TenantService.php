@@ -135,6 +135,13 @@ class TenantService {
         return config($key);
     }
 
+
+    public static function getTenantConfigPath(string $key) : string{
+        $tenant_name = self::getName();
+        $path = str_replace('/', '.', $tenant_name).'.'.$key;
+        return $path;
+    }
+
     /*
     public static function config(string $key) {
        $group = implode('.', array_slice(explode('.', $key), 0, 2));

@@ -71,6 +71,17 @@ https://docs.gitlab.com/ee/user/project/merge_requests/code_quality.html
 
 
 
+https://github.com/enlightn/enlightn
+
+ "edgedesign/phpqa": "^1.23",
+
+ "phan/phan": "^4.0",
+        "phpmetrics/phpmetrics": "^2.7",
+        "phpunit/php-code-coverage": "^9.2",
+
+
+
+
 
 
 
