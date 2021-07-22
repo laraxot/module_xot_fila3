@@ -788,7 +788,7 @@ abstract class XotBasePanel {
         $fields = $this->createFields();
         $row = $this->row;
         $res = '';
-        //$res.='<h3>'.$this->storeUrl().'</h3>'; //4 debug
+        //$res.='<h3>'.$this->url(['act'=>'store']).'</h3>'; //4 debug
         $res .= Form::bsOpenPanel($this, 'store');
         $res .= '<div class="clearfix">';
         foreach ($fields as $field) {
@@ -812,7 +812,7 @@ abstract class XotBasePanel {
         $fields = $this->editFields();
         $row = $this->row;
         $res = '';
-        //$res.='<h3>'.$this->storeUrl().'</h3>'; //4 debug
+        //$res.='<h3>'.$this->url(['act'=>'store']).'</h3>'; //4 debug
         $res .= Form::bsOpenPanel($this, 'update');
         $res .= '<div class="clearfix">';
         foreach ($fields as $field) {
@@ -1068,7 +1068,7 @@ abstract class XotBasePanel {
         $parz = [
             'id' => $this->row->getKey(),
             'btn_class' => 'btn '.$class,
-            'route' => $this->detachUrl(),
+            'route' => $this->url(['act'=>'detach']),
             'act' => $act,
         ];
 
@@ -1593,16 +1593,16 @@ abstract class XotBasePanel {
                 if (Gate::allows('index', $panel)) {
                     $tmp = new \stdClass();
                     $tmp->title = '<< Back '; //.'['.get_class($item).']';
-                    $tmp->url = $panel->indexUrl();
+                    $tmp->url = $panel->url(['act'=>'index']);
                     $tmp->active = false;
                     $row[] = $tmp;
                 }
                 //-----------------------
                 $tmp = new \stdClass();
                 if (in_array($act, ['index_edit', 'edit', 'update'])) {
-                    $url = $panel->editUrl();
+                    $url = $panel->url(['act'=>'edit']);
                 } else {
-                    $url = $panel->showUrl();
+                    $url = $panel->url(['act'=>'show']);
                 }
                 $tmp->url = $url;
                 $tmp->title = 'Content '; //.'['.request()->url().']['.$url.']';
@@ -1915,14 +1915,14 @@ abstract class XotBasePanel {
         $bread[] = $tmp;
         foreach ($parents as $parent) {
             $tmp = (object) [];
-            $tmp->url = $parent->indexUrl();
+            $tmp->url = $parent->url(['act'=>'index']);
             $tmp->title = $parent->postType();
             $tmp->obj = \Theme::xotModel($tmp->title);
             $tmp->method = 'index';
             $bread[] = $tmp;
             try {
                 $tmp = (object) [];
-                $tmp->url = $parent->showUrl();
+                $tmp->url = $parent->url(['act'=>'show']);
                 $tmp->title = $parent->row->title;
                 $tmp->obj = \Theme::xotModel($parent->postType());
                 $tmp->method = 'show';

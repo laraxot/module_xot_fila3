@@ -102,16 +102,16 @@ class PanelTabService {
                     $tmp = new \stdClass();
                     //$tmp->title = '<< Back '; //.'['.get_class($item).']';
                     $tmp->title = 'Back'; //.'['.get_class($item).']';
-                    $tmp->url = $panel->indexUrl();
+                    $tmp->url = $panel->url(['act'=>'index']);
                     $tmp->active = false;
                     $row[] = $tmp;
                 }
                 //-----------------------
                 $tmp = new \stdClass();
                 if (in_array($act, ['index_edit', 'edit', 'update'])) {
-                    $url = $panel->editUrl();
+                    $url = $panel->url(['act'=>'edit']);
                 } else {
-                    $url = $panel->showUrl();
+                    $url = $panel->url(['act'=>'show']);
                 }
                 $tmp->url = $url;
                 $tmp->title = 'Content'; //.'['.request()->url().']['.$url.']';

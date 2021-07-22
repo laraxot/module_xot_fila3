@@ -45,14 +45,14 @@ class RouteBrowserTest extends TestCase {
         $response = $this->visit('/');
         $response = $response->click('add-restaurant');
         $response->seeRouteIs('container0.create', ['lang' => $this->lang, 'container0' => 'restaurant_owner']);
-        $url = $this->restaurant_owner_panel->createUrl();
+        $url = $this->restaurant_owner_panel->url(['act'=>'create']);
         $url = Str::before($url, '?');
         $response->seePageIs($url);
         $attributes = factory(RestaurantOwner::class)->raw();
         $response->types = $attributes;
         $response->press('save');
         /*--- commentato perche' da sistemare !
-        $url=$this->restaurant_owner_panel->editUrl();
+        $url=$this->restaurant_owner_panel->url(['act'=>'edit']);
         $response->seePageIs($url);
         */
         //ddd($attributes);

@@ -4,8 +4,9 @@ declare(strict_types=1);
 
 namespace Modules\Xot\Services;
 
-use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Route;
 use Modules\Xot\Contracts\PanelContract;
 
 /**
@@ -61,6 +62,32 @@ class PanelRouteService {
         return 'admin' == 'aa';
         */
         //return in_admin();
+    }
+
+    public function addCacheQueryString(string $route):string{
+        $path='/'.request()->path();
+        $cache_key=$path.'_query';
+        Cache::forever($cache_key, request()->query());
+        //echo '[cache_key['.$cache_key.']['.$route.']]';
+
+
+        //--- aggiungo le query string all'url corrente
+        //$queries = collect(request()->query())->except(['_act', 'item0', 'item1'])->all();
+        $cache_key=Str::before($route,'?').'_query';
+
+        $queries=Cache::get($cache_key);
+        if(!is_array($queries)){
+            $queries=[];
+        }
+
+        $url = url_queries($queries, $route);
+
+        if (Str::endsWith($url, '?')) {
+            $url = Str::before($url, '?');
+        }
+        $url=str_replace(url('/'),'/',$url);
+
+        return $url;
     }
 
 
@@ -128,6 +155,23 @@ class PanelRouteService {
             return '#['.__LINE__.']['.__FILE__.']['.$e->getMessage().']';
         }
 
+
+        return $this->addCacheQueryString($route);
+        /*
+        if(!in_array($act,['update','create','edit','show'])){
+            dddx(
+                [
+                    'act'=>$act,
+                    'route'=>$route,
+                    'params' => $params,
+                    'route_name' => $route_name,
+                    'route_params' => $route_params,
+                    //'routes' => \Route::getRoutes(),
+                ]);
+        }
+        */
+
+        /*
         //--- aggiungo le query string all'url corrente
         $queries = collect(request()->query())->except(['_act', 'item0', 'item1'])->all();
 
@@ -137,108 +181,10 @@ class PanelRouteService {
             $url = Str::before($url, '?');
         }
         $url=str_replace(url('/'),'/',$url);
-
-        return $url;
-    }
-
-    public function urlPanel_old(array $params = []): string {
-        $panel = $this->panel;
-
-        $act = 'show'; //default
-        extract($params);
-        $parents = $panel->getParents();
-
-        $container_root = $panel->row;
-        if ($parents->count() > 0) {
-            $container_root = $parents->first()->row;
-        }
-        $n = 0;
-        $parz = ['n' => $n + $parents->count(), 'act' => $act];
-        //dddx($parz);
-        if (isset($in_admin)) {
-            $parz['in_admin'] = $in_admin;
-        }
-        if (isset($panel->in_admin)) {
-            $parz['in_admin'] = $panel->in_admin;
-        }
-
-        //dddx($panel);
-        $route_name = self::getRoutenameN($parz);
-        /*
-        $route_current = Route::current();
-        $route_params = is_object($route_current) ? $route_current->parameters() : [];
-        if (isset($params['route_params']) && is_array($params['route_params'])) {
-            $route_params = array_merge($params['route_params'], $route_params);
-        }
-        */
-        $route_params = $panel->getRouteParams();
-        $i = 0;
-        foreach ($parents as $parent) {
-            $route_params['container'.($n + $i)] = $parent->postType();
-            $route_params['item'.($n + $i)] = $parent->guid();
-            ++$i;
-        }
-
-        $post_type = $panel->postType();
-        /*
-        if( $post_type==null) {
-            $post_type=Str::snake(class_basename($panel->row));
-
-            if($panel->getParent()!=null){
-                $parent_post_type=Str::snake(class_basename($panel->getParent()->row));
-                if(Str::startsWith($post_type,$parent_post_type.'_')){
-                    $post_type=Str::after($post_type,$parent_post_type.'_');
-                }
-            }
-        }
         */
 
-        $route_params['container'.($n + $i)] = $panel->postType();
-
-        $route_params['item'.($n + $i)] = $panel->guid();
-
-        if (inAdmin($params) && ! isset($route_params['module'])) {
-            $container0 = $route_params['container0'];
-            $model = xotModel($container0);
-            $module_name = (string) getModuleNameFromModel($model);
-            $route_params['module'] = strtolower($module_name);
-        }
-
-        try {
-            $route = route($route_name, $route_params, false);
-        } catch (\Exception $e) {
-            if (request()->input('debug', false)) {
-                dddx(
-                ['e' => $e->getMessage(),
-                    'params' => $params,
-                    'route_name' => $route_name,
-                    'route_params' => $route_params,
-                    'last row' => $panel->row,
-                    'panel post type' => $panel->postType(),
-                    'panel guid' => $panel->guid(),
-                    'last route key ' => $panel->row->getRouteKey(),
-                    'last route key name' => $panel->row->getRouteKeyName(),
-                    'in_admin' => config()->get('in_admin'),
-                    'in_admin_session' => session()->get('in_admin'),
-                    //'routes' => \Route::getRoutes(),
-                ]
-            );
-            }
-
-            return '#['.__LINE__.']['.__FILE__.']['.$e->getMessage().']';
-        }
-
-        //--- aggiungo le query string all'url corrente
-        $queries = collect(request()->query())->except(['_act', 'item0', 'item1'])->all();
-
-        $url = url_queries($queries, $route);
-
-        if (Str::endsWith($url, '?')) {
-            $url = Str::before($url, '?');
-        }
-
-        return $url;
     }
+
 
     //se n=0 => 'container0'
     // se n=1 => 'container0.container1'
@@ -325,7 +271,7 @@ class PanelRouteService {
             $route_params['module'] = strtolower($module_name);
         }
 
-        $route_params['page'] = 1;
+        //$route_params['page'] = 1;
         $route_params['_act'] = '';
         unset($route_params['_act']);
 
@@ -352,9 +298,37 @@ class PanelRouteService {
 
             return '#['.__LINE__.']['.__FILE__.']['.$e->getMessage().']';
         }
+        /*
+        if(in_array($act,['index_edit'])){
+            dddx(
+                [
+                    'act'=>$act,
+                    'route'=>$route,
+                    'route1'=>Str::before($route,'?'),
+                    'params' => $params,
+                    'route_name' => $route_name,
+                    'route_params' => $route_params,
+                    'request_query' => request()->query(),
+                    'request_url' => request()->url(),
+                    'request_path' => '/'.request()->path(),
+                    //'ff'=> \Route::current()->parameters(),
+                    //'routes' => \Route::getRoutes(),
+                ]);
+        }
+        */
+        return $this->addCacheQueryString($route);
+        /*
+        $path='/'.request()->path();
+        $cache_key=$path.'_query';
+        Cache::forever($cache_key, request()->query());
+
 
         //--- aggiungo le query string all'url corrente
-        $queries = collect(request()->query())->except(['_act', 'item0', 'item1'])->all();
+        //$queries = collect(request()->query())->except(['_act', 'item0', 'item1'])->all();
+        $queries=Cache::get($route.'_query');
+        if(!is_array($queries)){
+            $queries=[];
+        }
 
         $url = url_queries($queries, $route);
 
@@ -364,78 +338,10 @@ class PanelRouteService {
         $url=str_replace(url('/'),'/',$url);
 
         return $url;
-
-    }
-
-
-    public function urlRelatedPanel_old($params) {
-        $panel = $this->panel;
-        $act = 'show';
-        extract($params);
-
-        if (! isset($related_name)) {
-            dddx(['err' => 'related_name is missing']);
-
-            return;
-        }
-        $parents = $panel->getParents();
-
-        $container_root = $panel->row;
-        if ($parents->count() > 0) {
-            /*
-            $tmp='['.$parents->count().']';
-            foreach($parents as $parent){
-                $tmp.=$parent->row->post_type.'-';
-            }
-            return $tmp;
-            */
-            $container_root = $parents->first()->row;
-        }
-        /*
-        $containers_class = self::getContainersClass();
-        $n = collect($containers_class)->search(get_class($container_root));
-        if (null === $n) {
-            $n = 0;
-        }
         */
-        $n = 0;
-
-        $route_name = self::getRoutenameN(['n' => $n + 1 + $parents->count(), 'act' => $act]);
-        $route_current = \Route::current();
-        $route_params = is_object($route_current) ? $route_current->parameters() : [];
-
-        $i = 0;
-        foreach ($parents as $parent) {
-            $route_params['container'.($n + $i)] = $parent->postType();
-            $route_params['item'.($n + $i)] = $parent->guid();
-            ++$i;
-        }
-        $route_params['container'.($n + $i)] = $panel->postType();
-        $route_params['item'.($n + $i)] = $panel->guid();
-        ++$i;
-        $route_params['container'.($n + $i)] = $related_name;
-
-        $route_params['page'] = 1;
-        $route_params['_act'] = '';
-        unset($route_params['_act']);
-        try {
-            $url = str_replace(url(''), '', route($route_name, $route_params));
-        } catch (\Exception $e) {
-            if (request()->input('debug', false)) {
-                dd([
-                    'route_name' => $route_name,
-                    'route_params' => $route_params,
-                    'line' => __LINE__,
-                    'file' => __FILE__,
-                    'e' => $e->getMessage(),
-                ]);
-            }
-
-            return '#['.__LINE__.']['.__FILE__.']';
-        }
-
-        return $url;
     }
+
+
 
     /**
      * @return string

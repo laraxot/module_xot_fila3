@@ -43,7 +43,7 @@ class PanelFormService {
         $fields = $this->createFields();
         $row = $this->panel->row;
         $res = '';
-        //$res.='<h3>'.$this->storeUrl().'</h3>'; //4 debug
+        //$res.='<h3>'.$this->url(['act'=>'store']).'</h3>'; //4 debug
         $res .= Form::bsOpenPanel($this, 'store');
         $res .= '<div class="clearfix">';
         foreach ($fields as $field) {
@@ -70,7 +70,7 @@ class PanelFormService {
         $fields = $this->editFields();
         $row = $this->panel->row;
         $res = '';
-        //$res.='<h3>'.$this->storeUrl().'</h3>'; //4 debug
+        //$res.='<h3>'.$this->url(['act'=>'store']).'</h3>'; //4 debug
         $res .= Form::bsOpenPanel($this->panel, 'update');
 
         $col_size = 0;
@@ -159,7 +159,7 @@ class PanelFormService {
         $parz = [
             'id' => $this->panel->row->getKey(),
             'btn_class' => 'btn '.$class,
-            'route' => $this->detachUrl(),
+            'route' => $this->url(['act'=>'detach']),
             'act' => $act,
         ];
 

@@ -1241,12 +1241,10 @@ abstract class XotBasePanel implements PanelContract {
 
         return $this->route->urlPanel([/*'panel' => $this,*/ 'act' => $act]);
     }
+    /*--- DEPRECATED
 
-    /**
-     * @return string
-     */
-    public function indexUrl() {
-        //$url = $this->route->urlModel(['model' => $this->row, 'panel_parent' => $this->parent, 'act' => 'index']);
+    public function indexUrl():?string {
+
         $url = $this->route->urlPanel(['panel' => $this, 'act' => 'index']);
         //--- da spostare in routeservice
         $data = [];
@@ -1287,68 +1285,51 @@ abstract class XotBasePanel implements PanelContract {
         return $url;
     }
 
-    /**
-     * @return string|void
-     */
-    public function indexEditUrl() {
+
+    public function indexEditUrl():?string {
         return $this->route->urlPanel(['panel' => $this, 'act' => 'index_edit']);
     }
 
-    /**
-     * @return string|void
-     */
-    public function editUrl() {
+
+    public function editUrl():?string {
         return $this->route->urlPanel(['panel' => $this, 'act' => 'edit']);
     }
 
-    /**
-     * @return string|void
-     */
-    public function updateUrl() {
+
+    public function updateUrl():?string {
         return $this->route->urlPanel(['panel' => $this, 'act' => 'update']);
     }
 
-    /**
-     * @return string|void
-     */
-    public function showUrl() {
+
+    public function showUrl():?string {
         return $this->route->urlPanel(['panel' => $this, 'act' => 'show']);
     }
 
-    /**
-     * @return string|void
-     */
-    public function createUrl() {
+
+    public function createUrl():?string {
         return $this->route->urlPanel(['panel' => $this, 'act' => 'create']);
     }
 
-    /**
-     * @return string|void
-     */
-    public function storeUrl() {
+
+    public function storeUrl():?string {
         return $this->route->urlPanel(['panel' => $this, 'act' => 'store']);
     }
 
-    /**
-     * @return string|void
-     */
-    public function destroyUrl() {
+
+    public function destroyUrl():?string {
         return $this->route->urlPanel(['panel' => $this, 'act' => 'destroy']);
     }
 
-    /**
-     * @return string|void
-     */
-    public function detachUrl() {
+
+    public function detachUrl():?string {
         return $this->route->urlPanel(['panel' => $this, 'act' => 'detach']);
     }
 
-    /**
-     * @return string
-     */
-    public function gearUrl() {
+
+    public function gearUrl():?string {
         return '#';
     }
+    */
 
     /*
     public function postType(){
@@ -1758,14 +1739,14 @@ abstract class XotBasePanel implements PanelContract {
         $bread[] = $tmp;
         foreach ($parents as $parent) {
             $tmp = (object) [];
-            $tmp->url = $parent->indexUrl();
+            $tmp->url = $parent->url(['act'=>'index']);
             $tmp->title = $parent->postType();
             $tmp->obj = \Theme::xotModel($tmp->title);
             $tmp->method = 'index';
             $bread[] = $tmp;
             try {
                 $tmp = (object) [];
-                $tmp->url = $parent->showUrl();
+                $tmp->url = $parent->url(['act'=>'show']);
                 $tmp->title = $parent->row->title;
                 $tmp->obj = \Theme::xotModel($parent->postType());
                 $tmp->method = 'show';
