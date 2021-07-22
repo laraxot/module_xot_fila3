@@ -4,40 +4,38 @@ declare(strict_types=1);
 
 namespace Modules\Xot\Models\Panels;
 
-use Illuminate\Support\Str;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\Gate;
-use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Cache;
 //----------  SERVICES --------------------------
-use Illuminate\Support\Facades\Route;
-use Modules\Xot\Services\HtmlService;
-use Modules\Xot\Services\StubService;
-use Spatie\QueryBuilder\QueryBuilder;
 use Illuminate\Support\Facades\Cookie;
-use Modules\Xot\Services\ChainService;
-use Modules\Xot\Services\ImageService;
-use Modules\Xot\Services\PanelService;
-use Modules\Xot\Services\RouteService;
-use Spatie\QueryBuilder\AllowedFilter;
-use Illuminate\Database\Eloquent\Model;
-use Modules\Xot\Services\PolicyService;
-use Spatie\QueryBuilder\Filters\Filter;
-use Modules\Theme\Services\ThemeService;
+use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\View;
+use Illuminate\Support\Str;
 use Modules\Xot\Contracts\ModelContract;
 use Modules\Xot\Contracts\PanelContract;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Support\Facades\Validator;
-use Modules\Xot\Services\PanelTabService;
-use Modules\Xot\Services\PanelFormService;
-use Modules\Xot\Services\PanelRouteService;
-use Modules\Xot\Services\PanelActionService;
+use Modules\Xot\Contracts\PanelPresenterContract;
 use Modules\Xot\Presenters\PdfPanelPresenter;
 use Modules\Xot\Presenters\XlsPanelPresenter;
+use Modules\Xot\Services\ChainService;
+use Modules\Xot\Services\ImageService;
+use Modules\Xot\Services\PanelActionService;
+use Modules\Xot\Services\PanelFormService;
+use Modules\Xot\Services\PanelRouteService;
+use Modules\Xot\Services\PanelService;
 use Modules\Xot\Services\PanelService as Panel;
-use Modules\Xot\Contracts\PanelPresenterContract;
-use Illuminate\Database\Eloquent\Relations\HasMany;
+use Modules\Xot\Services\PanelTabService;
+use Modules\Xot\Services\PolicyService;
+use Modules\Xot\Services\RouteService;
+use Modules\Xot\Services\StubService;
+use Spatie\QueryBuilder\AllowedFilter;
+use Spatie\QueryBuilder\Filters\Filter;
+use Spatie\QueryBuilder\QueryBuilder;
 
 /**
  * Class XotBasePanel.
@@ -196,19 +194,21 @@ abstract class XotBasePanel implements PanelContract {
         return $this->parent;
     }
 
-    public function getParents():Collection {
+    public function getParents(): Collection {
         $parents = collect([]);
         $panel_curr = $this->getParent();
         while (null != $panel_curr) {
             $parents->prepend($panel_curr);
             $panel_curr = $panel_curr->getParent();
         }
+
         return $parents;
     }
 
-    public function getBreads():Collection {
+    public function getBreads(): Collection {
         $breads = $this->getParents();
         $breads->add($this);
+
         return $breads;
     }
 
@@ -1227,6 +1227,7 @@ abstract class XotBasePanel implements PanelContract {
 
         return $this->route->urlPanel([/*'panel' => $this,*/ 'act' => $act]);
     }
+
     /*--- DEPRECATED
 
     public function indexUrl():?string {
@@ -1659,32 +1660,8 @@ abstract class XotBasePanel implements PanelContract {
     public function pdf(array $params = []) {
         $presenter = new PdfPanelPresenter();
         $presenter->setPanel($this);
-        //dddx($this->rows()->get()->count());
 
-        return $presenter->out($par->url(['act'=>'show'])
-        /*
-        if (! isset($params['view_params'])) {
-            $params['view_params'] = [];
-        }
-        $view = ThemeService::getView(); //progressioni::admin.schede.show
-        $view .= '.pdf';
-        $view = str_replace('.store.', '.show.', $view);
-        extract($params);
-
-        $html = view($view)
-            ->with('view', $view)
-            ->with('row', $this->row)
-            ->with('rows', $this->rows)
-            ->with($params['view_params']);
-
-        //dddx($this->rows->get());
-        if (request()->input('debug')) {
-            return $html;
-        }
-        $params['html'] = (string) $html;
-
-        return HtmlService::toPdf($params);
-        */
+        return $presenter->out($params);
     }
 
     //Method Modules\Xot\Models\Panels\XotBasePanel::related() should return Modules\Xot\Models\Panels\XotBasePanel but returns Modules\Xot\Contracts\PanelContract|null.
