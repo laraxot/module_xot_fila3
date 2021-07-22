@@ -4,39 +4,40 @@ declare(strict_types=1);
 
 namespace Modules\Xot\Models\Panels;
 
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Cache;
-use Illuminate\Support\Facades\Cookie;
-//----------  SERVICES --------------------------
-use Illuminate\Support\Facades\Gate;
-use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Facades\View;
 use Illuminate\Support\Str;
+use Illuminate\Http\Request;
+use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\View;
+use Illuminate\Support\Facades\Cache;
+//----------  SERVICES --------------------------
+use Illuminate\Support\Facades\Route;
+use Modules\Xot\Services\HtmlService;
+use Modules\Xot\Services\StubService;
+use Spatie\QueryBuilder\QueryBuilder;
+use Illuminate\Support\Facades\Cookie;
+use Modules\Xot\Services\ChainService;
+use Modules\Xot\Services\ImageService;
+use Modules\Xot\Services\PanelService;
+use Modules\Xot\Services\RouteService;
+use Spatie\QueryBuilder\AllowedFilter;
+use Illuminate\Database\Eloquent\Model;
+use Modules\Xot\Services\PolicyService;
+use Spatie\QueryBuilder\Filters\Filter;
 use Modules\Theme\Services\ThemeService;
 use Modules\Xot\Contracts\ModelContract;
 use Modules\Xot\Contracts\PanelContract;
-use Modules\Xot\Contracts\PanelPresenterContract;
-use Modules\Xot\Presenters\PdfPanelPresenter;
-use Modules\Xot\Presenters\XlsPanelPresenter;
-use Modules\Xot\Services\ChainService;
-use Modules\Xot\Services\HtmlService;
-use Modules\Xot\Services\ImageService;
-use Modules\Xot\Services\PanelActionService;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Facades\Validator;
+use Modules\Xot\Services\PanelTabService;
 use Modules\Xot\Services\PanelFormService;
 use Modules\Xot\Services\PanelRouteService;
-use Modules\Xot\Services\PanelService;
+use Modules\Xot\Services\PanelActionService;
+use Modules\Xot\Presenters\PdfPanelPresenter;
+use Modules\Xot\Presenters\XlsPanelPresenter;
 use Modules\Xot\Services\PanelService as Panel;
-use Modules\Xot\Services\PanelTabService;
-use Modules\Xot\Services\PolicyService;
-use Modules\Xot\Services\RouteService;
-use Modules\Xot\Services\StubService;
-use Spatie\QueryBuilder\AllowedFilter;
-use Spatie\QueryBuilder\Filters\Filter;
-use Spatie\QueryBuilder\QueryBuilder;
+use Modules\Xot\Contracts\PanelPresenterContract;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
  * Class XotBasePanel.
@@ -195,34 +196,19 @@ abstract class XotBasePanel implements PanelContract {
         return $this->parent;
     }
 
-    public function getParents(): \Illuminate\Support\Collection {
-        /*
-        $curr = $this;
-        $parents = [];
-        while (null != $curr) {
-            $parents[] = $curr;
-            $curr = $curr->getParent();
-        }
-
-        return $parents;
-        */
-
+    public function getParents():Collection {
         $parents = collect([]);
         $panel_curr = $this->getParent();
-
-        //while (null != $panel_curr->getParent()) {
         while (null != $panel_curr) {
             $parents->prepend($panel_curr);
             $panel_curr = $panel_curr->getParent();
         }
-
         return $parents;
     }
 
-    public function getBreads(): \Illuminate\Support\Collection {
+    public function getBreads():Collection {
         $breads = $this->getParents();
         $breads->add($this);
-
         return $breads;
     }
 
