@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Modules\Xot\Presenters;
 
+use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Collection;
 use Modules\Theme\Services\ThemeService;
 use Modules\Xot\Contracts\PanelContract;
@@ -82,6 +83,15 @@ class HtmlPanelPresenter implements PanelPresenterContract {
         $rows_err = '';
 
         try {
+            //questo snippet mi dovrebbe far visualizzare sempre la prima pagina
+            //dddx([get_defined_vars(), \Request::input()]);
+            /*
+            $currentPage = 1;
+            Paginator::currentPageResolver(function () use ($currentPage) {
+                return $currentPage;
+            });
+            */
+
             //dddx($this->panel->rows());
             $rows = $this->panel->rows()->paginate(20);
         } catch (\Exception $e) {
