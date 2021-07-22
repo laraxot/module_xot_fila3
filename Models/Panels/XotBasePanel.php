@@ -1661,7 +1661,7 @@ abstract class XotBasePanel implements PanelContract {
         $presenter->setPanel($this);
         //dddx($this->rows()->get()->count());
 
-        return $presenter->out($params);
+        return $presenter->out($par->url(['act'=>'show'])
         /*
         if (! isset($params['view_params'])) {
             $params['view_params'] = [];

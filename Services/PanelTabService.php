@@ -104,7 +104,7 @@ class PanelTabService {
                     $tmp->title = 'Back'; //.'['.get_class($item).']';
                     $tmp->url = $panel->url(['act'=>'index']);
                     $tmp->active = false;
-                    $row[] = $tmp;
+                    $row[] = $tmp->url(['act'=>'show'])
                 }
                 //-----------------------
                 $tmp = new \stdClass();

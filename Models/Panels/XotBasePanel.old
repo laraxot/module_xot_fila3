@@ -1602,7 +1602,7 @@ abstract class XotBasePanel {
                 if (in_array($act, ['index_edit', 'edit', 'update'])) {
                     $url = $panel->url(['act'=>'edit']);
                 } else {
-                    $url = $panel->url(['act'=>'show']);
+                    $url = $panel->url(['act'=>'show'])'=>'show']);
                 }
                 $tmp->url = $url;
                 $tmp->title = 'Content '; //.'['.request()->url().']['.$url.']';
@@ -1922,7 +1922,7 @@ abstract class XotBasePanel {
             $bread[] = $tmp;
             try {
                 $tmp = (object) [];
-                $tmp->url = $parent->url(['act'=>'show']);
+                $tmp->url = $parent->url(['act'=>'show'])'=>'show']);
                 $tmp->title = $parent->row->title;
                 $tmp->obj = \Theme::xotModel($parent->postType());
                 $tmp->method = 'show';
