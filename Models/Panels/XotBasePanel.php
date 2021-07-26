@@ -1163,11 +1163,7 @@ abstract class XotBasePanel implements PanelContract {
         return $this->route->urlLang($params);
     }
 
-    /**
-     * @param array $params
-     *
-     * @return string
-     */
+    /*
     public function relatedUrlRecursive($params) { //vedere chi lo usa
         $obj = $this;
         $items = [];
@@ -1194,6 +1190,7 @@ abstract class XotBasePanel implements PanelContract {
 
         return $route;
     }
+    */
 
     public function relatedUrl(array $params = []): string {
         $params['panel'] = $this;
@@ -1456,7 +1453,11 @@ abstract class XotBasePanel implements PanelContract {
         //dddx(get_class($this));
         $with = $this->with();
         //dddx($with);
-        $query = $query->with($with); //Method Illuminate\Database\Eloquent\Collection::with does not exist.
+        try {
+            $query = $query->with($with);
+        } catch (\Exception $e) {
+            //Method Illuminate\Database\Eloquent\Collection::with does not exist.
+        }
         /*
         * se prendo il builder perdo il modello.
         */

@@ -4,14 +4,7 @@ declare(strict_types=1);
 
 namespace Modules\Xot\Contracts;
 
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Relations\HasOneOrMany;
-use Modules\Xot\Services\PanelRouteService;
-
 
 interface PanelContract {
     /**
@@ -174,7 +167,7 @@ interface PanelContract {
 
     public function langUrl($lang);
 
-    public function relatedUrlRecursive($params);
+
 
     public function relatedUrl($params);
 
@@ -194,9 +187,7 @@ interface PanelContract {
 
     public function createUrl();
 
-    public function storeUrl();
-
-    public function destroyUrl();
+        public function destroyUrl();
 
     public function detachUrl();
 

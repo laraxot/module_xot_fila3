@@ -172,7 +172,7 @@ class PanelService {
             return null;
         }
 
-        //$row = xotModel($containers[0]);
+        $first_container = $containers[0];
         $row = TenantService::model($containers[0]);
         try {
             $panel = PanelService::get($row);
@@ -187,10 +187,18 @@ class PanelService {
             return response()->view('pub_theme::errors.404', $data, 404);
         }
         $panel->setRows($row);
-        $panel->setName($containers[0]);
+        $panel->setName($first_container);
+        $i = 0;
         if (isset($items[0])) {
             $panel->in_admin = $in_admin;
             $panel->setItem($items[0]);
+            if (null == $panel->row) {
+                $data = [
+                    'message' => 'Not Found ['.$items[$i].'] on ['.$containers[$i].']',
+                ];
+
+                return response()->view('pub_theme::errors.404', $data, 404);
+            }
             //dddx(['riga 108', $panel, $in_admin, $panel->in_admin, $route_params, params2ContainerItem($route_params)]);
         }
         $panel_parent = $panel;
@@ -229,8 +237,14 @@ class PanelService {
 
             if (isset($items[$i])) {
                 $panel->in_admin = $in_admin;
-
                 $panel->setItem($items[$i]);
+                if (null == $panel->row) {
+                    $data = [
+                        'message' => 'Not Found ['.$items[$i].'] on ['.$containers[$i].']',
+                    ];
+
+                    return response()->view('pub_theme::errors.404', $data, 404);
+                }
                 //dddx(['riga 143', $panel, $in_admin, $panel->in_admin, $route_params, params2ContainerItem($route_params)]);
             }
             $panel_parent = $panel;
