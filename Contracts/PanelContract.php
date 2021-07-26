@@ -167,7 +167,7 @@ interface PanelContract {
 
     public function langUrl($lang);
 
-    public function relatedUrlRecursive($params);
+
 
     public function relatedUrl($params);
 
