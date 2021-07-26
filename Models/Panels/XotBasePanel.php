@@ -1456,7 +1456,11 @@ abstract class XotBasePanel implements PanelContract {
         //dddx(get_class($this));
         $with = $this->with();
         //dddx($with);
-        $query = $query->with($with); //Method Illuminate\Database\Eloquent\Collection::with does not exist.
+        try {
+            $query = $query->with($with);
+        } catch (\Exception $e) {
+            //Method Illuminate\Database\Eloquent\Collection::with does not exist.
+        }
         /*
         * se prendo il builder perdo il modello.
         */
