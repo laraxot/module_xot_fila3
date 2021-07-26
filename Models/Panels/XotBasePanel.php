@@ -1163,11 +1163,7 @@ abstract class XotBasePanel implements PanelContract {
         return $this->route->urlLang($params);
     }
 
-    /**
-     * @param array $params
-     *
-     * @return string
-     */
+    /*
     public function relatedUrlRecursive($params) { //vedere chi lo usa
         $obj = $this;
         $items = [];
@@ -1194,6 +1190,7 @@ abstract class XotBasePanel implements PanelContract {
 
         return $route;
     }
+    */
 
     public function relatedUrl(array $params = []): string {
         $params['panel'] = $this;
