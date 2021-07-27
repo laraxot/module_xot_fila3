@@ -135,10 +135,10 @@ class TenantService {
         return config($key);
     }
 
-
-    public static function getTenantConfigPath(string $key) : string{
+    public static function getConfigPath(string $key): string {
         $tenant_name = self::getName();
         $path = str_replace('/', '.', $tenant_name).'.'.$key;
+
         return $path;
     }
 
