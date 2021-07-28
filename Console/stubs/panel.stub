@@ -60,14 +60,13 @@ class DummyClass extends XotBasePanel {
     /**
      * index navigation.
      */
-    public function indexNav() {
+    public function indexNav(): ?array {
         return [];
     }
 
     /**
      * Build an "index" query for the given resource.
      *
-     * @param Request                               $request
      * @param \Illuminate\Database\Eloquent\Builder $query
      *
      * @return \Illuminate\Database\Eloquent\Builder
@@ -77,7 +76,7 @@ class DummyClass extends XotBasePanel {
         return $query;
     }
 
-    
+
 
     /**
      * Get the fields displayed by the resource.

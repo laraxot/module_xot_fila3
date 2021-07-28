@@ -358,7 +358,7 @@ abstract class XotBasePanel {
         return collect(config('xra.model'))->search(static::$model);
     }
 
-    public function indexNav() {
+    public function indexNav(): ?array {
         return null;
     }
 
