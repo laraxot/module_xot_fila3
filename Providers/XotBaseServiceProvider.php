@@ -196,15 +196,13 @@ abstract class XotBaseServiceProvider extends ServiceProvider {
         }
         //dddx($comps);
 
-        //COMMENTATO DA LEO CAUSA ERRORE AL CARICAMENTO DELLA HOMEPAGE
-
-        /*if (class_exists("Livewire\Livewire")) {
+        if (class_exists("Livewire\Livewire")) {
             foreach ($comps as $comp) {
                 \Livewire\Livewire::component($comp->comp_name, $comp->comp_ns);
             }
             //Livewire::component($this->module_name.'::calendar', Calendar::class);
             //Livewire::component($this->module_name.'::numberer', Numberer::class);
-        }*/
+        }
     }
 
     /**
