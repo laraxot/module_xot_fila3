@@ -18,7 +18,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Str;
 use Modules\FormX\Services\FormXService;
-use Modules\Xot\Contracts\ModelContract;
 use Modules\Xot\Contracts\PanelContract;
 use Modules\Xot\Services\PanelService as Panel;
 
@@ -30,13 +29,10 @@ abstract class XotBasePanelAction {
 
     public bool $onItem = false;
 
-    /**
-     * @var ModelContract|Model
-     */
-    public $row;
+    public Model $row;
 
     /**
-     * @var Collection|ModelContract[]|Builder|null
+     * @var Collection|Model[]|Builder|null
      */
     public $rows = null;
 
@@ -122,8 +118,6 @@ abstract class XotBasePanelAction {
     }
 
     /**
-     * @param array $params
-     *
      * @return string
      */
     public function getUrl(array $params = []) {
@@ -171,8 +165,6 @@ abstract class XotBasePanelAction {
     }
 
     /**
-     * @param array $params
-     *
      * @return string
      */
     public function url(array $params = []) {
