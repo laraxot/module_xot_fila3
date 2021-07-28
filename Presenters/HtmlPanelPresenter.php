@@ -124,6 +124,17 @@ class HtmlPanelPresenter implements PanelPresenterContract {
             'page' => new \Modules\Theme\Services\Objects\PageObject(),
         ];
 
+        if (! view()->exists('pub_theme::layouts.app')) {
+            $data = [
+                'message' => 'not exists view [pub_theme::layouts.app] 
+                    <br/> pub_theme:'.config('xra.pub_theme'),
+            ];
+            if (view()->exists('pub_theme::errors.500')) {
+                return response()->view('pub_theme::errors.500', $data, 500);
+            }
+            dddx($data);
+        }
+
         //return view($view_work)->with($view_params);
         return view()->make($view_work, $view_params); //->render(); //se metto render , non mi prende piu' i parametri passati con with
     }
