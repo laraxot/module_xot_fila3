@@ -7,6 +7,8 @@ namespace Modules\Xot\Contracts;
 use Illuminate\Database\Eloquent\Model;
 
 interface PanelContract {
+    //public Model $row;
+
     /**
      * Undocumented function.
      *
@@ -37,6 +39,8 @@ interface PanelContract {
     public function relatedUrl(array $params = []): string;
 
     public function setLabel(string $label): ModelContract;
+
+    public function postType(): string;
 
     /*
     public function __construct($model = null);
@@ -193,7 +197,7 @@ interface PanelContract {
 
     public function gearUrl();
 
-    public function postType();
+
 
     public function guid();
 

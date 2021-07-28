@@ -1328,7 +1328,7 @@ abstract class XotBasePanel implements PanelContract {
     /**
      * @return false|mixed|string
      */
-    public function postType() {
+    public function postType(): string {
         $post_type = collect(config('xra.model'))->search(get_class($this->row));
         if (false === $post_type) {
             $post_type = snake_case(class_basename($this->row));
