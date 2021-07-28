@@ -67,7 +67,7 @@ class TestPanel extends XotBasePanel {
      *
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public static function indexQuery($data, $query) {
+    public static function indexQuery(array $data, $query) {
         //return $query->where('auth_user_id', $request->user()->auth_user_id);
         return $query;
     }

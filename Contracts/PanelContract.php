@@ -105,7 +105,7 @@ interface PanelContract {
 
     public function btnItemAction($act);
 
-    public static function indexQuery($data, $query);
+    public static function indexQuery(array $data, $query);
 
     public static function relatableQuery(Request $request, $query);
 
