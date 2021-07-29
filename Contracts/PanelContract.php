@@ -7,7 +7,6 @@ namespace Modules\Xot\Contracts;
 use Illuminate\Database\Eloquent\Model;
 
 interface PanelContract {
-    //Fatal error: Interfaces may not include member variables
     //public Model $row;
 
     /**
