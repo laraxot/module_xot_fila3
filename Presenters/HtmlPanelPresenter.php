@@ -49,6 +49,13 @@ class HtmlPanelPresenter implements PanelPresenterContract {
     public function out(?array $params = null) {
         //$route_params = \Route::current()->parameters();
 
+        //se eseguo una ricerca testuale, partendo dalla home, faccio redirect dalla pagina
+        //funziona, non so se ti piace qui questo controllo
+        //in questo modo, ogni homepanel mi può dire cosa cercare, considerando che non ho container nella home page
+        if (\Request::input('q') && 'HomePanel' == class_basename($this->panel)) {
+            return redirect()->route('container0.index', ['container0' => $this->panel->txtSearchFromHome(), 'q' => \Request::input('q')]);
+        }
+
         [$containers, $items] = params2ContainerItem();
         $view = ThemeService::getView(); //vew che dovrebbe essere
         $view_work = ThemeService::getViewWork(); //view effettiva
@@ -76,12 +83,7 @@ class HtmlPanelPresenter implements PanelPresenterContract {
             $modal = 'iframe';
         }
 
-        //$rows = $this->panel->rows()->paginate(20);
-
-        //*
         $rows_err = '';
-
-        //dddx([$this->panel, \Request::input()]);
 
         try {
             $rows = $this->panel->rows()->paginate(20);
@@ -97,7 +99,6 @@ class HtmlPanelPresenter implements PanelPresenterContract {
             $rows = null;
             $rows_err = $e;
         }
-        //*/
 
         $route_params = [];
         $route_name = '';
