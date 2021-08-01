@@ -81,7 +81,7 @@ class HtmlPanelPresenter implements PanelPresenterContract {
         //*
         $rows_err = '';
 
-        dddx([$this->panel, \Request::input()]);
+        //dddx([$this->panel, \Request::input()]);
 
         try {
             $rows = $this->panel->rows()->paginate(20);
