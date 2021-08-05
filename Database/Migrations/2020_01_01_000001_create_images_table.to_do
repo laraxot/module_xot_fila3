@@ -5,14 +5,14 @@ use Illuminate\Database\Schema\Blueprint;
 use Modules\Xot\Database\Migrations\XotBaseMigration;
 
 /**
- * Class CreateImagesTable
+ * Class CreateImagesTable.
  */
 class CreateImagesTable extends XotBaseMigration {
-/**
-* db up
-*
-* @return void
-*/
+    /**
+     * db up.
+     *
+     * @return void
+     */
     public function up() {
         //-- CREATE --
         if (! $this->tableExists()) {
@@ -40,6 +40,10 @@ class CreateImagesTable extends XotBaseMigration {
                 }
                 if (! $this->hasColumn('height')) {
                     $table->integer('height')->nullable()->after('src');
+                }
+
+                if (! $this->hasColumn('src')) {
+                    $table->text('src')->nullable();
                 }
             }
         );
