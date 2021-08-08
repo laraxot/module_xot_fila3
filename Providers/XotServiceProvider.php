@@ -15,20 +15,24 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Schema;
 //use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\URL;
-use Illuminate\Support\Facades\View;
 //use Modules\Xot\Engines\Opcache;
 //--- services ---
-use Illuminate\Translation\Translator;
+use Illuminate\Support\Facades\View;
 //use Laravel\Scout\EngineManager;
+use Illuminate\Translation\Translator;
+use League\Flysystem\Filesystem;
 use Modules\Xot\Contracts\PanelPresenterContract;
 use Modules\Xot\Engines\FullTextSearchEngine;
 use Modules\Xot\Http\View\Composers\XotComposer;
 use Modules\Xot\Presenters\GeoJsonPanelPresenter;
 use Modules\Xot\Presenters\HtmlPanelPresenter;
-use Modules\Xot\Presenters\JsonPanelPresenter;
+use Modules\Xot\Presenters\JsonPanelPresenter; // per slegarmi da tntsearch
 use Modules\Xot\Services\TenantService as Tenant; // per dizionario morph
-use Modules\Xot\Services\TranslatorService; // per slegarmi da tntsearch
+use Modules\Xot\Services\TranslatorService;
+use Spatie\Dropbox\Client as DropboxClient;
+use Spatie\FlysystemDropbox\DropboxAdapter;
 
 /**
  * Class XotServiceProvider.
@@ -100,9 +104,22 @@ class XotServiceProvider extends XotBaseServiceProvider {
         $this->registerViewComposers();
 
         //$this->registerPanel();
+        //$this->registerDropbox();// PROBLEMA DI COMPOSER
     }
 
     //end bootCallback
+
+    private function registerDropbox() {
+        Storage::extend('dropbox', function ($app, $config) {
+            //dddx($config);
+
+            $client = new DropboxClient($config['authorizationToken']);
+            $adapter = new DropboxAdapter($client);
+            $filesystem = new Filesystem($adapter, ['case_sensitive' => false]);
+
+            return $filesystem;
+        });
+    }
 
     private function registerPanel(): void {
         //dddx(get_class_methods($this->app['request']));
