@@ -105,7 +105,12 @@ class TenantService {
                 $original_conf = [];
             }
             //$merge_conf = array_merge($original_conf, $models);
-            $merge_conf = collect($original_conf)->merge($models)->all();
+
+            //collect($original_conf)->merge($models) non riesci ad visualizzare admin/xot
+            //$merge_conf = collect($original_conf)->merge($models)->all();
+            $merge_conf = collect($models)->merge($original_conf)->all();
+
+            //dddx([$models, $original_conf, $merge_conf]);
 
             \Config::set('xra.model', $merge_conf);
 
