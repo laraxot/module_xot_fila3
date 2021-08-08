@@ -47,8 +47,6 @@ trait LinkedTrait {
     /**
      * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
      * @throws \ReflectionException
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\MorphOne
      */
     public function post(): MorphOne {
         $models = Tenant::config('xra.model');
@@ -62,10 +60,11 @@ trait LinkedTrait {
             'ff' => Tenant::filePath('xra.php'),
         ]);
         */
-
-        Relation::morphMap([
-            $alias => $class,
-        ]);
+        if (null == Relation::getMorphedModel($alias)) {
+            Relation::morphMap([
+                $alias => $class,
+            ]);
+        }
 
         if (false === $alias) {
             $data = [];
