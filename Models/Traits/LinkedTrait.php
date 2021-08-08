@@ -52,19 +52,6 @@ trait LinkedTrait {
         $models = Tenant::config('xra.model');
         $class = get_class($this);
         $alias = collect($models)->search($class);
-        /*
-        dddx([
-            'class' => $class,
-            'alias' => $alias,
-            'config_file' => Tenant::getConfigPath('xra'),
-            'ff' => Tenant::filePath('xra.php'),
-        ]);
-        */
-        if (null == Relation::getMorphedModel($alias)) {
-            Relation::morphMap([
-                $alias => $class,
-            ]);
-        }
 
         if (false === $alias) {
             $data = [];
@@ -72,6 +59,12 @@ trait LinkedTrait {
             $alias = $panel->postType();
             $data['model'][$alias] = $class;
             Tenant::saveConfig(['name' => 'xra', 'data' => $data]);
+        }
+
+        if (null == Relation::getMorphedModel($alias)) {
+            Relation::morphMap([
+                $alias => $class,
+            ]);
         }
 
         return $this->morphOne(Post::class, 'post')//, null, 'id')
