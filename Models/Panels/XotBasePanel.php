@@ -307,7 +307,10 @@ abstract class XotBasePanel implements PanelContract {
                 $guid_old = $row_last->post->guid;
                 $row_last->post->update(['guid' => $guid_old.'-1']);
             }
-            //*
+            //effettuo il redirect alla stessa pagina perchè è inutile che mi manda il dddx per poi fare refresh(?)
+            return redirect(url()->current());
+
+            /*
             dddx(
                 [
                     'error' => 'multiple',
@@ -315,7 +318,7 @@ abstract class XotBasePanel implements PanelContract {
                     'row_last' => $row_last,
                 ]
             );
-            //*/
+            /*/
         }
         $this->row = $rows->first();
 
