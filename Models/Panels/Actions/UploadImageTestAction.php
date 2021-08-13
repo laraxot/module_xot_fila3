@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Modules\Xot\Models\Panels\Actions;
 
 use Illuminate\Support\Facades\Storage;
-use Modules\Theme\Services\ThemeService;
+use Intervention\Image\Facades\Image;
 
 //-------- models -----------
 
@@ -15,6 +15,9 @@ use Modules\Theme\Services\ThemeService;
 
 /**
  * Class UploadImageTest.
+ *
+ * https://artisansweb.net/how-to-upload-images-to-another-server-through-ftp-in-laravel/
+ * https://www.youtube.com/watch?v=GCuIUjWIhlA&t=136s
  */
 class UploadImageTestAction extends XotBasePanelAction {
     public bool $onItem = true;
@@ -43,7 +46,8 @@ class UploadImageTestAction extends XotBasePanelAction {
             $filenamewithextension = request()->file('test_image')->getClientOriginalName();
 
             //get filename without extension
-            $filename = pathinfo($filenamewithextension, PATHINFO_FILENAME);
+            $filename = str_replace(' ', '', pathinfo($filenamewithextension, PATHINFO_FILENAME));
+            //dddx($filename);
 
             //get file extension
             $extension = request()->file('test_image')->getClientOriginalExtension();
@@ -52,11 +56,38 @@ class UploadImageTestAction extends XotBasePanelAction {
             $filenametostore = $filename.'_'.uniqid().'.'.$extension;
 
             //Upload File to external server
-            Storage::disk('infinityfree')->put($filenametostore, $filename);
+            //Storage::disk('infinityfree')->put($filenametostore, $filename);
+            request()->file()->store('/', 'infinityfree');
 
-        //Store $filenametostore in the database
+            //Store $filenametostore in the database
+        }
+
+        /*
+        dddx([
+            $filenametostore,
+            $filename,
+            $extension,
+            //Storage::disk('infinityfree')->exists($filename.'.'.$extension),
+            Storage::disk('infinityfree')->exists($filenametostore),
+            //'/htdocs/images/'.$filenametostore,
+            //Storage::disk('infinityfree')->exists('/htdocs/images/'.$filenametostore),
+            //Image::make(Storage::disk('infinityfree')->get($filenametostore)),
+            Storage::disk('infinityfree')->url($filenametostore),
+        ]);
+        */
+
+        if (Storage::disk('infinityfree')->exists($filenametostore)) {
+            /*
+            try {
+                $img = Image::make(Storage::disk('infinityfree')->url($filenametostore));
+            } catch (\Intervention\Image\Exception\NotReadableException $e) {
+                dddx('non dovrei essere qui');
+            }
+            dddx($img);
+            */
+            return $this->panel->view()->with('image', $filenametostore);
         } else {
-            dddx('niente');
+            dddx('immagine non trovata');
         }
     }
 }
