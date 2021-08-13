@@ -36,6 +36,27 @@ class UploadImageTestAction extends XotBasePanelAction {
 
     public function postHandle() {
         $data = request()->all();
-        dddx($data);
+        //dddx(request()->file('test_image'));
+
+        if (request()->hasFile('test_image')) {
+            //get filename with extension
+            $filenamewithextension = request()->file('test_image')->getClientOriginalName();
+
+            //get filename without extension
+            $filename = pathinfo($filenamewithextension, PATHINFO_FILENAME);
+
+            //get file extension
+            $extension = request()->file('test_image')->getClientOriginalExtension();
+
+            //filename to store
+            $filenametostore = $filename.'_'.uniqid().'.'.$extension;
+
+            //Upload File to external server
+            Storage::disk('infinityfree')->put($filenametostore, $filename);
+
+        //Store $filenametostore in the database
+        } else {
+            dddx('niente');
+        }
     }
 }
