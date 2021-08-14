@@ -279,6 +279,9 @@ abstract class XotBasePanel implements PanelContract {
         return $route_params;
     }
 
+    /**
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
     public function setItem(string $guid): self {
         $model = $this->row;
         $rows = $this->rows;
