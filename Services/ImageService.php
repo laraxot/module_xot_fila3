@@ -34,8 +34,6 @@ class ImageService {
     protected static string $dirname = '/imgz';
 
     /**
-     * @param array $params
-     *
      * @return ImageService|null
      */
     public static function getInstance(array $params = []) {
@@ -48,8 +46,6 @@ class ImageService {
 
     /**
      * ImageService constructor.
-     *
-     * @param array $params
      */
     public function __construct(array $params = []) {
         $this->init($params);
@@ -65,7 +61,7 @@ class ImageService {
         //$instance == self::getInstance();
         foreach ($params as $k => $v) {
             $func = 'set'.Str::studly((string) $k);
-            if($v == null){
+            if (null == $v) {
                 $v = '';
             }
             //if (method_exists($instance, $func)) {
@@ -288,9 +284,6 @@ class ImageService {
         /// per il fluent, o chaining
     }
 
-    /**
-     * @param array $params
-     */
     public static function save(array $params = []): self {
         //extract($params);
         $info = pathinfo(self::$src);
@@ -305,10 +298,13 @@ class ImageService {
         }
 
         $basename = Str::slug($info['filename']).'.'.$info['extension'];
-        self::$filename = public_path(self::$dirname.'/'.self::$width.'x'.self::$height.'/'.$basename);
-        \File::makeDirectory(\dirname(self::$filename), 0775, true, true);
+        //self::$filename = public_path(self::$dirname.'/'.self::$width.'x'.self::$height.'/'.$basename);
+        //\File::makeDirectory(\dirname(self::$filename), 0775, true, true);
+
+        self::$filename = self::$dirname.'/'.self::$width.'x'.self::$height.'/'.$basename;
         try {
-            $r = self::$img->save(self::$filename, 75);
+            \Storage::disk('infinityfree')->put(self::$filename, self::out());
+            //$r = self::$img->save(self::$filename, 75);
         } catch (\Exception $e) {
         }
 
@@ -322,8 +318,6 @@ class ImageService {
     }
 
     /**
-     * @param array $params
-     *
      * @return mixed
      */
     public static function out(array $params = []) {
@@ -331,13 +325,17 @@ class ImageService {
     }
 
     /**
-     * @param array $params
-     *
      * @return string|string[]
      */
     public static function src(array $params = []) {
         $src = '/'.str_replace(public_path('/'), '', self::$filename);
         $src = str_replace('//', '/', $src);
+
+        //come faccio a recuperare l'url dell'immagine dal cdn?
+        //forse non mettere mani qui ma in themeservice->asset(), cioè in FileService->asset()?
+        //perchè è giusto che nel db si salvi url relativo?
+        //dddx($src);
+        //dddx(\Storage::disk('infinityfree')->get($src));
 
         return $src;
     }

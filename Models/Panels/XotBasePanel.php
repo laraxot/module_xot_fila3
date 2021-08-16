@@ -1134,7 +1134,7 @@ abstract class XotBasePanel implements PanelContract {
                 'width' => $width,
                 'height' => $height,
             ]);
-            //dddx($src_out);
+
             return $src_out;
         } catch (\Exception $e) {
             //dddx('isolated');
