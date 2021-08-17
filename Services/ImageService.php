@@ -332,6 +332,15 @@ class ImageService {
 
         self::$filename = self::$dirname.'/'.self::$width.'x'.self::$height.'/'.$basename;
 
+        /* qui volevo creare una sottocartella per progetto, non so se ti piace
+
+        self::$filename = '/'.config('metatag.sitename').self::$dirname.'/'.self::$width.'x'.self::$height.'/'.$basename;
+
+        if (! Storage::disk('photos')->exists(config('metatag.sitename'))) {
+            Storage::disk('photos')->makeDirectory(config('metatag.sitename'));
+        }
+        */
+
         try {
             Storage::disk('photos')->put(self::$filename, self::out());
         } catch (\Exception $e) {//ftp_mkdir(): Can't create directory: File exists
