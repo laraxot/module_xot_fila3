@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Modules\Xot\Models\Traits;
 
-//use Laravel\Scout\Searchable;
+////use Laravel\Scout\Searchable;
 
 //----- models------
 use Illuminate\Database\Eloquent\Builder;
