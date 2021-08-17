@@ -290,6 +290,9 @@ class ImageService {
     }
 
     public function url(array $params = []): string {
+        /**
+         * passare image da xra.. ma forse per performance predisporre anche elemento passato.
+         */
         $img = \Modules\Xot\Models\Image::where('src', self::$src)
             ->where('width', self::$width)
             ->where('height', self::$height)
