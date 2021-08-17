@@ -1098,6 +1098,7 @@ abstract class XotBasePanel implements PanelContract {
         return $img->url();
     }
 
+    /*
     public function imgSrcOld(array $params): string { //usare PanelImageService
         $row = $this->row;
         if (! is_object($row)) {
@@ -1149,6 +1150,7 @@ abstract class XotBasePanel implements PanelContract {
             return '#['.__LINE__.']['.__FILE__.']';
         }
     }
+    //*/
 
     /**
      * @return string
