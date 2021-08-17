@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Modules\Xot\Models;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 //------ ext models---
@@ -48,7 +47,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  *
  * @property \Modules\LU\Models\User|null $user
  */
-class Image extends Model {
+class Image extends BaseModel {
     /**
      * @var string[]
      */
