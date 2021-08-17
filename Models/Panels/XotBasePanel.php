@@ -1090,7 +1090,15 @@ abstract class XotBasePanel implements PanelContract {
         return '<img src="'.asset($src).'" >';
     }
 
-    public function imgSrc(array $params): string { //usare PanelImageService
+    public function imgSrc(array $params): string {
+        $params['dirname'] = '/photos/'.$this->postType().'/'.$this->guid();
+        $params['src'] = optional($this->row)->image_src;
+        $img = new ImageService($params);
+
+        return $img->url();
+    }
+
+    public function imgSrcOld(array $params): string { //usare PanelImageService
         $row = $this->row;
         if (! is_object($row)) {
             return '#'.__LINE__.class_basename($this);

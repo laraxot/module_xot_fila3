@@ -6,6 +6,7 @@ namespace Modules\Xot\Services;
 
 use Cache;
 use Exception;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use ImageOptimizer;
 use Intervention\Image\Facades\Image;
@@ -75,6 +76,10 @@ class ImageService {
 
     public static function setDirname(string $dirname): void {
         self::$dirname = $dirname;
+    }
+
+    public function getImg() {
+        return self::$img;
     }
 
     public static function setImg(string $val): void {
@@ -179,7 +184,7 @@ class ImageService {
 
         $img = Image::make($image_path);
 
-        $img->resize($width, null, function ($constraint) {
+        $img->resize($width, null, function ($constraint): void {
             $constraint->aspectRatio();
         });
 
@@ -235,7 +240,7 @@ class ImageService {
         $height = self::$height;
 
         if ($width > $height) {
-            $img->resize($width, null, function ($constraint) {
+            $img->resize($width, null, function ($constraint): void {
                 $constraint->aspectRatio();
             });
 
@@ -251,7 +256,7 @@ class ImageService {
                 $img->crop($width, $height, $x0, $y0);
             }
         } else {
-            $img->resize(null, $height, function ($constraint) {
+            $img->resize(null, $height, function ($constraint): void {
                 $constraint->aspectRatio();
             });
 
@@ -284,32 +289,53 @@ class ImageService {
         /// per il fluent, o chaining
     }
 
+    public function url(array $params = []): string {
+        $img = \Modules\Xot\Models\Image::where('src', self::$src)
+            ->where('width', self::$width)
+            ->where('height', self::$height)
+            ->first();
+
+        if (is_object($img)) {
+            if (Str::startsWith($img->src_out, Storage::disk('photos')->url(''))) {
+                //return str_replace('http://', '//', $img->src_out);
+                return $img->src_out;
+            } else {
+                $img->delete();
+            }
+        }
+
+        $this->fit()->save();
+        $src_out = Storage::disk('photos')->url(self::$filename);
+
+        \Modules\Xot\Models\Image::create(
+            [
+                'src' => self::$src,
+                'width' => self::$width,
+                'height' => self::$height,
+                'src_out' => $src_out,
+            ]
+        );
+
+        return $src_out;
+    }
+
     public static function save(array $params = []): self {
-        //extract($params);
         $info = pathinfo(self::$src);
-        //dddx($info);
-        /*
-        $basename = basename(self::$src);
-        $basename = Str::before($basename, '?');
-        $basename = Str::slug($basename);
-        */
         if (! isset($info['extension'])) {
             $info['extension'] = 'jpg';
         }
 
         $basename = Str::slug($info['filename']).'.'.$info['extension'];
-        //self::$filename = public_path(self::$dirname.'/'.self::$width.'x'.self::$height.'/'.$basename);
-        //\File::makeDirectory(\dirname(self::$filename), 0775, true, true);
 
         self::$filename = self::$dirname.'/'.self::$width.'x'.self::$height.'/'.$basename;
+
         try {
-            \Storage::disk('infinityfree')->put(self::$filename, self::out());
-            //$r = self::$img->save(self::$filename, 75);
-        } catch (\Exception $e) {
+            Storage::disk('photos')->put(self::$filename, self::out());
+        } catch (\Exception $e) {//ftp_mkdir(): Can't create directory: File exists
+             //$r = self::$img->save(self::$filename, 75);
         }
 
         $me = self::getInstance();
-        //return self::getInstance();
         if (null == $me) {
             throw new Exception('something gone wrong');
         }
@@ -448,12 +474,12 @@ class ImageService {
             //*/
         }
 
-        $img->resize($width, null, function ($constraint) {
+        $img->resize($width, null, function ($constraint): void {
             $constraint->aspectRatio();
         });
 
         if ($img->height() > $height) {
-            $img->resize(null, $height, function ($constraint) {
+            $img->resize(null, $height, function ($constraint): void {
                 $constraint->aspectRatio();
             });
         }
