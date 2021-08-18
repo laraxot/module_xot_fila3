@@ -11,7 +11,7 @@ use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
 //use Illuminate\Support\Facades\URL;
-////use Laravel\Scout\Searchable;
+//use Laravel\Scout\Searchable;
 use Illuminate\Support\Facades\Route;
 //----- models------
 use Illuminate\Support\Str;

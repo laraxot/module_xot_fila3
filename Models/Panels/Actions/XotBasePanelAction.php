@@ -8,7 +8,7 @@ use ErrorException;
 use Exception;
 use Illuminate\Database\Eloquent\Builder;
 //use Illuminate\Database\Eloquent\Model;
-////use Laravel\Scout\Searchable;
+//use Laravel\Scout\Searchable;
 
 //----------  SERVICES --------------------------
 use Illuminate\Database\Eloquent\Collection;
