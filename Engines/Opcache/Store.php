@@ -8,7 +8,6 @@ use Illuminate\Cache\RetrievesMultipleKeys;
 use Illuminate\Cache\TaggableStore;
 use Illuminate\Cache\TagSet;
 use Illuminate\Contracts\Cache\Store as StoreContract;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 
 /**
@@ -47,13 +46,20 @@ class Store extends TaggableStore implements StoreContract {
         if (extension_loaded('Zend OPcache')) {
             $this->enabled = true;
         } elseif (config('app.debug')) {
-            Log::warning('You do not have the Zend OPcache extension loaded!');
+            dddx(['message' => 'You do not have the Zend OPcache extension loaded!']);
         }
         $this->prefix = Str::slug($prefix ?: config('app.name', 'opcache'), '-');
         /*
          * In case if `OpCache` file path not being set we will use `file` driver path
          */
         $this->directory = $directory ?: config('cache.stores.opcache.path', config('cache.stores.file.path'));
+        /*
+        dddx([
+            'enabled' => $this->enabled,
+            'prefix' => $this->prefix,
+            'directory' => $this->directory,
+        ]);
+        */
     }
 
     /**
