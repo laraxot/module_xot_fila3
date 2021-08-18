@@ -229,9 +229,7 @@ class PanelService {
                 return response()->view('pub_theme::errors.404', $data, 404);
             }
 
-            if (method_exists($rows, 'getRelated')) {
-                $row = $rows->getRelated();
-            }
+            $row = $rows->getRelated();
 
             $panel = PanelService::get($row);
             $panel->setRows($rows);
