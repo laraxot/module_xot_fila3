@@ -300,8 +300,8 @@ class ImageService {
 
         if (is_object($img)) {
             if (Str::startsWith($img->src_out, Storage::disk('photos')->url(''))) {
-                //return str_replace('http://', '//', $img->src_out);
-                return $img->src_out;
+                return str_replace('http://', '//', $img->src_out);
+            //return $img->src_out;
             } else {
                 $img->delete();
             }
