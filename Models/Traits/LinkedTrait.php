@@ -29,7 +29,7 @@ use Modules\Xot\Services\TenantService as Tenant; // per dizionario morph
 //------ traits ---
 
 /**
- * Modules\Blog\Models\Traits\LinkedTrait.
+ * Modules\Xot\Models\Traits\LinkedTrait.
  *
  * @property \Modules\LU\Models\User|null $user
  * @property \Modules\Blog\Models\Post    $post
