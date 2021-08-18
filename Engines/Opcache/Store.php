@@ -101,24 +101,21 @@ class Store extends TaggableStore implements StoreContract {
      * @return mixed|void
      */
     public function get($key) {
-        /* phpstan dice
         if ($this->exists($key)) {
             @include $this->filePath($key);
         }
-        if (isset($exp)) {
-            if ($exp < time()) {
-                //
-                // In order to free disc space and memory we need to
-                // delete expired file from our disc and invalidate it from OpCache
-                //
-                $this->forget($key);
 
-                return null;
-            }
+        if (isset($exp) && $exp < time()) {
+            /*
+             * In order to free disc space and memory we need to
+             * delete expired file from our disc and invalidate it from OpCache
+             */
+            $this->forget($key);
+
+            return null;
         }
 
         return isset($val) ? $val : null;
-        */
     }
 
     /**
@@ -362,9 +359,9 @@ class Store extends TaggableStore implements StoreContract {
         return 0 === $minutes ? 9999999999 : strtotime('+'.$seconds.' seconds');
     }
 
-    public function extendExpiration(string $key, int $minutes = 1): void {
-        /*
+    public function extendExpiration(string $key, int $minutes = 1) {
         @include $this->filePath($key);
+
         if (isset($exp)) {
             $extended = strtotime('+'.$minutes.' minutes', $exp);
 
@@ -372,6 +369,5 @@ class Store extends TaggableStore implements StoreContract {
         }
 
         return false;
-        */
     }
 }

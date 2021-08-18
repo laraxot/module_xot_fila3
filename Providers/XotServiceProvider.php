@@ -72,11 +72,26 @@ class XotServiceProvider extends XotBaseServiceProvider {
         ddd(Relation::$morphMap);
         //*/
 
-        $this->commands([
-            \Modules\Xot\Console\CreateAllRepositoriesCommand::class,
-            \Modules\Xot\Console\PanelMakeCommand::class,
-            \Modules\Xot\Console\FixProvidersCommand::class,
-        ]);
+        $this->registerCommands();
+
+        $this->redirectSSL();
+
+        $this->registerTranslator();
+
+        //$this->registerCacheOPCache();
+
+        $this->registerScout();
+
+        //$this->registerLivewireComponents();
+        $this->registerViewComposers();
+
+        //$this->registerPanel();
+        //$this->registerDropbox();// PROBLEMA DI COMPOSER
+    }
+
+    //end bootCallback
+
+    private function redirectSSL(): void {
         if (config('xra.forcessl')) {
             // --- meglio ficcare un controllo anche sull'env
             if (isset($_SERVER['SERVER_NAME']) && 'localhost' != $_SERVER['SERVER_NAME']
@@ -91,25 +106,25 @@ class XotServiceProvider extends XotBaseServiceProvider {
                 }
             }
         }
-        //*
-        $this->registerTranslator();
-        //$this->registerCacheOPCache();
-        //*/
+    }
+
+    private function registerCommands(): void {
+        $this->commands([
+            \Modules\Xot\Console\CreateAllRepositoriesCommand::class,
+            \Modules\Xot\Console\PanelMakeCommand::class,
+            \Modules\Xot\Console\FixProvidersCommand::class,
+        ]);
+    }
+
+    private function registerScout(): void {
         /* --- Scout lo ho tolto per ora
         resolve(\Laravel\Scout\EngineManager::class)->extend('fulltext', function () {
             return new FullTextSearchEngine();
         });
         */
-        //$this->registerLivewireComponents();
-        $this->registerViewComposers();
-
-        //$this->registerPanel();
-        //$this->registerDropbox();// PROBLEMA DI COMPOSER
     }
 
-    //end bootCallback
-
-    private function registerDropbox() {
+    private function registerDropbox(): void {
         Storage::extend('dropbox', function ($app, $config) {
             //dddx($config);
 
