@@ -141,6 +141,15 @@ abstract class XotBasePanel implements PanelContract {
         return $this;
     }
 
+    /*
+     * get Row.
+     *
+     * @return object|Model
+     */
+    public function getRow() {
+        return $this->row;
+    }
+
     /**
      * get Rows.
      *
