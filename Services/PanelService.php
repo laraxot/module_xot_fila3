@@ -71,7 +71,13 @@ class PanelService {
      * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
      * @throws \ReflectionException
      */
-    public static function get(Model $model): PanelContract {
+    public static function get(?Model $model): PanelContract {
+
+        if(!isset($model))
+        {
+            throw new \Exception("Instance of Eloquent Model is missing in Xot/PanelService:get() ");
+        }
+
         $panel = self::setModel($model)->panel();
         $post_type = $panel->postType();
         $name = Str::plural($post_type);
