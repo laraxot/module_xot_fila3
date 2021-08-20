@@ -98,4 +98,5 @@ Route::group(
     );
 //}
 
-Route::get('{lang}/feed/{item}', 'FeedController@show');
+//Route::get('{lang}/feed/{item}', 'FeedController@show');
+Route::get('{lang}/feed/{item}', 'RssFeedController@feed');
