@@ -134,6 +134,7 @@ class HtmlPanelPresenter implements PanelPresenterContract
                 return response()->view('pub_theme::errors.500', $data, 500);
             }
             */
+            dddx(get_class_methods(response()));
             return response()->view()->first(['pub_theme::errors.500','theme::errors.500'], $data, 500);
             //dddx($data);
         }
