@@ -98,4 +98,6 @@ Route::group(
     );
 //}
 
+
+//custom route finche' siamo legati ai modelli
 Route::get('{lang}/feed/{item}', 'RssFeedController@feed');
