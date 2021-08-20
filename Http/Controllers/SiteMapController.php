@@ -11,8 +11,37 @@ use Modules\Blog\Models\Post;
  */
 class SiteMapController {
     public function sitemap() {
-        return 'wip';
-        $posts = Post::all();
-        dddx($posts);
+        //return 'wip';
+
+        //indicizzare solo i modelli traducibili?
+        $posts = Post::groupBy('post_type')
+            ->selectRaw('post_type')
+            ->get();
+
+        $posts = $posts->map(function ($item) {
+            return $item->post_type;
+        })->all();
+
+        $items = collect();
+
+        foreach ($posts as $post) {
+            //$new_collection = xotModel($post)::with('post')->get();
+            $new_collection = xotModel($post)::all()->map(function ($item) {
+                if ($item->post) {
+                    return $item;
+                }
+            })->filter(function ($value) {
+                return ! is_null($value);
+            });
+            //qui non so se prenderli tutti oppure una parte, ho letto che il sitemap non può essere più grande di tot mega
+
+            $items = $items->merge($new_collection);
+        }
+
+        //dddx($items);
+
+        return response()->view('xot::sitemap', [
+            'items' => $items,
+        ])->header('Content-Type', 'text/xml');
     }
 }
