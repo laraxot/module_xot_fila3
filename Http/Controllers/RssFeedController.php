@@ -8,8 +8,6 @@ namespace Modules\Xot\Http\Controllers;
  */
 class RssFeedController {
     public function feed($lang, $item) {
-        return 'wip';
-
         $items = xotModel($item)::with('post')
             ->orderBy('created_at', 'desc')
             ->limit(50)
