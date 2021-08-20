@@ -15,12 +15,13 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Schema;
 //use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\URL;
 //use Modules\Xot\Engines\Opcache;
 //--- services ---
-use Illuminate\Support\Facades\View;
+use Illuminate\Support\Facades\URL;
 //use Laravel\Scout\EngineManager;
+use Illuminate\Support\Facades\View;
 use Illuminate\Translation\Translator;
 use League\Flysystem\Filesystem;
 use Modules\Xot\Contracts\PanelPresenterContract;
@@ -28,11 +29,11 @@ use Modules\Xot\Engines\FullTextSearchEngine;
 use Modules\Xot\Http\View\Composers\XotComposer;
 use Modules\Xot\Presenters\GeoJsonPanelPresenter;
 use Modules\Xot\Presenters\HtmlPanelPresenter;
-use Modules\Xot\Presenters\JsonPanelPresenter; // per slegarmi da tntsearch
-use Modules\Xot\Services\TenantService as Tenant; // per dizionario morph
+use Modules\Xot\Presenters\JsonPanelPresenter;
+use Modules\Xot\Services\TenantService as Tenant;
 use Modules\Xot\Services\TranslatorService;
-use Spatie\Dropbox\Client as DropboxClient;
-use Spatie\FlysystemDropbox\DropboxAdapter;
+use Spatie\Dropbox\Client as DropboxClient; // per dizionario morph
+use Spatie\FlysystemDropbox\DropboxAdapter; // per slegarmi da tntsearch
 
 /**
  * Class XotServiceProvider.
@@ -66,17 +67,26 @@ class XotServiceProvider extends XotBaseServiceProvider {
 
         Relation::morphMap($map);
 
-        /*
-        $morph_map=Relation::morphMap();
-        ddd($morph_map);
-        ddd(Relation::$morphMap);
-        //*/
+        $this->registerCommands();
 
-        $this->commands([
-            \Modules\Xot\Console\CreateAllRepositoriesCommand::class,
-            \Modules\Xot\Console\PanelMakeCommand::class,
-            \Modules\Xot\Console\FixProvidersCommand::class,
-        ]);
+        $this->redirectSSL();
+
+        $this->registerTranslator();
+
+        $this->registerCacheOPCache();
+
+        $this->registerScout();
+
+        //$this->registerLivewireComponents();
+        $this->registerViewComposers();
+
+        //$this->registerPanel();
+        //$this->registerDropbox();// PROBLEMA DI COMPOSER
+    }
+
+    //end bootCallback
+
+    private function redirectSSL(): void {
         if (config('xra.forcessl')) {
             // --- meglio ficcare un controllo anche sull'env
             if (isset($_SERVER['SERVER_NAME']) && 'localhost' != $_SERVER['SERVER_NAME']
@@ -91,25 +101,25 @@ class XotServiceProvider extends XotBaseServiceProvider {
                 }
             }
         }
-        //*
-        $this->registerTranslator();
-        //$this->registerCacheOPCache();
-        //*/
+    }
+
+    private function registerCommands(): void {
+        $this->commands([
+            \Modules\Xot\Console\CreateAllRepositoriesCommand::class,
+            \Modules\Xot\Console\PanelMakeCommand::class,
+            \Modules\Xot\Console\FixProvidersCommand::class,
+        ]);
+    }
+
+    private function registerScout(): void {
         /* --- Scout lo ho tolto per ora
         resolve(\Laravel\Scout\EngineManager::class)->extend('fulltext', function () {
             return new FullTextSearchEngine();
         });
         */
-        //$this->registerLivewireComponents();
-        $this->registerViewComposers();
-
-        //$this->registerPanel();
-        //$this->registerDropbox();// PROBLEMA DI COMPOSER
     }
 
-    //end bootCallback
-
-    private function registerDropbox() {
+    private function registerDropbox(): void {
         Storage::extend('dropbox', function ($app, $config) {
             //dddx($config);
 
@@ -235,6 +245,13 @@ class XotServiceProvider extends XotBaseServiceProvider {
 
             return new \Modules\Xot\Engines\Opcache\Repository($store, new TagSet($store));
         });
+        /*
+        Session::extend('opcache', function () {
+            $store = new \Modules\Xot\Engines\Opcache\Store();
+
+            return new \Modules\Xot\Engines\Opcache\Repository($store, new TagSet($store));
+        });
+        */
         // Extend Collection to implement __set_state magic method
         if (! Collection::hasMacro('__set_state')) {
             Collection::macro('__set_state', function (array $array) {
