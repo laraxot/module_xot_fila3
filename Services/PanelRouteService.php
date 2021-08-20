@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Modules\Xot\Services;
 
+use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Str;
 use Modules\Xot\Contracts\PanelContract;
 
 /**
@@ -64,19 +64,20 @@ class PanelRouteService {
         //return in_admin();
     }
 
-    public function addCacheQueryString(string $route): string {
-        $path = '/'.request()->path();
-        $cache_key = $path.'_query';
+    public function addCacheQueryString(string $route):string{
+        $path='/'.request()->path();
+        $cache_key=$path.'_query';
         Cache::forever($cache_key, request()->query());
         //echo '[cache_key['.$cache_key.']['.$route.']]';
 
+
         //--- aggiungo le query string all'url corrente
         //$queries = collect(request()->query())->except(['_act', 'item0', 'item1'])->all();
-        $cache_key = Str::before($route, '?').'_query';
+        $cache_key=Str::before($route,'?').'_query';
 
-        $queries = Cache::get($cache_key);
-        if (! is_array($queries)) {
-            $queries = [];
+        $queries=Cache::get($cache_key);
+        if(!is_array($queries)){
+            $queries=[];
         }
 
         $url = url_queries($queries, $route);
@@ -84,10 +85,11 @@ class PanelRouteService {
         if (Str::endsWith($url, '?')) {
             $url = Str::before($url, '?');
         }
-        $url = str_replace(url('/'), '/', $url);
+        $url=str_replace(url('/'),'/',$url);
 
         return $url;
     }
+
 
     public function urlPanel(array $params = []): string {
         $panel = $this->panel;
@@ -95,12 +97,12 @@ class PanelRouteService {
         $act = 'show'; //default
         extract($params);
         //panel lo potrei passare da parametro
-        $breads = $panel->getBreads();
+        $breads=$panel->getBreads();
 
         //dddx($breads);
 
         $n = 0;
-        $parz = ['n' => $n + $breads->count() - 1, 'act' => $act];
+        $parz = ['n' => $n + $breads->count()-1, 'act' => $act];
 
         if (isset($in_admin)) {
             $parz['in_admin'] = $in_admin;
@@ -108,6 +110,7 @@ class PanelRouteService {
         if (isset($panel->in_admin)) {
             $parz['in_admin'] = $panel->in_admin;
         }
+
 
         $route_name = self::getRoutenameN($parz);
 
@@ -118,6 +121,8 @@ class PanelRouteService {
             $route_params['item'.($n + $i)] = $bread->guid();
             ++$i;
         }
+
+
 
         if (inAdmin($params) && ! isset($route_params['module'])) {
             $container0 = $route_params['container0'];
@@ -150,6 +155,7 @@ class PanelRouteService {
             return '#['.__LINE__.']['.__FILE__.']['.$e->getMessage().']';
         }
 
+
         return $this->addCacheQueryString($route);
         /*
         if(!in_array($act,['update','create','edit','show'])){
@@ -176,7 +182,9 @@ class PanelRouteService {
         }
         $url=str_replace(url('/'),'/',$url);
         */
+
     }
+
 
     //se n=0 => 'container0'
     // se n=1 => 'container0.container1'
@@ -226,7 +234,7 @@ class PanelRouteService {
         $act = 'show'; //default
         extract($params);
         //panel lo potrei passare da parametro
-        $breads = $panel->getBreads();
+        $breads=$panel->getBreads();
 
         //dddx($breads);
 
@@ -240,6 +248,7 @@ class PanelRouteService {
             $parz['in_admin'] = $panel->in_admin;
         }
 
+
         $route_name = self::getRoutenameN($parz);
 
         //dddx($route_name);
@@ -251,6 +260,7 @@ class PanelRouteService {
             $route_params['item'.($n + $i)] = $bread->guid();
             ++$i;
         }
+
 
         $route_params['container'.($n + $i)] = $related_name;
 
@@ -330,6 +340,8 @@ class PanelRouteService {
         return $url;
         */
     }
+
+
 
     /**
      * @return string

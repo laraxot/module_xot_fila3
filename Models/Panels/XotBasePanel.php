@@ -141,15 +141,6 @@ abstract class XotBasePanel implements PanelContract {
         return $this;
     }
 
-    /*
-     * get Row.
-     *
-     * @return object|Model
-     */
-    public function getRow() {
-        return $this->row;
-    }
-
     /**
      * get Rows.
      *
@@ -320,8 +311,7 @@ abstract class XotBasePanel implements PanelContract {
                 $row_last->post->update(['guid' => $guid_old.'-1']);
             }
             //effettuo il redirect alla stessa pagina perchè è inutile che mi manda il dddx per poi fare refresh(?)
-            //Return value of Modules\Xot\Models\Panels\XotBasePanel::setItem() must be an instance of Modules\Xot\Models\Panels\XotBasePanel, instance of Illuminate\Http\RedirectResponse returned
-            //return redirect(url()->current());
+            return redirect(url()->current());
 
             /*
             dddx(

@@ -8,6 +8,7 @@ use Illuminate\Cache\RetrievesMultipleKeys;
 use Illuminate\Cache\TaggableStore;
 use Illuminate\Cache\TagSet;
 use Illuminate\Contracts\Cache\Store as StoreContract;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 
 /**
@@ -46,20 +47,13 @@ class Store extends TaggableStore implements StoreContract {
         if (extension_loaded('Zend OPcache')) {
             $this->enabled = true;
         } elseif (config('app.debug')) {
-            dddx(['message' => 'You do not have the Zend OPcache extension loaded!']);
+            Log::warning('You do not have the Zend OPcache extension loaded!');
         }
         $this->prefix = Str::slug($prefix ?: config('app.name', 'opcache'), '-');
         /*
          * In case if `OpCache` file path not being set we will use `file` driver path
          */
         $this->directory = $directory ?: config('cache.stores.opcache.path', config('cache.stores.file.path'));
-        /*
-        dddx([
-            'enabled' => $this->enabled,
-            'prefix' => $this->prefix,
-            'directory' => $this->directory,
-        ]);
-        */
     }
 
     /**
@@ -107,21 +101,24 @@ class Store extends TaggableStore implements StoreContract {
      * @return mixed|void
      */
     public function get($key) {
+        /* phpstan dice
         if ($this->exists($key)) {
             @include $this->filePath($key);
         }
+        if (isset($exp)) {
+            if ($exp < time()) {
+                //
+                // In order to free disc space and memory we need to
+                // delete expired file from our disc and invalidate it from OpCache
+                //
+                $this->forget($key);
 
-        if (isset($exp) && $exp < time()) {
-            /*
-             * In order to free disc space and memory we need to
-             * delete expired file from our disc and invalidate it from OpCache
-             */
-            $this->forget($key);
-
-            return null;
+                return null;
+            }
         }
 
         return isset($val) ? $val : null;
+        */
     }
 
     /**
@@ -365,9 +362,9 @@ class Store extends TaggableStore implements StoreContract {
         return 0 === $minutes ? 9999999999 : strtotime('+'.$seconds.' seconds');
     }
 
-    public function extendExpiration(string $key, int $minutes = 1) {
+    public function extendExpiration(string $key, int $minutes = 1): void {
+        /*
         @include $this->filePath($key);
-
         if (isset($exp)) {
             $extended = strtotime('+'.$minutes.' minutes', $exp);
 
@@ -375,5 +372,6 @@ class Store extends TaggableStore implements StoreContract {
         }
 
         return false;
+        */
     }
 }

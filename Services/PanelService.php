@@ -228,7 +228,6 @@ class PanelService {
 
                 return response()->view('pub_theme::errors.404', $data, 404);
             }
-
             $row = $rows->getRelated();
 
             $panel = PanelService::get($row);

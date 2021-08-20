@@ -97,5 +97,3 @@ Route::group(
         }
     );
 //}
-
-//Route::get('{lang}/feed/{item}', 'RssFeedController@feed');
