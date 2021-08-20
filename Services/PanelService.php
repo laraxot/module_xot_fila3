@@ -208,7 +208,7 @@ class PanelService
                 $data = [
                     'message' => 'Not Found ['.$items[$i].'] on ['.$containers[$i].']',
                 ];
-                $view='pub_theme::errors.404';
+                $view='theme::errors.404';
                 if (view()->exists('pub_theme::errors.404')) {
                     $view='pub_theme::errors.404';
                 }
