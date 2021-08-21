@@ -28,14 +28,18 @@ class SiteMapController {
 
         foreach ($posts as $post) {
             //$new_collection = xotModel($post)::with('post')->get();
-            $new_collection = xotModel($post)::all()->map(function ($item) {
-                if ($item->post) {
-                    return $item;
-                }
-            })->filter(function ($value) {
-                return ! is_null($value);
-            });
+            if (null != $post) {
+                $new_collection = xotModel($post)::all()->map(function ($item) {
+                    if ($item->post) {
+                        return $item;
+                    }
+                })->filter(function ($value) {
+                    return ! is_null($value);
+                });
             //qui non so se prenderli tutti oppure una parte, ho letto che il sitemap non può essere più grande di tot mega
+            } else {
+                dddx($post);
+            }
 
             $items = $items->merge($new_collection);
         }
