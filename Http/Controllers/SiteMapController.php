@@ -5,14 +5,17 @@ namespace Modules\Xot\Http\Controllers;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use Modules\Blog\Models\Post;
+use Modules\Xot\Services\PanelService;
 
 /**
  * Class SiteMapController.
  * https://kaloraat.com/articles/create-a-dynamic-xml-sitemap-in-laravel
  * https://laraget.com/blog/generate-a-simple-xml-sitemap-using-laravel.
  */
-class SiteMapController {
-    public function sitemap() {
+class SiteMapController
+{
+    public function sitemap()
+    {
         //return 'wip';
 
         //indicizzare solo i modelli traducibili?
@@ -60,5 +63,23 @@ class SiteMapController {
         return response()->view('xot::sitemap', [
             'items' => $items,
         ])->header('Content-Type', 'text/xml');
+    }
+
+
+    public function index()
+    {
+        $limit=50;
+        $lang=app()->getLocale();
+        $rows=Post::where('lang', $lang)
+            ->whereHas('linkable')
+            ->limit($limit)
+            ->get();
+        $view='xot::sitemap.index';
+        $view_params=[
+            'view'=>$view,
+            'rows'=>$rows,
+        ];
+        return response()->view($view, $view_params)
+            ->header('Content-Type', 'text/xml');
     }
 }
