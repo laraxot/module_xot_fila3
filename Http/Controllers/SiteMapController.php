@@ -28,7 +28,7 @@ class SiteMapController {
             if (null != $value) {
                 return $value;
             }
-            if (! Str::containsAll($value, ['Modules'])) {
+            if (! Str::contains($value, 'Modules')) {
                 return $value;
             }
         });
@@ -49,7 +49,7 @@ class SiteMapController {
                     //qui non so se prenderli tutti oppure una parte, ho letto che il sitemap non può essere più grande di tot mega
                 }
             } catch (\Throwable $th) {
-                dddx($posts);
+                dddx(['elemento non valido '.$post, $posts]);
             }
 
             $items = $items->merge($new_collection);
