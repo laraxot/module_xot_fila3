@@ -71,9 +71,17 @@ class SiteMapController
         $limit=50;
         $lang=app()->getLocale();
         $rows=Post::where('lang', $lang)
-            ->whereHas('linkable')
+            //->whereHas('linkable') //Class 'Modules\Food\Models\Amenity' not found
             ->limit($limit)
-            ->get();
+            ->get()
+            ->filter(function ($item) {
+                try {
+                    $linkable=$item->linkable;
+                } catch (\Exception $e) {
+                    $linkable=null;
+                }
+                return is_object($linkable);
+            });
         $view='xot::sitemap.index';
         $view_params=[
             'view'=>$view,
