@@ -38,7 +38,7 @@ class SiteMapController {
                 });
             //qui non so se prenderli tutti oppure una parte, ho letto che il sitemap non può essere più grande di tot mega
             } else {
-                dddx($post);
+                dddx($posts);
             }
 
             $items = $items->merge($new_collection);
