@@ -5,15 +5,14 @@ namespace Modules\Xot\Http\Controllers;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use Modules\Blog\Models\Post;
-use Modules\Xot\Services\PanelService;
 
 /**
  * Class SiteMapController.
  * https://kaloraat.com/articles/create-a-dynamic-xml-sitemap-in-laravel
  * https://laraget.com/blog/generate-a-simple-xml-sitemap-using-laravel.
  */
-class SiteMapController
-{
+class SiteMapController {
+    /*
     public function sitemap()
     {
         //return 'wip';
@@ -64,31 +63,32 @@ class SiteMapController
             'items' => $items,
         ])->header('Content-Type', 'text/xml');
     }
+    */
 
-
-    public function index()
-    {
-        $limit=50;
-        $lang=app()->getLocale();
-        $rows=Post::where('lang', $lang)
+    public function index() {
+        $limit = 50;
+        $lang = app()->getLocale();
+        $rows = Post::where('lang', $lang)
             //->whereHas('linkable') //Class 'Modules\Food\Models\Amenity' not found
             ->limit($limit)
             ->get()
             ->filter(function ($item) {
                 try {
-                    $linkable=$item->linkable;
+                    $linkable = $item->linkable;
                 } catch (\Exception $e) {
-                    $linkable=null;
+                    $linkable = null;
                 } catch (\Error $e) {
-                    $linkable=null;
+                    $linkable = null;
                 }
+
                 return is_object($linkable);
             });
-        $view='xot::sitemap.index';
-        $view_params=[
-            'view'=>$view,
-            'rows'=>$rows,
+        $view = 'xot::sitemap.index';
+        $view_params = [
+            'view' => $view,
+            'rows' => $rows,
         ];
+
         return response()->view($view, $view_params)
             ->header('Content-Type', 'text/xml');
     }
