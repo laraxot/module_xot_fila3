@@ -22,6 +22,8 @@ class SiteMapController {
             return $item->post_type;
         })->all();
 
+        array_filter($posts);
+
         $items = collect();
 
         foreach ($posts as $post) {
