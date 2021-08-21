@@ -79,6 +79,8 @@ class SiteMapController
                     $linkable=$item->linkable;
                 } catch (\Exception $e) {
                     $linkable=null;
+                } catch (\Error $e) {
+                    $linkable=null;
                 }
                 return is_object($linkable);
             });
