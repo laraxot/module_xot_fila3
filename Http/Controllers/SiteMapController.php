@@ -2,6 +2,8 @@
 
 namespace Modules\Xot\Http\Controllers;
 
+use Illuminate\Support\Arr;
+use Illuminate\Support\Str;
 use Modules\Blog\Models\Post;
 
 /**
@@ -22,22 +24,31 @@ class SiteMapController {
             return $item->post_type;
         })->all();
 
-        array_filter($posts);
+        $posts = Arr::where($posts, function ($value) {
+            if (null != $value) {
+                return $value;
+            }
+            if (! Str::containsAll($value, ['Modules'])) {
+                return $value;
+            }
+        });
 
         $items = collect();
 
         foreach ($posts as $post) {
             //$new_collection = xotModel($post)::with('post')->get();
-            if (null != $post) {
-                $new_collection = xotModel($post)::all()->map(function ($item) {
-                    if ($item->post) {
-                        return $item;
-                    }
-                })->filter(function ($value) {
-                    return ! is_null($value);
-                });
-            //qui non so se prenderli tutti oppure una parte, ho letto che il sitemap non può essere più grande di tot mega
-            } else {
+            try {
+                if (is_object(xotModel($post))) {
+                    $new_collection = xotModel($post)::all()->map(function ($item) {
+                        if ($item->post) {
+                            return $item;
+                        }
+                    })->filter(function ($value) {
+                        return ! is_null($value);
+                    });
+                    //qui non so se prenderli tutti oppure una parte, ho letto che il sitemap non può essere più grande di tot mega
+                }
+            } catch (\Throwable $th) {
                 dddx($posts);
             }
 
