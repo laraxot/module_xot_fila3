@@ -91,7 +91,7 @@ interface PanelContract {
 
     public function getXotModelName();
 
-    public function indexNav();
+    public function indexNav(): ?\Illuminate\Contracts\Support\Renderable;
 
     public function getActions(array $params = []);
 
