@@ -18,7 +18,11 @@ class RouteDomTest extends TestCase {
      */
     public function testRoutes(): void {
         $urls = [
+<<<<<<< HEAD
             '/',
+=======
+            '/it/menus/contatta-il-comune/pages/filo-diretto-col-comune',
+>>>>>>> 032b2924c5899e79c0b2f1399f4475bb8ba8bae6
             //'/'.App::getlocale().'/home', //questo url mi da errore
         ];
         //dd(get_class_methods($this));
@@ -28,7 +32,11 @@ class RouteDomTest extends TestCase {
     public function checkLinks($urls, $depth = 0): void {
         $base_url = env('APP_URL');
 
+<<<<<<< HEAD
         if ($depth > 5) {
+=======
+        if ($depth > 4) {
+>>>>>>> 032b2924c5899e79c0b2f1399f4475bb8ba8bae6
             return;
         }
         $i = 0;
