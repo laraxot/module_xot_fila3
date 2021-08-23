@@ -18,7 +18,7 @@ class RouteDomTest extends TestCase {
      */
     public function testRoutes(): void {
         $urls = [
-            '/it/menus/contatta-il-comune/pages/filo-diretto-col-comune',
+            '/it/menus/emergenza-coronavirus/pages/aggiornamenti',
             //'/'.App::getlocale().'/home', //questo url mi da errore
         ];
         //dd(get_class_methods($this));
