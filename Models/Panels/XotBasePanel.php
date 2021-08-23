@@ -647,7 +647,11 @@ abstract class XotBasePanel implements PanelContract {
     /**
      * @return null
      */
+<<<<<<< HEAD
     public function indexNav(): ?Renderable {
+=======
+    public function indexNav(): ?\Illuminate\Contracts\Support\Renderable {
+>>>>>>> bc2b501 (.)
         return null;
     }
 
