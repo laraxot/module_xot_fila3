@@ -4,13 +4,14 @@ declare(strict_types=1);
 
 namespace Modules\Xot\Models\Panels;
 
+use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\Cache;
 //----------  SERVICES --------------------------
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Route;
@@ -646,7 +647,7 @@ abstract class XotBasePanel implements PanelContract {
     /**
      * @return null
      */
-    public function indexNav(): ?array {
+    public function indexNav(): Renderable {
         return null;
     }
 
