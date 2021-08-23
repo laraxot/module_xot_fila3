@@ -1,31 +1,3 @@
-Amazon Product Advertising API for Laravel
-https://github.com/kawax/laravel-amazon-product-api
-
-https://php-download.com/package/revolution/laravel-amazon-product-api/example
 
 
-
-
-Zend has a great Amazon API service available
-http://framework.zend.com/manual/current/en/modules/zendservice.amazon.html#zendservice-amazon-itemlookup-example-asin
-https://github.com/zendframework/ZendService_Amazon
-
-
-/---
-https://github.com/aws/aws-sdk-php-laravel
-
-
-https://github.com/Exeu/apai-io
-http://exeu.github.io/apai-io/
-
-
-https://stackoverflow.com/questions/37455339/amazon-api-for-laravel
-
-http://webservices.amazon.it/scratchpad/index.html
-
-
-
-https://webservices.amazon.com/paapi5/documentation/search-items.html
-
-
-
+https://amazon-affiliate.eu/it/i-migliori-10-plugin-wordpress-per-blogger/
