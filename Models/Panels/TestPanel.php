@@ -55,7 +55,7 @@ class TestPanel extends XotBasePanel {
     /**
      * index navigation.
      */
-    public function indexNav(): ?array {
+    public function indexNav(): ?\Illuminate\Contracts\Support\Renderable {
         return [];
     }
 
