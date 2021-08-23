@@ -4,13 +4,14 @@ declare(strict_types=1);
 
 namespace Modules\Xot\Models\Panels;
 
+use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\Cache;
 //----------  SERVICES --------------------------
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Route;
@@ -139,6 +140,15 @@ abstract class XotBasePanel implements PanelContract {
         $this->rows = $rows;
 
         return $this;
+    }
+
+    /*
+     * get Row.
+     *
+     * @return object|Model
+     */
+    public function getRow() {
+        return $this->row;
     }
 
     /**
@@ -279,6 +289,9 @@ abstract class XotBasePanel implements PanelContract {
         return $route_params;
     }
 
+    /**
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
     public function setItem(string $guid): self {
         $model = $this->row;
         $rows = $this->rows;
@@ -307,7 +320,11 @@ abstract class XotBasePanel implements PanelContract {
                 $guid_old = $row_last->post->guid;
                 $row_last->post->update(['guid' => $guid_old.'-1']);
             }
-            //*
+            //effettuo il redirect alla stessa pagina perchè è inutile che mi manda il dddx per poi fare refresh(?)
+            //Return value of Modules\Xot\Models\Panels\XotBasePanel::setItem() must be an instance of Modules\Xot\Models\Panels\XotBasePanel, instance of Illuminate\Http\RedirectResponse returned
+            //return redirect(url()->current());
+
+            /*
             dddx(
                 [
                     'error' => 'multiple',
@@ -315,7 +332,7 @@ abstract class XotBasePanel implements PanelContract {
                     'row_last' => $row_last,
                 ]
             );
-            //*/
+            /*/
         }
         $this->row = $rows->first();
 
@@ -630,7 +647,7 @@ abstract class XotBasePanel implements PanelContract {
     /**
      * @return null
      */
-    public function indexNav(): ?\Illuminate\Contracts\Support\Renderable {
+    public function indexNav(): ?Renderable {
         return null;
     }
 
@@ -1084,7 +1101,16 @@ abstract class XotBasePanel implements PanelContract {
         return '<img src="'.asset($src).'" >';
     }
 
-    public function imgSrc(array $params): string { //usare PanelImageService
+    public function imgSrc(array $params): string {
+        $params['dirname'] = '/photos/'.$this->postType().'/'.$this->guid();
+        $params['src'] = optional($this->row)->image_src;
+        $img = new ImageService($params);
+
+        return $img->url();
+    }
+
+    /*
+    public function imgSrcOld(array $params): string { //usare PanelImageService
         $row = $this->row;
         if (! is_object($row)) {
             return '#'.__LINE__.class_basename($this);
@@ -1128,13 +1154,14 @@ abstract class XotBasePanel implements PanelContract {
                 'width' => $width,
                 'height' => $height,
             ]);
-            //dddx($src_out);
+
             return $src_out;
         } catch (\Exception $e) {
             //dddx('isolated');
             return '#['.__LINE__.']['.__FILE__.']';
         }
     }
+    //*/
 
     /**
      * @return string

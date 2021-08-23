@@ -105,4 +105,8 @@ Route::group(
 Route::get('{lang}/feed/{item}', 'RssFeedController@feed');
 //Route::get('/sitemap.xml', 'SiteMapController@sitemap');
 //Route::get('{lang}/feed/{item}', 'RssFeedController@show');
+<<<<<<< HEAD
 Route::get('/sitemap.xml', 'SiteMapController@index');
+=======
+Route::get('/sitemap.xml', 'SiteMapController@index');
+>>>>>>> b401fac (.)
