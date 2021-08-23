@@ -18,7 +18,7 @@ class RouteDomTest extends TestCase {
      */
     public function testRoutes(): void {
         $urls = [
-            '/it/menus/cose-da-non-perdere/pages/personaggi-e-luoghi-storici',
+            '/it/menus/contatta-il-comune/pages/filo-diretto-col-comune',
             //'/'.App::getlocale().'/home', //questo url mi da errore
         ];
         //dd(get_class_methods($this));
@@ -28,7 +28,7 @@ class RouteDomTest extends TestCase {
     public function checkLinks($urls, $depth = 0): void {
         $base_url = env('APP_URL');
 
-        if ($depth > 3) {
+        if ($depth > 4) {
             return;
         }
         $i = 0;
