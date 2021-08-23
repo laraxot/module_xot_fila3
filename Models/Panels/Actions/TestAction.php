@@ -1,31 +1,35 @@
 <?php
-
-declare(strict_types=1);
+/**
+ *
+ */
 
 namespace Modules\Xot\Models\Panels\Actions;
-
-use Illuminate\Support\Facades\Storage;
 
 //-------- models -----------
 
 //-------- services --------
+use Modules\Xot\Models\Panels\Actions\XotBasePanelAction;
 
 //-------- bases -----------
 
 /**
- * Class TestAction.
+ * Class TestAction
+ * @package Modules\Xot\Models\Panels\Actions
  */
 class TestAction extends XotBasePanelAction {
+    /**
+     * @var bool
+     */
     public bool $onItem = true;
-
+    /**
+     * @var bool
+     */
     public bool $onContainer = true;
 
     /**
      * @return mixed
      */
     public function handle() {
-        //Storage::disk('dropbox')->put('file.txt', 'Contents');
-        //return 'preso';
-        //return $this->panel->view();
+        return $this->panel->view();
     }
 }

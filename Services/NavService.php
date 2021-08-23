@@ -1,12 +1,9 @@
 <?php
 
-declare(strict_types=1);
-
 namespace Modules\Xot\Services;
 
 use Carbon\Carbon;
 use Exception;
-use Illuminate\Contracts\Support\Renderable;
 
 /**
  * Class NavService.
@@ -15,7 +12,7 @@ class NavService {
     /**
      * @return array
      */
-    public static function yearNav(): Renderable {
+    public static function yearNav() {
         $request = \Request::capture();
         $routename = \Route::currentRouteName();
         //$request->route('parameter_name')
@@ -51,18 +48,13 @@ class NavService {
             ++$year;
         }
 
-        $view = 'adm_theme::layouts.partials.nav';
-        $view_params = [
-            'nav' => $nav,
-        ];
-
-        return view($view, $view_params);
+        return $nav;
     }
 
     /**
      * @return array
      */
-    public static function monthYearNav(): Renderable { //possiamo trasformarlo in una macro
+    public static function monthYearNav() { //possiamo trasformarlo in una macro
         $request = \Request::capture();
         $routename = \Route::currentRouteName();
 
@@ -102,12 +94,11 @@ class NavService {
             $d->addMonth();
         }
 
-        $view = 'adm_theme::layouts.partials.nav';
-        $view_params = [
-            'nav' => $nav,
-        ];
-
-        return view($view, $view_params);
+        return $nav;
+        //$d->locale() //it !!
+        /*
+        return '';
+        */
     }
 
     /* deprecated

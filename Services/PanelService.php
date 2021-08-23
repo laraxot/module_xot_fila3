@@ -14,8 +14,7 @@ use Modules\Xot\Contracts\UserContract;
 /**
  * Class PanelService.
  */
-class PanelService
-{
+class PanelService {
     private static ?PanelService $_instance = null;
 
     /**
@@ -33,14 +32,12 @@ class PanelService
     }
      */
 
-    public function __construct(array $route_params)
-    {
+    public function __construct(array $route_params) {
         $this->route_params = $route_params;
         //static::$panel = $this->getByRouteParams($route_params);
     }
 
-    public static function getInstance(): self
-    {
+    public static function getInstance(): self {
         if (null === self::$_instance) {
             $route_params = request()->route()->parameters();
             self::$_instance = new self($route_params);
@@ -54,14 +51,12 @@ class PanelService
         return static::$panel;
     }
     */
-    public static function setRequestPanel(?PanelContract $panel): void
-    {
+    public static function setRequestPanel(?PanelContract $panel): void {
         $inst = self::getInstance();
         $inst::$panel = $panel;
     }
 
-    public static function getRequestPanel(): ?PanelContract
-    {
+    public static function getRequestPanel(): ?PanelContract {
         $inst = self::getInstance();
         try {
             return $inst::$panel;
@@ -76,8 +71,7 @@ class PanelService
      * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
      * @throws \ReflectionException
      */
-    public static function get(Model $model): PanelContract
-    {
+    public static function get(Model $model): PanelContract {
         $panel = self::setModel($model)->panel();
         $post_type = $panel->postType();
         $name = Str::plural($post_type);
@@ -89,8 +83,7 @@ class PanelService
     /**
      * @param Model|ModelContract|UserContract $model
      */
-    public static function setModel($model): self
-    {
+    public static function setModel($model): self {
         self::$model = $model;
 
         return self::getInstance();
@@ -102,8 +95,7 @@ class PanelService
      * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
      * @throws \ReflectionException
      */
-    public static function panel(): PanelContract
-    {
+    public static function panel(): PanelContract {
         if (! is_object(self::$model)) {
             //dddx(['model' => self::$model, 'message' => 'is not an object', 'url' => url()->current()]);
             //return null;
@@ -135,21 +127,18 @@ class PanelService
         return self::$panel;
     }
 
-    public function imageHtml(?array $params): string
-    {
+    public function imageHtml(?array $params): string {
         return optional(self::$model)->image_src;
     }
 
-    public function tabs(): array
-    {
+    public function tabs(): array {
         return self::panel()->tabs();
     }
 
     //esempio parametro stringa 'area-1-menu-1'
     //rilascia il pannello dell'ultimo container (nell'esempio menu),
     //con parent il pannello del precedente container (nell'esempio area)
-    public static function getById(string $id)
-    {
+    public static function getById(string $id) {
         $piece = explode('-', $id);
         $route_params = [];
         $j = 0;
@@ -171,8 +160,7 @@ class PanelService
     /**
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\Response|mixed|null
      */
-    public static function getByParams(?array $route_params)
-    {
+    public static function getByParams(?array $route_params) {
         [$containers, $items] = params2ContainerItem($route_params);
         $in_admin = null;
         if (isset($route_params['in_admin'])) {
@@ -208,12 +196,8 @@ class PanelService
                 $data = [
                     'message' => 'Not Found ['.$items[$i].'] on ['.$containers[$i].']',
                 ];
-                $view='theme::errors.404';
-                if (view()->exists('pub_theme::errors.404')) {
-                    $view='pub_theme::errors.404';
-                }
 
-                return response()->view($view, $data, 404);
+                return response()->view('pub_theme::errors.404', $data, 404);
             }
             //dddx(['riga 108', $panel, $in_admin, $panel->in_admin, $route_params, params2ContainerItem($route_params)]);
         }
@@ -244,7 +228,6 @@ class PanelService
 
                 return response()->view('pub_theme::errors.404', $data, 404);
             }
-
             $row = $rows->getRelated();
 
             $panel = PanelService::get($row);
@@ -276,8 +259,7 @@ class PanelService
      *
      * @return \Illuminate\Http\RedirectResponse|mixed
      */
-    public static function getByModel(ModelContract $model)
-    {
+    public static function getByModel(ModelContract $model) {
         $class_full = get_class($model);
         $class_name = class_basename($model);
         $class = Str::before($class_full, $class_name);
@@ -299,8 +281,7 @@ class PanelService
      * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
      * @throws \ReflectionException
      */
-    public static function createPanel(ModelContract $model): void
-    {
+    public static function createPanel(ModelContract $model): void {
         if (! is_object($model)) {
             dddx(['da fare']);
         }
@@ -360,8 +341,7 @@ class PanelService
      * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
      * @throws \ReflectionException
      */
-    public static function updatePanel(array $params = []): void
-    {
+    public static function updatePanel(array $params = []): void {
         extract($params);
         if (! isset($func)) {
             dddx(['err' => 'func is missing']);
