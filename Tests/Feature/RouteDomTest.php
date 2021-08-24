@@ -18,7 +18,7 @@ class RouteDomTest extends TestCase {
      */
     public function testRoutes(): void {
         $urls = [
-            '/it/menus/emergenza-coronavirus/pages/aggiornamenti',
+            '/',
             //'/'.App::getlocale().'/home', //questo url mi da errore
         ];
         //dd(get_class_methods($this));
@@ -31,7 +31,7 @@ class RouteDomTest extends TestCase {
         if ($depth > 4) {
             return;
         }
-        $i = 0;
+        //$i = 0;
 
         foreach ($urls as $url) {
             /*
