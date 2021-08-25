@@ -646,11 +646,7 @@ abstract class XotBasePanel implements PanelContract {
     /**
      * @return null
      */
-<<<<<<< HEAD
     public function indexNav(): ?Renderable {
-=======
-    public function indexNav(): ?array {
->>>>>>> 0fdfa10 (.)
         return null;
     }
 
