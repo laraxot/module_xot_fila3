@@ -637,16 +637,16 @@ abstract class XotBasePanel implements PanelContract {
     }
 
     /**
-     * @return false|mixed
+     * ---.
      */
-    public function getXotModelName() {
+    public function getXotModelName(): ?string {
         return collect(config('xra.model'))->search(static::$model);
     }
 
     /**
-     * @return null
+     * barra navigazione.
      */
-    public function indexNav(): ?Renderable {
+    public function indexNav(): ?\Illuminate\Contracts\Support\Renderable {
         return null;
     }
 

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Modules\Xot\Services;
 
 use Carbon\Carbon;
@@ -10,9 +12,9 @@ use Exception;
  */
 class NavService {
     /**
-     * @return array
+     *--.
      */
-    public static function yearNav() {
+    public static function yearNav(): ?\Illuminate\Contracts\Support\Renderable {
         $request = \Request::capture();
         $routename = \Route::currentRouteName();
         //$request->route('parameter_name')
@@ -48,13 +50,18 @@ class NavService {
             ++$year;
         }
 
-        return $nav;
+        $view = 'adm_theme::layouts.partials.nav';
+        $view_params = [
+            'nav' => $nav,
+        ];
+
+        return view($view, $view_params);
     }
 
     /**
-     * @return array
+     *--.
      */
-    public static function monthYearNav() { //possiamo trasformarlo in una macro
+    public static function monthYearNav(): ?\Illuminate\Contracts\Support\Renderable { //possiamo trasformarlo in una macro
         $request = \Request::capture();
         $routename = \Route::currentRouteName();
 
@@ -94,11 +101,12 @@ class NavService {
             $d->addMonth();
         }
 
-        return $nav;
-        //$d->locale() //it !!
-        /*
-        return '';
-        */
+        $view = 'adm_theme::layouts.partials.nav';
+        $view_params = [
+            'nav' => $nav,
+        ];
+
+        return view($view, $view_params);
     }
 
     /* deprecated
