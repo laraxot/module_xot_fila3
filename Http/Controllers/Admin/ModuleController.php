@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Modules\Xot\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
@@ -13,8 +15,7 @@ use Modules\Theme\Services\ThemeService;
 ///*
 
 /**
- * Class ModuleController
- * @package Modules\Xot\Http\Controllers\Admin
+ * Class ModuleController.
  */
 class ModuleController extends XotBaseContainerController {
 }

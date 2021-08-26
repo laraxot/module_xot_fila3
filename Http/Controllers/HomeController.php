@@ -61,8 +61,6 @@ class HomeController extends Controller {
         $home = Tenant::model('home');
         $mod_name = Panel::get($home)->getModuleName();
 
-        
-
         $home_controller = '\Modules\\'.$mod_name.'\Http\Controllers\HomeController';
 
         //dddx($home_controller);

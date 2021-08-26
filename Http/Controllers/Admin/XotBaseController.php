@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Modules\Xot\Http\Controllers\Admin;
 
 use Illuminate\Routing\Controller;
@@ -17,8 +19,7 @@ use Modules\Xot\Jobs\Crud\storeJob;
 */
 
 /**
- * Class XotBaseController
- * @package Modules\Xot\Http\Controllers\Admin
+ * Class XotBaseController.
  */
 abstract class XotBaseController extends Controller {
     use CrudTrait;

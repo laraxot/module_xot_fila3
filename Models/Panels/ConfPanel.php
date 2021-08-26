@@ -1,25 +1,22 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Modules\Xot\Models\Panels;
 
 //--- Services --
 
 /**
- * Class ConfPanel
- * @package Modules\Xot\Models\Panels
+ * Class ConfPanel.
  */
 class ConfPanel extends XotBasePanel {
     /**
      * The model the resource corresponds to.
-     *
-     * @var string
      */
     public static string $model = 'Modules\Xot\Models\Conf';
 
     /**
      * The single value that should be used to represent the resource when being displayed.
-     *
-     * @var string
      */
     public static string $title = 'title';
 

@@ -179,8 +179,6 @@ trait Getter {
     }
 
     /**
-     * @param array $params
-     *
      * @return mixed|null
      */
     public function __getVars(array $params = []) {

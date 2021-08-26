@@ -13,7 +13,6 @@ use Illuminate\View\Component as IlluminateComponent;
  * Class XotBaseComponent.
  */
 abstract class XotBaseComponent extends IlluminateComponent {
-    /** @var array */
     protected static array $assets = [];
 
     public array $attrs = [];

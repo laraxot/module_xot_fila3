@@ -1,25 +1,19 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Modules\Xot\Models\Panels\Actions;
 
 use Illuminate\Support\Facades\File;
 
 /**
- * Class StoreFileMetatagAction
- * @package Modules\Xot\Models\Panels\Actions
+ * Class StoreFileMetatagAction.
  */
 class StoreFileMetatagAction extends XotBasePanelAction {
-    /**
-     * @var bool
-     */
     public bool $onContainer = false; //per tutte le righe, esempio xls
-    /**
-     * @var bool
-     */
+
     public bool $onItem = true; //per riga selezionata
-    /**
-     * @var string
-     */
+
     public string $icon = '<i class="far fa-save"></i>';
 
     /**

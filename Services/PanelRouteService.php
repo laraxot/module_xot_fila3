@@ -12,8 +12,7 @@ use Modules\Xot\Contracts\PanelContract;
 /**
  * Class PanelRouteService.
  */
-class PanelRouteService
-{
+class PanelRouteService {
     public PanelContract $panel;
 
     /*
@@ -27,8 +26,7 @@ class PanelRouteService
      *
      * @return $this
      */
-    public function setPanel(PanelContract &$panel)
-    {
+    public function setPanel(PanelContract &$panel) {
         $this->panel = $panel;
 
         return $this;
@@ -37,8 +35,7 @@ class PanelRouteService
     /**
      * @return array|bool|mixed
      */
-    public static function inAdmin(array $params = [])
-    {
+    public static function inAdmin(array $params = []) {
         if (isset($params['in_admin'])) {
             return $params['in_admin'];
         }
@@ -67,8 +64,7 @@ class PanelRouteService
         //return in_admin();
     }
 
-    public function addCacheQueryString(string $route): string
-    {
+    public function addCacheQueryString(string $route): string {
         $path = '/'.request()->path();
         $cache_key = $path.'_query';
         Cache::forever($cache_key, request()->query());
@@ -93,8 +89,7 @@ class PanelRouteService
         return $url;
     }
 
-    public function urlPanel(array $params = []): string
-    {
+    public function urlPanel(array $params = []): string {
         $panel = $this->panel;
         $act = 'show'; //default
         extract($params);
@@ -135,18 +130,18 @@ class PanelRouteService
             if (request()->input('debug', false)) {
                 dddx(
                     ['e' => $e->getMessage(),
-                    'params' => $params,
-                    'route_name' => $route_name,
-                    'route_params' => $route_params,
-                    'last row' => $panel->row,
-                    'panel post type' => $panel->postType(),
-                    'panel guid' => $panel->guid(),
-                    'last route key ' => $panel->row->getRouteKey(),
-                    'last route key name' => $panel->row->getRouteKeyName(),
-                    'in_admin' => config()->get('in_admin'),
-                    'in_admin_session' => session()->get('in_admin'),
-                    //'routes' => \Route::getRoutes(),
-                ]
+                        'params' => $params,
+                        'route_name' => $route_name,
+                        'route_params' => $route_params,
+                        'last row' => $panel->row,
+                        'panel post type' => $panel->postType(),
+                        'panel guid' => $panel->guid(),
+                        'last route key ' => $panel->row->getRouteKey(),
+                        'last route key name' => $panel->row->getRouteKeyName(),
+                        'in_admin' => config()->get('in_admin'),
+                        'in_admin_session' => session()->get('in_admin'),
+                        //'routes' => \Route::getRoutes(),
+                    ]
                 );
             }
 
@@ -189,8 +184,7 @@ class PanelRouteService
      *
      * @return string
      */
-    public static function getRoutenameN($params)
-    {
+    public static function getRoutenameN($params) {
         //default vars
         $n = 0;
         $act = 'show';
@@ -214,8 +208,7 @@ class PanelRouteService
      *
      * @return string|string[]|void
      */
-    public function urlRelatedPanel($params)
-    {
+    public function urlRelatedPanel($params) {
         $panel = $this->panel;
         $act = 'show';
         extract($params);
@@ -276,18 +269,18 @@ class PanelRouteService
             if (request()->input('debug', false)) {
                 dddx(
                     ['e' => $e->getMessage(),
-                    'params' => $params,
-                    'route_name' => $route_name,
-                    'route_params' => $route_params,
-                    'last row' => $panel->row,
-                    'panel post type' => $panel->postType(),
-                    'panel guid' => $panel->guid(),
-                    'last route key ' => $panel->row->getRouteKey(),
-                    'last route key name' => $panel->row->getRouteKeyName(),
-                    'in_admin' => config()->get('in_admin'),
-                    'in_admin_session' => session()->get('in_admin'),
-                    //'routes' => \Route::getRoutes(),
-                ]
+                        'params' => $params,
+                        'route_name' => $route_name,
+                        'route_params' => $route_params,
+                        'last row' => $panel->row,
+                        'panel post type' => $panel->postType(),
+                        'panel guid' => $panel->guid(),
+                        'last route key ' => $panel->row->getRouteKey(),
+                        'last route key name' => $panel->row->getRouteKeyName(),
+                        'in_admin' => config()->get('in_admin'),
+                        'in_admin_session' => session()->get('in_admin'),
+                        //'routes' => \Route::getRoutes(),
+                    ]
                 );
             }
 
@@ -339,8 +332,7 @@ class PanelRouteService
     /**
      * @return string
      */
-    public static function urlLang(array $params = [])
-    {
+    public static function urlLang(array $params = []) {
         extract($params);
 
         return '?';

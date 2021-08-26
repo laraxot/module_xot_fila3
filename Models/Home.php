@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Modules\Xot\Models;
 
 //--- TRAITS ---
@@ -8,21 +10,22 @@ use Modules\Xot\Models\Traits\WidgetTrait;
 //------ ext models---
 
 /**
- * Modules\Xot\Models\Home
+ * Modules\Xot\Models\Home.
  *
- * @property int $id
- * @property string|null $created_by
- * @property string|null $updated_by
- * @property string|null $deleted_by
- * @property \Illuminate\Support\Carbon|null $created_at
- * @property \Illuminate\Support\Carbon|null $updated_at
- * @property string|null $icon_src
- * @property-read \Illuminate\Database\Eloquent\Collection|\Modules\Xot\Models\Widget[] $containerWidgets
- * @property-read int|null $container_widgets_count
- * @property-read \Illuminate\Database\Eloquent\Collection|\Modules\Xot\Models\Image[] $images
- * @property-read int|null $images_count
- * @property-read \Illuminate\Database\Eloquent\Collection|\Modules\Xot\Models\Widget[] $widgets
- * @property-read int|null $widgets_count
+ * @property int                                                                   $id
+ * @property string|null                                                           $created_by
+ * @property string|null                                                           $updated_by
+ * @property string|null                                                           $deleted_by
+ * @property \Illuminate\Support\Carbon|null                                       $created_at
+ * @property \Illuminate\Support\Carbon|null                                       $updated_at
+ * @property string|null                                                           $icon_src
+ * @property \Illuminate\Database\Eloquent\Collection|\Modules\Xot\Models\Widget[] $containerWidgets
+ * @property int|null                                                              $container_widgets_count
+ * @property \Illuminate\Database\Eloquent\Collection|\Modules\Xot\Models\Image[]  $images
+ * @property int|null                                                              $images_count
+ * @property \Illuminate\Database\Eloquent\Collection|\Modules\Xot\Models\Widget[] $widgets
+ * @property int|null                                                              $widgets_count
+ *
  * @method static \Illuminate\Database\Eloquent\Builder|Home newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Home newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Home ofLayoutPosition($layout_position)
