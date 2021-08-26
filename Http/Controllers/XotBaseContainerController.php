@@ -77,7 +77,13 @@ abstract class XotBaseContainerController extends Controller {
         $controller = $this->getController();
         $data = $request->all();
 
-        $panel = app($controller)->$method($data, $panel);
+        //$panel = app($controller)->$method($data, $panel);
+        $panel = app($controller)->$method($request);
+
+        if (! method_exists($panel, 'out')) {
+            return $panel;
+        }
+
 
         return $panel->out(
             [
