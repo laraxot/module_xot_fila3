@@ -22,7 +22,7 @@ class HomeController extends Controller {
     /**
      * @return mixed
      */
-    public function index(array $data, $panel) {
+    public function index(?array $data, $panel=null) {
         $request=request();
         $home = null;
         try {
@@ -58,7 +58,7 @@ class HomeController extends Controller {
     /**
      * @return mixed
      */
-    public function show(array $data, $panel) {
+    public function show(?array $data, $panel=null) {
         $request=request();
         $home = null;
         $home = Tenant::model('home');
