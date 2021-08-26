@@ -130,20 +130,15 @@ trait LinkedTrait {
 
     /**
      * @param object|string $related
-     *
-     * @return string
      */
-    public function getTableMorph($related, bool $inverse) {
+    public function getTableMorph($related, bool $inverse): string {
         if ($inverse) {
-            //$model = $this;
             $pivot = get_class($this).'Morph';
         } else {
             if (is_string($related)) {
                 $pivot = $related.'Morph';
-            //$model = new $related();
             } else {
                 $pivot = get_class($related).'Morph';
-                //$model = $related;
             }
         }
 
@@ -197,17 +192,11 @@ trait LinkedTrait {
             $relation = $this->morphRelatedWithKey($related, $inverse, $table_key);
         } else {
             if ($inverse) {
-                //$with = Panel::get($this)->with();
                 $relation = $this->morphedByMany($related, $name, $pivot);
             } else {
-                //$with = Panel::get($related)->with();
-
                 $relation = $this->morphToMany($related, $name, $pivot);
             }
         }
-
-        //return $relation;
-        //dddx($with);
 
         return $relation->using($pivot)
             ->withPivot($pivot_fields)

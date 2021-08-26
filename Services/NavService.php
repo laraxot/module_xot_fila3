@@ -6,15 +6,16 @@ namespace Modules\Xot\Services;
 
 use Carbon\Carbon;
 use Exception;
+use Illuminate\Contracts\Support\Renderable;
 
 /**
  * Class NavService.
  */
 class NavService {
     /**
-     *--.
+     * @return array
      */
-    public static function yearNav(): ?\Illuminate\Contracts\Support\Renderable {
+    public static function yearNav(): Renderable {
         $request = \Request::capture();
         $routename = \Route::currentRouteName();
         //$request->route('parameter_name')
@@ -59,9 +60,9 @@ class NavService {
     }
 
     /**
-     *--.
+     * @return array
      */
-    public static function monthYearNav(): ?\Illuminate\Contracts\Support\Renderable { //possiamo trasformarlo in una macro
+    public static function monthYearNav(): Renderable { //possiamo trasformarlo in una macro
         $request = \Request::capture();
         $routename = \Route::currentRouteName();
 
