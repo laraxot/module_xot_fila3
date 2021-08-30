@@ -4,14 +4,13 @@ declare(strict_types=1);
 
 namespace Modules\Xot\Http\Controllers;
 
+use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Http\Request;
-use Illuminate\Routing\Controller;
 //---- services ---
 
+use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Schema;
 use Modules\Theme\Services\ThemeService;
-use Modules\Xot\Contracts\PanelContract;
-use Illuminate\Database\Schema\Blueprint;
 use Modules\Xot\Services\PanelService as Panel;
 use Modules\Xot\Services\TenantService as Tenant;
 
@@ -22,8 +21,7 @@ class HomeController extends Controller {
     /**
      * @return mixed
      */
-    public function index(?array $data, $panel=null) {
-        $request=request();
+    public function index(Request $request) {
         $home = null;
         try {
             $model = Tenant::modelEager('home');
@@ -58,11 +56,12 @@ class HomeController extends Controller {
     /**
      * @return mixed
      */
-    public function show(?array $data, $panel=null) {
-        $request=request();
+    public function show(Request $request) {
         $home = null;
         $home = Tenant::model('home');
         $mod_name = Panel::get($home)->getModuleName();
+
+        
 
         $home_controller = '\Modules\\'.$mod_name.'\Http\Controllers\HomeController';
 

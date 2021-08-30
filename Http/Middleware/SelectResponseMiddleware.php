@@ -1,20 +1,20 @@
 <?php
 
-declare(strict_types=1);
-
 namespace Modules\Xot\Http\Middleware;
 
 use Modules\Xot\Presenters\HtmlPanelPresenter;
 use Modules\Xot\Presenters\JsonPanelPresenter;
 
+
 /**
- * Class SelectResponseMiddleware.
+ * Class SelectResponseMiddleware
+ * @package Modules\Xot\Http\Middleware
  */
 class SelectResponseMiddleware {
     /**
      * @param \Illuminate\Http\Request $request
-     * @param mixed                    ...$guards
-     *
+     * @param \Closure $next
+     * @param mixed ...$guards
      * @return mixed
      */
     public function handle($request, \Closure $next, ...$guards) {
@@ -45,6 +45,8 @@ class SelectResponseMiddleware {
         //if ($responseType) {
         //    \Presenter::select($responseType);
         //}
+
+
 
         return $next($request);
     }

@@ -81,6 +81,8 @@ class DocxService {
     }
 
     /**
+     * @param array $params
+     *
      * @throws \PhpOffice\PhpWord\Exception\CopyFileException
      * @throws \PhpOffice\PhpWord\Exception\CreateTemporaryFileException
      *
@@ -120,7 +122,7 @@ class DocxService {
         }
 
         $data = collect($row)->map(
-            function ($item, $key) use ($prefix, $row) {
+            function ($item, $key) use ($prefix,$row) {
                 if ($row->$key instanceof Carbon) {
                     $item = $row->$key->format('d/m/Y');
                     $item_year = $row->$key->format('Y');
@@ -182,7 +184,7 @@ class DocxService {
         //$arr = $row->toArray();
         //ddd($arr);
         $data = collect($arr)->map(
-            function ($item, $key) use ($row, $prefix, $arr) {
+            function ($item, $key) use ($row,$prefix,$arr) {
                 //*
                 if ('' != $arr[$key] && is_object($row->$key)) {
                     if ($row->$key instanceof Carbon) {

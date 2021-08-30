@@ -267,7 +267,6 @@ class PanelFormService {
             }
         }
         $params['panel'] = $this->panel;
-
         return FormXService::btnHtml($params);
     }
 

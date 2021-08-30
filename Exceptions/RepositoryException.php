@@ -1,11 +1,10 @@
 <?php
 
-declare(strict_types=1);
-
 namespace Modules\Xot\Exceptions;
 
 /**
- * Class RepositoryException.
+ * Class RepositoryException
+ * @package Modules\Xot\Exceptions
  */
 class RepositoryException extends \Exception {
 }

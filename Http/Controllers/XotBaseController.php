@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 namespace Modules\Xot\Http\Controllers;
 
 use Illuminate\Routing\Controller;
@@ -9,7 +7,8 @@ use Illuminate\Support\Str;
 use Modules\Xot\Traits\CrudContainerItemJobTrait as CrudTrait;
 
 /**
- * Class XotBaseController.
+ * Class XotBaseController
+ * @package Modules\Xot\Http\Controllers
  */
 abstract class XotBaseController extends Controller {
     use CrudTrait;

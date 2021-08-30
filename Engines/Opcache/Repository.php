@@ -33,6 +33,8 @@ class Repository extends TaggedCache implements CacheContract {
 
     /**
      * Remove all items from the cache. If called with tags, only reset them.
+     *
+     * @return void
      */
     public function flush(): void {
         $this->tags->getNames() ? $this->store->flushSub() : $this->store->flush();

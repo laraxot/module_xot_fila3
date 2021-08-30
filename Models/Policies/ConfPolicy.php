@@ -1,11 +1,10 @@
 <?php
 
-declare(strict_types=1);
-
 namespace Modules\Xot\Models\Policies;
 
 /**
- * Class ConfPolicy.
+ * Class ConfPolicy
+ * @package Modules\Xot\Models\Policies
  */
 class ConfPolicy extends XotBasePolicy {
 }

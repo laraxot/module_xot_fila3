@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 namespace Modules\Xot\Notifications;
 
 use Illuminate\Bus\Queueable;
@@ -9,7 +7,8 @@ use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
 /**
- * Class Test1Notification.
+ * Class Test1Notification
+ * @package Modules\Xot\Notifications
  */
 class Test1Notification extends Notification {
     use Queueable;

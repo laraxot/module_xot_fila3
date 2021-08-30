@@ -1,11 +1,10 @@
 <?php
 
-declare(strict_types=1);
-
 namespace Modules\Xot\Services;
 
 /**
- * Class CSVService.
+ * Class CSVService
+ * @package Modules\Xot\Services
  */
 class CSVService {
 }

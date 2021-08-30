@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 use Illuminate\Database\Schema\Blueprint;
 //----- models -----
 use Modules\Xot\Database\Migrations\XotBaseMigration;

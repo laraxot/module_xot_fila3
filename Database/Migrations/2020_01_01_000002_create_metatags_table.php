@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 use Illuminate\Database\Schema\Blueprint;
 //----- bases ----
 use Modules\Xot\Database\Migrations\XotBaseMigration;
@@ -9,14 +7,14 @@ use Modules\Xot\Database\Migrations\XotBaseMigration;
 //----- models -----
 
 /**
- * Class CreateMetatagsTable.
+ * Class CreateMetatagsTable
  */
 class CreateMetatagsTable extends XotBaseMigration {
-    /**
-     * db up.
-     *
-     * @return void
-     */
+/**
+* db up
+*
+* @return void
+*/
     public function up() {
         //-- CREATE --
         if (! $this->tableExists()) {

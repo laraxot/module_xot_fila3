@@ -1,17 +1,21 @@
 <?php
 
-declare(strict_types=1);
-
 namespace Modules\Xot\Models\Panels\Policies;
 
 use Modules\Xot\Contracts\PanelContract;
 use Modules\Xot\Contracts\UserContract;
 
 /**
- * Class TranslationPanelPolicy.
+ * Class TranslationPanelPolicy
+ * @package Modules\Xot\Models\Panels\Policies
  */
 class TranslationPanelPolicy extends XotBasePanelPolicy {
-    public function clearDuplicatesTrans(UserContract $user, PanelContract $panel): bool {
+    /**
+     * @param UserContract $user
+     * @param PanelContract $panel
+     * @return bool
+     */
+    public function clearDuplicatesTrans(UserContract $user, PanelContract $panel):bool {
         return true;
     }
 }

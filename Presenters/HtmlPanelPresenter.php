@@ -12,10 +12,12 @@ use Modules\Xot\Contracts\PanelPresenterContract;
 /**
  * Class HtmlPanelPresenter.
  */
-class HtmlPanelPresenter implements PanelPresenterContract {
+class HtmlPanelPresenter implements PanelPresenterContract
+{
     protected PanelContract $panel;
 
-    public function setPanel(PanelContract &$panel): self {
+    public function setPanel(PanelContract &$panel): self
+    {
         $this->panel = $panel;
 
         return $this;
@@ -24,7 +26,8 @@ class HtmlPanelPresenter implements PanelPresenterContract {
     /**
      * @return mixed|void
      */
-    public function index(?Collection $items) {
+    public function index(?Collection $items)
+    {
         /*
         $count = $items->count();
         $last_update = $items
@@ -46,7 +49,8 @@ class HtmlPanelPresenter implements PanelPresenterContract {
     /**
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
-    public function out(?array $params = null) {
+    public function out(?array $params = null)
+    {
         //$route_params = \Route::current()->parameters();
 
         [$containers, $items] = params2ContainerItem();
@@ -125,11 +129,10 @@ class HtmlPanelPresenter implements PanelPresenterContract {
                 'message' => 'not exists view [pub_theme::layouts.app]
                     <br/> pub_theme:'.config('xra.pub_theme'),
             ];
-            $view = 'theme::errors.500';
+            $view='theme::errors.500';
             if (view()->exists('pub_theme::errors.500')) {
-                $view = 'pub_theme::errors.500';
+                $view='pub_theme::errors.500';
             }
-
             return response()->view($view, $data, 500);
         }
 

@@ -1,14 +1,13 @@
 <?php
 
-declare(strict_types=1);
-
 namespace Modules\Xot\Transformers;
 
 //use Illuminate\Http\Resources\Json\ResourceCollection;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 /**
- * Class MapResource.
+ * Class MapResource
+ * @package Modules\Xot\Transformers
  */
 class MapResource extends JsonResource {
     protected float $longitude;
@@ -16,6 +15,7 @@ class MapResource extends JsonResource {
 
     /**
      * @param \Illuminate\Http\Request $request
+     * @return array
      */
     public function toArray($request): array {
         return [
