@@ -9,6 +9,7 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Bus\Dispatchable;
+use Illuminate\Http\Request;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Validator;
@@ -37,8 +38,10 @@ abstract class XotBaseJob implements ShouldQueue {
     /**
      * __construct.
      */
-    public function __construct(array $data, PanelContract &$panel) {
+    //public function __construct(array $data, PanelContract &$panel) {
+    public function __construct(Request $request, PanelContract &$panel) {
         $this->panel = $panel;
+        $data = $request->all();
         $this->data = $data;
         //$this->data = $this->prepareAndValidate($request->all(), $panel);
     }

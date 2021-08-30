@@ -62,7 +62,7 @@ class TestPanel extends XotBasePanel {
     /**
      * Build an "index" query for the given resource.
      *
-     * @param Request                               $request
+     * @param mixed                               $data
      * @param \Illuminate\Database\Eloquent\Builder $query
      *
      * @return \Illuminate\Database\Eloquent\Builder
@@ -86,7 +86,7 @@ class TestPanel extends XotBasePanel {
      *
      * @return array
      */
-    public function tabs() {
+    public function tabs():array {
         $tabs_name = [];
 
         return $tabs_name;
@@ -97,7 +97,7 @@ class TestPanel extends XotBasePanel {
      *
      * @return array
      */
-    public function cards(Request $request) {
+    public function cards(Request $request):array {
         return [];
     }
 
@@ -108,7 +108,7 @@ class TestPanel extends XotBasePanel {
      *
      * @return array
      */
-    public function filters(Request $request = null) {
+    public function filters(Request $request = null):array {
         return [];
     }
 
@@ -117,7 +117,7 @@ class TestPanel extends XotBasePanel {
      *
      * @return array
      */
-    public function lenses(Request $request) {
+    public function lenses(Request $request):array {
         return [];
     }
 
@@ -126,7 +126,7 @@ class TestPanel extends XotBasePanel {
      *
      * @return array
      */
-    public function actions() {
+    public function actions():array {
         return [
             new Actions\TestMailAction(),
         ];

@@ -16,7 +16,6 @@ use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Facades\View;
 use Illuminate\Support\Str;
 use Modules\Xot\Contracts\ModelContract;
 use Modules\Xot\Contracts\PanelContract;
@@ -60,9 +59,11 @@ abstract class XotBasePanel implements PanelContract {
 
     //var \Illuminate\Database\Eloquent\Collection|Builder|ModelContract[]
 
-    /**
-     * @var \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Query\Builder|\Illuminate\Database\Eloquent\Relations\HasMany
-     */
+    //
+    // DA VEDERE \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Query\Builder|\Illuminate\Database\Eloquent\Relations\HasMany.
+    //
+    //
+    //
     public $rows = null;
 
     public ?string $name = null;
@@ -630,10 +631,8 @@ abstract class XotBasePanel implements PanelContract {
 
     /**
      * Get the filters available for the resource.
-     *
-     * @return array
      */
-    public function filters(Request $request = null) {
+    public function filters(Request $request = null): array {
         return [];
     }
 
@@ -1820,17 +1819,12 @@ abstract class XotBasePanel implements PanelContract {
 
     /**
      * Get the tabs available.
-     *
-     * @return array
      */
-    public function tabs() {
+    public function tabs(): array {
         return [];
     }
 
-    /**
-     * @return array
-     */
-    public function actions() {
+    public function actions(): array {
         return [];
     }
 

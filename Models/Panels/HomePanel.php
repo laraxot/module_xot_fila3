@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace Modules\Xot\Models\Panels;
 
-use Illuminate\Http\Request;
-
 //--- Services --
 
 /**
@@ -68,7 +66,7 @@ class HomePanel extends XotBasePanel {
      *
      * @return array
      */
-    public function actions() {
+    public function actions():array {
         $cmd = (string) request()->input('cmd');
 
         return [

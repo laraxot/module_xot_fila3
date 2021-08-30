@@ -121,7 +121,7 @@ class ProxyService {
     }
 
     public function firstProxyWorking(Request $request) {
-        \ini_set('max_execution_time', 300);
+        \ini_set('max_execution_time', '3600');
         $proxys = $this->xroxyProxys($request);
         $url = 'http://www.foodfriendfinder.com/ip.php';
         $res = $this->client->request('GET', $url, $this->client_options);
