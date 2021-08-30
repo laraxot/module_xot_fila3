@@ -21,13 +21,9 @@ class HomeController extends Controller {
     /**
      * @return mixed
      */
-<<<<<<< HEAD
-    public function index(Request $request) {
-=======
     //public function index(?array $data, $panel = null) {
     public function index(Request $request, $panel = null) {
         $request = request();
->>>>>>> e0d46ecb578c605d7bcb5823b2ce9ff0566394e0
         $home = null;
         try {
             $model = Tenant::modelEager('home');
@@ -62,18 +58,12 @@ class HomeController extends Controller {
     /**
      * @return mixed
      */
-<<<<<<< HEAD
-    public function show(Request $request) {
-=======
     //public function show(?array $data, $panel=null) {
     public function show(Request $request, $panel = null) {
         //$request=request();
->>>>>>> e0d46ecb578c605d7bcb5823b2ce9ff0566394e0
         $home = null;
         $home = Tenant::model('home');
         $mod_name = Panel::get($home)->getModuleName();
-
-        
 
         $home_controller = '\Modules\\'.$mod_name.'\Http\Controllers\HomeController';
 
