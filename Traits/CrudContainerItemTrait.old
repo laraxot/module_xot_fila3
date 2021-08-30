@@ -739,7 +739,7 @@ trait CrudContainerItemTrait {
         return $view;
     }
 
-    public function tabs() {
+    public function tabs():array {
         return ['test'];
     }
 }//end trait

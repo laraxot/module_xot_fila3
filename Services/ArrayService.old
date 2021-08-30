@@ -167,7 +167,7 @@ class ArrayService {
         if (! isset($nomefile) && isset($filename)) {
             $nomefile = $filename;
         }
-        \ini_set('max_execution_time', 3600);
+        \ini_set('max_execution_time', '3600');
         //require_once 'Spreadsheet/Excel/Writer.php';
         //global $registry;
         //$download_dir = $registry->conf->settings['root']['conf']['xot']['download'];

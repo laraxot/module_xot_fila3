@@ -17,7 +17,7 @@ class ImportGoutteService {
     protected static $client_options = [];
 
     public static function importInit() {
-        \ini_set('max_execution_time', 3000);
+        \ini_set('max_execution_time', '3000');
         $params = \Route::current()->parameters();
         $cookieFile = './jar.txt';
         $cookieJar = new FileCookieJar($cookieFile, true);
