@@ -16,7 +16,6 @@ use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Facades\View;
 use Illuminate\Support\Str;
 use Modules\Xot\Contracts\ModelContract;
 use Modules\Xot\Contracts\PanelContract;
