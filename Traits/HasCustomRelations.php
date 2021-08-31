@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 namespace Modules\Xot\Traits;
 
 /*
@@ -15,12 +13,15 @@ use Modules\Xot\Relations\CustomRelation;
 //use Illuminate\Database\Eloquent\Builder;
 
 /**
- * Trait HasCustomRelations.
+ * Trait HasCustomRelations
+ * @package Modules\Xot\Traits
  */
 trait HasCustomRelations {
     /**
      * @param $related
-     *
+     * @param Closure $baseConstraints
+     * @param Closure|null $eagerConstraints
+     * @param Closure|null $eagerMatcher
      * @return CustomRelation
      */
     public function customRelation($related, Closure $baseConstraints, Closure $eagerConstraints = null, Closure $eagerMatcher = null) {

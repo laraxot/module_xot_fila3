@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 namespace Modules\Xot\Traits;
 
 // /laravel/app/Updater.php

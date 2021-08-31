@@ -293,7 +293,7 @@ class ImportService {
         $key = self::getCacheKey($method, $url, $attrs = []);
         $value = Cache::store('file')->rememberForever(
             $key,
-            function () use ($method, $url, $attrs) {
+            function () use ($method,$url,$attrs) {
                 $body = self::gRequest($method, $url, $attrs);
 
                 return (string) $body;

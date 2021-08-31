@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /**
  * https://devdojo.com/devdojo/simple-laravel-route-testing.
  */
@@ -29,18 +27,18 @@ class RouteTest extends TestCase {
             //'/'.App::getlocale().'/home', //questo url mi da errore
         ];
 
-        echo PHP_EOL;
+        echo  PHP_EOL;
 
         foreach ($urls as $url) {
             $response = $this->get($url);
             if (200 !== (int) $response->status()) {
-                echo $appURL.$url.' (FAILED) did not return a 200.';
+                echo  $appURL.$url.' (FAILED) did not return a 200.';
                 $this->assertTrue(false);
             } else {
                 echo $appURL.$url.' (success ?)';
                 $this->assertTrue(true);
             }
-            echo PHP_EOL;
+            echo  PHP_EOL;
         }
     }
 }

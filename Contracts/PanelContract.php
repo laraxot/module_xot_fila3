@@ -42,6 +42,17 @@ interface PanelContract {
 
     public function postType(): string;
 
+    public function imgSrc(array $params): string;
+
+    public function optionLabel(object $row): string;
+
+    /**
+     * Undocumented function.
+     *
+     * @return object|Model
+     */
+    public function getRow();
+
     /*
     public function __construct($model = null);
 
@@ -59,7 +70,7 @@ interface PanelContract {
 
     public function optionId(object $row);
 
-    public function optionLabel(object $row):string;
+
 
 
 
@@ -163,7 +174,7 @@ interface PanelContract {
 
     public function imageHtml($params);
 
-    public function imgSrc($params);
+
 
     public function microdataSchemaOrg();
 
@@ -179,8 +190,7 @@ interface PanelContract {
 
     public function url(array $params = []);
 
-    public function indexUrl();
-
+    
     public function indexEditUrl();
 
     public function editUrl();

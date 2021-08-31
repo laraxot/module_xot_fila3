@@ -1,14 +1,16 @@
 <?php
 
-declare(strict_types=1);
-
 namespace Modules\Xot\Database\Migrations;
 
 /**
- * Trait XotBaseMigrationTrait.
+ * Trait XotBaseMigrationTrait
+ * @package Modules\Xot\Database\Migrations
  */
 trait XotBaseMigrationTrait {
-    public function getTable(): string {
+    /**
+     * @return string
+     */
+    public function getTable():string {
         return with(new MyModel())->getTable();
     }
 
@@ -31,7 +33,6 @@ trait XotBaseMigrationTrait {
 
     /**
      * @param $col
-     *
      * @return mixed
      */
     public function hasColumn($col) {
@@ -43,7 +44,7 @@ trait XotBaseMigrationTrait {
      *
      * @return void
      * @return void
-     */
+*/
     public function down() {
         $this->getConn()->dropIfExists($this->getTable());
     }

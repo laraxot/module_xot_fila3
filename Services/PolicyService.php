@@ -39,7 +39,7 @@ class PolicyService {
 
         self::$in_vars['class_name'] = $class_name;
         self::$in_vars['class_type'] = '';
-        if ($obj instanceof \Modules\Xot\Models\Panels\XotBasePanel) {
+        if ($obj instanceof  \Modules\Xot\Models\Panels\XotBasePanel) {
             self::$in_vars['class_type'] = 'panel';
         }
 

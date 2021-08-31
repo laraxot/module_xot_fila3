@@ -97,7 +97,7 @@ class DummyClass extends XotBasePanel {
      *
      * @return array
      */
-    public function tabs() {
+    public function tabs():array {
         $tabs_name = [];
 
         return $tabs_name;
@@ -108,7 +108,7 @@ class DummyClass extends XotBasePanel {
      *
      * @return array
      */
-    public function cards(Request $request) {
+    public function cards(Request $request):array {
         return [];
     }
 
@@ -128,7 +128,7 @@ class DummyClass extends XotBasePanel {
      *
      * @return array
      */
-    public function lenses(Request $request) {
+    public function lenses(Request $request):array {
         return [];
     }
 
@@ -137,7 +137,7 @@ class DummyClass extends XotBasePanel {
      *
      * @return array
      */
-    public function actions() {
+    public function actions():array {
         return [];
     }
 }

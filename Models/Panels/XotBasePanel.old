@@ -98,7 +98,7 @@ abstract class XotBasePanel {
         )->first();
     }
 
-    public function optionId($row) {
+    public function optionId(object $row) {
         return $row->getKey();
     }
 
@@ -466,7 +466,7 @@ abstract class XotBasePanel {
     /**
      * Build an "index" query for the given resource.
      *
-     * @param Request                               $request
+     * @param mixed                               $data
      * @param \Illuminate\Database\Eloquent\Builder $query
      *
      * @return \Illuminate\Database\Eloquent\Builder

@@ -1,11 +1,10 @@
 <?php
 
-declare(strict_types=1);
-
 namespace Modules\Xot\Models\Panels\Policies;
 
 /**
- * Class ConfPanelPolicy.
+ * Class ConfPanelPolicy
+ * @package Modules\Xot\Models\Panels\Policies
  */
 class ConfPanelPolicy extends XotBasePanelPolicy {
 }

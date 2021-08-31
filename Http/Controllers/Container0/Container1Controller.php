@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 namespace Modules\Xot\Http\Controllers\Container0;
 
 use Modules\Xot\Http\Controllers\XotBaseContainerController;
@@ -11,7 +9,8 @@ use Modules\Xot\Http\Controllers\XotBaseContainerController;
 */
 
 /**
- * Class Container1Controller.
+ * Class Container1Controller
+ * @package Modules\Xot\Http\Controllers\Container0
  */
 class Container1Controller extends XotBaseContainerController {
 }

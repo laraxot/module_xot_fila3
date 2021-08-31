@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace Modules\Xot\Services;
 
 use Exception;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\File;
+use Illuminate\Database\Eloquent\Model;
 use Modules\Xot\Contracts\ModelContract;
 use Modules\Xot\Contracts\PanelContract;
 
@@ -59,7 +59,7 @@ class StubService {
         $autoloader_reflector = new \ReflectionClass($class);
         //ddd($autoloader_reflector);
         $class_file_name = $autoloader_reflector->getFileName();
-        if (false === $class_file_name) {
+        if($class_file_name === false){
             throw new \Exception('autoloader_reflector false');
         }
         $dir = dirname($class_file_name);
@@ -160,8 +160,10 @@ class StubService {
      *
      * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
      * @throws \ReflectionException
+     *
+     
      */
-    public static function getByModel($model, string $name, bool $create = false): PanelContract {
+    public static function getByModel($model, string $name, bool $create = false):PanelContract {
         if (! is_object($model)) {
             //echo '<h3>Model: ['.$model.']</h3>';
             //$params = \Route::current()->parameters();
@@ -180,25 +182,41 @@ class StubService {
         return app($panel);
     }
 
-    public static function replaces(array $params): array {
+    /**
+
+     */
+    public static function replaces(array $params):array {
         extract($params);
         if (! isset($namespace)) {
+
             throw new \Exception('namespace is missing');
+
+
         }
         if (! isset($class_name)) {
             throw new \Exception('class_name is missing');
+
+
         }
         if (! isset($class)) {
             throw new \Exception('class is missing');
+
+
         }
         if (! isset($dummy_id)) {
             throw new \Exception('dummy_id is missing');
+
+
         }
         if (! isset($search)) {
             throw new \Exception('search is missing');
+
+
         }
         if (! isset($fields)) {
             throw new \Exception('fields is missing');
+
+
         }
         $replaces = [
             'DummyNamespace' => $namespace,
@@ -231,8 +249,9 @@ class StubService {
         //---- creazione panel
         $autoloader_reflector = new \ReflectionClass($model);
 
+
         $class_filename = $autoloader_reflector->getFileName();
-        if (false === $class_filename) {
+        if($class_filename === false){
             throw new \Exception('autoloader_reflector err');
         }
         $model_dir = dirname($class_filename); // /home/vagrant/code/htdocs/lara/multi/laravel/Modules/LU/Models
@@ -281,7 +300,6 @@ class StubService {
 
     /**
      * @param ModelContract|Model $model
-     *
      * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
      */
     public static function fields($model): array {
@@ -297,7 +315,7 @@ class StubService {
             ])->all();
             $autoloader_reflector = new \ReflectionClass($model);
             $class_filename = $autoloader_reflector->getFileName();
-            if (false === $class_filename) {
+            if($class_filename === false){
                 throw new \Exception('autoloader_reflector err');
             }
             $fillables_str = chr(13).chr(10).'    protected $fillable=[\''.implode("','", $fillables)."'];".chr(13).chr(10);
@@ -396,7 +414,7 @@ class StubService {
         $func_stub = File::get($func_file);
         $autoloader_reflector = new \ReflectionClass($panel);
         $panel_file = $autoloader_reflector->getFileName();
-        if (false === $panel_file) {
+        if($panel_file=== false){
             throw new \Exception('autoloader_reflector err');
         }
         $panel_stub = File::get($panel_file);

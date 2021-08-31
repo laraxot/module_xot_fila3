@@ -1,11 +1,10 @@
 <?php
 
-declare(strict_types=1);
-
 namespace Modules\Xot\Http\Controllers\Admin;
 
 /**
- * Class XotController.
+ * Class XotController
+ * @package Modules\Xot\Http\Controllers\Admin
  */
 class XotController extends XotBaseController {
 }

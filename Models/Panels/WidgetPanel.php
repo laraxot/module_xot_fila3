@@ -1,22 +1,25 @@
 <?php
 
-declare(strict_types=1);
-
 namespace Modules\Xot\Models\Panels;
 
 //--- Services --
 
 /**
- * Class WidgetPanel.
+ * Class WidgetPanel
+ * @package Modules\Xot\Models\Panels
  */
 class WidgetPanel extends XotBasePanel {
     /**
      * The model the resource corresponds to.
+     *
+     * @var string
      */
     public static string $model = 'Modules\Xot\Models\Widget';
 
     /**
      * The single value that should be used to represent the resource when being displayed.
+     *
+     * @var string
      */
     public static string $title = 'title';
 

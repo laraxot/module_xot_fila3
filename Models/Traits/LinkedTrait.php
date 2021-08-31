@@ -492,10 +492,6 @@ trait LinkedTrait {
         return $this->urlActFunc(__FUNCTION__, $value);
     }
 
-    public function getIndexUrlAttribute($value) {
-        return $this->urlActFunc(__FUNCTION__, $value);
-    }
-
     public function getShowUrlAttribute($value) {
         return $this->urlActFunc(__FUNCTION__, $value);
     }

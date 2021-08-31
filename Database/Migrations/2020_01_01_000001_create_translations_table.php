@@ -1,21 +1,19 @@
 <?php
 
-declare(strict_types=1);
-
 use Illuminate\Database\Schema\Blueprint;
 //--- models --
 ///use Modules\Blog\Models\Post as MyModel;
 use Modules\Xot\Database\Migrations\XotBaseMigration;
 
 /**
- * Class CreateTranslationsTable.
+ * Class CreateTranslationsTable
  */
 class CreateTranslationsTable extends XotBaseMigration {
-    /**
-     * db up.
-     *
-     * @return void
-     */
+/**
+* db up
+*
+* @return void
+*/
     public function up() {
         //-- CREATE --
         if (! $this->tableExists()) {

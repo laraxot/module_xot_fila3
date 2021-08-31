@@ -1,32 +1,29 @@
 <?php
 
-declare(strict_types=1);
-
 namespace Modules\Xot\Models;
 
 //------ ext models---
 
 /**
- * Modules\Xot\Models\Metatag.
+ * Modules\Xot\Models\Metatag
  *
- * @property int                                                                  $id
- * @property string|null                                                          $sitename
- * @property string|null                                                          $title
- * @property string|null                                                          $subtitle
- * @property string|null                                                          $charset
- * @property string|null                                                          $author
- * @property string|null                                                          $meta_description
- * @property string|null                                                          $meta_keywords
- * @property string|null                                                          $logo_src
- * @property string|null                                                          $logo_footer_src
- * @property string|null                                                          $tennant_name
- * @property \Illuminate\Support\Carbon|null                                      $created_at
- * @property string|null                                                          $created_by
- * @property \Illuminate\Support\Carbon|null                                      $updated_at
- * @property string|null                                                          $updated_by
- * @property \Illuminate\Database\Eloquent\Collection|\Modules\Xot\Models\Image[] $images
- * @property int|null                                                             $images_count
- *
+ * @property int $id
+ * @property string|null $sitename
+ * @property string|null $title
+ * @property string|null $subtitle
+ * @property string|null $charset
+ * @property string|null $author
+ * @property string|null $meta_description
+ * @property string|null $meta_keywords
+ * @property string|null $logo_src
+ * @property string|null $logo_footer_src
+ * @property string|null $tennant_name
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property string|null $created_by
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property string|null $updated_by
+ * @property-read \Illuminate\Database\Eloquent\Collection|\Modules\Xot\Models\Image[] $images
+ * @property-read int|null $images_count
  * @method static \Illuminate\Database\Eloquent\Builder|Metatag newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Metatag newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Metatag query()

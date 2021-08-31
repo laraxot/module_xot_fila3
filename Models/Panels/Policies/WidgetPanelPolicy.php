@@ -1,11 +1,10 @@
 <?php
 
-declare(strict_types=1);
-
 namespace Modules\Xot\Models\Panels\Policies;
 
 /**
- * Class WidgetPanelPolicy.
+ * Class WidgetPanelPolicy
+ * @package Modules\Xot\Models\Panels\Policies
  */
 class WidgetPanelPolicy extends XotBasePanelPolicy {
 }

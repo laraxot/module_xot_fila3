@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 namespace Modules\Xot\Models\Panels;
 
 use Illuminate\Http\Request;
@@ -64,7 +62,7 @@ class TestPanel extends XotBasePanel {
     /**
      * Build an "index" query for the given resource.
      *
-     * @param Request                               $request
+     * @param mixed                                 $data
      * @param \Illuminate\Database\Eloquent\Builder $query
      *
      * @return \Illuminate\Database\Eloquent\Builder
@@ -88,7 +86,7 @@ class TestPanel extends XotBasePanel {
      *
      * @return array
      */
-    public function tabs() {
+    public function tabs(): array {
         $tabs_name = [];
 
         return $tabs_name;
@@ -99,18 +97,20 @@ class TestPanel extends XotBasePanel {
      *
      * @return array
      */
-    public function cards(Request $request) {
+    public function cards(Request $request): array {
         return [];
     }
 
     /**
      * Get the filters available for the resource.
      *
-     * @param \Illuminate\Http\Request $request
-     *
      * @return array
      */
+<<<<<<< HEAD
     public function filters(Request $request = null):array {
+=======
+    public function filters(Request $request = null): array {
+>>>>>>> f4b8528f0ac2ba6a2e78f97ba9af98dfa7a427b3
         return [];
     }
 
@@ -119,7 +119,7 @@ class TestPanel extends XotBasePanel {
      *
      * @return array
      */
-    public function lenses(Request $request) {
+    public function lenses(Request $request): array {
         return [];
     }
 
@@ -128,7 +128,7 @@ class TestPanel extends XotBasePanel {
      *
      * @return array
      */
-    public function actions() {
+    public function actions(): array {
         return [
             new Actions\TestMailAction(),
         ];
