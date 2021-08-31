@@ -633,7 +633,7 @@ abstract class XotBasePanel implements PanelContract {
      *
      * @return array
      */
-    public function filters(Request $request = null) {
+    public function filters(Request $request = null):array {
         return [];
     }
 
