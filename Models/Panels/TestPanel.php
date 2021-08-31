@@ -107,7 +107,11 @@ class TestPanel extends XotBasePanel {
      * @return array
      */
 <<<<<<< HEAD
+<<<<<<< HEAD
     public function filters(Request $request = null):array {
+=======
+    public function filters(Request $request = null): array {
+>>>>>>> f4b8528f0ac2ba6a2e78f97ba9af98dfa7a427b3
 =======
     public function filters(Request $request = null): array {
 >>>>>>> f4b8528f0ac2ba6a2e78f97ba9af98dfa7a427b3
