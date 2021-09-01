@@ -237,6 +237,8 @@ class PanelService {
             $row = $rows->getRelated();
 
             $panel = PanelService::get($row);
+            $rows = $rows->getQuery();
+            //dddx(['class' => get_class($rows)]);
             $panel->setRows($rows);
             $panel->setName($types);
             $panel->setParent($panel_parent);
