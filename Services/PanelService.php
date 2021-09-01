@@ -186,7 +186,8 @@ class PanelService {
 
             return response()->view('pub_theme::errors.404', $data, 404);
         }
-        $panel->setRows($row);
+        //dddx(['methods' => get_class_methods($row), 'q' => $row->getQuery()]);
+        $panel->setRows($row->whereRaw('1=1'));
         $panel->setName($first_container);
         $i = 0;
         if (isset($items[0])) {

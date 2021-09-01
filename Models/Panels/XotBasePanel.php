@@ -52,10 +52,7 @@ abstract class XotBasePanel implements PanelContract {
 
     //var \Illuminate\Contracts\Foundation\Application|mixed|null
 
-    /**
-     * @var Model|ModelContract|object
-     */
-    public $row = null;
+    public Model $row;
 
     //var \Illuminate\Database\Eloquent\Collection|Builder|ModelContract[]
 
@@ -64,7 +61,7 @@ abstract class XotBasePanel implements PanelContract {
     //
     //
     //
-    public $rows = null;
+    public Builder $rows;
 
     public ?string $name = null;
 
@@ -134,11 +131,8 @@ abstract class XotBasePanel implements PanelContract {
         return $this;
     }
 
-    /**
-     * @param object|Model $rows
-     */
-    public function setRows($rows): self {
-        $this->rows = $rows;
+    public function setRows(Builder $rows): self {
+        $this->rows = $rows->whereRaw('1=1');
 
         return $this;
     }

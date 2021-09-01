@@ -11,7 +11,6 @@ use Illuminate\Database\Eloquent\Builder;
 //use Laravel\Scout\Searchable;
 
 //----------  SERVICES --------------------------
-use Illuminate\Database\Eloquent\Collection;
 //------------ jobs ----------------------------
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
@@ -31,10 +30,7 @@ abstract class XotBasePanelAction {
 
     public Model $row;
 
-    /**
-     * @var Collection|Model[]|Builder|null
-     */
-    public $rows = null;
+    public Builder $rows;
 
     public PanelContract $panel;
 

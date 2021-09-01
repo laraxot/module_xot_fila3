@@ -4,17 +4,14 @@ declare(strict_types=1);
 
 namespace Modules\Xot\Contracts;
 
+use Illuminate\Database\Eloquent\Builder;
+//use Illuminate\Database\Query\Builder;
 use Illuminate\Database\Eloquent\Model;
 
 interface PanelContract {
     //public Model $row;
 
-    /**
-     * Undocumented function.
-     *
-     * @param Model|ModelContract|ModelContract[] $rows
-     */
-    public function setRows($rows): self;
+    public function setRows(Builder $rows): self;
 
     public function setItem(string $guid): self;
 
@@ -52,6 +49,13 @@ interface PanelContract {
      * @return object|Model
      */
     public function getRow();
+
+    /**
+     * Undocumented function.
+     *
+     * @return mixed
+     */
+    public function pdf(array $params = []);
 
     /*
     public function __construct($model = null);
