@@ -43,10 +43,6 @@ use Spatie\QueryBuilder\QueryBuilder;
  * Modules\Xot\Models\Panels\XotBasePanel.
  */
 abstract class XotBasePanel implements PanelContract {
-    //public $out = null; //deprecated
-
-    //public bool $force_exit = false; //deprecated
-
     //public string $msg = 'msg from panel';
     protected static string $model;
 
