@@ -37,27 +37,27 @@ declare(strict_types=1);
      *
      **/
     class FPDF_Merge {
-        const   TYPE_NULL = 0;
+        public const TYPE_NULL = 0;
 
-        const   TYPE_TOKEN = 1;
+        public const TYPE_TOKEN = 1;
 
-        const   TYPE_REFERENCE = 2;
+        public const TYPE_REFERENCE = 2;
 
-        const   TYPE_REFERENCE_F = 3;
+        public const TYPE_REFERENCE_F = 3;
 
-        const   TYPE_NUMERIC = 4;
+        public const TYPE_NUMERIC = 4;
 
-        const   TYPE_HEX = 5;
+        public const TYPE_HEX = 5;
 
-        const   TYPE_BOOL = 6;
+        public const TYPE_BOOL = 6;
 
-        const   TYPE_STRING = 7;
+        public const TYPE_STRING = 7;
 
-        const   TYPE_ARRAY = 8;
+        public const TYPE_ARRAY = 8;
 
-        const   TYPE_DICTIONARY = 9;
+        public const TYPE_DICTIONARY = 9;
 
-        const   TYPE_STREAM = 10;
+        public const TYPE_STREAM = 10;
 
         private $buffer;
 
@@ -96,7 +96,7 @@ declare(strict_types=1);
 
         private function error($msg) {
             throw new Exception($msg);
-            die;
+            exit;
         }
 
         //================================================
@@ -838,7 +838,7 @@ declare(strict_types=1);
                 ini_set('zlib.output_compression', '0');
 
                 echo $this->buffer;
-                die;
+                exit;
             } else {
                 file_put_contents($filename, $this->buffer);
             }

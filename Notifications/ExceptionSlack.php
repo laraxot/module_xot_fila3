@@ -19,10 +19,8 @@ class ExceptionSlack extends Notification implements ShouldQueue {
 
     /**
      * Create a new notification instance.
-     *
-     * @param Exception $e
      */
-    public function __construct(\Exception $e) {
+    public function __construct(Exception $e) {
         //ddd($e);
         $this->msg .= \chr(13).'Line    :    '.$e->getLine();
         $this->msg .= \chr(13).'File    :    '.$e->getFile();

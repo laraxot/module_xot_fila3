@@ -1,13 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Modules\Xot\Rules;
 
 use Carbon\Carbon;
 use Illuminate\Contracts\Validation\Rule;
 
 /**
- * Class DateTimeRule
- * @package Modules\Xot\Rules
+ * Class DateTimeRule.
  */
 class DateTimeRule implements Rule {
     public function __construct() {
@@ -15,7 +16,8 @@ class DateTimeRule implements Rule {
 
     /**
      * @param string $attribute
-     * @param mixed $value
+     * @param mixed  $value
+     *
      * @return bool
      */
     public function passes($attribute, $value) {

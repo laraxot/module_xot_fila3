@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Modules\Xot\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;

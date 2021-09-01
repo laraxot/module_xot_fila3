@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Modules\Xot\Http\Controllers;
 
 use App\Http\Controllers\Controller;
@@ -10,12 +12,10 @@ use Modules\Theme\Services\ThemeService;
 use Modules\Xot\Services\TranslatorService;
 
 /**
- * Class TranslationController
- * @package Modules\Xot\Http\Controllers
+ * Class TranslationController.
  */
 class TranslationController extends Controller {
     /**
-     * @param Request $request
      * @return mixed
      */
     public function index(Request $request) {
@@ -23,7 +23,6 @@ class TranslationController extends Controller {
     }
 
     /**
-     * @param Request $request
      * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
      */
     public function store(Request $request) {

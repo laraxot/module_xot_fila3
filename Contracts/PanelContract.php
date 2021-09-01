@@ -190,7 +190,7 @@ interface PanelContract {
 
     public function url(array $params = []);
 
-    
+
     public function indexEditUrl();
 
     public function editUrl();

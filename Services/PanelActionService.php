@@ -20,8 +20,6 @@ class PanelActionService {
     }
 
     /**
-     * @param array $params
-     *
      * @return \Illuminate\Support\Collection
      */
     public function getActions(array $params = []) {
@@ -58,8 +56,6 @@ class PanelActionService {
     }
 
     /**
-     * @param array $params
-     *
      * @return \Illuminate\Support\Collection
      */
     public function containerActions(array $params = []) {
@@ -69,8 +65,6 @@ class PanelActionService {
     }
 
     /**
-     * @param array $params
-     *
      * @return \Illuminate\Support\Collection
      */
     public function itemActions(array $params = []) {

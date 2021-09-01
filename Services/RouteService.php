@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Modules\Xot\Services;
 
 use Illuminate\Support\Facades\Request;
@@ -14,8 +16,6 @@ use Illuminate\Support\Str;
  */
 class RouteService {
     /**
-     * @param array $params
-     *
      * @return array|bool|mixed
      */
     public static function inAdmin(array $params = []) {
@@ -291,8 +291,6 @@ class RouteService {
     */
 
     /**
-     * @param array $params
-     *
      * @return string
      */
     public static function urlLang(array $params = []) {

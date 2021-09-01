@@ -57,9 +57,9 @@ class RouteDynService {
         if (\in_array('as', \array_keys($v), true)) {
             return $v['as'];
         }
-        $as = (string)\mb_strtolower($v['name']).'';
+        $as = (string) \mb_strtolower($v['name']).'';
         $as = \str_replace('/', '.', $as);
-        $as = (string)\preg_replace('/{.*}./', '', $as);
+        $as = (string) \preg_replace('/{.*}./', '', $as);
 
         $as = \str_replace('{', '', $as);
         $as = \str_replace('}', '', $as);
@@ -79,7 +79,7 @@ class RouteDynService {
         if ('' == $namespace) {
             return null;
         }
-        if(is_array($namespace)){
+        if (is_array($namespace)) {
             throw new \Exception('namespace is array');
         }
 
@@ -135,12 +135,11 @@ class RouteDynService {
     public static function getResourceOpts(array $v, ?string $namespace): array {
         $param_name = self::getParamName($v, $namespace);
         $params_name = self::getParamsName($v, $namespace);
-        if(!is_array($params_name)){
+        if (! is_array($params_name)) {
             throw new \Exception('params_name is not an array');
-
         }
         $opts = [
-            'parameters' => [(string)\mb_strtolower($v['name']) => \implode('}/{', $params_name)],
+            'parameters' => [(string) \mb_strtolower($v['name']) => \implode('}/{', $params_name)],
             'names' => self::prefixedResourceNames(self::getAs($v, $namespace)),
         ];
         if (isset($v['only'])) {
@@ -226,7 +225,7 @@ class RouteDynService {
             $group_opts = self::getGroupOpts($v, $namespace);
             $v['group_opts'] = $group_opts;
             self::createRouteResource($v, $namespace);
-            Route::group($group_opts, function () use ($v,  $namespace, $curr) {
+            Route::group($group_opts, function () use ($v, $namespace, $curr) {
                 self::createRouteActs($v, $namespace, $curr);
                 self::createRouteSubs($v, $namespace, $curr);
             });
