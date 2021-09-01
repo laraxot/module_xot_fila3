@@ -52,7 +52,7 @@ abstract class XotBasePanel implements PanelContract {
 
     //var \Illuminate\Contracts\Foundation\Application|mixed|null
 
-    public Model $row;
+    public ?Model $row;
 
     //var \Illuminate\Database\Eloquent\Collection|Builder|ModelContract[]
 
