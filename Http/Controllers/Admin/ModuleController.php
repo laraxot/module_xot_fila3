@@ -23,7 +23,7 @@ class ModuleController extends XotBaseContainerController {
 /*
 class ModuleController extends Controller {
     public function index(Request $request) {
-        $params = \Route::current()->parameters();
+        $params = optional(\Route::current())->parameters();
         $home_view = $params['module'].'::admin.index';
 
         if (\View::exists($home_view)) {

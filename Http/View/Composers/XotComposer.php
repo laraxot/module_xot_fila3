@@ -40,18 +40,20 @@ class XotComposer {
      * @return void
      */
     public function compose(View $view) {
-        if (null == ! Auth::user()) {
-            $profile = ProfileService::get(Auth::user());
-            $lang = app()->getLocale();
-            $params = [];
-            $route_current = Route::current();
-            if (null != $route_current) {
-                $params = $route_current->parameters();
-            }
-
-            $view->with('params', $params);
-            $view->with('lang', $lang);
-            $view->with('profile', $profile);
+        $user = Auth::user();
+        if (null == $user) {
+            return;
         }
+        $profile = ProfileService::get($user);
+        $lang = app()->getLocale();
+        $params = [];
+        $route_current = Route::current();
+        if (null != $route_current) {
+            $params = $route_current->parameters();
+        }
+
+        $view->with('params', $params);
+        $view->with('lang', $lang);
+        $view->with('profile', $profile);
     }
 }

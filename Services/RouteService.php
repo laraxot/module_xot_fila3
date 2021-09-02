@@ -69,7 +69,7 @@ class RouteService {
         }
         /*
         try {
-            $route_params = \Route::current()->parameters();
+            $route_params = optional(\Route::current())->parameters();
         } catch (\Exception $e) {
             $route_params = [];
         }
@@ -303,7 +303,7 @@ class RouteService {
         //$row->lang=$lang;
         //return '/wip'.$this->url();
         $route_name = \Route::currentRouteName();
-        $route_params = \Route::current()->parameters();
+        $route_params = optional(\Route::current())->parameters();
         $route_params['lang'] = $lang;
         [$containers, $items] = params2ContainerItem($route_params);
         $n_items = count($items);

@@ -14,8 +14,9 @@ url":"https://www.foodfriendfinder.com/it/feed/restaurant"
 */
 
 class CreateFeedsTable extends XotBaseMigration {
-    /*
+    /**
      * Run the migrations.
+     *
      * @return void
      */
     public function up() {

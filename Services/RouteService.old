@@ -475,7 +475,7 @@ class RouteService {
         $container_i = self::containerN($params);
         $routename_son = self::routenameSon($params);
         extract($params);
-        $params = \Route::current()->parameters();
+        $params = optional(\Route::current())->parameters();
         $parz = $params;
         $parz['container'.($container_i + 1)] = $son_name;
         try {
@@ -495,7 +495,7 @@ class RouteService {
 
     public static function tabs($params) {
         extract($params);
-        $route_params = \Route::current()->parameters();
+        $route_params = optional(\Route::current())->parameters();
         $routename = \Route::currentRouteName();
         $act = last(explode('.', $routename));
         list($containers, $items) = params2ContainerItem($route_params);
@@ -842,7 +842,7 @@ class RouteService {
     public static function urlRelated($params) {
         extract($params);
         try {
-            $params = \Route::current()->parameters();
+            $params = optional(\Route::current())->parameters();
         } catch (\Exception $e) {
             $params = [];
         }
@@ -883,7 +883,7 @@ class RouteService {
 
         $routename_act = Str::before($routename, $old_act_route).''.$act;
         try {
-            $route_params = \Route::current()->parameters();
+            $route_params = optional(\Route::current())->parameters();
         } catch (\Exception $e) {
             $route_params = [];
         }

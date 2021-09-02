@@ -21,7 +21,7 @@ class ConfController extends Controller {
      * @return mixed
      */
     public function index(Request $request) {
-        $route_params = \Route::current()->parameters();
+        $route_params = optional(\Route::current())->parameters();
         //$confs = Config::all('localhost');
         $tenant_name = TenantService::getName();
         $confs = Config::get($tenant_name);
@@ -41,7 +41,7 @@ class ConfController extends Controller {
     }
 
     public function edit(Request $request): Renderable {
-        $route_params = \Route::current()->parameters();
+        $route_params = optional(\Route::current())->parameters();
         extract($route_params);
         if (! isset($item0)) {
             dddx(['err' => 'item0 is missing']);
@@ -58,7 +58,7 @@ class ConfController extends Controller {
      */
     public function update(Request $request) {
         $data = $request->all();
-        $route_params = \Route::current()->parameters();
+        $route_params = optional(\Route::current())->parameters();
         //dddx([$data, $route_params]);
         $data = collect($data)->except(['_token', '_method'])->all();
 

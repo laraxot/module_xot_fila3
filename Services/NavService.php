@@ -108,7 +108,7 @@ class NavService {
     public static function yearNavRedirect() {
         $request = \Request::capture();
         $routename = \Route::currentRouteName();
-        $params = \Route::current()->parameters();
+        $params = optional(\Route::current())->parameters();
         $year = $request->input('year', date('Y'));
         $redirect = 1;
         if ('' == $request->year) {

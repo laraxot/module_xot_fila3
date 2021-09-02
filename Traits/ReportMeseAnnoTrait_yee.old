@@ -17,7 +17,7 @@ trait ReportMeseAnnoTrait_yee {
     //----------------------------------
     public function index(Request $request) {
         $data = $request->all();
-        $params = \Route::current()->parameters();
+        $params = optional(\Route::current())->parameters();
         $model = $this->getModel();
 
         //$params=array_merge($request->all(),);

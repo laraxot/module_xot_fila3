@@ -51,9 +51,12 @@ class ImageController extends Controller {
 
         $tmp = \explode(',', $data['data']);
         $imgdata = \base64_decode($tmp[1], true);
+        if (null == $imgdata) {
+            throw new \Exception('cannot decode imgdata base64');
+        }
 
         //$extension              = strtolower(end(explode('.',$data['name'])));
-        $extension = $path_parts['extension'];
+        $extension = $path_parts['extension'] ?? '';
         $filename = \mb_substr($data['name'], 0, -(\mb_strlen($extension) + 1)).'.'.\mb_substr(\sha1(\time().''), 0, 6).'.'.$extension;
         /*
         $handle                 = fopen($serverdir.$filename,'w');
@@ -83,8 +86,10 @@ class ImageController extends Controller {
             $original = \mb_substr($data['name'], 0, -(\mb_strlen($extension) + 1)).'.'.\mb_substr(\sha1(\time().''), 0, 6).'.original.'.$extension;
 
             $handle = \fopen($serverdir.$original, 'w');
-            \fwrite($handle, $originaldata);
-            \fclose($handle);
+            if (false != $handle && false != $originaldata) {
+                \fwrite($handle, $originaldata);
+                \fclose($handle);
+            }
 
             $response['original'] = $original;
         }

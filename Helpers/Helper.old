@@ -220,7 +220,7 @@ if (! \function_exists('fullTextWildcards')) {
 if (! \function_exists('params2ContainerItem')) {
     function params2ContainerItem($params = null) {
         if (null == $params) {
-            $params = \Route::current()->parameters();
+            $params = optional(\Route::current())->parameters();
         }
         $container = [];
         $item = [];

@@ -43,9 +43,12 @@ abstract class XotBaseContainerController extends Controller {
      * @return string
      */
     public function getController() {
+        if (null == $this->panel) {
+            return '\Modules\Xot\Http\Controllers\XotPanelController';
+        }
         list($containers, $items) = params2ContainerItem();
 
-        $mod_name = $this->panel->getModuleName(); //forse da mettere container0
+        $mod_name = $this->panel->getModuleName();
 
         $tmp = collect($containers)->map(
             function ($item) {
@@ -69,6 +72,9 @@ abstract class XotBaseContainerController extends Controller {
     public function __callRouteAct($method, $args) {
         $panel = $this->panel;
         $authorized = Gate::allows($method, $panel);
+        if (null == $panel) {
+            throw new \Exception('panel is null');
+        }
 
         if (! $authorized) {
             return $this->notAuthorized($method, $panel);
@@ -89,6 +95,9 @@ abstract class XotBaseContainerController extends Controller {
      * @return mixed
      */
     public function __callPanelAct($method, $args) {
+        if (null == $this->panel) {
+            throw new \Exception('panel is null');
+        }
         $request = request();
         $act = $request->_act;
         $method_act = Str::camel($act);
@@ -106,7 +115,7 @@ abstract class XotBaseContainerController extends Controller {
     /**
      * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse|\Illuminate\Http\Response
      */
-    public function notAuthorized(string $method, ?PanelContract $panel) {
+    public function notAuthorized(string $method, PanelContract $panel) {
         $lang = app()->getLocale();
         if (! \Auth::check()) {
             //$request = \Modules\Xot\Http\Requests\XotRequest::capture();

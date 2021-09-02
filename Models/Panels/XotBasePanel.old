@@ -935,7 +935,7 @@ abstract class XotBasePanel {
     public function yearNavRedirect() {
         $request = \Request::capture();
         $routename = \Route::currentRouteName();
-        $params = \Route::current()->parameters();
+        $params = optional(\Route::current())->parameters();
 
         $redirect = 1;
         if ('' == $request->year) {
@@ -975,7 +975,7 @@ abstract class XotBasePanel {
     public function yearNav() {
         $request = \Request::capture();
         $routename = \Route::currentRouteName();
-        $params = \Route::current()->parameters();
+        $params = optional(\Route::current())->parameters();
         $year = $request->input('year', date('Y'));
         $year = $year - 1;
         $nav = [];
@@ -1002,7 +1002,7 @@ abstract class XotBasePanel {
     public function monthYearNav() { //possiamo trasformarlo in una macro
         $request = \Request::capture();
         $routename = \Route::currentRouteName();
-        $params = \Route::current()->parameters();
+        $params = optional(\Route::current())->parameters();
         /*
         if ('' == $request->year) {
             $request->year = date('Y');
@@ -1166,7 +1166,7 @@ abstract class XotBasePanel {
         extract($params);
         $parents = [];
         $parent = $this->parent;
-        $route_params = \Route::current()->parameters();
+        $route_params = optional(\Route::current())->parameters();
         $cont_i = RouteService::containerN(['model' => get_class($parent->getRow())]);
         $routename = RouteService::routenameN(['n' => $cont_i + 1, 'act' => $act]);
 
@@ -1257,7 +1257,7 @@ abstract class XotBasePanel {
         //$row->lang=$lang;
         //return '/wip'.$this->url();
         $route_name = \Route::currentRouteName();
-        $route_params = \Route::current()->parameters();
+        $route_params = optional(\Route::current())->parameters();
         $route_params['lang'] = $lang;
         [$containers, $items] = params2ContainerItem($route_params);
         $n_items = count($items);
@@ -1566,7 +1566,7 @@ abstract class XotBasePanel {
         $routename = \Route::currentRouteName();
         $act = last(explode('.', $routename));
         //$routename = \Route::current()->getName();
-        $route_params = \Route::current()->parameters();
+        $route_params = optional(\Route::current())->parameters();
         [$containers, $items] = params2ContainerItem($route_params);
         $data = [];
         //$items[]=$this->row;
@@ -2022,7 +2022,7 @@ abstract class XotBasePanel {
     }
 
     public function view($params = null) {
-        //$route_params = \Route::current()->parameters();
+        //$route_params = optional(\Route::current())->parameters();
 
         [$containers, $items] = params2ContainerItem();
         $view = ThemeService::getView(); //vew che dovrebbe essere
@@ -2060,7 +2060,7 @@ abstract class XotBasePanel {
             'rows' => $rows,
             'mod_trad' => $mod_trad,
             'trad_mod' => $mod_trad, /// da sostiutire ed uccidere
-            'params' => \Route::current()->parameters(),
+            'params' => optional(\Route::current())->parameters(),
             'routename' => \Route::current()->getName(),
             'modal' => $modal,
             'containers' => $containers,

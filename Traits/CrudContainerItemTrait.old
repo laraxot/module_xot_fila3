@@ -40,7 +40,7 @@ trait CrudContainerItemTrait {
         if ('routelist' == $request->act) {
             return ArtisanTrait::exe('route:list');
         }
-        $params = \Route::current()->parameters();
+        $params = optional(\Route::current())->parameters();
         if (isset($params['lang'])) {
             \App::setLocale($params['lang']);
         }
@@ -171,7 +171,7 @@ trait CrudContainerItemTrait {
             case 'xstack': xdebug_print_function_stack('Your own message'); break;
         }
         $lang = app()->getLocale();
-        $params = \Route::current()->parameters();
+        $params = optional(\Route::current())->parameters();
         if (isset($params['lang'])) {
             \App::setLocale($params['lang']);
         } else {
@@ -198,7 +198,7 @@ trait CrudContainerItemTrait {
     //end edit
 
     public function update(Request $request) {
-        $params = \Route::current()->parameters();
+        $params = optional(\Route::current())->parameters();
         $lang = app()->getLocale();
         \extract($params);
         $data = $request->all();
@@ -281,7 +281,7 @@ trait CrudContainerItemTrait {
     }
 
     public function create(Request $request) {
-        $params = \Route::current()->parameters();
+        $params = optional(\Route::current())->parameters();
         if (isset($params['lang'])) {
             \App::setLocale($params['lang']);
         } else {
@@ -314,7 +314,7 @@ trait CrudContainerItemTrait {
     }
 
     public function store(Request $request) {
-        $params = \Route::current()->parameters();
+        $params = optional(\Route::current())->parameters();
         $routename = \Route::current()->getName();
         /*
         if($request->_action=='exit'){ //il request qui gia' darebbe noie
@@ -323,7 +323,7 @@ trait CrudContainerItemTrait {
         }
         */
 
-        $params = \Route::current()->parameters();
+        $params = optional(\Route::current())->parameters();
         $n_params = \count($params);
         $row = last($params);
         $data = $request->all();
@@ -411,7 +411,7 @@ trait CrudContainerItemTrait {
     }
 
     public function indexEdit(Request $request) {
-        $params = \Route::current()->parameters();
+        $params = optional(\Route::current())->parameters();
         $row = last($params);
         if (! \Auth::check() || \Auth::user()->cannot(__FUNCTION__, $row)) {
             $routename = \Route::current()->getName();
@@ -449,7 +449,7 @@ trait CrudContainerItemTrait {
         $data = $request->all();
         $model = $this->getModel(); //Rating
         //ddd($model);
-        $params = \Route::current()->parameters();
+        $params = optional(\Route::current())->parameters();
         [$container, $item] = $this->params2ContainerItem($params);
         $n_container = count($container);
         $n_item = count($item);
@@ -472,7 +472,7 @@ trait CrudContainerItemTrait {
     }
 
     public function indexOrder(Request $request) {
-        $params = \Route::current()->parameters();
+        $params = optional(\Route::current())->parameters();
         $row = last($params);
 
         /*
@@ -517,7 +517,7 @@ trait CrudContainerItemTrait {
     }
 
     public function show(Request $request) {
-        $params = \Route::current()->parameters();
+        $params = optional(\Route::current())->parameters();
         $row = last($params);
         $roots = Post::getRoots();
         if (\is_string($row)) {
@@ -548,7 +548,7 @@ trait CrudContainerItemTrait {
 
     // TODO migliorare il destroy, in modo che cancellando una categoria o menu, cancelli ricorsivamente anche tutti i suoi figlio (categorie e non)
     public function destroy(Request $request) {
-        $params = \Route::current()->parameters();
+        $params = optional(\Route::current())->parameters();
         \extract($params);
         $row = last($params);
         $row->delete();
@@ -561,7 +561,7 @@ trait CrudContainerItemTrait {
     }
 
     public function detach(Request $request) {
-        $params = \Route::current()->parameters();
+        $params = optional(\Route::current())->parameters();
         $data = $request->all();
         $lang = app()->getLocale();
         \extract($params);
@@ -570,7 +570,7 @@ trait CrudContainerItemTrait {
     }
 
     public function attach(Request $request) {
-        $params = \Route::current()->parameters();
+        $params = optional(\Route::current())->parameters();
         $data = $request->all();
         $lang = app()->getLocale();
         \extract($params);
@@ -597,7 +597,7 @@ trait CrudContainerItemTrait {
     }
 
     public function initPos() {
-        $params = \Route::current()->parameters();
+        $params = optional(\Route::current())->parameters();
         //extract($params);
         $parent_item = collect(\array_slice($params, -3))->first();
         $me = collect(\array_slice($params, -1))->first();
@@ -612,7 +612,7 @@ trait CrudContainerItemTrait {
     }
 
     public function moveUp(Request $request) {
-        $params = \Route::current()->parameters();
+        $params = optional(\Route::current())->parameters();
         $parent_item = collect(\array_slice($params, -3))->first();
         $me = collect(\array_slice($params, -1))->first();
         $me_pos = $me->pivot->pos;
@@ -635,7 +635,7 @@ trait CrudContainerItemTrait {
     }
 
     public function moveDown(Request $request) {
-        $params = \Route::current()->parameters();
+        $params = optional(\Route::current())->parameters();
         $parent_item = collect(\array_slice($params, -3))->first();
         $me = collect(\array_slice($params, -1))->first();
         if (! isset($me->pivot)) {

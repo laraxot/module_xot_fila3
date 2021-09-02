@@ -21,7 +21,7 @@ abstract class XotBaseContainerController extends Controller {
 
     //public function __construct() { //o lo chiamavo "init".. etc etc
     public function init($params) { //o lo chiamavo "init".. etc etc
-        //$params = \Route::current()->parameters();
+        //$params = optional(\Route::current())->parameters();
         //ddd($params);
         list($containers, $items) = params2ContainerItem($params);
         $tmp = collect($containers)->map(function ($item) {
@@ -75,7 +75,7 @@ abstract class XotBaseContainerController extends Controller {
     }
 
     public function getModel() {
-        $params = \Route::current()->parameters();
+        $params = optional(\Route::current())->parameters();
         [$containers, $items] = params2ContainerItem($params);
         if (0 == count($containers)) {
             return Tenant::model('home');
@@ -171,7 +171,7 @@ abstract class XotBaseContainerController extends Controller {
     }
 
     public function __callUFF($method, $args) {
-        $params = \Route::current()->parameters();
+        $params = optional(\Route::current())->parameters();
         $request = \Modules\Xot\Http\Requests\XotRequest::capture();
         $a = $this->init($params);
         $act = $request->_act;
@@ -191,7 +191,7 @@ abstract class XotBaseContainerController extends Controller {
     }
 
     public function __call_new_not_working_now($method, $args) {
-        $params = \Route::current()->parameters();
+        $params = optional(\Route::current())->parameters();
         //$panel = request()->panel;
         $panel = Panel::getRequestPanel();
 
@@ -224,7 +224,7 @@ abstract class XotBaseContainerController extends Controller {
     }
 
     public function __call_old_but_working($method, $args) {
-        $params = \Route::current()->parameters();
+        $params = optional(\Route::current())->parameters();
 
         $this->init($params);
         $controller = $this->controller;

@@ -277,7 +277,7 @@ class PanelFormService {
         extract($params);
         $parents = [];
         $parent = $this->panel->parent;
-        $route_params = \Route::current()->parameters();
+        $route_params = optional(\Route::current())->parameters();
         $cont_i = RouteService::containerN(['model' => get_class($parent->getRow())]);
         $routename = RouteService::routenameN(['n' => $cont_i + 1, 'act' => $act]);
 

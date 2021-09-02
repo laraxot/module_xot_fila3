@@ -47,7 +47,7 @@ class HtmlPanelPresenter implements PanelPresenterContract {
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
      */
     public function out(?array $params = null) {
-        //$route_params = \Route::current()->parameters();
+        //$route_params = optional(\Route::current())->parameters();
 
         [$containers, $items] = params2ContainerItem();
         $view = ThemeService::getView(); //vew che dovrebbe essere

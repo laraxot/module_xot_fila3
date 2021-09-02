@@ -19,7 +19,7 @@ trait CrudTrait
         if ($request->routelist == 1) {
             return ArtisanTrait::exe('route:list');
         }
-        $params = \Route::current()->parameters();
+        $params = optional(\Route::current())->parameters();
         $model = $this->getModel();
 
         if (isset($params['id_page'])) {
@@ -48,7 +48,7 @@ trait CrudTrait
 
     public function create()
     {
-        $params = \Route::current()->parameters();
+        $params = optional(\Route::current())->parameters();
         $model = $this->getModel();
 
         $row = $model;
@@ -68,7 +68,7 @@ trait CrudTrait
     public function store(Request $request)
     {
         $data = $request->all();
-        $params = \Route::current()->parameters();
+        $params = optional(\Route::current())->parameters();
         $model = $this->getModel();
         $row = $model;
         $routename = \Route::current()->getName();
@@ -134,7 +134,7 @@ trait CrudTrait
 
     public function edit(Request $request)
     {
-        $params = \Route::current()->parameters();
+        $params = optional(\Route::current())->parameters();
         $model = $this->getModel();
         $id = $params[$this->getPrimaryKey()];
         $row = $model->findOrFail($id);
@@ -146,7 +146,7 @@ trait CrudTrait
     public function update(Request $request)
     {
         $data = $request->all();
-        $params = \Route::current()->parameters();
+        $params = optional(\Route::current())->parameters();
         $model = $this->getModel();
         $id = $params[$this->getPrimaryKey()];
         $row = $model->findOrFail($id);
@@ -203,7 +203,7 @@ trait CrudTrait
 
     public function delete(Request $request)
     {
-        $params = \Route::current()->parameters();
+        $params = optional(\Route::current())->parameters();
         $model = $this->getModel();
         $id = $params[$this->getPrimaryKey()];
         $row = $model->findOrFail($id);
@@ -214,7 +214,7 @@ trait CrudTrait
 
     public function destroy(Request $request)
     {
-        $params = \Route::current()->parameters();
+        $params = optional(\Route::current())->parameters();
         $model = $this->getModel();
 
 
@@ -252,7 +252,7 @@ trait CrudTrait
 
     public function dupplica()
     {
-        $params = \Route::current()->parameters();
+        $params = optional(\Route::current())->parameters();
         $model = $this->getModel();
         $id = $params[$this->getPrimaryKey()];
         $row = $model->findOrFail($id)->toArray();
@@ -281,7 +281,7 @@ trait CrudTrait
 
     public function rename()
     {
-        $params = \Route::current()->parameters();
+        $params = optional(\Route::current())->parameters();
         $model = $this->getModel();
         $id = $params[$this->getPrimaryKey()];
         $row = $model->findOrFail($id);
@@ -292,7 +292,7 @@ trait CrudTrait
 
     public function postRename(Request $request)
     {
-        $params = \Route::current()->parameters();
+        $params = optional(\Route::current())->parameters();
         $model = $this->getModel();
         $id = $params[$this->getPrimaryKey()];
         $row = $model->findOrFail($id);

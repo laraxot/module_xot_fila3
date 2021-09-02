@@ -164,7 +164,7 @@ class StubService {
     public static function getByModel($model, string $name, bool $create = false): PanelContract {
         if (! is_object($model)) {
             //echo '<h3>Model: ['.$model.']</h3>';
-            //$params = \Route::current()->parameters();
+            //$params = optional(\Route::current())->parameters();
             throw new Exception('model is not an object');
             //return null;
         }

@@ -42,19 +42,13 @@ use Spatie\QueryBuilder\QueryBuilder;
  * Modules\Xot\Models\Panels\XotBasePanel.
  */
 abstract class XotBasePanel implements PanelContract {
-    //public string $msg = 'msg from panel';
     protected static string $model;
 
     public Model $row;
 
-    //
-    // DA VEDERE \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Query\Builder|\Illuminate\Database\Eloquent\Relations\HasMany.
-    //
-    //
-    //
     public Builder $rows;
 
-    public ?string $name = null;
+    public string $name;
 
     public ?PanelContract $parent = null;
 
@@ -130,7 +124,7 @@ abstract class XotBasePanel implements PanelContract {
      * get Row.
      *
      */
-    public function getRow(): ?Model {
+    public function getRow(): Model {
         return $this->row;
     }
 
@@ -312,6 +306,7 @@ abstract class XotBasePanel implements PanelContract {
         }
         */
         $row = $rows->first();
+        //315    Property Modules\Xot\Models\Panels\XotBasePanel::$row (Illuminate\Database\Eloquent\Model) does not accept mixed.
         $this->row = $row;
 
         return $this;

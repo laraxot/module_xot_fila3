@@ -1,11 +1,11 @@
     /**
-     * Get the tabs available 
+     * Get the tabs available
      *
      * @return array
      */
     public function tabs(){
         $tabs_name= [];
-        //$routename = \Route::currentRouteName(); 
+        //$routename = \Route::currentRouteName();
         $tabs=[];
         foreach($tabs_name as $k=>$v){
             $tmp1=new \stdClass();
@@ -14,7 +14,7 @@
             $tmp1->url='./'.$v;
             $tabs[]=$tmp1;
         }
-        $params = \Route::current()->parameters();
+        $params = optional(\Route::current())->parameters();
         list($containers,$items)=params2ContainerItem($params);
         $n_containers=count($containers);
         if($n_containers>1){

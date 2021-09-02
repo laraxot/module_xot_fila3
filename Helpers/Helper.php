@@ -82,11 +82,16 @@ if (! function_exists('str_contains')) {
 //-------------------------------------------
 
 if (! \function_exists('backtrace')) {
-    function filter_vendor($obj) {
-        return false === \strpos(\str_replace('/', DIRECTORY_SEPARATOR, $obj['file']), 'vendor');
+    function filter_vendor(array $obj): bool {
+        $tmp = \str_replace('/', DIRECTORY_SEPARATOR, $obj['file']);
+        if (is_array($tmp)) {
+            $tmp = implode(' ', $tmp);
+        }
+
+        return false === \strpos($tmp, 'vendor');
     }
 
-    function backtrace($exclude_vendor = false) {
+    function backtrace(bool $exclude_vendor = false): void {
         $dbg_backtrace = \debug_backtrace();
 
         if (true === $exclude_vendor) {
@@ -138,11 +143,12 @@ if (! \function_exists('getFilename')) {
      */
     function getFilename($params) {
         $tmp = \debug_backtrace();
-        $class = class_basename($tmp[1]['class']);
-        $func = $tmp[1]['function'];
+        $class = (string) class_basename($tmp[1]['class']);
+
+        $func = (string) $tmp[1]['function'];
         $params_list = collect($params)->except(['_token', '_method'])->implode('_');
         $filename = Str::slug(
-            \str_replace('Controller', '', $class).
+            (string) \str_replace('Controller', '', $class).
                 '_'.\str_replace('do_', '', $func).
                 '_'.$params_list
         );
@@ -285,7 +291,7 @@ if (! \function_exists('params2ContainerItem')) {
      */
     function params2ContainerItem(?array $params = null) {
         if (null == $params) {
-            $params = \Route::current()->parameters();
+            $params = optional(\Route::current())->parameters();
         }
         $container = [];
         $item = [];
@@ -425,6 +431,7 @@ if (! \function_exists('getModuleModels')) {
                 $tmp->class = $ns.'\\'.$name;
                 $name = Str::snake($name);
                 $tmp->name = $name;
+                // 434    Parameter #1 $argument of class ReflectionClass constructor expects class-string<T of object>|T of object, string given.
                 $reflection_class = new ReflectionClass($tmp->class);
                 if (! $reflection_class->isAbstract()) {
                     $data[$tmp->name] = $tmp->class;
@@ -517,7 +524,7 @@ if (! \function_exists('transFields')) {
 
         $trans_fields = ['label', 'placeholder', 'help'];
         foreach ($trans_fields as $tf) {
-            $trans = $trans_root.'.field.'.Str::snake($ris->name_dot).'_'.$tf;
+            $trans = $trans_root.'.field.'.Str::snake((string) $ris->name_dot).'_'.$tf;
             //if (! isset($ris->$tf)) {
             $ris->$tf = isset($$tf) ? $$tf : trans($trans);
 
@@ -781,9 +788,14 @@ if (! function_exists('url_queries')) {
         }
         // Split the URL down into an array with all the parts separated out
         $url_parsed = parse_url($url);
+        if (false === $url_parsed) {
+            throw new \Exception('error parsing url ['.$url.']');
+        }
         // Turn the query string into an array
         $url_params = [];
+        //Cannot access offset 'query' on array(?'scheme' => string, ?'host' => string, ?'port' => int, ?'user' => string, ?'pass' => string, ?'path' => string, ?'query' => string, ?'fragment' => string)|false.
         if (isset($url_parsed['query'])) {
+            //if (in_array('query', array_keys($url_parsed))) {
             parse_str($url_parsed['query'], $url_params);
         }
         // Merge the existing URL's query parameters with our new ones
@@ -913,7 +925,7 @@ if (! function_exists('removeQueryParams')) {
         foreach ($params as $param) {
             unset($query[$param]); // loop through the array of parameters we wish to remove and unset the parameter from the query array
         }
-
+        //924    Parameter #1 $querydata of function http_build_query expects array|object, array|string given.
         return $query ? $url.'?'.http_build_query($query) : $url; // rebuild the URL with the remaining parameters, don't append the "?" if there aren't any query parameters left
     }
 }
@@ -936,7 +948,7 @@ if (! function_exists('addQueryParams')) {
      */
     function addQueryParams(array $params = []) {
         $query = array_merge(
-            request()->query(),
+            (array) request()->query(),
             $params
         ); // merge the existing query parameters with the ones we want to add
 
@@ -969,9 +981,9 @@ if (! function_exists('isJson')) {
 }
 
 if (! function_exists('getExcerpt')) {
-    function getExcerpt(string $str, ?int $length = 225) {
+    function getExcerpt(string $str, int $length = 225): string {
         $cleaned = strip_tags(
-            preg_replace(['/<pre>[\w\W]*?<\/pre>/', '/<h\d>[\w\W]*?<\/h\d>/'], '', $str),
+            (string) preg_replace(['/<pre>[\w\W]*?<\/pre>/', '/<h\d>[\w\W]*?<\/h\d>/'], '', $str),
             '<code>'
         );
         $truncated = substr($cleaned, 0, $length);

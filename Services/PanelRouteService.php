@@ -292,7 +292,7 @@ class PanelRouteService {
                     'request_query' => request()->query(),
                     'request_url' => request()->url(),
                     'request_path' => '/'.request()->path(),
-                    //'ff'=> \Route::current()->parameters(),
+                    //'ff'=> optional(\Route::current())->parameters(),
                     //'routes' => \Route::getRoutes(),
                 ]);
         }
@@ -335,7 +335,7 @@ class PanelRouteService {
         //$row->lang=$lang;
         //return '/wip'.$this->url();
         $route_name = \Route::currentRouteName();
-        $route_params = \Route::current()->parameters();
+        $route_params = optional(\Route::current())->parameters();
         $route_params['lang'] = $lang;
         [$containers, $items] = params2ContainerItem($route_params);
         $n_items = count($items);

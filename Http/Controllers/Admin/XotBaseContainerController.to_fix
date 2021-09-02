@@ -20,7 +20,7 @@ abstract class XotBaseContainerController extends Controller {
 
     //public function __construct() { //o lo chiamavo "init".. etc etc
     public function init($params) { //o lo chiamavo "init".. etc etc
-        //$params = \Route::current()->parameters();
+        //$params = optional(\Route::current())->parameters();
         //ddd($params);
         list($containers, $items) = params2ContainerItem($params);
         $tmp = collect($containers)->map(function ($item) {
@@ -78,7 +78,7 @@ abstract class XotBaseContainerController extends Controller {
     }
 
     public function getModel(){
-        $params = \Route::current()->parameters();
+        $params = optional(\Route::current())->parameters();
         list($containers, $items) = params2ContainerItem($params);
 
         if (count($containers)==0) {
@@ -158,7 +158,7 @@ abstract class XotBaseContainerController extends Controller {
     }
 
     public function __call($method, $args) {
-        $params = \Route::current()->parameters();
+        $params = optional(\Route::current())->parameters();
         $request = \Modules\Xot\Http\Requests\XotRequest::capture();
 
         $lang = \App::getLocale();

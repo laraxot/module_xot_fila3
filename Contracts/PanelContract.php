@@ -116,6 +116,20 @@ interface PanelContract {
      */
     public function callAction(string $act);
 
+    /**
+     * Undocumented function.
+     *
+     * @return mixed
+     */
+    public function out(array $params = []);
+
+    /**
+     * Undocumented function.
+     *
+     * @return mixed
+     */
+    public function callItemActionWithGate(string $act);
+
     /*
     public function __construct($model = null);
 

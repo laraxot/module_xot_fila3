@@ -24,7 +24,7 @@ trait CrudContainerItemNoPostTrait {
 
     public function index(Request $request, $container, $item) {
         /*
-        $params = \Route::current()->parameters();
+        $params = optional(\Route::current())->parameters();
         if (false === $container) {
             $home_view = $params['module'].'::admin.index';
             if (\View::exists($home_view)) {
@@ -100,7 +100,7 @@ trait CrudContainerItemNoPostTrait {
         /*
         $panel = StubService::getByModel($item, 'panel');
         $types = Str::camel(Str::plural($container));
-        $route_params = \Route::current()->parameters();
+        $route_params = optional(\Route::current())->parameters();
         list($containers, $items) = params2ContainerItem($route_params);
         if (count($items) > 1) {
             $second_last_item = $items[count($items) - 2];

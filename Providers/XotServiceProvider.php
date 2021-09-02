@@ -25,7 +25,7 @@ use Illuminate\Support\Facades\View;
 use Illuminate\Translation\Translator;
 use League\Flysystem\Filesystem;
 use Modules\Xot\Contracts\PanelPresenterContract;
-use Modules\Xot\Engines\FullTextSearchEngine;
+//use Modules\Xot\Engines\FullTextSearchEngine;
 use Modules\Xot\Http\View\Composers\XotComposer;
 use Modules\Xot\Presenters\GeoJsonPanelPresenter;
 use Modules\Xot\Presenters\HtmlPanelPresenter;
@@ -140,7 +140,7 @@ class XotServiceProvider extends XotBaseServiceProvider {
         //dddx(request()->route()->paremeters());
         //$request->route()->parameters()
         //{{ URL::toCurrentRouteWithParameters(['language' => 'az']) }}
-        //dddx(\Route::current()->parameters());
+        //dddx(optional(\Route::current())->parameters());
         //dddx(request()->route()->parameters());
         /*
         $this->app->singleton(
@@ -243,23 +243,25 @@ class XotServiceProvider extends XotBaseServiceProvider {
     }
 
     public function registerCacheOPCache(): void {
+        /*
         Cache::extend('opcache', function () {
             $store = new \Modules\Xot\Engines\Opcache\Store();
 
             return new \Modules\Xot\Engines\Opcache\Repository($store, new TagSet($store));
         });
-        /*
-        Session::extend('opcache', function () {
-            $store = new \Modules\Xot\Engines\Opcache\Store();
+        //
+        //Session::extend('opcache', function () {
+        //    $store = new \Modules\Xot\Engines\Opcache\Store();
 
-            return new \Modules\Xot\Engines\Opcache\Repository($store, new TagSet($store));
-        });
-        */
+        //    return new \Modules\Xot\Engines\Opcache\Repository($store, new TagSet($store));
+        //});
+
         // Extend Collection to implement __set_state magic method
         if (! Collection::hasMacro('__set_state')) {
             Collection::macro('__set_state', function (array $array) {
                 return new Collection($array['items']);
             });
         }
+        */
     }
 } //end class
