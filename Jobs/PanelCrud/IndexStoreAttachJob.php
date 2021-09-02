@@ -24,6 +24,11 @@ class IndexStoreAttachJob extends XotBaseJob {
         if (! is_array($to)) {
             $to = [];
         }
+
+        //27     Call to an undefined method Illuminate\Database\Eloquent\Builder::getRelated().
+        //41     Call to an undefined method Illuminate\Database\Eloquent\Builder::detach().
+        //42     Call to an undefined method Illuminate\Database\Eloquent\Builder::attach().
+
         $related = $this->panel->getRows()->getRelated();
         $items_key = $related->getKeyName();
 

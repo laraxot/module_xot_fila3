@@ -6,9 +6,9 @@ namespace Modules\Xot\Models\Panels\Policies;
 
 use Illuminate\Auth\Access\HandlesAuthorization;
 //use Illuminate\Contracts\Auth\UserProvider as User;
+use Modules\LU\Services\ProfileService;
 use Modules\Xot\Contracts\PanelContract;
 use Modules\Xot\Contracts\UserContract;
-use Modules\Xot\Services\PanelService as Panel;
 
 /**
  * Class XotBasePanelPolicy.
@@ -25,7 +25,7 @@ abstract class XotBasePanelPolicy {
     //*
     public function before($user, $ability) {
         //*
-        if (is_object($user) && Panel::get($user)->isSuperAdmin()) {
+        if (is_object($user) && ProfileService::get($user)->isSuperAdmin()) {
             return true;
         }
         //*/

@@ -17,7 +17,7 @@ class PanelService {
 
     private static Model $model;
 
-    private static ?PanelContract $panel;
+    private static ?PanelContract $panel = null;
 
     private array $route_params;
 
@@ -54,11 +54,12 @@ class PanelService {
 
     public static function getRequestPanel(): ?PanelContract {
         $inst = self::getInstance();
-        try {
-            return $inst::$panel;
-        } catch (\Exception $e) {
-            return null;
-        }
+        $panel = $inst::$panel;
+        //try {
+        return $inst::$panel;
+        //} catch (\Exception $e) {
+        //    return null;
+        //}
     }
 
     /**
@@ -148,6 +149,14 @@ class PanelService {
         return self::getByParams($route_params);
     }
 
+    public static function getHomePanel(): PanelContract {
+        $model = TenantService::modelEager('home');
+        $home = $model->firstOrCreate(['id' => 1]);
+        $panel = PanelService::get($home);
+
+        return $panel;
+    }
+
     /**
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\Response|mixed|null
      */
@@ -158,6 +167,9 @@ class PanelService {
             $in_admin = $route_params['in_admin'];
         }
         if (0 == count($containers)) {
+            //165    Parameter #1 $panel of static method Modules\Xot\Services\PanelService::setRequestPanel() expects Modules\Xot\Contracts\PanelContract, null given.
+            //$home_panel = self::getHomePanel();
+            //return $home_panel;
             PanelService::setRequestPanel(null);
 
             return null;
@@ -281,9 +293,6 @@ class PanelService {
      * @throws \ReflectionException
      */
     public static function createPanel(Model $model): void {
-        if (! is_object($model)) {
-            dddx(['da fare']);
-        }
         $class_full = get_class($model);
         $class_name = class_basename($model);
         $class = Str::before($class_full, $class_name);

@@ -116,7 +116,14 @@ class FixProvidersCommand extends Command {
 
     public function handle(): void {
         $module_name = $this->argument('name');
+        if (is_array($module_name)) {
+            $module_name = implode(' ', $module_name);
+        }
+        if (null == $module_name) {
+            throw new \Exception('module_name is null');
+        }
         $module = \Module::findOrFail($module_name);
+
         $providers_path = realpath($module->getExtraPath('Providers'));
         $module_name = $module->getStudlyName();
         $route_provider_stub = File::get(__DIR__.'/stubs/route_provider.stub');

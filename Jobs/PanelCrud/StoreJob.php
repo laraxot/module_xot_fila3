@@ -52,6 +52,7 @@ class StoreJob extends XotBaseJob {
             }
             try {
                 //$tmp = $parent_row->$types()->save($row, $pivot_data);
+                //55  Call to an undefined method Illuminate\Database\Eloquent\Builder::save().
                 $tmp = $this->panel->getRows()->save($row, $pivot_data); //??
                 /*
                 Model
@@ -203,7 +204,7 @@ class StoreJob extends XotBaseJob {
         if (! $model->$name()->exists()) {//collegamento non riuscito
             $pk_local = $rows->getLocalKeyName();
             $pk_fore = $rows->getForeignKeyName();
-            $data1 = [$pk_local => $related->$pk_fore];
+            $data1 = [(string) $pk_local => $related->$pk_fore];
             $model->update($data1);
         }
     }
@@ -230,7 +231,7 @@ class StoreJob extends XotBaseJob {
         if (! $model->$name()->exists()) {//collegamento non riuscito
             $pk_own = $rows->getOwnerKeyName();
             $pk_fore = $rows->getForeignKeyName();
-            $data1 = [$pk_fore => $related->$pk_own];
+            $data1 = [(string) $pk_fore => $related->$pk_own];
             $model->update($data1);
         }
     }
@@ -341,7 +342,7 @@ class StoreJob extends XotBaseJob {
         $related = $items->getRelated();
         //ddd($related);
         $container_obj = $model;
-        $container = $container_obj->post_type;
+        $container = $container_obj->post_type ?? 'aaa';
         //$items_key = $container_obj->getKeyName();
         $items_key = $related->getKeyName();
         //ddd($items_key);//auth_user_id

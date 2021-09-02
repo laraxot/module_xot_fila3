@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Schema;
 use Modules\Theme\Services\ThemeService;
+use Modules\Xot\Contracts\PanelContract;
 use Modules\Xot\Services\PanelService as Panel;
 use Modules\Xot\Services\TenantService as Tenant;
 
@@ -22,7 +23,7 @@ class HomeController extends Controller {
      * @return mixed
      */
     //public function index(?array $data, $panel = null) {
-    public function index(Request $request, $panel = null) {
+    public function index(Request $request, ?PanelContract $panel = null) {
         $request = request();
         $home = null;
         try {
@@ -30,6 +31,9 @@ class HomeController extends Controller {
             $home = $model->firstOrCreate(['id' => 1]);
         } catch (\Exception $e) {
             dddx('run migrations');
+        }
+        if (null == $home) {
+            throw new \Exception('home is null');
         }
 
         $home_panel = Panel::get($home);
@@ -59,7 +63,7 @@ class HomeController extends Controller {
      * @return mixed
      */
     //public function show(?array $data, $panel=null) {
-    public function show(Request $request, $panel = null) {
+    public function show(Request $request, ?PanelContract $panel = null) {
         //$request=request();
         $home = null;
         $home = Tenant::model('home');

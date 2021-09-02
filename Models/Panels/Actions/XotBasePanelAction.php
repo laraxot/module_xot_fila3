@@ -92,10 +92,7 @@ abstract class XotBasePanelAction {
         return $this->name;
     }
 
-    /**
-     * @return array|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Translation\Translator|string|string[]|null
-     */
-    public function getTitle() {
+    public function getTitle(): string {
         $name = $this->getName();
 
         $row = $this->panel->getRow();
@@ -113,10 +110,7 @@ abstract class XotBasePanelAction {
         return $title;
     }
 
-    /**
-     * @return string
-     */
-    public function getUrl(array $params = []) {
+    public function getUrl(array $params = []): string {
         if (isset($this->onItem) && $this->onItem) {
             return $this->urlItem($params);
         }
@@ -142,10 +136,7 @@ abstract class XotBasePanelAction {
         return $this;
     }
 
-    /**
-     * @return string|void|null
-     */
-    public function btn(array $params = []) {
+    public function btn(array $params = []): string {
         extract($params);
         if (isset($row)) {
             $this->setRow($row);
@@ -160,10 +151,7 @@ abstract class XotBasePanelAction {
         return $this->btnContainer($params);
     }
 
-    /**
-     * @return string
-     */
-    public function url(array $params = []) {
+    public function url(array $params = []): string {
         if (isset($this->onItem) && $this->onItem) {
             return $this->urlItem($params);
         }
@@ -181,8 +169,12 @@ abstract class XotBasePanelAction {
         //dddx([request()->all(),$this->data]);
         //dddx(request()->all());
         //dddx(get_class_methods(request()));
+        $request_query = request()->query();
+        if (! is_array($request_query)) {
+            $request_query = [];
+        }
 
-        $this->data = array_merge(request()->query(), $this->data);
+        $this->data = array_merge($request_query, $this->data);
         //$this->data = collect($this->data)->except(['fingerprint', 'serverMemo', 'updates'])->all();
 
         //$url = $panel->url(['act'=>'index']);
@@ -210,10 +202,7 @@ abstract class XotBasePanelAction {
         return $this;
     }
 
-    /**
-     * @return string|void|null
-     */
-    public function btnHtml(array $params = []) {
+    public function btnHtml(array $params = []): string {
         $params['panel'] = $this->panel;
         $params['url'] = $this->getUrl($params);
 
@@ -253,10 +242,7 @@ abstract class XotBasePanelAction {
         return FormXService::btnHtml($params);
     }
 
-    /**
-     * @return string|void|null
-     */
-    public function btnContainer(array $params = []) {
+    public function btnContainer(array $params = []): string {
         $url = $this->urlContainer($params);
         $title = $this->getTitle();
         $params['url'] = $url;
@@ -270,10 +256,7 @@ abstract class XotBasePanelAction {
 
     //end btnContainer
 
-    /**
-     * @return string
-     */
-    public function urlItem(array $params = []) {
+    public function urlItem(array $params = []): string {
         //dddx($params);
         $url = '';
         $query_params = [];
@@ -286,7 +269,7 @@ abstract class XotBasePanelAction {
         }
         $name = $this->getName();
         try {
-            $url = $this->panel->route->urlPanel(['act' => 'show']);
+            $url = $this->panel->url(['act' => 'show']);
         } catch (Exception $e) {
             dddx($e->getMessage());
         }/* catch (ErrorException $e) {
@@ -306,10 +289,7 @@ abstract class XotBasePanelAction {
         return $url;
     }
 
-    /**
-     * @return string
-     */
-    public function btnItem(array $params = []) {
+    public function btnItem(array $params = []): string {
         $url = $this->urlItem($params);
         $title = $this->getTitle();
         $method = Str::camel($this->getName());
@@ -357,6 +337,11 @@ abstract class XotBasePanelAction {
 
     //*/
 
+    /**
+     * Undocumented function.
+     *
+     * @return mixed
+     */
     public function pdf(array $params = []) {
         /*
         if (null == $this->row) {

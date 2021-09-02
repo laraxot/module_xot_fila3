@@ -14,7 +14,6 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
-use Modules\Xot\Contracts\ModelContract;
 use Modules\Xot\Contracts\PanelContract;
 use Modules\Xot\Services\ModelService;
 
@@ -55,10 +54,8 @@ abstract class XotBaseJob implements ShouldQueue {
 
     /**
      * manage the relationships.
-     *
-     * @param ModelContract|Model $model
      */
-    public function manageRelationships($model, array $data, string $act): void {
+    public function manageRelationships(Model $model, array $data, string $act): void {
         $relationships = ModelService::getRelationshipsAndData($model, $data);
         foreach ($relationships as $k => $v) {
             $func = $act.'Relationships'.$v->relationship_type;
@@ -123,17 +120,26 @@ abstract class XotBaseJob implements ShouldQueue {
         return $validator->validate(); //fa tutto da solo
     }
 
+    /**
+     * Undocumented function.
+     *
+     * @param string $field
+     * @param mixed  $value
+     *
+     * @return mixed
+     */
     public function ConvDateList($field, $value) {
         return $value;
     }
 
     /**
-     * @param $field
+     *  Method Modules\Xot\Jobs\PanelCrud\XotBaseJob::ConvDate() should return Carbon\Carbon|false|null but returns 0|0.0|''|'0'|array()|false|null.
+     *
      * @param mixed $value
      *
-     * @return Carbon|false|null
+     * @return mixed
      */
-    public function ConvDate($field, $value) {
+    public function ConvDate(string $field, $value) {
         if (null == $value) {
             return $value;
         }
@@ -143,12 +149,13 @@ abstract class XotBaseJob implements ShouldQueue {
     }
 
     /**
-     * @param $field
+     * Method Modules\Xot\Jobs\PanelCrud\XotBaseJob::ConvDateTime() should return Carbon\Carbon|false|null but returns 0|0.0|''|'0'|array()|false|null.
+     *
      * @param mixed $value
      *
-     * @return Carbon|false|null
+     * @return mixed
      */
-    public function ConvDateTime($field, $value) {
+    public function ConvDateTime(string $field, $value) {
         if (null == $value) {
             return $value;
         }
@@ -162,12 +169,13 @@ abstract class XotBaseJob implements ShouldQueue {
     }
 
     /**
-     * @param $field
+     *  Method Modules\Xot\Jobs\PanelCrud\XotBaseJob::ConvDateTime2Fields() should return Carbon\Carbon|false|null but returns 0|0.0|''|'0'|array()|false|null.
+     *
      * @param mixed $value
      *
-     * @return Carbon|false|null
+     * @return mixed
      */
-    public function ConvDateTime2Fields($field, $value) {
+    public function ConvDateTime2Fields(string $field, $value) {
         if (null == $value) {
             return $value;
         }

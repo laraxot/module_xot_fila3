@@ -12,11 +12,18 @@ use Illuminate\Support\Collection;
 interface PanelContract {
     //public Model $row;
 
+    public function setRow(Model $row): self;
+
     public function setRows(Builder $rows): self;
 
     public function setItem(string $guid): self;
 
     public function setParent(?PanelContract $panel): PanelContract;
+
+    /**
+     * @return mixed
+     */
+    public function update(array $data);
 
     /**
      * Undocumented function.
@@ -94,14 +101,25 @@ interface PanelContract {
 
     public function getModuleNameLow(): string;
 
+    public function getModuleName(): string;
+
     public function getName(): string;
 
     public function rules(array $params = []): array;
 
+    public function rulesMessages(): array;
+
+    /**
+     * Undocumented function.
+     *
+     * @return mixed
+     */
+    public function callAction(string $act);
+
     /*
     public function __construct($model = null);
 
-    public function setRow($row);
+
 
 
 

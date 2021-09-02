@@ -27,6 +27,7 @@ class UpdateJob extends XotBaseJob {
         $data = $this->data;
 
         //https://medium.com/@taylorotwell/tap-tap-tap-1fc6fc1f93a6
+        //  30     Call to an undefined method Illuminate\Support\HigherOrderTapProxy<mixed>::update().
         $row = tap($row)->update($data);
         //dd([/*'row' => $row, */'data' => $data, 'ris' => $ris, __LINE__, __FILE__]);
 
@@ -143,7 +144,7 @@ class UpdateJob extends XotBaseJob {
             dddx(get_class_methods($rows));
             //$this->saveMultiselectTwoSides($model,$name,$data);
         }
-        ddd(['wip']);
+        dddx(['wip']);
     }
 
     /**
@@ -260,8 +261,8 @@ class UpdateJob extends XotBaseJob {
     public function saveMultiselectTwoSides($model, string $name, array $data): void {
         $items = $model->$name();
         $related = $items->getRelated();
-        $container_obj = $model;
-        $container = $container_obj->post_type;
+        //$container_obj = $model;
+        //$container = $container_obj->post_type;
         //$items_key = $container_obj->getKeyName();
         $items_key = $related->getKeyName();
         $items_0 = $items->get()->pluck($items_key);

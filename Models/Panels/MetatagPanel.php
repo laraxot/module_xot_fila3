@@ -99,7 +99,7 @@ class MetatagPanel extends XotBasePanel {
      */
     public function actions(Request $request = null): array {
         return [
-            new Actions\StoreFileMetatagAction(),
+            //new Actions\StoreFileMetatagAction(),
         ];
     }
 }

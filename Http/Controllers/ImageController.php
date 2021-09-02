@@ -23,7 +23,7 @@ class ImageController extends Controller {
      * @return mixed
      */
     public function show(Request $request) {
-        $params = \Route::current()->parameters();
+        $params = optional(\Route::current())->parameters();
         list($containers, $items) = params2ContainerItem($params);
         $last_item = last($items);
 

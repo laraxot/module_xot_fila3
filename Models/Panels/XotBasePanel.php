@@ -31,6 +31,7 @@ use Modules\Xot\Services\PanelTabService;
 use Modules\Xot\Services\PolicyService;
 use Modules\Xot\Services\RouteService;
 use Modules\Xot\Services\StubService;
+use Response;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\Filters\Filter;
 use Spatie\QueryBuilder\QueryBuilder;
@@ -129,7 +130,7 @@ abstract class XotBasePanel implements PanelContract {
      * get Row.
      *
      */
-    public function getRow(): Model {
+    public function getRow(): ?Model {
         return $this->row;
     }
 
@@ -311,9 +312,6 @@ abstract class XotBasePanel implements PanelContract {
         }
         */
         $row = $rows->first();
-        if (! $row instanceof Model) {
-            throw new \Exception('row is not a Model or null');
-        }
         $this->row = $row;
 
         return $this;
@@ -575,10 +573,7 @@ abstract class XotBasePanel implements PanelContract {
         return [];
     }
 
-    /**
-     * @return array
-     */
-    public function rulesMessages() {
+    public function rulesMessages(): array {
         $lang = app()->getLocale();
         $rules_msg_fields = collect($this->fields())->filter(function ($value, $key) use ($lang) {
             return isset($value->rules_messages) && isset($value->rules_messages[$lang]);
@@ -1064,9 +1059,15 @@ abstract class XotBasePanel implements PanelContract {
         * mettere imageservice, o quello di spatie ?
         *
         **/
+        if (! property_exists($this->row, 'image_src')) {
+            throw new \Exception('in ['.get_class($this->row).'] property [image_src] is missing');
+        }
         $params['src'] = $this->row->image_src;
         $img = new ImageService($params);
         $src = $img->fit()->save()->src();
+        if (! is_string($src)) {
+            throw new \Exception('src is not a string');
+        }
 
         return '<img src="'.asset($src).'" >';
     }
@@ -1344,9 +1345,8 @@ abstract class XotBasePanel implements PanelContract {
             'key' => $key,
             '$row->getKey()' => $row->getKey(),
             '$row->getKeyName()' => $row->getKeyName(),
-            '$row->primary_key' => $row->primaryKey,
             //'$row->$key' => $row->{$key},
-            '$row->post' => $row->post,
+            //'$row->post' => $row->post,
             '$row' => $row,
         ];
         if (null == $row->getKey()) {
@@ -1486,11 +1486,9 @@ abstract class XotBasePanel implements PanelContract {
     }
 
     /**
-     * @param string $act
-     *
-     * @return null
+     * @return mixed
      */
-    public function callItemActionWithGate($act) {
+    public function callItemActionWithGate(string $act) {
         //$actions = $this->actions();
         //dddx([get_class($this), $actions]);
         $method_act = Str::camel($act);
@@ -1503,23 +1501,22 @@ abstract class XotBasePanel implements PanelContract {
         return $this->callItemAction($act);
     }
 
-    public function notAuthorized(string $method) {
+    public function notAuthorized(string $method): \Illuminate\Http\Response {
         $policy_class = PolicyService::get($this)->createIfNotExists()->getClass();
         $msg = 'Auth Id ['.\Auth::id().'] not can ['.$method.'] on ['.$policy_class.']';
 
         if (! view()->exists('pub_theme::errors.403')) {
-            return '<h3> Aggiungere la view : pub_theme::errors.403<br/>pub_theme: '.config('xra.pub_theme').'</h3>';
+            $msg = '<h3> Aggiungere la view : pub_theme::errors.403<br/>pub_theme: '.config('xra.pub_theme').'</h3>';
+            throw new \Exception($msg);
         }
 
-        return response()->view('pub_theme::errors.403', ['msg' => $msg], 403);
+        return response()->view('pub_theme::errors.403', ['message' => $msg], 403);
     }
 
     /**
-     * @param string $act
-     *
      * @return mixed
      */
-    public function callAction($act) {
+    public function callAction(string $act) {
         //$act = Str::camel($act);
 
         $action = $this->getActions()
@@ -1527,7 +1524,7 @@ abstract class XotBasePanel implements PanelContract {
         if (! is_object($action)) {
             $msg = 'action '.$act.' not recognized for ['.get_class($this).']';
 
-            return response()->view('pub_theme::errors.403', ['msg' => $msg], 403);
+            return response()->view('pub_theme::errors.403', ['message' => $msg], 403);
         }
 
         $action->setRow($this->row);
@@ -1545,11 +1542,9 @@ abstract class XotBasePanel implements PanelContract {
     }
 
     /**
-     * @param string $act
-     *
-     * @return null
+     * @return mixed
      */
-    public function callItemAction($act) {
+    public function callItemAction(string $act) {
         if (null == $act) {
             return null;
         }
@@ -1576,11 +1571,9 @@ abstract class XotBasePanel implements PanelContract {
     }
 
     /**
-     * @param string $act
-     *
-     * @return null
+     * @return mixed
      */
-    public function callContainerAction($act) {
+    public function callContainerAction(string $act) {
         if (null == $act) {
             return null;
         }
@@ -1611,6 +1604,10 @@ abstract class XotBasePanel implements PanelContract {
         //dddx(get_class($this->presenter));//Modules\Xot\Presenters\HtmlPanelPresenter
 
         return $this->presenter->out();
+    }
+
+    public function __toString() {
+        return $this->presenter->out()->render();
     }
 
     public function pdfFilename(array $params = []): string {
@@ -1727,6 +1724,12 @@ abstract class XotBasePanel implements PanelContract {
     public function getExcerpt($length = 225) {
         $row = $this->row;
         //$content = $row->subtitle ?? $row->txt;
+        if (! property_exists($row, 'subtitle')) {
+            throw new \Exception('in ['.get_class($row).'] property [subtitle] is missing');
+        }
+        if (! property_exists($row, 'txt')) {
+            throw new \Exception('in ['.get_class($row).'] property [txt] is missing');
+        }
 
         if ($row->subtitle) {
             $content = $row->subtitle;
@@ -1734,10 +1737,15 @@ abstract class XotBasePanel implements PanelContract {
             $content = $row->txt;
         }
 
-        $cleaned = strip_tags(
-            preg_replace(['/<pre>[\w\W]*?<\/pre>/', '/<h\d>[\w\W]*?<\/h\d>/'], '', $content),
-            '<code>'
-        );
+        // 1737   Parameter #1 $str of function strip_tags expects string, array|string|null given.
+        $tmp = preg_replace(['/<pre>[\w\W]*?<\/pre>/', '/<h\d>[\w\W]*?<\/h\d>/'], '', $content);
+        if (is_array($tmp)) {
+            $tmp = implode(' ', $tmp);
+        }
+        if (null == $tmp) {
+            $tmp = '';
+        }
+        $cleaned = strip_tags($tmp, '<code>');
         $truncated = substr($cleaned, 0, $length);
 
         if (substr_count($truncated, '<code>') > substr_count($truncated, '</code>')) {
@@ -1795,11 +1803,9 @@ abstract class XotBasePanel implements PanelContract {
     }
 
     /**
-     * @param array $data
-     *
      * @return mixed
      */
-    public function update($data) {
+    public function update(array $data) {
         //$func = '\Modules\Xot\Jobs\Crud\\'.Str::studly(__FUNCTION__).'Job';
         $func = '\Modules\Xot\Jobs\PanelCrud\\'.Str::studly(__FUNCTION__).'Job';
 

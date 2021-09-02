@@ -26,7 +26,8 @@ class PanelMiddleware {
      * @return \Illuminate\Http\Response|mixed
      */
     public function handle(Request $request, Closure $next) {
-        $parameters = request()->route()->parameters();
+        //$parameters = request()->route()->parameters();
+        $parameters = optional(\Route::current())->parameters();
         $res = PanelService::getByParams($parameters);
 
         if ('Response' == class_basename($res)) {

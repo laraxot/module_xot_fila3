@@ -63,8 +63,6 @@ class TestPanel extends XotBasePanel {
 
     /**
      * Build an "index" query for the given resource.
-     *
-     * @param mixed $data
      */
     public static function indexQuery(array $data, \Illuminate\Database\Eloquent\Builder $query): \Illuminate\Database\Eloquent\Builder {
         //return $query->where('auth_user_id', $request->user()->auth_user_id);
@@ -115,7 +113,7 @@ class TestPanel extends XotBasePanel {
      */
     public function actions(): array {
         return [
-            new Actions\TestMailAction(),
+            //new Actions\TestMailAction(),
         ];
     }
 }
