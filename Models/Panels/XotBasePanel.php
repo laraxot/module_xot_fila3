@@ -1322,9 +1322,6 @@ abstract class XotBasePanel implements PanelContract {
         return $post_type;
     }*/
 
-    /**
-     * @return false|mixed|string
-     */
     public function postType(): string {
         $post_type = collect(config('xra.model'))->search(get_class($this->row));
         if (false === $post_type) {
@@ -1638,6 +1635,11 @@ abstract class XotBasePanel implements PanelContract {
         return $filename;
     }
 
+    /**
+     * Undocumented function.
+     *
+     * @return mixed
+     */
     public function xls(array $params = []) {
         $presenter = new XlsPanelPresenter();
         $presenter->setPanel($this);
@@ -1647,7 +1649,9 @@ abstract class XotBasePanel implements PanelContract {
     }
 
     /**
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|string|void
+     * Undocumented function.
+     *
+     * @return mixed
      */
     public function pdf(array $params = []) {
         $presenter = new PdfPanelPresenter();

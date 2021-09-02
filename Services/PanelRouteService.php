@@ -203,20 +203,13 @@ class PanelRouteService {
         return $routename;
     }
 
-    /**
-     * @param array $params
-     *
-     * @return string|string[]|void
-     */
-    public function urlRelatedPanel($params) {
+    public function urlRelatedPanel(array $params): string {
         $panel = $this->panel;
         $act = 'show';
         extract($params);
 
         if (! isset($related_name)) {
-            dddx(['err' => 'related_name is missing']);
-
-            return;
+            throw new \Exception('err: related_name is missing');
         }
 
         $panel = $this->panel;
