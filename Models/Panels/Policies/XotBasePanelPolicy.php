@@ -54,7 +54,7 @@ abstract class XotBasePanelPolicy {
 
     public function edit(UserContract $user, PanelContract $panel): bool {
         //return true;
-        $post = $panel->row;
+        $post = $panel->getRow();
         if ($post->created_by == $user->handle || $post->updated_by == $user->handle || $post->auth_user_id == $user->auth_user_id) {
             return true;
         }
@@ -63,7 +63,7 @@ abstract class XotBasePanelPolicy {
     }
 
     public function update(UserContract $user, PanelContract $panel): bool {
-        $post = $panel->row;
+        $post = $panel->getRow();
 
         if ($post->created_by == $user->handle || $post->updated_by == $user->handle || $post->auth_user_id == $user->auth_user_id) {
             return true;
@@ -99,7 +99,7 @@ abstract class XotBasePanelPolicy {
     }
 
     public function destroy(UserContract $user, PanelContract $panel): bool {
-        $post = $panel->row;
+        $post = $panel->getRow();
 
         if ($post->created_by == $user->handle || $post->updated_by == $user->handle) {
             return true;
@@ -109,7 +109,7 @@ abstract class XotBasePanelPolicy {
     }
 
     public function delete(UserContract $user, PanelContract $panel): bool {
-        $post = $panel->row;
+        $post = $panel->getRow();
 
         if ($post->created_by == $user->handle) {
             return true;
@@ -119,7 +119,7 @@ abstract class XotBasePanelPolicy {
     }
 
     public function restore(UserContract $user, PanelContract $panel): bool {
-        $post = $panel->row;
+        $post = $panel->getRow();
 
         if ($post->created_by == $user->handle) {
             return true;
@@ -133,7 +133,7 @@ abstract class XotBasePanelPolicy {
     }
 
     public function detach(UserContract $user, PanelContract $panel): bool {
-        $post = $panel->row;
+        $post = $panel->getRow();
 
         if ($post->created_by == $user->handle || $post->updated_by == $user->handle) {
             return true;

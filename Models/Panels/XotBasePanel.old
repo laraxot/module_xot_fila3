@@ -1146,7 +1146,7 @@ abstract class XotBasePanel {
             $parent = $this->getParent();
             if (null != $parent) {
                 $tmp = [];
-                $tmp[] = class_basename($parent->row);
+                $tmp[] = class_basename($parent->getRow());
                 $tmp[] = class_basename($row);
                 $tmp[] = 'act';
                 $tmp[] = $params['method'];
@@ -1167,7 +1167,7 @@ abstract class XotBasePanel {
         $parents = [];
         $parent = $this->parent;
         $route_params = \Route::current()->parameters();
-        $cont_i = RouteService::containerN(['model' => get_class($parent->row)]);
+        $cont_i = RouteService::containerN(['model' => get_class($parent->getRow())]);
         $routename = RouteService::routenameN(['n' => $cont_i + 1, 'act' => $act]);
 
         $route_params['item'.($cont_i + 0)] = $this->parent->row;
@@ -1514,7 +1514,7 @@ abstract class XotBasePanel {
     public function getTitle() {
        $name = $this->getName();
        //$title = str_replace('_', ' ', $title);
-       $row = $this->panel->row;
+       $row = $this->panel->getRow();
 
        $module_name_low = strtolower(getModuleNameFromModel($row));
        $title = trans($module_name_low.'::'.strtolower(class_basename($row)).'.act.'.$name);
@@ -1581,7 +1581,7 @@ abstract class XotBasePanel {
         //dddx($parents);
 
         foreach ($parents as $k => $panel) {
-            //$item = $panel->row;
+            //$item = $panel->getRow();
             $tabs = [];
             if (! is_object($panel)) {
                 return $tabs;
@@ -1923,7 +1923,7 @@ abstract class XotBasePanel {
             try {
                 $tmp = (object) [];
                 $tmp->url = $parent->url(['act'=>'show']);
-                $tmp->title = $parent->row->title;
+                $tmp->title = $parent->getRow()->title;
                 $tmp->obj = \Theme::xotModel($parent->postType());
                 $tmp->method = 'show';
                 $bread[] = $tmp;

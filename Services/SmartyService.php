@@ -56,18 +56,16 @@ class SmartyService {
 
     /**
      * The core work of parsing a smarty template and converting it into flexy.
-     *
-     * @param   string       the contents of the smarty template
-     *
-     * @return string the flexy version of the template
-     *
-     * @see      see also methods.....
+     * the contents of the smarty template.
      */
-    public function convert(string $file) {
+    public function convert(string $file): string {
         if (! File::exists($file)) {
             dddx(['message' => $file.' not exists']);
         }
         $content = file_get_contents($file);
+        if (false === $content) {
+            throw new \Exception('cannot get content of file ['.$file.']');
+        }
         /* solo per test
         $content = '\t{if $isMobile}
       \t{include file="../templates/interno/header_mobile.tpl"}
@@ -89,8 +87,12 @@ class SmartyService {
         $tags = $matches[1];
         // find all the tags/text...
         $text = preg_split('!'.$leftq.'.*?'.$rightq.'!s', $content);
-        $max_text = count($text);
+        if (false === $text) {
+            throw new \Exception('text is false');
+        }
+        //$max_text = count($text);
         $max_tags = count($tags);
+        $compiled_tags = [];
         for ($i = 0; $i < $max_tags; ++$i) {
             $compiled_tags[] = $this->compileTag($tags[$i]);
         }
@@ -109,7 +111,7 @@ class SmartyService {
         return $data;
     }
 
-    public function compileTag($str) {
+    public function compileTag(string $str): string {
         // skip comments
         if (('*' == $str[0]) && ('*' == substr($str, -1, 1))) {
             return '';
@@ -133,18 +135,21 @@ class SmartyService {
             case preg_match('/^config_load\s/', $str):
                 // convert to $t->TemplateConfigLoad()
 
-                $args = $this->convertAttributesToKeyVal(substr($str, strpos($str, ' ')));
+                $args = $this->convertAttributesToKeyVal(substr($str, (int) strpos($str, ' ')));
 
                 return '{plugin(#smartyConfigLoad#,#'.$args['file'].'#,#'.$args['section'].'#)}';
 
             case preg_match('/^include\s/', $str):
                 // convert to $t->TemplateConfigLoad()
 
-                $args = $this->convertAttributesToKeyVal(substr($str, strpos($str, ' ')));
+                $args = $this->convertAttributesToKeyVal(substr($str, (int) strpos($str, ' ')));
 
                 //return '{plugin(#smartyInclude#,#'.$args['file'].'#)}';
                 $blade_file = str_replace('.tpl', '', $args['file']);
                 $blade_file = str_replace("'", '', $blade_file);
+                if (! is_string($blade_file)) {
+                    throw new \Exception('blade_file not a string');
+                }
 
                 return '@include(\''.$blade_file.'\')';
 
@@ -333,12 +338,10 @@ class SmartyService {
 
     /**
      * convert a smarty var into a flexy one.
-     *
-     * @param   string       the inside of the smart tag
-     *
-     * @return string a flexy version of it
+     * str      the inside of the smart tag
+     * return a string a flexy version of it.
      */
-    public function convertVar($str) {
+    public function convertVar(string $str): string {
         // look for modfiers first.
 
         $mods = explode('|', $str);
@@ -379,12 +382,10 @@ class SmartyService {
 
     /**
      * convert a smarty var into a $index->value type.
-     *
-     * @param   string       the inside of the smart tag
-     *
-     * @return string a flexy version of it
+     * str       the inside of the smart tag
+     * return string a flexy version of it.
      */
-    public function convertVarToObject($str) {
+    public function convertVarToObject(string $str): string {
         $var = $str; // strip $
 
         $bits = explode('.', $var);
@@ -401,12 +402,10 @@ class SmartyService {
     /**
      * convert a smarty key="value" string into a key value array
      * cheap and cheerfull - doesnt handle spaces inside the strings...
-     *
-     * @param   string       the key value part of the tag..
-     *
-     * @return array key value array
+     * str     the key value part of the tag..
+     * return array key value array.
      */
-    public function convertAttributesToKeyVal($str) {
+    public function convertAttributesToKeyVal(string $str): array {
         $atts = explode(' ', $str);
         $ret = [];
         foreach ($atts as $bit) {
@@ -423,12 +422,10 @@ class SmartyService {
 
     /**
      * convert a smarty config var into a flexy one.
-     *
-     * @param   string       the inside of the smart tag
-     *
-     * @return string a flexy version of it
+     * str       the inside of the smart tag
+     * return string a flexy version of it.
      */
-    public function convertConfigVar($str) {
+    public function convertConfigVar(string $str): string {
         $mods = explode('|', $str);
         $var = array_shift($mods);
         $var = substr($var, 1, -1); // strip #'s

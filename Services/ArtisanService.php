@@ -158,7 +158,9 @@ class ArtisanService {
         } catch (Exception $e) {
             //dddx(get_class_methods($e));
             $vendor_dir = (realpath(LARAVEL_DIR.'/vendor'));
-
+            if (false === $vendor_dir) {
+                throw new \Exception('not recognize realpath laravel_dir/vendor');
+            }
             $my = collect($e->getTrace())->filter(
                 function ($item) use ($vendor_dir) {
                     return isset($item['file']) && ! Str::startsWith($item['file'], $vendor_dir);

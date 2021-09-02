@@ -202,7 +202,7 @@ abstract class XotBaseContainerController extends Controller {
         }
 
         //dddx(['params'=>$params,'method'=>$method,'args'=>$args,'panel'=>$panel]);
-        $row = $panel->row;
+        $row = $panel->getRow();
         if (is_object($row) && \Auth::user()->cannot($method, $row)) {
             $msg = 'user ['.\Auth::user()->handle.'] not authorized to ['.$method.'] on class ['.get_class($row).']';
             abort(403, $msg);

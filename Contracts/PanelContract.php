@@ -7,6 +7,7 @@ namespace Modules\Xot\Contracts;
 use Illuminate\Database\Eloquent\Builder;
 //use Illuminate\Database\Query\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Collection;
 
 interface PanelContract {
     //public Model $row;
@@ -27,11 +28,9 @@ interface PanelContract {
     /**
      * Undocumented function.
      *
-     * @param string $act
-     *
      * @return mixed
      */
-    public function itemAction($act);
+    public function itemAction(string $act);
 
     public function relatedUrl(array $params = []): string;
 
@@ -56,6 +55,46 @@ interface PanelContract {
      * @return mixed
      */
     public function pdf(array $params = []);
+
+    public function pdfFilename(array $params = []): string;
+
+    public function setInAdmin(bool $in_admin): void;
+
+    public function setRouteParams(array $route_params): void;
+
+    public function getXotModelName(): ?string;
+
+    public function url(array $params = []): string;
+
+    public function itemActions(array $params = []): Collection;
+
+    public function id(?bool $is_admin = null): string;
+
+    public function title(): ?string;
+
+    public function with(): array;
+
+    public function setName(string $name): self;
+
+    public function tabs(): array;
+
+    public function getBreads(): Collection;
+
+    public function getRouteParams(): array;
+
+    public function guid(?bool $is_admin = null): ?string;
+
+    public function getParent(): ?PanelContract;
+
+    public function getRows(): Builder;
+
+    public function fields(): array;
+
+    public function actions(): array;
+
+    public function getModuleNameLow(): string;
+
+    public function getName(): string;
 
     /*
     public function __construct($model = null);
@@ -233,7 +272,7 @@ interface PanelContract {
 
     public function out(array $params = []);
 
-    public function pdfFilename(array $params = []);
+
 
     public function pdf(array $params = []);
 

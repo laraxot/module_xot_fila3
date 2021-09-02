@@ -41,7 +41,7 @@ class PanelFormService {
      */
     public function formCreate(array $params = []) {
         $fields = $this->createFields();
-        $row = $this->panel->row;
+        $row = $this->panel->getRow();
         $res = '';
         //$res.='<h3>'.$this->url(['act'=>'store']).'</h3>'; //4 debug
         $res .= Form::bsOpenPanel($this, 'store');
@@ -68,7 +68,7 @@ class PanelFormService {
         </p>';
         extract($params);
         $fields = $this->editFields();
-        $row = $this->panel->row;
+        $row = $this->panel->getRow();
         $res = '';
         //$res.='<h3>'.$this->url(['act'=>'store']).'</h3>'; //4 debug
         $res .= Form::bsOpenPanel($this->panel, 'update');
@@ -116,7 +116,7 @@ class PanelFormService {
     public function getFormData(array $params = []): array {
         $form_data = [];
         $fields = $this->getFields($params);
-        $row = isset($params['row']) ? $params['row'] : $this->panel->row;
+        $row = isset($params['row']) ? $params['row'] : $this->panel->getRow();
         foreach ($fields as $field) {
             $value = Arr::get($row, $field->name);
             if (is_object($value)) {
@@ -142,7 +142,7 @@ class PanelFormService {
         //dddx($params);
         $act = 'destroy';
         $parz = [
-            'id' => $this->panel->row->getKey(),
+            'id' => $this->panel->getRow()->getKey(),
             'btn_class' => 'btn '.$class,
             'route' => $this->panel->url(['act' => 'destroy']),
             'act' => $act,
@@ -157,7 +157,7 @@ class PanelFormService {
         extract($params);
         $act = 'detach';
         $parz = [
-            'id' => $this->panel->row->getKey(),
+            'id' => $this->panel->getRow()->getKey(),
             'btn_class' => 'btn '.$class,
             'route' => $this->url(['act'=>'detach']),
             'act' => $act,
@@ -173,7 +173,7 @@ class PanelFormService {
     public function btnCrud(array $params = []) {
         extract($params);
         $acts = ['edit', 'destroy', 'show'];
-        if (is_object($this->panel->row->pivot)) {
+        if (is_object($this->panel->getRow()->pivot)) {
             $acts = ['edit', 'destroy', 'detach', 'show'];
         }
 
@@ -206,13 +206,13 @@ class PanelFormService {
         }
 
         if (! isset($params['tooltip'])) {
-            $row = $this->panel->row;
+            $row = $this->panel->getRow();
             $module_name_low = (string) strtolower((string) getModuleNameFromModel($row));
             $params['tooltip'] = trans($module_name_low.'::'.strtolower(class_basename($row)).'.act.'.$params['method']);
         }
 
         if (! isset($params['title'])) {
-            $row = $this->panel->row;
+            $row = $this->panel->getRow();
             $module_name_low = strtolower((string) getModuleNameFromModel($row));
 
             $trans_key = $module_name_low.'::'.strtolower(class_basename($row)).'.act.'.$params['method'];
@@ -249,12 +249,12 @@ class PanelFormService {
         }
 
         if (true === $params['title']) {
-            $row = $this->panel->row;
+            $row = $this->panel->getRow();
             $module_name_low = strtolower((string) getModuleNameFromModel($row));
             $parent = $this->panel->getParent();
             if (null != $parent) {
                 $tmp = [];
-                $tmp[] = class_basename($parent->row);
+                $tmp[] = class_basename($parent->getRow());
                 $tmp[] = class_basename($row);
                 $tmp[] = 'act';
                 $tmp[] = $params['method'];
@@ -278,17 +278,17 @@ class PanelFormService {
         $parents = [];
         $parent = $this->panel->parent;
         $route_params = \Route::current()->parameters();
-        $cont_i = RouteService::containerN(['model' => get_class($parent->row)]);
+        $cont_i = RouteService::containerN(['model' => get_class($parent->getRow())]);
         $routename = RouteService::routenameN(['n' => $cont_i + 1, 'act' => $act]);
 
         $route_params['item'.($cont_i + 0)] = $this->parent->row;
         $route_params['container'.($cont_i + 1)] = $this->postType();
-        $route_params['item'.($cont_i + 1)] = $this->panel->row;
+        $route_params['item'.($cont_i + 1)] = $this->panel->getRow();
         $route = route($routename, $route_params);
         //http://multi.local:8080/it/profile/profile%20279656/restaurant/pizza%20gino/cuisine/antipasti/recipe/gigi]
         //return '['.$routename.']<br>['.$route.'][['.$cont_i.']';
         $parz = [
-            'id' => $this->panel->row->id,
+            'id' => $this->panel->getRow()->id,
             'btn_class' => 'btn',
             'route' => $route,
             'act' => $act,
@@ -310,13 +310,12 @@ class PanelFormService {
      * @return array
      */
     public function exceptFields(array $params = []) {
-        //dddx($params);
-        //$act = 'show';
+        $act = 'show';
         extract($params);
         $panel = $this->panel;
         extract($params);
         $excepts = collect([]);
-        if (is_object($panel->rows)) {
+        if (is_object($panel->getRows())) {
             $methods = [
                 'getForeignKeyName',
                 'getMorphType',
@@ -330,8 +329,8 @@ class PanelFormService {
             }
 
             foreach ($methods as $method) {
-                if (method_exists($panel->rows, $method)) {
-                    $excepts = $excepts->merge($panel->rows->$method());
+                if (method_exists($panel->getRows(), $method)) {
+                    $excepts = $excepts->merge($panel->getRows()->$method());
                 }
             }
         }
@@ -353,37 +352,25 @@ class PanelFormService {
         return $fields;
     }
 
-    /**
-     * @return array
-     */
-    public function indexFields() {
+    public function indexFields(): array {
         $fields = $this->exceptFields(['act' => 'index']);
 
         return $fields;
     }
 
-    /**
-     * @return array
-     */
-    public function createFields() {
+    public function createFields(): array {
         $fields = $this->exceptFields(['act' => 'create']);
 
         return $fields;
     }
 
-    /**
-     * @return array
-     */
-    public function editFields() {
+    public function editFields(): array {
         $fields = $this->exceptFields(['act' => 'edit']);
 
         return $fields;
     }
 
-    /**
-     * @return array
-     */
-    public function getFields(array $params = []) {
+    public function getFields(array $params = []): array {
         $act = isset($params['act']) ? $params['act'] : 'index';
 
         $fields = $this->exceptFields(['act' => $act]);
@@ -391,7 +378,7 @@ class PanelFormService {
         return $fields;
     }
 
-    public function editObjFields() {
+    public function editObjFields(): array {
         $fields = collect($this->editFields())->map(function ($field) {
             return FieldService::make($field->name)
                 ->type($field->type)
@@ -402,10 +389,7 @@ class PanelFormService {
         return $fields;
     }
 
-    /**
-     * @return array
-     */
-    public function indexEditFields() {
+    public function indexEditFields(): array {
         $fields = $this->exceptFields(['act' => 'index_edit']);
 
         return $fields;

@@ -41,11 +41,11 @@ class XlsPanelPresenter implements PanelPresenterContract {
         //$view .= '.pdf';
         //$view = str_replace('.store.', '.show.', $view);
         extract($params);
-        //$row = $this->panel->row;
-        $rows = $this->panel->rows()->get()->toArray();
+        //$row = $this->panel->getRow();
+        $rows = $this->panel->getRows()->get()->toArray();
 
         //if (null == $row->getKey()) { //utile per le cose a containers
-        //    $row = $this->panel->rows()->first();
+        //    $row = $this->panel->getRows()->first();
         //}
         /*
         $html = view($view)

@@ -23,7 +23,7 @@ class StoreJob extends XotBaseJob {
     public function handle(): PanelContract {
         //dd('['.__LINE__.']['.__FILE__.']');
 
-        $row = $this->panel->row;
+        $row = $this->panel->getRow();
         $this->data = $this->prepareAndValidate($this->data, $this->panel);
         $data = $this->data;
 
@@ -42,7 +42,7 @@ class StoreJob extends XotBaseJob {
         $row->save();
         $parent = $this->panel->getParent();
         if (is_object($parent)) {
-            $parent_row = $parent->row;
+            $parent_row = $parent->getRow();
             $pivot_data = [];
             if (isset($data['pivot'])) {
                 $pivot_data = $data['pivot'];
@@ -52,7 +52,7 @@ class StoreJob extends XotBaseJob {
             }
             try {
                 //$tmp = $parent_row->$types()->save($row, $pivot_data);
-                $tmp = $this->panel->rows->save($row, $pivot_data); //??
+                $tmp = $this->panel->getRows()->save($row, $pivot_data); //??
                 /*
                 Model
                 BelongsToMany
@@ -85,7 +85,7 @@ class StoreJob extends XotBaseJob {
 
     /*
     public function saveParentHasManyDeep_OLD() {
-        $row = $this->panel->row;
+        $row = $this->panel->getRow();
         $data = $this->data;
         $types = $this->types;
         $item = $this->item;

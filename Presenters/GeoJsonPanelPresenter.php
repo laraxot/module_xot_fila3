@@ -33,14 +33,14 @@ class GeoJsonPanelPresenter implements PanelPresenterContract {
      * @throws \ReflectionException
      */
     public function outContainer(?array $params = null): \Modules\Xot\Transformers\GeoJsonCollection {
-        $model = $this->panel->row;
+        $model = $this->panel->getRow();
         $model_table = $model->getTable();
         $model_type = PanelService::get($model)->postType();
         $transformer = \Modules\Xot\Transformers\GeoJsonCollection::class;
         //--------
 
         $lang = app()->getLocale();
-        $rows = $this->panel->rows();
+        $rows = $this->panel->getRows();
         /*
         $post_table = app(Post::class)->getTable();
         $rows = $rows->join($post_table.' as post',
@@ -66,7 +66,7 @@ class GeoJsonPanelPresenter implements PanelPresenterContract {
     }
 
     public function outItem(?array $params = null): \Modules\Xot\Transformers\GeoJsonResource {
-        $model = $this->panel->row;
+        $model = $this->panel->getRow();
         $transformer = \Modules\Xot\Transformers\GeoJsonResource::class;
 
         $out = new $transformer($model);

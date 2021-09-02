@@ -590,7 +590,7 @@ class RouteService {
             $parents->prepend($panel_curr->getParent());
             $panel_curr = $panel_curr->getParent();
         }
-        $container_root = $panel->row;
+        $container_root = $panel->getRow();
         if ($parents->count() > 0) {
             $container_root = $parents->first()->row;
         }
@@ -614,7 +614,7 @@ class RouteService {
 
         $i = 0;
         foreach ($parents as $parent) {
-            $route_params['container'.($n + $i)] = $parent->postType(); //$parent->row->post_type;
+            $route_params['container'.($n + $i)] = $parent->postType(); //$parent->getRow()->post_type;
             $route_params['item'.($n + $i)] = $parent->guid();
             ++$i;
         }
@@ -622,7 +622,7 @@ class RouteService {
         $post_type = $panel->postType();
         /*
         if( $post_type==null) {
-            $post_type=Str::snake(class_basename($panel->row));
+            $post_type=Str::snake(class_basename($panel->getRow()));
 
             if($panel->getParent()!=null){
                 $parent_post_type=Str::snake(class_basename($panel->getParent()->row));
@@ -654,11 +654,11 @@ class RouteService {
                     'params' => $params,
                     'route_name' => $route_name,
                     'route_params' => $route_params,
-                    'last row' => $panel->row,
+                    'last row' => $panel->getRow(),
                     'panel post type' => $panel->postType(),
                     'panel guid' => $panel->guid(),
-                    'last route key ' => $panel->row->getRouteKey(),
-                    'last route key name' => $panel->row->getRouteKeyName(),
+                    'last route key ' => $panel->getRow()->getRouteKey(),
+                    'last route key name' => $panel->getRow()->getRouteKeyName(),
                 ]
             );
             //*/
@@ -680,12 +680,12 @@ class RouteService {
             $parents->prepend($panel_curr->getParent());
             $panel_curr = $panel_curr->getParent();
         }
-        $container_root = $panel->row;
+        $container_root = $panel->getRow();
         if ($parents->count() > 0) {
             /*
             $tmp='['.$parents->count().']';
             foreach($parents as $parent){
-                $tmp.=$parent->row->post_type.'-';
+                $tmp.=$parent->getRow()->post_type.'-';
             }
             return $tmp;
             */
@@ -750,7 +750,7 @@ class RouteService {
         $cont_i = RouteService::containerN(['model' => get_class($model), 'route_params' => $route_params]);
         $parent = $model->parent;
         if (isset($panel_parent) && is_object($panel_parent)) {
-            $parent = $panel_parent->row;
+            $parent = $panel_parent->getRow();
         }
         if (is_object($parent)) {
             $parent_cont_i = RouteService::containerN(['model' => get_class($parent), 'route_params' => $route_params]);

@@ -119,6 +119,8 @@ class XotServiceProvider extends XotBaseServiceProvider {
         */
     }
 
+    /*
+    // lo riabilitiamo in futuro
     private function registerDropbox(): void {
         Storage::extend('dropbox', function ($app, $config) {
             //dddx($config);
@@ -130,6 +132,7 @@ class XotServiceProvider extends XotBaseServiceProvider {
             return $filesystem;
         });
     }
+    */
 
     private function registerPanel(): void {
         //dddx(get_class_methods($this->app['request']));

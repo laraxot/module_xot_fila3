@@ -7,6 +7,7 @@ namespace Modules\Xot\Models\Policies;
 use Illuminate\Auth\Access\HandlesAuthorization;
 //use Illuminate\Database\Eloquent\Model as Post;
 //use Modules\LU\Models\User;
+use Modules\LU\Services\ProfileService;
 use Modules\Xot\Contracts\ModelContract;
 use Modules\Xot\Contracts\UserContract;
 use Modules\Xot\Services\PanelService as Panel;
@@ -24,11 +25,18 @@ abstract class XotBasePolicy {
      * @return bool|null
      */
     public function before(?UserContract $user, $ability) {
+        /*
         if (is_object($user) && Panel::get($user)->isSuperAdmin()) {
             return true;
         }
 
         return false;
+        */
+        if (null == $user) {
+            return null;
+        }
+
+        return ProfileService::get($user)->isSuperAdmin();
     }
 
     public function index(?UserContract $user, ModelContract $post): bool {
@@ -110,9 +118,10 @@ abstract class XotBasePolicy {
         return false;
     }
 
-    public function forceDelete(UserContract $user, ModelContract $post): mixed {
+    /*
+    public function forceDelete(UserContract $user, ModelContract $post): bool {
     }
-
+    */
     public function detach(UserContract $user, ModelContract $post): bool {
         if ($post->created_by == $user->handle || $post->updated_by == $user->handle) {
             return true;
@@ -125,12 +134,15 @@ abstract class XotBasePolicy {
         return true;
     }
 
-    /**
+    /*
      * Determine whether the user can view any DocDummyPluralModel.
      */
-    public function viewAny(UserContract $user): mixed {
+    /*
+    public function viewAny(UserContract $user): bool {
     }
-
-    public function view(UserContract $user, ModelContract $post): mixed {
+    */
+    /*
+    public function view(UserContract $user, ModelContract $post): bool {
     }
+    */
 }

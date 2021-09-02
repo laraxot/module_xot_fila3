@@ -73,7 +73,7 @@ class PanelMiddleware {
         $panel_parent = $panel;
 
         for ($i = 1; $i < count($containers); ++$i) {
-            $row_prev = $panel_parent->row;
+            $row_prev = $panel_parent->getRow();
             $types = $containers[$i];
             //$types=Str::plural($types);
             $types = Str::camel($types);

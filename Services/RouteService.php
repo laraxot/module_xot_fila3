@@ -102,7 +102,7 @@ class RouteService {
 
         $parents = $panel->getParents();
 
-        $container_root = $panel->row;
+        $container_root = $panel->getRow();
         if ($parents->count() > 0) {
             $container_root = $parents->first()->row;
         }
@@ -126,7 +126,7 @@ class RouteService {
         $post_type = $panel->postType();
         //
         //if( $post_type==null) {
-        //    $post_type=Str::snake(class_basename($panel->row));
+        //    $post_type=Str::snake(class_basename($panel->getRow()));
         //
         //    if($panel->getParent()!=null){
         //        $parent_post_type=Str::snake(class_basename($panel->getParent()->row));
@@ -157,11 +157,11 @@ class RouteService {
                     'params' => $params,
                     'route_name' => $route_name,
                     'route_params' => $route_params,
-                    'last row' => $panel->row,
+                    'last row' => $panel->getRow(),
                     'panel post type' => $panel->postType(),
                     'panel guid' => $panel->guid(),
-                    'last route key ' => $panel->row->getRouteKey(),
-                    'last route key name' => $panel->row->getRouteKeyName(),
+                    'last route key ' => $panel->getRow()->getRouteKey(),
+                    'last route key name' => $panel->getRow()->getRouteKeyName(),
                     'in_admin' => config()->get('in_admin'),
                     'in_admin_session' => session()->get('in_admin'),
                     //'routes' => \Route::getRoutes(),
@@ -232,12 +232,12 @@ class RouteService {
             $parents->prepend($panel_curr->getParent());
             $panel_curr = $panel_curr->getParent();
         }
-        $container_root = $panel->row;
+        $container_root = $panel->getRow();
         if ($parents->count() > 0) {
 
             //$tmp='['.$parents->count().']';
             //foreach($parents as $parent){
-            //    $tmp.=$parent->row->post_type.'-';
+            //    $tmp.=$parent->getRow()->post_type.'-';
             //}
             //return $tmp;
 

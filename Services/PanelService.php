@@ -7,9 +7,7 @@ namespace Modules\Xot\Services;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
-use Modules\Xot\Contracts\ModelContract;
 use Modules\Xot\Contracts\PanelContract;
-use Modules\Xot\Contracts\UserContract;
 
 /**
  * Class PanelService.
@@ -17,10 +15,7 @@ use Modules\Xot\Contracts\UserContract;
 class PanelService {
     private static ?PanelService $_instance = null;
 
-    /**
-     * @var Model|ModelContract|UserContract
-     */
-    private static $model;
+    private static Model $model;
 
     private static ?PanelContract $panel;
 
@@ -39,7 +34,8 @@ class PanelService {
 
     public static function getInstance(): self {
         if (null === self::$_instance) {
-            $route_params = request()->route()->parameters();
+            //$route_params = request()->route()->parameters();// 42     Cannot call method parameters() on mixed.
+            $route_params = optional(\Route::current())->parameters();
             self::$_instance = new self($route_params);
         }
 
@@ -66,8 +62,6 @@ class PanelService {
     }
 
     /**
-     * @param Model|ModelContract|UserContract $model
-     *
      * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
      * @throws \ReflectionException
      */
@@ -80,10 +74,7 @@ class PanelService {
         return $panel;
     }
 
-    /**
-     * @param Model|ModelContract|UserContract $model
-     */
-    public static function setModel($model): self {
+    public static function setModel(Model $model): self {
         self::$model = $model;
 
         return self::getInstance();
@@ -138,7 +129,7 @@ class PanelService {
     //esempio parametro stringa 'area-1-menu-1'
     //rilascia il pannello dell'ultimo container (nell'esempio menu),
     //con parent il pannello del precedente container (nell'esempio area)
-    public static function getById(string $id) {
+    public static function getById(string $id): PanelContract {
         $piece = explode('-', $id);
         $route_params = [];
         $j = 0;
@@ -191,9 +182,9 @@ class PanelService {
         $panel->setName($first_container);
         $i = 0;
         if (isset($items[0])) {
-            $panel->in_admin = $in_admin;
+            $panel->setInAdmin($in_admin);
             $panel->setItem($items[0]);
-            if (null == $panel->row) {
+            if (null == $panel->getRow()) {
                 $data = [
                     'message' => 'Not Found ['.$items[$i].'] on ['.$containers[$i].']',
                 ];
@@ -209,7 +200,7 @@ class PanelService {
         $panel_parent = $panel;
 
         for ($i = 1; $i < count($containers); ++$i) {
-            $row_prev = $panel_parent->row;
+            $row_prev = $panel_parent->getRow();
             $types = $containers[$i];
             //$types=Str::plural($types);
             $types = Str::camel($types);
@@ -244,9 +235,9 @@ class PanelService {
             $panel->setParent($panel_parent);
 
             if (isset($items[$i])) {
-                $panel->in_admin = $in_admin;
+                $panel->setInAdmin($in_admin);
                 $panel->setItem($items[$i]);
-                if (null == $panel->row) {
+                if (null == $panel->getRow()) {
                     $data = [
                         'message' => 'Not Found ['.$items[$i].'] on ['.$containers[$i].']',
                     ];
@@ -267,7 +258,7 @@ class PanelService {
      *
      * @return \Illuminate\Http\RedirectResponse|mixed
      */
-    public static function getByModel(ModelContract $model) {
+    public static function getByModel(Model $model) {
         $class_full = get_class($model);
         $class_name = class_basename($model);
         $class = Str::before($class_full, $class_name);
@@ -289,7 +280,7 @@ class PanelService {
      * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
      * @throws \ReflectionException
      */
-    public static function createPanel(ModelContract $model): void {
+    public static function createPanel(Model $model): void {
         if (! is_object($model)) {
             dddx(['da fare']);
         }
@@ -312,12 +303,14 @@ class PanelService {
         $fields = [];
         foreach ($fillables as $input_name) {
             try {
-                $input_type = $model->getConnection()->getDoctrineColumn($model->getTable(), $input_name)->getType(); //->getName();
+                $input_type = $model->getConnection()->getDoctrineColumn($model->getTable(), $input_name)->getType()->getName();
             } catch (\Exception $e) {
                 $input_type = 'Text';
             }
             $tmp = new \stdClass();
-            $tmp->type = (string) $input_type;
+            //$tmp->type = (string) $input_type;// 311    Cannot cast 'Text'|Doctrine\DBAL\Types\Type to string.
+            $tmp->type = $input_type;
+
             $tmp->name = $input_name;
             $fields[] = $tmp;
         }

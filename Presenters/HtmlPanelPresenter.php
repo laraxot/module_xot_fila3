@@ -44,7 +44,7 @@ class HtmlPanelPresenter implements PanelPresenterContract {
     }
 
     /**
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
      */
     public function out(?array $params = null) {
         //$route_params = \Route::current()->parameters();
@@ -79,15 +79,15 @@ class HtmlPanelPresenter implements PanelPresenterContract {
         $rows_err = '';
 
         try {
-            $rows = $this->panel->rows()->paginate(20);
+            $rows = $this->panel->getRows()->paginate(20);
         } catch (\Exception $e) {
             $data = [
                 'message' => $e->getMessage(),
             ];
 
             return response()->view('pub_theme::errors.500', $data, 500);
-            $rows = null;
-            $rows_err = $e;
+            //$rows = null;
+            //$rows_err = $e;
         } catch (\Error $e) {
             $rows = null;
             $rows_err = $e;
@@ -107,7 +107,7 @@ class HtmlPanelPresenter implements PanelPresenterContract {
             'views' => $views,
             '_panel' => $this->panel,
             '_panel_name' => $this->panel->getName(),
-            'row' => $this->panel->row,
+            'row' => $this->panel->getRow(),
             'rows' => $rows,
             'rows_err' => $rows_err,
             'mod_trad' => $mod_trad,

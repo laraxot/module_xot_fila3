@@ -92,7 +92,13 @@ class RouteDynService {
         }
         $v['act'] = $v['name'];
         $v['act'] = \preg_replace('/{.*}\//', '', $v['act']);
+        if (null === $v['act']) {
+            $v['act'] = '';
+        }
         $v['act'] = \str_replace('/', '_', $v['act']);
+        if (! is_string($v['act'])) {
+            throw new \Exception('act is not a string');
+        }
         $v['act'] = Str::camel($v['act']);
         $v['act'] = \str_replace('{', '', $v['act']);
         $v['act'] = \str_replace('}', '', $v['act']);
@@ -165,6 +171,10 @@ class RouteDynService {
         $v['controller'] = \str_replace('/', '_', $v['controller']);
         $v['controller'] = \str_replace('{', '', $v['controller']);
         $v['controller'] = \str_replace('}', '', $v['controller']);
+        if (! is_string($v['controller'])) {
+            throw new \Exception('controller is not a string');
+        }
+
         $v['controller'] = Str::studly($v['controller']);
         //camel_case foo_bar  => fooBar
         //studly_case foo_bar => FooBar

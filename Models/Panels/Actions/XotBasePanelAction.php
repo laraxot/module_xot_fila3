@@ -98,7 +98,7 @@ abstract class XotBasePanelAction {
     public function getTitle() {
         $name = $this->getName();
 
-        $row = $this->panel->row;
+        $row = $this->panel->getRow();
 
         $module_name_low = strtolower(getModuleNameFromModel($row));
         $trans_path = $module_name_low.'::'.strtolower(class_basename($row)).'.act.'.$name;

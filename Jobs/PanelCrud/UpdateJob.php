@@ -20,7 +20,7 @@ class UpdateJob extends XotBaseJob {
      * Execute the job.
      */
     public function handle(): PanelContract {
-        $row = $this->panel->row;
+        $row = $this->panel->getRow();
 
         $this->data = $this->prepareAndValidate($this->data, $this->panel);
 
@@ -107,8 +107,8 @@ class UpdateJob extends XotBaseJob {
             /*
                 $parent=$this->panel->getParent();
                 if($parent!=null){
-                    $parent_id=$parent->row->getKey();
-                    $parent_key=$parent->postType().'_'.$parent->row->getKeyName();
+                    $parent_id=$parent->getRow()->getKey();
+                    $parent_key=$parent->postType().'_'.$parent->getRow()->getKeyName();
                     $data1=[];
                     foreach($data['to'] as $v){
                         $data1[$v]=[$parent_key=>$parent_id];
@@ -285,8 +285,8 @@ class UpdateJob extends XotBaseJob {
         $ids = $items_sub->all();
         $parent = $this->panel->getParent();
         if (null != $parent) {
-            $parent_id = $parent->row->getKey();
-            $parent_key = $parent->postType().'_'.$parent->row->getKeyName();
+            $parent_id = $parent->getRow()->getKey();
+            $parent_key = $parent->postType().'_'.$parent->getRow()->getKeyName();
             /*
             $data1=[];
             foreach($ids as $v){
@@ -313,8 +313,8 @@ class UpdateJob extends XotBaseJob {
 
         $parent = $this->panel->getParent();
         if (null != $parent) {
-            $parent_id = $parent->row->getKey();
-            $parent_key = $parent->postType().'_'.$parent->row->getKeyName();
+            $parent_id = $parent->getRow()->getKey();
+            $parent_key = $parent->postType().'_'.$parent->getRow()->getKeyName();
             $data1 = [];
             foreach ($ids as $v) {
                 $data1[$v] = [$parent_key => $parent_id];
