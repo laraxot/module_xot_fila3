@@ -71,7 +71,7 @@ class DummyClass extends XotBasePanel {
      *
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public static function indexQuery(array $data, $query) {
+    public static function indexQuery(array $data,\Illuminate\Database\Eloquent\Builder $query):\Illuminate\Database\Eloquent\Builder {
         //return $query->where('auth_user_id', $request->user()->auth_user_id);
         return $query;
     }

@@ -34,7 +34,7 @@ interface PanelContract {
 
     public function relatedUrl(array $params = []): string;
 
-    public function setLabel(string $label): ModelContract;
+    public function setLabel(string $label): Model;
 
     public function postType(): string;
 
@@ -96,6 +96,8 @@ interface PanelContract {
 
     public function getName(): string;
 
+    public function rules(array $params = []): array;
+
     /*
     public function __construct($model = null);
 
@@ -135,7 +137,6 @@ interface PanelContract {
 
     public function orderBy();
 
-    public function rules(array $params = []);
 
     public function pivotRules($params);
 

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Modules\Xot\Models\Panels;
 
 use Illuminate\Http\Request;
@@ -62,12 +64,9 @@ class TestPanel extends XotBasePanel {
     /**
      * Build an "index" query for the given resource.
      *
-     * @param mixed                                 $data
-     * @param \Illuminate\Database\Eloquent\Builder $query
-     *
-     * @return \Illuminate\Database\Eloquent\Builder
+     * @param mixed $data
      */
-    public static function indexQuery(array $data, $query) {
+    public static function indexQuery(array $data, \Illuminate\Database\Eloquent\Builder $query): \Illuminate\Database\Eloquent\Builder {
         //return $query->where('auth_user_id', $request->user()->auth_user_id);
         return $query;
     }
@@ -83,8 +82,6 @@ class TestPanel extends XotBasePanel {
 
     /**
      * Get the tabs available.
-     *
-     * @return array
      */
     public function tabs(): array {
         $tabs_name = [];
@@ -94,8 +91,6 @@ class TestPanel extends XotBasePanel {
 
     /**
      * Get the cards available for the request.
-     *
-     * @return array
      */
     public function cards(Request $request): array {
         return [];
@@ -103,18 +98,13 @@ class TestPanel extends XotBasePanel {
 
     /**
      * Get the filters available for the resource.
-     *
-     * @return array
      */
     public function filters(Request $request = null): array {
-
         return [];
     }
 
     /**
      * Get the lenses available for the resource.
-     *
-     * @return array
      */
     public function lenses(Request $request): array {
         return [];
@@ -122,8 +112,6 @@ class TestPanel extends XotBasePanel {
 
     /**
      * Get the actions available for the resource.
-     *
-     * @return array
      */
     public function actions(): array {
         return [

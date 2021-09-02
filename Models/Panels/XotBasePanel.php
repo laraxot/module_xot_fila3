@@ -7,7 +7,6 @@ namespace Modules\Xot\Models\Panels;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 //----------  SERVICES --------------------------
@@ -17,7 +16,6 @@ use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
-use Modules\Xot\Contracts\ModelContract;
 use Modules\Xot\Contracts\PanelContract;
 use Modules\Xot\Contracts\PanelPresenterContract;
 use Modules\Xot\Presenters\PdfPanelPresenter;
@@ -270,7 +268,8 @@ abstract class XotBasePanel implements PanelContract {
     public function setItem(string $guid): self {
         $model = $this->row;
         $rows = $this->rows;
-        $pk = $model->getRouteKeyName($this->in_admin);
+        //$pk = $model->getRouteKeyName($this->in_admin);
+        $pk = $model->getRouteKeyName(); // !!! MI SEMBRA STRANO !!
         $pk_full = $model->getTable().'.'.$pk;
 
         if ('guid' == $pk) {
@@ -288,28 +287,34 @@ abstract class XotBasePanel implements PanelContract {
         } else {
             $rows = $rows->where([$pk_full => $value]);
         }
-
+        /* da spostare in amministrazione
         if ($rows->count() > 1) {
+
             $row_last = $rows->latest()->first();
             if ('guid' == $pk_full) {
                 $guid_old = $row_last->post->guid;
                 $row_last->post->update(['guid' => $guid_old.'-1']);
             }
+
             //effettuo il redirect alla stessa pagina perchè è inutile che mi manda il dddx per poi fare refresh(?)
             //Return value of Modules\Xot\Models\Panels\XotBasePanel::setItem() must be an instance of Modules\Xot\Models\Panels\XotBasePanel, instance of Illuminate\Http\RedirectResponse returned
             //return redirect(url()->current());
 
-            /*
-            dddx(
-                [
-                    'error' => 'multiple',
-                    'rows' => $rows->get(),
-                    'row_last' => $row_last,
-                ]
-            );
-            /*/
+            //
+            //dddx(
+            //    [
+            //        'error' => 'multiple',
+            //        'rows' => $rows->get(),
+            //        'row_last' => $row_last,
+            //    ]
+            //);
         }
-        $this->row = $rows->first();
+        */
+        $row = $rows->first();
+        if (! $row instanceof Model) {
+            throw new \Exception('row is not a Model or null');
+        }
+        $this->row = $row;
 
         return $this;
     }
@@ -323,7 +328,7 @@ abstract class XotBasePanel implements PanelContract {
         return false;
     }
 
-    public function setLabel(string $label): ModelContract {
+    public function setLabel(string $label): Model {
         $model = $this->row;
         $res = $model::whereHas(
             'post',
@@ -336,6 +341,9 @@ abstract class XotBasePanel implements PanelContract {
         }
         $me = $model->create();
         // dddx([$me, $me->getKey()]);
+        if (! method_exists($model, 'post')) {
+            throw new \Exception('in ['.get_class($model).'] method [post] is missing');
+        }
         $post = $model->post()->create(
             [
                 //'post_id' => $me->getKey(),
@@ -512,6 +520,13 @@ abstract class XotBasePanel implements PanelContract {
                 }
                 if (Str::contains($item->type, 'RelationshipOne')) {
                     $rows_tmp = $this->row->{$item->name}();
+                    /*
+                    if (! is_object($rows_tmp)) {
+                        throw new \Exception('rows_tmp is not an object');
+                    }
+                    */
+                    //529    Cannot call method getLocalKeyName() on class-string|object.
+
                     if (method_exists($rows_tmp, 'getLocalKeyName')) {
                         $name1 = $rows_tmp->getLocalKeyName();
                     } else {
@@ -676,12 +691,8 @@ abstract class XotBasePanel implements PanelContract {
 
     /**
      * Build an "index" query for the given resource.
-     *
-     * @param Builder|HasMany $query
-     *
-     * @return Builder|HasMany
      */
-    public static function indexQuery(array $data, $query) {
+    public static function indexQuery(array $data, Builder $query): Builder {
         //return $query->where('auth_user_id', $request->user()->auth_user_id);
         return $query;
     }
@@ -708,10 +719,12 @@ abstract class XotBasePanel implements PanelContract {
     }
     */
 
+    //|\Illuminate\Database\Query\Builder
+
     /**
-     * @param \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Query\Builder|\Illuminate\Database\Eloquent\Relations\HasMany $query
+     * @param \Illuminate\Database\Eloquent\Builder $query
      *
-     * @return \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Query\Builder
+     * @return \Illuminate\Database\Eloquent\Builder
      */
     public function applyFilter($query, array $filters) {
         //https://github.com/spatie/laravel-query-builder
@@ -918,10 +931,16 @@ abstract class XotBasePanel implements PanelContract {
         return $this->form->formEdit($params);
     }
 
+    /**
+     * @return mixed
+     */
     public function formLivewireEdit(array $params = []) {
         return $this->form->formLivewireEdit($params);
     }
 
+    /**
+     * @return mixed
+     */
     public function getFormData(array $params = []) {
         return $this->form->{__FUNCTION__}($params);
     }
@@ -1752,7 +1771,7 @@ abstract class XotBasePanel implements PanelContract {
         $data = collect([]);
         while (null != $curr) {
             //$data->prepend($curr->postType().'-'.$curr->guid($is_admin));
-            $data->prepend($curr->postType().'-'.$curr->row->getKey());
+            $data->prepend($curr->postType().'-'.$curr->getRow()->getKey());
 
             $curr = $curr->getParent();
         }
