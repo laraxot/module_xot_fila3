@@ -105,17 +105,14 @@ abstract class XotBasePanel implements PanelContract {
         }
     }
 
-    /**
-     * @param object $row
-     */
-    public function setRow($row): self {
+    public function setRow(Model $row): self {
         $this->row = $row;
 
         return $this;
     }
 
     public function setRows(Builder $rows): self {
-        $this->rows = $rows->whereRaw('1=1');
+        $this->rows = $rows;
 
         return $this;
     }
@@ -307,7 +304,9 @@ abstract class XotBasePanel implements PanelContract {
         */
         $row = $rows->first();
         //315    Property Modules\Xot\Models\Panels\XotBasePanel::$row (Illuminate\Database\Eloquent\Model) does not accept mixed.
-
+        if (null == $row) {
+            throw new \Exception('Not Found ['.$value.'] on ['.$this->getName().']');
+        }
         $this->row = $row;
 
         return $this;

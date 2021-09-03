@@ -19,7 +19,7 @@ use Nwidart\Modules\Facades\Module;
  * Class XotBaseContainerController.
  */
 abstract class XotBaseContainerController extends Controller {
-    protected ?PanelContract $panel;
+    protected PanelContract $panel;
 
     /**
      * @param string $method
@@ -30,25 +30,25 @@ abstract class XotBaseContainerController extends Controller {
     public function __call($method, $args) {
         //dddx(['method' => $method, 'args' => $args]);
         $panel = Panel::getRequestPanel();
+        if (null == $panel) {
+            throw new \Exception('uston gavemo un problemon');
+        }
         $this->panel = $panel;
 
         if ('' != request()->input('_act', '')) {
             return $this->__callPanelAct($method, $args);
         }
-
+        /*
         if (null == $panel) {
             $request = XotRequest::capture();
 
             return app('\Modules\Xot\Http\Controllers\Admin\HomeController')->$method($request);
         }
-
+        */
         return $this->__callRouteAct($method, $args);
     }
 
-    /**
-     * @return string
-     */
-    public function getController() {
+    public function getController(): string {
         list($containers, $items) = params2ContainerItem();
         $mod_name = $this->panel->getModuleName(); //forse da mettere container0
 
@@ -66,12 +66,9 @@ abstract class XotBaseContainerController extends Controller {
     }
 
     /**
-     * @param string $method
-     * @param array  $args
-     *
      * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse|\Illuminate\Http\Response
      */
-    public function __callRouteAct($method, $args) {
+    public function __callRouteAct(string $method, array $args) {
         $panel = $this->panel;
 
         $authorized = Gate::allows($method, $panel);
@@ -85,8 +82,10 @@ abstract class XotBaseContainerController extends Controller {
         $data = $request->all();
 
         //$panel = app($controller)->$method($data, $panel);
-        $panel = app($controller)->$method($request, $panel);
+        $out = app($controller)->$method($request, $panel);
 
+        return $out;
+        /*
         if (! method_exists($panel, 'out')) {
             return $panel;
         }
@@ -97,6 +96,7 @@ abstract class XotBaseContainerController extends Controller {
                 'method' => $request->getMethod(),
             ]
         );
+        */
     }
 
     /**
@@ -111,6 +111,7 @@ abstract class XotBaseContainerController extends Controller {
         $method_act = Str::camel($act);
 
         $panel = $this->panel;
+        /*
         if (null == $panel) {
             $route_params = $request->route()->parameters();
             if (isset($route_params['module'])) {
@@ -122,6 +123,7 @@ abstract class XotBaseContainerController extends Controller {
                 $panel = Panel::get($home);
             }
         }
+        */
 
         $authorized = Gate::allows($method_act, $panel);
         if (! $authorized) {
@@ -132,12 +134,9 @@ abstract class XotBaseContainerController extends Controller {
     }
 
     /**
-     * @param string        $method
-     * @param PanelContract $panel
-     *
      * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse|\Illuminate\Http\Response
      */
-    public function notAuthorized($method, $panel) {
+    public function notAuthorized(string $method, PanelContract $panel) {
         $lang = app()->getLocale();
         if (! \Auth::check()) {
             //$request = \Modules\Xot\Http\Requests\XotRequest::capture();

@@ -130,6 +130,8 @@ interface PanelContract {
      */
     public function callItemActionWithGate(string $act);
 
+    public function getParents(): Collection;
+
     /*
     public function __construct($model = null);
 
@@ -141,7 +143,7 @@ interface PanelContract {
 
     public function setParent($parent);
 
-    public function getParents();
+
 
     public function findParentType($type);
 

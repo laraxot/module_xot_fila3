@@ -157,29 +157,23 @@ class PanelService {
         return $panel;
     }
 
-    /**
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\Response|mixed|null
-     */
-    public static function getByParams(?array $route_params) {
+    public static function getByParams(?array $route_params): PanelContract {
         [$containers, $items] = params2ContainerItem($route_params);
         $in_admin = null;
         if (isset($route_params['in_admin'])) {
             $in_admin = $route_params['in_admin'];
         }
         if (0 == count($containers)) {
-            //165    Parameter #1 $panel of static method Modules\Xot\Services\PanelService::setRequestPanel() expects Modules\Xot\Contracts\PanelContract, null given.
-            //$home_panel = self::getHomePanel();
-            //return $home_panel;
-            PanelService::setRequestPanel(null);
+            $panel = self::getHomePanel();
 
-            return null;
+            return $panel;
         }
 
         $first_container = $containers[0];
         $row = TenantService::model($containers[0]);
-        try {
-            $panel = PanelService::get($row);
-        } catch (\Exception $e) {
+        //try {
+        $panel = PanelService::get($row);
+        /*} catch (\Exception $e) {
             $data = [
                 'message' => $e->getMessage(),
                 'lang' => \App::getLocale(),
@@ -189,13 +183,21 @@ class PanelService {
 
             return response()->view('pub_theme::errors.404', $data, 404);
         }
+        */
         //dddx(['methods' => get_class_methods($row), 'q' => $row->getQuery()]);
-        $panel->setRows($row->whereRaw('1=1'));
+
+        //dddx([$row->query(), $row->newQuery(), $row->getQuery()]);
+        $panel->setRows($row->with([]));
         $panel->setName($first_container);
         $i = 0;
         if (isset($items[0])) {
             $panel->setInAdmin($in_admin);
+            //try {
             $panel->setItem($items[0]);
+            //} catch (\Exception $e) {
+            //    throw new \Exception('test');
+            //}
+            /*
             if (null == $panel->getRow()) {
                 $data = [
                     'message' => 'Not Found ['.$items[$i].'] on ['.$containers[$i].']',
@@ -207,6 +209,7 @@ class PanelService {
 
                 return response()->view($view, $data, 404);
             }
+            */
             //dddx(['riga 108', $panel, $in_admin, $panel->in_admin, $route_params, params2ContainerItem($route_params)]);
         }
         $panel_parent = $panel;
@@ -216,9 +219,9 @@ class PanelService {
             $types = $containers[$i];
             //$types=Str::plural($types);
             $types = Str::camel($types);
-            try {
-                $rows = $row_prev->{$types}();
-            } catch (\Exception $e) {
+            //try {
+            $rows = $row_prev->{$types}();
+            /*} catch (\Exception $e) {
                 $data = [
                     'message' => $e->getMessage(),
                     'lang' => \App::getLocale(),
@@ -236,7 +239,7 @@ class PanelService {
 
                 return response()->view('pub_theme::errors.404', $data, 404);
             }
-
+            */
             $row = $rows->getRelated();
 
             $panel = PanelService::get($row);
@@ -249,6 +252,7 @@ class PanelService {
             if (isset($items[$i])) {
                 $panel->setInAdmin($in_admin);
                 $panel->setItem($items[$i]);
+                /*
                 if (null == $panel->getRow()) {
                     $data = [
                         'message' => 'Not Found ['.$items[$i].'] on ['.$containers[$i].']',
@@ -256,6 +260,7 @@ class PanelService {
 
                     return response()->view('pub_theme::errors.404', $data, 404);
                 }
+                */
                 //dddx(['riga 143', $panel, $in_admin, $panel->in_admin, $route_params, params2ContainerItem($route_params)]);
             }
             $panel_parent = $panel;

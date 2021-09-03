@@ -16,7 +16,7 @@ use Modules\Xot\Services\PanelService as Panel;
  * Class XotBaseContainerController.
  */
 abstract class XotBaseContainerController extends Controller {
-    protected ?PanelContract $panel;
+    protected PanelContract $panel;
 
     /**
      * @param string $method
@@ -29,7 +29,9 @@ abstract class XotBaseContainerController extends Controller {
 
     public function __call($method, $args) {
         $panel = Panel::getRequestPanel();
-
+        if (null == $panel) {
+            throw new \Exception('uston gavemo un problemon');
+        }
         $this->panel = $panel;
 
         if ('' != request()->input('_act', '')) {
@@ -43,9 +45,11 @@ abstract class XotBaseContainerController extends Controller {
      * @return string
      */
     public function getController() {
+        /*
         if (null == $this->panel) {
             return '\Modules\Xot\Http\Controllers\XotPanelController';
         }
+        */
         list($containers, $items) = params2ContainerItem();
 
         $mod_name = $this->panel->getModuleName();
@@ -64,17 +68,11 @@ abstract class XotBaseContainerController extends Controller {
     }
 
     /**
-     * @param string $method
-     * @param array  $args
-     *
      * @return mixed
      */
-    public function __callRouteAct($method, $args) {
+    public function __callRouteAct(string $method, array $args) {
         $panel = $this->panel;
         $authorized = Gate::allows($method, $panel);
-        if (null == $panel) {
-            throw new \Exception('panel is null');
-        }
 
         if (! $authorized) {
             return $this->notAuthorized($method, $panel);
@@ -89,15 +87,9 @@ abstract class XotBaseContainerController extends Controller {
     }
 
     /**
-     * @param string $method
-     * @param array  $args
-     *
      * @return mixed
      */
-    public function __callPanelAct($method, $args) {
-        if (null == $this->panel) {
-            throw new \Exception('panel is null');
-        }
+    public function __callPanelAct(string $method, array $args) {
         $request = request();
         $act = $request->_act;
         $method_act = Str::camel($act);
