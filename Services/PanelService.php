@@ -153,6 +153,7 @@ class PanelService {
         $model = TenantService::modelEager('home');
         $home = $model->firstOrCreate(['id' => 1]);
         $panel = PanelService::get($home);
+        $panel->setRows($home->with([]));
 
         return $panel;
     }
