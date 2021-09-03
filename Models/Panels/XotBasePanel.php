@@ -307,6 +307,7 @@ abstract class XotBasePanel implements PanelContract {
         */
         $row = $rows->first();
         //315    Property Modules\Xot\Models\Panels\XotBasePanel::$row (Illuminate\Database\Eloquent\Model) does not accept mixed.
+
         $this->row = $row;
 
         return $this;
@@ -711,12 +712,7 @@ abstract class XotBasePanel implements PanelContract {
 
     //|\Illuminate\Database\Query\Builder
 
-    /**
-     * @param \Illuminate\Database\Eloquent\Builder $query
-     *
-     * @return \Illuminate\Database\Eloquent\Builder
-     */
-    public function applyFilter($query, array $filters) {
+    public function applyFilter(Builder $query, array $filters): Builder {
         //https://github.com/spatie/laravel-query-builder
         $lang = app()->getLocale();
         $filters_fields = $this->filters();
@@ -775,13 +771,8 @@ abstract class XotBasePanel implements PanelContract {
      * https://forum.laravel-livewire.com/t/anybody-using-spatie-laravel-query-builder-with-livewire/299/5
      * https://github.com/spatie/laravel-query-builder/issues/243.
      * https://github.com/spatie/laravel-query-builder/pull/223.
-     *
-     * @param \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Query\Builder $query
-     *
-     * @return \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Query\Builder
      */
-    public function applySearch($query, ?string $q) {
-        dddx('aaa');
+    public function applySearch(Builder $query, ?string $q): Builder {
         if (! isset($q)) {
             return $query;
         }
@@ -843,12 +834,7 @@ abstract class XotBasePanel implements PanelContract {
 
     //end applySearch
 
-    /**
-     * @param \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Query\Builder $query
-     *
-     * @return \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Query\Builder
-     */
-    public function applySort($query, ?array $sort) {
+    public function applySort(Builder $query, ?array $sort): Builder {
         if (! is_array($sort)) {
             return $query;
         }
