@@ -781,6 +781,7 @@ abstract class XotBasePanel implements PanelContract {
      * @return \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Query\Builder
      */
     public function applySearch($query, ?string $q) {
+        dddx('aaa');
         if (! isset($q)) {
             return $query;
         }
@@ -1375,7 +1376,7 @@ abstract class XotBasePanel implements PanelContract {
             }
         }
 
-        return $guid;
+        return (string) $guid;
     }
 
     /*
