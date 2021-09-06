@@ -63,8 +63,12 @@ class TestPanel extends XotBasePanel {
 
     /**
      * Build an "index" query for the given resource.
+     *
+     * @param \Illuminate\Database\Eloquent\Relations\Relation|\Illuminate\Database\Eloquent\Builder $query
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\Relation|\Illuminate\Database\Eloquent\Builder
      */
-    public static function indexQuery(array $data, \Illuminate\Database\Eloquent\Relations\Relation $query): \Illuminate\Database\Eloquent\Relations\Relation {
+    public static function indexQuery(array $data, $query) {
         //return $query->where('auth_user_id', $request->user()->auth_user_id);
         return $query;
     }

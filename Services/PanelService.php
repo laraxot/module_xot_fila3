@@ -154,6 +154,7 @@ class PanelService {
         $home = $model->firstOrCreate(['id' => 1]);
         $panel = PanelService::get($home);
         $panel->setRows($home->with([]));
+        //$panel->setRows($home);
 
         return $panel;
     }
@@ -175,8 +176,7 @@ class PanelService {
 
         $panel = PanelService::get($row);
 
-        //$panel->setRows($row->with([]));
-        $panel->setRows($row);
+        $panel->setRows($row->with([]));
         $panel->setName($first_container);
         $i = 0;
         if (isset($items[0])) {

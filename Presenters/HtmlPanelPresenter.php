@@ -44,7 +44,7 @@ class HtmlPanelPresenter implements PanelPresenterContract {
     }
 
     /**
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response|string
      */
     public function out(?array $params = null) {
         //$route_params = optional(\Route::current())->parameters();
@@ -79,15 +79,7 @@ class HtmlPanelPresenter implements PanelPresenterContract {
         $rows_err = '';
 
         try {
-            $parent_row = $this->panel->getParent()->getRow();
-            $panel_name = $this->panel->getName();
-            $rows1 = $parent_row->{$panel_name}();
-            //$tbl = $this->panel->row->getTable();
-            $pivot_table = $rows1->getTable();
-            $rows = $this->panel->rows()
-            //->selectRaw($tbl.'.*')
-            //->selectRaw('cuisine_cat_morph.note as "pivot.note" ')
-            ->paginate(20);
+            $rows = $this->panel->rows()->paginate(20);
         } catch (\Exception $e) {
             $data = [
                 'message' => $e->getMessage(),

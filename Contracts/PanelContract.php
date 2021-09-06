@@ -4,8 +4,9 @@ declare(strict_types=1);
 
 namespace Modules\Xot\Contracts;
 
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Builder;
 //use Illuminate\Database\Query\Builder;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Support\Collection;
 
@@ -14,13 +15,30 @@ interface PanelContract {
 
     public function setRow(Model $row): self;
 
-    public function setRows(Relation $rows): self;
+    /**
+     * Undocumented function.
+     *
+     * @param Builder|Relation $rows
+     */
+    public function setRows($rows): self;
 
-    public function getRows(): Relation;
+    /**
+     * Undocumented function.
+     *
+     * @return Builder|Relation
+     */
+    public function getRows();
 
     public function setItem(string $guid): self;
 
     public function setParent(?PanelContract $panel): PanelContract;
+
+    /**
+     * Undocumented function.
+     *
+     * @return Builder|Relation
+     */
+    public function rows(?array $data = null);
 
     /**
      * @return mixed
@@ -51,12 +69,7 @@ interface PanelContract {
 
     public function optionLabel(object $row): string;
 
-    /**
-     * Undocumented function.
-     *
-     * @return object|Model
-     */
-    public function getRow();
+    public function getRow(): Model;
 
     /**
      * Undocumented function.

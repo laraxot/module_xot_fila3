@@ -47,7 +47,13 @@ abstract class XotBasePanel implements PanelContract {
 
     //e se fosse relation ?
     //Typed property Modules\Xot\Models\Panels\XotBasePanel::$rows must not be accessed before initialization
-    public $rows = null;
+
+    /**
+     * Undocumented variable.
+     *
+     * @var Relation|Builder
+     */
+    public $rows;
 
     //public Builder $rows;
 
@@ -119,7 +125,7 @@ abstract class XotBasePanel implements PanelContract {
     /**
      * Undocumented function.
      *
-     * @param Relation $rows
+     * @param Relation|Builder $rows
      */
     public function setRows($rows): self {
         $this->rows = $rows;
@@ -137,10 +143,17 @@ abstract class XotBasePanel implements PanelContract {
 
     /**
      * get Rows.
+     *
+     * @return Relation|Builder
      */
-    public function getRows(): Relation {
+    public function getRows() {
+        /*
         if (null == $this->rows) {
-            throw new \Exception('rows is null');
+            throw new \Exception('rows is null ['.__LINE__.']['.get_class($this).']');
+        }
+        */
+        if (null == $this->rows) {
+            return $this->row->query();
         }
 
         return $this->rows;
@@ -677,8 +690,12 @@ abstract class XotBasePanel implements PanelContract {
 
     /**
      * Build an "index" query for the given resource.
+     *
+     * @param Builder|Relation $query
+     *
+     * @return Builder|Relation
      */
-    public static function indexQuery(array $data, Relation $query): Relation {
+    public static function indexQuery(array $data, $query) {
         //return $query->where('auth_user_id', $request->user()->auth_user_id);
         return $query;
     }
@@ -687,8 +704,12 @@ abstract class XotBasePanel implements PanelContract {
      * Build a "relatable" query for the given resource.
      *
      * This query determines which instances of the model may be attached to other resources.
+     *
+     * @param Builder|Relation $query
+     *
+     * @return Builder|Relation
      */
-    public static function relatableQuery(Request $request, Relation $query): Relation {
+    public static function relatableQuery(Request $request, $query) {
         //return $query->where('auth_user_id', $request->user()->auth_user_id);
         //return $query->where('user_id', $request->user()->id);
         return $query;
@@ -707,7 +728,14 @@ abstract class XotBasePanel implements PanelContract {
 
     //|\Illuminate\Database\Query\Builder
 
-    public function applyFilter(Relation $query, array $filters): Relation {
+    /**
+     * Undocumented function.
+     *
+     * @param Builder|Relation $query
+     *
+     * @return Builder|Relation
+     */
+    public function applyFilter($query, array $filters) {
         //https://github.com/spatie/laravel-query-builder
         $lang = app()->getLocale();
         $filters_fields = $this->filters();
@@ -767,7 +795,15 @@ abstract class XotBasePanel implements PanelContract {
      * https://github.com/spatie/laravel-query-builder/issues/243.
      * https://github.com/spatie/laravel-query-builder/pull/223.
      */
-    public function applySearch(Relation $query, ?string $q): Relation {
+
+    /**
+     * Undocumented function.
+     *
+     * @param Builder|Relation $query
+     *
+     * @return Builder|Relation
+     */
+    public function applySearch($query, ?string $q) {
         if (! isset($q)) {
             return $query;
         }
@@ -829,7 +865,14 @@ abstract class XotBasePanel implements PanelContract {
 
     //end applySearch
 
-    public function applySort(Relation $query, ?array $sort): Relation {
+    /**
+     * Undocumented function.
+     *
+     * @param Builder|Relation $query
+     *
+     * @return Builder|Relation
+     */
+    public function applySort($query, ?array $sort) {
         if (! is_array($sort)) {
             return $query;
         }
@@ -1084,14 +1127,20 @@ abstract class XotBasePanel implements PanelContract {
     //Return value of Modules\Xot\Models\Panels\XotBasePanel::rows()
     //must be an instance of Illuminate\Database\Eloquent\Builder,
     //instance of Illuminate\Database\Eloquent\Relations\MorphToMany returned
-    public function rows(?array $data = null): Relation {
+
+    /**
+     * Undocumented function.
+     *
+     * @return Builder|Relation
+     */
+    public function rows(?array $data = null) {
         if (null == $data) {
             $data = request()->all();
         }
         $filters = $data;
         $q = isset($data['q']) ? $data['q'] : null;
         $sort = isset($data['sort']) ? $data['sort'] : null;
-        $query = $this->rows;
+        $query = $this->getRows();
         $with = $this->with();
         try {
             $query = $query->with($with);
