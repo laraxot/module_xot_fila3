@@ -175,7 +175,8 @@ class PanelService {
 
         $panel = PanelService::get($row);
 
-        $panel->setRows($row->with([]));
+        //$panel->setRows($row->with([]));
+        $panel->setRows($row);
         $panel->setName($first_container);
         $i = 0;
         if (isset($items[0])) {
@@ -190,7 +191,7 @@ class PanelService {
             $rows = $row_prev->{$types}();
             $row = $rows->getRelated();
             $panel = PanelService::get($row);
-            $rows = $rows->getQuery();
+            //$rows = $rows->getQuery();
             $panel->setRows($rows);
             $panel->setName($types);
             $panel->setParent($panel_parent);

@@ -233,11 +233,26 @@ class UpdateJob extends XotBaseJob {
      * pivot.
      */
     public function updateRelationshipsPivot(Model $model, string $name, array $data): void {
+        /*
         $rows = $model->$name;
         if (null == $rows) {
-            dddx(['model' => $model, 'name' => $name, 'data' => $data]);
+            dddx([
+                'model' => $model, //cuisine_cat
+                'panel_name' => $this->panel->getName(),
+                'parent_row' => $this->panel->getParent()->getRow(), //restaurant
+                'parent_name' => $this->panel->getParent()->getName(), //restaurant
+                'name' => $name, //pivot
+                'data' => $data,
+            ]);
         }
-        $rows->update($data);
+        //*/
+        $parent_row = $this->panel->getParent()->getRow();
+        $panel_name = $this->panel->getName();
+        $parent_row->{$panel_name}()->updateExistingPivot($model->getKey(), $data);
+        //$res = $this->panel->rows->updateOrCreate($data);
+        //dddx($res);
+
+        //$rows->update($data);
     }
 
     public function saveMultiselectTwoSides(Model $model, string $name, array $data): void {

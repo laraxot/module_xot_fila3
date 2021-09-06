@@ -46,9 +46,10 @@ abstract class XotBasePanel implements PanelContract {
     public Model $row;
 
     //e se fosse relation ?
-    //public Relation $rows;
+    //Typed property Modules\Xot\Models\Panels\XotBasePanel::$rows must not be accessed before initialization
+    public $rows = null;
 
-    public Builder $rows;
+    //public Builder $rows;
 
     public string $name;
 
@@ -113,7 +114,14 @@ abstract class XotBasePanel implements PanelContract {
         return $this;
     }
 
-    public function setRows(Builder $rows): self {
+    //public function setRows(Builder $rows): self {
+
+    /**
+     * Undocumented function.
+     *
+     * @param Relation $rows
+     */
+    public function setRows($rows): self {
         $this->rows = $rows;
 
         return $this;
@@ -130,7 +138,11 @@ abstract class XotBasePanel implements PanelContract {
     /**
      * get Rows.
      */
-    public function getRows(): Builder {
+    public function getRows(): Relation {
+        if (null == $this->rows) {
+            throw new \Exception('rows is null');
+        }
+
         return $this->rows;
     }
 
@@ -260,12 +272,12 @@ abstract class XotBasePanel implements PanelContract {
     }
 
     public function setItem(string $guid): self {
-        $model = $this->row;
-        $tbl = $model->getTable();
+        $row = $this->row;
         $rows = $this->rows;
+        $tbl = $row->getTable();
         //$pk = $model->getRouteKeyName($this->in_admin);
-        $pk = $model->getRouteKeyName(); // !!! MI SEMBRA STRANO !!
-        $pk_full = $model->getTable().'.'.$pk;
+        $pk = $row->getRouteKeyName(); // !!! MI SEMBRA STRANO !!
+        $pk_full = $row->getTable().'.'.$pk;
 
         if ('guid' == $pk) {
             $pk_full = 'guid';
@@ -283,7 +295,10 @@ abstract class XotBasePanel implements PanelContract {
             $rows = $rows->where([$pk_full => $value]);
         }
 
-        $row = $rows->select($tbl.'.*')->first();
+        $row = $rows
+            //->select($tbl.'.*')
+            //->select('cuisine_cat_morph.note as "pivot.note"')
+            ->first();
 
         if (null == $row) {
             throw new \Exception('Not Found ['.$value.'] on ['.$this->getName().']');
@@ -663,7 +678,7 @@ abstract class XotBasePanel implements PanelContract {
     /**
      * Build an "index" query for the given resource.
      */
-    public static function indexQuery(array $data, Builder $query): Builder {
+    public static function indexQuery(array $data, Relation $query): Relation {
         //return $query->where('auth_user_id', $request->user()->auth_user_id);
         return $query;
     }
@@ -673,7 +688,7 @@ abstract class XotBasePanel implements PanelContract {
      *
      * This query determines which instances of the model may be attached to other resources.
      */
-    public static function relatableQuery(Request $request, Builder $query): Builder {
+    public static function relatableQuery(Request $request, Relation $query): Relation {
         //return $query->where('auth_user_id', $request->user()->auth_user_id);
         //return $query->where('user_id', $request->user()->id);
         return $query;
@@ -692,7 +707,7 @@ abstract class XotBasePanel implements PanelContract {
 
     //|\Illuminate\Database\Query\Builder
 
-    public function applyFilter(Builder $query, array $filters): Builder {
+    public function applyFilter(Relation $query, array $filters): Relation {
         //https://github.com/spatie/laravel-query-builder
         $lang = app()->getLocale();
         $filters_fields = $this->filters();
@@ -752,7 +767,7 @@ abstract class XotBasePanel implements PanelContract {
      * https://github.com/spatie/laravel-query-builder/issues/243.
      * https://github.com/spatie/laravel-query-builder/pull/223.
      */
-    public function applySearch(Builder $query, ?string $q): Builder {
+    public function applySearch(Relation $query, ?string $q): Relation {
         if (! isset($q)) {
             return $query;
         }
@@ -814,7 +829,7 @@ abstract class XotBasePanel implements PanelContract {
 
     //end applySearch
 
-    public function applySort(Builder $query, ?array $sort): Builder {
+    public function applySort(Relation $query, ?array $sort): Relation {
         if (! is_array($sort)) {
             return $query;
         }
@@ -1066,7 +1081,10 @@ abstract class XotBasePanel implements PanelContract {
         return (new PanelTabService($this))->{__FUNCTION__}();
     }
 
-    public function rows(?array $data = null): Builder {
+    //Return value of Modules\Xot\Models\Panels\XotBasePanel::rows()
+    //must be an instance of Illuminate\Database\Eloquent\Builder,
+    //instance of Illuminate\Database\Eloquent\Relations\MorphToMany returned
+    public function rows(?array $data = null): Relation {
         if (null == $data) {
             $data = request()->all();
         }

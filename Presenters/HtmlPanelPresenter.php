@@ -79,8 +79,15 @@ class HtmlPanelPresenter implements PanelPresenterContract {
         $rows_err = '';
 
         try {
-            $tbl = $this->panel->row->getTable();
-            $rows = $this->panel->rows()->selectRaw($tbl.'.*')->paginate(20);
+            $parent_row = $this->panel->getParent()->getRow();
+            $panel_name = $this->panel->getName();
+            $rows1 = $parent_row->{$panel_name}();
+            //$tbl = $this->panel->row->getTable();
+            $pivot_table = $rows1->getTable();
+            $rows = $this->panel->rows()
+            //->selectRaw($tbl.'.*')
+            //->selectRaw('cuisine_cat_morph.note as "pivot.note" ')
+            ->paginate(20);
         } catch (\Exception $e) {
             $data = [
                 'message' => $e->getMessage(),

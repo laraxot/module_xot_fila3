@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Modules\Xot\Contracts;
 
-use Illuminate\Database\Eloquent\Builder;
-//use Illuminate\Database\Query\Builder;
 use Illuminate\Database\Eloquent\Model;
+//use Illuminate\Database\Query\Builder;
+use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Support\Collection;
 
 interface PanelContract {
@@ -14,7 +14,9 @@ interface PanelContract {
 
     public function setRow(Model $row): self;
 
-    public function setRows(Builder $rows): self;
+    public function setRows(Relation $rows): self;
+
+    public function getRows(): Relation;
 
     public function setItem(string $guid): self;
 
@@ -92,8 +94,6 @@ interface PanelContract {
     public function guid(?bool $is_admin = null): ?string;
 
     public function getParent(): ?PanelContract;
-
-    public function getRows(): Builder;
 
     public function fields(): array;
 
