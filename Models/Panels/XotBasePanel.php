@@ -727,11 +727,8 @@ abstract class XotBasePanel implements PanelContract {
     /**
      * Build an "index" query for the given resource.
      *
-     * @param Builder|HasMany $query
-     *
-     * @return Builder|HasMany
      */
-    public static function indexQuery(array $data, $query) {
+    public static function indexQuery(array $data, Builder $query):Builder {
         //return $query->where('auth_user_id', $request->user()->auth_user_id);
         return $query;
     }
