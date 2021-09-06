@@ -79,7 +79,7 @@ class HtmlPanelPresenter implements PanelPresenterContract {
         $rows_err = '';
 
         try {
-            $rows = $this->panel->getRows()->paginate(20);
+            $rows = $this->panel->rows()->paginate(20);
         } catch (\Exception $e) {
             $data = [
                 'message' => $e->getMessage(),
