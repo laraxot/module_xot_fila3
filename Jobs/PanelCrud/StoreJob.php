@@ -49,17 +49,23 @@ class StoreJob extends XotBaseJob {
                 $pivot_data['auth_user_id'] = \Auth::id();
             }
             try {
+                //*
                 $types=$this->panel->getName();
                 $tmp_rows=$parent_row->$types();
+                $tmp = $tmp_rows->save($row, $pivot_data);
+                //*/
+
                 /*
                 dddx([
                     '$tmp_rows'=>$tmp_rows,   // Illuminate\Database\Eloquent\Relations\BelongsToMany
                     '$this->panel->getRows()'=>$this->panel->getRows(), //Illuminate\Database\Eloquent\Builder 
                 ]);
                 */
-                $tmp = $tmp_rows->save($row, $pivot_data);
+                
                 //55  Call to an undefined method Illuminate\Database\Eloquent\Builder::save().
                 //$tmp = $this->panel->getRows()->save($row, $pivot_data); //??
+
+                //$tmp = $this->panel->getRows()->create($pivot_data); //??
                 /*
                 Model
                 BelongsToMany
