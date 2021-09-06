@@ -172,80 +172,25 @@ class PanelService {
 
         $first_container = $containers[0];
         $row = TenantService::model($containers[0]);
-        //try {
+
         $panel = PanelService::get($row);
-        /*} catch (\Exception $e) {
-            $data = [
-                'message' => $e->getMessage(),
-                'lang' => \App::getLocale(),
-                'e' => $e,
-                'params' => $route_params,
-            ];
 
-            return response()->view('pub_theme::errors.404', $data, 404);
-        }
-        */
-        //dddx(['methods' => get_class_methods($row), 'q' => $row->getQuery()]);
-
-        //dddx([$row->query(), $row->newQuery(), $row->getQuery()]);
         $panel->setRows($row->with([]));
         $panel->setName($first_container);
         $i = 0;
         if (isset($items[0])) {
             $panel->setInAdmin($in_admin);
-            //try {
             $panel->setItem($items[0]);
-            //} catch (\Exception $e) {
-            //    throw new \Exception('test');
-            //}
-            /*
-            if (null == $panel->getRow()) {
-                $data = [
-                    'message' => 'Not Found ['.$items[$i].'] on ['.$containers[$i].']',
-                ];
-                $view = 'theme::errors.404';
-                if (view()->exists('pub_theme::errors.404')) {
-                    $view = 'pub_theme::errors.404';
-                }
-
-                return response()->view($view, $data, 404);
-            }
-            */
-            //dddx(['riga 108', $panel, $in_admin, $panel->in_admin, $route_params, params2ContainerItem($route_params)]);
         }
         $panel_parent = $panel;
 
         for ($i = 1; $i < count($containers); ++$i) {
             $row_prev = $panel_parent->getRow();
-            $types = $containers[$i];
-            //$types=Str::plural($types);
-            $types = Str::camel($types);
-            //try {
+            $types = Str::camel($containers[$i]);
             $rows = $row_prev->{$types}();
-            /*} catch (\Exception $e) {
-                $data = [
-                    'message' => $e->getMessage(),
-                    'lang' => \App::getLocale(),
-                    'params' => $route_params,
-                ];
-
-                return response()->view('pub_theme::errors.404', $data, 404);
-            } catch (\Error $e) {
-                //return response("User can't perform this action.", 404);
-                $data = [
-                    'message' => $e->getMessage(),
-                    'lang' => \App::getLocale(),
-                    'params' => $route_params,
-                ];
-
-                return response()->view('pub_theme::errors.404', $data, 404);
-            }
-            */
             $row = $rows->getRelated();
-
             $panel = PanelService::get($row);
             $rows = $rows->getQuery();
-            //dddx(['class' => get_class($rows)]);
             $panel->setRows($rows);
             $panel->setName($types);
             $panel->setParent($panel_parent);
@@ -253,16 +198,6 @@ class PanelService {
             if (isset($items[$i])) {
                 $panel->setInAdmin($in_admin);
                 $panel->setItem($items[$i]);
-                /*
-                if (null == $panel->getRow()) {
-                    $data = [
-                        'message' => 'Not Found ['.$items[$i].'] on ['.$containers[$i].']',
-                    ];
-
-                    return response()->view('pub_theme::errors.404', $data, 404);
-                }
-                */
-                //dddx(['riga 143', $panel, $in_admin, $panel->in_admin, $route_params, params2ContainerItem($route_params)]);
             }
             $panel_parent = $panel;
         }

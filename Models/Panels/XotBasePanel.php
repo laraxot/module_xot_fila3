@@ -7,9 +7,10 @@ namespace Modules\Xot\Models\Panels;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Http\Request;
-use Illuminate\Support\Collection;
 //----------  SERVICES --------------------------
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Route;
@@ -43,6 +44,9 @@ abstract class XotBasePanel implements PanelContract {
     protected static string $model;
 
     public Model $row;
+
+    //e se fosse relation ?
+    //public Relation $rows;
 
     public Builder $rows;
 
