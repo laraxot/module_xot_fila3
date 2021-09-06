@@ -21,8 +21,6 @@ class StoreJob extends XotBaseJob {
      * Execute the job.
      */
     public function handle(): PanelContract {
-        //dd('['.__LINE__.']['.__FILE__.']');
-
         $row = $this->panel->getRow();
         $this->data = $this->prepareAndValidate($this->data, $this->panel);
         $data = $this->data;
@@ -51,16 +49,28 @@ class StoreJob extends XotBaseJob {
                 $pivot_data['auth_user_id'] = \Auth::id();
             }
             try {
-                //$tmp = $parent_row->$types()->save($row, $pivot_data);
+                $types=$this->panel->getName();
+                $tmp_rows=$parent_row->$types();
+                /*
+                dddx([
+                    '$tmp_rows'=>$tmp_rows,   // Illuminate\Database\Eloquent\Relations\BelongsToMany
+                    '$this->panel->getRows()'=>$this->panel->getRows(), //Illuminate\Database\Eloquent\Builder 
+                ]);
+                */
+                $tmp = $tmp_rows->save($row, $pivot_data);
                 //55  Call to an undefined method Illuminate\Database\Eloquent\Builder::save().
-                $tmp = $this->panel->getRows()->save($row, $pivot_data); //??
+                //$tmp = $this->panel->getRows()->save($row, $pivot_data); //??
                 /*
                 Model
                 BelongsToMany
                 HasOneOrMany
                 */
             } catch (\Exception $e) {
-                dddx(['e' => $e]);
+                #message: "Call to undefined method Illuminate\Database\Eloquent\Builder::save()"
+                dddx(['e' => $e,
+                    'panel'=>$this->panel,
+                    'methods'=>get_class_methods($this->panel->getRows()),
+                    ]);
                 /*
                 $this->row = $row;
                 $func = 'saveParent'.Str::studly(class_basename($parent_row->$types()));
