@@ -1587,7 +1587,7 @@ abstract class XotBasePanel implements PanelContract {
         return $this->presenter->out();
     }
 
-    /*
+    /*//--- valutare
     public function __toString() {
         return $this->presenter->out()->render();
     }
