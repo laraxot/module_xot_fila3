@@ -6,9 +6,9 @@ namespace Modules\Xot\Models\Panels\Policies;
 
 use Illuminate\Auth\Access\HandlesAuthorization;
 //use Illuminate\Contracts\Auth\UserProvider as User;
+use Modules\LU\Services\ProfileService;
 use Modules\Xot\Contracts\PanelContract;
 use Modules\Xot\Contracts\UserContract;
-use Modules\Xot\Services\PanelService as Panel;
 
 /**
  * Class XotBasePanelPolicy.
@@ -24,11 +24,9 @@ abstract class XotBasePanelPolicy {
      */
     //*
     public function before($user, $ability) {
-        //*
-        if (is_object($user) && Panel::get($user)->isSuperAdmin()) {
+        if (is_object($user) && ProfileService::get($user)->isSuperAdmin()) {
             return true;
         }
-        //*/
 
         return null;
     }
@@ -54,7 +52,7 @@ abstract class XotBasePanelPolicy {
 
     public function edit(UserContract $user, PanelContract $panel): bool {
         //return true;
-        $post = $panel->row;
+        $post = $panel->getRow();
         if ($post->created_by == $user->handle || $post->updated_by == $user->handle || $post->auth_user_id == $user->auth_user_id) {
             return true;
         }
@@ -63,7 +61,7 @@ abstract class XotBasePanelPolicy {
     }
 
     public function update(UserContract $user, PanelContract $panel): bool {
-        $post = $panel->row;
+        $post = $panel->getRow();
 
         if ($post->created_by == $user->handle || $post->updated_by == $user->handle || $post->auth_user_id == $user->auth_user_id) {
             return true;
@@ -99,7 +97,7 @@ abstract class XotBasePanelPolicy {
     }
 
     public function destroy(UserContract $user, PanelContract $panel): bool {
-        $post = $panel->row;
+        $post = $panel->getRow();
 
         if ($post->created_by == $user->handle || $post->updated_by == $user->handle) {
             return true;
@@ -109,7 +107,7 @@ abstract class XotBasePanelPolicy {
     }
 
     public function delete(UserContract $user, PanelContract $panel): bool {
-        $post = $panel->row;
+        $post = $panel->getRow();
 
         if ($post->created_by == $user->handle) {
             return true;
@@ -119,7 +117,7 @@ abstract class XotBasePanelPolicy {
     }
 
     public function restore(UserContract $user, PanelContract $panel): bool {
-        $post = $panel->row;
+        $post = $panel->getRow();
 
         if ($post->created_by == $user->handle) {
             return true;
@@ -133,7 +131,7 @@ abstract class XotBasePanelPolicy {
     }
 
     public function detach(UserContract $user, PanelContract $panel): bool {
-        $post = $panel->row;
+        $post = $panel->getRow();
 
         if ($post->created_by == $user->handle || $post->updated_by == $user->handle) {
             return true;

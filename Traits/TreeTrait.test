@@ -15,7 +15,7 @@ trait TreeTrait {
         $lang = Enteweb::getLang();
         $rows = $model->where('id_tbl_lingua', $lang)->where('deleted_at', null)->get();
         $href_create = null;
-        $params = \Route::current()->parameters();
+        $params = optional(\Route::current())->parameters();
         $titolo = $this->getTitle();
         if (null != $this->getHrefTitle()) {
             $href_create = route($this->getHrefTitle(), $params);
@@ -37,7 +37,7 @@ trait TreeTrait {
 
     //    function getNodesAng($id_padre = 0)
     //    {
-    //        $params = \Route::current()->parameters();
+    //        $params = optional(\Route::current())->parameters();
     //        $model = $this->getModel();
     //        $table = $model->getTable();
     //        $data = $model->search($params)->get()->toArray();
@@ -66,7 +66,7 @@ trait TreeTrait {
     //    }
 
     public function getNodes(Request $request, $id_padre = 0) {
-        $params = \Route::current()->parameters();
+        $params = optional(\Route::current())->parameters();
         $model = $this->getModel();
 
         $tree_id = $model->getTable().'.0';
@@ -111,7 +111,7 @@ trait TreeTrait {
     }
 
     public function getContextMenu(Request $request) {
-        $params = \Route::current()->parameters();
+        $params = optional(\Route::current())->parameters();
         $tmp = \debug_backtrace();
         $name = \explode('\\', $tmp[0]['class']);
         $name_dir = \ucwords($name[\count($name) - 4]);

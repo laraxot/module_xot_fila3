@@ -1,4 +1,8 @@
-<?php return array (
-  'previous' => '&laquo; Föregående',
-  'next' => 'Nästa &raquo;',
-);
+<?php
+
+declare(strict_types=1);
+
+return [
+    'previous' => '&laquo; Föregående',
+    'next' => 'Nästa &raquo;',
+];

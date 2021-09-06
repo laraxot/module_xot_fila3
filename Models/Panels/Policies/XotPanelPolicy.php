@@ -1,12 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Modules\Xot\Models\Panels\Policies;
 
 //use Modules\Food\Models\Restaurant as Post;
 
 /**
- * Class XotPanelPolicy
- * @package Modules\Xot\Models\Panels\Policies
+ * Class XotPanelPolicy.
  */
 class XotPanelPolicy extends XotBasePanelPolicy {
 }

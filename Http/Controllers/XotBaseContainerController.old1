@@ -83,7 +83,7 @@ abstract class XotBaseContainerController extends Controller {
     }
 
     public function getModel() {
-        $params = \Route::current()->parameters();
+        $params = optional(\Route::current())->parameters();
         [$containers, $items] = params2ContainerItem($params);
         if (0 == count($containers)) {
             return Tenant::model('home');
@@ -185,7 +185,7 @@ abstract class XotBaseContainerController extends Controller {
     }
 
     public function __call($method, $args) {
-        $params = \Route::current()->parameters();
+        $params = optional(\Route::current())->parameters();
         //$request = \Modules\Xot\Http\Requests\XotRequest::capture();
 
         //$url=url()->full();

@@ -39,18 +39,20 @@ class PdfPanelPresenter implements PanelPresenterContract {
         $view .= '.pdf';
         $view = str_replace('.store.', '.show.', $view);
         extract($params);
-        $row = $this->panel->row;
-        $rows = $this->panel->rows();
+        $row = $this->panel->getRow();
+        $rows = $this->panel->getRows();
         if (null == $row->getKey()) { //utile per le cose a containers
-            $row = $this->panel->rows()->first();
+            $row = $this->panel->getRows()->first();
         }
 
-        $html = view($view)
-            ->with('view', $view)
-            ->with('row', $row)
-            ->with('rows', $rows)
-            ->with($params['view_params']);
+        $view_params = [
+            'view' => $view,
+            'row' => $row,
+            'rows' => $rows,
+        ];
 
+        $html = view()->make($view, $view_params);
+        $html = $html->render();
         //dddx($this->rows->get());
         if (request()->input('debug')) {
             return $html;

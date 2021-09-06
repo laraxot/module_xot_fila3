@@ -1,4 +1,8 @@
-<?php return array (
-  'administrator' => 'Administrateur',
-  'user' => 'Utilisateur',
-);
+<?php
+
+declare(strict_types=1);
+
+return [
+    'administrator' => 'Administrateur',
+    'user' => 'Utilisateur',
+];

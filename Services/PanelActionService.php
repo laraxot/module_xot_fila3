@@ -20,8 +20,6 @@ class PanelActionService {
     }
 
     /**
-     * @param array $params
-     *
      * @return \Illuminate\Support\Collection
      */
     public function getActions(array $params = []) {
@@ -58,8 +56,6 @@ class PanelActionService {
     }
 
     /**
-     * @param array $params
-     *
      * @return \Illuminate\Support\Collection
      */
     public function containerActions(array $params = []) {
@@ -69,8 +65,6 @@ class PanelActionService {
     }
 
     /**
-     * @param array $params
-     *
      * @return \Illuminate\Support\Collection
      */
     public function itemActions(array $params = []) {
@@ -126,7 +120,7 @@ class PanelActionService {
         $containerActions = $this->containerActions();
         $containerAction = $containerActions->firstWhere('name', $act);
         if (is_object($containerAction)) {
-            return $containerAction->urlContainer(['rows' => $this->panel->rows, 'panel' => $this->panel]);
+            return $containerAction->urlContainer(['rows' => $this->panel->getRows(), 'panel' => $this->panel]);
         }
     }
 
@@ -136,7 +130,7 @@ class PanelActionService {
     public function urlItemAction(string $act) {
         $itemAction = $this->itemAction($act);
         if (is_object($itemAction)) {
-            return $itemAction->urlItem(['row' => $this->panel->row, 'panel' => $this->panel]);
+            return $itemAction->urlItem(['row' => $this->panel->getRow(), 'panel' => $this->panel]);
         }
     }
 
@@ -146,7 +140,7 @@ class PanelActionService {
     public function btnItemAction(string $act) {
         $itemAction = $this->itemAction($act);
         if (is_object($itemAction)) {
-            return $itemAction->btn(['row' => $this->panel->row, 'panel' => $this->panel]);
+            return $itemAction->btn(['row' => $this->panel->getRow(), 'panel' => $this->panel]);
         }
     }
 }

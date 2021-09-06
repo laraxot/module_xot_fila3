@@ -12,7 +12,6 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
-use Modules\Xot\Contracts\ModelContract;
 
 /**
  * Class TenantService.
@@ -92,7 +91,7 @@ class TenantService {
      * @return \Illuminate\Config\Repository|\Illuminate\Contracts\Foundation\Application|mixed
      */
     public static function config(string $key) {
-        if (in_admin() && Str::startsWith($key, 'xra.model')) {
+        if (in_admin() && Str::startsWith($key, 'xra.model') && null !== (\Request::segment(2))) {
             $module_name = \Request::segment(2);
             $models = getModuleModels($module_name);
             $original_conf = config('xra.model');
@@ -170,10 +169,8 @@ class TenantService {
 
     /**
      * @throws \ReflectionException
-     *
-     * @return ModelContract|Model
      */
-    public static function model(string $name) {
+    public static function model(string $name): Model {
         $name = Str::singular($name);
         $name = Str::snake($name);
         $class = self::config('xra.model.'.$name);

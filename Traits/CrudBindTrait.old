@@ -38,7 +38,7 @@ trait CrudBindTrait {
         if ('routelist' == $request->act) {
             return ArtisanTrait::exe('route:list');
         }
-        $params = \Route::current()->parameters();
+        $params = optional(\Route::current())->parameters();
         if (isset($params['lang'])) {
             \App::setLocale($params['lang']);
         }
@@ -103,7 +103,7 @@ trait CrudBindTrait {
     }
 
     public function create(Request $request) {
-        $params = \Route::current()->parameters();
+        $params = optional(\Route::current())->parameters();
         \extract($params);
         if (isset($lang)) {
             \App::setLocale($lang);
@@ -133,7 +133,7 @@ trait CrudBindTrait {
     //end edit
 
     public function store(Request $request) {
-        $params = \Route::current()->parameters();
+        $params = optional(\Route::current())->parameters();
         \extract($params);
         $data = $request->all();
         /*
@@ -172,7 +172,7 @@ trait CrudBindTrait {
         if (1 == $request->replicate) {
             return $this->replicate($request);
         }
-        $params = \Route::current()->parameters();
+        $params = optional(\Route::current())->parameters();
         \extract($params);
         if (isset($lang)) {
             \App::setLocale($lang);
@@ -199,7 +199,7 @@ trait CrudBindTrait {
     //end edit
 
     public function update(Request $request) {
-        $params = \Route::current()->parameters();
+        $params = optional(\Route::current())->parameters();
         \extract($params);
         $data = $request->all();
         /*
@@ -218,7 +218,7 @@ trait CrudBindTrait {
     }
 
     public function show(Request $request) {
-        $params = \Route::current()->parameters();
+        $params = optional(\Route::current())->parameters();
         $row = last($params);
         $routename = \Route::current()->getName();
         $view = $this->getView($params);
@@ -233,7 +233,7 @@ trait CrudBindTrait {
     }
 
     public function destroy(Request $request) {
-        $params = \Route::current()->parameters();
+        $params = optional(\Route::current())->parameters();
         $row = last($params);
         //extract($params);
         $row->delete();

@@ -119,7 +119,7 @@ abstract class XotBaseRequest extends FormRequest {
      * @param string $field
      * @param mixed  $value
      *
-     * @return Carbon|false|null
+     * @return mixed
      */
     public function ConvDate($field, $value) {
         if (null == $value) {
@@ -134,7 +134,7 @@ abstract class XotBaseRequest extends FormRequest {
      * @param string $field
      * @param mixed  $value
      *
-     * @return Carbon|false|null
+     * @return mixed
      */
     public function ConvDateTime($field, $value) {
         if (null == $value) {
@@ -149,7 +149,7 @@ abstract class XotBaseRequest extends FormRequest {
      * @param string $field
      * @param mixed  $value
      *
-     * @return Carbon|false|null
+     * @return mixed
      */
     public function ConvDateTime2Fields($field, $value) {
         if (null == $value) {

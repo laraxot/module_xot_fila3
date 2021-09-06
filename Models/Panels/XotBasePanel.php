@@ -7,7 +7,6 @@ namespace Modules\Xot\Models\Panels;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 //----------  SERVICES --------------------------
@@ -17,7 +16,6 @@ use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
-use Modules\Xot\Contracts\ModelContract;
 use Modules\Xot\Contracts\PanelContract;
 use Modules\Xot\Contracts\PanelPresenterContract;
 use Modules\Xot\Presenters\PdfPanelPresenter;
@@ -33,6 +31,7 @@ use Modules\Xot\Services\PanelTabService;
 use Modules\Xot\Services\PolicyService;
 use Modules\Xot\Services\RouteService;
 use Modules\Xot\Services\StubService;
+use Response;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\Filters\Filter;
 use Spatie\QueryBuilder\QueryBuilder;
@@ -43,30 +42,13 @@ use Spatie\QueryBuilder\QueryBuilder;
  * Modules\Xot\Models\Panels\XotBasePanel.
  */
 abstract class XotBasePanel implements PanelContract {
-    //public $out = null; //deprecated
-
-    //public bool $force_exit = false; //deprecated
-
-    //public string $msg = 'msg from panel';
     protected static string $model;
 
-    //var \Illuminate\Contracts\Foundation\Application|mixed|null
+    public Model $row;
 
-    /**
-     * @var Model|ModelContract|object
-     */
-    public $row = null;
+    public Builder $rows;
 
-    //var \Illuminate\Database\Eloquent\Collection|Builder|ModelContract[]
-
-    //
-    // DA VEDERE \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Query\Builder|\Illuminate\Database\Eloquent\Relations\HasMany.
-    //
-    //
-    //
-    public $rows = null;
-
-    public ?string $name = null;
+    public string $name;
 
     public ?PanelContract $parent = null;
 
@@ -104,8 +86,6 @@ abstract class XotBasePanel implements PanelContract {
 
     /**
      * The relationships that should be eager loaded on index queries.
-     *
-     * @var array
      */
     public function with(): array {
         return [];
@@ -125,19 +105,13 @@ abstract class XotBasePanel implements PanelContract {
         }
     }
 
-    /**
-     * @param object $row
-     */
-    public function setRow($row): self {
+    public function setRow(Model $row): self {
         $this->row = $row;
 
         return $this;
     }
 
-    /**
-     * @param object|Model $rows
-     */
-    public function setRows($rows): self {
+    public function setRows(Builder $rows): self {
         $this->rows = $rows;
 
         return $this;
@@ -146,30 +120,26 @@ abstract class XotBasePanel implements PanelContract {
     /*
      * get Row.
      *
-     * @return object|Model
      */
-    public function getRow() {
+    public function getRow(): Model {
         return $this->row;
     }
 
     /**
      * get Rows.
-     *
-     * @return object|Model
      */
-    public function getRows() {
+    public function getRows(): Builder {
         return $this->rows;
     }
 
-    /**
-     * @return $this
-     */
+    /* deprecated
     public function initRows(): self {
         $this->rows = $this->rows();
         //$this->rows = $this->rows; ??
 
         return $this;
     }
+    */
 
     //Parameter #1 $panel of method Modules\Xot\Contracts\PanelContract::setParent()
     //expects Modules\Xot\Contracts\PanelContract,
@@ -180,7 +150,7 @@ abstract class XotBasePanel implements PanelContract {
         return $this;
     }
 
-    public function setBrother(?PanelContract $panel): self {
+    public function setBrother(PanelContract $panel): self {
         $this->setParent($panel->getParent());
         $this->setName($panel->getName());
 
@@ -263,20 +233,17 @@ abstract class XotBasePanel implements PanelContract {
     /*
      * @return void
      */
-    public function setInAdmin(bool $in_admin): void {
+    public function setInAdmin(?bool $in_admin): void {
         $this->in_admin = $in_admin;
     }
 
     /*
      * @return bool|null
      */
-    public function getInAdmin() {
+    public function getInAdmin(): ?bool {
         return $this->in_admin;
     }
 
-    /*
-     * @return void
-     */
     public function setRouteParams(array $route_params): void {
         $this->route_params = $route_params;
     }
@@ -290,13 +257,11 @@ abstract class XotBasePanel implements PanelContract {
         return $route_params;
     }
 
-    /**
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
-     */
     public function setItem(string $guid): self {
         $model = $this->row;
         $rows = $this->rows;
-        $pk = $model->getRouteKeyName($this->in_admin);
+        //$pk = $model->getRouteKeyName($this->in_admin);
+        $pk = $model->getRouteKeyName(); // !!! MI SEMBRA STRANO !!
         $pk_full = $model->getTable().'.'.$pk;
 
         if ('guid' == $pk) {
@@ -314,28 +279,35 @@ abstract class XotBasePanel implements PanelContract {
         } else {
             $rows = $rows->where([$pk_full => $value]);
         }
-
+        /* da spostare in amministrazione
         if ($rows->count() > 1) {
+
             $row_last = $rows->latest()->first();
             if ('guid' == $pk_full) {
                 $guid_old = $row_last->post->guid;
                 $row_last->post->update(['guid' => $guid_old.'-1']);
             }
+
             //effettuo il redirect alla stessa pagina perchè è inutile che mi manda il dddx per poi fare refresh(?)
             //Return value of Modules\Xot\Models\Panels\XotBasePanel::setItem() must be an instance of Modules\Xot\Models\Panels\XotBasePanel, instance of Illuminate\Http\RedirectResponse returned
             //return redirect(url()->current());
 
-            /*
-            dddx(
-                [
-                    'error' => 'multiple',
-                    'rows' => $rows->get(),
-                    'row_last' => $row_last,
-                ]
-            );
-            /*/
+            //
+            //dddx(
+            //    [
+            //        'error' => 'multiple',
+            //        'rows' => $rows->get(),
+            //        'row_last' => $row_last,
+            //    ]
+            //);
         }
-        $this->row = $rows->first();
+        */
+        $row = $rows->first();
+        //315    Property Modules\Xot\Models\Panels\XotBasePanel::$row (Illuminate\Database\Eloquent\Model) does not accept mixed.
+        if (null == $row) {
+            throw new \Exception('Not Found ['.$value.'] on ['.$this->getName().']');
+        }
+        $this->row = $row;
 
         return $this;
     }
@@ -349,7 +321,7 @@ abstract class XotBasePanel implements PanelContract {
         return false;
     }
 
-    public function setLabel(string $label): ModelContract {
+    public function setLabel(string $label): Model {
         $model = $this->row;
         $res = $model::whereHas(
             'post',
@@ -362,6 +334,9 @@ abstract class XotBasePanel implements PanelContract {
         }
         $me = $model->create();
         // dddx([$me, $me->getKey()]);
+        if (! method_exists($model, 'post')) {
+            throw new \Exception('in ['.get_class($model).'] method [post] is missing');
+        }
         $post = $model->post()->create(
             [
                 //'post_id' => $me->getKey(),
@@ -384,7 +359,7 @@ abstract class XotBasePanel implements PanelContract {
         return $row->matr.' ['.$row->email.']['.$row->ha_diritto.'] '.$row->cognome.' '.$row->cognome.' ';
     }
 
-    public function title() {
+    public function title(): ?string {
         return optional($this->row)->title;
     }
 
@@ -538,6 +513,13 @@ abstract class XotBasePanel implements PanelContract {
                 }
                 if (Str::contains($item->type, 'RelationshipOne')) {
                     $rows_tmp = $this->row->{$item->name}();
+                    /*
+                    if (! is_object($rows_tmp)) {
+                        throw new \Exception('rows_tmp is not an object');
+                    }
+                    */
+                    //529    Cannot call method getLocalKeyName() on class-string|object.
+
                     if (method_exists($rows_tmp, 'getLocalKeyName')) {
                         $name1 = $rows_tmp->getLocalKeyName();
                     } else {
@@ -586,10 +568,7 @@ abstract class XotBasePanel implements PanelContract {
         return [];
     }
 
-    /**
-     * @return array
-     */
-    public function rulesMessages() {
+    public function rulesMessages(): array {
         $lang = app()->getLocale();
         $rules_msg_fields = collect($this->fields())->filter(function ($value, $key) use ($lang) {
             return isset($value->rules_messages) && isset($value->rules_messages[$lang]);
@@ -631,17 +610,12 @@ abstract class XotBasePanel implements PanelContract {
 
     /**
      * Get the filters available for the resource.
-     *
-     * @return array
      */
-    public function filters(Request $request = null):array {
+    public function filters(Request $request = null): array {
         return [];
     }
 
-    /**
-     * @return false|mixed
-     */
-    public function getXotModelName() {
+    public function getXotModelName(): ?string {
         return collect(config('xra.model'))->search(static::$model);
     }
 
@@ -652,69 +626,50 @@ abstract class XotBasePanel implements PanelContract {
         return null;
     }
 
-    /**
-     * @return \Illuminate\Support\Collection
-     */
-    public function getActions(array $params = []) {
+    public function getActions(array $params = []): \Illuminate\Support\Collection {
         return (new PanelActionService($this))->getActions($params);
     }
 
-    /**
-     * @return \Illuminate\Support\Collection
-     */
-    public function containerActions(array $params = []) {
+    public function containerActions(array $params = []): \Illuminate\Support\Collection {
         return (new PanelActionService($this))->containerActions($params);
     }
 
-    /**
-     * @return \Illuminate\Support\Collection
-     */
-    public function itemActions(array $params = []) {
+    public function itemActions(array $params = []): \Illuminate\Support\Collection {
         return (new PanelActionService($this))->itemActions($params);
     }
 
     /**
-     * @param string $act
-     *
      * @return mixed
      */
-    public function itemAction($act) {
+    public function itemAction(string $act) {
         return (new PanelActionService($this))->itemAction($act);
     }
 
     /**
-     * @param string $act
-     *
      * @return mixed
      */
-    public function containerAction($act) {
+    public function containerAction(string $act) {
         return (new PanelActionService($this))->containerAction($act);
     }
 
     /**
-     * @param string $act
-     *
      * @return mixed
      */
-    public function urlContainerAction($act) {
+    public function urlContainerAction(string $act) {
         return (new PanelActionService($this))->urlContainerAction($act);
     }
 
     /**
-     * @param string $act
-     *
      * @return mixed
      */
-    public function urlItemAction($act) {
+    public function urlItemAction(string $act) {
         return (new PanelActionService($this))->urlItemAction($act);
     }
 
     /**
-     * @param string $act
-     *
      * @return mixed
      */
-    public function btnItemAction($act) {
+    public function btnItemAction(string $act) {
         return (new PanelActionService($this))->btnItemAction($act);
     }
 
@@ -726,9 +681,8 @@ abstract class XotBasePanel implements PanelContract {
 
     /**
      * Build an "index" query for the given resource.
-     *
      */
-    public static function indexQuery(array $data, Builder $query):Builder {
+    public static function indexQuery(array $data, Builder $query): Builder {
         //return $query->where('auth_user_id', $request->user()->auth_user_id);
         return $query;
     }
@@ -755,12 +709,9 @@ abstract class XotBasePanel implements PanelContract {
     }
     */
 
-    /**
-     * @param \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Query\Builder|\Illuminate\Database\Eloquent\Relations\HasMany $query
-     *
-     * @return \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Query\Builder
-     */
-    public function applyFilter($query, array $filters) {
+    //|\Illuminate\Database\Query\Builder
+
+    public function applyFilter(Builder $query, array $filters): Builder {
         //https://github.com/spatie/laravel-query-builder
         $lang = app()->getLocale();
         $filters_fields = $this->filters();
@@ -819,12 +770,8 @@ abstract class XotBasePanel implements PanelContract {
      * https://forum.laravel-livewire.com/t/anybody-using-spatie-laravel-query-builder-with-livewire/299/5
      * https://github.com/spatie/laravel-query-builder/issues/243.
      * https://github.com/spatie/laravel-query-builder/pull/223.
-     *
-     * @param \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Query\Builder $query
-     *
-     * @return \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Query\Builder
      */
-    public function applySearch($query, ?string $q) {
+    public function applySearch(Builder $query, ?string $q): Builder {
         if (! isset($q)) {
             return $query;
         }
@@ -886,12 +833,7 @@ abstract class XotBasePanel implements PanelContract {
 
     //end applySearch
 
-    /**
-     * @param \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Query\Builder $query
-     *
-     * @return \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Query\Builder
-     */
-    public function applySort($query, ?array $sort) {
+    public function applySort(Builder $query, ?array $sort): Builder {
         if (! is_array($sort)) {
             return $query;
         }
@@ -965,10 +907,16 @@ abstract class XotBasePanel implements PanelContract {
         return $this->form->formEdit($params);
     }
 
+    /**
+     * @return mixed
+     */
     public function formLivewireEdit(array $params = []) {
         return $this->form->formLivewireEdit($params);
     }
 
+    /**
+     * @return mixed
+     */
     public function getFormData(array $params = []) {
         return $this->form->{__FUNCTION__}($params);
     }
@@ -1092,9 +1040,15 @@ abstract class XotBasePanel implements PanelContract {
         * mettere imageservice, o quello di spatie ?
         *
         **/
+        if (! property_exists($this->row, 'image_src')) {
+            throw new \Exception('in ['.get_class($this->row).'] property [image_src] is missing');
+        }
         $params['src'] = $this->row->image_src;
         $img = new ImageService($params);
         $src = $img->fit()->save()->src();
+        if (! is_string($src)) {
+            throw new \Exception('src is not a string');
+        }
 
         return '<img src="'.asset($src).'" >';
     }
@@ -1350,9 +1304,6 @@ abstract class XotBasePanel implements PanelContract {
         return $post_type;
     }*/
 
-    /**
-     * @return false|mixed|string
-     */
     public function postType(): string {
         $post_type = collect(config('xra.model'))->search(get_class($this->row));
         if (false === $post_type) {
@@ -1362,10 +1313,7 @@ abstract class XotBasePanel implements PanelContract {
         return $post_type;
     }
 
-    /**
-     * @return mixed|string|null
-     */
-    public function guid(?bool $is_admin = null) {
+    public function guid(?bool $is_admin = null): ?string {
         if (isset($is_admin) && $is_admin) {
             return $this->row->getKey();
         }
@@ -1378,9 +1326,8 @@ abstract class XotBasePanel implements PanelContract {
             'key' => $key,
             '$row->getKey()' => $row->getKey(),
             '$row->getKeyName()' => $row->getKeyName(),
-            '$row->primary_key' => $row->primaryKey,
             //'$row->$key' => $row->{$key},
-            '$row->post' => $row->post,
+            //'$row->post' => $row->post,
             '$row' => $row,
         ];
         if (null == $row->getKey()) {
@@ -1414,14 +1361,14 @@ abstract class XotBasePanel implements PanelContract {
             }
         }
 
-        return $guid;
+        return (string) $guid;
     }
 
     /*
     public function getTitle() {
        $name = $this->getName();
        //$title = str_replace('_', ' ', $title);
-       $row = $this->panel->row;
+       $row = $this->panel->getRow();
 
        $module_name_low = strtolower(getModuleNameFromModel($row));
        $title = trans($module_name_low.'::'.strtolower(class_basename($row)).'.act.'.$name);
@@ -1457,7 +1404,7 @@ abstract class XotBasePanel implements PanelContract {
         }
         $filters = $data;
         $q = isset($data['q']) ? $data['q'] : null;
-        $out_format = isset($data['format']) ? $data['format'] : null;
+        //$out_format = isset($data['format']) ? $data['format'] : null;
         $sort = isset($data['sort']) ? $data['sort'] : null;
         //$act = isset($data['_act']) ? $data['_act'] : null;
 
@@ -1520,11 +1467,9 @@ abstract class XotBasePanel implements PanelContract {
     }
 
     /**
-     * @param string $act
-     *
-     * @return null
+     * @return mixed
      */
-    public function callItemActionWithGate($act) {
+    public function callItemActionWithGate(string $act) {
         //$actions = $this->actions();
         //dddx([get_class($this), $actions]);
         $method_act = Str::camel($act);
@@ -1537,23 +1482,22 @@ abstract class XotBasePanel implements PanelContract {
         return $this->callItemAction($act);
     }
 
-    public function notAuthorized(string $method) {
+    public function notAuthorized(string $method): \Illuminate\Http\Response {
         $policy_class = PolicyService::get($this)->createIfNotExists()->getClass();
         $msg = 'Auth Id ['.\Auth::id().'] not can ['.$method.'] on ['.$policy_class.']';
 
         if (! view()->exists('pub_theme::errors.403')) {
-            return '<h3> Aggiungere la view : pub_theme::errors.403<br/>pub_theme: '.config('xra.pub_theme').'</h3>';
+            $msg = '<h3> Aggiungere la view : pub_theme::errors.403<br/>pub_theme: '.config('xra.pub_theme').'</h3>';
+            throw new \Exception($msg);
         }
 
-        return response()->view('pub_theme::errors.403', ['msg' => $msg], 403);
+        return response()->view('pub_theme::errors.403', ['message' => $msg], 403);
     }
 
     /**
-     * @param string $act
-     *
      * @return mixed
      */
-    public function callAction($act) {
+    public function callAction(string $act) {
         //$act = Str::camel($act);
 
         $action = $this->getActions()
@@ -1561,7 +1505,7 @@ abstract class XotBasePanel implements PanelContract {
         if (! is_object($action)) {
             $msg = 'action '.$act.' not recognized for ['.get_class($this).']';
 
-            return response()->view('pub_theme::errors.403', ['msg' => $msg], 403);
+            return response()->view('pub_theme::errors.403', ['message' => $msg], 403);
         }
 
         $action->setRow($this->row);
@@ -1579,11 +1523,9 @@ abstract class XotBasePanel implements PanelContract {
     }
 
     /**
-     * @param string $act
-     *
-     * @return null
+     * @return mixed
      */
-    public function callItemAction($act) {
+    public function callItemAction(string $act) {
         if (null == $act) {
             return null;
         }
@@ -1610,11 +1552,9 @@ abstract class XotBasePanel implements PanelContract {
     }
 
     /**
-     * @param string $act
-     *
-     * @return null
+     * @return mixed
      */
-    public function callContainerAction($act) {
+    public function callContainerAction(string $act) {
         if (null == $act) {
             return null;
         }
@@ -1647,10 +1587,13 @@ abstract class XotBasePanel implements PanelContract {
         return $this->presenter->out();
     }
 
-    /**
-     * @return string
-     */
-    public function pdfFilename(array $params = []) {
+    /*
+    public function __toString() {
+        return $this->presenter->out()->render();
+    }
+    */
+
+    public function pdfFilename(array $params = []): string {
         $fields = ['matr', 'cognome', 'nome', 'anno'];
         extract($params);
         $filename_arr = [];
@@ -1672,6 +1615,11 @@ abstract class XotBasePanel implements PanelContract {
         return $filename;
     }
 
+    /**
+     * Undocumented function.
+     *
+     * @return mixed
+     */
     public function xls(array $params = []) {
         $presenter = new XlsPanelPresenter();
         $presenter->setPanel($this);
@@ -1681,7 +1629,9 @@ abstract class XotBasePanel implements PanelContract {
     }
 
     /**
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|string|void
+     * Undocumented function.
+     *
+     * @return mixed
      */
     public function pdf(array $params = []) {
         $presenter = new PdfPanelPresenter();
@@ -1736,7 +1686,7 @@ abstract class XotBasePanel implements PanelContract {
             try {
                 $tmp = (object) [];
                 $tmp->url = $parent->url(['act'=>'show']);
-                $tmp->title = $parent->row->title;
+                $tmp->title = $parent->getRow()->title;
                 $tmp->obj = \Theme::xotModel($parent->postType());
                 $tmp->method = 'show';
                 $bread[] = $tmp;
@@ -1757,6 +1707,12 @@ abstract class XotBasePanel implements PanelContract {
     public function getExcerpt($length = 225) {
         $row = $this->row;
         //$content = $row->subtitle ?? $row->txt;
+        if (! property_exists($row, 'subtitle')) {
+            throw new \Exception('in ['.get_class($row).'] property [subtitle] is missing');
+        }
+        if (! property_exists($row, 'txt')) {
+            throw new \Exception('in ['.get_class($row).'] property [txt] is missing');
+        }
 
         if ($row->subtitle) {
             $content = $row->subtitle;
@@ -1764,10 +1720,15 @@ abstract class XotBasePanel implements PanelContract {
             $content = $row->txt;
         }
 
-        $cleaned = strip_tags(
-            preg_replace(['/<pre>[\w\W]*?<\/pre>/', '/<h\d>[\w\W]*?<\/h\d>/'], '', $content),
-            '<code>'
-        );
+        // 1737   Parameter #1 $str of function strip_tags expects string, array|string|null given.
+        $tmp = preg_replace(['/<pre>[\w\W]*?<\/pre>/', '/<h\d>[\w\W]*?<\/h\d>/'], '', $content);
+        if (is_array($tmp)) {
+            $tmp = implode(' ', $tmp);
+        }
+        if (null == $tmp) {
+            $tmp = '';
+        }
+        $cleaned = strip_tags($tmp, '<code>');
         $truncated = substr($cleaned, 0, $length);
 
         if (substr_count($truncated, '<code>') > substr_count($truncated, '</code>')) {
@@ -1800,15 +1761,12 @@ abstract class XotBasePanel implements PanelContract {
         return $this->presenter->out($params);
     }
 
-    /**
-     * @return string
-     */
-    public function id(?bool $is_admin = null) {
+    public function id(?bool $is_admin = null): string {
         $curr = $this;
         $data = collect([]);
         while (null != $curr) {
             //$data->prepend($curr->postType().'-'.$curr->guid($is_admin));
-            $data->prepend($curr->postType().'-'.$curr->row->getKey());
+            $data->prepend($curr->postType().'-'.$curr->getRow()->getKey());
 
             $curr = $curr->getParent();
         }
@@ -1828,11 +1786,9 @@ abstract class XotBasePanel implements PanelContract {
     }
 
     /**
-     * @param array $data
-     *
      * @return mixed
      */
-    public function update($data) {
+    public function update(array $data) {
         //$func = '\Modules\Xot\Jobs\Crud\\'.Str::studly(__FUNCTION__).'Job';
         $func = '\Modules\Xot\Jobs\PanelCrud\\'.Str::studly(__FUNCTION__).'Job';
 

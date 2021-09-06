@@ -12,12 +12,10 @@ use Modules\Xot\Contracts\PanelPresenterContract;
 /**
  * Class HtmlPanelPresenter.
  */
-class HtmlPanelPresenter implements PanelPresenterContract
-{
+class HtmlPanelPresenter implements PanelPresenterContract {
     protected PanelContract $panel;
 
-    public function setPanel(PanelContract &$panel): self
-    {
+    public function setPanel(PanelContract &$panel): self {
         $this->panel = $panel;
 
         return $this;
@@ -26,8 +24,7 @@ class HtmlPanelPresenter implements PanelPresenterContract
     /**
      * @return mixed|void
      */
-    public function index(?Collection $items)
-    {
+    public function index(?Collection $items) {
         /*
         $count = $items->count();
         $last_update = $items
@@ -47,11 +44,10 @@ class HtmlPanelPresenter implements PanelPresenterContract
     }
 
     /**
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
      */
-    public function out(?array $params = null)
-    {
-        //$route_params = \Route::current()->parameters();
+    public function out(?array $params = null) {
+        //$route_params = optional(\Route::current())->parameters();
 
         [$containers, $items] = params2ContainerItem();
         $view = ThemeService::getView(); //vew che dovrebbe essere
@@ -90,8 +86,8 @@ class HtmlPanelPresenter implements PanelPresenterContract
             ];
 
             return response()->view('pub_theme::errors.500', $data, 500);
-            $rows = null;
-            $rows_err = $e;
+            //$rows = null;
+            //$rows_err = $e;
         } catch (\Error $e) {
             $rows = null;
             $rows_err = $e;
@@ -111,7 +107,7 @@ class HtmlPanelPresenter implements PanelPresenterContract
             'views' => $views,
             '_panel' => $this->panel,
             '_panel_name' => $this->panel->getName(),
-            'row' => $this->panel->row,
+            'row' => $this->panel->getRow(),
             'rows' => $rows,
             'rows_err' => $rows_err,
             'mod_trad' => $mod_trad,
@@ -129,10 +125,11 @@ class HtmlPanelPresenter implements PanelPresenterContract
                 'message' => 'not exists view [pub_theme::layouts.app]
                     <br/> pub_theme:'.config('xra.pub_theme'),
             ];
-            $view='theme::errors.500';
+            $view = 'theme::errors.500';
             if (view()->exists('pub_theme::errors.500')) {
-                $view='pub_theme::errors.500';
+                $view = 'pub_theme::errors.500';
             }
+
             return response()->view($view, $data, 500);
         }
 

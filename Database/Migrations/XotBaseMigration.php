@@ -16,6 +16,7 @@ use Illuminate\Support\Str;
  */
 abstract class XotBaseMigration extends Migration {
     protected ?Model $model = null;
+
     protected ?string $model_class = null;
 
     //*
@@ -39,7 +40,7 @@ abstract class XotBaseMigration extends Migration {
         $name = Str::singular($name);
         //ddd($name);//Device
         $reflection_class = new \ReflectionClass($this);
-        $filename = $reflection_class->getFilename();
+        $filename = (string) $reflection_class->getFilename();
         //ddd($filename);//C:\var\www\multi\laravel\Modules\Customer\Database\Migrations\2019_12_11_082626_create_devices_table.php
         $mod_path = \Module::getPath();
         //ddd($mod_path);//C:\var\www\multi\laravel\Modules
@@ -57,6 +58,9 @@ abstract class XotBaseMigration extends Migration {
     }
 
     public function getTable(): string {
+        if (null == $this->model) {
+            return '';
+        }
         $table = $this->model->getTable();
         /*
         if (Str::endsWith($table, '_pivot')) {
@@ -75,6 +79,9 @@ abstract class XotBaseMigration extends Migration {
         //dddx(config('database'));
         //\DB::purge('mysql');
         //\DB::reconnect('mysql');
+        if (null == $this->model) {
+            throw new \Exception('model is null');
+        }
         $conn_name = $this->model->getConnectionName();
         $conn = Schema::connection($conn_name);
 
@@ -119,7 +126,7 @@ abstract class XotBaseMigration extends Migration {
     /**
      * @return bool
      */
-    public function tableExists($table = null) {
+    public function tableExists(string $table = null) {
         if (null == $table) {
             $table = $this->getTable();
         }

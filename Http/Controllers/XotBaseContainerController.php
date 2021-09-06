@@ -29,6 +29,9 @@ abstract class XotBaseContainerController extends Controller {
 
     public function __call($method, $args) {
         $panel = Panel::getRequestPanel();
+        if (null == $panel) {
+            throw new \Exception('uston gavemo un problemon');
+        }
         $this->panel = $panel;
 
         if ('' != request()->input('_act', '')) {
@@ -42,8 +45,14 @@ abstract class XotBaseContainerController extends Controller {
      * @return string
      */
     public function getController() {
+        /*
+        if (null == $this->panel) {
+            return '\Modules\Xot\Http\Controllers\XotPanelController';
+        }
+        */
         list($containers, $items) = params2ContainerItem();
-        $mod_name = $this->panel->getModuleName(); //forse da mettere container0
+
+        $mod_name = $this->panel->getModuleName();
 
         $tmp = collect($containers)->map(
             function ($item) {
@@ -59,47 +68,28 @@ abstract class XotBaseContainerController extends Controller {
     }
 
     /**
-     * @param string $method
-     * @param array  $args
-     *
-     * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse|\Illuminate\Http\Response
+     * @return mixed
      */
-    public function __callRouteAct($method, $args) {
+    public function __callRouteAct(string $method, array $args) {
         $panel = $this->panel;
-        //$authorized = Gate::allows($method, $model);
         $authorized = Gate::allows($method, $panel);
 
         if (! $authorized) {
             return $this->notAuthorized($method, $panel);
         }
-
         $request = XotRequest::capture();
+
         $controller = $this->getController();
-        $data = $request->all();
-        //dddx($args);
-        //$panel = app($controller)->$method($data, $panel);
-        //$panel = app($controller)->$method($args);
+
         $panel = app($controller)->$method($request, $panel);
 
-        if (! method_exists($panel, 'out')) {
-            return $panel;
-        }
-
-        return $panel->out(
-            [
-                'is_ajax' => $request->ajax(),
-                'method' => $request->getMethod(),
-            ]
-        );
+        return $panel;
     }
 
     /**
-     * @param string $method
-     * @param array  $args
-     *
-     * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse|\Illuminate\Http\Response
+     * @return mixed
      */
-    public function __callPanelAct($method, $args) {
+    public function __callPanelAct(string $method, array $args) {
         $request = request();
         $act = $request->_act;
         $method_act = Str::camel($act);

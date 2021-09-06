@@ -32,7 +32,7 @@ trait FrontTrait {
 
     public function containerFunc(Request $request) {
         $lang = app()->getLocale();
-        $params = \Route::current()->parameters();
+        $params = optional(\Route::current())->parameters();
         $containers = \array_keys(config('xra.model'));
         \extract($params);
         if (\is_object($container)) {
@@ -141,7 +141,7 @@ trait FrontTrait {
     */
     public function containerFuncB(Request $request) {
         $lang = app()->getLocale();
-        $params = \Route::current()->parameters();
+        $params = optional(\Route::current())->parameters();
         $row = last($params); // meglio ultimo oggetto
         \extract($params);
         $view = CrudTrait::getView($params);
@@ -159,7 +159,7 @@ trait FrontTrait {
     }
 
     public function containerFuncCache(Request $request) {
-        $params = \Route::current()->parameters();
+        $params = optional(\Route::current())->parameters();
         $key = ['params' => $params, 'data' => $request->all()];
         $key = \json_encode($key);
         $key = \md5($key);
@@ -245,13 +245,13 @@ trait FrontTrait {
         //-- se le altre 2 son false arrivo qui
         //return redirect()->back();
         //$routename = \Route::current()->getName();
-        //$params = \Route::current()->parameters();
+        //$params = optional(\Route::current())->parameters();
         //$routename = str_replace('.store', '.index', $routename);
         return redirect($row->url); //->route($routename, $params);
     }
 
     public function update(Request $request) {
-        $params = \Route::current()->parameters();
+        $params = optional(\Route::current())->parameters();
         \extract($params);
         $data = $request->all();
         $row = last($params); // si fa edit sempre sull'ultimo parametro prima appunto della parola edit

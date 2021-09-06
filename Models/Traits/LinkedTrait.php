@@ -686,7 +686,7 @@ trait LinkedTrait {
     public function urlNextContainer($container) {
         //ddd($this->post->pivot);
         //ddd($this->post);
-        //$params = \Route::current()->parameters();
+        //$params = optional(\Route::current())->parameters();
         $params = Route::current()->parameters();
         list($containers, $items) = params2ContainerItem($params);
         $container_n = collect($containers)->search($this->post_type);

@@ -10,6 +10,7 @@ $pack = class_basename($namespace);
 $namespace .= '\Http\Controllers';
 //$middleware = ['web', 'guest']; //guest ti riindirizza se non sei loggato
 $middleware = ['web', \Modules\Xot\Http\Middleware\PanelMiddleware::class];
+//$middleware = ['web'];
 //, \Modules\Xot\Http\Middleware\SelectResponseMiddleware::class];
 
 //$areas_prgs = include __DIR__ . '/web_common.php';
@@ -84,7 +85,12 @@ Route::group(
         //$item0,
     ];
     $prefix = 'admin';
-    $middleware = ['web', 'auth', \Modules\Xot\Http\Middleware\PanelMiddleware::class, \Modules\Xot\Http\Middleware\SelectResponseMiddleware::class];
+    $middleware = [
+        'web',
+        'auth',
+        \Modules\Xot\Http\Middleware\PanelMiddleware::class,
+        /*\Modules\Xot\Http\Middleware\SelectResponseMiddleware::class */
+    ];
     $namespace .= '\Admin';
     Route::group(
         [

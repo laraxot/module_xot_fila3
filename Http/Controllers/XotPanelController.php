@@ -26,6 +26,6 @@ class XotPanelController extends Controller {
         $func = '\Modules\Xot\Jobs\PanelCrud\\'.Str::studly($method).'Job';
         $panel = $func::dispatchNow($arg[0], $arg[1]);
 
-        return $panel;
+        return $panel->out();
     }
 }

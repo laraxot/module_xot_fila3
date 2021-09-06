@@ -126,7 +126,7 @@ class ChainService {
             return 0;
         }
 
-        return($a[$a['key']] < $b[$b['key']]) ? -1 : 1;
+        return ($a[$a['key']] < $b[$b['key']]) ? -1 : 1;
     }
 }
 /*

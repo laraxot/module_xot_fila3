@@ -25,7 +25,7 @@ class RouteDomTest extends TestCase {
         $this->checkLinks($urls);
     }
 
-    public function checkLinks($urls, $depth = 0): void {
+    public function checkLinks(array $urls, int $depth = 0): void {
         $base_url = env('APP_URL');
 
         if ($depth > 4) {
@@ -40,8 +40,17 @@ class RouteDomTest extends TestCase {
             }
             */
             $url = str_replace('index.php', '', $url);
+            if (null == $url) {
+                throw new \Exception('url is null');
+            }
+            if (! is_string($url)) {
+                throw new \Exception('url is not a string');
+            }
             $response = $this->get($url);
             $html = $response->getContent();
+            if (false === $html) {
+                throw new \Exception('cannot get content');
+            }
             //dd(get_class_methods($response));
             //dd($response->streamedContent());The response is not a streamed response
             $status = (int) $response->status();
@@ -54,6 +63,7 @@ class RouteDomTest extends TestCase {
                 $this->assertTrue(true);
             }
             echo PHP_EOL;
+
             $dom = $this->dom($html);
             //$links = $dom->filter('a')->links();
             $links = $dom->filter('a')->each(
@@ -79,7 +89,7 @@ class RouteDomTest extends TestCase {
     so you must define its base URI passing an absolute URL to the constructor of the
     "Symfony\Component\DomCrawler\AbstractUriElement" class ("" was passed)
     */
-    private function dom($html) {
+    private function dom(string $html): \Symfony\Component\DomCrawler\Crawler {
         $dom = new \Symfony\Component\DomCrawler\Crawler();
         $dom->addHTMLContent($html, 'UTF-8');
 

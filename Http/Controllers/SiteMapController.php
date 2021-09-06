@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Modules\Xot\Http\Controllers;
 
 use Illuminate\Support\Arr;
@@ -65,7 +67,7 @@ class SiteMapController {
     }
     */
 
-    public function index() {
+    public function index(): \Illuminate\Http\Response {
         $limit = 50;
         $lang = app()->getLocale();
         $rows = Post::where('lang', $lang)

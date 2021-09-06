@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 use Illuminate\Database\Schema\Blueprint;
 //----- models -----
 use Modules\Xot\Database\Migrations\XotBaseMigration;
@@ -12,8 +14,9 @@ url":"https://www.foodfriendfinder.com/it/feed/restaurant"
 */
 
 class CreateFeedsTable extends XotBaseMigration {
-    /*
+    /**
      * Run the migrations.
+     *
      * @return void
      */
     public function up() {

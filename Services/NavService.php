@@ -12,9 +12,6 @@ use Illuminate\Contracts\Support\Renderable;
  * Class NavService.
  */
 class NavService {
-    /**
-     * @return array
-     */
     public static function yearNav(): Renderable {
         $request = \Request::capture();
         $routename = \Route::currentRouteName();
@@ -59,9 +56,6 @@ class NavService {
         return view($view, $view_params);
     }
 
-    /**
-     * @return array
-     */
     public static function monthYearNav(): Renderable { //possiamo trasformarlo in una macro
         $request = \Request::capture();
         $routename = \Route::currentRouteName();
@@ -114,7 +108,7 @@ class NavService {
     public static function yearNavRedirect() {
         $request = \Request::capture();
         $routename = \Route::currentRouteName();
-        $params = \Route::current()->parameters();
+        $params = optional(\Route::current())->parameters();
         $year = $request->input('year', date('Y'));
         $redirect = 1;
         if ('' == $request->year) {

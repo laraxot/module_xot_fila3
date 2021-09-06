@@ -127,6 +127,9 @@ abstract class XotBaseServiceProvider extends ServiceProvider {
 
     public function registerBladeComponents(): void {
         $module = Module::find($this->module_name);
+        if (null == $module) {
+            throw new \Exception('['.$this->module_name.'] is not found');
+        }
         /*
         $methods = get_class_methods($module);
         echo '<table border="1">';
@@ -225,7 +228,11 @@ abstract class XotBaseServiceProvider extends ServiceProvider {
         $events_file = $path.'/_events.json';
         $force_recreate = request()->input('force_recreate', true);
         if (! File::exists($events_file) || $force_recreate) {
-            foreach (\glob($path.'/*.php') as $filename) {
+            $filenames = \glob($path.'/*.php');
+            if (null == $filenames) {
+                $filenames = [];
+            }
+            foreach ($filenames as $filename) {
                 $info = pathinfo($filename);
 
                 //$tmp->namespace='\\'.$vendor.'\\'.$pack.'\\Events\\'.$info['filename'];

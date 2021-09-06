@@ -23,7 +23,11 @@ class PolicyService {
         if (null === self::$instance) {
             self::$instance = new self();
         }
-
+        /*
+        if (null == self::$instance) {
+            throw new \Exception('something gone bad');
+        }
+        */
         return self::$instance;
     }
 
@@ -39,7 +43,7 @@ class PolicyService {
 
         self::$in_vars['class_name'] = $class_name;
         self::$in_vars['class_type'] = '';
-        if ($obj instanceof  \Modules\Xot\Models\Panels\XotBasePanel) {
+        if ($obj instanceof \Modules\Xot\Models\Panels\XotBasePanel) {
             self::$in_vars['class_type'] = 'panel';
         }
 
@@ -106,10 +110,8 @@ class PolicyService {
 
     /**
      * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
-     *
-     * @return PolicyService|null
      */
-    public function createIfNotExists() {
+    public function createIfNotExists(): PolicyService {
         if ($this->exists()) {
             return self::getInstance(); //se esiste esce;
         }
@@ -133,6 +135,8 @@ class PolicyService {
             dddx(debug_backtrace());
         }
 
-        return self::getInstance();
+        $res = self::getInstance();
+
+        return $res;
     }
 }

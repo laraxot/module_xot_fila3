@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Modules\Xot\Models\Panels;
 
 use Illuminate\Http\Request;
@@ -7,21 +9,16 @@ use Illuminate\Http\Request;
 //--- Services --
 
 /**
- * Class MetatagPanel
- * @package Modules\Xot\Models\Panels
+ * Class MetatagPanel.
  */
 class MetatagPanel extends XotBasePanel {
     /**
      * The model the resource corresponds to.
-     *
-     * @var string
      */
     public static string $model = 'Modules\Xot\Models\Metatag';
 
     /**
      * The single value that should be used to represent the resource when being displayed.
-     *
-     * @var string
      */
     public static string $title = 'title';
 
@@ -99,13 +96,10 @@ class MetatagPanel extends XotBasePanel {
 
     /**
      * Get the actions available for the resource.
-     *
-     * @param Request|null $request
-     * @return array
      */
-    public function actions(Request $request = null):array {
+    public function actions(Request $request = null): array {
         return [
-            new Actions\StoreFileMetatagAction(),
+            //new Actions\StoreFileMetatagAction(),
         ];
     }
 }

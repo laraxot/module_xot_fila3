@@ -20,13 +20,14 @@ class UpdateJob extends XotBaseJob {
      * Execute the job.
      */
     public function handle(): PanelContract {
-        $row = $this->panel->row;
+        $row = $this->panel->getRow();
 
         $this->data = $this->prepareAndValidate($this->data, $this->panel);
 
         $data = $this->data;
 
         //https://medium.com/@taylorotwell/tap-tap-tap-1fc6fc1f93a6
+        //  30     Call to an undefined method Illuminate\Support\HigherOrderTapProxy<mixed>::update().
         $row = tap($row)->update($data);
         //dd([/*'row' => $row, */'data' => $data, 'ris' => $ris, __LINE__, __FILE__]);
 
@@ -107,8 +108,8 @@ class UpdateJob extends XotBaseJob {
             /*
                 $parent=$this->panel->getParent();
                 if($parent!=null){
-                    $parent_id=$parent->row->getKey();
-                    $parent_key=$parent->postType().'_'.$parent->row->getKeyName();
+                    $parent_id=$parent->getRow()->getKey();
+                    $parent_key=$parent->postType().'_'.$parent->getRow()->getKeyName();
                     $data1=[];
                     foreach($data['to'] as $v){
                         $data1[$v]=[$parent_key=>$parent_id];
@@ -143,7 +144,7 @@ class UpdateJob extends XotBaseJob {
             dddx(get_class_methods($rows));
             //$this->saveMultiselectTwoSides($model,$name,$data);
         }
-        ddd(['wip']);
+        dddx(['wip']);
     }
 
     /**
@@ -260,8 +261,8 @@ class UpdateJob extends XotBaseJob {
     public function saveMultiselectTwoSides($model, string $name, array $data): void {
         $items = $model->$name();
         $related = $items->getRelated();
-        $container_obj = $model;
-        $container = $container_obj->post_type;
+        //$container_obj = $model;
+        //$container = $container_obj->post_type;
         //$items_key = $container_obj->getKeyName();
         $items_key = $related->getKeyName();
         $items_0 = $items->get()->pluck($items_key);
@@ -285,8 +286,8 @@ class UpdateJob extends XotBaseJob {
         $ids = $items_sub->all();
         $parent = $this->panel->getParent();
         if (null != $parent) {
-            $parent_id = $parent->row->getKey();
-            $parent_key = $parent->postType().'_'.$parent->row->getKeyName();
+            $parent_id = $parent->getRow()->getKey();
+            $parent_key = $parent->postType().'_'.$parent->getRow()->getKeyName();
             /*
             $data1=[];
             foreach($ids as $v){
@@ -313,8 +314,8 @@ class UpdateJob extends XotBaseJob {
 
         $parent = $this->panel->getParent();
         if (null != $parent) {
-            $parent_id = $parent->row->getKey();
-            $parent_key = $parent->postType().'_'.$parent->row->getKeyName();
+            $parent_id = $parent->getRow()->getKey();
+            $parent_key = $parent->postType().'_'.$parent->getRow()->getKeyName();
             $data1 = [];
             foreach ($ids as $v) {
                 $data1[$v] = [$parent_key => $parent_id];

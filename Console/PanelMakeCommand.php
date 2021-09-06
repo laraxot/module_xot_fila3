@@ -66,7 +66,15 @@ class PanelMakeCommand extends GeneratorCommand {
      * @return string
      */
     protected function getFileName() {
-        return Str::studly($this->argument('name'));
+        $name = $this->argument('name');
+        if (is_array($name)) {
+            $name = implode(' ', $name);
+        }
+        if (null == $name) {
+            throw new \Exception('name is missing');
+        }
+
+        return Str::studly($name);
     }
 
     public function getDefaultNamespace(): string {

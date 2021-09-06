@@ -78,6 +78,11 @@ class ImageService {
         self::$dirname = $dirname;
     }
 
+    /**
+     * Undocumented function.
+     *
+     * @return mixed
+     */
     public function getImg() {
         return self::$img;
     }
@@ -300,7 +305,12 @@ class ImageService {
 
         if (is_object($img)) {
             if (Str::startsWith($img->src_out, Storage::disk('photos')->url(''))) {
-                return str_replace('http://', '//', $img->src_out);
+                $out = str_replace('http://', '//', $img->src_out);
+                if (! is_string($out)) {
+                    throw new \Exception('out is not a string');
+                }
+
+                return $out;
             //return $img->src_out;
             } else {
                 $img->delete();

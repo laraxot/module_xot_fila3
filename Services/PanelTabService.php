@@ -22,7 +22,7 @@ class PanelTabService {
     }
 
     public function getItemTabs(): array {
-        $item = $this->panel->row;
+        $item = $this->panel->getRow();
         $tabs = $this->panel->tabs();
         $routename = (string) \Route::currentRouteName();
         $act = last(explode('.', $routename));
@@ -46,10 +46,13 @@ class PanelTabService {
 
     public function getRowTabs(): array {
         $data = [];
+        if (null == $this->panel->getRow()) {
+            return $data;
+        }
 
         foreach ($this->panel->tabs() as $tab) {
             $tmp = (object) [];
-            $tmp->title = trans($this->panel->getModuleNameLow().'::'.class_basename($this->panel->row).'.tab.'.$tab);
+            $tmp->title = trans($this->panel->getModuleNameLow().'::'.class_basename($this->panel->getRow()).'.tab.'.$tab);
             $tmp->url = $this->panel->relatedUrl(['related_name' => $tab, 'act' => 'index']);
             /*
             if ('#' != $tmp->url[0]) {
@@ -89,7 +92,7 @@ class PanelTabService {
         //dddx($parents);
 
         foreach ($parents as $k => $panel) {
-            //$item = $panel->row;
+            //$item = $panel->getRow();
             $tabs = [];
             if (! is_object($panel)) {
                 return $tabs;

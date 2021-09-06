@@ -54,7 +54,7 @@ trait CrudSimpleTrait {
         //if($request->scoutimport == 1){
 
         //}
-        $params = \Route::current()->parameters();
+        $params = optional(\Route::current())->parameters();
         if (isset($params['lang'])) {
             \App::setLocale($params['lang']);
         }
@@ -159,7 +159,7 @@ trait CrudSimpleTrait {
     }
 
     public function show(Request $request) {
-        $params = \Route::current()->parameters();
+        $params = optional(\Route::current())->parameters();
         $model = $this->getModel();
         if (\method_exists($model, 'getWith')) {
             $with = $model->getWith();
@@ -200,7 +200,7 @@ trait CrudSimpleTrait {
     */
 
     public function create(Request $request) {
-        $params = \Route::current()->parameters();
+        $params = optional(\Route::current())->parameters();
         $model = $this->getModel();
 
         $row = $model;
@@ -236,7 +236,7 @@ trait CrudSimpleTrait {
     public function saveandexit($parz) {
         $params = [];
         \extract($parz);
-        $params = \array_merge(\Route::current()->parameters(), $params);
+        $params = \array_merge(optional(\Route::current())->parameters(), $params);
         $routename = \Route::current()->getName();
         \Session::flash('status', $msg);
         $routename = \str_replace('.store', '.index', $routename);
@@ -247,7 +247,7 @@ trait CrudSimpleTrait {
     public function saveandcontinue($parz) {
         $params = [];
         \extract($parz);
-        $params = \array_merge(\Route::current()->parameters(), $params);
+        $params = \array_merge(optional(\Route::current())->parameters(), $params);
         $routename = \Route::current()->getName();
         \Session::flash('status', $msg);
 
@@ -261,7 +261,7 @@ trait CrudSimpleTrait {
     }
 
     public function store(Request $request) {
-        $params = \Route::current()->parameters();
+        $params = optional(\Route::current())->parameters();
         $model = $this->getModel();
         if (\method_exists($model, 'validate')) {
             $res = $model->validate($data);
@@ -399,7 +399,7 @@ trait CrudSimpleTrait {
         if (1 == $request->replicate) {
             return $this->replicate($request);
         }
-        $params = \Route::current()->parameters();
+        $params = optional(\Route::current())->parameters();
         $params_key = \array_map('strtolower', \array_keys($params));
         $params_value = \array_values($params);
         $params1 = \array_combine($params_key, $params_value);
@@ -476,7 +476,7 @@ trait CrudSimpleTrait {
     }
 
     public function replicate(Request $request) {//duplica una riga..
-        $params = \Route::current()->parameters();
+        $params = optional(\Route::current())->parameters();
         $model = $this->getModel();
         if (isset($params['lang']) && \in_array('lang', $model->fields()->all(), true)) {
             $model = $model->where('lang', $params['lang']);
@@ -504,7 +504,7 @@ trait CrudSimpleTrait {
 
     public function update(Request $request) {
         $routename = \Route::current()->getName();
-        $params = \Route::current()->parameters();
+        $params = optional(\Route::current())->parameters();
 
         if ('exit' == $request->_action) {
             \Session::flash('status', 'Risorsa NON salvata!');
@@ -575,7 +575,7 @@ trait CrudSimpleTrait {
     }
 
     public function delete(Request $request) {
-        $params = \Route::current()->parameters();
+        $params = optional(\Route::current())->parameters();
         $model = $this->getModel();
         $id = $params[$this->getPrimaryKey()];
         $row = $model->findOrFail($id);
@@ -586,7 +586,7 @@ trait CrudSimpleTrait {
 
     // TODO migliorare il destroy, in modo che cancellando una categoria o menu, cancelli ricorsivamente anche tutti i suoi figlio (categorie e non)
     public function destroy(Request $request) {
-        $params = \Route::current()->parameters();
+        $params = optional(\Route::current())->parameters();
         $model = $this->getModel();
         if (isset($params[$this->getPrimaryKey()])) {
             $id = $params[$this->getPrimaryKey()];
@@ -694,7 +694,7 @@ trait CrudSimpleTrait {
 
     //-------------------------------------------------------------------------------------------
     public function xls(Request $request) {
-        $params = \Route::current()->parameters(); // "stabi" => "605"  "repar" => "11"  "anno" => "2017"
+        $params = optional(\Route::current())->parameters(); // "stabi" => "605"  "repar" => "11"  "anno" => "2017"
         \extract($params);
         $model = $this->getModel();
         //dd($model);
@@ -716,7 +716,7 @@ trait CrudSimpleTrait {
     }
 
     public function pdf(Request $request) {
-        $params = \Route::current()->parameters(); // "stabi" => "605"  "repar" => "11"  "anno" => "2017"
+        $params = optional(\Route::current())->parameters(); // "stabi" => "605"  "repar" => "11"  "anno" => "2017"
         \extract($params);
         $model = $this->getModel();
         $rows = $model->filter($params);
@@ -743,7 +743,7 @@ trait CrudSimpleTrait {
     //
 
     public function pdfszip(Request $request) {
-        $params = \Route::current()->parameters(); // "stabi" => "605"  "repar" => "11"  "anno" => "2017"
+        $params = optional(\Route::current())->parameters(); // "stabi" => "605"  "repar" => "11"  "anno" => "2017"
         \extract($params);
         $model = $this->getModel();
         $rows = $model->filter($params);
@@ -783,7 +783,7 @@ trait CrudSimpleTrait {
     //end pdfszip
     //------------------------------------------------------------------------------------------
     public function pdfrow(Request $request, $out = 'show', $pdforientation = 'L') {
-        $params = \Route::current()->parameters();
+        $params = optional(\Route::current())->parameters();
         \extract($request->all());
         \extract($params);
         //dd($params);
@@ -836,7 +836,7 @@ trait CrudSimpleTrait {
     //*
     public function filtersendmail(Request $request) {
         //return 'UNDER COSTRUCTION, ';
-        $params = \Route::current()->parameters();
+        $params = optional(\Route::current())->parameters();
         \extract($params);
         $data = $request->all();
         //echo '<pre>';print_r($data);echo '</pre>';
@@ -890,7 +890,7 @@ trait CrudSimpleTrait {
         $rotename_arr = array_slice($rotename_arr, 0, -1);
         $routename_base = implode('.', $rotename_arr);
         //ddd($rotename_arr);
-        $params = \Route::current()->parameters();
+        $params = optional(\Route::current())->parameters();
         $data = $request->all();
         switch ($data['_action']) {
             case 'save_continue':

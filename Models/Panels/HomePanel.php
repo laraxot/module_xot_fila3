@@ -63,10 +63,8 @@ class HomePanel extends XotBasePanel {
 
     /**
      * Get the actions available for the resource.
-     *
-     * @return array
      */
-    public function actions():array {
+    public function actions(): array {
         $cmd = (string) request()->input('cmd');
 
         return [
