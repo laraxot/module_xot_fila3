@@ -89,7 +89,7 @@ class PanelRouteService {
         return $url;
     }
 
-    public function urlPanel(array $params = []): string {
+    public function url(array $params = []): string {
         $panel = $this->panel;
         $act = 'show'; //default
         extract($params);
@@ -203,7 +203,7 @@ class PanelRouteService {
         return $routename;
     }
 
-    public function urlRelatedPanel(array $params): string {
+    public function relatedUrl(array $params): string {
         $panel = $this->panel;
         $act = 'show';
         extract($params);
@@ -325,7 +325,7 @@ class PanelRouteService {
     /**
      * @return string
      */
-    public static function urlLang(array $params = []) {
+    public static function langUrl(array $params = []) {
         extract($params);
 
         return '?';

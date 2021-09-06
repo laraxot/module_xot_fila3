@@ -156,7 +156,7 @@ class StubService {
     }
 
     /**
-     * @param ModelContract|Model $model
+     * @param Model $model
      *
      * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
      * @throws \ReflectionException
@@ -216,7 +216,7 @@ class StubService {
     }
 
     /**
-     * @param ModelContract|Model $model
+     * @param Model $model
      *
      * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
      * @throws \ReflectionException
@@ -280,7 +280,7 @@ class StubService {
     }
 
     /**
-     * @param ModelContract|Model $model
+     * @param Model $model
      *
      * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
      */

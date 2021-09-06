@@ -67,7 +67,7 @@ abstract class XotBaseJob implements ShouldQueue {
         }
         if (isset($data['pivot'])) {
             $func = $act.'Relationships'.'Pivot';
-            self::$func($model, 'pivot', $data['pivot']);
+            static::$func($model, 'pivot', $data['pivot']);
         }
     }
 

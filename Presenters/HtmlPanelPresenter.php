@@ -79,19 +79,25 @@ class HtmlPanelPresenter implements PanelPresenterContract {
         $rows_err = '';
 
         try {
-            $rows = $this->panel->rows()->paginate(20);
+            $tbl = $this->panel->row->getTable();
+            $rows = $this->panel->rows()->selectRaw($tbl.'.*')->paginate(20);
         } catch (\Exception $e) {
             $data = [
                 'message' => $e->getMessage(),
             ];
 
             return response()->view('pub_theme::errors.500', $data, 500);
-            //$rows = null;
-            //$rows_err = $e;
         } catch (\Error $e) {
             $rows = null;
             $rows_err = $e;
+            $data = [
+                'message' => $e->getMessage(),
+            ];
+
+            return response()->view('pub_theme::errors.500', $data, 500);
         }
+
+        //dddx($this->panel->rows->toSql());
 
         $route_params = [];
         $route_name = '';

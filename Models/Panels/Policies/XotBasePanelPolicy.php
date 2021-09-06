@@ -24,6 +24,7 @@ abstract class XotBasePanelPolicy {
      */
     //*
     public function before($user, $ability) {
+        //dddx(ProfileService::get($user)->isSuperAdmin()); // Modules\LU\Services\ProfileService
         if (is_object($user) && ProfileService::get($user)->isSuperAdmin()) {
             return true;
         }

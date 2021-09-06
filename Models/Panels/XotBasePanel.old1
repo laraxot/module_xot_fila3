@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 //----------  SERVICES --------------------------
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Validator;
@@ -28,6 +29,7 @@ use Modules\Xot\Services\PanelService;
 use Modules\Xot\Services\PanelService as Panel;
 use Modules\Xot\Services\PanelTabService;
 use Modules\Xot\Services\PolicyService;
+use Modules\Xot\Services\RouteService;
 use Modules\Xot\Services\StubService;
 use Response;
 use Spatie\QueryBuilder\AllowedFilter;
@@ -604,50 +606,50 @@ abstract class XotBasePanel implements PanelContract {
     }
 
     public function getActions(array $params = []): \Illuminate\Support\Collection {
-        return (new PanelActionService($this))->{__FUNCTION__}($params);
+        return (new PanelActionService($this))->getActions($params);
     }
 
     public function containerActions(array $params = []): \Illuminate\Support\Collection {
-        return (new PanelActionService($this))->{__FUNCTION__}($params);
+        return (new PanelActionService($this))->containerActions($params);
     }
 
     public function itemActions(array $params = []): \Illuminate\Support\Collection {
-        return (new PanelActionService($this))->{__FUNCTION__}($params);
+        return (new PanelActionService($this))->itemActions($params);
     }
 
     /**
      * @return mixed
      */
     public function itemAction(string $act) {
-        return (new PanelActionService($this))->{__FUNCTION__}($act);
+        return (new PanelActionService($this))->itemAction($act);
     }
 
     /**
      * @return mixed
      */
     public function containerAction(string $act) {
-        return (new PanelActionService($this))->{__FUNCTION__}($act);
+        return (new PanelActionService($this))->containerAction($act);
     }
 
     /**
      * @return mixed
      */
     public function urlContainerAction(string $act) {
-        return (new PanelActionService($this))->{__FUNCTION__}($act);
+        return (new PanelActionService($this))->urlContainerAction($act);
     }
 
     /**
      * @return mixed
      */
     public function urlItemAction(string $act) {
-        return (new PanelActionService($this))->{__FUNCTION__}($act);
+        return (new PanelActionService($this))->urlItemAction($act);
     }
 
     /**
      * @return mixed
      */
     public function btnItemAction(string $act) {
-        return (new PanelActionService($this))->{__FUNCTION__}($act);
+        return (new PanelActionService($this))->btnItemAction($act);
     }
 
     //-- nella registrazione 1 tasto, nelle modifiche 3
@@ -837,25 +839,58 @@ abstract class XotBasePanel implements PanelContract {
         return $query;
     }
 
+    //Method Modules\Xot\Models\Panels\XotBasePanel::indexRows() has parameter $query with no typehint specified.
+    /* deprecated ??
+    public function indexRows(Request $request, $query): Builder {
+        dddx([get_class($query)]);
+        $data = $request->all();
+
+        $filters = $data;
+        $q = isset($data['q']) ? $data['q'] : null;
+        $out_format = isset($data['format']) ? $data['format'] : null;
+        $act = isset($data['_act']) ? $data['_act'] : null;
+
+        $query = $query->with($this->with());
+        //$query = $this->indexQuery($request, $query);
+        $query = $this->indexQuery($data, $query);
+
+        //$query=$query->withPost('a');
+        //$query = $this->applyJoin($query);
+        $query = $this->applyFilter($query, $filters);
+        $query = $this->applySearch($query, $q);
+
+        //$this->callAction($query, $act);
+
+        //$formatted = $this->formatData($query, $data); // to presenter
+        $page = isset($data['page']) ? $data['page'] : 1;
+        Cache::forever('page', $page);
+        //dddx(Cache::get('page'));
+        //session('page',$page);
+        //Cookie::make('page', $page, 20);
+        //dddx(Cookie::get('page'));
+        return $query;
+    }
+    */
+
     /**
      * @return mixed
      */
     public function formCreate(array $params = []) {
-        return $this->form->{__FUNCTION__}($params);
+        return $this->form->formCreate($params);
     }
 
     /**
      * @return mixed
      */
     public function formEdit(array $params = []) {
-        return $this->form->{__FUNCTION__}($params);
+        return $this->form->formEdit($params);
     }
 
     /**
      * @return mixed
      */
     public function formLivewireEdit(array $params = []) {
-        return $this->form->{__FUNCTION__}($params);
+        return $this->form->formLivewireEdit($params);
     }
 
     /**
@@ -864,6 +899,48 @@ abstract class XotBasePanel implements PanelContract {
     public function getFormData(array $params = []) {
         return $this->form->{__FUNCTION__}($params);
     }
+
+    /* -- to panelformservice
+    public function exceptFields(array $params = []) {
+        extract($params);
+        $excepts = collect([]);
+        if (is_object($this->rows)) {
+            $methods = [
+                'getForeignKeyName',
+                'getMorphType',
+                //'getLocalKeyName',
+                'getForeignPivotKeyName',
+                'getRelatedPivotKeyName',
+                'getRelatedKeyName',
+            ];
+            if ('index' != $act) { //nella lista voglio visualizzare l'id
+                $methods[] = 'getLocalKeyName';
+            }
+
+            foreach ($methods as $method) {
+                if (method_exists($this->rows, $method)) {
+                    $excepts = $excepts->merge($this->rows->$method());
+                }
+            }
+        }
+        $excepts = $excepts->unique()->all();
+
+        $fields = collect($this->fields())
+            ->filter(
+                function ($item) use ($excepts, $act) {
+                    if (! isset($item->except)) {
+                        $item->except = [];
+                    }
+
+                    //!in_array($item->type,['Password']) &&
+                    return ! in_array($act, $item->except) &&
+                        ! in_array($item->name, $excepts);
+                }
+            )->all();
+
+        return $fields;
+    }
+    */
 
     /**
      * @return mixed
@@ -907,6 +984,28 @@ abstract class XotBasePanel implements PanelContract {
         return $this->form->{__FUNCTION__}();
     }
 
+    /*
+        -- in ingresso "qs" che e' array con le cose da aggiungere
+    */
+    /* --- da mettere in routeService
+    public function addQuerystringsUrl($params) {
+        extract($params);
+
+        return $request->fullUrlWithQuery($qs); // fa il merge in automatico
+
+        //$currentQueries = $request->query();
+        //Declare new queries you want to append to string:
+        //$newQueries = ['year' => date('Y')];
+        //Merge together current and new query strings:
+        //$allQueries = array_merge($currentQueries, $qs);
+        //Generate the URL with all the queries:
+        //return $request->fullUrlWithQuery($allQueries);
+
+    }
+    */
+
+    //-- nella registrazione 1 tasto, nelle modifiche 3
+
     public function btnHtml(array $params): ?string {
         return $this->form->{__FUNCTION__}($params);
     }
@@ -941,24 +1040,120 @@ abstract class XotBasePanel implements PanelContract {
         return $img->url();
     }
 
-    public function microdataSchemaOrg(): string {
+    /*
+    public function imgSrcOld(array $params): string { //usare PanelImageService
+        $row = $this->row;
+        if (! is_object($row)) {
+            return '#'.__LINE__.class_basename($this);
+        }
+        $src = $row->image_src;
+
+        $str0 = '/laravel-filemanager/';
+        if (Str::startsWith($src, $str0)) {
+            $src = '/'.Str::after($src, $str0);
+        }
+        $params['src'] = $src;
+        $width = 200;
+        $height = 200;
+        extract($params);
+        $images = $row->images;
+        if (null == $images) {
+            $images = $row->images();
+        }
+        $src = $src.'';
+        $img = $images->where('src', $src)
+            ->where('width', $width)
+            ->where('height', $height)
+            ->first();
+        if (is_object($img)) {
+            if (Str::startsWith($img->src_out, '\\')) {
+                $img->src_out = Str::after($img->src_out, '\\');
+                $img->save();
+            }
+
+            return $img->src_out;
+        }
+        $params['dirname'] = '/photos/'.$this->postType().'/'.$this->guid();
+
+        try {
+            $img = new ImageService($params);
+            $src_out = $img->fit()->save()->src();
+
+            $row->images()->create([
+                'src' => $src,
+                'src_out' => $src_out,
+                'width' => $width,
+                'height' => $height,
+            ]);
+
+            return $src_out;
+        } catch (\Exception $e) {
+            //dddx('isolated');
+            return '#['.__LINE__.']['.__FILE__.']';
+        }
+    }
+    //*/
+
+    /**
+     * @return string
+     */
+    public function microdataSchemaOrg() {
         return '';
     }
 
-    public function show_ldJson(): array {
+    /**
+     * @return array
+     */
+    public function show_ldJson() {
         return [];
     }
 
+    /**
+     * @param string $lang
+     *
+     * @return string
+     */
+    public function langUrl($lang) {
+        $params = [];
+        $params['lang'] = $lang;
+        $params['panel'] = $this;
+
+        return $this->route->urlLang($params);
+    }
+
+    /*
+    public function relatedUrlRecursive($params) { //vedere chi lo usa
+        $obj = $this;
+        $items = [];
+        $items[] = $this;
+        while (isset($obj->parent)) {
+            $items[] = $obj->parent;
+            $obj = $obj->parent;
+        }
+
+        $count = count($items);
+        $parz = [];
+        $routename = [];
+        for ($i = 0; $i < $count; ++$i) {
+            $j = $count - $i - 1;
+            $parz['container'.$i] = $items[$j]->postType();
+            $parz['item'.$i] = $items[$j]->row;
+            $routename[] = 'container'.$i;
+        }
+        $parz['container'.$count] = $params['related_name'];
+        $parz['lang'] = app()->getLocale();
+        $routename[] = 'container'.$i;
+        $routename = implode('.', $routename).'.'.$params['act'];
+        $route = route($routename, $parz);
+
+        return $route;
+    }
+    */
+
     public function relatedUrl(array $params = []): string {
-        return $this->route->{__FUNCTION__}($params);
-    }
+        $params['panel'] = $this;
 
-    public function langUrl(string $lang): string {
-        return $this->route->{__FUNCTION__}(['lang' => $lang]);
-    }
-
-    public function url(array $params = []): string {
-        return $this->route->{__FUNCTION__}($params);
+        return $this->route->urlRelatedPanel($params);
     }
 
     public function relatedName(string $name, ?int $id = null): ?PanelContract {
@@ -976,6 +1171,117 @@ abstract class XotBasePanel implements PanelContract {
 
         return $panel;
     }
+
+    public function url(array $params = []): string {
+        $act = 'show';
+        extract($params);
+        $act = Str::snake($act);
+        if (! isset($route_params)) {
+            $route_params = null;
+        }
+
+        return $this->route->urlPanel([/*'panel' => $this,*/ 'act' => $act]);
+    }
+
+    /*--- DEPRECATED
+
+    public function indexUrl():?string {
+
+        $url = $this->route->urlPanel(['panel' => $this, 'act' => 'index']);
+        //--- da spostare in routeservice
+        $data = [];
+        $filters = $this->filters();
+
+        foreach ($filters as $k => $v) {
+            $field_value = $this->row->{$v->field_name};
+            if (! isset($v->where_method)) {
+                $v->where_method = 'where';
+            }
+            $where = Str::after($v->where_method, 'where');
+
+            $filters[$k]->field_value = $field_value;
+            switch ($where) {
+                case 'Year':
+                    $value = $field_value->year;
+                    break;
+                case 'ofYear':
+                    $value = \Request::input('year', date('Y'));
+                    break;
+                case 'Month':
+                    $value = $field_value->month;
+                    break;
+                default:
+                    $value = $field_value;
+                    break;
+            }
+            $filters[$k]->value = $value;
+        }
+        $queries = collect($filters)->pluck('value', 'param_name')->all();
+        $node = class_basename($this->row).'-'.$this->row->getKey();
+        $queries['page'] = Cache::get('page');
+
+        $queries = array_merge(request()->query(), $queries);
+        $queries = collect($queries)->except(['_act'])->all();
+        $url = (url_queries($queries, $url)).'#'.$node;
+
+        return $url;
+    }
+
+
+    public function indexEditUrl():?string {
+        return $this->route->urlPanel(['panel' => $this, 'act' => 'index_edit']);
+    }
+
+
+    public function editUrl():?string {
+        return $this->route->urlPanel(['panel' => $this, 'act' => 'edit']);
+    }
+
+
+    public function updateUrl():?string {
+        return $this->route->urlPanel(['panel' => $this, 'act' => 'update']);
+    }
+
+
+    public function showUrl():?string {
+        return $this->route->urlPanel(['panel' => $this, 'act' => 'show']);
+    }
+
+
+    public function createUrl():?string {
+        return $this->route->urlPanel(['panel' => $this, 'act' => 'create']);
+    }
+
+
+    public function storeUrl():?string {
+        return $this->route->urlPanel(['panel' => $this, 'act' => 'store']);
+    }
+
+
+    public function destroyUrl():?string {
+        return $this->route->urlPanel(['panel' => $this, 'act' => 'destroy']);
+    }
+
+
+    public function detachUrl():?string {
+        return $this->route->urlPanel(['panel' => $this, 'act' => 'detach']);
+    }
+
+
+    public function gearUrl():?string {
+        return '#';
+    }
+    */
+
+    /*
+    public function postType(){
+        $models=config('xra.model');
+        $post_type=collect($models)->search(static::$model);
+        if($post_type==''){
+            $post_type=Str::snake(class_basename(static::$model));
+        }
+        return $post_type;
+    }*/
 
     public function postType(): string {
         $post_type = collect(config('xra.model'))->search(get_class($this->row));
@@ -1068,25 +1374,65 @@ abstract class XotBasePanel implements PanelContract {
         }
         $filters = $data;
         $q = isset($data['q']) ? $data['q'] : null;
+        //$out_format = isset($data['format']) ? $data['format'] : null;
         $sort = isset($data['sort']) ? $data['sort'] : null;
+        //$act = isset($data['_act']) ? $data['_act'] : null;
+
         $query = $this->rows;
+        /*
+        dddx([
+            'getQuery' => $query->getQuery(),
+            'methods' => get_class_methods($query),
+        ]);
+        */
+        if (! is_object($query)) {
+            if (! is_object($this->row)) {
+                return $query;
+            }
+            $query = $this->row;
+        }
+
+        //dddx(get_class($this));
         $with = $this->with();
+        //dddx($with);
         try {
             $query = $query->with($with);
         } catch (\Exception $e) {
             //Method Illuminate\Database\Eloquent\Collection::with does not exist.
         }
+        /*
+        * se prendo il builder perdo il modello.
+        */
+        //$query = $query->getQuery(); //per prendere il Illuminate\Database\Query\Builder
+
         $query = $this->indexQuery($data, $query);
+
+        //$query=$query->withPost('a');
+        //$query = $this->applyJoin($query);
         $query = $this->applyFilter($query, $filters);
+
         $query = $this->applySearch($query, $q);
 
+        //dddx(Route::is('*edit*'));
+        //controllo se la pagina su cui devo andare è un edit,
+        //in caso tolgo i sort che rompono le scatole
+        //magari meglio fare helper?
         if (! Route::is('*edit*')) {
             $query = $this->applySort($query, $sort);
         }
-        /*
+        //$query = $this->applySort($query, $sort);
+
         $page = isset($data['page']) ? $data['page'] : 1;
         Cache::forever('page', $page);
+
+        /*
+        $this->callAction($query, $act);
+
+        $formatted = $this->formatData($query, $data);
+        $query=$query->paginate(20);
+        return $query;
         */
+
         return $query;
     }
 
