@@ -85,7 +85,12 @@ Route::group(
         //$item0,
     ];
     $prefix = 'admin';
-    $middleware = ['web', 'auth', \Modules\Xot\Http\Middleware\PanelMiddleware::class, \Modules\Xot\Http\Middleware\SelectResponseMiddleware::class];
+    $middleware = [
+        'web',
+        'auth',
+        \Modules\Xot\Http\Middleware\PanelMiddleware::class,
+        /*\Modules\Xot\Http\Middleware\SelectResponseMiddleware::class */
+    ];
     $namespace .= '\Admin';
     Route::group(
         [

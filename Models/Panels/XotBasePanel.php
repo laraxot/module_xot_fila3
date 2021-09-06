@@ -1587,9 +1587,11 @@ abstract class XotBasePanel implements PanelContract {
         return $this->presenter->out();
     }
 
+    /*
     public function __toString() {
         return $this->presenter->out()->render();
     }
+    */
 
     public function pdfFilename(array $params = []): string {
         $fields = ['matr', 'cognome', 'nome', 'anno'];
