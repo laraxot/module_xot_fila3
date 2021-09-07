@@ -110,11 +110,11 @@ if (! \function_exists('backtrace')) {
 
 if (! \function_exists('dddx')) {
     /**
-     * @param array|mixed $params
+     * @param array|string|mixed $params
      *
      * @return string
      */
-    function dddx(array $params){
+    function dddx($params) {
         $tmp = \debug_backtrace();
         $file = $tmp[0]['file'];
         $file = \str_replace('/', DIRECTORY_SEPARATOR, $file);
@@ -137,11 +137,9 @@ if (! \function_exists('dddx')) {
 
 if (! \function_exists('getFilename')) {
     /**
-     * @param array $params
-     *
      * @return string
      */
-    function getFilename(array $params){
+    function getFilename(array $params) {
         $tmp = \debug_backtrace();
         $class = (string) class_basename($tmp[1]['class']);
 
@@ -467,11 +465,9 @@ if (! \function_exists('xotModelEager')) {
 
 if (! \function_exists('transFields')) {
     /**
-     * @param array $params
-     *
      * @return mixed|stdClass
      */
-    function transFields(array $params){
+    function transFields(array $params) {
         $params_orig = $params;
         if (! isset($params_orig['attributes'])) {
             $params_orig['attributes'] = [];
@@ -651,13 +647,11 @@ if (! \function_exists('debug_getter_obj')) {
     */
 
     /**
-     * @param array $params
-     *
      * @throws ReflectionException
      *
      * @return array|null
      */
-    function debug_getter_obj(array $params){
+    function debug_getter_obj(array $params) {
         extract($params);
         if (! isset($obj)) {
             dddx(['err' => 'obj is missing']);
