@@ -12,8 +12,6 @@ use Modules\Xot\Contracts\PanelContract;
 use Modules\Xot\Http\Requests\XotRequest;
 use Modules\Xot\Services\PanelService as Panel;
 use Modules\Xot\Services\PolicyService;
-use Modules\Xot\Services\TenantService as Tenant;
-use Nwidart\Modules\Facades\Module;
 
 /**
  * Class XotBaseContainerController.
@@ -28,7 +26,6 @@ abstract class XotBaseContainerController extends Controller {
      * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse|\Illuminate\Http\Response|mixed
      */
     public function __call($method, $args) {
-        //dddx(['method' => $method, 'args' => $args]);
         $panel = Panel::getRequestPanel();
         if (null == $panel) {
             throw new \Exception('uston gavemo un problemon');
@@ -38,13 +35,7 @@ abstract class XotBaseContainerController extends Controller {
         if ('' != request()->input('_act', '')) {
             return $this->__callPanelAct($method, $args);
         }
-        /*
-        if (null == $panel) {
-            $request = XotRequest::capture();
 
-            return app('\Modules\Xot\Http\Controllers\Admin\HomeController')->$method($request);
-        }
-        */
         return $this->__callRouteAct($method, $args);
     }
 
@@ -57,9 +48,15 @@ abstract class XotBaseContainerController extends Controller {
                 return Str::studly($item);
             }
         )->implode('\\');
+        if ('' == $tmp) {
+            $tmp = 'Module';
+        }
         $controller = '\Modules\\'.$mod_name.'\Http\Controllers\Admin\\'.$tmp.'Controller';
         if (class_exists($controller)) {
             return $controller;
+        }
+        if ('Module' == $tmp) {
+            return '\Modules\Xot\Http\Controllers\Admin\ModuleController';
         }
 
         return '\Modules\Xot\Http\Controllers\Admin\XotPanelController';
@@ -79,24 +76,11 @@ abstract class XotBaseContainerController extends Controller {
 
         $request = XotRequest::capture();
         $controller = $this->getController();
-        $data = $request->all();
+        //$data = $request->all();
 
-        //$panel = app($controller)->$method($data, $panel);
         $out = app($controller)->$method($request, $panel);
 
         return $out;
-        /*
-        if (! method_exists($panel, 'out')) {
-            return $panel;
-        }
-
-        return $panel->out(
-            [
-                'is_ajax' => $request->ajax(),
-                'method' => $request->getMethod(),
-            ]
-        );
-        */
     }
 
     /**
@@ -111,19 +95,6 @@ abstract class XotBaseContainerController extends Controller {
         $method_act = Str::camel($act);
 
         $panel = $this->panel;
-        /*
-        if (null == $panel) {
-            $route_params = $request->route()->parameters();
-            if (isset($route_params['module'])) {
-                $module = Module::find($route_params['module']);
-                $module_name = $module->getName();
-                $panel = app('\Modules\\'.$module_name.'\Models\Panels\HomePanel');
-            } else {
-                $home = Tenant::model('home');
-                $panel = Panel::get($home);
-            }
-        }
-        */
 
         $authorized = Gate::allows($method_act, $panel);
         if (! $authorized) {
@@ -154,7 +125,7 @@ abstract class XotBaseContainerController extends Controller {
             $referer = \Request::path();
 
             return redirect()->route('login.notice', ['lang' => $lang, 'referer' => $referer])
-            ->withErrors(['active' => 'login before']);
+                ->withErrors(['active' => 'login before']);
         }
         $policy_class = PolicyService::get($panel)->createIfNotExists()->getClass();
         $msg = 'Auth Id ['.\Auth::id().'] not can ['.$method.'] on ['.$policy_class.']';

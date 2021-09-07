@@ -30,7 +30,12 @@ abstract class XotBasePanelAction {
 
     public Model $row;
 
-    public Builder $rows;
+    /**
+     * @var Relation|Builder
+     */
+    public $rows;
+
+    //public Builder $rows;
 
     public PanelContract $panel;
 

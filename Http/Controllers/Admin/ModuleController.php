@@ -17,13 +17,14 @@ use Modules\Theme\Services\ThemeService;
 /**
  * Class ModuleController.
  */
-class ModuleController extends XotBaseContainerController {
-}
+//class ModuleController extends XotBaseContainerController {
+//}
 //*/
-/*
+//*
 class ModuleController extends Controller {
     public function index(Request $request) {
         $params = optional(\Route::current())->parameters();
+
         $home_view = $params['module'].'::admin.index';
 
         if (\View::exists($home_view)) {
@@ -33,4 +34,4 @@ class ModuleController extends Controller {
         return ThemeService::view('xot::admin.home');
     }
 }
-*/
+//*/
