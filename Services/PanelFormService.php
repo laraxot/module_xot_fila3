@@ -167,13 +167,10 @@ class PanelFormService {
     }
     */
 
-    /**
-     * @return string
-     */
-    public function btnCrud(array $params = []) {
+    public function btnCrud(array $params = []): string {
         extract($params);
         $acts = ['edit', 'destroy', 'show'];
-        if (is_object($this->panel->getRow()->pivot)) {
+        if (is_object($this->panel->getRow()->getRelationValue('pivot'))) {
             $acts = ['edit', 'destroy', 'detach', 'show'];
         }
 

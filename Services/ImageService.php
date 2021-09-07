@@ -304,6 +304,9 @@ class ImageService {
             ->first();
 
         if (is_object($img)) {
+            if($img->src_out==null){
+                throw new \Exception('$img->src_out==null ['.__LINE__.']['.__FILE__.']');
+            }
             if (Str::startsWith($img->src_out, Storage::disk('photos')->url(''))) {
                 $out = str_replace('http://', '//', $img->src_out);
                 if (! is_string($out)) {

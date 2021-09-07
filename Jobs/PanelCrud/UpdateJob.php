@@ -246,9 +246,12 @@ class UpdateJob extends XotBaseJob {
             ]);
         }
         //*/
-        $parent_row = $this->panel->getParent()->getRow();
-        $panel_name = $this->panel->getName();
-        $parent_row->{$panel_name}()->updateExistingPivot($model->getKey(), $data);
+        $parent_panel = $this->panel->getParent();
+        if (null != $parent_panel) {
+            $parent_row = $parent_panel->getRow();
+            $panel_name = $this->panel->getName();
+            $parent_row->{$panel_name}()->updateExistingPivot($model->getKey(), $data);
+        }
         //$res = $this->panel->rows->updateOrCreate($data);
         //dddx($res);
 

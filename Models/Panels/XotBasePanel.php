@@ -298,6 +298,7 @@ abstract class XotBasePanel implements PanelContract {
 
         $value = Str::slug($guid); //retrocompatibilita'
         if ('guid' == $pk_full) {
+            // 301    Call to an undefined method Illuminate\Database\Eloquent\Builder|Illuminate\Database\Eloquent\Relations\Relation::whereHas().
             $rows = $rows->whereHas(
                 'posts',
                 function (Builder $query) use ($value): void {
@@ -927,53 +928,38 @@ abstract class XotBasePanel implements PanelContract {
         return $this->form->{__FUNCTION__}($params);
     }
 
-    /**
-     * @return mixed
-     */
-    public function indexFields():array {
+    public function indexFields(): array {
         //return $this->exceptFields(['act' => 'index']);
         return $this->form->{__FUNCTION__}();
     }
 
-    /**
-     * @return mixed
-     */
-    public function createFields():array {
+    public function createFields(): array {
         //return  $this->exceptFields(['act' => 'create']);
 
         return $this->form->{__FUNCTION__}();
     }
 
-    /**
-     * @return mixed
-     */
-    public function editFields():array {
+    public function editFields(): array {
         //return  $this->exceptFields(['act' => 'edit']);
 
         return $this->form->{__FUNCTION__}();
     }
 
-    /**
-     * @return mixed
-     */
-    public function editObjFields():array {
+    public function editObjFields(): array {
         return $this->form->{__FUNCTION__}();
     }
 
-    /**
-     * @return mixed
-     */
-    public function indexEditFields():array {
+    public function indexEditFields(): array {
         //return  $this->exceptFields(['act' => 'index_edit']);
 
         return $this->form->{__FUNCTION__}();
     }
 
-    public function btnHtml(array $params): ?string {
+    public function btnHtml(array $params): string {
         return $this->form->{__FUNCTION__}($params);
     }
 
-    public function btnCrud(array $params = []): ?string {
+    public function btnCrud(array $params = []): string {
         return $this->form->{__FUNCTION__}($params);
     }
 
