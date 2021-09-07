@@ -17,10 +17,10 @@ use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 //$Excel_writer->save('php://output');
 
 class XLSService {
-    public static function out($params) {
+    public static function out(array $params){
     }
 
-    public static function save_phpoffice($params) {
+    public static function save_phpoffice(array $params){
         \extract($params);
         $spreadsheet = new Spreadsheet();
         $sheet = $spreadsheet->getActiveSheet();

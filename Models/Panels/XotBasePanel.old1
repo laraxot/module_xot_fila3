@@ -988,7 +988,7 @@ abstract class XotBasePanel implements PanelContract {
         -- in ingresso "qs" che e' array con le cose da aggiungere
     */
     /* --- da mettere in routeService
-    public function addQuerystringsUrl($params) {
+    public function addQuerystringsUrl(array $params){
         extract($params);
 
         return $request->fullUrlWithQuery($qs); // fa il merge in automatico
@@ -1122,7 +1122,7 @@ abstract class XotBasePanel implements PanelContract {
     }
 
     /*
-    public function relatedUrlRecursive($params) { //vedere chi lo usa
+    public function relatedUrlRecursive(array $params){ //vedere chi lo usa
         $obj = $this;
         $items = [];
         $items[] = $this;

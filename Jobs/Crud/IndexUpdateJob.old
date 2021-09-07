@@ -78,7 +78,7 @@ class IndexUpdateJob implements ShouldQueue {
         return $this->panel;
     }
 
-    public function indexUpdateRelationshipsBelongsToMany($params) {
+    public function indexUpdateRelationshipsBelongsToMany(array $params){
         extract($params);
         if (isset($data['from']) || isset($data['to'])) {
             $this->saveMultiselectTwoSides($params);
@@ -89,7 +89,7 @@ class IndexUpdateJob implements ShouldQueue {
         }
     }
 
-    public function indexUpdateRelationshipsMorphToMany($params) {
+    public function indexUpdateRelationshipsMorphToMany(array $params){
         extract($params);
         //ddd($data);
         /*
@@ -122,7 +122,7 @@ class IndexUpdateJob implements ShouldQueue {
         }
     }
 
-    public function saveMultiselectTwoSides($params) {
+    public function saveMultiselectTwoSides(array $params){
         //passo request o direttamente data ?
         extract($params);
         $items = $model->$name();

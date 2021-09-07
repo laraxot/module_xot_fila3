@@ -86,7 +86,7 @@ class RouteService {
     }
 
     /* // move to RoutePanelService
-    public static function urlPanel($params) {
+    public static function urlPanel(array $params){
         extract($params);
 
         if (! isset($panel)) {
@@ -192,7 +192,7 @@ class RouteService {
      *
      * @return string
      */
-    public static function getRoutenameN($params) {
+    public static function getRoutenameN(array $params){
         //default vars
         $n = 0;
         $act = 'show';
@@ -212,7 +212,7 @@ class RouteService {
     }
 
     /*
-    public static function urlRelatedPanel($params) {
+    public static function urlRelatedPanel(array $params){
         $act = 'show';
         extract($params);
         if (! isset($panel)) {

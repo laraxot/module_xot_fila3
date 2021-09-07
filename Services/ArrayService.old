@@ -13,7 +13,7 @@ use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 class ArrayService {
     protected static $export_processor = 1;
 
-    public static function toXLS($params) {
+    public static function toXLS(array $params){
         require_once __DIR__.'/vendor/autoload.php';
         $data = $params['data'];
         $res = [];
@@ -36,7 +36,7 @@ class ArrayService {
         }
     }
 
-    public static function toXLS_phpoffice($params) {
+    public static function toXLS_phpoffice(array $params){
         $filename = 'test';
         \extract($params);
         if (! isset($data)) {
@@ -93,7 +93,7 @@ class ArrayService {
     header('Cache-Control: max-age=0');
     */
 
-    public static function toXLS_Maatwebsite($params) {
+    public static function toXLS_Maatwebsite(array $params){
         \extract($params);
         Excel::create($filename, function ($excel) use ($data) {
             $excel->sheet('Excel sheet', function ($sheet) use ($data) {
@@ -104,7 +104,7 @@ class ArrayService {
         })->export('xlsx');
     }
 
-    public static function toXLS_phpexcel($params) {
+    public static function toXLS_phpexcel(array $params){
         \Debugbar::disable();
         $objPHPExcel = new \PHPExcel();
         $text = '';
@@ -160,7 +160,7 @@ class ArrayService {
     }
 
     /*
-    public static function toXLS_pear($params) {
+    public static function toXLS_pear(array $params){
         //echo '<pre>';print_r($params); echo '</pre>';
         $caption = '';
         \extract($params);
@@ -254,7 +254,7 @@ class ArrayService {
     */
     //end function
 
-    public static function toCSV($params) {
+    public static function toCSV(array $params){
         //return self::toCSV_php($params);
         //return self::toCSV_phpexcel($params);
         require_once __DIR__.'/vendor/autoload.php';
@@ -262,7 +262,7 @@ class ArrayService {
         return self::toCSV_phpoffice($params);
     }
 
-    public static function toCSV_phpoffice($params) {
+    public static function toCSV_phpoffice(array $params){
         \extract($params);
         $spreadsheet = new Spreadsheet();
         $sheet = $spreadsheet->getActiveSheet();
@@ -332,7 +332,7 @@ class ArrayService {
     }
     */
 
-    public static function toCSV_php($params) {
+    public static function toCSV_php(array $params){
         global $registry;
         $caption = '';
         $delimiter = ';';
@@ -370,7 +370,7 @@ class ArrayService {
         }
     }
 
-    public static function toCSV_Maatwebsite($params) {
+    public static function toCSV_Maatwebsite(array $params){
         \Config::set('excel::csv.delimiter', ';');
         \Config::set('excel.csv.delimiter', ';');
         \Maatwebsite\Excel\Facades\Excel::setDelimiter(';');
@@ -426,7 +426,7 @@ class ArrayService {
         return false;
     }
 
-    public static function raggruppa($params) {
+    public static function raggruppa(array $params){
         if (! isset($params['key_array']) && isset($params['key'])) {
             $params['key_array'] = $params['key'];
         }
@@ -486,7 +486,7 @@ class ArrayService {
         return $ris;
     }
 
-    public static function subtotale($params) {
+    public static function subtotale(array $params){
         $fields = [];
         \extract($params);
         $ris = [];
@@ -579,7 +579,7 @@ class ArrayService {
         return $ris;
     }
 
-    public static function save($params) {
+    public static function save(array $params){
         //require_once(__DIR__.'/vendor/autoload.php');
         \extract($params);
         /*

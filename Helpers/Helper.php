@@ -114,7 +114,7 @@ if (! \function_exists('dddx')) {
      *
      * @return string
      */
-    function dddx($params) {
+    function dddx(array $params){
         $tmp = \debug_backtrace();
         $file = $tmp[0]['file'];
         $file = \str_replace('/', DIRECTORY_SEPARATOR, $file);
@@ -141,7 +141,7 @@ if (! \function_exists('getFilename')) {
      *
      * @return string
      */
-    function getFilename($params) {
+    function getFilename(array $params){
         $tmp = \debug_backtrace();
         $class = (string) class_basename($tmp[1]['class']);
 
@@ -471,7 +471,7 @@ if (! \function_exists('transFields')) {
      *
      * @return mixed|stdClass
      */
-    function transFields($params) {
+    function transFields(array $params){
         $params_orig = $params;
         if (! isset($params_orig['attributes'])) {
             $params_orig['attributes'] = [];
@@ -577,7 +577,7 @@ if (! \function_exists('deltaTime')) {
 
 if (! \function_exists('debug_getter_obj')) {
     /*
-    function debug_getter_objOLD($params) {
+    function debug_getter_objOLD(array $params){
         extract($params);
         if (! isset($obj)) {
             dddx(['err' => 'obj is missing']);
@@ -657,7 +657,7 @@ if (! \function_exists('debug_getter_obj')) {
      *
      * @return array|null
      */
-    function debug_getter_obj($params) {
+    function debug_getter_obj(array $params){
         extract($params);
         if (! isset($obj)) {
             dddx(['err' => 'obj is missing']);

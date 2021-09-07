@@ -23,7 +23,7 @@ class ZipService {
      *
      * @return string|\Symfony\Component\HttpFoundation\BinaryFileResponse|void
      */
-    public static function fromRowsPdf($params) {
+    public static function fromRowsPdf(array $params){
         ini_set('max_execution_time', '3600');
         ini_set('memory_limit', '-1');
         $pdforientation = 'P';

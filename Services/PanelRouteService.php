@@ -184,7 +184,7 @@ class PanelRouteService {
      *
      * @return string
      */
-    public static function getRoutenameN($params) {
+    public static function getRoutenameN(array $params){
         //default vars
         $n = 0;
         $act = 'show';

@@ -57,7 +57,7 @@ trait RouteTrait {
     //end function
 
     //--------------------------------------------------------------------------------
-    public static function createRouteResource($params) {
+    public static function createRouteResource(array $params){
         $v = $params;
         if (null == $v['name']) {
             return;
@@ -96,7 +96,7 @@ trait RouteTrait {
     }
 
     // ------------------------------------------------------------------------------
-    public static function createRouteSubs($params) {
+    public static function createRouteSubs(array $params){
         $v = $params;
         if (! isset($v['subs'])) {
             return;
@@ -120,7 +120,7 @@ trait RouteTrait {
     // Route::get($uri, $callback);
 
     //---------------------------------------------------
-    public static function createRouteActs($params) {
+    public static function createRouteActs(array $params){
         $v = $params;
         if (! isset($v['acts'])) {
             return;

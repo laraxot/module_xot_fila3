@@ -6,17 +6,17 @@ use Modules\Xot\Services\ArrayService;
 use Zend;
 
 trait ArrayTrait {
-    public static function toXLS($params) {
+    public static function toXLS(array $params){
         //return self::toXLS_Maatwebsite($params);
         return ArrayService::toXLS($params);
     }
 
-    public static function toCSV($params) {
+    public static function toCSV(array $params){
         //return self::toCSV_php($params);
         return ArrayService::toCSV($params);
     }
 
-    public static function array_raggruppa($params) {
+    public static function array_raggruppa(array $params){
         if (! isset($params['key_array']) && isset($params['key'])) {
             $params['key_array'] = $params['key'];
         }
@@ -76,7 +76,7 @@ trait ArrayTrait {
         return $ris;
     }
 
-    public static function array_subtotale($params) {
+    public static function array_subtotale(array $params){
         $fields = [];
         \extract($params);
         $ris = [];
@@ -196,7 +196,7 @@ trait ArrayTrait {
         return null;
     }
 
-    public static function save($params) {
+    public static function save(array $params){
         \extract($params);
         $writer = new Zend\Config\Writer\PhpArray();
         $content = $writer->toString($data);

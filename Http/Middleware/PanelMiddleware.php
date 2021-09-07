@@ -17,7 +17,7 @@ use Modules\Xot\Services\PanelService;
  */
 class PanelMiddleware {
     /*
-    public function __construct($params) {
+    public function __construct(array $params){
         dddx($params);
     }
     */

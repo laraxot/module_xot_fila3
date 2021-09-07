@@ -516,7 +516,7 @@ class ImportService {
      *
      * @return mixed|null
      */
-    public static function pixabay($params) {
+    public static function pixabay(array $params){
         $lang = app()->getLocale();
         $image_type = 'photo';
         $q = 'necessary';
@@ -541,7 +541,7 @@ class ImportService {
      *
      * @return mixed|null
      */
-    public static function pexels($params) {
+    public static function pexels(array $params){
         $lang = app()->getLocale();
         $q = 'necessary';
         \extract($params);
@@ -557,7 +557,7 @@ class ImportService {
      *
      * @return mixed|string|void
      */
-    public static function trans($params) {
+    public static function trans(array $params){
         $i = \rand(0, 20);
         if ($i > 0 && $i < 10) {
             return self::googleTrans($params);
@@ -571,7 +571,7 @@ class ImportService {
      *
      * @return mixed|null
      */
-    public static function apertiumTrans($params) {
+    public static function apertiumTrans(array $params){
         //https://github.com/24aitor/Laralang/blob/master/src/Builder/ApertiumTrans.php
         //$host = 'api.apertium.org';
         //$urldata = file_get_contents("http://$host/json/translate?q=$urlString&langpair=$this->from|$this->to");
@@ -583,7 +583,7 @@ class ImportService {
      *
      * @return string
      */
-    public static function googleTrans($params) {
+    public static function googleTrans(array $params){
         $host = 'translate.googleapis.com';
         $q = 'necessary';
         $from = 'en';
@@ -609,7 +609,7 @@ class ImportService {
      *
      * @return mixed|void
      */
-    public static function mymemoryTrans($params) {
+    public static function mymemoryTrans(array $params){
         $host = 'api.mymemory.translated.net';
         $q = 'necessary';
         $from = 'en';
@@ -645,7 +645,7 @@ class ImportService {
      *
      * @return array
      */
-    public static function getForms($params) {
+    public static function getForms(array $params){
         $html = '';
         $node_tag = '';
         extract($params);
@@ -673,7 +673,7 @@ class ImportService {
     /**
      * @param array $params
      */
-    public static function formRequest($params): ?string {
+    public static function formRequest(array $params): ?string {
         $form = ['method' => '?', 'action' => '?', 'fields' => '?'];
         extract($params);
 

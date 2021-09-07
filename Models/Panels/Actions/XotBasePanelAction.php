@@ -13,6 +13,7 @@ use Illuminate\Database\Eloquent\Builder;
 //----------  SERVICES --------------------------
 //------------ jobs ----------------------------
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Str;

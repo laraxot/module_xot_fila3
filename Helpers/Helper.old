@@ -43,7 +43,7 @@ if (! function_exists('str_contains')) {
 //-------------------------------------------
 
 if (! \function_exists('dddx')) {
-    function dddx($params) {
+    function dddx(array $params){
         $tmp = \debug_backtrace();
         $file = $tmp[0]['file'];
         $file = \str_replace('/', DIRECTORY_SEPARATOR, $file);
@@ -65,7 +65,7 @@ if (! \function_exists('dddx')) {
 }
 
 if (! \function_exists('getFilename')) {
-    function getFilename($params) {
+    function getFilename(array $params){
         $tmp = \debug_backtrace();
         $class = class_basename($tmp[1]['class']);
         $func = $tmp[1]['function'];
@@ -81,7 +81,7 @@ if (! \function_exists('getFilename')) {
 }
 /*
 if (! \function_exists('setConfig')) {
-    function setConfig($params) {
+    function setConfig(array $params){
         $data = getConfig($params);
         $data = \array_merge($data, $params['data']);
 
@@ -97,7 +97,7 @@ if (! \function_exists('setConfig')) {
 }
 
 if (! \function_exists('getConfig')) {
-    function getConfig($params) {
+    function getConfig(array $params){
         $config_files = getConfigFiles($params);
         if (\count($config_files) > 1) {
             $data = [];
@@ -114,7 +114,7 @@ if (! \function_exists('getConfig')) {
 }
 
 if (! \function_exists('getConfigFile')) {
-    function getConfigFiles($params) {
+    function getConfigFiles(array $params){
         //if(count($params)>1){
         if (\is_dir(base_path('config/'.$params['file']))) {
             $tmps = (\array_keys(config($params['file'])));
@@ -160,7 +160,7 @@ if (! \function_exists('req_uri')) {
 
 /*
 if (! \function_exists('arraySave')) {
-    function arraySave($params) {
+    function arraySave(array $params){
         \XRA\Extend\Services\ArrayService::save($params);
 
         // \extract($params);
@@ -367,7 +367,7 @@ if (! \function_exists('xotModel')) {
 }
 
 if (! \function_exists('transFields')) {
-    function transFields($params) {
+    function transFields(array $params){
         $model = Form::getModel();
         $module_name = getModuleNameFromModel($model);
         $trans_root = Str::lower($module_name).'::'.Str::snake(class_basename($model));
@@ -440,7 +440,7 @@ if (! \function_exists('deltaTime')) {
 }
 
 if (! \function_exists('debug_getter_obj')) {
-    function debug_getter_objOLD($params) {
+    function debug_getter_objOLD(array $params){
         extract($params);
         $methods = collect(get_class_methods($obj))->filter(function ($item) {
             $exclude = [
@@ -507,7 +507,7 @@ if (! \function_exists('debug_getter_obj')) {
         ddd($methods);
     }//end function
 
-    function debug_getter_obj($params) {
+    function debug_getter_obj(array $params){
         extract($params);
         $methods = get_class_methods($obj);
         $data = [];

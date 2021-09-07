@@ -394,7 +394,7 @@ trait CrudContainerItemTrait {
         return ThemeService::action($request, $row);
     }
 
-    public function params2ContainerItem($params) {
+    public function params2ContainerItem(array $params){
         $container = [];
         $item = [];
         foreach ($params as $k => $v) {

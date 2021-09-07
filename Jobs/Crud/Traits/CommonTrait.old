@@ -30,7 +30,7 @@ trait CommonTrait {
      * https://hackernoon.com/eloquent-relationships-cheat-sheet-5155498c209
      * https://laracasts.com/discuss/channels/eloquent/cleanest-way-to-save-model-and-relationships.
      */
-    public function manageRelationships($params) {
+    public function manageRelationships(array $params){
         extract($params);
         if (! is_object($model)) {
             return;

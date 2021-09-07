@@ -370,7 +370,7 @@ class RouteService {
 
     //--------------------------------------------------
 
-    public static function containerN($params) {
+    public static function containerN(array $params){
         extract($params);
         if (! isset($model)) {
             ddd($params);
@@ -428,7 +428,7 @@ class RouteService {
     }
 
     /*
-    public static function routenameN($params) {
+    public static function routenameN(array $params){
     $routename = \Route::currentRouteName();
     $act = last(explode('.', $routename));
     extract($params);
@@ -444,7 +444,7 @@ class RouteService {
     return $routename_n;
     }
      */
-    public static function routenameSon($params) {
+    public static function routenameSon(array $params){
         $container_i = self::containerN($params);
         $routename = \Route::currentRouteName();
         extract($params);
@@ -493,7 +493,7 @@ class RouteService {
         return $route;
     }
 
-    public static function tabs($params) {
+    public static function tabs(array $params){
         extract($params);
         $route_params = optional(\Route::current())->parameters();
         $routename = \Route::currentRouteName();
@@ -531,7 +531,7 @@ class RouteService {
                 $tmp1->active = in_array($v, $containers);
                 $tmp1->routename = RouteService::routenameSon(['model' => $model]);
                 /*
-                $path=collect(explode('.',$tmp1->routename))->map(function ($v,$k) use ($params) {
+                $path=collect(explode('.',$tmp1->routename))->map(function ($v,$k) use ($params){
                 if(isset($params[$v])) return $params[$v];
                 return $v;
                 })->implode('.');
@@ -576,11 +576,11 @@ class RouteService {
         return $classes;
     }
 
-    public static function getRouteN($params) {
+    public static function getRouteN(array $params){
         extract($params);
     }
 
-    public static function urlPanel($params) {
+    public static function urlPanel(array $params){
         $lang = app()->getLocale();
         extract($params);
         $parents = collect([]);
@@ -670,7 +670,7 @@ class RouteService {
         return url_queries($queries, $route);
     }
 
-    public static function urlRelatedPanel($params) {
+    public static function urlRelatedPanel(array $params){
         $lang = app()->getLocale();
         extract($params);
         $parents = collect([]);
@@ -726,7 +726,7 @@ class RouteService {
         }
     }
 
-    public static function getRoutenameN($params) {
+    public static function getRoutenameN(array $params){
         extract($params);
         $tmp = [];
         if (in_admin()) {
@@ -741,7 +741,7 @@ class RouteService {
         return $routename;
     }
 
-    public static function urlModel($params) {
+    public static function urlModel(array $params){
         $lang = app()->getLocale();
         extract($params);
         $route_current = \Route::current();
@@ -817,7 +817,7 @@ class RouteService {
         return $url;
     }
 
-    public static function routenameN($params) {
+    public static function routenameN(array $params){
         //--- default data
         $routename = \Route::currentRouteName();
         $act = last(explode('.', $routename));
@@ -839,7 +839,7 @@ class RouteService {
      * in = row , related.
      *
      **/
-    public static function urlRelated($params) {
+    public static function urlRelated(array $params){
         extract($params);
         try {
             $params = optional(\Route::current())->parameters();
@@ -867,7 +867,7 @@ class RouteService {
         return $route;
     }
 
-    public static function urlAct($params) {
+    public static function urlAct(array $params){
         $query = [];
         extract($params);
         $mutator = $act.'_url';

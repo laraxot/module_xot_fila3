@@ -43,7 +43,7 @@ trait CommonTrait {
      *
      * @param array $params
      */
-    public function manageRelationships($params): void {
+    public function manageRelationships(array $params): void {
         $act = 'show';
         extract($params);
         if (! isset($model)) {

@@ -195,7 +195,7 @@ class StoreJob implements ShouldQueue {
 
     //end handle
 
-    public function storeRelationshipsPivot($params) {
+    public function storeRelationshipsPivot(array $params){
         /*
         extract($params);
         $types=Str::plural($container);
@@ -207,7 +207,7 @@ class StoreJob implements ShouldQueue {
         */
     }
 
-    public function storeRelationshipsHasOne($params) {
+    public function storeRelationshipsHasOne(array $params){
         extract($params);
         $rows = $model->$name();
         /*
@@ -232,12 +232,12 @@ class StoreJob implements ShouldQueue {
         }
     }
 
-    public function storeRelationshipsHasMany($params) {
+    public function storeRelationshipsHasMany(array $params){
         extract($params);
         //$rows = $model->$name();
     }
 
-    public function storeRelationshipsBelongsTo($params) {
+    public function storeRelationshipsBelongsTo(array $params){
         extract($params);
         $rows = $model->$name();
         //debug_getter_obj(['obj'=>$rows]);
@@ -251,7 +251,7 @@ class StoreJob implements ShouldQueue {
         }
     }
 
-    public function storeRelationshipsMorphOne($params) {
+    public function storeRelationshipsMorphOne(array $params){
         extract($params);
         if (! isset($data['lang']) /* && in_array('lang', $row->getFillable()) */) {
             $data['lang'] = app()->getLocale();
@@ -263,7 +263,7 @@ class StoreJob implements ShouldQueue {
         }
     }
 
-    public function storeRelationshipsMorphToMany($params) {
+    public function storeRelationshipsMorphToMany(array $params){
         extract($params);
 
         //ddd(\Request::all());
@@ -316,14 +316,14 @@ class StoreJob implements ShouldQueue {
         }
     }
 
-    public function storeRelationshipsHasManyThrough($params) {
+    public function storeRelationshipsHasManyThrough(array $params){
         /*
         Call to undefined method Illuminate\Database\Eloquent\Relations\HasManyThrough::syncWithoutDetaching()
         */
         //$this->storeRelationshipsMorphToMany($params); //
     }
 
-    public function storeRelationshipsBelongsToMany($params) {
+    public function storeRelationshipsBelongsToMany(array $params){
         extract($params);
         if (isset($data['from']) || isset($data['to'])) {
             $this->saveMultiselectTwoSides($params);
@@ -333,7 +333,7 @@ class StoreJob implements ShouldQueue {
         $model->$name()->syncWithoutDetaching($data);
     }
 
-    public function saveMultiselectTwoSides($params) {
+    public function saveMultiselectTwoSides(array $params){
         //passo request o direttamente data ?
         extract($params);
         $items = $model->$name();

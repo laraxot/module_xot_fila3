@@ -71,7 +71,7 @@ class UpdateJob implements ShouldQueue {
     /**
      *--- hasOne ----.
      **/
-    public function updateRelationshipsHasOne($params) {
+    public function updateRelationshipsHasOne(array $params){
         extract($params);
         $rows = $model->$name();
         if ($rows->exists()) {
@@ -88,7 +88,7 @@ class UpdateJob implements ShouldQueue {
     /**
      *  belongsTo.
      **/
-    public function updateRelationshipsBelongsTo($params) {
+    public function updateRelationshipsBelongsTo(array $params){
         extract($params);
         $rows = $model->$name();
         if ($rows->exists()) {
@@ -102,7 +102,7 @@ class UpdateJob implements ShouldQueue {
     /**
      * --- hasMany ---.
      **/
-    public function updateRelationshipsHasMany($params) {
+    public function updateRelationshipsHasMany(array $params){
         extract($params);
         $rows = $model->$name();
         debug_getter_obj(['obj' => $rows]);
@@ -114,7 +114,7 @@ class UpdateJob implements ShouldQueue {
     /**
      * --- belongsToMany.
      **/
-    public function updateRelationshipsBelongsToMany($params) {
+    public function updateRelationshipsBelongsToMany(array $params){
         extract($params);
         if (isset($data['from']) || isset($data['to'])) {
             $this->saveMultiselectTwoSides($params);
@@ -133,7 +133,7 @@ class UpdateJob implements ShouldQueue {
     /**
      * morphOne.
      **/
-    public function updateRelationshipsMorphOne($params) {
+    public function updateRelationshipsMorphOne(array $params){
         extract($params);
         /* con update or create crea sempre uno nuovo, con update e basta se non esiste non va a crearlo */
         $rows = $model->$name();
@@ -150,7 +150,7 @@ class UpdateJob implements ShouldQueue {
     /**
      * morphMany.
      **/
-    public function updateRelationshipsMorphMany($params) {
+    public function updateRelationshipsMorphMany(array $params){
         extract($params);
         //$res=$model->$name()->syncWithoutDetaching($data);
         foreach ($data as $k => $v) {
@@ -169,7 +169,7 @@ class UpdateJob implements ShouldQueue {
     /**
      * morphToMany.
      **/
-    public function updateRelationshipsMorphToMany($params) {
+    public function updateRelationshipsMorphToMany(array $params){
         extract($params);
         //dddx([\Request::all(), $params]);
         //$res=$model->$name()->syncWithoutDetaching($data);
@@ -229,12 +229,12 @@ class UpdateJob implements ShouldQueue {
     /**
      * pivot.
      **/
-    public function updateRelationshipsPivot($params) {
+    public function updateRelationshipsPivot(array $params){
         extract($params);
         $model->$name->update($data);
     }
 
-    public function saveMultiselectTwoSides($params) {
+    public function saveMultiselectTwoSides(array $params){
         //passo request o direttamente data ?
         extract($params);
         $items = $model->$name();

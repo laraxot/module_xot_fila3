@@ -20,7 +20,7 @@ abstract class XotBaseContainerController extends Controller {
     protected $controller_exist;
 
     //public function __construct() { //o lo chiamavo "init".. etc etc
-    public function init($params) {
+    public function init(array $params){
         list($containers, $items) = params2ContainerItem($params);
         $tmp = collect($containers)->map(
             function ($item) {

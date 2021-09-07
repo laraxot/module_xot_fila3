@@ -124,7 +124,7 @@ trait CrudContainerItemRepositoryTrait {
      * https://hackernoon.com/eloquent-relationships-cheat-sheet-5155498c209
      * https://laracasts.com/discuss/channels/eloquent/cleanest-way-to-save-model-and-relationships.
      */
-    public function manageRelationships($params) {
+    public function manageRelationships(array $params){
         //ddd($params);
         extract($params);
         $methods = get_class_methods($model);
@@ -155,12 +155,12 @@ trait CrudContainerItemRepositoryTrait {
         }
     }
 
-    public function updateRelationshipsMorphOne($params) {
+    public function updateRelationshipsMorphOne(array $params){
         extract($params);
         $model->$name()->update($data);
     }
 
-    public function updateRelationshipsMorphToMany($params) {
+    public function updateRelationshipsMorphToMany(array $params){
         extract($params);
         //$res=$model->$name()->syncWithoutDetaching($data);
         foreach ($data as $k => $v) {
@@ -177,12 +177,12 @@ trait CrudContainerItemRepositoryTrait {
     //*/
     }
 
-    public function updateRelationshipsPivot($params) {
+    public function updateRelationshipsPivot(array $params){
         extract($params);
         $model->$name->update($data);
     }
 
-    public function storeRelationshipsPivot($params) {
+    public function storeRelationshipsPivot(array $params){
         /*
         extract($params);
         $types=Str::plural($container);
@@ -194,7 +194,7 @@ trait CrudContainerItemRepositoryTrait {
         */
     }
 
-    public function formatData($params) {
+    public function formatData(array $params){
         extract($params);
         $panel = StubService::getByModel(new $class(), 'panel');
         //ddd($panel->fields());
@@ -264,7 +264,7 @@ trait CrudContainerItemRepositoryTrait {
         return ThemeService::action($request, $row);
     }
 
-    public function storeRelationshipsMorphOne($params) {
+    public function storeRelationshipsMorphOne(array $params){
         extract($params);
         if (! isset($data['lang'])) {
             $data['lang'] = app()->getLocale();
@@ -276,7 +276,7 @@ trait CrudContainerItemRepositoryTrait {
         }
     }
 
-    public function storeRelationshipsMorphToMany($params) {
+    public function storeRelationshipsMorphToMany(array $params){
         extract($params);
         /*
             name= nome relazione
@@ -411,7 +411,7 @@ trait CrudContainerItemRepositoryTrait {
         return back()->withInput();
     }
 
-    public function indexUpdateRelationshipsMorphToMany($params) {
+    public function indexUpdateRelationshipsMorphToMany(array $params){
         extract($params);
         //ddd($data);
         /*

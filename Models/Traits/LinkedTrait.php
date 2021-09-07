@@ -289,7 +289,7 @@ trait LinkedTrait {
     }
 
     public function getPostTypeAttribute(?string $value): ?string {
-        if ('' != $value) {
+        if (null != $value) {
             return $value;
         }
         $post_type = collect(config('xra.model'))->search(get_class($this));
@@ -301,7 +301,7 @@ trait LinkedTrait {
     }
 
     public function getLangAttribute(?string $value): ?string {
-        if ('' != $value) {
+        if (null != $value) {
             return $value;
         }
 
@@ -318,7 +318,7 @@ trait LinkedTrait {
         $str1 = 'Attribute';
         $name = substr($func, strlen($str0), -strlen($str1));
         $name = Str::snake($name);
-        if ('' != $value) {
+        if (null != $value) {
             return $value;
         }
         if ('Post' == class_basename($this)) {
@@ -519,7 +519,7 @@ trait LinkedTrait {
 
     //----------------------------------------------
     /* deprecated
-    public function imageResizeSrc($params) {
+    public function imageResizeSrc(array $params){
         return '['.__FILE__.']['.__LINE__.']';
         $value = null;
         if (isset($this->post)) {
@@ -529,7 +529,7 @@ trait LinkedTrait {
         return $value;
     }
 
-    public function image_html($params) {
+    public function image_html(array $params){
         $value = null;
         if (isset($this->post)) {
             $value = $this->post->image_html($params);
@@ -538,7 +538,7 @@ trait LinkedTrait {
         return $value;
     }
 
-    public function urlLang($params) {
+    public function urlLang(array $params){
         return '['.__FILE__.']['.__LINE__.']';
         if (! isset($this->post)) {
             return '#';
@@ -660,7 +660,7 @@ trait LinkedTrait {
 
     //---------------------------------
     /*
-    public function listItemSchemaOrg($params) {
+    public function listItemSchemaOrg(array $params){
         $tmp = explode('\\', get_class($this));
         $ns = Str::snake($tmp[1]);
         $pack = Str::snake($tmp[3]);

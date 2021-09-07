@@ -19,7 +19,7 @@ abstract class XotBaseContainerController extends Controller {
     protected $controller_exist;
 
     //public function __construct() { //o lo chiamavo "init".. etc etc
-    public function init($params) { //o lo chiamavo "init".. etc etc
+    public function init(array $params){ //o lo chiamavo "init".. etc etc
         //$params = optional(\Route::current())->parameters();
         //ddd($params);
         list($containers, $items) = params2ContainerItem($params);

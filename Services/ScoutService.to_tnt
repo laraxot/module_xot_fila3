@@ -9,7 +9,7 @@ use TeamTNT\TNTSearch\TNTSearch;
 //---------CSS----------
 
 class ScoutService {
-    public static function import($params) {
+    public static function import(array $params){
         \extract($params);
         $tnt = new TNTSearch();
         $driver = config('database.default');
@@ -29,7 +29,7 @@ class ScoutService {
         $indexer->run();
     }
 
-    public static function geoImport($params) {
+    public static function geoImport(array $params){
         \extract($params);
         $index = $model->searchableAs().'.geo.index';
         $driver = config('database.default');
@@ -48,11 +48,11 @@ class ScoutService {
         $indexer->run();
     }
 
-    public static function findNearest($params) {
+    public static function findNearest(array $params){
         return self::findNearestTnt($params);
     }
 
-    public static function findNearestTnt($params) {
+    public static function findNearestTnt(array $params){
         extract($params);
         $index = $model->searchableAs().'.geo.index';
         if (! \File::exists(storage_path($index))) {

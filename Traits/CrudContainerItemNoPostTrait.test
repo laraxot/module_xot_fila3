@@ -153,7 +153,7 @@ trait CrudContainerItemNoPostTrait {
      * https://hackernoon.com/eloquent-relationships-cheat-sheet-5155498c209
      * https://laracasts.com/discuss/channels/eloquent/cleanest-way-to-save-model-and-relationships.
      */
-    public function manageRelationships($params) {
+    public function manageRelationships(array $params){
         //ddd($params);
         extract($params);
         $methods = get_class_methods($model);
@@ -189,7 +189,7 @@ trait CrudContainerItemNoPostTrait {
         }
     }
 
-    public function updateRelationshipsHasOne($params) {
+    public function updateRelationshipsHasOne(array $params){
         extract($params);
         $rows = $model->$name();
         if ($rows->exists()) {
@@ -203,7 +203,7 @@ trait CrudContainerItemNoPostTrait {
         }
     }
 
-    public function updateRelationshipsBelongsTo($params) {
+    public function updateRelationshipsBelongsTo(array $params){
         extract($params);
         $rows = $model->$name();
         if ($rows->exists()) {
@@ -215,12 +215,12 @@ trait CrudContainerItemNoPostTrait {
         }
     }
 
-    public function updateRelationshipsMorphOne($params) {
+    public function updateRelationshipsMorphOne(array $params){
         extract($params);
         $model->$name()->update($data);
     }
 
-    public function updateRelationshipsMorphToMany($params) {
+    public function updateRelationshipsMorphToMany(array $params){
         extract($params);
         //$res=$model->$name()->syncWithoutDetaching($data);
         foreach ($data as $k => $v) {
@@ -243,12 +243,12 @@ trait CrudContainerItemNoPostTrait {
     //*/
     }
 
-    public function updateRelationshipsPivot($params) {
+    public function updateRelationshipsPivot(array $params){
         extract($params);
         $model->$name->update($data);
     }
 
-    public function storeRelationshipsPivot($params) {
+    public function storeRelationshipsPivot(array $params){
         /*
         extract($params);
         $types=Str::plural($container);
@@ -260,7 +260,7 @@ trait CrudContainerItemNoPostTrait {
         */
     }
 
-    public function storeRelationshipsHasOne($params) {
+    public function storeRelationshipsHasOne(array $params){
         extract($params);
         $rows = $model->$name();
         //debug_getter_obj(['obj'=>$rows]);
@@ -273,7 +273,7 @@ trait CrudContainerItemNoPostTrait {
         }
     }
 
-    public function storeRelationshipsBelongsTo($params) {
+    public function storeRelationshipsBelongsTo(array $params){
         extract($params);
         $rows = $model->$name();
         //debug_getter_obj(['obj'=>$rows]);
@@ -286,7 +286,7 @@ trait CrudContainerItemNoPostTrait {
         }
     }
 
-    public function formatData($params) {
+    public function formatData(array $params){
         extract($params);
         $panel = StubService::getByModel(new $class(), 'panel');
         //ddd($panel->fields());
@@ -374,7 +374,7 @@ trait CrudContainerItemNoPostTrait {
         return $item_new;
     }
 
-    public function storeRelationshipsMorphOne($params) {
+    public function storeRelationshipsMorphOne(array $params){
         extract($params);
         if (! isset($data['lang'])) {
             $data['lang'] = \App::getLocale();
@@ -386,7 +386,7 @@ trait CrudContainerItemNoPostTrait {
         }
     }
 
-    public function storeRelationshipsMorphToMany($params) {
+    public function storeRelationshipsMorphToMany(array $params){
         extract($params);
         /*
             name= nome relazione
@@ -525,7 +525,7 @@ trait CrudContainerItemNoPostTrait {
         $this->manageRelationships(['model' => $item, 'data' => $data, 'act' => 'indexUpdate']);
     }
 
-    public function indexUpdateRelationshipsMorphToMany($params) {
+    public function indexUpdateRelationshipsMorphToMany(array $params){
         extract($params);
         //ddd($data);
         /*
@@ -558,7 +558,7 @@ trait CrudContainerItemNoPostTrait {
         }
     }
 
-    public function indexUpdateRelationshipsBelongsToMany($params) {
+    public function indexUpdateRelationshipsBelongsToMany(array $params){
         extract($params);
         if (isset($data['from']) || isset($data['to'])) {
             $this->saveMultiselectTwoSides($params);
@@ -567,7 +567,7 @@ trait CrudContainerItemNoPostTrait {
         }
     }
 
-    public function saveMultiselectTwoSides($params) { //passo request o direttamente data ?
+    public function saveMultiselectTwoSides(array $params){ //passo request o direttamente data ?
         extract($params);
 
         //$data = $request->all();

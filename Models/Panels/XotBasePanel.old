@@ -299,7 +299,7 @@ abstract class XotBasePanel {
         return $rules;
     }
 
-    public function pivotRules($params) {
+    public function pivotRules(array $params){
         extract($params);
     }
 
@@ -915,7 +915,7 @@ abstract class XotBasePanel {
     /*
         -- in ingresso "qs" che e' array con le cose da aggiungere
     */
-    public function addQuerystringsUrl($params) {
+    public function addQuerystringsUrl(array $params){
         extract($params);
 
         return $request->fullUrlWithQuery($qs); // fa il merge in automatico
@@ -1094,7 +1094,7 @@ abstract class XotBasePanel {
         return $html;
     }
 
-    public function btnHtml($params) {
+    public function btnHtml(array $params){
         $params['panel'] = $this;
         $params['url'] = RouteService::urlPanel($params);
         $params['method'] = Str::camel($params['act']);
@@ -1189,7 +1189,7 @@ abstract class XotBasePanel {
         return view('formx::includes.components.btn.'.$act)->with($parz);
     }
 
-    public function imageHtml($params) {
+    public function imageHtml(array $params){
         /*
         * mettere imageservice, o quello di spatie ?
         *
@@ -1201,7 +1201,7 @@ abstract class XotBasePanel {
         return '<img src="'.asset($src).'" >';
     }
 
-    public function imgSrc($params) {
+    public function imgSrc(array $params){
         $row = $this->row;
         $src = $row->image_src;
 
@@ -1311,7 +1311,7 @@ abstract class XotBasePanel {
         }
     }
 
-    public function relatedUrlRecursive($params) {
+    public function relatedUrlRecursive(array $params){
         $obj = $this;
         $items = [];
         $items[] = $this;
@@ -1338,7 +1338,7 @@ abstract class XotBasePanel {
         return $route;
     }
 
-    public function relatedUrl($params) {
+    public function relatedUrl(array $params){
         /*
         $params['row'] = $this->row;
         return RouteService::urlRelated($params);

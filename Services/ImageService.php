@@ -57,7 +57,7 @@ class ImageService {
     /**
      * @param array $params
      */
-    public static function init($params): void {
+    public static function init(array $params): void {
         //dddx($params);
         //$instance == self::getInstance();
         foreach ($params as $k => $v) {
@@ -149,7 +149,7 @@ class ImageService {
      *
      * @return mixed
      */
-    public static function image_resized_cropped($params) {
+    public static function image_resized_cropped(array $params){
         $width = self::$width;
         $height = self::$height;
         \extract($params);
@@ -393,7 +393,7 @@ class ImageService {
      *
      * @return string|void|null
      */
-    public static function image_resized_canvas($params) {
+    public static function image_resized_canvas(array $params){
         $width = self::$width;
         $height = self::$height;
         \extract($params);
