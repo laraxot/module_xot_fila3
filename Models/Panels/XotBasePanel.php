@@ -930,7 +930,7 @@ abstract class XotBasePanel implements PanelContract {
     /**
      * @return mixed
      */
-    public function indexFields() {
+    public function indexFields():array {
         //return $this->exceptFields(['act' => 'index']);
         return $this->form->{__FUNCTION__}();
     }
@@ -938,7 +938,7 @@ abstract class XotBasePanel implements PanelContract {
     /**
      * @return mixed
      */
-    public function createFields() {
+    public function createFields():array {
         //return  $this->exceptFields(['act' => 'create']);
 
         return $this->form->{__FUNCTION__}();
@@ -947,7 +947,7 @@ abstract class XotBasePanel implements PanelContract {
     /**
      * @return mixed
      */
-    public function editFields() {
+    public function editFields():array {
         //return  $this->exceptFields(['act' => 'edit']);
 
         return $this->form->{__FUNCTION__}();
@@ -956,14 +956,14 @@ abstract class XotBasePanel implements PanelContract {
     /**
      * @return mixed
      */
-    public function editObjFields() {
+    public function editObjFields():array {
         return $this->form->{__FUNCTION__}();
     }
 
     /**
      * @return mixed
      */
-    public function indexEditFields() {
+    public function indexEditFields():array {
         //return  $this->exceptFields(['act' => 'index_edit']);
 
         return $this->form->{__FUNCTION__}();

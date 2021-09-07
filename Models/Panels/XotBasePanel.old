@@ -866,13 +866,13 @@ abstract class XotBasePanel {
         return $fields;
     }
 
-    public function indexFields() {
+    public function indexFields():array {
         $fields = $this->exceptFields(['act' => 'index']);
 
         return $fields;
     }
 
-    public function createFields() {
+    public function createFields():array {
         $excepts = collect([]);
         /*
         $methods = collect(get_class_methods($this->rows))->filter(
@@ -900,13 +900,13 @@ abstract class XotBasePanel {
         return $fields;
     }
 
-    public function editFields() {
+    public function editFields():array {
         $fields = $this->exceptFields(['act' => 'edit']);
 
         return $fields;
     }
 
-    public function indexEditFields() {
+    public function indexEditFields():array {
         $fields = $this->exceptFields(['act' => 'index_edit']);
 
         return $fields;

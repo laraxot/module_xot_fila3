@@ -548,7 +548,7 @@ trait LinkedTrait {
     }
     */
     /* deprecated ??
-    public function linkedFormFields() {
+    public function linkedFormFields():array {
         $roots = Post::getRoots();
         $view = 'blog::admin.partials.'.Str::snake(class_basename($this));
 
