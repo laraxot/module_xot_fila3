@@ -1131,7 +1131,7 @@ abstract class XotBasePanel implements PanelContract {
     /**
      * Undocumented function.
      *
-     * @return Builder|Relation
+     * @return Builder
      */
     public function rows(?array $data = null) {
         if (null == $data) {
