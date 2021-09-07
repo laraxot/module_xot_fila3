@@ -123,8 +123,8 @@ abstract class XotBaseJob implements ShouldQueue {
     /**
      * Undocumented function.
      *
-     * @param string $field
-     * @param mixed  $value
+     * @param mixed $field
+     * @param mixed $value
      *
      * @return mixed
      */
@@ -135,11 +135,12 @@ abstract class XotBaseJob implements ShouldQueue {
     /**
      *  Method Modules\Xot\Jobs\PanelCrud\XotBaseJob::ConvDate() should return Carbon\Carbon|false|null but returns 0|0.0|''|'0'|array()|false|null.
      *
+     * @param mixed $field
      * @param mixed $value
      *
      * @return mixed
      */
-    public function ConvDate(string $field, $value) {
+    public function ConvDate($field, $value) {
         if (null == $value) {
             return $value;
         }
@@ -151,11 +152,12 @@ abstract class XotBaseJob implements ShouldQueue {
     /**
      * Method Modules\Xot\Jobs\PanelCrud\XotBaseJob::ConvDateTime() should return Carbon\Carbon|false|null but returns 0|0.0|''|'0'|array()|false|null.
      *
+     * @param mixed $field
      * @param mixed $value
      *
      * @return mixed
      */
-    public function ConvDateTime(string $field, $value) {
+    public function ConvDateTime($field, $value) {
         if (null == $value) {
             return $value;
         }
@@ -171,11 +173,12 @@ abstract class XotBaseJob implements ShouldQueue {
     /**
      *  Method Modules\Xot\Jobs\PanelCrud\XotBaseJob::ConvDateTime2Fields() should return Carbon\Carbon|false|null but returns 0|0.0|''|'0'|array()|false|null.
      *
+     * @param mixed $field
      * @param mixed $value
      *
      * @return mixed
      */
-    public function ConvDateTime2Fields(string $field, $value) {
+    public function ConvDateTime2Fields($field, $value) {
         if (null == $value) {
             return $value;
         }
