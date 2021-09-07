@@ -990,4 +990,12 @@ if (! function_exists('getExcerpt')) {
             ? preg_replace('/\s+?(\S+)?$/', '', $truncated).'...'
             : $cleaned;
     }
+
 }
+
+if (! function_exists('getRouteParameters')) {
+    function getRouteParameters():array{
+        return optional(request()->route())->parameters();
+    }
+}
+
