@@ -145,6 +145,15 @@ interface PanelContract {
 
     public function getParents(): Collection;
 
+    /**
+     * @return mixed
+     */
+    public function formLivewireEdit(array $params = []);
+
+    public function editFields(): array;
+
+    public function indexFields(): array;
+
     /*
     public function __construct($model = null);
 
