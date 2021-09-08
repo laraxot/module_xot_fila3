@@ -53,7 +53,7 @@ class DocxService {
     //should return Modules\Xot\Services\DocxService
     //but returns Modules\Xot\Services\DocxService|null.
 
-    public static function setDocxInput(string $filename): ?self {
+    public static function setDocxInput(string $filename): self {
         $obj = self::getInstance();
         if (null == $obj) {
             throw new Exception('instance error');
@@ -65,10 +65,8 @@ class DocxService {
 
     /**
      * @param mixed $values
-     *
-     * @return DocxService|null
      */
-    public static function setValues($values) {
+    public static function setValues($values): self {
         $obj = self::getInstance();
 
         if (null == $obj) {
