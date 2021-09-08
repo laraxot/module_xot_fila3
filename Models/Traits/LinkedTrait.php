@@ -19,7 +19,7 @@ use Illuminate\Support\Str;
 use Modules\Blog\Models\Post;
 //----- services -----
 use Modules\LU\Models\User;
-use Modules\Xot\Contracts\ModelContract;
+
 use Modules\Xot\Models\Image;
 use Modules\Xot\Services\PanelService as Panel;
 use Modules\Xot\Services\RouteService;
@@ -560,7 +560,7 @@ trait LinkedTrait {
     /**
      * Undocumented function.
      *
-     * @return ModelContract|Model|\Modules\Blog\Models\XotBaseModel|\Modules\Blog\Models\BaseModelLang|null
+     * @return Model|\Modules\Blog\Models\XotBaseModel|\Modules\Blog\Models\BaseModelLang|null
      */
     public function item(string $guid) {
         $post_table = with(new Post())->getTable();

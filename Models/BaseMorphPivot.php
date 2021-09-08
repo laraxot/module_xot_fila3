@@ -5,13 +5,13 @@ declare(strict_types=1);
 namespace Modules\Xot\Models;
 
 use Illuminate\Database\Eloquent\Relations\MorphPivot;
-use Modules\Xot\Contracts\ModelContract;
+
 use Modules\Xot\Traits\Updater;
 
 /**
  * Class BaseMorphPivot.
  */
-abstract class BaseMorphPivot extends MorphPivot implements ModelContract {
+abstract class BaseMorphPivot extends MorphPivot{
     use Updater;
 
     /**

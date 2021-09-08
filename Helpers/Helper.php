@@ -5,7 +5,7 @@ declare(strict_types=1);
 //use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
-use Modules\Xot\Contracts\ModelContract;
+
 use Modules\Xot\Services\RouteService;
 use Modules\Xot\Services\TenantService as Tenant;
 
@@ -828,7 +828,7 @@ if (! function_exists('build_url')) {
 
 if (! function_exists('getRelationships')) {
     /**
-     * @param ModelContract $model
+     * @param Model $model
      *
      * @throws ReflectionException
      *

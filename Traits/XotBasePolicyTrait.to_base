@@ -21,15 +21,15 @@ trait XotBasePolicyTrait {
         }
     }
 
-    public function index(?User $user,ModelContract $post):bool{
+    public function index(?User $user,Model $post):bool{
         return true;
     }
 
-    public function create(User $user,ModelContract $post):bool{
+    public function create(User $user,Model $post):bool{
         return true;
     }
 
-    public function edit(User $user,ModelContract $post):bool{
+    public function edit(User $user,Model $post):bool{
         if (null == $post->created_by) {
             $post->created_by = $post->post->created_by;
             $post->save();
@@ -46,7 +46,7 @@ trait XotBasePolicyTrait {
         return false;
     }
 
-    public function update(User $user,ModelContract $post):bool{
+    public function update(User $user,Model $post):bool{
         if ($post->created_by == $user->handle) {
             return true;
         }
@@ -54,7 +54,7 @@ trait XotBasePolicyTrait {
         return false;
     }
 
-    public function store(User $user,ModelContract $post):bool{
+    public function store(User $user,Model $post):bool{
         if ($post->created_by == $user->handle) {
             return true;
         }
@@ -62,31 +62,31 @@ trait XotBasePolicyTrait {
         return false;
     }
 
-    public function show(User $user,ModelContract $post):bool{
+    public function show(User $user,Model $post):bool{
         return true; // perche' false ?? dovrei mettere lo status pubblicato
     }
 
-    public function indexAttach(User $user,ModelContract $post):bool{
+    public function indexAttach(User $user,Model $post):bool{
         return true;
     }
 
-    public function indexEdit(User $user,ModelContract $post):bool{
+    public function indexEdit(User $user,Model $post):bool{
         return true;
     }
 
-    public function updateTranslate(User $user,ModelContract $post):bool{
+    public function updateTranslate(User $user,Model $post):bool{
         return false; //update-translate di @can()
     }
 
-    public function destroy(User $user,ModelContract $post):bool{
+    public function destroy(User $user,Model $post):bool{
         return true;
     }
 
-    public function detach(User $user,ModelContract $post):bool{
+    public function detach(User $user,Model $post):bool{
         return true;
     }
 
-    public function clone(User $user,ModelContract $post):bool{
+    public function clone(User $user,Model $post):bool{
         return true;
     }
 }

@@ -24,7 +24,7 @@ class ModelService {
      */
     public static function getRelationshipsAndData(Model $model, array $data): array {
         $methods = get_class_methods($model);
-        //Access to an undefined property Illuminate\Database\Eloquent\Model|Modules\Xot\Contracts\ModelContract::$post_type.
+
         /* se metto questa eccezzione si blokka
         if (! property_exists($model, 'post_type')) {
             throw new \Exception('in ['.get_class($model).'] property [post_type] is missing');

@@ -7,13 +7,13 @@ namespace Modules\Xot\Models;
 use Illuminate\Database\Eloquent\Model;
 //use Laravel\Scout\Searchable;
 //---------- traits
-use Modules\Xot\Contracts\ModelContract;
+
 use Modules\Xot\Traits\Updater;
 
 /**
  * Class BaseModel.
  */
-abstract class BaseModel extends Model implements ModelContract {
+abstract class BaseModel extends Model{
     use Updater;
     //use Searchable;
 
