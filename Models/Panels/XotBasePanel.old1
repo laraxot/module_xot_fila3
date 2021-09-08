@@ -455,10 +455,10 @@ abstract class XotBasePanel implements PanelContract {
         }
         switch ($act) {
             case 'store':
-                $fields = $this->createFields();
+                $fields = $this->getFields(['act'=>'create']);
                 break;
             case 'update':
-                $fields = $this->editFields();
+                $fields = $this->getFields(['act'=>'edit']);
                 break;
             default:
                 $fields = $this->fields();

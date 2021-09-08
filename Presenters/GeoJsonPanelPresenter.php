@@ -40,7 +40,7 @@ class GeoJsonPanelPresenter implements PanelPresenterContract {
         //--------
 
         $lang = app()->getLocale();
-        $rows = $this->panel->getRows();
+        $rows = $this->panel->rows();
         /*
         $post_table = app(Post::class)->getTable();
         $rows = $rows->join($post_table.' as post',

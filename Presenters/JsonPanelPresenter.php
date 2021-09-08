@@ -36,7 +36,7 @@ class JsonPanelPresenter implements PanelPresenterContract {
     public function outContainer(?array $params = null) {
         $model = $this->panel->getRow();
         $transformer = StubService::fromModel(['model' => $model, 'stub' => 'transformer_collection']);
-        $rows = $this->panel->getRows()->paginate(20);
+        $rows = $this->panel->rows()->paginate(20);
         $out = new $transformer($rows);
 
         return $out;

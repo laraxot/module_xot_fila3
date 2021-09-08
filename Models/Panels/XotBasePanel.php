@@ -55,6 +55,8 @@ abstract class XotBasePanel implements PanelContract {
      */
     public Relation $rows;
 
+    public ?Builder $builder = null;
+
     //public Builder $rows;
 
     public string $name;
@@ -100,6 +102,24 @@ abstract class XotBasePanel implements PanelContract {
         return [];
     }
 
+    public function setBuilder(Builder $builder): self {
+        $this->builder = $builder;
+
+        return $this;
+    }
+
+    public function getBuilder(): Builder {
+        if (null != $this->builder) {
+            return $this->builder;
+        }
+        //143    Call to an undefined method Illuminate\Database\Eloquent\Relations\Relation::with().
+        //return $this->rows->with();
+        //145    Call to an undefined method Illuminate\Database\Eloquent\Relations\Relation::where().
+        //return $this->rows->where('1=1');
+        return $this->rows->getQuery(); //Get the underlying query for the relation.
+        //return $this->rows->getBaseQuery();//Get the base query builder driving the Eloquent builder.
+    }
+
     public function setName(string $name): self {
         $this->name = $name;
 
@@ -137,15 +157,6 @@ abstract class XotBasePanel implements PanelContract {
      */
     public function getRow(): Model {
         return $this->row;
-    }
-
-    public function getBuilder(): Builder {
-        //143    Call to an undefined method Illuminate\Database\Eloquent\Relations\Relation::with().
-        //return $this->rows->with();
-        //145    Call to an undefined method Illuminate\Database\Eloquent\Relations\Relation::where().
-        //return $this->rows->where('1=1');
-        return $this->rows->getQuery(); //Get the underlying query for the relation.
-        //return $this->rows->getBaseQuery();//Get the base query builder driving the Eloquent builder.
     }
 
     /**
@@ -384,11 +395,7 @@ abstract class XotBasePanel implements PanelContract {
      */
     public function optionsSelect() {
         $opts = [];
-        $rows = $this->rows;
-        if (null == $rows) {
-            //dddx($this);
-            $rows = $this->options();
-        }
+        $rows = $this->getBuilder()->get();
 
         foreach ($rows as $row) {
             $id = $this->optionId($row);
@@ -492,10 +499,10 @@ abstract class XotBasePanel implements PanelContract {
         }
         switch ($act) {
             case 'store':
-                $fields = $this->createFields();
+                $fields = $this->getFields(['act' => 'create']);
                 break;
             case 'update':
-                $fields = $this->editFields();
+                $fields = $this->getFields(['act' => 'edit']);
                 break;
             default:
                 $fields = $this->fields();
@@ -934,31 +941,12 @@ abstract class XotBasePanel implements PanelContract {
         return $this->form->{__FUNCTION__}($params);
     }
 
-    public function indexFields(): array {
-        //return $this->exceptFields(['act' => 'index']);
-        return $this->form->{__FUNCTION__}();
-    }
-
-    public function createFields(): array {
-        //return  $this->exceptFields(['act' => 'create']);
-
-        return $this->form->{__FUNCTION__}();
-    }
-
-    public function editFields(): array {
-        //return  $this->exceptFields(['act' => 'edit']);
-
-        return $this->form->{__FUNCTION__}();
-    }
-
     public function editObjFields(): array {
         return $this->form->{__FUNCTION__}();
     }
 
-    public function indexEditFields(): array {
-        //return  $this->exceptFields(['act' => 'index_edit']);
-
-        return $this->form->{__FUNCTION__}();
+    public function getFields(array $params = []): array {
+        return $this->form->{__FUNCTION__}($params);
     }
 
     public function btnHtml(array $params): string {
@@ -1136,11 +1124,16 @@ abstract class XotBasePanel implements PanelContract {
         //$query = $this->getBuilder();
 
         $with = $this->with();
+        if (method_exists($query, 'with')) {
+            $query = $query->with($with);
+        }
+        /*
         try {
             $query = $query->with($with);
         } catch (\Exception $e) {
             //Method Illuminate\Database\Eloquent\Collection::with does not exist.
         }
+        */
         $query = $this->indexQuery($data, $query);
         $query = $this->applyFilter($query, $filters);
         $query = $this->applySearch($query, $q);
@@ -1271,8 +1264,6 @@ abstract class XotBasePanel implements PanelContract {
      * @return mixed
      */
     public function out(array $params = []) {
-        //dddx(get_class($this->presenter));//Modules\Xot\Presenters\HtmlPanelPresenter
-
         return $this->presenter->out();
     }
 

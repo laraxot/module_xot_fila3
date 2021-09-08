@@ -40,7 +40,7 @@ class PanelFormService {
      * @return string
      */
     public function formCreate(array $params = []) {
-        $fields = $this->createFields();
+        $fields = $this->getFields(['act' => 'create']);
         $row = $this->panel->getRow();
         $res = '';
         //$res.='<h3>'.$this->url(['act'=>'store']).'</h3>'; //4 debug
@@ -67,7 +67,7 @@ class PanelFormService {
             <input name="submit" type="submit" id="submit" value="Post your answer" class="button small color">
         </p>';
         extract($params);
-        $fields = $this->editFields();
+        $fields = $this->getFields(['act' => 'edit']);
         $row = $this->panel->getRow();
         $res = '';
         //$res.='<h3>'.$this->url(['act'=>'store']).'</h3>'; //4 debug
@@ -349,24 +349,6 @@ class PanelFormService {
         return $fields;
     }
 
-    public function indexFields(): array {
-        $fields = $this->exceptFields(['act' => 'index']);
-
-        return $fields;
-    }
-
-    public function createFields(): array {
-        $fields = $this->exceptFields(['act' => 'create']);
-
-        return $fields;
-    }
-
-    public function editFields(): array {
-        $fields = $this->exceptFields(['act' => 'edit']);
-
-        return $fields;
-    }
-
     public function getFields(array $params = []): array {
         $act = isset($params['act']) ? $params['act'] : 'index';
 
@@ -376,18 +358,12 @@ class PanelFormService {
     }
 
     public function editObjFields(): array {
-        $fields = collect($this->editFields())->map(function ($field) {
+        $fields = collect($this->getFields(['act' => 'edit']))->map(function ($field) {
             return FieldService::make($field->name)
                 ->type($field->type)
                 ->setColSize($field->col_bs_size ?? 12)
                 ;
         })->all();
-
-        return $fields;
-    }
-
-    public function indexEditFields(): array {
-        $fields = $this->exceptFields(['act' => 'index_edit']);
 
         return $fields;
     }
