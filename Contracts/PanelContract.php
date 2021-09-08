@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Modules\Xot\Contracts;
 
 //use Illuminate\Database\Query\Builder;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Support\Collection;
@@ -142,4 +143,6 @@ interface PanelContract {
     public function isRevisionBy(UserContract $user): bool;
 
     public function relatedName(string $name, ?int $id = null): PanelContract;
+
+    public function getBuilder(): Builder;
 }

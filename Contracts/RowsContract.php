@@ -137,4 +137,30 @@ interface RowsContract {
      * @return string
      */
     public function getKeyName();
+
+    /**
+     * Count the number of items in the collection.
+     *
+     * @return int
+     */
+    //[\ReturnTypeWillChange]
+    public function count();
+
+    /**
+     * Set the "offset" value of the query.
+     *
+     * @param int $value
+     *
+     * @return $this
+     */
+    public function offset($value);
+
+    /**
+     * Set the "limit" value of the query.
+     *
+     * @param int $value
+     *
+     * @return $this
+     */
+    public function limit($value);
 }
