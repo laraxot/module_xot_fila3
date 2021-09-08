@@ -133,7 +133,10 @@ interface PanelContract {
 
     public function getParents(): Collection;
 
-    public function formLivewireEdit(array $params = []): mixed;
+    /**
+     * @return mixed
+     */
+    public function formLivewireEdit(array $params = []);
 
     public function getFields(array $params = []): array;
 
