@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
 use Modules\Xot\Contracts\PanelContract;
+use Modules\Xot\Relations\CustomRelation;
 
 /**
  * Class PanelService.
@@ -160,12 +161,29 @@ class PanelService {
         //160    Parameter #1 $rows of method Modules\Xot\Contracts\PanelContract::setRows()
         // expects Modules\Xot\Contracts\RowsContract,
         // Illuminate\Database\Eloquent\Model given.
-        //$panel->setRows($home);
-        $panel->setRows($home->getRelation('homes'));
+
+        //$panel->setRows($home->query());
+        //Modules\Xot\Models\Panels\XotBasePanel::setRows() must be an
+        // instance of Modules\Xot\Contracts\RowsContract,
+        //instance of Illuminate\Database\Eloquent\Relations\HasMany given,
+        //$rows = $home->homes();
+        $rows = new CustomRelation(
+            $home->newQuery(),
+            $home,
+            function ($relation): void {
+                $relation->getQuery();
+            },
+            null,
+            null
+        );
+        $panel->setRows($rows);
 
         return $panel;
     }
 
+    /**
+     * Function getByParams.
+     */
     public static function getByParams(?array $route_params): PanelContract {
         [$containers, $items] = params2ContainerItem($route_params);
         $in_admin = null;
@@ -177,14 +195,33 @@ class PanelService {
 
             return $panel;
         }
+        $home_row = self::getHomePanel()->getRow();
 
         $first_container = $containers[0];
+        /*
+        $rows = $home_row->{$first_container}();
+        $related = $rows->getRelated();
+        $panel = PanelService::get($related);
+        $panel->setRows($rows);
+        //*/
+
         $row = TenantService::model($containers[0]);
 
-        $panel = PanelService::get($row);
+        $rows = new CustomRelation(
+            $row->newQuery(),
+            $home_row,
+            function ($relation): void {
+                $relation->getQuery();
+            },
+            null,
+            null
+        );
 
-        //$panel->setRows($row->with([]));
-        $panel->setRows($row->getRelation('homes'));
+        $panel = PanelService::get($row);
+        //Illuminate\Database\Eloquent\Builder
+        $panel->setRows($rows);
+
+        //$panel->setRows($row->getRelation('homes'));
         $panel->setName($first_container);
         $i = 0;
         if (isset($items[0])) {

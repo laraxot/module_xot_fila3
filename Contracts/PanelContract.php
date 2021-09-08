@@ -6,6 +6,7 @@ namespace Modules\Xot\Contracts;
 
 //use Illuminate\Database\Query\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Support\Collection;
 
 interface PanelContract {
@@ -16,12 +17,12 @@ interface PanelContract {
     /**
      * Undocumented function.
      */
-    public function setRows(RowsContract $rows): self;
+    public function setRows(Relation $rows): self;
 
     /**
      * Undocumented function.
      */
-    public function getRows(): RowsContract;
+    public function getRows(): Relation;
 
     public function setItem(string $guid): self;
 

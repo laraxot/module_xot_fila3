@@ -12,6 +12,7 @@ use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Schema;
 use Modules\Theme\Services\ThemeService;
 use Modules\Xot\Contracts\PanelContract;
+use Modules\Xot\Relations\CustomRelation;
 use Modules\Xot\Services\PanelService as Panel;
 use Modules\Xot\Services\TenantService as Tenant;
 
@@ -49,7 +50,7 @@ class HomeController extends Controller {
     }
 
     public function createHomesTable(): void {
-        Schema::create('homes', function (Blueprint $table) {
+        Schema::create('homes', function (Blueprint $table): void {
             $table->increments('id');
 
             $table->string('created_by')->nullable();
@@ -91,6 +92,19 @@ class HomeController extends Controller {
             dddx(['exception' => $e, 'model' => $home]);
         }
         $panel = Panel::get($home);
+
+        $rows = new CustomRelation(
+            $home->newQuery(),
+            $home,
+            function ($relation): void {
+                $relation->getQuery();
+            },
+            null,
+            null
+        );
+        $panel->setRows($rows);
+
+        //$panel->setRows($home->homes());
 
         return $panel->out();
     }

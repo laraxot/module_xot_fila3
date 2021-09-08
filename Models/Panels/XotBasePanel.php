@@ -53,7 +53,7 @@ abstract class XotBasePanel implements PanelContract {
     /**
      * Undocumented variable.
      */
-    public RowsContract $rows;
+    public Relation $rows;
 
     //public Builder $rows;
 
@@ -125,7 +125,7 @@ abstract class XotBasePanel implements PanelContract {
     /**
      * Undocumented function.
      */
-    public function setRows(RowsContract $rows): self {
+    public function setRows(Relation $rows): self {
         $this->rows = $rows;
 
         return $this;
@@ -139,15 +139,24 @@ abstract class XotBasePanel implements PanelContract {
         return $this->row;
     }
 
+    public function getBuilder(): Builder {
+        //143    Call to an undefined method Illuminate\Database\Eloquent\Relations\Relation::with().
+        //return $this->rows->with();
+        //145    Call to an undefined method Illuminate\Database\Eloquent\Relations\Relation::where().
+        //return $this->rows->where('1=1');
+        return $this->rows->getQuery(); //Get the underlying query for the relation.
+        //return $this->rows->getBaseQuery();//Get the base query builder driving the Eloquent builder.
+    }
+
     /**
      * get Rows.
      */
-    public function getRows(): RowsContract {
-        /*
+    public function getRows(): Relation {
         if (null == $this->rows) {
-            throw new \Exception('rows is null ['.__LINE__.']['.get_class($this).']');
+            dddx(debug_backtrace());
+            throw new \Exception('rows is null [line:'.__LINE__.'][class:'.get_class($this).']');
         }
-        */
+
         /*
         if (null == $this->rows) {
             return $this->row->query();
@@ -283,7 +292,7 @@ abstract class XotBasePanel implements PanelContract {
 
     public function setItem(string $guid): self {
         $row = $this->row;
-        $rows = $this->rows;
+        $rows = $this->getBuilder();
         $tbl = $row->getTable();
         //$pk = $model->getRouteKeyName($this->in_admin);
         $pk = $row->getRouteKeyName(); // !!! MI SEMBRA STRANO !!
@@ -1124,6 +1133,8 @@ abstract class XotBasePanel implements PanelContract {
         $q = isset($data['q']) ? $data['q'] : null;
         $sort = isset($data['sort']) ? $data['sort'] : null;
         $query = $this->getRows();
+        //$query = $this->getBuilder();
+
         $with = $this->with();
         try {
             $query = $query->with($with);
