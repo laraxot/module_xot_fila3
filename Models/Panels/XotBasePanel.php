@@ -18,6 +18,8 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 use Modules\Xot\Contracts\PanelContract;
 use Modules\Xot\Contracts\PanelPresenterContract;
+use Modules\Xot\Contracts\RowsContract;
+use Modules\Xot\Contracts\UserContract;
 use Modules\Xot\Presenters\PdfPanelPresenter;
 use Modules\Xot\Presenters\XlsPanelPresenter;
 use Modules\Xot\Services\ChainService;
@@ -50,10 +52,8 @@ abstract class XotBasePanel implements PanelContract {
 
     /**
      * Undocumented variable.
-     *
-     * @var Relation|Builder
      */
-    public $rows;
+    public RowsContract $rows;
 
     //public Builder $rows;
 
@@ -124,10 +124,8 @@ abstract class XotBasePanel implements PanelContract {
 
     /**
      * Undocumented function.
-     *
-     * @param Relation|Builder $rows
      */
-    public function setRows($rows): self {
+    public function setRows(RowsContract $rows): self {
         $this->rows = $rows;
 
         return $this;
@@ -143,19 +141,18 @@ abstract class XotBasePanel implements PanelContract {
 
     /**
      * get Rows.
-     *
-     * @return Relation|Builder
      */
-    public function getRows() {
+    public function getRows(): RowsContract {
         /*
         if (null == $this->rows) {
             throw new \Exception('rows is null ['.__LINE__.']['.get_class($this).']');
         }
         */
+        /*
         if (null == $this->rows) {
             return $this->row->query();
         }
-
+        */
         return $this->rows;
     }
 
@@ -636,15 +633,15 @@ abstract class XotBasePanel implements PanelContract {
         return null;
     }
 
-    public function getActions(array $params = []): \Illuminate\Support\Collection {
+    public function getActions(array $params = []): Collection {
         return (new PanelActionService($this))->{__FUNCTION__}($params);
     }
 
-    public function containerActions(array $params = []): \Illuminate\Support\Collection {
+    public function containerActions(array $params = []): Collection {
         return (new PanelActionService($this))->{__FUNCTION__}($params);
     }
 
-    public function itemActions(array $params = []): \Illuminate\Support\Collection {
+    public function itemActions(array $params = []): Collection {
         return (new PanelActionService($this))->{__FUNCTION__}($params);
     }
 
@@ -692,9 +689,9 @@ abstract class XotBasePanel implements PanelContract {
     /**
      * Build an "index" query for the given resource.
      *
-     * @param Builder|Relation $query
+     * @param RowsContract $query
      *
-     * @return Builder|Relation
+     * @return RowsContract
      */
     public static function indexQuery(array $data, $query) {
         //return $query->where('auth_user_id', $request->user()->auth_user_id);
@@ -706,9 +703,9 @@ abstract class XotBasePanel implements PanelContract {
      *
      * This query determines which instances of the model may be attached to other resources.
      *
-     * @param Builder|Relation $query
+     * @param RowsContract $query
      *
-     * @return Builder|Relation
+     * @return RowsContract
      */
     public static function relatableQuery(Request $request, $query) {
         //return $query->where('auth_user_id', $request->user()->auth_user_id);
@@ -732,9 +729,9 @@ abstract class XotBasePanel implements PanelContract {
     /**
      * Undocumented function.
      *
-     * @param Builder|Relation $query
+     * @param RowsContract $query
      *
-     * @return Builder|Relation
+     * @return RowsContract
      */
     public function applyFilter($query, array $filters) {
         //https://github.com/spatie/laravel-query-builder
@@ -800,9 +797,9 @@ abstract class XotBasePanel implements PanelContract {
     /**
      * Undocumented function.
      *
-     * @param Builder|Relation $query
+     * @param RowsContract $query
      *
-     * @return Builder|Relation
+     * @return RowsContract
      */
     public function applySearch($query, ?string $q) {
         if (! isset($q)) {
@@ -869,9 +866,9 @@ abstract class XotBasePanel implements PanelContract {
     /**
      * Undocumented function.
      *
-     * @param Builder|Relation $query
+     * @param RowsContract $query
      *
-     * @return Builder|Relation
+     * @return RowsContract
      */
     public function applySort($query, ?array $sort) {
         if (! is_array($sort)) {
@@ -1117,7 +1114,7 @@ abstract class XotBasePanel implements PanelContract {
     /**
      * Undocumented function.
      *
-     * @return Builder
+     * @return RowsContract
      */
     public function rows(?array $data = null) {
         if (null == $data) {
@@ -1476,5 +1473,16 @@ abstract class XotBasePanel implements PanelContract {
         $panel = $func::dispatchNow($data, $this);
 
         return $panel;
+    }
+
+    public function isRevisionBy(UserContract $user): bool {
+        $post = $this->getRow();
+        if ($post->getAttributeValue('created_by') == $user->handle ||
+            $post->getAttributeValue('updated_by') == $user->handle ||
+            $post->getAttributeValue('auth_user_id') == $user->auth_user_id) {
+            return true;
+        }
+
+        return false;
     }
 }

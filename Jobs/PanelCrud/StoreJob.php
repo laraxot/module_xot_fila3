@@ -10,6 +10,7 @@ use Illuminate\Support\Arr;
 //------------ services ----------
 use Illuminate\Support\Str;
 use Modules\Xot\Contracts\PanelContract;
+use Modules\Xot\Services\ModelService;
 use Modules\Xot\Services\PanelService as Panel;
 
 /**
@@ -335,7 +336,7 @@ class StoreJob extends XotBaseJob {
         $related = $items->getRelated();
         //ddd($related);
         $container_obj = $model;
-        $container = $container_obj->post_type ?? 'aaa';
+        $container = ModelService::getPostType($container_obj);
         //$items_key = $container_obj->getKeyName();
         $items_key = $related->getKeyName();
         //ddd($items_key);//auth_user_id

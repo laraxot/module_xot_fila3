@@ -11,7 +11,7 @@ use Modules\Xot\Contracts\UserContract;
  * Class MetatagPolicy.
  */
 class MetatagPolicy extends XotBasePolicy {
-    public function storeFileMetatag(UserContract $user, ModelContract $post): bool {
+    public function storeFileMetatag(UserContract $user, \Illuminate\Database\Eloquent\Model $post): bool {
         //return ($metatag->tennant_name=='foodlocal');
         return false;
     }

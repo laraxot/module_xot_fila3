@@ -153,8 +153,15 @@ class PanelService {
         $model = TenantService::modelEager('home');
         $home = $model->firstOrCreate(['id' => 1]);
         $panel = PanelService::get($home);
-        $panel->setRows($home->with([]));
+        // 156    Parameter #1 $rows of method Modules\Xot\Contracts\PanelContract::setRows()
+        // expects Modules\Xot\Contracts\RowsContract,
+        //Illuminate\Database\Eloquent\Builder<Illuminate\Database\Eloquent\Model> given
+        //$panel->setRows($home->with([]));
+        //160    Parameter #1 $rows of method Modules\Xot\Contracts\PanelContract::setRows()
+        // expects Modules\Xot\Contracts\RowsContract,
+        // Illuminate\Database\Eloquent\Model given.
         //$panel->setRows($home);
+        $panel->setRows($home->getRelation('homes'));
 
         return $panel;
     }
@@ -176,7 +183,8 @@ class PanelService {
 
         $panel = PanelService::get($row);
 
-        $panel->setRows($row->with([]));
+        //$panel->setRows($row->with([]));
+        $panel->setRows($row->getRelation('homes'));
         $panel->setName($first_container);
         $i = 0;
         if (isset($items[0])) {

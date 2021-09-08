@@ -4,10 +4,8 @@ declare(strict_types=1);
 
 namespace Modules\Xot\Contracts;
 
-use Illuminate\Database\Eloquent\Builder;
 //use Illuminate\Database\Query\Builder;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Support\Collection;
 
 interface PanelContract {
@@ -17,17 +15,13 @@ interface PanelContract {
 
     /**
      * Undocumented function.
-     *
-     * @param Builder|Relation $rows
      */
-    public function setRows($rows): self;
+    public function setRows(RowsContract $rows): self;
 
     /**
      * Undocumented function.
-     *
-     * @return Builder|Relation
      */
-    public function getRows();
+    public function getRows(): RowsContract;
 
     public function setItem(string $guid): self;
 
@@ -36,7 +30,7 @@ interface PanelContract {
     /**
      * Undocumented function.
      *
-     * @return Builder|Relation
+     * @return RowsContract
      */
     public function rows(?array $data = null);
 
@@ -153,6 +147,8 @@ interface PanelContract {
     public function editFields(): array;
 
     public function indexFields(): array;
+
+    public function isRevisionBy(UserContract $user): bool;
 
     /*
     public function __construct($model = null);

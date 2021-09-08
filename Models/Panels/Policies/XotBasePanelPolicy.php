@@ -52,32 +52,17 @@ abstract class XotBasePanelPolicy {
     }
 
     public function edit(UserContract $user, PanelContract $panel): bool {
-        //return true;
-        $post = $panel->getRow();
-        if ($post->created_by == $user->handle || $post->updated_by == $user->handle || $post->auth_user_id == $user->auth_user_id) {
-            return true;
-        }
-
-        return false;
+        return $panel->isRevisionBy($user);
     }
 
     public function update(UserContract $user, PanelContract $panel): bool {
-        $post = $panel->getRow();
-
-        if ($post->created_by == $user->handle || $post->updated_by == $user->handle || $post->auth_user_id == $user->auth_user_id) {
-            return true;
-        }
-
-        return false;
+        return $panel->isRevisionBy($user);
     }
 
     public function store(UserContract $user, PanelContract $panel): bool {
         /*
-        if ($post->created_by == $user->handle || $post->updated_by == $user->handle) {
-            return true;
-        }
-        return false;
-        non e' stato creato..
+        return $panel->isRevisionBy($user);
+        non e' stato creato.. percio' sempre false
         */
         return true;
     }
@@ -98,33 +83,15 @@ abstract class XotBasePanelPolicy {
     }
 
     public function destroy(UserContract $user, PanelContract $panel): bool {
-        $post = $panel->getRow();
-
-        if ($post->created_by == $user->handle || $post->updated_by == $user->handle) {
-            return true;
-        }
-
-        return false;
+        return $panel->isRevisionBy($user);
     }
 
     public function delete(UserContract $user, PanelContract $panel): bool {
-        $post = $panel->getRow();
-
-        if ($post->created_by == $user->handle) {
-            return true;
-        }
-
-        return false;
+        return $panel->isRevisionBy($user);
     }
 
     public function restore(UserContract $user, PanelContract $panel): bool {
-        $post = $panel->getRow();
-
-        if ($post->created_by == $user->handle) {
-            return true;
-        }
-
-        return false;
+        return $panel->isRevisionBy($user);
     }
 
     public function forceDelete(UserContract $user, PanelContract $panel): bool {
@@ -132,13 +99,7 @@ abstract class XotBasePanelPolicy {
     }
 
     public function detach(UserContract $user, PanelContract $panel): bool {
-        $post = $panel->getRow();
-
-        if ($post->created_by == $user->handle || $post->updated_by == $user->handle) {
-            return true;
-        }
-
-        return false;
+        return $panel->isRevisionBy($user);
     }
 
     public function clone(UserContract $user, PanelContract $panel): bool {
