@@ -142,6 +142,4 @@ interface PanelContract {
     public function relatedName(string $name, ?int $id = null): PanelContract;
 
     public function getBuilder(): Builder;
-
-    public function findParentType(string $type): mixed;
 }
