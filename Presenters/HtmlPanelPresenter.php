@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Modules\Xot\Presenters;
 
+use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Support\Collection;
 use Modules\Theme\Services\ThemeService;
 use Modules\Xot\Contracts\PanelContract;
@@ -43,10 +44,9 @@ class HtmlPanelPresenter implements PanelPresenterContract {
         */
     }
 
-    /**
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response|string
-     */
-    public function out(?array $params = null) {
+    //eturn \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response|string
+
+    public function out(?array $params = null): Renderable {
         //$route_params = optional(\Route::current())->parameters();
 
         [$containers, $items] = params2ContainerItem();
@@ -77,7 +77,9 @@ class HtmlPanelPresenter implements PanelPresenterContract {
         }
 
         $rows_err = '';
+        $rows = $this->panel->rows()->paginate(20);
 
+        /*
         try {
             $rows = $this->panel->rows()->paginate(20);
         } catch (\Exception $e) {
@@ -95,7 +97,7 @@ class HtmlPanelPresenter implements PanelPresenterContract {
 
             return response()->view('pub_theme::errors.500', $data, 500);
         }
-
+        */
         //dddx($this->panel->rows->toSql());
 
         $route_params = [];
@@ -126,6 +128,7 @@ class HtmlPanelPresenter implements PanelPresenterContract {
         ];
 
         if (! view()->exists('pub_theme::layouts.app')) {
+            /*
             $data = [
                 'message' => 'not exists view [pub_theme::layouts.app]
                     <br/> pub_theme:'.config('xra.pub_theme'),
@@ -136,6 +139,10 @@ class HtmlPanelPresenter implements PanelPresenterContract {
             }
 
             return response()->view($view, $data, 500);
+            */
+            $message = 'not exists view [pub_theme::layouts.app]<br/> pub_theme:'.config('xra.pub_theme');
+            die($message);
+            //throw new \Exception();
         }
 
         //return view($view_work)->with($view_params);

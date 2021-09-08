@@ -140,4 +140,6 @@ interface PanelContract {
     public function getFields(array $params = []): array;
 
     public function isRevisionBy(UserContract $user): bool;
+
+    public function relatedName(string $name, ?int $id = null): PanelContract;
 }

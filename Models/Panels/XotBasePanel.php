@@ -1003,17 +1003,17 @@ abstract class XotBasePanel implements PanelContract {
         return $this->route->{__FUNCTION__}($params);
     }
 
-    public function relatedName(string $name, ?int $id = null): ?PanelContract {
+    public function relatedName(string $name, ?int $id = null): PanelContract {
         //bell_boy => Modules\Food\Models\BellBoy
         $model = xotModel($name);
         if (null != $id) {
             $model = $model->find($id);
         }
         $panel = Panel::get($model);
-        if (! is_object($panel)) {
-            //dddx($model);
-            return null;
-        }
+        //if (! is_object($panel)) {
+
+        //    return null;
+        //}
         $panel = $panel->setParent($this);
 
         return $panel;
@@ -1264,7 +1264,11 @@ abstract class XotBasePanel implements PanelContract {
      * @return mixed
      */
     public function out(array $params = []) {
-        return $this->presenter->out();
+        try {
+            return $this->presenter->out();
+        } catch (\Exception $e) {
+            return response()->view('pub_theme::errors.500', ['message' => $e->getMessage()], 500);
+        }
     }
 
     /*//--- valutare
