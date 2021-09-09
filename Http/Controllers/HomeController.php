@@ -104,7 +104,6 @@ class HomeController extends Controller {
         );
         $panel->setRows($rows);
 
-        //$panel->setRows($home->homes());
 
         return $panel->out();
     }
