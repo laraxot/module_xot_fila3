@@ -3,9 +3,9 @@
 declare(strict_types=1);
 
 //use Illuminate\Support\Facades\Storage;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
-
 use Modules\Xot\Services\RouteService;
 use Modules\Xot\Services\TenantService as Tenant;
 
@@ -828,13 +828,11 @@ if (! function_exists('build_url')) {
 
 if (! function_exists('getRelationships')) {
     /**
-     * @param Model $model
-     *
      * @throws ReflectionException
      *
      * @return array
      */
-    function getRelationships($model) { //working
+    function getRelationships(Model $model) { //working
         $methods = get_class_methods($model);
         $data = [];
         if (! is_array($methods)) {
@@ -990,12 +988,10 @@ if (! function_exists('getExcerpt')) {
             ? preg_replace('/\s+?(\S+)?$/', '', $truncated).'...'
             : $cleaned;
     }
-
 }
 
 if (! function_exists('getRouteParameters')) {
-    function getRouteParameters():array{
+    function getRouteParameters(): array {
         return optional(request()->route())->parameters();
     }
 }
-
