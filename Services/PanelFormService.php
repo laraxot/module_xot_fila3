@@ -314,12 +314,12 @@ class PanelFormService {
         $excepts = collect([]);
         if (is_object($panel->getRows())) {
             $methods = [
-                'getForeignKeyName',
-                'getMorphType',
+                'getForeignKeyName', //relation  BelongsTo,HasManyThrought,HasOneOrMany
+                'getMorphType',     //relation   MorphOneOrMany,MorphPivot,MorphTo,MorphToMany
                 //'getLocalKeyName',
-                'getForeignPivotKeyName',
-                'getRelatedPivotKeyName',
-                'getRelatedKeyName',
+                'getForeignPivotKeyName', //relation BelongsToMany
+                'getRelatedPivotKeyName', //relation  BelongsToMany
+                'getRelatedKeyName', //relation  BelongsToMany
             ];
             if ('index' != $act) { //nella lista voglio visualizzare l'id
                 $methods[] = 'getLocalKeyName';
