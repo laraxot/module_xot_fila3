@@ -425,7 +425,10 @@ abstract class XotBasePanel implements PanelContract {
         if (null == $data /*|| empty($data)*/) {
             $data = request()->all();
         }
-        $rows = $this->rows($data)->get();
+        
+        //$rows = $this->rows($data)->get();
+        $rows = $this->getBuilder()->get();
+
         $primary_field = $this->row->getKeyName();
         $c = new ChainService($primary_field, 'parent_id', 'pos', $rows);
 
