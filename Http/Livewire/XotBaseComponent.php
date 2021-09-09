@@ -38,6 +38,11 @@ abstract class XotBaseComponent extends Component {
     /**
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
+    /**
+     * Render the component.
+     *
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
     public function render() { //per fare copia ed incolla
         $view = $this->getView();
         $view_params = [

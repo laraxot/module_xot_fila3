@@ -992,6 +992,11 @@ if (! function_exists('getExcerpt')) {
 
 if (! function_exists('getRouteParameters')) {
     function getRouteParameters(): array {
-        return optional(request()->route())->parameters();
+        $params = optional(request()->route())->parameters();
+        if (null == $params) {
+            $params = [];
+        }
+
+        return $params;
     }
 }

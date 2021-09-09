@@ -40,6 +40,11 @@ abstract class XotBaseFormComponent extends Component {
         }
     }
 
+    /**
+     * Render the component.
+     *
+     * @return \Illuminate\View\View
+     */
     public function render() {
         return $this->formView();
     }

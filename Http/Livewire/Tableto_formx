@@ -12,7 +12,7 @@ class Table extends XotBaseTableComponent {
     public $route_params = [];
     public $data = [];
 
-    public function mount() {
+    public function mount():void {
         $this->route_params = request()->route()->parameters();
         $this->data = request()->all();
         $this->setTableProperties();

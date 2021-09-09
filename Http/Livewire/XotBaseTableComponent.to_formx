@@ -34,7 +34,7 @@ abstract class XotBaseTableComponent extends Component {
     public $per_page;
 
     /*
-    public function mount() {
+    public function mount():void {
         $this->setTableProperties();
     }
     */
@@ -45,6 +45,11 @@ abstract class XotBaseTableComponent extends Component {
         }
     }
 
+    /**
+     * Render the component.
+     *
+     * @return \Illuminate\View\View
+     */
     public function render() {
         return $this->tableView();
     }

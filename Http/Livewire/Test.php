@@ -28,7 +28,7 @@ class Test extends Component {
     /**
      * @return void
      */
-    public function mount() {
+    public function mount():void {
         $this->options = ['one' => true, 'two' => false, 'three' => false];
         //$this->qty = [0 => -1, 1 => 1, 2 => 0, 3 => 0, 4 => -1];
         $this->products = [
@@ -57,6 +57,11 @@ class Test extends Component {
 
     /**
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     */
+    /**
+     * Render the component.
+     *
+     * @return \Illuminate\Contracts\Support\Renderable
      */
     public function render() {
         $view_params = [];

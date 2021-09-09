@@ -36,7 +36,7 @@ class PanelService {
     public static function getInstance(): self {
         if (null === self::$_instance) {
             //$route_params = request()->route()->parameters();// 42     Cannot call method parameters() on mixed.
-            $route_params = optional(\Route::current())->parameters();
+            $route_params = getRouteParameters();
             self::$_instance = new self($route_params);
         }
 
