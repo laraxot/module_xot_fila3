@@ -11,7 +11,7 @@ class PolicyService {
         $class_name = class_basename($model);
         $class = Str::before($class_full, $class_name);
         $policy = $class.'Policies\\'.$class_name.'Policy';
-        //ddd($policy);//  =  Modules\LU\Models\Policies\UserPolicy
+        //dddx($policy);//  =  Modules\LU\Models\Policies\UserPolicy
         if (class_exists($policy)) {
             /*
             if(!method_exists($policy, 'tabs')){
@@ -69,7 +69,7 @@ class PolicyService {
         ];
         $stub = str_replace(array_keys($replace), array_values($replace), $stub);
 
-        ddd($stub);
+        dddx($stub);
 
         $policy_dir = $model_dir.'/Policies';
         File::makeDirectory($policy_dir, $mode = 0777, true, true);

@@ -130,7 +130,7 @@ class DocxService {
                 }
 
                 if (isJson($row->$key)) {
-                    //ddd($row->$key);
+                    //dddx($row->$key);
                     $tmp = json_decode($row->$key);
                     $data = [];
                     foreach ($tmp as $k => $v) {
@@ -138,7 +138,7 @@ class DocxService {
                             $data[$prefix.'.'.$key.'_'.$k] = $v;
                         }
                     }
-                    //ddd($data);
+                    //dddx($data);
                     return $data;
                 }
                 if (is_string($item)) {
@@ -178,7 +178,7 @@ class DocxService {
         }
 
         //$arr = $row->toArray();
-        //ddd($arr);
+        //dddx($arr);
         $data = collect($arr)->map(
             function ($item, $key) use ($row, $prefix, $arr) {
                 //*
@@ -203,7 +203,7 @@ class DocxService {
                 //*/
 
                 if (isJson($row->$key)) {
-                    //ddd($row->$key);
+                    //dddx($row->$key);
                     $tmp = json_decode($row->$key);
                     $data = [];
                     foreach ($tmp as $k => $v) {
@@ -211,7 +211,7 @@ class DocxService {
                             $data[$prefix.'.'.$key.'_'.$k] = $v;
                         }
                     }
-                    //ddd($data);
+                    //dddx($data);
                     return $data;
                 }
                 if (is_string($item)) {

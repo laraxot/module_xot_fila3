@@ -167,7 +167,7 @@ class XotServiceProvider extends XotBaseServiceProvider {
         $configs = ['database', 'filesystems', 'auth', 'metatag', 'services', 'xra', 'social'];
         foreach ($configs as $v) {
             $tmp = Tenant::config($v);
-            //ddd($tmp);
+            //dddx($tmp);
         }
         //DB::purge('mysql');//Call to a member function prepare() on null
         //DB::purge('liveuser_general');

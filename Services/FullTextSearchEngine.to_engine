@@ -57,7 +57,7 @@ class FullTextSearchEngine extends Engine {
         }
 
         $term = $builder->query;
-        //ddd($columns);
+        //dddx($columns);
         $query = $model::whereRaw("MATCH ({$columns}) AGAINST (? IN BOOLEAN MODE)", $this->fullTextWildcards($term));
         //--- qui si potrebbe creare l'indice fulltext_index per accellerare
 

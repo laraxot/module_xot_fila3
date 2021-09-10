@@ -14,7 +14,7 @@ use Illuminate\Support\Str;
 use Illuminate\Translation\Translator as BaseTranslator;
 use Modules\Theme\Services\ThemeService;
 
-//ddd('leggo');
+//dddx('leggo');
 
 /**
  * Class TranslatorService.
@@ -111,12 +111,12 @@ class TranslatorService extends BaseTranslator {
         })
         ->groupBy(['ns_group'])  //risparmio salvataggi
         ->all();
-        //ddd($data);
+        //dddx($data);
         foreach ($data as $ns_group => $data0) {
             $rows = trans($ns_group);
 
             if (! is_array($rows)) {
-                //ddd($rows);  //---- dovrei leggere il file o controllarlo intanto lo blokko non voglio sovrascrivere
+                //dddx($rows);  //---- dovrei leggere il file o controllarlo intanto lo blokko non voglio sovrascrivere
                 $rows = [];
             }
 
@@ -174,13 +174,13 @@ class TranslatorService extends BaseTranslator {
 
         /*
 
-        ddd($rows)
+        dddx($rows)
 
 
 
-        ddd($item_keys);
+        dddx($item_keys);
 
-    	ddd($filename);
+    	dddx($filename);
     	*/
     }
 }

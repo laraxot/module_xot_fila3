@@ -21,15 +21,15 @@ abstract class XotBaseContainerController extends Controller {
     //public function __construct() { //o lo chiamavo "init".. etc etc
     public function init(array $params){ //o lo chiamavo "init".. etc etc
         //$params = optional(\Route::current())->parameters();
-        //ddd($params);
+        //dddx($params);
         list($containers, $items) = params2ContainerItem($params);
         $tmp = collect($containers)->map(function ($item) {
             return Str::studly($item);
         })->implode('\\');
 
         $container_first = Arr::first($containers);
-        //ddd($container_first); //restaurant
-        $model_name = config('xra.model.'.$container_first); // ddd($model_name); //Modules\Food\Models\Restaurant
+        //dddx($container_first); //restaurant
+        $model_name = config('xra.model.'.$container_first); // dddx($model_name); //Modules\Food\Models\Restaurant
         $pos = strpos($model_name, '\\Models\\');
         $mod = substr($model_name, 0, $pos);
         //$controller='\Modules\\'.$mod->name.'\Http\Controllers\\'.$tmp.'Controller';
@@ -144,7 +144,7 @@ abstract class XotBaseContainerController extends Controller {
                 'class'=>get_class($model),
                 'method'=>$method,
             ];
-            ddd($msg);
+            dddx($msg);
             return $this->notAuthorized($method, $model);
         }
         $panel = app($this->controller)
@@ -176,16 +176,16 @@ abstract class XotBaseContainerController extends Controller {
         //$request = Request::capture();
         $controller = $this->controller;
         $row = $this->last;
-        // ddd($this->authorize($method,$row));
+        // dddx($this->authorize($method,$row));
         if (! is_object($row) && '' != $row && '' != config('xra.model.'.$row)) {
             $class = config('xra.model.'.$row);
             if ('' == $class) {
-                ddd('['.$row.'] not exists on config/xra.php');
+                dddx('['.$row.'] not exists on config/xra.php');
             }
             try {
                 $row = new $class();
             } catch (\Exception $e) {
-                ddd('['.$row.']['.$class.'] not exists on config/xra.php');
+                dddx('['.$row.']['.$class.'] not exists on config/xra.php');
             }
         }
         $authorized = true;
@@ -197,7 +197,7 @@ abstract class XotBaseContainerController extends Controller {
             //} else {
             $authorized = Gate::allows($method, $row);
         } else {
-            // ddd($this->controller);
+            // dddx($this->controller);
         }
         //$authorized=\Auth::guest()->can($method, $row);
         //}
@@ -232,7 +232,7 @@ abstract class XotBaseContainerController extends Controller {
                 //'special_case_exists'=>'NO',
                 'tips' => 'modify policy or create special case',
             ];
-            ddd($msg);
+            dddx($msg);
             abort(403);
         }
         //if(in_array($method,['update','store'])){

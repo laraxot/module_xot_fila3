@@ -57,7 +57,7 @@ class StubService {
          */
         //$params['dir']=realpath(__DIR__.'/../..');
         $autoloader_reflector = new \ReflectionClass($class);
-        //ddd($autoloader_reflector);
+        //dddx($autoloader_reflector);
         $class_file_name = $autoloader_reflector->getFileName();
         if (false === $class_file_name) {
             throw new \Exception('autoloader_reflector false');
@@ -68,7 +68,7 @@ class StubService {
         $params['dummy_id'] = '';
         $params['search'] = [];
         $params['fields'] = [];
-        //ddd($params);
+        //dddx($params);
         $stub_name = $stub;
         $file = '';
         switch ($stub_name) {
@@ -86,8 +86,8 @@ class StubService {
                     'model'=>$model,
                     'class_name'=>$class_name,
                 ];
-                ddd($msg);
-                ddd(get_class($model));
+                dddx($msg);
+                dddx(get_class($model));
                 */
                 /*
                 $file = $dir . '/' . $class_name . '.php';
@@ -142,11 +142,11 @@ class StubService {
         $replace = self::replaces($params);
         $stub = str_replace(array_keys($replace), array_values($replace), $stub);
 
-        //ddd($file);
+        //dddx($file);
 
-        //ddd($stub);
-        //ddd($autoloader_reflector);
-        //ddd($params);
+        //dddx($stub);
+        //dddx($autoloader_reflector);
+        //dddx($params);
         //
 
         File::put($file, $stub);

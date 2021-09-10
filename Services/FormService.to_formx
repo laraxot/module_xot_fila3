@@ -74,7 +74,7 @@ class FormService {
                 //echo '<hr/>'.$class.'<br/>';
                 //\Form::macro(Str::camel($macro), app($class)());
                 Form::macro('bs'.Str::studly($macro), app($class)());
-                //ddd($path);
+                //dddx($path);
             });
     }
 

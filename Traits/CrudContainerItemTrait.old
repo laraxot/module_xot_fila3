@@ -98,19 +98,19 @@ trait CrudContainerItemTrait {
             $types = Str::camel($types);
             try {
                 if (! is_object($items[$n_items - 1])) {
-                    ddd($items);
+                    dddx($items);
                 }
                 $rows = $items[$n_items - 1]->$types();
             } catch (\Exception $e) {
                 //$rows=[];
-                ddd($e);
+                dddx($e);
 
                 return abort(404);
             }
 
             //*
             if ($n_items >= 2) {
-                //ddd($items[$n_items-2]); //guid = padova , type= location
+                //dddx($items[$n_items-2]); //guid = padova , type= location
                 //$rows=$rows->scopeOfLocality('padova');
                 //* -- se tutto collegato coi related
                 /* -- MEGLIO FARLO CUSTOM DENTRO IL MODELLO, non tutto deve passare per RELATED
@@ -218,7 +218,7 @@ trait CrudContainerItemTrait {
         if (is_array($pivot_var) && isset($row->pivot)) {
             $row->pivot->update($pivot_var);
         }
-        //ddd($row->getFillable());
+        //dddx($row->getFillable());
 
         if (isset($row->fillableRelationship) && is_array($row->fillableRelationship)) {
             $intersects = collect(array_keys($data))->intersect($row->fillableRelationship)->all();
@@ -231,7 +231,7 @@ trait CrudContainerItemTrait {
         }
 
         if (isset($data['related'])) {
-            ddd('check 1');
+            dddx('check 1');
             foreach ($data['related'] as $rel_obj => $rel_id) {
                 $type = $row->post_type.'_x_'.$rel_obj;
                 PostRelated::where('post_id', $row->post_id)->where('type', $type)->delete();
@@ -240,7 +240,7 @@ trait CrudContainerItemTrait {
         }
 
         if (isset($data['relatedrev'])) {
-            ddd('check 2');
+            dddx('check 2');
             foreach ($data['relatedrev'] as $rel_obj => $rel_id) {
                 $type = $rel_obj.'_x_'.$row->post_type;
                 PostRelated::where('related_id', $row->post_id)->where('type', $type)->delete();
@@ -291,7 +291,7 @@ trait CrudContainerItemTrait {
         \extract($params);
         $routename = \Route::current()->getName();
         $row = last($params);
-        //ddd(config('xra.model'));
+        //dddx(config('xra.model'));
         if (Post::class == get_class($row)) { //se e' post devo prendere l'elemento collegato
             $row = $row->getLinkedModel();
             //$row=$row->linkable; //Class 'forum_cat' not found
@@ -335,7 +335,7 @@ trait CrudContainerItemTrait {
             $data['guid'] = Str::slug($data['title']);
         }
         $row = $model->create($data);
-        //ddd($row); // bisogna controllare se post_id e' creato
+        //dddx($row); // bisogna controllare se post_id e' creato
         $post = $row->post()->create($data);
 
         if (isset($row->fillableRelationship) && is_array($row->fillableRelationship)) {
@@ -345,7 +345,7 @@ trait CrudContainerItemTrait {
             }
         }
 
-        //ddd($post);
+        //dddx($post);
         $second_last = collect(\array_slice($params, -2))->first(); //penultimo
 
         if (\is_object($second_last) && $n_params >= 2) { // da verificare il > x
@@ -448,7 +448,7 @@ trait CrudContainerItemTrait {
     public function indexUpdate(Request $request) {
         $data = $request->all();
         $model = $this->getModel(); //Rating
-        //ddd($model);
+        //dddx($model);
         $params = optional(\Route::current())->parameters();
         [$container, $item] = $this->params2ContainerItem($params);
         $n_container = count($container);
@@ -467,8 +467,8 @@ trait CrudContainerItemTrait {
                 }
             }
         }
-        //ddd($data);
-        //ddd($rows->get());
+        //dddx($data);
+        //dddx($rows->get());
     }
 
     public function indexOrder(Request $request) {
@@ -639,7 +639,7 @@ trait CrudContainerItemTrait {
         $parent_item = collect(\array_slice($params, -3))->first();
         $me = collect(\array_slice($params, -1))->first();
         if (! isset($me->pivot)) {
-            ddd($me);
+            dddx($me);
         }
         $me_pos = $me->pivot->pos;
         if (null == $me_pos) {

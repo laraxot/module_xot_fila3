@@ -666,7 +666,7 @@ trait LinkedTrait {
         $pack = Str::snake($tmp[3]);
         $view = $ns.'::schema_org.list_item.'.$pack;
         if (! view()->exists($view)) {
-            ddd('not exists ['.$view.']');
+            dddx('not exists ['.$view.']');
         }
         $row = $this;
         foreach ($params as $k => $v) {
@@ -684,8 +684,8 @@ trait LinkedTrait {
      */
     /* deprecated ?
     public function urlNextContainer($container) {
-        //ddd($this->post->pivot);
-        //ddd($this->post);
+        //dddx($this->post->pivot);
+        //dddx($this->post);
         //$params = optional(\Route::current())->parameters();
         $params = Route::current()->parameters();
         list($containers, $items) = params2ContainerItem($params);

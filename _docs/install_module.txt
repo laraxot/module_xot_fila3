@@ -11,7 +11,7 @@
         //echo '<pre>'.print_r($json,1).'</pre>';
         //return ;
         $zip_url=$json->packages->{$vendor_name}->{$version}->dist->url;
-        //ddd(pathinfo($zip_url));
+        //dddx(pathinfo($zip_url));
         $client=new GuzzleClient();
         $zip_path=Storage::disk('local')->path('tmp.zip');
         $client->request('GET', $zip_url, ['sink'=>$zip_path]);

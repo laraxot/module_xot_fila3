@@ -21,8 +21,8 @@ class DateTimeRule implements Rule {
      * @return bool
      */
     public function passes($attribute, $value) {
-        //ddd($attribute); //published_at
-        //ddd($value);//10/10/2019 13:43
+        //dddx($attribute); //published_at
+        //dddx($value);//10/10/2019 13:43
         //return 5 === strlen($value);
 
         $format = 'd/m/Y H:i';

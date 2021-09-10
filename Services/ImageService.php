@@ -484,7 +484,7 @@ class ImageService {
                 //$this->image_src=''; //-- meglio non cancellare..
                 //$this->image_resize_src=[];
                 //$this->save();
-                //ddd('non dovrei essere qui');
+                //dddx('non dovrei essere qui');
                 return null;
             }
             //$img_content=base64_encode($img_content);

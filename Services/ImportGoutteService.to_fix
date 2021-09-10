@@ -42,7 +42,7 @@ $cookieJar = new FileCookieJar($cookieFile, TRUE);
         self::$client_options['headers']['referer'] = 'http://www.google.com';
         self::$client_options['verify'] = false;
         self::$client_options['defaults']['verify'] = false;
-        //ddd(self::$client_options);
+        //dddx(self::$client_options);
         self::$goutteClient = new GoutteClient();
         self::$guzzleClient = new GuzzleClient(self::$client_options);
         self::$goutteClient->setClient(self::$guzzleClient);

@@ -23,7 +23,7 @@ trait MyLogTrait {
         });
         */
         static::creating(function ($model) {
-            //ddd(static::$logModel);
+            //dddx(static::$logModel);
             if (null != \Auth::user()) {
                 $model->created_by = optional(\Auth::user())->handle;
                 $model->updated_by = optional(\Auth::user())->handle.'';
@@ -33,7 +33,7 @@ trait MyLogTrait {
 
         static::updating(function ($model) {
             //$tmp = ;
-            //ddd(debug_backtrace());
+            //dddx(debug_backtrace());
             $parz = [];
             $parz['tbl'] = $model->getTable(); //work
             $parz['id_tbl'] = $model->getKey(); //work

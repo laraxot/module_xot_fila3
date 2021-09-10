@@ -33,6 +33,6 @@ class Update implements ShouldQueue
     public function handle()
     {
         //
-       // ddd($this->data);
+       // dddx($this->data);
     }
 }

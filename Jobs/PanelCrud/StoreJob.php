@@ -180,11 +180,11 @@ class StoreJob extends XotBaseJob {
         /*
         extract($params);
         $types=Str::plural($container);
-        //ddd($params);
+        //dddx($params);
         //$model->$name()->create($data);
         $k=$model->getKey();
         $res=$item->$types()->update($model,$data);
-        //ddd($res);
+        //dddx($res);
         */
     }
 
@@ -257,7 +257,7 @@ class StoreJob extends XotBaseJob {
     }
 
     public function storeRelationshipsMorphToMany(Model $model, string $name, array $data): void {
-        //ddd(\Request::all());
+        //dddx(\Request::all());
         //return ;
 
         if (! Arr::isAssoc($data)) {
@@ -298,11 +298,11 @@ class StoreJob extends XotBaseJob {
                 /*
                 $rows1=$model->$name();
                 $related=$rows1->getRelated();
-                ddd($related);
-                //ddd($params);
+                dddx($related);
+                //dddx($params);
                 */
                 //$model->$name()->attach()
-                //ddd('semplice assegnazione');
+                //dddx('semplice assegnazione');
             }
         }
     }
@@ -334,12 +334,12 @@ class StoreJob extends XotBaseJob {
 
         $items = $model->$name();
         $related = $items->getRelated();
-        //ddd($related);
+        //dddx($related);
         $container_obj = $model;
         $container = ModelService::getPostType($container_obj);
         //$items_key = $container_obj->getKeyName();
         $items_key = $related->getKeyName();
-        //ddd($items_key);//auth_user_id
+        //dddx($items_key);//auth_user_id
         $items_0 = $items->get()->pluck($items_key);
 
         if (! isset($data['to'])) {

@@ -125,7 +125,7 @@ if (! \function_exists('getConfigFile')) {
 
             return $files;
         }
-        //ddd($params);
+        //dddx($params);
         //}
         if (! isset($_SERVER['SERVER_NAME']) || '127.0.0.1' == $_SERVER['SERVER_NAME']) {
             $_SERVER['SERVER_NAME'] = 'localhost';
@@ -133,13 +133,13 @@ if (! \function_exists('getConfigFile')) {
         $server_name = Str::slug(\str_replace('www.', '', $_SERVER['SERVER_NAME']));
         $config_file = base_path('config'.DIRECTORY_SEPARATOR.$server_name.DIRECTORY_SEPARATOR.$params['file']);
         if (! \file_exists($config_file)) {
-            //ddd($config_file);
+            //dddx($config_file);
             if (\file_exists(base_path('config/'.$params['file']))) {
-                //ddd(base_path('config/'.$params['file']));
+                //dddx(base_path('config/'.$params['file']));
                 return [base_path('config/'.$params['file'])];
             }
             if (\file_exists(base_path('config/'.$params['file'].'.php'))) {
-                //ddd('b');
+                //dddx('b');
                 return [base_path('config/'.$params['file'].'.php')];
             }
             echo '<h3>'.$config_file.'</h3>';
@@ -218,7 +218,7 @@ if (! \function_exists('fullTextWildcards')) {
 }
 
 if (! \function_exists('params2ContainerItem')) {
-    function params2ContainerItem($params = null) {
+    function params2ContainerItem(array $params = null) {
         if (null == $params) {
             $params = optional(\Route::current())->parameters();
         }
@@ -265,9 +265,9 @@ if (! \function_exists('getTransformerFromModel')) {
         $class = get_class($model);
         $module_name = getModuleNameFromModel($model);
         $transformer = '\\Modules\\'.$module_name.'\Transformers\\'.class_basename($model).''.$type;
-        //ddd($transformer.' '.class_exists($transformer));
+        //dddx($transformer.' '.class_exists($transformer));
         if (! class_exists($transformer)) {
-            ddd('preso');
+            dddx('preso');
         }
 
         return $transformer;
@@ -341,7 +341,7 @@ if (! \function_exists('tenantConfig')) {
         $tenant_name = tenantName();
         $extra_conf = config($tenant_name.'.'.$group);
         $original_conf = config($group);
-        //ddd($extra_conf);
+        //dddx($extra_conf);
         if (! is_array($original_conf)) {
             $original_conf = [];
         }
@@ -371,11 +371,11 @@ if (! \function_exists('transFields')) {
         $model = Form::getModel();
         $module_name = getModuleNameFromModel($model);
         $trans_root = Str::lower($module_name).'::'.Str::snake(class_basename($model));
-        //ddd() );
+        //dddx() );
         //debug_getter_obj(['obj'=>$module]);
-        //ddd($module_name->getNamespace());
+        //dddx($module_name->getNamespace());
         extract($params);
-        //ddd($params);
+        //dddx($params);
         if (isset($attributes)) {
             extract($attributes);
         }
@@ -504,7 +504,7 @@ if (! \function_exists('debug_getter_obj')) {
         }
         $html .= '</table>';
         echo $html;
-        ddd($methods);
+        dddx($methods);
     }//end function
 
     function debug_getter_obj(array $params){
@@ -525,7 +525,7 @@ if (! \function_exists('debug_getter_obj')) {
 
             return false;
         })->all();
-        //ddd($methods);
+        //dddx($methods);
         foreach ($methods as $method) {
             $reflection = new \ReflectionMethod($obj, $method);
             $args = $reflection->getParameters();
@@ -549,7 +549,7 @@ if (! \function_exists('debug_getter_obj')) {
                 }
             }
         }
-        ddd($data);
+        dddx($data);
 
         return $data;
     }

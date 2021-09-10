@@ -28,7 +28,7 @@ $areas_prgs = [
     //$item0,
 ];
 
-//ddd($areas_prgs);
+//dddx($areas_prgs);
 
 if ('admin' == \Request::segment(1)) {
     $prefix = 'admin';
@@ -47,5 +47,5 @@ if ('admin' == \Request::segment(1)) {
 \Artisan::call('route:list');
 $output = '[<pre>'.Artisan::output().'</pre>]';
 echo $output;
-ddd('a');
+dddx('a');
 */

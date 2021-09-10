@@ -125,7 +125,7 @@ trait CrudContainerItemRepositoryTrait {
      * https://laracasts.com/discuss/channels/eloquent/cleanest-way-to-save-model-and-relationships.
      */
     public function manageRelationships(array $params){
-        //ddd($params);
+        //dddx($params);
         extract($params);
         $methods = get_class_methods($model);
         $data1 = collect($data)->filter(function ($item, $key) use ($methods) {
@@ -168,7 +168,7 @@ trait CrudContainerItemRepositoryTrait {
             $model->$name()->touch();
         }
 
-        //ddd($res);
+        //dddx($res);
         /*"attached" => []
   "detached" => []
   "updated" => array:2 [▼
@@ -186,23 +186,23 @@ trait CrudContainerItemRepositoryTrait {
         /*
         extract($params);
         $types=Str::plural($container);
-        //ddd($params);
+        //dddx($params);
         //$model->$name()->create($data);
         $k=$model->getKey();
         $res=$item->$types()->update($model,$data);
-        //ddd($res);
+        //dddx($res);
         */
     }
 
     public function formatData(array $params){
         extract($params);
         $panel = StubService::getByModel(new $class(), 'panel');
-        //ddd($panel->fields());
-        //ddd($data);
+        //dddx($panel->fields());
+        //dddx($data);
         $fields = collect($panel->fields())->filter(function ($item) use ($data) {
             return in_array($item->name, array_keys($data));
         })->all();
-        //ddd($fields);
+        //dddx($fields);
         return $data;
     }
 
@@ -229,11 +229,11 @@ trait CrudContainerItemRepositoryTrait {
         //echo '<pre>'.print_r($data,true).'</pre>';
         //echo '<pre>'.print_r($row->getFillable(),true).'</pre>';
         //echo '<pre>'.print_r($item_new->toArray(),true).'</pre>';
-        //ddd($item_new);
+        //dddx($item_new);
 
         if (false !== $item) {
             if (! is_object($item)) {
-                ddd($item);
+                dddx($item);
             }
             $pivot_data = [];
             if (isset($data['pivot'])) {
@@ -248,7 +248,7 @@ trait CrudContainerItemRepositoryTrait {
             }
 
             $data = $this->formatData(['data' => $data, 'class' => Post::class]);
-            //ddd($data);
+            //dddx($data);
             $item_new->post()->create($data);
         }
         $panel = StubService::getByModel($item_new, 'panel');
@@ -282,11 +282,11 @@ trait CrudContainerItemRepositoryTrait {
             name= nome relazione
         */
         /*
-        ddd($params);
+        dddx($params);
         $model_linked_name=Str::singular($name);
         $model_linked=$this->getXotModel($model_linked_name);
         $row_linked=$model_linked->where($data)->first();
-        ddd($row_linked);
+        dddx($row_linked);
         $model->$name()->save($row_linked);
         */
         foreach ($data as $k => $v) {
@@ -302,8 +302,8 @@ trait CrudContainerItemRepositoryTrait {
                 /*
                 $rows1=$model->$name();
                 $related=$rows1->getRelated();
-                ddd($related);
-                //ddd($params);
+                dddx($related);
+                //dddx($params);
                 */
                 //$model->$name()->attach()
             }
@@ -355,7 +355,7 @@ trait CrudContainerItemRepositoryTrait {
         $related_pivot_key_name = $item->$types()->getRelatedPivotKeyName();
         $related_pivot_key_value = $data[$related_pivot_key_name];
         $rows = $item->$types()->attach($related_pivot_key_value, $data); //forse dovremmo aggiungere il tipo di relazione
-        //ddd($data);
+        //dddx($data);
         /*
         if(is_object($item)){
             $rows=$item->$types();
@@ -364,14 +364,14 @@ trait CrudContainerItemRepositoryTrait {
             $pivot=new $pivot_class;
             $pivot->
         };
-        ddd('senza item ?');
+        dddx('senza item ?');
         */
         //return view('xot::test');// 4 debug
         return ThemeService::action($request, $item);
     }
 
     public function indexEdit(Request $request, $container, $item) {
-        //ddd($request->getMethod());
+        //dddx($request->getMethod());
         if ('POST' == $request->getMethod()) {
             return $this->indexUpdate($request, $container, $item);
         }
@@ -388,7 +388,7 @@ trait CrudContainerItemRepositoryTrait {
             $this->saveMultiselectTwoSides($request, $container, $item);
         }
         $this->manageRelationships(['model' => $item, 'data' => $data, 'act' => 'indexUpdate']);
-        //ddd($data);
+        //dddx($data);
 
         //foreach($data[$types] as $k=>$v){
         //$item->$types()->updateExistingPivot($k, $v, false);
@@ -413,7 +413,7 @@ trait CrudContainerItemRepositoryTrait {
 
     public function indexUpdateRelationshipsMorphToMany(array $params){
         extract($params);
-        //ddd($data);
+        //dddx($data);
         /*
         $auth_user_id=\Auth::user()->auth_user_id;
         $data=collect($data)->map(function($item) use($auth_user_id){
@@ -432,12 +432,12 @@ trait CrudContainerItemRepositoryTrait {
                 }
                 $model->$name()->syncWithoutDetaching([$k => $v['pivot']]);
             } else {
-                ddd('to do-- ovvero da fare');
+                dddx('to do-- ovvero da fare');
                 /*
                 $rows1=$model->$name();
                 $related=$rows1->getRelated();
-                ddd($related);
-                //ddd($params);
+                dddx($related);
+                //dddx($params);
                 */
                 //$model->$name()->attach()
             }
@@ -451,11 +451,11 @@ trait CrudContainerItemRepositoryTrait {
         $items = $item->$types();
         //getPivotAccessor
         //getPivotClass
-        //ddd($items->pivot());
-        //ddd($items->getPivotClass());//Illuminate\Database\Eloquent\Relations\Pivot
+        //dddx($items->pivot());
+        //dddx($items->getPivotClass());//Illuminate\Database\Eloquent\Relations\Pivot
         //Modules\LU\Models\AreaAdminArea  solo se lo ficco con lo Using
-        //ddd(get_class_methods($items));
-        //ddd(class_basename($items));//BelongsToMany
+        //dddx(get_class_methods($items));
+        //dddx(class_basename($items));//BelongsToMany
         $container_obj = $this->getXotModel($container);
         $items_key = $container_obj->getKeyName();
         $items_0 = $items->get()->pluck($items_key);
@@ -479,10 +479,10 @@ trait CrudContainerItemRepositoryTrait {
     //*
     public function getXotModel($name) { //spostare in helper ?
         $model = Tenant::config('xra.model.'.$name);
-        //ddd($model);
+        //dddx($model);
         if (null == $model) {
             echo '<h3>not exists ['.$name.'] on config xra.model</h3>';
-            ddd(config('xra.model'));
+            dddx(config('xra.model'));
         }
         $row = new $model();
 

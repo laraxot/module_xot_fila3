@@ -41,9 +41,9 @@ class RouteServiceProvider extends XotBaseRouteServiceProvider {
         }
         */
         //$route_params = optional(\Route::current())->parameters();
-        //ddd($route_params);
+        //dddx($route_params);
 
-        //ddd('preso');
+        //dddx('preso');
     }
 
     public function registerRoutePattern(Router $router) {

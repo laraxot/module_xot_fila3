@@ -58,7 +58,7 @@ class IndexAttachJob implements ShouldQueue {
         $this->rows = $rows;
         $this->panel = Panel::get($row);
         $this->panel->setRows($rows);
-        //ddd($this->panel);
+        //dddx($this->panel);
         /*
     if($data==null){
     //$data=$this->getData();

@@ -264,7 +264,7 @@ abstract class XotBasePanel {
             )->all();
         }
 
-        //ddd($fields);
+        //dddx($fields);
 
         $rules = collect($fields)->map(
             function ($item) {
@@ -278,7 +278,7 @@ abstract class XotBasePanel {
                         ->getPivotClass();
                     $pivot = new $pivot_class();
                     $pivot_panel = StubService::getByModel($pivot, 'panel', true);
-                    //ddd('preso ['.$pivot_class.']['.get_class($pivot_panel).']');
+                    //dddx('preso ['.$pivot_class.']['.get_class($pivot_panel).']');
                     $pivot_rules = collect($pivot_panel->rules())
                         ->map(
                             function ($pivot_rule_val, $pivot_rule_key) use ($item) {
@@ -326,7 +326,7 @@ abstract class XotBasePanel {
         $mod = strtolower($mod);
         $name = Str::snake(class_basename(static::$model));
         $trans_ns = $mod.'::'.$name.'__rules_messages';
-        //ddd($trans_ns);//food::restaurant_owner__rules_messages
+        //dddx($trans_ns);//food::restaurant_owner__rules_messages
         $rules_msg = trans($trans_ns);
         if (! \is_array($rules_msg)) {
             $rules_msg = [];
@@ -564,7 +564,7 @@ abstract class XotBasePanel {
                 break;
             case 1:
                 $repo = with(new \Modules\Food\Repositories\RestaurantRepository())->search('grom');
-                //ddd($repo->paginate());
+                //dddx($repo->paginate());
                 return $repo;
                 break;
             case 2:
@@ -653,14 +653,14 @@ abstract class XotBasePanel {
             return null;
         }
         if ('json' == $format) { //potrei ficcare anche xls
-            //ddd($this->option_id());
+            //dddx($this->option_id());
             //$res=$data->pluck('dest1','repar')->all();
-            //ddd(get_class($data)); //Illuminate\Database\Eloquent\Builder
+            //dddx(get_class($data)); //Illuminate\Database\Eloquent\Builder
             //debug_getter_obj(['obj'=>$data]);
             $model = $data->getModel();
             //$transformer=getTransformerFromModel($model,'Collection');
             $transformer = StubService::fromModel(['model' => $model, 'stub' => 'transformer_collection']);
-            //ddd($transformer); // Modules\Food\Transformers\LocationCollection
+            //dddx($transformer); // Modules\Food\Transformers\LocationCollection
             //die(json_encode($res));
             $ris = $data->paginate(20);
             $this->force_exit = 1;
@@ -695,13 +695,13 @@ abstract class XotBasePanel {
             $ris = $data->paginate(20);
             $this->force_exit = 1;
             $model_class = $this::$model;
-            //ddd($model_class);//Modules\LU\Models\Area
+            //dddx($model_class);//Modules\LU\Models\Area
             $model_class_name = class_basename($model_class);
             $module_ns = Str::before($model_class, '\\Models\\');
             $transformers_coll = $module_ns.'\\Transformers\\'.$model_class_name.'Collection';
             $transformers_res = $module_ns.'\\Transformers\\'.$model_class_name.'Resource';
             //Typeahead
-            //ddd($transformers_coll);
+            //dddx($transformers_coll);
             //$this->out=new $transformers_coll($ris);
             $this->out = $transformers_res::collection($ris);
 
@@ -714,7 +714,7 @@ abstract class XotBasePanel {
              * https://github.com/shramov/leaflet-plugins/blob/master/examples/permalink.html.
              *
              **/
-            //ddd('aaa');
+            //dddx('aaa');
             $cache_key = 'geoJson_6_'.Str::slug(url()->full());
             if ($cache_custom = 0) {
                 if (! Storage::disk('cache')->exists($cache_key.'.json')) {
@@ -777,10 +777,10 @@ abstract class XotBasePanel {
         $formatted = $this->formatData($query, $data);
         $page = isset($data['page']) ? $data['page'] : 1;
         Cache::forever('page', $page);
-        //ddd(Cache::get('page'));
+        //dddx(Cache::get('page'));
         //session('page',$page);
         //Cookie::make('page', $page, 20);
-        //ddd(Cookie::get('page'));
+        //dddx(Cookie::get('page'));
         return $query;
     }
 
@@ -1239,7 +1239,7 @@ abstract class XotBasePanel {
             'width' => $width,
             'height' => $height,
         ]);
-        //ddd($src_out);
+        //dddx($src_out);
         return $src_out;
     }
 
@@ -1261,8 +1261,8 @@ abstract class XotBasePanel {
         $route_params['lang'] = $lang;
         [$containers, $items] = params2ContainerItem($route_params);
         $n_items = count($items);
-        //ddd($n_items);//1
-        //ddd($route_name); container0.show
+        //dddx($n_items);//1
+        //dddx($route_name); container0.show
         for ($i = 0; $i < $n_items; ++$i) {
             $v = $items[$i];
             if (method_exists($v, 'postLang')) {
@@ -1300,7 +1300,7 @@ abstract class XotBasePanel {
             }
 
             $route_params['item'.$i] = $guid;
-            //ddd($route_params['item'.$i]->guidLang);
+            //dddx($route_params['item'.$i]->guidLang);
         }
         //dddx($route_params);
         //return '/wip['.__LINE__.']['.__FILE__.']';
@@ -1653,14 +1653,14 @@ abstract class XotBasePanel {
             }
             $query = $this->row;
         }
-        //ddd(get_class($this));
+        //dddx(get_class($this));
         $with = $this->with();
         if (! is_array($with)) {
             $msg = [
                 'class' => get_class($this),
                 'with' => $with,
             ];
-            ddd($with);
+            dddx($with);
         }
         $query = $query->with($with);
         $query = $this->indexQuery($data, $query);
@@ -1862,7 +1862,7 @@ abstract class XotBasePanel {
             ->with('rows', $this->rows)
             ->with($params['view_params']);
 
-        //ddd($this->rows->get());
+        //dddx($this->rows->get());
         if (request()->input('debug')) {
             return $html;
         }
@@ -2021,7 +2021,7 @@ abstract class XotBasePanel {
         return $html;
     }
 
-    public function view($params = null) {
+    public function view(array $params = null) {
         //$route_params = optional(\Route::current())->parameters();
 
         [$containers, $items] = params2ContainerItem();

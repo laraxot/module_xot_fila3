@@ -69,7 +69,7 @@ class IndexJob implements ShouldQueue {
         }
 
         $this->panel->setRows($rows);
-        //ddd($this->panel);
+        //dddx($this->panel);
         /*
     if($data==null){
     //$data=$this->getData();

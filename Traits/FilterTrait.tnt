@@ -105,9 +105,9 @@ trait FilterTrait {
         $tmp = $model->search($q)->get()->map(function ($item) {
             return $item->id;
         });
-        //ddd($tmp->all());
+        //dddx($tmp->all());
         return $query->whereIn('id', $tmp->all());
-        //ddd($tmp);
+        //dddx($tmp);
 
         $index = $model->searchableAs().'.index';
         $driver = config('database.default');
@@ -116,8 +116,8 @@ trait FilterTrait {
         $candyShopIndex->loadConfig($config);
         $candyShopIndex->selectIndex($index);
         $candyShops = $candyShopIndex->search($q);
-        //ddd($res);
-        //ddd($candyShops['ids']);
+        //dddx($res);
+        //dddx($candyShops['ids']);
         //return $query;
         return $query->whereIn('id', $candyShops['ids']);
     }
@@ -204,7 +204,7 @@ trait FilterTrait {
                 die('solo single_date ['.__LINE__.']['.__FILE__.']');
             }
         }
-        //ddd($parz);
+        //dddx($parz);
         return $query;
     }
 

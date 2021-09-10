@@ -165,7 +165,7 @@ abstract class XotBaseContainerController extends Controller {
                 'model_class' => get_class($model),
                 'method' => $method,
             ];
-            //ddd($msg);
+            //dddx($msg);
 
             return $this->notAuthorized($method, $model);
         }

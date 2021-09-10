@@ -43,7 +43,7 @@ trait ArrayTrait {
         //foreach($data as $k => $v) {
         foreach ($data as $k => $v) {
             if (! \is_array($key_array)) {
-                ddd($key_array);
+                dddx($key_array);
             }
             \reset($key_array);
             $skey = [];
@@ -53,7 +53,7 @@ trait ArrayTrait {
                     if (! isset($v->$v1)) {
                         //self::print_x($v1);
                         //self::print_x($v);
-                        //ddd('qui');
+                        //dddx('qui');
                         $v->$v1 = '';
                     }
                     $v2 = $v->$v1;
@@ -127,7 +127,7 @@ trait ArrayTrait {
                     echo '<pre>[vk]';
                     \print_r($vk);
                     echo '[/vk]</pre>';
-                    ddd('qui');
+                    dddx('qui');
                 }
                 $skey[] = $v->$vk;
             }
@@ -155,7 +155,7 @@ trait ArrayTrait {
                     //echo '<pre>';print_r($ris[$skey]);echo '</pre>';
                     //echo '<pre>';print_r($v);echo '</pre>';
                     //echo '<pre>';print_r($va);echo '</pre>';
-                    //ddd('qui');
+                    //dddx('qui');
                 }
             }
         }

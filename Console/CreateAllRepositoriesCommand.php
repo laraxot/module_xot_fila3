@@ -60,7 +60,7 @@ class CreateAllRepositoriesCommand extends Command {
      */
     public function handle() {
         $modules = \Module::all();
-        //ddd($modules);
+        //dddx($modules);
         //$this->info('Success ! User Created !');
         $all = [];
         foreach ($modules as $mod) {

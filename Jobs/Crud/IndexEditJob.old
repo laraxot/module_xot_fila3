@@ -67,7 +67,7 @@ class IndexEditJob implements ShouldQueue {
         }
         $this->panel->setParent($panel);
 
-        //ddd($this->panel);
+        //dddx($this->panel);
         /*
     if($data==null){
     //$data=$this->getData();

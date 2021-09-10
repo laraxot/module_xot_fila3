@@ -72,7 +72,7 @@ trait CrudSimpleTrait {
                 $query = \trim($request->get('q'));
                 if (\mb_strlen($query) > 1) {
                     //$rows=$rows->ofSearch($query);
-                    //ddd($rows->toSql());
+                    //dddx($rows->toSql());
                 }
             }
         }
@@ -83,7 +83,7 @@ trait CrudSimpleTrait {
                 if (\mb_strlen(\trim($query)) > 2) {
                     $rows = $rows->search($query);
                 }
-                //ddd($rows->get());
+                //dddx($rows->get());
             } else {
                 echo '<p>Method Search not exists on ['.\get_class($rows).']</p>';
             }
@@ -415,7 +415,7 @@ trait CrudSimpleTrait {
             $msg .= '<h3>Primary key non trovata in params</h3>';
             $msg .= '<h4>Primary key:['.$this->getPrimaryKey().']</h4>';
             echo $msg;
-            ddd($params);
+            dddx($params);
 
             echo '[params]<pre>';
             \print_r($params);
@@ -450,7 +450,7 @@ trait CrudSimpleTrait {
         if (isset($params['lang']) && \in_array('lang', $model->fields()->all(), true)) {
             $model = $model->where('lang', $params['lang']);
         }
-        //ddd($model);
+        //dddx($model);
         $row = $model->findOrFail($pk_val);
 
         /*
@@ -515,8 +515,8 @@ trait CrudSimpleTrait {
         $model = $this->getModel();
         $table = $model->getTable();
         $data = $request->all();
-        //ddd(get_class($model));
-        //ddd($data); tipo_commissioni
+        //dddx(get_class($model));
+        //dddx($data); tipo_commissioni
         if (\method_exists($model, 'validate')) {
             $res = $model->validate($data);
         }
@@ -889,14 +889,14 @@ trait CrudSimpleTrait {
         $rotename_arr = explode('.', $routename);
         $rotename_arr = array_slice($rotename_arr, 0, -1);
         $routename_base = implode('.', $rotename_arr);
-        //ddd($rotename_arr);
+        //dddx($rotename_arr);
         $params = optional(\Route::current())->parameters();
         $data = $request->all();
         switch ($data['_action']) {
             case 'save_continue':
                 $routename = $routename_base.'.edit';
                 /*
-                //ddd($request->route($routename)->paremeters());
+                //dddx($request->route($routename)->paremeters());
                 if (!isset($params['item0'])) {
                     $params['item0'] = $empty;
                 }
@@ -925,7 +925,7 @@ trait CrudSimpleTrait {
                 break;
             default:
                 echo '<h3>['.__LINE__.']['.__FILE__.']</h3>';
-                ddd($data['_action']);
+                dddx($data['_action']);
                 break;
         }//end switch
     }

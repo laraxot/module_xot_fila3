@@ -339,8 +339,8 @@ class PanelRouteService {
         $route_params['lang'] = $lang;
         [$containers, $items] = params2ContainerItem($route_params);
         $n_items = count($items);
-        //ddd($n_items);//1
-        //ddd($route_name); container0.show
+        //dddx($n_items);//1
+        //dddx($route_name); container0.show
         for ($i = 0; $i < $n_items; ++$i) {
             $v = $items[$i];
             if (method_exists($v, 'postLang')) {
@@ -378,7 +378,7 @@ class PanelRouteService {
             }
 
             $route_params['item'.$i] = $guid;
-            //ddd($route_params['item'.$i]->guidLang);
+            //dddx($route_params['item'.$i]->guidLang);
         }
         //dddx($route_params);
         //return '/wip['.__LINE__.']['.__FILE__.']';

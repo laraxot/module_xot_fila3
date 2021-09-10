@@ -126,7 +126,7 @@ class FileService {
         /* 4 debug , dovrebbe uscire al return prima
         if($ns=='adm_theme'){
 
-            ddd($msg);
+            dddx($msg);
         }
         //*/
         $url = Module::asset($ns.':'.$path1);
@@ -156,7 +156,7 @@ class FileService {
         }
 
         //$url=str_replace(url('/'),'',$url);
-        //ddd(url($url));
+        //dddx(url($url));
         return $url;
     }
 
@@ -164,7 +164,7 @@ class FileService {
         $path = (string) self::getViewNameSpacePath($ns);
         /* 4 debug
         if(basename($path1)=='font-awesome.min.css'){
-            ddd('-['.$path.']['.public_path('').']');
+            dddx('-['.$path.']['.public_path('').']');
         }
         //*/
         if (Str::startsWith($path, public_path(''))) {
@@ -207,7 +207,7 @@ class FileService {
                 'msg' => 'Filename not Exists',
             ];
             dddx($msg);
-            //ddd('non esiste '.); //4 debug
+            //dddx('non esiste '.); //4 debug
         }
 
         return asset($path_pub);
@@ -240,7 +240,7 @@ class FileService {
                 dd('Caught exception: ', $e->getMessage(), '\n['.__LINE__.']['.__FILE__.']');
             }
         } else {
-            //ddd('non esiste '.$filename); //4 debug
+            //dddx('non esiste '.$filename); //4 debug
         }
 
         return asset($path_pub);
@@ -280,7 +280,7 @@ class FileService {
 
         if (! File::exists($filename_from)) {
             //dddx('['.$filename_from.'] not exists');
-            //ddd($msg);
+            //dddx($msg);
             return '['.$filename_from.']['.__LINE__.']['.basename(__FILE__).'] not exists';
         }
         if (! File::exists($filename_to)) {

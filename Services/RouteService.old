@@ -373,7 +373,7 @@ class RouteService {
     public static function containerN(array $params){
         extract($params);
         if (! isset($model)) {
-            ddd($params);
+            dddx($params);
         }
         $name = collect(config('xra.model'))->search($model);
         if (! isset($route_params)) {
@@ -411,7 +411,7 @@ class RouteService {
         }
         $container_i = collect($container_types)->search($model);
         /*
-        ddd($container_types);
+        dddx($container_types);
         //$item_i=collect($items)->whereInstanceOf($model);
         $item_i=collect($items)->search(function ($item,$key) use ($model){
         return get_class($item)==$model;
@@ -486,7 +486,7 @@ class RouteService {
                 'routename_son' => $routename_son,
                 'son_name' => $son_name,
             ];
-            //echo '<pre>'.print_r($msg,true).'</pre>';ddd($parz);
+            //echo '<pre>'.print_r($msg,true).'</pre>';dddx($parz);
             $route = '#';
         }
 
@@ -507,7 +507,7 @@ class RouteService {
         $tabs = [];
 
         $cont_i = RouteService::containerN(['model' => $model, 'route_params' => $route_params]);
-        //ddd($routename);
+        //dddx($routename);
         if (0 == $cont_i) {
             $tmp1 = new \stdClass();
             if ('index_edit' == $act) {
@@ -779,7 +779,7 @@ class RouteService {
         $route_key = $model->getRouteKeyName();
         $route_key_val = $model->$route_key;
         if ('' == $route_key_val && '' != $model->getKey()) {
-            ddd([
+            dddx([
                 'route_key' => $route_key,
                 'class' => get_class($model),
                 'primary_name' => $model->getKeyName(),
@@ -806,7 +806,7 @@ class RouteService {
                 'e'=>$e,
 
             ];
-            ddd($msg);
+            dddx($msg);
             //*/
             $url = '#routename_err['.$routename.']['.__FILE__.']['.__LINE__.']';
         }

@@ -70,7 +70,7 @@ trait CrudContainerItemNoPostTrait {
 
         if (false !== $item) {
             if (! is_object($item)) {
-                ddd($item);
+                dddx($item);
             }
             $pivot_data = [];
             if (isset($data['pivot'])) {
@@ -112,7 +112,7 @@ trait CrudContainerItemNoPostTrait {
      * https://laracasts.com/discuss/channels/eloquent/cleanest-way-to-save-model-and-relationships.
      */
     public function manageRelationships(array $params){
-        //ddd($params);
+        //dddx($params);
         extract($params);
         $methods = get_class_methods($model);
         /*
@@ -166,9 +166,9 @@ trait CrudContainerItemNoPostTrait {
         //$rows = $model->$name();
         if (isset($data['from']) || isset($data['to'])) {
             $this->saveMultiselectTwoSides($params);
-        //ddd($params);
+        //dddx($params);
         } else {
-            //ddd('TO DO');
+            //dddx('TO DO');
         }
     }
 
@@ -212,11 +212,11 @@ trait CrudContainerItemNoPostTrait {
         /*
         extract($params);
         $types=Str::plural($container);
-        //ddd($params);
+        //dddx($params);
         //$model->$name()->create($data);
         $k=$model->getKey();
         $res=$item->$types()->update($model,$data);
-        //ddd($res);
+        //dddx($res);
         */
     }
 
@@ -256,12 +256,12 @@ trait CrudContainerItemNoPostTrait {
     public function formatData(array $params){
         extract($params);
         $panel = StubService::getByModel(new $class(), 'panel');
-        //ddd($panel->fields());
-        //ddd($data);
+        //dddx($panel->fields());
+        //dddx($data);
         $fields = collect($panel->fields())->filter(function ($item) use ($data) {
             return in_array($item->name, array_keys($data));
         })->all();
-        //ddd($fields);
+        //dddx($fields);
         return $data;
     }
     */
@@ -301,8 +301,8 @@ trait CrudContainerItemNoPostTrait {
                 /*
                 $rows1=$model->$name();
                 $related=$rows1->getRelated();
-                ddd($related);
-                //ddd($params);
+                dddx($related);
+                //dddx($params);
                 */
                 //$model->$name()->attach()
             }
@@ -336,7 +336,7 @@ trait CrudContainerItemNoPostTrait {
         $related_pivot_key_name = $item->$types()->getRelatedPivotKeyName();
         $related_pivot_key_value = $data[$related_pivot_key_name];
         $rows = $item->$types()->attach($related_pivot_key_value, $data); //forse dovremmo aggiungere il tipo di relazione
-        //ddd($data);
+        //dddx($data);
         /*
         if(is_object($item)){
             $rows=$item->$types();
@@ -345,13 +345,13 @@ trait CrudContainerItemNoPostTrait {
             $pivot=new $pivot_class;
             $pivot->
         };
-        ddd('senza item ?');
+        dddx('senza item ?');
         */
         //return ThemeService::action($request, $item);
     }
 
     public function indexEdit(Request $request, $container, $item) {
-        //ddd($request->getMethod());
+        //dddx($request->getMethod());
         if ('POST' == $request->getMethod()) {
             //return  //
             $this->indexUpdate($request, $container, $item);
@@ -380,7 +380,7 @@ trait CrudContainerItemNoPostTrait {
 
     public function indexUpdateRelationshipsMorphToMany(array $params){
         extract($params);
-        //ddd($data);
+        //dddx($data);
         /*
         $auth_user_id=\Auth::user()->auth_user_id;
         $data=collect($data)->map(function($item) use($auth_user_id){
@@ -399,12 +399,12 @@ trait CrudContainerItemNoPostTrait {
                 }
                 $model->$name()->syncWithoutDetaching([$k => $v['pivot']]);
             } else {
-                ddd('to do-- ovvero da fare');
+                dddx('to do-- ovvero da fare');
                 /*
                 $rows1=$model->$name();
                 $related=$rows1->getRelated();
-                ddd($related);
-                //ddd($params);
+                dddx($related);
+                //dddx($params);
                 */
                 //$model->$name()->attach()
             }
@@ -426,11 +426,11 @@ trait CrudContainerItemNoPostTrait {
         extract($params);
         $items = $model->$name();
         $related = $items->getRelated();
-        //ddd($related);
+        //dddx($related);
         $container_obj = $model;
         //$items_key = $container_obj->getKeyName();
         $items_key = $related->getKeyName();
-        //ddd($items_key);//auth_user_id
+        //dddx($items_key);//auth_user_id
         $items_0 = $items->get()->pluck($items_key);
 
         if (! isset($data['to'])) {
@@ -453,11 +453,11 @@ trait CrudContainerItemNoPostTrait {
     //*
     public function getXotModel($name) { //spostare in helper ?
         $model = Tenant::config('xra.model.'.$name);
-        //ddd($model);
+        //dddx($model);
         if (null == $model) {
             return null;
             echo '<h3>not exists ['.$name.'] on config xra.model</h3>';
-            ddd(config('xra.model'));
+            dddx(config('xra.model'));
         }
         if ('BaseModel' == class_basename($model)) {
             return abort('403', 'BaseModel is only for Abstract!');

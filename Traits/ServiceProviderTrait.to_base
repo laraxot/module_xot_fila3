@@ -33,7 +33,7 @@ trait ServiceProviderTrait {
         }
 
         $rc = new \ReflectionClass($this);
-        //ddd(get_class($this)->getFileName());
+        //dddx(get_class($this)->getFileName());
         $dir = \dirname($rc->getFileName());
 
         $class = class_basename($this);
@@ -95,7 +95,7 @@ trait ServiceProviderTrait {
         // \View::addNamespace('pub_theme', $pub_theme_dir);
         $this->loadTranslationsFrom($pub_theme_dir.'/translations', 'pub_theme');
         $this->loadTranslationsFrom($adm_theme_dir.'/translations', 'adm_theme');
-        //ddd($pub_theme_dir);
+        //dddx($pub_theme_dir);
         // Lang::addNamespace($namespace, $path);
     }
 
@@ -147,7 +147,7 @@ trait ServiceProviderTrait {
             try {
                 \File::put($policies_file, json_encode($policies));
             } catch (\Exception $e) {
-                ddd($e);
+                dddx($e);
             }
         } else {
             $policies = \File::get($policies_file);
@@ -186,7 +186,7 @@ trait ServiceProviderTrait {
             try {
                 \File::put($events_file, json_encode($events));
             } catch (\Exception $e) {
-                ddd($e);
+                dddx($e);
             }
         } else {
             $events = \File::get($events_file);
@@ -212,7 +212,7 @@ trait ServiceProviderTrait {
         //$this->loadPoliciesFrom($dir.'/Policies');
 
         foreach (\glob($dir.'/Commands/*.php') as $filename) {
-            ddd($filename);
+            dddx($filename);
         }
     }
 

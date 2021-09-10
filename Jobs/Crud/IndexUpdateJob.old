@@ -58,7 +58,7 @@ class IndexUpdateJob implements ShouldQueue {
         $this->rows = $rows;
         $this->panel = Panel::get($row);
         $this->panel->setRows($rows);
-        //ddd($this->panel);
+        //dddx($this->panel);
 
         if (null == $data) {
             $data = $this->getData();
@@ -72,7 +72,7 @@ class IndexUpdateJob implements ShouldQueue {
      * @return void
      */
     public function handle() {
-        //ddd($this->item->groups);
+        //dddx($this->item->groups);
         $this->manageRelationships(['model' => $this->item, 'data' => $this->data, 'act' => 'indexUpdate']);
 
         return $this->panel;
@@ -91,7 +91,7 @@ class IndexUpdateJob implements ShouldQueue {
 
     public function indexUpdateRelationshipsMorphToMany(array $params){
         extract($params);
-        //ddd($data);
+        //dddx($data);
         /*
         $auth_user_id=\Auth::user()->auth_user_id;
         $data=collect($data)->map(function($item) use($auth_user_id){
@@ -110,12 +110,12 @@ class IndexUpdateJob implements ShouldQueue {
                 }
                 $model->$name()->syncWithoutDetaching([$k => $v['pivot']]);
             } else {
-                ddd('to do-- ovvero da fare');
+                dddx('to do-- ovvero da fare');
                 /*
                 $rows1=$model->$name();
                 $related=$rows1->getRelated();
-                ddd($related);
-                //ddd($params);
+                dddx($related);
+                //dddx($params);
                  */
                 //$model->$name()->attach()
             }
@@ -127,11 +127,11 @@ class IndexUpdateJob implements ShouldQueue {
         extract($params);
         $items = $model->$name();
         $related = $items->getRelated();
-        //ddd($related);
+        //dddx($related);
         $container_obj = $model;
         //$items_key = $container_obj->getKeyName();
         $items_key = $related->getKeyName();
-        //ddd($items_key);//auth_user_id
+        //dddx($items_key);//auth_user_id
         $items_0 = $items->get()->pluck($items_key);
 
         if (! isset($data['to'])) {

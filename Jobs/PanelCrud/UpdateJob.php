@@ -203,7 +203,7 @@ class UpdateJob extends XotBaseJob {
                 if (! isset($v['pivot'])) {
                     $v['pivot'] = [];
                 }
-                //ddd('a');
+                //dddx('a');
                 /*
                 echo '<hr/><pre>'.print_r($v['pivot'],1).'</pre><hr/>';
                 $res = $model->$name()
