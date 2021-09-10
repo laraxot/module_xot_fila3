@@ -91,7 +91,7 @@ class ArrayService {
             $text = 'text';
         }
         switch ($out) {
-            case 'link': return view('theme::download_icon')->with('file', $pathToFile)->with('ext', 'xls')->with('text', $text);
+            case 'link': return view()->make('theme::download_icon')->with('file', $pathToFile)->with('ext', 'xls')->with('text', $text);
             case 'download': response()->download($pathToFile);
             // no break
             case 'file':  return $pathToFile;

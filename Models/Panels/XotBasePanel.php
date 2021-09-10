@@ -646,6 +646,8 @@ abstract class XotBasePanel implements PanelContract {
     }
 
     /**
+     * index Navigation
+     * 
      * @return null
      */
     public function indexNav(): ?Renderable {
@@ -1468,7 +1470,13 @@ abstract class XotBasePanel implements PanelContract {
         return [];
     }
 
-    public function actions(): array {
+    /**
+     * 
+     * Get the actions available for the resouce
+     * 
+     * @return array
+     */
+    public function actions():array {
         return [];
     }
 

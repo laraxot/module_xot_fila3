@@ -40,7 +40,7 @@ class HtmlPanelPresenter implements PanelPresenterContract {
             'Ultimo aggiornamento' => $last_update,
         ];
 
-        return view('workshop::index')->with(compact('items', 'data'));
+        return view()->make('workshop::index')->with(compact('items', 'data'));
         */
     }
 
