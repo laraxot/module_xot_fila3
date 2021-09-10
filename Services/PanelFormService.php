@@ -149,7 +149,7 @@ class PanelFormService {
             'title' => $title,
         ];
 
-        return view('formx::includes.components.btn.'.$act)->with($parz);
+        return view()->make('formx::includes.components.btn.'.$act)->with($parz);
     }
 
     public function btnDetach(array $params = []) {
@@ -163,7 +163,7 @@ class PanelFormService {
             'act' => $act,
         ];
 
-        return view('formx::includes.components.btn.'.$act)->with($parz);
+        return view()->make('formx::includes.components.btn.'.$act)->with($parz);
     }
     */
 
@@ -291,10 +291,10 @@ class PanelFormService {
             'act' => $act,
         ];
         if (isset($modal) && $modal) {
-            return view('formx::includes.components.btn.modal')->with($parz);
+            return view()->make('formx::includes.components.btn.modal')->with($parz);
         }
 
-        return view('formx::includes.components.btn.'.$act)->with($parz);
+        return view()->make('formx::includes.components.btn.'.$act)->with($parz);
     }
     */
     /* deprecated

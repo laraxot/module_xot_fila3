@@ -69,6 +69,6 @@ class Test extends Component {
         $this->change_cats = $this->fix($this->change_cats);
         $this->changes = $this->fix($this->changes);
 
-        return view('xot::livewire.test', $view_params);
+        return view()->make('xot::livewire.test', $view_params);
     }
 }

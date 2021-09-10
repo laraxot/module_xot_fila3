@@ -552,7 +552,7 @@ trait LinkedTrait {
         $roots = Post::getRoots();
         $view = 'blog::admin.partials.'.Str::snake(class_basename($this));
 
-        return view($view)->with('row', $this->post)->with($roots);
+        return view()->make($view)->with('row', $this->post)->with($roots);
     }
     //*/
     //------------------------------------
@@ -673,7 +673,7 @@ trait LinkedTrait {
             $row->$k = $v;
         }
 
-        return view($view)->with('row', $row);
+        return view()->make($view)->with('row', $row);
     }
     */
 
