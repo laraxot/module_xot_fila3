@@ -99,7 +99,7 @@ trait LinkedTrait {
     */
 
     /* -- messo in hasprofileTrait
-    public function user() {
+    public function user():\Illuminate\Database\Eloquent\Relations\HasOne {
         return $this->hasOne(User::class, 'auth_user_id', 'auth_user_id');
     }
 

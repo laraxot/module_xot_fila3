@@ -35,7 +35,7 @@ trait WidgetTrait {
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function containerWidgets() {
+    public function containerWidgets():\Illuminate\Database\Eloquent\Relations\HasMany {
         return $this->hasMany(Widget::class, 'post_type', 'post_type')
             ->orderBy('pos');
         //->whereNull('post_id');
