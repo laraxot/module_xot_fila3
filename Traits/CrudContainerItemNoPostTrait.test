@@ -20,7 +20,7 @@ use Modules\Xot\Services\PanelService as Panel;
 
 trait CrudContainerItemNoPostTrait {
 
-   // public $rows;
+   // //public $rows;
 
     public function index(Request $request, $container, $item) {
         /*

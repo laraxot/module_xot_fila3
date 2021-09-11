@@ -13,12 +13,12 @@ use Illuminate\Database\Eloquent\Builder;
 //----------  SERVICES --------------------------
 //------------ jobs ----------------------------
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Str;
 use Modules\FormX\Services\FormXService;
 use Modules\Xot\Contracts\PanelContract;
+use Modules\Xot\Contracts\RowsContract;
 use Modules\Xot\Services\PanelService as Panel;
 
 /**
@@ -31,10 +31,7 @@ abstract class XotBasePanelAction {
 
     public Model $row;
 
-    /**
-     * @var Relation|Builder
-     */
-    public $rows;
+    public RowsContract $rows;
 
     //public Builder $rows;
 
