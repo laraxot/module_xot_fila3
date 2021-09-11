@@ -13,10 +13,10 @@ use ZipArchive;
 class PdfZipYearAction extends XotBasePanelAction {
     public bool $onContainer = true;
     public string $icon = '<i class="far fa-file-pdf"></i><i class="far fa-file-archive"></i>';
-    public $year = null;
-    public $pdf_view = null;
+    public ?int $year = null;
+    public ?string $pdf_view = null;
 
-    public function __construct($year, $pdf_view) {
+    public function __construct(int $year,string $pdf_view) {
         $this->year = $year;
         $this->pdf_view = $pdf_view;
     }

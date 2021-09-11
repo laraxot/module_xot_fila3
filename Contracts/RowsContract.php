@@ -170,4 +170,16 @@ interface RowsContract {
      * @return array
      */
     public function toArray();
+
+    /**
+     * Add a "where in" clause to the query.
+     *
+     * @param string $column
+     * @param mixed  $values
+     * @param string $boolean
+     * @param bool   $not
+     *
+     * @return $this
+     */
+    public function whereIn($column, $values, $boolean = 'and', $not = false);
 }
