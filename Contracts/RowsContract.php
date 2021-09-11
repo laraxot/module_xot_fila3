@@ -163,4 +163,11 @@ interface RowsContract {
      * @return $this
      */
     public function limit($value);
+
+    /**
+     * Convert the model instance to an array.
+     *
+     * @return array
+     */
+    public function toArray();
 }
