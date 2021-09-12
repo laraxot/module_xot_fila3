@@ -5,17 +5,22 @@ declare(strict_types=1);
 namespace Modules\Xot\Contracts;
 
 //use Illuminate\Database\Query\Builder;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Support\Collection;
+use Illuminate\Database\Eloquent\Model;
+use Modules\Xot\Contracts\RowsContract;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Relations\Relation;
 
 interface PanelContract {
     public function setRow(Model $row): self;
 
-    public function setRows(Relation $rows): self;
+    //public function setRows(Relation $rows): self;
 
-    public function getRows(): Relation;
+    //public function getRows(): Relation;
+    public function setRows(RowsContract $rows): self;
+
+    public function getRows(): RowsContract;
+
 
     public function setItem(string $guid): self;
 

@@ -164,7 +164,7 @@ class PanelService {
             null,
             null
         );
-        $panel->setRows($rows);
+        $panel->setRows($home->whereRaw('1=1'));
 
         return $panel;
     }
