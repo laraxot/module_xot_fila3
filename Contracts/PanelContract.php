@@ -16,10 +16,20 @@ interface PanelContract {
 
     //public function setRows(Relation $rows): self;
 
-    //public function getRows(): Relation;
-    public function setRows(RowsContract $rows): self;
+    /**
+     * Undocumented function
+     *
+     * @param Relation|Builder $rows
+     * @return self
+     */
+    public function setRows( $rows): self;
 
-    public function getRows(): RowsContract;
+    /**
+     * Undocumented function
+     *
+     * @return Relation|Builder
+     */
+    public function getRows();
 
 
     public function setItem(string $guid): self;

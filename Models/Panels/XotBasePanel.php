@@ -55,8 +55,14 @@ abstract class XotBasePanel implements PanelContract
      * Undocumented variable.
      */
     //public Relation $rows;
-    public RowsContract $rows;
+    //public RowsContract $rows;
 
+    /**
+     * in certe relazioni c'e' il where se passo al builder perdo i "with"
+     *
+     * @var Relation|Builder
+     */
+    public $rows;
     public ?Builder $builder = null;
 
     public string $name;
@@ -151,9 +157,10 @@ abstract class XotBasePanel implements PanelContract
 
     /**
      * Undocumented function.
+     *
+     * @param Relation|Builder
      */
-    //public function setRows(Relation $rows): self {
-    public function setRows(RowsContract $rows): self
+    public function setRows($rows): self
     {
         $this->rows = $rows;
 
@@ -171,9 +178,10 @@ abstract class XotBasePanel implements PanelContract
 
     /**
      * get Rows.
+     *
+     * @return Relation|Builder
      */
-    //public function getRows(): Relation
-    public function getRows(): RowsContract
+    public function getRows()
     {
         if (null == $this->rows) {
             dddx(debug_backtrace());

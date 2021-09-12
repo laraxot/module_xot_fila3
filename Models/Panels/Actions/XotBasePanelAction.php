@@ -4,22 +4,23 @@ declare(strict_types=1);
 
 namespace Modules\Xot\Models\Panels\Actions;
 
-use ErrorException;
 use Exception;
-use Illuminate\Database\Eloquent\Builder;
+use ErrorException;
+use Illuminate\Support\Str;
 //use Illuminate\Database\Eloquent\Model;
 //use Laravel\Scout\Searchable;
 
 //----------  SERVICES --------------------------
 //------------ jobs ----------------------------
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
-use Illuminate\Support\Str;
+use Illuminate\Database\Eloquent\Model;
+use Modules\Xot\Contracts\RowsContract;
 use Modules\FormX\Services\FormXService;
 use Modules\Xot\Contracts\PanelContract;
-use Modules\Xot\Contracts\RowsContract;
+use Illuminate\Database\Eloquent\Builder;
 use Modules\Xot\Services\PanelService as Panel;
+use Illuminate\Database\Eloquent\Relations\Relation;
 
 /**
  * Class XotBasePanelAction.
@@ -31,7 +32,12 @@ abstract class XotBasePanelAction {
 
     public Model $row;
 
-    public RowsContract $rows;
+    /**
+     * Undocumented variable
+     *
+     * @var Relation|Builder
+     */
+    public $rows;
 
     //public Builder $rows;
 
