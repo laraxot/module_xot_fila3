@@ -34,7 +34,7 @@ class PanelMiddleware
             $panel = PanelService::getByParams($parameters);
         } catch (\Exception $e) {
             //return response()->view('theme::errors.404', ['message' => $e->getMessage(), 'lang' => 'it'], 404);
-            return response()->view('pub_theme::errors.404', ['message' => $e->getMessage(), 'lang' => 'it'], 404);
+            return response()->view('theme::errors.404', ['message' => $e->getMessage(), 'lang' => 'it'], 404);
         }
 
         PanelService::setRequestPanel($panel);

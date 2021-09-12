@@ -151,8 +151,10 @@ class PanelService {
     }
 
     public static function getHomePanel(): PanelContract {
-        $model = TenantService::modelEager('home');
-        $home = $model->firstOrCreate(['id' => 1]);
+        $model = TenantService::model('home');
+        $home = $model;
+        
+        /*->firstOrCreate(['id' => 1]);*/
         $panel = PanelService::get($home);
 
         $rows = new CustomRelation(
@@ -164,7 +166,7 @@ class PanelService {
             null,
             null
         );
-        $panel->setRows($home->whereRaw('1=1'));
+        $panel->setRows($rows);
 
         return $panel;
     }
