@@ -140,8 +140,13 @@ class HtmlPanelPresenter implements PanelPresenterContract {
 
             return response()->view($view, $data, 500);
             */
-            $message = 'not exists view [pub_theme::layouts.app]<br/> pub_theme:'.config('xra.pub_theme');
+            $message = 'not exists view [pub_theme::layouts.app]
+                <br/> pub_theme:'.config('xra.pub_theme').'
+                <br/> pub_theme dir: '.collect(\View::getFinder()->getHints())->get('pub_theme')[0];
             die($message);
+            //<br/> hints :'.\View::getFinder()->getHints();
+            //$hints = \View::getFinder()->getHints();
+            //dddx($hints);
             //throw new \Exception();
         }
 
