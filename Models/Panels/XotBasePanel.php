@@ -310,8 +310,8 @@ abstract class XotBasePanel implements PanelContract {
         $row = $this->row;
         $rows = $this->getBuilder();
         $tbl = $row->getTable();
-        //$pk = $model->getRouteKeyName($this->in_admin);
-        $pk = $row->getRouteKeyName(); // !!! MI SEMBRA STRANO !!
+        $pk = $row->getRouteKeyName($this->in_admin);
+        //$pk = $row->getRouteKeyName(); // !!! MI SEMBRA STRANO !!
         $pk_full = $row->getTable().'.'.$pk;
 
         if ('guid' == $pk) {
@@ -1038,12 +1038,17 @@ abstract class XotBasePanel implements PanelContract {
         return $post_type;
     }
 
+    /**
+     * Undocumented function.
+     *
+     * @return string|null
+     */
     public function guid(?bool $is_admin = null): ?string {
         if (isset($is_admin) && $is_admin) {
-            return $this->row->getKey();
+            return (string) $this->row->getKey();
         }
         if (null !== $this->getInAdmin() && $this->getInAdmin()) {
-            return $this->row->getKey();
+            return (string) $this->row->getKey();
         }
         $row = $this->row;
         $key = $row->getRouteKeyName();
