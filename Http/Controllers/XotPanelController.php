@@ -4,6 +4,10 @@ declare(strict_types=1);
 
 namespace Modules\Xot\Http\Controllers;
 
+<<<<<<< HEAD
+=======
+use Illuminate\Http\Request;
+>>>>>>> 0dde30e9f2b2df6f75dab01118816136e11caea2
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Str;
 
@@ -33,4 +37,8 @@ class XotPanelController extends Controller {
 
         return $panel->out();
     }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> 0dde30e9f2b2df6f75dab01118816136e11caea2
