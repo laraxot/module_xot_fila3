@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
 use Modules\Xot\Contracts\PanelContract;
 use Modules\Xot\Relations\CustomRelation;
+use Nwidart\Modules\Facades\Module;
 
 /**
  * Class PanelService.
@@ -151,11 +152,22 @@ class PanelService {
     }
 
     public static function getHomePanel(): PanelContract {
-        $model = TenantService::model('home');
-        $home = $model;
-        
+        $home = TenantService::model('home');
+
+        if (inAdmin()) {
+            $params = getRouteParameters();
+            $module = Module::find($params['module']);
+            $panel = '\Modules\\'.$module->getName().'\Models\Panels\_ModulePanel';
+            $panel = app($panel);
+            $panel->setRow($home);
+            $panel->setName('admin');
+        } else {
+            $panel = PanelService::get($home);
+            $panel->setName('home');
+        }
+
         /*->firstOrCreate(['id' => 1]);*/
-        $panel = PanelService::get($home);
+        //$panel = PanelService::get($home);
 
         $rows = new CustomRelation(
             $home->newQuery(),
