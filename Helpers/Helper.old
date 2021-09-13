@@ -638,7 +638,7 @@ if (! \function_exists('money_format')) {
             }
             $space = $locale["{$letter}_sep_by_space"] ? ' ' : '';
 
-            $value = number_format($value, $right, $locale['mon_decimal_point'], $flags['nogroup'] ? '' : $locale['mon_thousands_sep']);
+            //$value = number_format($value, $right, $locale['mon_decimal_point'], $flags['nogroup'] ? '' : $locale['mon_thousands_sep']);
             $value = @explode($locale['mon_decimal_point'], $value);
 
             $n = strlen($prefix) + strlen($currency) + strlen($value[0]);

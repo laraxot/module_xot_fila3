@@ -24,7 +24,12 @@ class XotPanelController extends Controller {
          * 1 => userPanel.
          */
         $func = '\Modules\Xot\Jobs\PanelCrud\\'.Str::studly($method).'Job';
-        $panel = $func::dispatchNow($arg[0], $arg[1]);
+
+        $data = $arg[0];
+        if ($arg[0] instanceof Request) {
+            $data = $data->all();
+        }
+        $panel = $func::dispatchNow($data, $arg[1]);
 
         return $panel->out();
     }

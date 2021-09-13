@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Modules\Xot\Http\Controllers\Admin;
 
+use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Str;
 
@@ -19,12 +20,18 @@ class XotPanelController extends Controller {
      */
     public function __call($method, $arg) {
         //dddx(['name' => $name, 'arg' => $arg]);
-        /**
+        /*
          * 0 => xotrequest
          * 1 => userPanel.
          */
+
         $func = '\Modules\Xot\Jobs\PanelCrud\\'.Str::studly($method).'Job';
-        $panel = $func::dispatchNow($arg[0], $arg[1]);
+
+        $data = $arg[0];
+        if ($arg[0] instanceof Request) {
+            $data = $data->all();
+        }
+        $panel = $func::dispatchNow($data, $arg[1]);
 
         return $panel->out();
     }

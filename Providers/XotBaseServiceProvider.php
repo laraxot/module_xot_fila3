@@ -107,6 +107,7 @@ abstract class XotBaseServiceProvider extends ServiceProvider {
      * Register translations.
      */
     public function registerTranslations(): void {
+        /*
         $langPath = resource_path('lang/modules/'.$this->module_name);
 
         if (is_dir($langPath)) {
@@ -114,6 +115,10 @@ abstract class XotBaseServiceProvider extends ServiceProvider {
         } else {
             $this->loadTranslationsFrom($this->module_dir.'/../Resources/lang', $this->module_name);
         }
+        */
+        $langPath = realpath($this->module_dir.'/../Resources/lang');
+        //echo '<hr>'.$langPath.'  :  '.$this->module_name.' <hr/>';
+        $this->loadTranslationsFrom($langPath, $this->module_name);
     }
 
     /**
