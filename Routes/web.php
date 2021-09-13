@@ -79,7 +79,8 @@ Route::group(
             'name' => '{module}',
             'as' => 'admin.',
             'param_name' => 'lang',  //ero titubante su questo
-            'only' => ['index'],
+            /* ho aggiunto la route post a store */
+            'only' => ['index','store'],
             'subs' => $areas_prgs,
         ],
         //$item0,
