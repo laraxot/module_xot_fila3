@@ -312,7 +312,7 @@ class PanelFormService {
         $panel = $this->panel;
         extract($params);
         $excepts = collect([]);
-        if (is_object($panel->getRows())) {
+        if (isset($panel->rows) && is_object($panel->getRows())) {
             $methods = [
                 'getForeignKeyName', //relation  BelongsTo,HasManyThrought,HasOneOrMany
                 'getMorphType',     //relation   MorphOneOrMany,MorphPivot,MorphTo,MorphToMany
