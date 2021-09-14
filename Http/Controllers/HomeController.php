@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Schema;
 use Modules\Theme\Services\ThemeService;
 use Modules\Xot\Contracts\PanelContract;
 use Modules\Xot\Relations\CustomRelation;
+use Modules\Xot\Services\PanelService;
 use Modules\Xot\Services\PanelService as Panel;
 use Modules\Xot\Services\TenantService as Tenant;
 
@@ -65,6 +66,15 @@ class HomeController extends Controller {
      */
     //public function show(?array $data, $panel=null) {
     public function show(Request $request, ?PanelContract $panel = null) {
+        $panel = PanelService::getRequestPanel();
+        if ('' != $request->_act) {
+            return $panel->callItemActionWithGate($request->_act);
+        }
+
+        return $panel->out();
+    }
+
+    public function showOld(Request $request, ?PanelContract $panel = null) {
         //$request=request();
         $home = null;
         $home = Tenant::model('home');
@@ -103,7 +113,6 @@ class HomeController extends Controller {
             null
         );
         $panel->setRows($rows);
-
 
         return $panel->out();
     }

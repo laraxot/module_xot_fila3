@@ -13,6 +13,9 @@ class Profile extends BaseModel {
      */
     protected $fillable = ['id', 'auth_user_id'];
 
+    /**
+     * Undocumented function.
+     */
     public function user(): HasOne {
         return $this->hasOne(User::class, 'auth_user_id', 'auth_user_id');
     }
