@@ -21,12 +21,7 @@ class PanelRouteService {
     }
     */
 
-    /**
-     * setPanel.
-     *
-     * @return $this
-     */
-    public function setPanel(PanelContract &$panel) {
+    public function setPanel(PanelContract &$panel): self {
         $this->panel = $panel;
 
         return $this;
@@ -180,11 +175,9 @@ class PanelRouteService {
     // se n=1 => 'container0.container1'
 
     /**
-     * @param array $params
-     *
      * @return string
      */
-    public static function getRoutenameN(array $params){
+    public static function getRoutenameN(array $params) {
         //default vars
         $n = 0;
         $act = 'show';

@@ -62,6 +62,7 @@ abstract class XotBasePanel implements PanelContract {
      * @var Relation|Builder
      */
     public $rows;
+
     public ?Builder $builder = null;
 
     public string $name;
@@ -236,6 +237,9 @@ abstract class XotBasePanel implements PanelContract {
     }
 
     public function getBreads(): Collection {
+        if ('_ModulePanel' == class_basename($this)) {
+            return collect();
+        }
         $breads = $this->getParents();
         $breads->add($this);
 
@@ -672,8 +676,8 @@ abstract class XotBasePanel implements PanelContract {
     }
 
     /**
-     * crea l'oggetto del pannello item (quello dove passi $row)
-     * 
+     * crea l'oggetto del pannello item (quello dove passi $row).
+     *
      * @return mixed
      */
     public function itemAction(string $act) {
@@ -681,8 +685,8 @@ abstract class XotBasePanel implements PanelContract {
     }
 
     /**
-     * crea l'oggetto del pannello Container (quello dove passi $rowS)
-     * 
+     * crea l'oggetto del pannello Container (quello dove passi $rowS).
+     *
      * @return mixed
      */
     public function containerAction(string $act) {
@@ -1044,8 +1048,6 @@ abstract class XotBasePanel implements PanelContract {
 
     /**
      * Undocumented function.
-     *
-     * @return string|null
      */
     public function guid(?bool $is_admin = null): ?string {
         if (isset($is_admin) && $is_admin) {

@@ -33,7 +33,9 @@ class ModuleController extends Controller {
         $panel = PanelService::getRequestPanel();
 
         if ('' != $request->_act) {
-            return $panel->callItemActionWithGate($request->_act);
+            //return $panel->callItemActionWithGate($request->_act);
+            //return $panel->callContainerAction($request->_act);
+            return $panel->callAction($request->_act);
         }
 
         return $panel->out();

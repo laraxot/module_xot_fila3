@@ -4,23 +4,22 @@ declare(strict_types=1);
 
 namespace Modules\Xot\Models\Panels\Actions;
 
-use Exception;
 use ErrorException;
-use Illuminate\Support\Str;
+use Exception;
+use Illuminate\Database\Eloquent\Builder;
 //use Illuminate\Database\Eloquent\Model;
 //use Laravel\Scout\Searchable;
 
 //----------  SERVICES --------------------------
 //------------ jobs ----------------------------
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
-use Illuminate\Database\Eloquent\Model;
-use Modules\Xot\Contracts\RowsContract;
+use Illuminate\Support\Str;
 use Modules\FormX\Services\FormXService;
 use Modules\Xot\Contracts\PanelContract;
-use Illuminate\Database\Eloquent\Builder;
 use Modules\Xot\Services\PanelService as Panel;
-use Illuminate\Database\Eloquent\Relations\Relation;
 
 /**
  * Class XotBasePanelAction.
@@ -33,7 +32,7 @@ abstract class XotBasePanelAction {
     public Model $row;
 
     /**
-     * Undocumented variable
+     * Undocumented variable.
      *
      * @var Relation|Builder
      */
@@ -75,11 +74,6 @@ abstract class XotBasePanelAction {
     */
 
     public function setPanel(PanelContract &$panel): self {
-        /*
-        if (null == $panel) {
-            throw new Exception('panel is null');
-        }
-        */
         $this->panel = $panel;
 
         return $this;
@@ -171,7 +165,7 @@ abstract class XotBasePanelAction {
     public function urlContainer(array $params = []): string {
         $panel = $this->panel;
         extract($params);
-        $request = \Request::capture();
+        //$request = \Request::capture();
         $name = $this->getName();
         //$url = $request->fullUrlWithQuery(['_act' => $name]);
         //if (isset($panel)) {
@@ -189,7 +183,7 @@ abstract class XotBasePanelAction {
         //$url = $panel->url(['act'=>'index']);
         $url = $panel->url(['act' => 'index']);
         $url = url_queries(['_act' => $name], $url);
-        $this->data['page'] = 1;
+        //$this->data['page'] = 1;
         $this->data['_act'] = $name;
         $url = url_queries($this->data, $url);
         //}

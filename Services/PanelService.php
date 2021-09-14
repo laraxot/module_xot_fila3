@@ -153,15 +153,18 @@ class PanelService {
 
     public static function getHomePanel(): PanelContract {
         $home = TenantService::model('home');
-        $home=$home->firstOrCreate(['id' => 1]);
-
+        try {
+            $home = $home->firstOrCreate(['id' => 1]);
+        } catch (\Exception $e) {
+            echo '<h3>'.$e->getMessage().'</h3>';
+        }
         if (inAdmin()) {
             $params = getRouteParameters();
             $module = Module::find($params['module']);
             $panel = '\Modules\\'.$module->getName().'\Models\Panels\_ModulePanel';
             $panel = app($panel);
             $panel->setRow($home);
-            $panel->setName('admin');
+            $panel->setName($params['module']);
         } else {
             $panel = PanelService::get($home);
             $panel->setName('home');
