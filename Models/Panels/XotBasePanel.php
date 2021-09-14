@@ -672,6 +672,8 @@ abstract class XotBasePanel implements PanelContract {
     }
 
     /**
+     * crea l'oggetto del pannello item (quello dove passi $row)
+     * 
      * @return mixed
      */
     public function itemAction(string $act) {
@@ -679,6 +681,8 @@ abstract class XotBasePanel implements PanelContract {
     }
 
     /**
+     * crea l'oggetto del pannello Container (quello dove passi $rowS)
+     * 
      * @return mixed
      */
     public function containerAction(string $act) {

@@ -153,6 +153,7 @@ class PanelService {
 
     public static function getHomePanel(): PanelContract {
         $home = TenantService::model('home');
+        $home=$home->firstOrCreate(['id' => 1]);
 
         if (inAdmin()) {
             $params = getRouteParameters();
@@ -166,7 +167,7 @@ class PanelService {
             $panel->setName('home');
         }
 
-        /*->firstOrCreate(['id' => 1]);*/
+        //->firstOrCreate(['id' => 1]);
         //$panel = PanelService::get($home);
 
         $rows = new CustomRelation(
