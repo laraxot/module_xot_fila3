@@ -50,6 +50,7 @@ if (! config('xra.disable_frontend_dynamic_route')) {
         function (): void {
             Route::get('/', 'HomeController@show')->name('home'); //show o index ? homecontrller@show o pagecontroller@home ?
             Route::get('/home', 'HomeController@show')->name('home'); //togliere o tenere ?
+            Route::post('/', 'HomeController@show')->name('home_post'); //togliere o tenere ?
             Route::get('/redirect', 'HomeController@redirect')->name('redirect');
             //Route::get('/test01',   'HomeController@test01');
         }
@@ -80,7 +81,7 @@ Route::group(
             'as' => 'admin.',
             'param_name' => 'lang',  //ero titubante su questo
             /* ho aggiunto la route post a store */
-            'only' => ['index','store'],
+            'only' => ['index', 'store'],
             'subs' => $areas_prgs,
         ],
         //$item0,

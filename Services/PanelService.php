@@ -19,7 +19,7 @@ class PanelService {
 
     private static Model $model;
 
-    private static ?PanelContract $panel = null;
+    private ?PanelContract $panel = null;
 
     private array $route_params;
 
@@ -51,14 +51,14 @@ class PanelService {
     */
     public static function setRequestPanel(?PanelContract $panel): void {
         $inst = self::getInstance();
-        $inst::$panel = $panel;
+        //$inst::$panel = $panel;
+        $inst->panel = $panel;
     }
 
     public static function getRequestPanel(): ?PanelContract {
         $inst = self::getInstance();
-        $panel = $inst::$panel;
         //try {
-        return $inst::$panel;
+        return $inst->panel;
         //} catch (\Exception $e) {
         //    return null;
         //}
@@ -104,7 +104,10 @@ class PanelService {
         if (! class_exists($panel_class)) {
             $tmp = StubService::getByModel(self::$model, 'panel', $create = true);
         }
+
         //*/
+        return app($panel_class)->setRow(self::$model);
+        /*
         try {
             //self::$panel = new $panel_class(self::$model);
             self::$panel = app($panel_class);
@@ -119,6 +122,7 @@ class PanelService {
         }
 
         return self::$panel;
+        */
     }
 
     public function imageHtml(?array $params): string {
