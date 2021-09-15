@@ -406,6 +406,9 @@ class RouteService {
             throw new \Exception('$route_action is null');
         }
         $name = Str::between($route_action, 'Http\Controllers\\', 'Controller');
+        if (Str::startsWith($name, 'Admin\\Module\\')) {
+            $name = 'Admin\\'.Str::after($name, 'Admin\\Module\\');
+        }
 
         return $name;
     }
@@ -413,15 +416,12 @@ class RouteService {
     public static function getControllerNameDotted(): string {
         $tmp = self::getControllerName();
         $tmp_arr = explode('\\', $tmp);
-
+        $params = getRouteParameters();
         $path = collect($tmp_arr)->map(
-            function ($item) {
+            function ($item) use ($params) {
                 $item = Str::snake($item);
-                //if (isset($params[$item])) {
-                //    return $params[$item];
-                //}
 
-                return $item;
+                return $params[$item] ?? $item;
             }
         )->implode('.');
 
