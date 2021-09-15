@@ -111,6 +111,7 @@ abstract class XotBaseContainerController extends Controller {
     public function notAuthorized(string $method, PanelContract $panel) {
         $lang = app()->getLocale();
         if (! \Auth::check()) {
+            /*
             //$request = \Modules\Xot\Http\Requests\XotRequest::capture();
             $request = request();
             if ($request->ajax()) {
@@ -126,6 +127,11 @@ abstract class XotBaseContainerController extends Controller {
             $referer = \Request::path();
 
             return redirect()->route('login.notice', ['lang' => $lang, 'referer' => $referer])
+            ->withErrors(['active' => 'login before']);
+            */
+            $referer = \Request::path();
+
+            return redirect()->route('login', ['lang' => $lang, 'referer' => $referer])
             ->withErrors(['active' => 'login before']);
         }
         $msg = 'Auth Id ['.\Auth::id().'] not can ['.$method.'] on ['.get_class($panel).']';

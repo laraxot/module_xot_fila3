@@ -205,7 +205,7 @@ class PanelService {
 
             return $panel;
         }
-        $home_row = self::getHomePanel()->getRow();
+        //$home_row = self::getHomePanel()->getRow();
 
         $first_container = $containers[0];
 
@@ -213,7 +213,8 @@ class PanelService {
 
         $rows = new CustomRelation(
             $row->newQuery(),
-            $home_row,
+            //$home_row,
+            $row,
             function ($relation): void {
                 $relation->getQuery();
             },
@@ -234,7 +235,7 @@ class PanelService {
         for ($i = 1; $i < count($containers); ++$i) {
             $row_prev = $panel_parent->getRow();
             $types = Str::camel($containers[$i]);
-            $rows = $row_prev->{$types}();
+            $rows = $row_prev->{$types}(); //Relazione
             $row = $rows->getRelated();
             $panel = PanelService::get($row);
             //$rows = $rows->getQuery();

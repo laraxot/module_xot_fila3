@@ -111,6 +111,7 @@ abstract class XotBaseContainerController extends Controller {
         $lang = app()->getLocale();
         if (! \Auth::check()) {
             //$request = \Modules\Xot\Http\Requests\XotRequest::capture();
+            /*
             $request = request();
             if ($request->ajax()) {
                 $html = '<h3>Before Login </h3>
@@ -125,6 +126,11 @@ abstract class XotBaseContainerController extends Controller {
             $referer = \Request::path();
 
             return redirect()->route('login.notice', ['lang' => $lang, 'referer' => $referer])
+                ->withErrors(['active' => 'login before']);
+            */
+            $referer = \Request::path();
+
+            return redirect()->route('login', ['lang' => $lang, 'referer' => $referer])
                 ->withErrors(['active' => 'login before']);
         }
         $policy_class = PolicyService::get($panel)->createIfNotExists()->getClass();
