@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Modules\Xot\Services;
 
 use Modules\Xot\Contracts\PanelContract;
+use Modules\Xot\Models\Panels\Actions\XotBasePanelAction;
 
 /**
  * Class PanelActionService.
@@ -73,12 +74,10 @@ class PanelActionService {
         return $this->getActions($params);
     }
 
-    /**
-     * @return mixed
-     */
-    public function itemAction(string $act) {
+    public function itemAction(string $act): ?XotBasePanelAction {
         $itemActions = $this->itemActions();
         $itemAction = $itemActions->firstWhere('name', $act);
+        /*
         if (! is_object($itemAction)) {
             dddx([
                 'error' => 'nessuna azione con questo nome',
@@ -88,6 +87,7 @@ class PanelActionService {
             ]);
         }
         //$itemAction->setPanel($this); //incerto dovrebbe farlo getActions
+        */
 
         return $itemAction;
     }
