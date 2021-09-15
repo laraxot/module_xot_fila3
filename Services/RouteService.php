@@ -188,11 +188,9 @@ class RouteService {
     // se n=1 => 'container0.container1'
 
     /**
-     * @param array $params
-     *
      * @return string
      */
-    public static function getRoutenameN(array $params){
+    public static function getRoutenameN(array $params) {
         //default vars
         $n = 0;
         $act = 'show';
@@ -356,5 +354,77 @@ class RouteService {
             return url($lang);
         }
         */
+    }
+
+    /**
+     * Function getAct.
+     *
+     * @throws \Exception
+     */
+    public static function getAct(): string {
+        $route_action = \Route::currentRouteAction();
+        if (null == $route_action) {
+            throw new \Exception('$route_action is null');
+        }
+        $act = (Str::after($route_action, '@'));
+
+        //--- i prossimi 2 if son per i controller con metodo invoke
+        if (Str::contains($act, '\\')) {
+            $act = Str::afterLast($act, '\\');
+        }
+        if (Str::endsWith($act, 'Controller')) {
+            $act = Str::before($act, 'Controller');
+        }
+        $act = Str::snake($act);
+
+        return $act;
+    }
+
+    /**
+     * Function.
+     *
+     * @throws \Exception
+     */
+    public static function getModuleName(): string {
+        $route_action = \Route::currentRouteAction();
+        if (null == $route_action) {
+            throw new \Exception('$route_action is null');
+        }
+        $mod_name = Str::between($route_action, 'Modules\\', '\Http');
+
+        return $mod_name;
+    }
+
+    /**
+     * Function.
+     *
+     * @throws \Exception
+     */
+    public static function getControllerName(): string {
+        $route_action = \Route::currentRouteAction();
+        if (null == $route_action) {
+            throw new \Exception('$route_action is null');
+        }
+        $name = Str::between($route_action, 'Http\Controllers\\', 'Controller');
+
+        return $name;
+    }
+
+    public static function getControllerNameDotted(): string {
+        $tmp = self::getControllerName();
+        $tmp_arr = explode('\\', $tmp);
+
+        $path = collect($tmp_arr)->map(
+            function ($item) {
+                $item = Str::snake($item);
+                //if (isset($params[$item])) {
+                //    return $params[$item];
+                //}
+
+                return $item;
+            }
+        )->implode('.');
+
+        return $path;
     }
 }

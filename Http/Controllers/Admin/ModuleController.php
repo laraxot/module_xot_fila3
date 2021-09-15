@@ -124,5 +124,17 @@ class ModuleController extends Controller {
         return ThemeService::view('xot::admin.home');
         */
     }
+
+    public function home(Request $request) {
+        $panel = PanelService::getRequestPanel();
+
+        if ('' != $request->_act) {
+            return $panel->callItemActionWithGate($request->_act);
+            //return $panel->callContainerAction($request->_act);
+            //return $panel->callAction($request->_act);
+        }
+
+        return $panel->out();
+    }
 }
 //*/

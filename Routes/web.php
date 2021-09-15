@@ -80,8 +80,9 @@ Route::group(
             'name' => '{module}',
             'as' => 'admin.',
             'param_name' => 'lang',  //ero titubante su questo
-            /* ho aggiunto la route post a store */
-            'only' => ['index', 'store'],
+
+            //'only' => ['index', 'store'],
+            'only' => [],
             'subs' => $areas_prgs,
         ],
         //$item0,
@@ -105,6 +106,18 @@ Route::group(
         }
     );
 //}
+
+Route::group(
+        [
+            'prefix' => 'admin',
+            'middleware' => $middleware,
+            'namespace' => $namespace,
+        ],
+        function (): void {
+            Route::get('{module}', 'ModuleController@home')->name('admin.show');
+            Route::put('{module}', 'ModuleController@home')->name('admin.show');
+        }
+    );
 
 //custom route finche' siamo legati ai modelli
 // lista e' index, mostrare un elemento e' show ..

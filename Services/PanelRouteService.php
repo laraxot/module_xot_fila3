@@ -119,6 +119,12 @@ class PanelRouteService {
             $route_params['module'] = strtolower($module_name);
         }
 
+        /*
+        if ('admin.show' == $route_name) {
+            $route_name = 'admin.home';
+        }
+        */
+
         try {
             $route = route($route_name, $route_params, false);
         } catch (\Exception $e) {
