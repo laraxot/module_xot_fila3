@@ -544,29 +544,17 @@ abstract class XotBasePanel implements PanelContract {
                 if (! isset($item->rules)) {
                     $item->rules = '';
                 }
+                /*
                 if (Str::contains($item->type, 'RelationshipOne')) {
                     $rows_tmp = $this->row->{$item->name}();
-                    /*
-                    if (! is_object($rows_tmp)) {
-                        throw new \Exception('rows_tmp is not an object');
-                    }
-                    */
-                    //529    Cannot call method getLocalKeyName() on class-string|object.
-
                     if (method_exists($rows_tmp, 'getLocalKeyName')) {
                         $name1 = $rows_tmp->getLocalKeyName();
                     } else {
                         $name1 = $rows_tmp->getForeignKeyName();
                     }
-                    /*
-                    dddx([
-                        'msg' => 'preso',
-                        'row' => $this->row,
-                        'test' => $name1,
-                    ]);
-                    */
                     $item->name = $name1;
                 }
+                */
                 if ('pivot_rules' == $item->rules) {
                     $rel_name = $item->name;
                     $pivot_class = with(new $this::$model())

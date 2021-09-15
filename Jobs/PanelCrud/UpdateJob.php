@@ -20,9 +20,9 @@ class UpdateJob extends XotBaseJob {
      */
     public function handle(): PanelContract {
         $row = $this->panel->getRow();
-
+        $old = $this->data;
         $this->data = $this->prepareAndValidate($this->data, $this->panel);
-
+        //dddx(['old' => $old, 'prepared' => $this->data]);
         $data = $this->data;
 
         //https://medium.com/@taylorotwell/tap-tap-tap-1fc6fc1f93a6
@@ -66,14 +66,23 @@ class UpdateJob extends XotBaseJob {
 
     /**
      *  belongsTo.
+     *
+     * @param string|int|array $data
      */
-    public function updateRelationshipsBelongsTo(Model $model, string $name, array $data): void {
-        $rows = $model->$name();
+    public function updateRelationshipsBelongsTo(Model $model, string $name, $data): void {
+        if (! is_array($data)) {
+            $rows = $model->$name();
+            $related = $rows->getRelated();
+            $related = $related->find($data);
+            $res = $rows->associate($related);
+            $res->save();
+
+            return;
+        }
+
         if ($rows->exists()) {
             $model->$name()->update($data);
-        //$model->$name->update($data);
         } else {
-            //$this->storeRelationshipsBelongsTo($params);
             dddx(['err' => 'wip']);
         }
     }

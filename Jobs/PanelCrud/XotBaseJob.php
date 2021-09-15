@@ -38,11 +38,8 @@ abstract class XotBaseJob implements ShouldQueue {
      * __construct.
      */
     public function __construct(array $data, PanelContract &$panel) {
-        //public function __construct(Request $request, PanelContract &$panel) {
         $this->panel = $panel;
-        //$data = $request->all();
         $this->data = $data;
-        //$this->data = $this->prepareAndValidate($request->all(), $panel);
     }
 
     /**
@@ -113,7 +110,7 @@ abstract class XotBaseJob implements ShouldQueue {
         //dddx(['data0' => $data0, 'data' => $data]);
         $act = '';
         $rules = $panel->rules(['act' => $act]);
-        //dddx(['data' => $data, 'rules' => $rules, 'panel_class' => get_class($panel)]);
+        //dddx(['data' => $data, 'rules' => $rules, 'panel_class' => get_class($panel), 'act' => $act]);
 
         $validator = Validator::make($data, $rules);
 
