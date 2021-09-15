@@ -125,7 +125,7 @@ abstract class XotBaseContainerController extends Controller {
 
             $referer = \Request::path();
 
-            return redirect()->route('login.notice', ['lang' => $lang, 'referer' => $referer])
+            return redirect()->route('login', ['lang' => $lang, 'referer' => $referer])
                 ->withErrors(['active' => 'login before']);
             */
             $referer = \Request::path();
