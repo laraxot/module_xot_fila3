@@ -425,7 +425,6 @@ abstract class XotBasePanel implements PanelContract {
         if (null == $data) {
             $data = request()->all();
         }
-        //dddx($this->rows()->get());
 
         return $this->rows($data)->get();
     }
@@ -435,7 +434,6 @@ abstract class XotBasePanel implements PanelContract {
             $data = request()->all();
         }
 
-        //$rows = $this->rows($data)->get();
         $rows = $this->getBuilder()->get();
 
         $primary_field = $this->row->getKeyName();
@@ -1328,7 +1326,6 @@ abstract class XotBasePanel implements PanelContract {
     public function xls(array $params = []) {
         $presenter = new XlsPanelPresenter();
         $presenter->setPanel($this);
-        //dddx($this->rows()->get()->count());
 
         return $presenter->out($params);
     }
