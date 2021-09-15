@@ -28,7 +28,6 @@ abstract class XotBaseContainerController extends Controller {
     //Declaration of Modules\Xot\Http\Controllers\XotBaseContainerController::__call($method, $args) should be compatible with Illuminate\Routing\Controller::__call($method, $parameters)
 
     public function __call($method, $args) {
-        dddx('a');
         $panel = Panel::getRequestPanel();
         if (null == $panel) {
             throw new \Exception('uston gavemo un problemon');
@@ -42,10 +41,7 @@ abstract class XotBaseContainerController extends Controller {
         return $this->__callRouteAct($method, $args);
     }
 
-    /**
-     * @return string
-     */
-    public function getController() {
+    public function getController(): string {
         /*
         if (null == $this->panel) {
             return '\Modules\Xot\Http\Controllers\XotPanelController';
