@@ -29,7 +29,7 @@ class SiteMapController {
         })->all();
 
         $posts = Arr::where($posts, function ($value) {
-            if (null != $value) {
+            if (null !== $value) {
                 return $value;
             }
             if (! Str::contains($value, 'Modules')) {

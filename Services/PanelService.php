@@ -71,7 +71,8 @@ class PanelService {
     public static function get(Model $model): PanelContract {
         $panel = self::setModel($model)->panel();
         $post_type = $panel->postType();
-        $name = Str::plural($post_type);
+        //$name = Str::plural($post_type);
+        $name = $post_type;
         $panel->setName($name);
 
         return $panel;

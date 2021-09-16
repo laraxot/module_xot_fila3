@@ -289,7 +289,7 @@ trait LinkedTrait {
     }
 
     public function getPostTypeAttribute(?string $value): ?string {
-        if (null != $value) {
+        if (null !== $value) {
             return $value;
         }
         $post_type = collect(config('xra.model'))->search(get_class($this));
@@ -301,7 +301,7 @@ trait LinkedTrait {
     }
 
     public function getLangAttribute(?string $value): ?string {
-        if (null != $value) {
+        if (null !== $value) {
             return $value;
         }
 
@@ -318,7 +318,7 @@ trait LinkedTrait {
         $str1 = 'Attribute';
         $name = substr($func, strlen($str0), -strlen($str1));
         $name = Str::snake($name);
-        if (null != $value) {
+        if (null !== $value) {
             return $value;
         }
         if ('Post' == class_basename($this)) {

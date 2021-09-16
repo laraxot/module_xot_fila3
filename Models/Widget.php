@@ -81,7 +81,7 @@ class Widget extends BaseModel {
      * @return int|mixed
      */
     public function getPosAttribute($value) {
-        if (null != $value) {
+        if (null !== $value) {
             return $value;
         }
         $value = self::max('pos') + 1;
