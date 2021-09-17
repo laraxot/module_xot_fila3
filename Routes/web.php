@@ -31,8 +31,8 @@ if (! config('xra.disable_frontend_dynamic_route')) {
         ],
         function () use ($areas_prgs, $namespace): void {
             RouteDynService::dynamic_route($areas_prgs, null, $namespace);
-            Route::get('/', 'HomeController@show')->name('home');
-            Route::get('/home', 'HomeController@show')->name('home');
+            Route::get('/', 'HomeController@show')->name('lang.home');
+            Route::get('/home', 'HomeController@show')->name('lang.home');
         }
     );
     //->when('container0', '!=', 'password');
@@ -49,8 +49,9 @@ if (! config('xra.disable_frontend_dynamic_route')) {
         ],
         function (): void {
             Route::get('/', 'HomeController@show')->name('home'); //show o index ? homecontrller@show o pagecontroller@home ?
-            Route::get('/home', 'HomeController@show')->name('home'); //togliere o tenere ?
-            Route::post('/', 'HomeController@show')->name('home_post'); //togliere o tenere ?
+            Route::post('/', 'HomeController@show')->name('home'); //togliere o tenere ?
+            //Route::get('/home', 'HomeController@show')->name('home'); //togliere o tenere ?
+
             Route::get('/redirect', 'HomeController@redirect')->name('redirect');
             //Route::get('/test01',   'HomeController@test01');
         }

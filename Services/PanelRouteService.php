@@ -90,9 +90,10 @@ class PanelRouteService {
         extract($params);
         //panel lo potrei passare da parametro
         $breads = $panel->getBreads();
+        $breads_count = $breads->count();
 
         $n = 0;
-        $parz = ['n' => $n + $breads->count() - 1, 'act' => $act];
+        $parz = ['n' => $n + $breads_count - 1, 'act' => $act];
 
         if (isset($in_admin)) {
             $parz['in_admin'] = $in_admin;
@@ -198,6 +199,9 @@ class PanelRouteService {
         }
         $tmp[] = $act;
         $routename = implode('.', $tmp);
+        if ('show' == $routename) {
+            return 'home';
+        }
 
         return $routename;
     }

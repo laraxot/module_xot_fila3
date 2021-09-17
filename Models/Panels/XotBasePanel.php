@@ -32,7 +32,6 @@ use Modules\Xot\Services\PanelService as Panel;
 use Modules\Xot\Services\PanelTabService;
 use Modules\Xot\Services\PolicyService;
 use Modules\Xot\Services\StubService;
-use Response;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\Filters\Filter;
 use Spatie\QueryBuilder\QueryBuilder;
@@ -237,7 +236,8 @@ abstract class XotBasePanel implements PanelContract {
     }
 
     public function getBreads(): Collection {
-        if ('_ModulePanel' == class_basename($this)) {
+        //'_ModulePanel' == //per back, homepanel per front
+        if (in_array(class_basename($this), ['_ModulePanel', 'HomePanel'])) {
             return collect();
         }
         $breads = $this->getParents();
