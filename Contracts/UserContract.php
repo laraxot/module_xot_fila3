@@ -123,12 +123,14 @@ namespace Modules\Xot\Contracts;
  *
  * @property \Modules\Blog\Models\Profile|null $profile
  *
+ * @method bool  hasRight($value)
  * @method bool  hasRole($value)
  * @method mixed role($value)
  * @method mixed update($params)
  * @method mixed forceFill($params)
  */
-interface UserContract {
+interface UserContract
+{
     /*
     public function isSuperAdmin();
     public function name();
