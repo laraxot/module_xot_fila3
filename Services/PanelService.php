@@ -14,7 +14,8 @@ use Nwidart\Modules\Facades\Module;
 /**
  * Class PanelService.
  */
-class PanelService {
+class PanelService
+{
     private static ?PanelService $_instance = null;
 
     private static Model $model;
@@ -29,12 +30,14 @@ class PanelService {
     }
      */
 
-    public function __construct(array $route_params) {
+    public function __construct(array $route_params)
+    {
         $this->route_params = $route_params;
         //static::$panel = $this->getByRouteParams($route_params);
     }
 
-    public static function getInstance(): self {
+    public static function getInstance(): self
+    {
         if (null === self::$_instance) {
             //$route_params = request()->route()->parameters();// 42     Cannot call method parameters() on mixed.
             $route_params = getRouteParameters();
@@ -49,13 +52,15 @@ class PanelService {
         return static::$panel;
     }
     */
-    public static function setRequestPanel(?PanelContract $panel): void {
+    public static function setRequestPanel(?PanelContract $panel): void
+    {
         $inst = self::getInstance();
         //$inst::$panel = $panel;
         $inst->panel = $panel;
     }
 
-    public static function getRequestPanel(): ?PanelContract {
+    public static function getRequestPanel(): ?PanelContract
+    {
         $inst = self::getInstance();
         //try {
         return $inst->panel;
@@ -68,7 +73,8 @@ class PanelService {
      * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
      * @throws \ReflectionException
      */
-    public static function get(Model $model): PanelContract {
+    public static function get(Model $model): PanelContract
+    {
         $panel = self::setModel($model)->panel();
         $post_type = $panel->postType();
         //$name = Str::plural($post_type);
@@ -78,7 +84,8 @@ class PanelService {
         return $panel;
     }
 
-    public static function setModel(Model $model): self {
+    public static function setModel(Model $model): self
+    {
         self::$model = $model;
 
         return self::getInstance();
@@ -90,19 +97,20 @@ class PanelService {
      * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
      * @throws \ReflectionException
      */
-    public static function panel(): PanelContract {
-        if (! is_object(self::$model)) {
+    public static function panel(): PanelContract
+    {
+        if (!is_object(self::$model)) {
             //dddx(['model' => self::$model, 'message' => 'is not an object', 'url' => url()->current()]);
             //return null;
-            throw new \Exception('model is not an object url:'.url()->current());
+            throw new \Exception('model is not an object url:' . url()->current());
         }
         $class_full = get_class(self::$model);
         $class_name = class_basename(self::$model);
         //$class = Str::before($class_full, $class_name);
         $class = substr($class_full, 0, -strlen($class_name));
-        $panel_class = $class.'Panels\\'.$class_name.'Panel';
+        $panel_class = $class . 'Panels\\' . $class_name . 'Panel';
         //*
-        if (! class_exists($panel_class)) {
+        if (!class_exists($panel_class)) {
             $tmp = StubService::getByModel(self::$model, 'panel', $create = true);
         }
 
@@ -126,26 +134,29 @@ class PanelService {
         */
     }
 
-    public function imageHtml(?array $params): string {
+    public function imageHtml(?array $params): string
+    {
         return optional(self::$model)->image_src;
     }
 
-    public function tabs(): array {
+    public function tabs(): array
+    {
         return self::panel()->tabs();
     }
 
     //esempio parametro stringa 'area-1-menu-1'
     //rilascia il pannello dell'ultimo container (nell'esempio menu),
     //con parent il pannello del precedente container (nell'esempio area)
-    public static function getById(string $id): PanelContract {
+    public static function getById(string $id): PanelContract
+    {
         $piece = explode('-', $id);
         $route_params = [];
         $j = 0;
         for ($i = 0; $i < count($piece); ++$i) {
             if (0 == $i % 2) {
-                $route_params['container'.$j] = $piece[$i];
+                $route_params['container' . $j] = $piece[$i];
             } else {
-                $route_params['item'.$j] = $piece[$i];
+                $route_params['item' . $j] = $piece[$i];
                 ++$j;
             }
         }
@@ -156,17 +167,18 @@ class PanelService {
         return self::getByParams($route_params);
     }
 
-    public static function getHomePanel(): PanelContract {
+    public static function getHomePanel(): PanelContract
+    {
         $home = TenantService::model('home');
         try {
             $home = $home->firstOrCreate(['id' => 1]);
         } catch (\Exception $e) {
-            echo '<h3>'.$e->getMessage().'</h3>';
+            echo '<h3>' . $e->getMessage() . '</h3>';
         }
         if (inAdmin()) {
             $params = getRouteParameters();
             $module = Module::find($params['module']);
-            $panel = '\Modules\\'.$module->getName().'\Models\Panels\_ModulePanel';
+            $panel = '\Modules\\' . $module->getName() . '\Models\Panels\_ModulePanel';
             $panel = app($panel);
             $panel->setRow($home);
             $panel->setName($params['module']);
@@ -195,7 +207,8 @@ class PanelService {
     /**
      * Function getByParams.
      */
-    public static function getByParams(?array $route_params): PanelContract {
+    public static function getByParams(?array $route_params): PanelContract
+    {
         [$containers, $items] = params2ContainerItem($route_params);
         $in_admin = null;
         if (isset($route_params['in_admin'])) {
@@ -260,13 +273,14 @@ class PanelService {
      *
      * @return \Illuminate\Http\RedirectResponse|mixed
      */
-    public static function getByModel(Model $model) {
+    public static function getByModel(Model $model)
+    {
         $class_full = get_class($model);
         $class_name = class_basename($model);
         $class = Str::before($class_full, $class_name);
-        $panel = $class.'Panels\\'.$class_name.'Panel';
+        $panel = $class . 'Panels\\' . $class_name . 'Panel';
         if (class_exists($panel)) {
-            if (! method_exists($panel, 'tabs')) {
+            if (!method_exists($panel, 'tabs')) {
                 self::updatePanel(['panel' => $panel, 'func' => 'tabs']);
             }
 
@@ -282,12 +296,13 @@ class PanelService {
      * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
      * @throws \ReflectionException
      */
-    public static function createPanel(Model $model): void {
+    public static function createPanel(Model $model): void
+    {
         $class_full = get_class($model);
         $class_name = class_basename($model);
         $class = Str::before($class_full, $class_name);
-        $panel_namespace = $class.'Panels';
-        $panel = $panel_namespace.'\\'.$class_name.'Panel';
+        $panel_namespace = $class . 'Panels';
+        $panel = $panel_namespace . '\\' . $class_name . 'Panel';
         //---- creazione panel
         $autoloader_reflector = new \ReflectionClass($model);
         $class_filename = $autoloader_reflector->getFileName();
@@ -295,7 +310,7 @@ class PanelService {
             throw new \Exception('autoloader_reflector err');
         }
         $model_dir = dirname($class_filename); // /home/vagrant/code/htdocs/lara/multi/laravel/Modules/LU/Models
-        $stub_file = __DIR__.'/../Console/stubs/panel.stub';
+        $stub_file = __DIR__ . '/../Console/stubs/panel.stub';
         $stub = File::get($stub_file);
         $search = [];
         $fillables = $model->getFillable();
@@ -323,7 +338,7 @@ class PanelService {
         */
         $replace = [
             'DummyNamespace' => $panel_namespace,
-            'DummyClass' => $class_name.'Panel',
+            'DummyClass' => $class_name . 'Panel',
             'DummyFullModel' => $class_full,
             'dummy_id' => $dummy_id,
             'dummy_title' => 'title', // prendo il primo campo stringa
@@ -331,9 +346,9 @@ class PanelService {
             'dummy_fields' => var_export($fields, true),
         ];
         $stub = str_replace(array_keys($replace), array_values($replace), $stub);
-        $panel_dir = $model_dir.'/Panels';
+        $panel_dir = $model_dir . '/Panels';
         File::makeDirectory($panel_dir, $mode = 0777, true, true);
-        $panel_file = $panel_dir.'/'.$class_name.'Panel.php';
+        $panel_file = $panel_dir . '/' . $class_name . 'Panel.php';
         File::put($panel_file, $stub);
     }
 
@@ -341,19 +356,20 @@ class PanelService {
      * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
      * @throws \ReflectionException
      */
-    public static function updatePanel(array $params = []): void {
+    public static function updatePanel(array $params = []): void
+    {
         extract($params);
-        if (! isset($func)) {
+        if (!isset($func)) {
             dddx(['err' => 'func is missing']);
 
             return;
         }
-        if (! isset($panel)) {
+        if (!isset($panel)) {
             dddx(['err' => 'panel is missing']);
 
             return;
         }
-        $func_file = __DIR__.'/../Console/stubs/panels/'.$func.'.stub';
+        $func_file = __DIR__ . '/../Console/stubs/panels/' . $func . '.stub';
         $func_stub = File::get($func_file);
         $autoloader_reflector = new \ReflectionClass($panel);
         $panel_file = $autoloader_reflector->getFileName();
@@ -362,7 +378,7 @@ class PanelService {
         }
 
         $panel_stub = File::get($panel_file);
-        $panel_stub = Str::replaceLast('}', $func_stub.chr(13).chr(10).'}', $panel_stub);
+        $panel_stub = Str::replaceLast('}', $func_stub . chr(13) . chr(10) . '}', $panel_stub);
         File::put($panel_file, $panel_stub);
     }
 }
