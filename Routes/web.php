@@ -16,7 +16,7 @@ $middleware = ['web', \Modules\Xot\Http\Middleware\PanelMiddleware::class];
 //$areas_prgs = include __DIR__ . '/web_common.php';
 $areas_prgs = RouteDynService::generate();
 //$prefix = App::getLocale();
-if (! config('xra.disable_frontend_dynamic_route')) {
+if (!config('xra.disable_frontend_dynamic_route')) {
     $prefix = '{lang}';
     Route::group(
         [
@@ -50,7 +50,7 @@ if (! config('xra.disable_frontend_dynamic_route')) {
         function (): void {
             Route::get('/', 'HomeController@show')->name('home'); //show o index ? homecontrller@show o pagecontroller@home ?
             Route::post('/', 'HomeController@show')->name('home'); //togliere o tenere ?
-            //Route::get('/home', 'HomeController@show')->name('home'); //togliere o tenere ?
+            Route::redirect('/home', '/'); //togliere o tenere ?
 
             Route::get('/redirect', 'HomeController@redirect')->name('redirect');
             //Route::get('/test01',   'HomeController@test01');
@@ -65,7 +65,7 @@ Route::group(
     [
         'prefix' => $prefix,
         'middleware' => $middleware,
-        'namespace' => $namespace.'\Admin',
+        'namespace' => $namespace . '\Admin',
     ],
     function (): void {
         Route::get('/', 'BackendController@dashboard')->name('admin');
@@ -74,51 +74,51 @@ Route::group(
 );
 
 //if (inAdmin()) {
-    //require_once(__DIR__.'/web_admin.php');  //WEB GENERICO
-    $areas_adm = [
-        //$item1,
-        [
-            'name' => '{module}',
-            'as' => 'admin.',
-            'param_name' => 'lang',  //ero titubante su questo
+//require_once(__DIR__.'/web_admin.php');  //WEB GENERICO
+$areas_adm = [
+    //$item1,
+    [
+        'name' => '{module}',
+        'as' => 'admin.',
+        'param_name' => 'lang',  //ero titubante su questo
 
-            //'only' => ['index', 'store'],
-            'only' => [],
-            'subs' => $areas_prgs,
-        ],
-        //$item0,
-    ];
-    $prefix = 'admin';
-    $middleware = [
-        'web',
-        'auth',
-        \Modules\Xot\Http\Middleware\PanelMiddleware::class,
-        /*\Modules\Xot\Http\Middleware\SelectResponseMiddleware::class */
-    ];
-    $namespace .= '\Admin';
-    Route::group(
-        [
-            'prefix' => $prefix,
-            'middleware' => $middleware,
-            'namespace' => $namespace,
-        ],
-        function () use ($areas_adm, $namespace): void {
-            RouteDynService::dynamic_route($areas_adm, null, $namespace);
-        }
-    );
+        //'only' => ['index', 'store'],
+        'only' => [],
+        'subs' => $areas_prgs,
+    ],
+    //$item0,
+];
+$prefix = 'admin';
+$middleware = [
+    'web',
+    'auth',
+    \Modules\Xot\Http\Middleware\PanelMiddleware::class,
+    /*\Modules\Xot\Http\Middleware\SelectResponseMiddleware::class */
+];
+$namespace .= '\Admin';
+Route::group(
+    [
+        'prefix' => $prefix,
+        'middleware' => $middleware,
+        'namespace' => $namespace,
+    ],
+    function () use ($areas_adm, $namespace): void {
+        RouteDynService::dynamic_route($areas_adm, null, $namespace);
+    }
+);
 //}
 
 Route::group(
-        [
-            'prefix' => 'admin',
-            'middleware' => $middleware,
-            'namespace' => $namespace,
-        ],
-        function (): void {
-            Route::get('{module}', 'ModuleController@home')->name('admin.show');
-            Route::put('{module}', 'ModuleController@home')->name('admin.show');
-        }
-    );
+    [
+        'prefix' => 'admin',
+        'middleware' => $middleware,
+        'namespace' => $namespace,
+    ],
+    function (): void {
+        Route::get('{module}', 'ModuleController@home')->name('admin.show');
+        Route::put('{module}', 'ModuleController@home')->name('admin.show');
+    }
+);
 
 //custom route finche' siamo legati ai modelli
 // lista e' index, mostrare un elemento e' show ..

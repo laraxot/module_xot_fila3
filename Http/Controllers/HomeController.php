@@ -71,6 +71,7 @@ class HomeController extends Controller
     {
         $panel = PanelService::getRequestPanel();
         if ('' != $request->_act) {
+
             return $panel->callItemActionWithGate($request->_act);
         }
 
