@@ -20,12 +20,14 @@ use Modules\Xot\Services\TenantService as Tenant;
 /**
  * Class HomeController.
  */
-class HomeController extends Controller {
+class HomeController extends Controller
+{
     /**
      * @return mixed
      */
     //public function index(?array $data, $panel = null) {
-    public function index(Request $request, ?PanelContract $panel = null) {
+    public function index(Request $request, ?PanelContract $panel = null)
+    {
         $request = request();
         $home = null;
         try {
@@ -46,11 +48,11 @@ class HomeController extends Controller {
 
         return ThemeService::view('pub_theme::home.index')
             ->with('home', $home)
-            ->with('_panel', $home_panel)
-            ;
+            ->with('_panel', $home_panel);
     }
 
-    public function createHomesTable(): void {
+    public function createHomesTable(): void
+    {
         Schema::create('homes', function (Blueprint $table): void {
             $table->increments('id');
 
@@ -65,7 +67,8 @@ class HomeController extends Controller {
      * @return mixed
      */
     //public function show(?array $data, $panel=null) {
-    public function show(Request $request, ?PanelContract $panel = null) {
+    public function show(Request $request, ?PanelContract $panel = null)
+    {
         $panel = PanelService::getRequestPanel();
         if ('' != $request->_act) {
             return $panel->callItemActionWithGate($request->_act);
@@ -74,13 +77,14 @@ class HomeController extends Controller {
         return $panel->out();
     }
 
-    public function showOld(Request $request, ?PanelContract $panel = null) {
+    public function showOld(Request $request, ?PanelContract $panel = null)
+    {
         //$request=request();
         $home = null;
         $home = Tenant::model('home');
         $mod_name = Panel::get($home)->getModuleName();
 
-        $home_controller = '\Modules\\'.$mod_name.'\Http\Controllers\HomeController';
+        $home_controller = '\Modules\\' . $mod_name . '\Http\Controllers\HomeController';
 
         //dddx($home_controller);
 
@@ -120,7 +124,15 @@ class HomeController extends Controller {
     /**
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
-    public function redirect(Request $request) {
+    public function redirect(Request $request)
+    {
         return redirect($request->url);
+    }
+
+
+
+    public function store(Request $request)
+    {
+        return $this->index($request);
     }
 }
