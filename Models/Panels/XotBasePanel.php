@@ -399,6 +399,22 @@ abstract class XotBasePanel implements PanelContract {
         return optional($this->row)->title;
     }
 
+
+    public function optionsModelClass(string $model_class):array{
+        $data=[];
+
+        $row=app($model_class);
+        $panel=PanelService::get($row);
+        $rows=$model_class::all();
+        //$data[null]='---';
+        foreach($rows as $v){
+            $option_id=$panel->optionId($v);
+            $option_label=$panel->optionLabel($v);
+            $data[$option_id]=$option_label;
+        }
+        return $data;
+    }
+
     /**
      * @return array
      */
