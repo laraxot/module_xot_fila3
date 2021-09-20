@@ -206,6 +206,14 @@ abstract class XotBasePanel implements PanelContract {
         return $this;
     }
 
+    public function getSonModel(Model $model): self {
+        $panel = PanelService::get($model)->setParent($this);
+        $name = Str::plural($panel->postType());
+        $panel->setName($name);
+
+        return $panel;
+    }
+
     // se uso in rows() getQuery il dato ottenuto e' una collezione di items non di modelli
     public function getHydrate(object $data): PanelContract {
         if ('stdClass' == get_class($data)) {
@@ -399,19 +407,19 @@ abstract class XotBasePanel implements PanelContract {
         return optional($this->row)->title;
     }
 
+    public function optionsModelClass(string $model_class): array {
+        $data = [];
 
-    public function optionsModelClass(string $model_class):array{
-        $data=[];
-
-        $row=app($model_class);
-        $panel=PanelService::get($row);
-        $rows=$model_class::all();
+        $row = app($model_class);
+        $panel = PanelService::get($row);
+        $rows = $model_class::all();
         //$data[null]='---';
-        foreach($rows as $v){
-            $option_id=$panel->optionId($v);
-            $option_label=$panel->optionLabel($v);
-            $data[$option_id]=$option_label;
+        foreach ($rows as $v) {
+            $option_id = $panel->optionId($v);
+            $option_label = $panel->optionLabel($v);
+            $data[$option_id] = $option_label;
         }
+
         return $data;
     }
 
