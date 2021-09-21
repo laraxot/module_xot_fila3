@@ -320,7 +320,8 @@ abstract class XotBasePanel implements PanelContract {
 
     public function setItem(string $guid): self {
         $row = $this->row;
-        $rows = $this->getBuilder();
+        //$rows = $this->getBuilder();
+        $rows = $this->getRows();
         $tbl = $row->getTable();
         $pk = $row->getRouteKeyName($this->in_admin);
         //$pk = $row->getRouteKeyName(); // !!! MI SEMBRA STRANO !!
