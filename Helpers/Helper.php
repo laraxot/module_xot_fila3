@@ -1000,3 +1000,16 @@ if (! function_exists('getRouteParameters')) {
         return $params;
     }
 }
+
+/*
+
+    function is_iterable($var)
+{
+    return $var !== null
+        && (is_array($var)
+            || $var instanceof Traversable
+            || $var instanceof Iterator
+            || $var instanceof IteratorAggregate
+            );
+}
+*/
