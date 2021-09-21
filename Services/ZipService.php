@@ -15,15 +15,25 @@ use ZipArchive;
  * Class ZipService.
  */
 class ZipService {
+    public string $filename_zip;
+
+    private static ?self $instance = null;
+
+    public static function getInstance(): self {
+        if (null === self::$instance) {
+            self::$instance = new self();
+        }
+
+        return self::$instance;
+    }
+
     /**
-     * @param array $params
-     *
      * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
      * @throws \ReflectionException
      *
      * @return string|\Symfony\Component\HttpFoundation\BinaryFileResponse|void
      */
-    public static function fromRowsPdf(array $params){
+    public static function fromRowsPdf(array $params) {
         ini_set('max_execution_time', '3600');
         ini_set('memory_limit', '-1');
         $pdforientation = 'P';
@@ -56,7 +66,7 @@ class ZipService {
         $filename_zip = str_replace(['/', '\\'], [DIRECTORY_SEPARATOR, DIRECTORY_SEPARATOR], $filename_zip);
 
         if (true !== $zip->open($filename_zip, ZipArchive::CREATE)) {
-            dddx(['NO']);
+            throw new \Exception('cannot create zip ['.$filename_zip.']');
         }
 
         //dddx(get_class_methods($zip));
@@ -133,4 +143,64 @@ class ZipService {
 
         return '<h3>variabile Out non conosciuta</h3>';
     }
+
+    public static function setFilenameZip(string $filename_zip): self {
+        $instance = self::getInstance();
+        $instance->filename_zip = $filename_zip;
+
+        return $instance;
+    }
+
+    public static function getFilenameZip(): string {
+        $instance = self::getInstance();
+
+        return $instance->filename_zip;
+    }
+
+    public static function getFilenameZipPath(): string {
+        $filename_zip = self::getFilenameZip();
+        $filename_zip = Storage::disk('cache')->path($filename_zip);
+        $filename_zip = str_replace(['/', '\\'], [DIRECTORY_SEPARATOR, DIRECTORY_SEPARATOR], $filename_zip);
+        File::makeDirectory(\dirname($filename_zip), 0755, true, true);
+
+        return $filename_zip;
+    }
+
+    public static function getZipArchive(): ZipArchive {
+        $zip = new ZipArchive();
+        $filename_zip = self::getFilenameZipPath();
+        if (File::exists($filename_zip)) {
+            File::delete($filename_zip);
+        }
+        if (true !== $zip->open($filename_zip, ZipArchive::CREATE)) {
+            throw new \Exception('cannot create zip ['.$filename_zip.']');
+        }
+
+        return $zip;
+    }
+
+    /**
+     * Undocumented function.
+     */
+    public static function fromFiles(array $files): self {
+        $zip = self::getZipArchive();
+        foreach ($files as $path) {
+            $path = str_replace(['/', '\\'], [DIRECTORY_SEPARATOR, DIRECTORY_SEPARATOR], $path);
+            $zip->addFile($path, basename($path));
+        }
+        $zip->close();
+
+        return self::getInstance();
+    }
+
+    /**
+     * @return \Symfony\Component\HttpFoundation\BinaryFileResponse
+     */
+    public function download() {
+        $filename_zip = self::getFilenameZipPath();
+
+        return response()->download($filename_zip);
+    }
+
+    //-- potrebbe non fare download ma mostra un bottone.. o altro
 }
