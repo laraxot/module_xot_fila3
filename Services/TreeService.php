@@ -8,7 +8,7 @@ use Illuminate\Support\Collection;
 use Modules\Xot\Contracts\PanelContract;
 
 class TreeService {
-    public static function mapItems(Collection $coll, ?PanelContract $parent = null, bool $in_admin, array $route_params): Collection {
+    public static function mapItems(Collection $coll, ?PanelContract $parent = null, /*bool $in_admin,*/ array $route_params): Collection {
         return $coll->map(
                 function ($item) use ($parent, $route_params) {
                     $panel = PanelService::get($item)->setParent($parent);
