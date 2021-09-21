@@ -140,15 +140,8 @@ class TenantService {
         $tennant_name = self::getName();
         $config_name = $tennant_name.'.'.$name;
         $config_data = config($config_name);
-        //$config_data = array_merge_recursive($config_data, $data);
+
         if (! is_array($config_data)) {
-            /*
-            $msg = [
-                'config_data' => $config_data,
-                'config_name' => $config_name,
-            ];
-            dddx($msg);
-            */
             $config_name = str_replace('/', '.', $config_name);
             $config_data = config($config_name);
         }
@@ -156,14 +149,11 @@ class TenantService {
         $config_data = array_merge_recursive_distinct($config_data, $data); //funzione in helper
 
         $config_data = Arr::sortRecursive($config_data);
-        /*
-        $path = config_path($tennant_name.'/'.$name.'.php');
-        $path = str_replace(['\\', '/'], [DIRECTORY_SEPARATOR, DIRECTORY_SEPARATOR], $path);
-        */
+
         $path = self::filePath($name.'.php');
         $content = '<'.'?'.'php'.chr(13).chr(13).' return '.var_export($config_data, true).';';
         $content = str_replace('\\\\', '\\', $content);
-
+        //dddx(['path' => $path, 'content' => $content]);
         File::put($path.'', $content);
     }
 
