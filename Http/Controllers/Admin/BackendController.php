@@ -39,11 +39,14 @@ class BackendController extends Controller {
         //return ThemeService::view('adm_theme::admin.dashboard');
         $view = 'adm_theme::admin.dashboard';
         if (! view()->exists($view)) {
+            /*
             dddx([
                 'err' => 'view not exists',
                 'view' => $view,
                 'adm_theme' => config('xra.adm_theme'),
             ]);
+            */
+            throw new \Exception('view['.$view.'] not exists adm_theme['.config('xra.adm_theme').']');
         }
 
         return view()->make($view);
