@@ -116,7 +116,7 @@ class PanelActionService {
     /**
      * @return mixed
      */
-    public function urlContainerAction(string $act) {
+    public function urlContainerAction(string $act, array $params = []) {
         $containerActions = $this->containerActions();
         $containerAction = $containerActions->firstWhere('name', $act);
         if (is_object($containerAction)) {
@@ -127,20 +127,22 @@ class PanelActionService {
     /**
      * @return mixed
      */
-    public function urlItemAction(string $act) {
+    public function urlItemAction(string $act, array $params = []) {
         $itemAction = $this->itemAction($act);
         if (is_object($itemAction)) {
-            return $itemAction->urlItem(['row' => $this->panel->getRow(), 'panel' => $this->panel]);
+            //return $itemAction->urlItem(['row' => $this->panel->getRow(), 'panel' => $this->panel]);
+            return $itemAction->urlItem($params);
         }
     }
 
     /**
      * @return mixed
      */
-    public function btnItemAction(string $act) {
+    public function btnItemAction(string $act, array $params = []) {
         $itemAction = $this->itemAction($act);
         if (is_object($itemAction)) {
-            return $itemAction->btn(['row' => $this->panel->getRow(), 'panel' => $this->panel]);
+            //return $itemAction->btn(['row' => $this->panel->getRow(), 'panel' => $this->panel]);
+            return $itemAction->btn($params);
         }
     }
 }
