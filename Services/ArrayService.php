@@ -23,6 +23,9 @@ class ArrayService {
      * @return mixed
      */
     public static function toXLS(array $params) {
+        if (1 == request()->input('debug')) {
+            return self::toHtml($params);
+        }
         require_once __DIR__.'/vendor/autoload.php';
         $data = $params['data'];
         $res = [];
@@ -43,6 +46,22 @@ class ArrayService {
                 dddx(['unknown export_processor ['.self::$export_processor.']']);
             break;
         }
+    }
+
+    public static function toHtml(array $params): string {
+        $data = $params['data'];
+        $html = '';
+        $html .= '<table border="1">';
+        foreach ($data as $k => $v) {
+            $html .= '<tr>';
+            foreach ($v as $v0) {
+                $html .= '<td>'.$v0.'</td>';
+            }
+            $html .= '</tr>';
+        }
+        $html .= '</table>';
+
+        return $html;
     }
 
     //ret array|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|string|\Symfony\Component\HttpFoundation\BinaryFileResponse
