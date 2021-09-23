@@ -564,4 +564,21 @@ class FileService {
 
         return ''.$path;
     }
+
+    public static function allDirectories(string $path,array $except=[],string $dir=''){
+        $dirs=File::directories($path);
+        $data=[];
+        foreach($dirs as $v){
+            $name = Str::after($v, $path.DIRECTORY_SEPARATOR);
+            $value=$dir==''?$name:$dir.DIRECTORY_SEPARATOR.$name;
+            if(!in_array($name,$except)){
+                $data[]=$value;
+                $sub=self::allDirectories($v,$except,$value);
+                if($sub!=[]){
+                    $data=array_merge($data,$sub);
+                }
+            }
+        }
+        return $data;
+    }
 }
