@@ -31,6 +31,7 @@ use Modules\Xot\Services\PanelService;
 use Modules\Xot\Services\PanelService as Panel;
 use Modules\Xot\Services\PanelTabService;
 use Modules\Xot\Services\PolicyService;
+use Modules\Xot\Services\RowsService;
 use Modules\Xot\Services\StubService;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\Filters\Filter;
@@ -422,6 +423,29 @@ abstract class XotBasePanel implements PanelContract {
         }
 
         return $data;
+    }
+
+    public function optionsModelClassGrouped(string $model_class, string $group_by, array $where = []): array {
+        $model = app($model_class);
+        $panel = PanelService::get($model);
+
+        $options = $model->with($panel->with())
+            ->where($where)
+            ->get()
+            ->groupBy($group_by)
+            ->map(function ($item) use ($panel) {
+                $data = [];
+                foreach ($item as $v) {
+                    $option_id = $panel->optionId($v);
+                    $option_label = $panel->optionLabel($v);
+                    $data[$option_id] = $option_label;
+                }
+
+                return $data;
+            })
+            ->all();
+
+        return $options;
     }
 
     /**
@@ -847,6 +871,17 @@ abstract class XotBasePanel implements PanelContract {
      * @return RowsContract
      */
     public function applySearch($query, ?string $q) {
+        return RowsService::search($query, $q, $this->search());
+    }
+
+    /**
+     * Undocumented function.
+     *
+     * @param RowsContract $query
+     *
+     * @return RowsContract
+     */
+    public function applySearchOLD($query, ?string $q) {
         if (! isset($q)) {
             return $query;
         }
@@ -1141,7 +1176,7 @@ abstract class XotBasePanel implements PanelContract {
     //instance of Illuminate\Database\Eloquent\Relations\MorphToMany returned
 
     /**
-     * Undocumented function.
+     * init + filter + search + sort => ??? trovare nome.
      *
      * @return RowsContract
      */
