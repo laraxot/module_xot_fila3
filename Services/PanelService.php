@@ -236,6 +236,7 @@ class PanelService {
         for ($i = 1; $i < count($containers); ++$i) {
             $row_prev = $panel_parent->getRow();
             $types = Str::camel($containers[$i]);
+            //dddx([$row_prev, $panel_parent, $types]);
             $rows = $row_prev->{$types}(); //Relazione
             $row = $rows->getRelated();
             $panel = PanelService::get($row);
