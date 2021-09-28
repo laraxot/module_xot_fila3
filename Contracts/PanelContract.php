@@ -5,11 +5,10 @@ declare(strict_types=1);
 namespace Modules\Xot\Contracts;
 
 //use Illuminate\Database\Query\Builder;
-use Illuminate\Support\Collection;
-use Illuminate\Database\Eloquent\Model;
-use Modules\Xot\Contracts\RowsContract;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\Relation;
+use Illuminate\Support\Collection;
 
 interface PanelContract {
     public function setRow(Model $row): self;
@@ -17,20 +16,20 @@ interface PanelContract {
     //public function setRows(Relation $rows): self;
 
     /**
-     * Undocumented function
+     * Undocumented function.
      *
      * @param Relation|Builder $rows
+     *
      * @return self
      */
-    public function setRows( $rows): self;
+    public function setRows($rows): self;
 
     /**
-     * Undocumented function
+     * Undocumented function.
      *
      * @return Relation|Builder
      */
     public function getRows();
-
 
     public function setItem(string $guid): self;
 
@@ -124,6 +123,11 @@ interface PanelContract {
     public function rules(array $params = []): array;
 
     public function rulesMessages(): array;
+
+    /**
+     * @return mixed
+     */
+    public function getOrderField();
 
     /**
      * Undocumented function.
