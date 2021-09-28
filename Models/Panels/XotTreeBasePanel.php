@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Modules\Xot\Models\Panels;
 
+use Modules\Xot\Contracts\PanelTreeContract;
+
 class XotTreeBasePanel extends XotBasePanel implements PanelTreeContract {
     /**
      * @return bool
