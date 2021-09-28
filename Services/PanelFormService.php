@@ -224,6 +224,9 @@ class PanelFormService {
 
         if (! isset($params['icon'])) {
             switch ($params['method']) {
+                case 'index':
+                    $params['icon'] = '<i class="fas fa-bars"></i>';
+                    break;
                 case 'create':
                     $params['icon'] = '<i class="far fa-plus-square"></i>';
                     break;
