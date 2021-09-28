@@ -212,4 +212,27 @@ class TenantService {
 
         return $model;
     }
+
+    /**
+     * Find the path to a localized Markdown resource. copiata da jetstream.php.
+     *
+     * @param string $name
+     *
+     * @return string|null
+     */
+    public static function localizedMarkdownPath($name) {
+        $localName = preg_replace('#(\.md)$#i', '.'.app()->getLocale().'$1', $name);
+        $lang = app()->getLocale();
+        $paths = [
+            TenantService::filePath('lang/'.$lang.'/'.$name),
+            TenantService::filePath($name),
+        ];
+
+        return Arr::first(
+            $paths,
+            function ($path) {
+                return file_exists($path);
+            }
+        );
+    }
 }

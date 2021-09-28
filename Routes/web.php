@@ -16,7 +16,7 @@ $middleware = ['web', \Modules\Xot\Http\Middleware\PanelMiddleware::class];
 //$areas_prgs = include __DIR__ . '/web_common.php';
 $areas_prgs = RouteDynService::generate();
 //$prefix = App::getLocale();
-if (!config('xra.disable_frontend_dynamic_route')) {
+if (! config('xra.disable_frontend_dynamic_route')) {
     $prefix = '{lang}';
     Route::group(
         [
@@ -65,7 +65,7 @@ Route::group(
     [
         'prefix' => $prefix,
         'middleware' => $middleware,
-        'namespace' => $namespace . '\Admin',
+        'namespace' => $namespace.'\Admin',
     ],
     function (): void {
         Route::get('/', 'BackendController@dashboard')->name('admin');
@@ -120,10 +120,5 @@ Route::group(
     }
 );
 
-//custom route finche' siamo legati ai modelli
-// lista e' index, mostrare un elemento e' show ..
-
-Route::get('{lang}/feed/{item}', 'RssFeedController@feed');
-//Route::get('/sitemap.xml', 'SiteMapController@sitemap');
-//Route::get('{lang}/feed/{item}', 'RssFeedController@show');
-Route::get('/sitemap.xml', 'SiteMapController@index');
+require_once 'seo.php';
+require_once 'gdpr.php';
