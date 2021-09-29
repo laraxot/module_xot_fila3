@@ -165,7 +165,7 @@ abstract class XotBaseServiceProvider extends ServiceProvider {
         $components_json = $this->module_dir.'/../Http/Livewire/_components.json';
         //$force_recreate = request()->input('force_recreate', true);
         $exists = File::exists($components_json);
-        if ($exists) {
+        if ($exists && false) {
             $content = File::get($components_json);
             $comps = json_decode($content);
         } else {
@@ -175,14 +175,32 @@ abstract class XotBaseServiceProvider extends ServiceProvider {
             foreach ($files as $k => $v) {
                 if ('php' == $v->getExtension()) {
                     $tmp = (object) [];
-                    $class_name = Str::before($v->getBasename(), '.php');
+                    //$class_name = Str::before($v->getBasename(), '.php');
+                    $class_name = $v->getFilenameWithoutExtension();
+                    /*
+                    dddx(
+                        [
+                            '$class_name' => $class_name,
+                            'getFilenameWithoutExtension' => $v->getFilenameWithoutExtension(),
+                            'methods' => get_class_methods($v),
+                        ]
+                    );
+                    */
 
                     $tmp->class_name = $class_name;
-                    $tmp->comp_name = $this->module_name.'::'.Str::snake($class_name);
+                    $tmp->comp_name = $this->module_name.'::'.Str::snake(Str::replace('\\', ' ', $class_name));
                     $tmp->comp_ns = Str::before($this->module_ns, '\Providers').'\Http\Livewire\\'.$class_name;
                     if ('' != $v->getRelativePath()) {
-                        $tmp->comp_name = $this->module_name.'::'.Str::snake($v->getRelativePath()).'.'.Str::snake($class_name);
+                        $tmp->comp_name = $this->module_name.'::';
+                        $piece = collect(explode('\\', $v->getRelativePath()))->map(function ($item) {
+                            return Str::snake($item);
+                        })->implode('.');
+                        $tmp->comp_name .= $piece;
+                        $tmp->comp_name .= '.'.Str::snake(Str::replace('\\', ' ', $class_name));
+                        //$tmp->comp_name =
+                        //Str::snake(Str::replace('\\', ' ', $v->getRelativePath().' '.$class_name));
                         $tmp->comp_ns = Str::before($this->module_ns, '\Providers').'\Http\Livewire\\'.$v->getRelativePath().'\\'.$class_name;
+                        $tmp->class_name = $v->getRelativePath().'\\'.$tmp->class_name;
                     }
 
                     $comps[] = $tmp;

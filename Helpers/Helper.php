@@ -1001,6 +1001,17 @@ if (! function_exists('getRouteParameters')) {
     }
 }
 
+if (! function_exists('getModTradFilepath')) {
+    function getModTradFilepath(string $file_path): ?string {
+        $ns = Str::of($file_path)->after('\\Modules\\')->before('\\')->lower();
+        $info = pathinfo($file_path);
+        $group = Str::snake($info['filename']);
+        $mod_trad = $ns.'::'.$group;
+
+        return $mod_trad;
+    }
+}
+
 /*
 
     function is_iterable($var)

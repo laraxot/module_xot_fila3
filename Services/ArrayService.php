@@ -6,6 +6,7 @@ namespace Modules\Xot\Services;
 
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
@@ -91,7 +92,25 @@ class ArrayService {
         if (! is_array($firstrow)) {
             $firstrow = [];
         }
-        $sheet->fromArray(\array_keys($firstrow), null, 'A1');
+        $header = \array_keys($firstrow);
+
+        $debug = debug_backtrace();
+        if (isset($debug[1]['file'])) {
+            $mod_trad = getModTradFilepath($debug[1]['file']);
+        }
+
+        //$mod_trad = 'progressioni::xls_rows';
+        ///*
+        $header = collect($header)->map(function ($item) use ($mod_trad) {
+            $k = $mod_trad.'.'.$item;
+            $v = trans($k);
+
+            return $v;
+        })->all();
+
+        //*/
+
+        $sheet->fromArray($header, null, 'A1');
         $sheet->fromArray(
             $data,  	// The data to set
             null,        // Array values with this value will not be set
