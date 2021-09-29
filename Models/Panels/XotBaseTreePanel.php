@@ -6,7 +6,7 @@ namespace Modules\Xot\Models\Panels;
 
 use Modules\Xot\Contracts\PanelTreeContract;
 
-class XotTreeBasePanel extends XotBasePanel implements PanelTreeContract {
+class XotBaseTreePanel extends XotBasePanel implements PanelTreeContract {
     /**
      * @return bool
      */
