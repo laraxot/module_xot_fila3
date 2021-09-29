@@ -44,15 +44,17 @@ class ManageLangModuleAction extends XotBasePanelAction {
                 //'getAssetsPath' => $module->getAssetsPath(),//dart\Modules\Laravel\Module::getAssetsPath does not exist.
             ]);
         */
+        /*
         $lang = app()->getLocale();
         $path = Module::getModulePath($this->module_name);
         $path .= 'Resources\lang\\'.$lang.'';
         $path = FileService::fixPath($path);
 
         $files = File::files($path);
-
+        */
         $view_params = [
-            'files' => $files,
+            //'files' => $files,
+            'module_name' => $this->module_name,
         ];
 
         return $this->panel->view()->with($view_params);
