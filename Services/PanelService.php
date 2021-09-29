@@ -207,10 +207,19 @@ class PanelService {
             return $panel;
         }
         //$home_row = self::getHomePanel()->getRow();
-
+        $row = null;
         $first_container = $containers[0];
+        if (isset($route_params['module'])) {
+            $model_class = collect(getModuleModels($route_params['module']))
+                ->get($first_container);
+            if (null != $model_class) {
+                $row = app($model_class);
+            }
+        }
 
-        $row = TenantService::model($containers[0]);
+        if (null === $row) {
+            $row = TenantService::model($containers[0]);
+        }
 
         $rows = new CustomRelation(
             $row->newQuery(),
