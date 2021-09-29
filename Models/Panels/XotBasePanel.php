@@ -358,12 +358,8 @@ abstract class XotBasePanel implements PanelContract {
         return $this;
     }
 
-    //funzione/flag da settare a true ad ogni pannello/modello che abbia le traduzioni
-
-    /**
-     * @return false
-     */
-    public function hasLang() {
+    //funzione/flag da settare a true ad ogni pannello/modello che abbia le traduzioni (bandierina)
+    public function hasLang(): bool {
         return false;
     }
 
@@ -409,12 +405,15 @@ abstract class XotBasePanel implements PanelContract {
         return optional($this->row)->title;
     }
 
-    public function optionsModelClass(string $model_class): array {
+    public function optionsModelClass(string $model_class, array $where = []): array {
         $data = [];
 
         $row = app($model_class);
         $panel = PanelService::get($row);
-        $rows = $model_class::all();
+        $with = $panel->with();
+        $rows = $model_class::with($with)
+            ->where($where)
+            ->get();
         //$data[null]='---';
         foreach ($rows as $v) {
             $option_id = $panel->optionId($v);

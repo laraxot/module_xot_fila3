@@ -15,8 +15,7 @@ use Modules\Xot\Services\PanelService;
 /**
  * Class PanelMiddleware.
  */
-class PanelMiddleware
-{
+class PanelMiddleware {
     /*
     public function __construct(array $params){
         dddx($params);
@@ -26,8 +25,7 @@ class PanelMiddleware
     /**
      * @return \Illuminate\Http\Response|mixed
      */
-    public function handle(Request $request, Closure $next)
-    {
+    public function handle(Request $request, Closure $next) {
         //$parameters = request()->route()->parameters();
         $parameters = optional(\Route::current())->parameters();
         try {
