@@ -52,6 +52,7 @@ class ArtisanService {
                 echo ArtisanService::exe('debugbar:clear');
                 echo ArtisanService::exe('opcache:clear');
                 echo ArtisanService::exe('optimize:clear');
+                echo ArtisanService::exe('key:generate');
 
             break;
             case 'clearcache': return ArtisanService::exe('cache:clear');
