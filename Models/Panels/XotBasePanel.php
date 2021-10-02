@@ -1063,6 +1063,8 @@ abstract class XotBasePanel implements PanelContract {
     }
 
     public function url(array $params = []): string {
+        //dddx($params);
+
         return $this->route->{__FUNCTION__}($params);
     }
 
