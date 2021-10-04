@@ -7,10 +7,11 @@ namespace Modules\Xot\Services;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Lang;
 use Illuminate\Support\Facades\Log;
+//---- services ---
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
-//---- services ---
 use Illuminate\Translation\Translator as BaseTranslator;
 use Modules\Theme\Services\ThemeService;
 
@@ -182,5 +183,49 @@ class TranslatorService extends BaseTranslator {
 
     	dddx($filename);
     	*/
+    }
+
+    public static function getFilePath(string $key): string {
+        $lang = app()->getLocale();
+        $translator = app('translator');
+        [$namespace,$group,$item] = ($translator->parseKey($key));
+        $trans = trans();
+        $path = collect($trans->getLoader()->namespaces())->flip()->search($namespace);
+        $file_path = $path.DIRECTORY_SEPARATOR.$lang.DIRECTORY_SEPARATOR.$group.'.php';
+        $file_path = FileService::fixPath($file_path);
+
+        return $file_path;
+    }
+
+    public static function add(string $key, array $data) {
+        $file_path = self::getFilePath($key);
+        $original = Lang::get($key, []);
+        //$merged = collect($original)->merge($data)->all();
+        $merged = array_merge($original, $data);
+        /*
+        echo '<pre>'.print_r([
+            'key' => $key,
+            'original' => $original,
+            'data' => $data,
+            'merged' => $merged,
+            'file_path' => $file_path,
+        ], true).'</pre>';
+        */
+        //echo '<pre>'.print_r($data).'</pre>';
+
+        ArrayService::save(['data' => $merged, 'filename' => $file_path]);
+
+        Session::flash('status', 'Modifica Eseguita! ['.$file_path.']');
+    }
+
+    public static function addMissing(string $key, array $data) {
+        $missing = collect($data)->filter(function ($item) use ($key) {
+            $k = $key.'.'.$item;
+            $v = trans($k);
+
+            return $k == $v;
+        })->all();
+        $missing = array_combine($missing, $missing);
+        self::add($key, $missing);
     }
 }

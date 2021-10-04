@@ -50,9 +50,19 @@ class ArrayService {
     }
 
     public static function toHtml(array $params): string {
+        $header = self::getHeader($params);
         $data = $params['data'];
         $html = '';
         $html .= '<table border="1">';
+        $html .= '<thead>';
+        $html .= '<tr>';
+        foreach ($header as $k => $v) {
+            $html .= '<th>'.$v.'</th>';
+        }
+
+        $html .= '</tr>';
+        $html .= '</thead>';
+        $html .= '<tbody>';
         foreach ($data as $k => $v) {
             $html .= '<tr>';
             foreach ($v as $v0) {
@@ -60,9 +70,48 @@ class ArrayService {
             }
             $html .= '</tr>';
         }
+        $html .= '</tbody>';
         $html .= '</table>';
 
         return $html;
+    }
+
+    public static function getHeader(array $params): array {
+        \extract($params);
+
+        $firstrow = collect($data)->first();
+        if (! is_array($firstrow)) {
+            $firstrow = [];
+        }
+        $header = \array_keys($firstrow);
+
+        $debug = debug_backtrace();
+        if (isset($debug[2]['file'])) {
+            $mod_trad = getModTradFilepath($debug[2]['file']);
+        }
+        //dddx($mod_trad);
+        //$mod_trad = 'progressioni::xls_rows';
+        ///*
+        //$missing = collect($header)->filter(function($item) use ($mod_trad));
+
+        TranslatorService::addMissing($mod_trad, $header);
+
+        $header = collect($header)->map(function ($item) use ($mod_trad) {
+            $k = $mod_trad.'.'.$item;
+            $v = trans($k);
+            //$missing[$item] = $item;
+            //if ($v == $k) { //vuol dire che non ha trovato traduzione
+            //    TranslatorService::add($mod_trad, [$item => $item]);
+            //$missing[$item] = $item;
+            //} else {
+            //echo '<hr>PRESO '.$k.' : '.$v;
+            //}
+
+            return $v;
+        })->all();
+        //dddx($missing);
+
+        return $header;
     }
 
     //ret array|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|string|\Symfony\Component\HttpFoundation\BinaryFileResponse
@@ -88,6 +137,8 @@ class ArrayService {
         //----
         $sheet = $spreadsheet->getActiveSheet();
         $sheet->getStyle($ltr)->getAlignment()->setWrapText(true);
+
+        /*
         $firstrow = collect($data)->first();
         if (! is_array($firstrow)) {
             $firstrow = [];
@@ -100,15 +151,20 @@ class ArrayService {
         }
 
         //$mod_trad = 'progressioni::xls_rows';
-        ///*
+
         $header = collect($header)->map(function ($item) use ($mod_trad) {
             $k = $mod_trad.'.'.$item;
             $v = trans($k);
+            if ($v == $k) { //vuol dire che non ha trovato traduzione
+                TranslatorService::add($mod_trad, [$item => $item]);
+            } else {
+                echo '<hr> '.$k.' : '.$v;
+            }
 
             return $v;
         })->all();
-
-        //*/
+        */
+        $header = self::getHeader($params);
 
         $sheet->fromArray($header, null, 'A1');
         $sheet->fromArray(
