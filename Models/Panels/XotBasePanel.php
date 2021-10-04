@@ -1160,6 +1160,53 @@ abstract class XotBasePanel implements PanelContract {
     }
     */
 
+    public function getCrudActions(): array {
+        $acts = ['index', 'create'];
+        if (
+            Str::endsWith(
+                request()
+                    ->route()
+                    ->getName(),
+                'index_edit',
+            )
+        ) {
+            $acts = ['indexEdit', 'create'];
+        }
+        $route_params = getRouteParameters();
+        $panel = PanelService::getByParams($route_params);
+        if ($panel->row->getKey()) {
+            $acts[] = 'edit';
+        }
+
+        $trad_mod = $panel->getTradMod();
+        $actions = [];
+        foreach ($acts as $act) {
+            $url = $panel->url(['act' => $act]);
+            $url1 = Str::before($url, '?');
+            $req_path = '/'.request()->path();
+            $active = $url1 == $req_path;
+
+            $tmp = new \stdClass();
+            $tmp->title = trans($trad_mod.'.tab.'.$act);
+            $tmp->url = $url;
+            $tmp->act = $act;
+            $tmp->active = $active;
+
+            if (Gate::allows($act, $panel)) {
+                $actions[] = $tmp;
+            }
+        }
+
+        return $actions;
+    }
+
+    public function getTradMod(): string {
+        $mod_low = $this->getModulenameLow();
+        $str = $mod_low.'::'.$this->getName();
+
+        return $str;
+    }
+
     public function getItemTabs(): array {
         return (new PanelTabService($this))->{__FUNCTION__}();
     }

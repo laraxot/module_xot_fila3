@@ -6,6 +6,7 @@ declare(strict_types=1);
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
+use Modules\Xot\Services\PanelService;
 use Modules\Xot\Services\RouteService;
 use Modules\Xot\Services\TenantService as Tenant;
 
@@ -438,6 +439,27 @@ if (! \function_exists('getModuleModels')) {
         }
 
         return $data;
+    }
+}
+
+if (! \function_exists('getModuleModelsMenu')) {
+    function getModuleModelsMenu($module) {
+        $models = getModuleModels($module);
+        $menu = collect($models)->map(
+            function ($item, $key) {
+                $obj = new $item();
+                $panel = PanelService::get($obj);
+                $url = $panel->url(['act' => 'index']);
+
+                return (object) [
+                    'title' => $key,
+                    'url' => $url,
+                    'active' => false,
+                ];
+            }
+        );
+
+        return $menu;
     }
 }
 

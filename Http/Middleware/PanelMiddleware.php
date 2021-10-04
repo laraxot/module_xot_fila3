@@ -27,9 +27,10 @@ class PanelMiddleware {
      */
     public function handle(Request $request, Closure $next) {
         //$parameters = request()->route()->parameters();
-        $parameters = optional(\Route::current())->parameters();
+        //$parameters = optional(\Route::current())->parameters();
+        $route_params = getRouteParameters();
         try {
-            $panel = PanelService::getByParams($parameters);
+            $panel = PanelService::getByParams($route_params);
         } catch (\Exception $e) {
             //return response()->view('theme::errors.404', ['message' => $e->getMessage(), 'lang' => 'it'], 404);
             return response()->view('theme::errors.404', ['message' => $e->getMessage(), 'lang' => 'it'], 404);

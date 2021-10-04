@@ -49,19 +49,17 @@ class PanelService {
         return static::$panel;
     }
     */
-    public static function setRequestPanel(?PanelContract $panel): void {
+    public static function setRequestPanel(?PanelContract $panel): self {
         $inst = self::getInstance();
-        //$inst::$panel = $panel;
         $inst->panel = $panel;
+
+        return $inst;
     }
 
     public static function getRequestPanel(): ?PanelContract {
         $inst = self::getInstance();
-        //try {
+
         return $inst->panel;
-        //} catch (\Exception $e) {
-        //    return null;
-        //}
     }
 
     /**
@@ -101,29 +99,12 @@ class PanelService {
         //$class = Str::before($class_full, $class_name);
         $class = substr($class_full, 0, -strlen($class_name));
         $panel_class = $class.'Panels\\'.$class_name.'Panel';
-        //*
+
         if (! class_exists($panel_class)) {
             $tmp = StubService::getByModel(self::$model, 'panel', $create = true);
         }
 
-        //*/
         return app($panel_class)->setRow(self::$model);
-        /*
-        try {
-            //self::$panel = new $panel_class(self::$model);
-            self::$panel = app($panel_class);
-            self::$panel->setRow(self::$model);
-        } catch (\Exception $e) {
-            echo '<h1 style="color:darkred">'.($e->getMessage()).'</h1>';
-            $tmp = StubService::getByModel(self::$model, 'panel', $create = true);
-        }
-
-        if (null == self::$panel) {
-            throw new \Exception('panel is null');
-        }
-
-        return self::$panel;
-        */
     }
 
     public function imageHtml(?array $params): string {
