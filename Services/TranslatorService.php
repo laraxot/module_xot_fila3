@@ -228,4 +228,17 @@ class TranslatorService extends BaseTranslator {
         $missing = array_combine($missing, $missing);
         self::add($key, $missing);
     }
+
+    public static function getArrayTranslated(string $key, array $data): array {
+        TranslatorService::addMissing($key, $data);
+
+        $data = collect($data)->map(function ($item) use ($key) {
+            $k = $key.'.'.$item;
+            $v = trans($k);
+
+            return $v;
+        })->all();
+
+        return $data;
+    }
 }

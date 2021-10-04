@@ -88,28 +88,9 @@ class ArrayService {
         $debug = debug_backtrace();
         if (isset($debug[2]['file'])) {
             $mod_trad = getModTradFilepath($debug[2]['file']);
+
+            return TranslatorService::getArrayTranslated($mod_trad, $header);
         }
-        //dddx($mod_trad);
-        //$mod_trad = 'progressioni::xls_rows';
-        ///*
-        //$missing = collect($header)->filter(function($item) use ($mod_trad));
-
-        TranslatorService::addMissing($mod_trad, $header);
-
-        $header = collect($header)->map(function ($item) use ($mod_trad) {
-            $k = $mod_trad.'.'.$item;
-            $v = trans($k);
-            //$missing[$item] = $item;
-            //if ($v == $k) { //vuol dire che non ha trovato traduzione
-            //    TranslatorService::add($mod_trad, [$item => $item]);
-            //$missing[$item] = $item;
-            //} else {
-            //echo '<hr>PRESO '.$k.' : '.$v;
-            //}
-
-            return $v;
-        })->all();
-        //dddx($missing);
 
         return $header;
     }
