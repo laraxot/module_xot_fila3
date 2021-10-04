@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Modules\Xot\Services;
 
 use Exception;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Str;
@@ -587,5 +588,17 @@ class FileService {
         $path = str_replace(['/', '\\'], [DIRECTORY_SEPARATOR, DIRECTORY_SEPARATOR], $path);
 
         return $path;
+    }
+
+    public static function config(string $key) {
+        $ns_name = Str::before($key, '::');
+        $group = Str::of($key)->after('::')->before('.');
+        $item = Str::after($key, $ns_name.'::'.$group.'.');
+        $ns_dir = self::getViewNameSpacePath($ns_name);
+        $path = $ns_dir.'/../../Config/'.$group.'.php';
+        $data = File::getRequire($path);
+        $value = Arr::get($data, $item);
+
+        return $value;
     }
 }
