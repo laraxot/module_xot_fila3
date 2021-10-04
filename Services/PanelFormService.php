@@ -19,11 +19,9 @@ use Modules\Xot\Contracts\PanelContract;
 class PanelFormService {
     protected PanelContract $panel;
 
-    /*
-    public function __construct(&$panel) {
+    public function __construct(PanelContract &$panel) {
         $this->panel = $panel;
     }
-    */
 
     /**
      * setPanel.

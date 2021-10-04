@@ -110,6 +110,15 @@ class PanelRouteService {
         foreach ($breads as $bread) {
             $route_params['container'.($n + $i)] = $bread->getName();
             $route_params['item'.($n + $i)] = $bread->guid();
+            if (null == $bread->guid() && 'edit' == $act) {
+                /* dddx([
+                    'act' => $act,
+                    'bread' => $bread,
+                    'n+i' => ($n + $i),
+                    'guid' => $this->panel->row->getKey(),
+                ]);
+                */
+            }
             ++$i;
         }
 

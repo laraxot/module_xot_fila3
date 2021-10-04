@@ -14,7 +14,6 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 use Modules\Xot\Contracts\PanelContract;
 use Modules\Xot\Contracts\PanelPresenterContract;
@@ -33,9 +32,7 @@ use Modules\Xot\Services\PanelTabService;
 use Modules\Xot\Services\PolicyService;
 use Modules\Xot\Services\RowsService;
 use Modules\Xot\Services\StubService;
-use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\Filters\Filter;
-use Spatie\QueryBuilder\QueryBuilder;
 
 /**
  * Class XotBasePanel.
@@ -83,7 +80,8 @@ abstract class XotBasePanel implements PanelContract {
         $this->presenter = $presenter->setPanel($this);
 
         //$this->row = app($this::$model);
-        $this->form = app(PanelFormService::class)->setPanel($this);
+        //$this->form = app(PanelFormService::class)->setPanel($this);
+        $this->form = new PanelFormService($this);
         $this->route = $route->setPanel($this);
     }
 
@@ -138,6 +136,11 @@ abstract class XotBasePanel implements PanelContract {
 
     public function setRow(Model $row): self {
         $this->row = $row;
+
+        /*--- in teoria con la "&"
+        $this->form->setPanel($this);
+        $this->route->setPanel($this);
+        */
 
         return $this;
     }
@@ -213,6 +216,15 @@ abstract class XotBasePanel implements PanelContract {
         $panel->setName($name);
 
         return $panel;
+    }
+
+    public function newPanel(Model $row): self {
+        $cloned = clone $this;
+        $cloned->setRow($row);
+        $cloned->form->setPanel($cloned);
+        $cloned->route->setPanel($cloned);
+
+        return $cloned;
     }
 
     // se uso in rows() getQuery il dato ottenuto e' una collezione di items non di modelli
@@ -802,55 +814,7 @@ abstract class XotBasePanel implements PanelContract {
      * @return RowsContract
      */
     public function applyFilter($query, array $filters) {
-        //https://github.com/spatie/laravel-query-builder
-        $lang = app()->getLocale();
-        $filters_fields = $this->filters();
-
-        $filters_rules = collect($filters_fields)
-            ->filter(
-                function ($item) {
-                    return isset($item->rules);
-                }
-            )->map(
-                function ($item) {
-                    return [$item->param_name => $item->rules];
-                }
-            )->collapse()
-            ->all();
-
-        $validator = Validator::make($filters, $filters_rules);
-        if ($validator->fails()) {
-            \Session::flash('error', 'error');
-            $id = $query->getModel()->getKeyName();
-
-            return $query->whereNull($id); //restituisco query vuota
-        }
-
-        $filters_fields = collect($filters_fields)->filter(function ($item) use ($filters) {
-            return in_array($item->param_name, array_keys($filters));
-        })
-            ->all();
-
-        foreach ($filters_fields as $k => $v) {
-            $filter_val = $filters[$v->param_name];
-            if ('' != $filter_val) {
-                if (! isset($v->op)) {
-                    $v->op = '=';
-                }
-                if (isset($v->where_method)) {
-                    if (! isset($v->field_name)) {
-                        dddx(['err' => 'field_name is missing']);
-
-                        return $query;
-                    }
-                    $query = $query->{$v->where_method}($v->field_name, $filter_val);
-                } else {
-                    $query = $query->where($v->field_name, $v->op, $filter_val);
-                }
-            }
-        }
-
-        return $query;
+        return RowsService::filter($query, $filters, $this->filters());
     }
 
     /**
@@ -872,75 +836,6 @@ abstract class XotBasePanel implements PanelContract {
     public function applySearch($query, ?string $q) {
         return RowsService::search($query, $q, $this->search());
     }
-
-    /**
-     * Undocumented function.
-     *
-     * @param RowsContract $query
-     *
-     * @return RowsContract
-     */
-    public function applySearchOLD($query, ?string $q) {
-        if (! isset($q)) {
-            return $query;
-        }
-        /*
-        $test = QueryBuilder::for($query)
-            //->allowedFilters(Filter::FiltersExact('q', 'matr'))
-            ->allowedFilters([AllowedFilter::exact('q', 'matr'), AllowedFilter::exact('q', 'ente')])
-            // ->allowedIncludes('posts')
-            //->allowedFilters('matr')
-            ->get();
-        */
-        /*
-            ->allowedFilters([
-                Filter::search('q', ['first_name', 'last_name', 'address.city', 'address.country']),
-            ]);
-        */
-        //dddx($test);
-
-        $tipo = 0; //0 a mano , 1 repository, 2 = scout
-        switch ($tipo) {
-            case 0:
-                $search_fields = $this->search(); //campi di ricerca
-                if (0 == count($search_fields)) { //se non gli passo nulla, cerco in tutti i fillable
-                    $search_fields = with(new $this::$model())->getFillable();
-                }
-                $table = with(new $this::$model())->getTable();
-                if (strlen($q) > 1) {
-                    $query = $query->where(function ($subquery) use ($search_fields, $q): void {
-                        foreach ($search_fields as $k => $v) {
-                            if (Str::contains($v, '.')) {
-                                [$rel, $rel_field] = explode('.', $v);
-                                $subquery = $subquery->orWhereHas(
-                                    $rel,
-                                    function (Builder $subquery1) use ($rel_field, $q): void {
-                                        $subquery1->where($rel_field, 'like', '%'.$q.'%');
-                                    }
-                                );
-                            } else {
-                                $subquery = $subquery->orWhere($v, 'like', '%'.$q.'%');
-                            }
-                        }
-                    });
-                }
-                //dddx(['q' => $q, 'sql' => $query->toSql()]);
-
-                return $query;
-                // break;
-            case 1:
-                //$repo = with(new \Modules\Food\Repositories\RestaurantRepository())->search('grom');
-                //dddx($repo->paginate());
-                //return $repo;
-                break;
-            case 2:
-                break;
-        } //end switch
-
-        return $query;
-    }
-
-    //end applySearch
 
     /**
      * Undocumented function.
@@ -1017,7 +912,8 @@ abstract class XotBasePanel implements PanelContract {
     }
 
     public function btnCrud(array $params = []): string {
-        return $this->form->{__FUNCTION__}($params);
+        //return $this->form->{__FUNCTION__}($params);
+        return (new PanelFormService($this))->{__FUNCTION__}();
     }
 
     public function imageHtml(array $params): string { //usare PanelImageService
@@ -1172,16 +1068,20 @@ abstract class XotBasePanel implements PanelContract {
         ) {
             $acts = ['indexEdit', 'create'];
         }
+        /*
         $route_params = getRouteParameters();
         $panel = PanelService::getByParams($route_params);
-        if ($panel->row->getKey()) {
+        */
+        //dddx(PanelService::getRequestPanel()->row->getKey());
+        //dddx($this->row->getKey());
+        if ($this->row->getKey()) {
             $acts[] = 'edit';
         }
 
-        $trad_mod = $panel->getTradMod();
+        $trad_mod = $this->getTradMod();
         $actions = [];
         foreach ($acts as $act) {
-            $url = $panel->url(['act' => $act]);
+            $url = $this->url(['act' => $act]);
             $url1 = Str::before($url, '?');
             $req_path = '/'.request()->path();
             $active = $url1 == $req_path;
@@ -1192,7 +1092,7 @@ abstract class XotBasePanel implements PanelContract {
             $tmp->act = $act;
             $tmp->active = $active;
 
-            if (Gate::allows($act, $panel)) {
+            if (Gate::allows($act, $this)) {
                 $actions[] = $tmp;
             }
         }
@@ -1232,6 +1132,7 @@ abstract class XotBasePanel implements PanelContract {
         if (null == $data) {
             $data = request()->all();
         }
+
         $filters = $data;
         $q = isset($data['q']) ? $data['q'] : null;
         $sort = isset($data['sort']) ? $data['sort'] : null;
@@ -1256,6 +1157,7 @@ abstract class XotBasePanel implements PanelContract {
         if (! Route::is('*edit*')) {
             $query = $this->applySort($query, $sort);
         }
+
         /*
         $page = isset($data['page']) ? $data['page'] : 1;
         Cache::forever('page', $page);

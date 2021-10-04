@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Modules\Xot\Services;
 
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 use Modules\Xot\Contracts\RowsContract;
 
@@ -87,4 +88,63 @@ class RowsService {
     }
 
     //end applySearch
+
+    /**
+     * Undocumented function.
+     *
+     * @param RowsContract $query
+     *
+     * @return RowsContract
+     */
+    public static function filter($query, array $filters, $filters_fields) {
+        //https://github.com/spatie/laravel-query-builder
+
+        //$filters_fields = $this->filters();
+
+        $filters_rules = collect($filters_fields)
+            ->filter(
+                function ($item) {
+                    return isset($item->rules);
+                }
+            )->map(
+                function ($item) {
+                    return [$item->param_name => $item->rules];
+                }
+            )->collapse()
+            ->all();
+
+        $validator = Validator::make($filters, $filters_rules);
+        if ($validator->fails()) {
+            \Session::flash('error', 'error');
+            $id = $query->getModel()->getKeyName();
+
+            return $query->whereNull($id); //restituisco query vuota
+        }
+
+        $filters_fields = collect($filters_fields)->filter(function ($item) use ($filters) {
+            return in_array($item->param_name, array_keys($filters));
+        })
+            ->all();
+
+        foreach ($filters_fields as $k => $v) {
+            $filter_val = $filters[$v->param_name];
+            if ('' != $filter_val) {
+                if (! isset($v->op)) {
+                    $v->op = '=';
+                }
+                if (isset($v->where_method)) {
+                    if (! isset($v->field_name)) {
+                        dddx(['err' => 'field_name is missing']);
+
+                        return $query;
+                    }
+                    $query = $query->{$v->where_method}($v->field_name, $filter_val);
+                } else {
+                    $query = $query->where($v->field_name, $v->op, $filter_val);
+                }
+            }
+        }
+
+        return $query;
+    }
 }
