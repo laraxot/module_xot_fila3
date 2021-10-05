@@ -199,15 +199,22 @@ class TranslatorService extends BaseTranslator {
 
     public static function add(string $key, array $data) {
         $file_path = self::getFilePath($key);
-        $original = Lang::get($key, []);
-        if(!is_array($original){
+        $original = [];
+        if (File::exists($file_path)) {
+            $original = File::getRequire($file_path);
+            //$original = Lang::get($key, []);
+        }
+
+        if (! is_array($original)) {
             dddx([
-                'message'=>'original is not an array',
-                'original'=>$original,
-                'key'=>$key,
-                'data'=>$data,
+                'message' => 'original is not an array',
+                'file_path' => $file_path,
+                'original' => $original,
+                //'ori1' => File::getRequire($file_path),
+                'key' => $key,
+                'data' => $data,
             ]);
-        });
+        }
         //$merged = collect($original)->merge($data)->all();
         $merged = array_merge($original, $data);
         /*
