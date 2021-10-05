@@ -200,6 +200,14 @@ class TranslatorService extends BaseTranslator {
     public static function add(string $key, array $data) {
         $file_path = self::getFilePath($key);
         $original = Lang::get($key, []);
+        if(!is_array($original){
+            dddx([
+                'message'=>'original is not an array',
+                'original'=>$original,
+                'key'=>$key,
+                'data'=>$data,
+            ]);
+        });
         //$merged = collect($original)->merge($data)->all();
         $merged = array_merge($original, $data);
         /*
@@ -219,12 +227,15 @@ class TranslatorService extends BaseTranslator {
     }
 
     public static function addMissing(string $key, array $data) {
-        $missing = collect($data)->filter(function ($item) use ($key) {
-            $k = $key.'.'.$item;
-            $v = trans($k);
+        $missing = collect($data)
+            ->filter(
+                function ($item) use ($key) {
+                    $k = $key.'.'.$item;
+                    $v = trans($k);
 
-            return $k == $v;
-        })->all();
+                    return $k == $v;
+                }
+            )->all();
         $missing = array_combine($missing, $missing);
         self::add($key, $missing);
     }
