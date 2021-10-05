@@ -596,6 +596,9 @@ class FileService {
         $item = Str::after($key, $ns_name.'::'.$group.'.');
         $ns_dir = self::getViewNameSpacePath($ns_name);
         $path = $ns_dir.'/../../Config/'.$group.'.php';
+        if (! File::exists($path)) {
+            ArrayService::save(['filename' => $path, 'data' => []]);
+        }
         $data = File::getRequire($path);
         $value = Arr::get($data, $item);
 
