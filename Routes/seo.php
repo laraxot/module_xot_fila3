@@ -9,3 +9,4 @@ Route::get('{lang}/feed/{item}', 'RssFeedController@feed');
 //Route::get('/sitemap.xml', 'SiteMapController@sitemap');
 //Route::get('{lang}/feed/{item}', 'RssFeedController@show');
 Route::get('/sitemap.xml', 'SiteMapController@index');
+Route::get('/{lang}/sitemap', 'SiteMapController@index');
