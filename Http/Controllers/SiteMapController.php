@@ -68,6 +68,7 @@ class SiteMapController {
     */
 
     public function index(): \Illuminate\Http\Response {
+        dddx('aaa');
         $limit = 50;
         $lang = app()->getLocale();
         $rows = Post::where('lang', $lang)
