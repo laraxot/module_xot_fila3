@@ -29,11 +29,13 @@ class StoreJob extends XotBaseJob {
         if (! isset($data['lang']) && in_array('lang', $row->getFillable())) {
             $data['lang'] = app()->getLocale();
         }
+        /*
         if (! isset($data['auth_user_id'])
             && in_array('auth_user_id', $row->getFillable())
             && 'auth_user_id' != $row->getKeyName()) {
             $data['auth_user_id'] = \Auth::id();
         }
+        */
 
         $row = $row->fill($data);
 
@@ -190,26 +192,40 @@ class StoreJob extends XotBaseJob {
 
     public function storeRelationshipsHasOne(Model $model, string $name, array $data): void {
         $rows = $model->$name();
+        /*
+        $rows = $model->$name();
         $related = $rows->getRelated();
+        $related = $related->create($data);
+        //Call to undefined method Illuminate\Database\Eloquent\Relations\HasOne::associate()
+        // VA SOLO NEL BELONGSTO
+        $model->$name()->associate($related);
+        */
+
+        $related = $rows->create($data);
+
+        if (! $model->$name()->exists()) {//collegamento non riuscito
+            $pk_local = $rows->getLocalKeyName();
+            $pk_fore = $rows->getForeignKeyName();
+            $data1 = [(string) $pk_local => $related->$pk_fore];
+            $model->update($data1);
+        }
 
         /*
-        $pk = $rows->getRelated()->getKeyName();
-        if ('auth_user_id' == $pk) {
-            dddx($data);
-        }
-        */
-        //debug_getter_obj(['obj'=>$rows]);
+        dddx(
+            [
+                'model' => $model,
+                'name' => $name,
+                'data' => $data,
+                'rows' => $rows,
+                'related' => $related,
+            ]
+        );
+
         try {
             $related = $rows->create($data);
         } catch (\Exception $e) {
-            //"SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry '1' for key 'PRIMARY' (SQL: insert into `liveuser_users` (`first_name`, `last_name`, `email`, `auth_user_id`, `created_by`, `updated_by`, `updated_at`, `created_at`) values (gfdsfs, fdsfds, fds
-            //dddx(['e' => $e->getMessage(), 'data' => $data]);
             $data = collect($data)->only($related->getFillable())->all();
-            //dddx($data);
-
             $related = $rows->update($data);
-            //$rows->fill($data);
-            //$related = $rows->save();
         }
         if (! $model->$name()->exists()) {//collegamento non riuscito
             $pk_local = $rows->getLocalKeyName();
@@ -217,6 +233,7 @@ class StoreJob extends XotBaseJob {
             $data1 = [(string) $pk_local => $related->$pk_fore];
             $model->update($data1);
         }
+        */
     }
 
     /**
@@ -228,8 +245,22 @@ class StoreJob extends XotBaseJob {
 
     /**
      * Undocumented function.
+     * array|string|integet $data.
      */
-    public function storeRelationshipsBelongsTo(Model $model, string $name, array $data): void {
+    public function storeRelationshipsBelongsTo(Model $model, string $name, $data): void {
+        /*
+        dddx([
+            'model' => $model,
+            'name' => $name,
+            'data' => $data,
+        ]);
+        */
+        if (is_string($data) || is_integer($data)) {
+            $model->$name()->associate($data);
+
+            return;
+        }
+
         $rows = $model->$name();
         //debug_getter_obj(['obj'=>$rows]);
         $related = $rows->create($data);
@@ -339,7 +370,6 @@ class StoreJob extends XotBaseJob {
         $container = ModelService::getPostType($container_obj);
         //$items_key = $container_obj->getKeyName();
         $items_key = $related->getKeyName();
-        //dddx($items_key);//auth_user_id
         $items_0 = $items->get()->pluck($items_key);
 
         if (! isset($data['to'])) {

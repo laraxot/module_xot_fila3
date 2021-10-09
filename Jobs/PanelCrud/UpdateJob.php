@@ -56,7 +56,8 @@ class UpdateJob extends XotBaseJob {
             if (! is_array($data)) {
                 //variabile uguale alla relazione
             } else {
-                $model->$name()->update($data);
+                //$model->$name()->update($data);
+                $model->$name->update($data);
             }
         } else {
             dddx(['err' => 'wip']);
