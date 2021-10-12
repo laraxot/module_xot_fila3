@@ -175,7 +175,7 @@ class UpdateJob extends XotBaseJob {
                     'model->getLocalKeyName' => $model->{$rows->getLocalKeyName()}, //2
                     'rows_methods' => get_class_methods($rows),
                     'model_methods' => get_class_methods($model),
-                    'model getRelations' => $model->factory()->guessRelationship('a'),
+                    //'model getRelations' => $model->factory()->guessRelationship('a'),
                 ]
             );
 
