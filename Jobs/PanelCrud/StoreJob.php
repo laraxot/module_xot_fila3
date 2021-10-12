@@ -201,6 +201,7 @@ class StoreJob extends XotBaseJob {
         $model->$name()->associate($related);
         */
 
+<<<<<<< HEAD
         $related = $rows->create($data);
 
         if (! $model->$name()->exists()) {//collegamento non riuscito
@@ -221,7 +222,18 @@ class StoreJob extends XotBaseJob {
             ]
         );
 
+=======
+        //la chiave da aggiornare
+        $pk = $rows->getRelated()->getKeyName();
+        /* if ('auth_user_id' == $pk) {
+             dddx([$model]);
+         }*/
+
+        //debug_getter_obj(['obj'=>$rows]);
+>>>>>>> a4c5634 (up)
         try {
+            //backtrace(true);
+            //dddx([$model, $name, $data]);
             $related = $rows->create($data);
         } catch (\Exception $e) {
             $data = collect($data)->only($related->getFillable())->all();
@@ -248,6 +260,7 @@ class StoreJob extends XotBaseJob {
      * array|string|integet $data.
      */
     public function storeRelationshipsBelongsTo(Model $model, string $name, $data): void {
+<<<<<<< HEAD
         /*
         dddx([
             'model' => $model,
@@ -260,17 +273,44 @@ class StoreJob extends XotBaseJob {
 
             return;
         }
+=======
+        //$model può essere il modello Profile di ClubReport
+        //$name ad esempio può essere la stringa con il nome della relazione region
+        //che contiene la lista delle regioni, e parte dal modello Profile
+        //quindi $rows->$name() andrà ad aprire la relazione Region del modello Profile
+        //la suddetta relazione verrà chiamata $rows
+>>>>>>> a4c5634 (up)
 
         $rows = $model->$name();
         //debug_getter_obj(['obj'=>$rows]);
-        $related = $rows->create($data);
+
+        //dddx([$rows]);
+
+        //sicchè $rows sarà nel caso di esempio, la relazione BelongsTo region appartenente a Profile
+        //in questa relazione salverò dei dati
+
+        //var_dump([$rows->getForeignKeyName() => $data]);
+
+        //dddx([$model, $data, $rows, $rows->getRelated()->find($data)]);
+
+        $associated = $rows->getRelated()->find($data);
+
+        //serve ad associare un modello padre ad un modello figlio, tramite chiave esterna del figlio
+        //esempio region_id
+        $model->$name()->associate($associated);
+
+        //dopo aver associato bisogna salvà er modello
+        $model->save();
+
+        /*$related = $rows->create($data);
         //$model->$name()->save($related); //Call to undefined method Illuminate\Database\Eloquent\Relations\BelongsTo::save()
+
         if (! $model->$name()->exists()) {//collegamento non riuscito
             $pk_own = $rows->getOwnerKeyName();
             $pk_fore = $rows->getForeignKeyName();
             $data1 = [(string) $pk_fore => $related->$pk_own];
             $model->update($data1);
-        }
+        }*/
     }
 
     /**
@@ -339,10 +379,17 @@ class StoreJob extends XotBaseJob {
     }
 
     public function storeRelationshipsHasManyThrough(Model $model, string $name, array $data): void {
-        /*
-        Call to undefined method Illuminate\Database\Eloquent\Relations\HasManyThrough::syncWithoutDetaching()
-        */
-        //$this->storeRelationshipsMorphToMany($params); //
+        $rows = $model->$name();
+        $throughKey = $model->$name()->getRelated()->getKeyName();
+
+        //in realtà sarebbe sufficiente create però proviamo
+        if (! empty($data['to'])) {
+            $rows->getParent()->updateOrCreate([$rows->getForeignKeyName() => $this->panel->row->{$rows->getFirstKeyName()}, $rows->getFirstKeyName() => $this->panel->row->{$rows->getFirstKeyName()}]);
+
+            $rows->getRelated()->updateOrCreate([$rows->getForeignKeyName() => $this->panel->row->{$rows->getFirstKeyName()}, $throughKey => $data['to'][0]]);
+        } else {
+            $rows->getRelated()->updateOrCreate([$rows->getForeignKeyName() => '', $throughKey => '']);
+        }
     }
 
     /**
