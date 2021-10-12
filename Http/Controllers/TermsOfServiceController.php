@@ -7,7 +7,7 @@ namespace Modules\Xot\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Str;
-use Modules\Xot\Services\TenantService;
+use Modules\Tenant\Services\TenantService;
 
 class TermsOfServiceController extends Controller {
     /**

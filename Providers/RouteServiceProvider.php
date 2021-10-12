@@ -8,7 +8,7 @@ use Illuminate\Routing\Router;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Str;
 use Modules\Xot\Http\Middleware\SetDefaultLocaleForUrlsMiddleware;
-use Modules\Xot\Services\TenantService;
+use Modules\Tenant\Services\TenantService;
 
 //--- services ---
 

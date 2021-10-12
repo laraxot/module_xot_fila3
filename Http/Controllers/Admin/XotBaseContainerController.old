@@ -9,7 +9,7 @@ use Illuminate\Support\Str;
 //---- services ---
 use Modules\Xot\Services\PanelService as Panel;
 use Modules\Xot\Services\StubService;
-use Modules\Xot\Services\TenantService as Tenant;
+use Modules\Tenant\Services\TenantService as Tenant;
 
 //use Modules\Xot\Traits\CrudContainerItemNoPostTrait as CrudTrait;
 

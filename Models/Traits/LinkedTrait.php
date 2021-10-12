@@ -24,7 +24,7 @@ use Modules\Xot\Models\Image;
 use Modules\Xot\Services\PanelService as Panel;
 use Modules\Xot\Services\RouteService;
 use Modules\Xot\Services\StubService;
-use Modules\Xot\Services\TenantService as Tenant; // per dizionario morph
+use Modules\Tenant\Services\TenantService as Tenant; // per dizionario morph
 
 //------ traits ---
 

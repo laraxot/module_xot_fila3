@@ -9,7 +9,7 @@ use Illuminate\Routing\Controller;
 //---- services ---
 use Modules\Theme\Services\ThemeService;
 use Modules\Xot\Services\PanelService;
-use Modules\Xot\Services\TenantService;
+use Modules\Tenant\Services\TenantService;
 use Nwidart\Modules\Facades\Module;
 
 //use Modules\Xot\Services\ArtisanService;

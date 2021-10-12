@@ -16,7 +16,7 @@ use Modules\Theme\Services\ThemeService;
 //use Modules\Xot\Services\PolicyService;
 use Modules\Xot\Contracts\RepositoryContract;
 use Modules\Xot\Services\StubService;
-use Modules\Xot\Services\TenantService as Tenant;
+use Modules\Tenant\Services\TenantService as Tenant;
 
 //use Modules\Food\Repositories\LocationRepository;
 

@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
 use Modules\Xot\Services\PanelService;
 use Modules\Xot\Services\RouteService;
-use Modules\Xot\Services\TenantService as Tenant;
+use Modules\Tenant\Services\TenantService as Tenant;
 
 //------------------------------------------------
 if (! \function_exists('snake_case')) {

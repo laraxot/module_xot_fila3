@@ -15,7 +15,7 @@ use Modules\Xot\Contracts\PanelContract;
 use Modules\Xot\Relations\CustomRelation;
 use Modules\Xot\Services\PanelService;
 use Modules\Xot\Services\PanelService as Panel;
-use Modules\Xot\Services\TenantService as Tenant;
+use Modules\Tenant\Services\TenantService as Tenant;
 
 /**
  * Class HomeController.

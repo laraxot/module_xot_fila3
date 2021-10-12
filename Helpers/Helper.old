@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Str;
-use Modules\Xot\Services\TenantService as Tenant;
+use Modules\Tenant\Services\TenantService as Tenant;
 
 //------------------------------------------------
 if (! \function_exists('snake_case')) {

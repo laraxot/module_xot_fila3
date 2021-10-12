@@ -7,6 +7,7 @@ namespace Modules\Xot\Services;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
+use Modules\Tenant\Services\TenantService;
 use Modules\Xot\Contracts\PanelContract;
 use Modules\Xot\Relations\CustomRelation;
 use Nwidart\Modules\Facades\Module;

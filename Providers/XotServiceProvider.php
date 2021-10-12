@@ -11,8 +11,9 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\View;
+use Modules\Tenant\Services\TenantService as Tenant;
 use Modules\Xot\Http\View\Composers\XotComposer;
-use Modules\Xot\Services\TenantService as Tenant;
+use Nwidart\Modules\Facades\Module;
 
 /**
  * Class XotServiceProvider.
@@ -33,6 +34,7 @@ class XotServiceProvider extends XotBaseServiceProvider {
     public string $module_name = 'xot';
 
     public function bootCallback(): void {
+        /*
         $this->mergeConfigs();
 
         if (\Request::has('act') && 'migrate' == \Request::input('act')) {
@@ -40,14 +42,16 @@ class XotServiceProvider extends XotBaseServiceProvider {
             DB::reconnect('mysql');
         }
         //DB::purge(); //Call to a member function prepare() on null
-        //* //Database connection [mysql] not configured.
+        // Database connection [mysql] not configured.
         DB::reconnect();
         Schema::defaultStringLength(191);
-        //*/
+
         $map = config('xra.model');
 
         Relation::morphMap($map);
+        */
 
+        Module::enable('Tenant');
         $this->registerCommands();
 
         $this->redirectSSL();
@@ -108,6 +112,7 @@ class XotServiceProvider extends XotBaseServiceProvider {
         //dddx($res);
     }
 
+    /*
     public function mergeConfigs(): void {
         $configs = ['database', 'filesystems', 'auth', 'metatag', 'services', 'xra', 'social'];
         foreach ($configs as $v) {
@@ -120,7 +125,7 @@ class XotServiceProvider extends XotBaseServiceProvider {
     }
 
     //end mergeConfigs
-
+    */
     public function loadHelpersFrom(string $path): void {
         $files = File::files($path);
         foreach ($files as $file) {
