@@ -147,6 +147,9 @@ class PanelService {
         if (inAdmin()) {
             $params = getRouteParameters();
             $module = Module::find($params['module']);
+            if (null == $module) {
+                throw new \Exception('module ['.$params['module'].'] not found');
+            }
             $panel = '\Modules\\'.$module->getName().'\Models\Panels\_ModulePanel';
             $panel = app($panel);
             $panel->setRow($home);
