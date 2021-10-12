@@ -201,7 +201,6 @@ class StoreJob extends XotBaseJob {
         $model->$name()->associate($related);
         */
 
-<<<<<<< HEAD
         $related = $rows->create($data);
 
         if (! $model->$name()->exists()) {//collegamento non riuscito
@@ -222,15 +221,6 @@ class StoreJob extends XotBaseJob {
             ]
         );
 
-=======
-        //la chiave da aggiornare
-        $pk = $rows->getRelated()->getKeyName();
-        /* if ('auth_user_id' == $pk) {
-             dddx([$model]);
-         }*/
-
-        //debug_getter_obj(['obj'=>$rows]);
->>>>>>> a4c5634 (up)
         try {
             //backtrace(true);
             //dddx([$model, $name, $data]);
@@ -260,7 +250,6 @@ class StoreJob extends XotBaseJob {
      * array|string|integet $data.
      */
     public function storeRelationshipsBelongsTo(Model $model, string $name, $data): void {
-<<<<<<< HEAD
         /*
         dddx([
             'model' => $model,
@@ -273,13 +262,6 @@ class StoreJob extends XotBaseJob {
 
             return;
         }
-=======
-        //$model può essere il modello Profile di ClubReport
-        //$name ad esempio può essere la stringa con il nome della relazione region
-        //che contiene la lista delle regioni, e parte dal modello Profile
-        //quindi $rows->$name() andrà ad aprire la relazione Region del modello Profile
-        //la suddetta relazione verrà chiamata $rows
->>>>>>> a4c5634 (up)
 
         $rows = $model->$name();
         //debug_getter_obj(['obj'=>$rows]);

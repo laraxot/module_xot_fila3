@@ -57,12 +57,7 @@ class UpdateJob extends XotBaseJob {
             if (! is_array($data)) {
                 //variabile uguale alla relazione
             } else {
-<<<<<<< HEAD
                 //$model->$name()->update($data);
-=======
-                //backtrace(true);
-                //dddx([$model, $name, $data]);
->>>>>>> a4c5634 (up)
                 $model->$name->update($data);
             }
         } else {
@@ -147,9 +142,8 @@ class UpdateJob extends XotBaseJob {
         //$rows = $model->$name();
         //dddx(get_class_methods($rows));
 
-        /*if (isset($data['to'])) {
+        if (isset($data['to'])) {
             $rows = $model->$name();
-<<<<<<< HEAD
             //touch
             dddx(
                 [
@@ -180,48 +174,6 @@ class UpdateJob extends XotBaseJob {
             );
 
             //$this->saveMultiselectTwoSides($model,$name,$data);
-=======
-            dddx(get_class_methods($rows));
-            dddx($rows->getParent());
-            $this->saveMultiselectTwoSides($rows->getParent(), $name, $data);
-        }*/
-
-        /* modificato da davide. tolto wip altrimenti non modifica lo user da profile */
-        /*dddx(['wip']);*/
-
-        //dddx([$model, $name, $data]);
-
-        //es. relazione rights hasmanythrough a modello profile
-        //dddx($model->$name());
-        $rows = $model->$name();
-
-        //dddx(get_class_methods($rows));
-
-        $throughKey = $model->$name()->getRelated()->getKeyName();
-
-        //dddx([$rows->getFirstKeyName(), $rows->getForeignKeyName(), $throughKey]);
-
-        //potrebbe essere necessario un foreach
-
-        //dddx($data);
-
-        //from è la tendina di sinistra, to quella di destra
-        if (! empty($data['to'])) {
-            //dddx([$rows, $rows->getForeignKeyName() => $this->panel->row->{$rows->getFirstKeyName()}, $throughKey => $data['to'][0]]);
-
-            /*dddx([$rows->getForeignKeyName() => $this->panel->row->{$rows->getFirstKeyName()},
-                $rows->getFirstKeyName() => $this->panel->row->{$rows->getFirstKeyName()}, ]);*/
-
-            $rows->getParent()->updateOrCreate([$rows->getForeignKeyName() => $this->panel->row->{$rows->getFirstKeyName()}, $rows->getFirstKeyName() => $this->panel->row->{$rows->getFirstKeyName()}]);
-
-            $rows->getRelated()->updateOrCreate([$rows->getForeignKeyName() => $this->panel->row->{$rows->getFirstKeyName()}, $throughKey => $data['to'][0]]);
-        } else {
-            //dddx([$rows->getForeignKeyName() => $this->panel->row->{$rows->getFirstKeyName()}, $throughKey => '']);
-            //se non c'è niente su to vuol dire che va cancellato il campo dal modello relativo
-
-            //attenzione. in sto caso va bene così ma in realtà solo i from andrebbero cancellati
-            $rows->getRelated()->where([$rows->getForeignKeyName() => $this->panel->row->{$rows->getFirstKeyName()}])->delete();
->>>>>>> a4c5634 (up)
         }
 
         //$rows->save();
