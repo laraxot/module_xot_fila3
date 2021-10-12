@@ -140,7 +140,35 @@ class UpdateJob extends XotBaseJob {
     public function updateRelationshipsHasManyThrough(Model $model, string $name, array $data): void {
         if (isset($data['to'])) {
             $rows = $model->$name();
-            dddx(get_class_methods($rows));
+            //touch
+            dddx(
+                [
+                    //Call to undefined method Illuminate\Database\Eloquent\Relations\HasManyThrough::attach()
+                    //'attach' => $rows->attach(1),
+                    //Call to undefined method Illuminate\Database\Eloquent\Relations\HasManyThrough::sync()
+                    //'attach' => $rows->sync(1),
+                    'model' => $model, //Profile
+                    'name' => $name, //rights
+                    'data' => $data, //['to']=>[0=>'1',1=>'2'];
+                    'value' => $rows->get(),
+                    'getQualifiedParentKeyName' => $rows->getQualifiedParentKeyName(), //liveuser_perm_users.perm_user_id
+                    'getQualifiedFarKeyName' => $rows->getQualifiedFarKeyName(), //liveuser_userrights.perm_user_id
+                    'getParent' => $rows->getParent(), //PermUser
+                    'getRelated' => $rows->getRelated(), //UserRight
+                    'getFirstKeyName' => $rows->getFirstKeyName(), //auth_user_id
+                    'getQualifiedFirstKeyName' => $rows->getQualifiedFirstKeyName(), //liveuser_perm_users.auth_user_id
+                    'getForeignKeyName' => $rows->getForeignKeyName(), //perm_user_id
+                    'getQualifiedForeignKeyName' => $rows->getQualifiedForeignKeyName(), //liveuser_userrights.perm_user_id
+                    'getLocalKeyName' => $rows->getLocalKeyName(), //auth_user_id
+                    'getQualifiedLocalKeyName' => $rows->getQualifiedLocalKeyName(), //profiles.auth_user_id
+                    'getSecondLocalKeyName' => $rows->getSecondLocalKeyName(), //perm_user_id
+                    'model->getLocalKeyName' => $model->{$rows->getLocalKeyName()}, //2
+                    'rows_methods' => get_class_methods($rows),
+                    'model_methods' => get_class_methods($model),
+                    'model getRelations' => $model->factory()->guessRelationship('a'),
+                ]
+            );
+
             //$this->saveMultiselectTwoSides($model,$name,$data);
         }
         dddx(['wip']);
