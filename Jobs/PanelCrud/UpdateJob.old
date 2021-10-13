@@ -57,8 +57,7 @@ class UpdateJob extends XotBaseJob {
             if (! is_array($data)) {
                 //variabile uguale alla relazione
             } else {
-                //backtrace(true);
-                //dddx([$model, $name, $data]);
+                //$model->$name()->update($data);
                 $model->$name->update($data);
             }
         } else {
@@ -143,48 +142,38 @@ class UpdateJob extends XotBaseJob {
         //$rows = $model->$name();
         //dddx(get_class_methods($rows));
 
-        /*if (isset($data['to'])) {
+        if (isset($data['to'])) {
             $rows = $model->$name();
-            dddx(get_class_methods($rows));
-            dddx($rows->getParent());
-            $this->saveMultiselectTwoSides($rows->getParent(), $name, $data);
-        }*/
+            //touch
+            dddx(
+                [
+                    //Call to undefined method Illuminate\Database\Eloquent\Relations\HasManyThrough::attach()
+                    //'attach' => $rows->attach(1),
+                    //Call to undefined method Illuminate\Database\Eloquent\Relations\HasManyThrough::sync()
+                    //'attach' => $rows->sync(1),
+                    'model' => $model, //Profile
+                    'name' => $name, //rights
+                    'data' => $data, //['to']=>[0=>'1',1=>'2'];
+                    'value' => $rows->get(),
+                    'getQualifiedParentKeyName' => $rows->getQualifiedParentKeyName(), //liveuser_perm_users.perm_user_id
+                    'getQualifiedFarKeyName' => $rows->getQualifiedFarKeyName(), //liveuser_userrights.perm_user_id
+                    'getParent' => $rows->getParent(), //PermUser
+                    'getRelated' => $rows->getRelated(), //UserRight
+                    'getFirstKeyName' => $rows->getFirstKeyName(), //auth_user_id
+                    'getQualifiedFirstKeyName' => $rows->getQualifiedFirstKeyName(), //liveuser_perm_users.auth_user_id
+                    'getForeignKeyName' => $rows->getForeignKeyName(), //perm_user_id
+                    'getQualifiedForeignKeyName' => $rows->getQualifiedForeignKeyName(), //liveuser_userrights.perm_user_id
+                    'getLocalKeyName' => $rows->getLocalKeyName(), //auth_user_id
+                    'getQualifiedLocalKeyName' => $rows->getQualifiedLocalKeyName(), //profiles.auth_user_id
+                    'getSecondLocalKeyName' => $rows->getSecondLocalKeyName(), //perm_user_id
+                    'model->getLocalKeyName' => $model->{$rows->getLocalKeyName()}, //2
+                    'rows_methods' => get_class_methods($rows),
+                    'model_methods' => get_class_methods($model),
+                    //'model getRelations' => $model->factory()->guessRelationship('a'),
+                ]
+            );
 
-        /* modificato da davide. tolto wip altrimenti non modifica lo user da profile */
-        /*dddx(['wip']);*/
-
-        //dddx([$model, $name, $data]);
-
-        //es. relazione rights hasmanythrough a modello profile
-        //dddx($model->$name());
-        $rows = $model->$name();
-
-        //dddx(get_class_methods($rows));
-
-        $throughKey = $model->$name()->getRelated()->getKeyName();
-
-        //dddx([$rows->getFirstKeyName(), $rows->getForeignKeyName(), $throughKey]);
-
-        //potrebbe essere necessario un foreach
-
-        //dddx($data);
-
-        //from è la tendina di sinistra, to quella di destra
-        if (! empty($data['to'])) {
-            //dddx([$rows, $rows->getForeignKeyName() => $this->panel->row->{$rows->getFirstKeyName()}, $throughKey => $data['to'][0]]);
-
-            /*dddx([$rows->getForeignKeyName() => $this->panel->row->{$rows->getFirstKeyName()},
-                $rows->getFirstKeyName() => $this->panel->row->{$rows->getFirstKeyName()}, ]);*/
-
-            $rows->getParent()->updateOrCreate([$rows->getForeignKeyName() => $this->panel->row->{$rows->getFirstKeyName()}, $rows->getFirstKeyName() => $this->panel->row->{$rows->getFirstKeyName()}]);
-
-            $rows->getRelated()->updateOrCreate([$rows->getForeignKeyName() => $this->panel->row->{$rows->getFirstKeyName()}, $throughKey => $data['to'][0]]);
-        } else {
-            //dddx([$rows->getForeignKeyName() => $this->panel->row->{$rows->getFirstKeyName()}, $throughKey => '']);
-            //se non c'è niente su to vuol dire che va cancellato il campo dal modello relativo
-
-            //attenzione. in sto caso va bene così ma in realtà solo i from andrebbero cancellati
-            $rows->getRelated()->where([$rows->getForeignKeyName() => $this->panel->row->{$rows->getFirstKeyName()}])->delete();
+            //$this->saveMultiselectTwoSides($model,$name,$data);
         }
 
         //$rows->save();
