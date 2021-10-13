@@ -7,9 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
+use Modules\Tenant\Services\TenantService as Tenant;
 use Modules\Xot\Services\PanelService;
 use Modules\Xot\Services\RouteService;
-use Modules\Tenant\Services\TenantService as Tenant;
 
 //------------------------------------------------
 if (! \function_exists('snake_case')) {
@@ -1053,3 +1053,12 @@ if (! function_exists('getModTradFilepath')) {
             );
 }
 */
+
+if (! function_exists('is_active')) {
+    /**
+     * Determines if the given routes are active.
+     */
+    function is_active($routes): bool {
+        return (bool) call_user_func_array([app('router'), 'is'], (array) $routes);
+    }
+}
