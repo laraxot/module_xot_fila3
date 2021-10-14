@@ -1062,3 +1062,27 @@ if (! function_exists('is_active')) {
         return (bool) call_user_func_array([app('router'), 'is'], (array) $routes);
     }
 }
+
+if (! function_exists('md_to_html')) {
+    /**
+     * Convert Markdown to HTML.
+     */
+    function md_to_html(string $markdown): string {
+        return $markdown;
+        //return app(App\Markdown\Converter::class)->toHtml($markdown);
+    }
+}
+
+if (! function_exists('replace_links')) {
+    /**
+     * Convert Standalone Urls to HTML.
+     */
+    function replace_links(string $markdown): string {
+        /*
+        return (new LinkFinder([
+            'attrs' => ['target' => '_blank', 'rel' => 'nofollow'],
+        ]))->processHtml($markdown);
+        */
+        return $markdown;
+    }
+}
