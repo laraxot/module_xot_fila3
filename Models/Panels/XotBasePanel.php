@@ -1001,6 +1001,7 @@ abstract class XotBasePanel implements PanelContract {
         }
         $row = $this->row;
         $key = $row->getRouteKeyName();
+        /*
         $msg = [
             'key' => $key,
             '$row->getKey()' => $row->getKey(),
@@ -1009,6 +1010,7 @@ abstract class XotBasePanel implements PanelContract {
             //'$row->post' => $row->post,
             '$row' => $row,
         ];
+        */
         if (null == $row->getKey()) {
             return null;
         }
