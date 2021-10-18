@@ -52,6 +52,9 @@ class XotServiceProvider extends XotBaseServiceProvider {
         */
 
         Module::enable('Tenant');
+        Module::enable('Rating');
+        Module::enable('Tag');
+
         $this->registerCommands();
 
         $this->redirectSSL();
