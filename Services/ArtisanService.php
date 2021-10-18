@@ -7,7 +7,9 @@ namespace Modules\Xot\Services;
 use Exception;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Str;
+use Modules\Theme\Services\ThemeService;
 
 if (! defined('STDIN')) {
     define('STDIN', fopen('php://stdin', 'r'));
@@ -40,6 +42,7 @@ class ArtisanService {
                 }
                 // no break
             case 'routelist': return ArtisanService::exe('route:list');
+            case 'routelist1': return ArtisanService::showRouteList();
             case 'optimize': return ArtisanService::exe('optimize');
             case 'clear':
                 echo self::debugbarClear();
@@ -107,6 +110,37 @@ class ArtisanService {
         }
 
         return '';
+    }
+
+    public static function showRouteList() {
+        $routeCollection = Route::getRoutes();
+        /*
+        $view = ThemeService::getViewModule();
+
+        dddx([
+            'view' => $view,
+            'this' => get_class(),
+            'parent' => get_parent_class(),
+            'debug' => \debug_backtrace(),
+        ]);
+        */
+        /*
+        $debug = \debug_backtrace();
+        $file = $debug[1]['file'];
+
+        dddx([
+            'file' => $file,
+            'views' => ThemeService::getDefaultViewArray(),
+        ]);
+        */
+        $view = 'xot::acts.artisan.show_route_list';
+        $view_params = [
+            'view' => $view,
+            'routeCollection' => $routeCollection,
+            'lang' => app()->getLocale(),
+        ];
+
+        return view()->make($view, $view_params);
     }
 
     /**
