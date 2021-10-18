@@ -1247,7 +1247,7 @@ abstract class XotBasePanel implements PanelContract {
         $action = $this->itemActions()
             ->firstWhere('name', $act);
         if (! is_object($action)) {
-            $msg = '<h3>['.$act.'] not exists in ['.get_class($this).']</h3>Actions Avaible are :';
+            $msg = '<h3>['.$act.'] not exists in ['.get_class($this).']</h3>Items Actions Avaible are :';
             foreach ($this->itemActions() as $act) {
                 $msg .= '<br/>'.$act->getName();
             }
