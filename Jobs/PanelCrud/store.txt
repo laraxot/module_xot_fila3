@@ -190,15 +190,35 @@ class StoreJob extends XotBaseJob {
 
     public function storeRelationshipsHasOne(Model $model, string $name, array $data): void {
         $rows = $model->$name();
+        /*
+        $rows = $model->$name();
         $related = $rows->getRelated();
+        $related = $related->create($data);
+        //Call to undefined method Illuminate\Database\Eloquent\Relations\HasOne::associate()
+        // VA SOLO NEL BELONGSTO
+        $model->$name()->associate($related);
+        */
 
-        //la chiave da aggiornare
-        $pk = $rows->getRelated()->getKeyName();
-        /* if ('auth_user_id' == $pk) {
-             dddx([$model]);
-         }*/
+        $related = $rows->create($data);
 
-        //debug_getter_obj(['obj'=>$rows]);
+        if (! $model->$name()->exists()) {//collegamento non riuscito
+            $pk_local = $rows->getLocalKeyName();
+            $pk_fore = $rows->getForeignKeyName();
+            $data1 = [(string) $pk_local => $related->$pk_fore];
+            $model->update($data1);
+        }
+
+        /*
+        dddx(
+            [
+                'model' => $model,
+                'name' => $name,
+                'data' => $data,
+                'rows' => $rows,
+                'related' => $related,
+            ]
+        );
+
         try {
             //backtrace(true);
             //dddx([$model, $name, $data]);
@@ -219,6 +239,7 @@ class StoreJob extends XotBaseJob {
             $data1 = [(string) $pk_local => $related->$pk_fore];
             $model->update($data1);
         }
+        */
     }
 
     /**
@@ -233,17 +254,18 @@ class StoreJob extends XotBaseJob {
      * array|string|integet $data.
      */
     public function storeRelationshipsBelongsTo(Model $model, string $name, $data): void {
+        /*
+        dddx([
+            'model' => $model,
+            'name' => $name,
+            'data' => $data,
+        ]);
+        */
         if (is_string($data) || is_integer($data)) {
             $model->$name()->associate($data);
-            //$model->save(); //non dovrebbe essere necessario
 
             return;
         }
-        //$model può essere il modello Profile di ClubReport
-        //$name ad esempio può essere la stringa con il nome della relazione region
-        //che contiene la lista delle regioni, e parte dal modello Profile
-        //quindi $rows->$name() andrà ad aprire la relazione Region del modello Profile
-        //la suddetta relazione verrà chiamata $rows
 
         $rows = $model->$name();
         //debug_getter_obj(['obj'=>$rows]);
@@ -256,7 +278,7 @@ class StoreJob extends XotBaseJob {
         //var_dump([$rows->getForeignKeyName() => $data]);
 
         //dddx([$model, $data, $rows, $rows->getRelated()->find($data)]);
-        // !!! SE E? UN ARRAY DARA? ERROR
+
         $associated = $rows->getRelated()->find($data);
 
         //serve ad associare un modello padre ad un modello figlio, tramite chiave esterna del figlio
