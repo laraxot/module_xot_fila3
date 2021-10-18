@@ -640,6 +640,8 @@ abstract class XotBasePanel implements PanelContract {
         )->collapse()
             ->all();
 
+        //dddx($rules);
+
         return $rules;
     }
 
