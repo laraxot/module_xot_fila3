@@ -504,7 +504,6 @@ if (! \function_exists('transFields')) {
 
         $ns = Str::lower($module_name);
         $trans_root = $ns.'::'.Str::snake(class_basename($model));
-        //dddx() );
         //debug_getter_obj(['obj'=>$module]);
         //dddx($module_name->getNamespace());
         $view = 'unknown';
@@ -580,7 +579,6 @@ if (! \function_exists('transFields')) {
         if (! isset($ris->col_bs_size)) {
             $ris->col_bs_size = 12;
         }
-
         $row = \Form::getModel();
 
         $ris->value = (Arr::get($row, $name));
