@@ -7,8 +7,8 @@ namespace Modules\Xot\Providers;
 use Illuminate\Routing\Router;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Str;
-use Modules\Xot\Http\Middleware\SetDefaultLocaleForUrlsMiddleware;
 use Modules\Tenant\Services\TenantService;
+use Modules\Xot\Http\Middleware\SetDefaultLocaleForUrlsMiddleware;
 
 //--- services ---
 
@@ -67,6 +67,7 @@ class RouteServiceProvider extends XotBaseRouteServiceProvider {
 
         //$pattern = '/|'.$pattern.'|/i';
         $pattern = '/|'.$pattern.'|'.$pattern_plural.'|/i';
+
         $router->pattern('container0', $pattern);
     }
 
