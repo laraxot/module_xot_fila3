@@ -140,7 +140,7 @@ class PanelService {
 
     public static function getHomePanel(): PanelContract {
         $home = TenantService::model('home');
-        dddx($home);
+
         try {
             $home = $home->firstOrCreate(['id' => 1]);
         } catch (\Exception $e) {
