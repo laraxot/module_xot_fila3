@@ -26,7 +26,6 @@ class HomeController extends Controller {
      */
     //public function index(?array $data, $panel = null) {
     public function index(Request $request, ?PanelContract $panel = null) {
-        dddx('a');
         $request = request();
         $home = null;
         try {
