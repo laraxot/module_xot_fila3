@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\Route;
 //----- models------
 use Illuminate\Support\Str;
 //use Modules\Blog\Models\Favorite;
-use Modules\Blog\Models\Post;
+use Modules\Xot\Models\Post;
 //----- services -----
 use Modules\LU\Models\User;
 use Modules\Tenant\Services\TenantService as Tenant;
