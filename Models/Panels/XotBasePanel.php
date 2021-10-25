@@ -366,6 +366,8 @@ abstract class XotBasePanel implements PanelContract {
         if (null == $row) {
             //dddx(['class_methods' => get_class_methods($rows)]);
             //dddx(DB::getQueryLog());
+            //$query = str_replace(array('?'), array('\'%s\''), $builder->toSql());
+            //$query = vsprintf($query, $builder->getBindings());
             throw new \Exception('Not Found ['.$value.'] on ['.$this->getName().']['.$rows->toSql().']');
         }
         $this->row = $row;
