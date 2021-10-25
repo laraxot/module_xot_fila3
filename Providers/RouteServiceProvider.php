@@ -67,23 +67,14 @@ class RouteServiceProvider extends XotBaseRouteServiceProvider {
 
         //$pattern = '/|'.$pattern.'|/i';
         $container0_pattern = '/|'.$pattern.'|'.$pattern_plural.'|/i';
-<<<<<<< HEAD
-=======
-
->>>>>>> 45b0b96 (.)
         /*
         dddx([
             'lang_pattern' => $lang_pattern,
             'container0_pattern' => $container0_pattern,
             'config_path' => TenantService::getConfigPath('morph_map'),
         ]);
-<<<<<<< HEAD
-        //*/
-        //$router->pattern('container0', $container0_pattern);
-=======
         */
         $router->pattern('container0', $container0_pattern);
->>>>>>> 45b0b96 (.)
     }
 
     //end registerRoutePattern
