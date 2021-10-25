@@ -67,7 +67,7 @@ class RouteServiceProvider extends XotBaseRouteServiceProvider {
 
         //$pattern = '/|'.$pattern.'|/i';
         $container0_pattern = '/|'.$pattern.'|'.$pattern_plural.'|/i';
-        /*
+        /*--pattern vuoto
         dddx([
             'lang_pattern' => $lang_pattern,
             'container0_pattern' => $container0_pattern,
