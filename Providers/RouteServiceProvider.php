@@ -58,7 +58,7 @@ class RouteServiceProvider extends XotBaseRouteServiceProvider {
         $pattern = '/|'.$pattern.'|/i';
         $router->pattern('lang', $pattern);
         //-------------------------------------------------------------
-        $models = TenantService::config('xra.model');
+        $models = TenantService::config('morph_map');
         $models_collect = collect(\array_keys($models));
         $pattern = $models_collect->implode('|');
         $pattern_plural = $models_collect->map(function ($item) {

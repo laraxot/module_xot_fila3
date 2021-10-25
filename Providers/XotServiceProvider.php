@@ -46,7 +46,7 @@ class XotServiceProvider extends XotBaseServiceProvider {
         DB::reconnect();
         Schema::defaultStringLength(191);
 
-        $map = config('xra.model');
+        $map = config('morph_map');
 
         Relation::morphMap($map);
         */

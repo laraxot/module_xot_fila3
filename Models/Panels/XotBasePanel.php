@@ -699,7 +699,7 @@ abstract class XotBasePanel implements PanelContract {
     }
 
     public function getXotModelName(): ?string {
-        return collect(config('xra.model'))->search(static::$model);
+        return collect(config('morph_map'))->search(static::$model);
     }
 
     /**
@@ -983,7 +983,7 @@ abstract class XotBasePanel implements PanelContract {
     }
 
     public function postType(): string {
-        $post_type = collect(config('xra.model'))->search(get_class($this->row));
+        $post_type = collect(config('morph_map'))->search(get_class($this->row));
         if (false === $post_type) {
             $post_type = snake_case(class_basename($this->row));
         }
