@@ -363,7 +363,7 @@ abstract class XotBasePanel implements PanelContract {
             ->first();
 
         if (null == $row) {
-            throw new \Exception('Not Found ['.$value.'] on ['.$this->getName().']');
+            throw new \Exception('Not Found ['.$value.'] on ['.$this->getName().'][<pre>'.$rows->toSql().'</pre>]');
         }
         $this->row = $row;
 
