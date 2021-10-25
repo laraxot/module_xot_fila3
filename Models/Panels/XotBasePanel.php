@@ -12,6 +12,7 @@ use Illuminate\Http\Request;
 //----------  SERVICES --------------------------
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Str;
@@ -356,14 +357,15 @@ abstract class XotBasePanel implements PanelContract {
         } else {
             $rows = $rows->where([$pk_full => $value]);
         }
-
+        DB::enableQueryLog();
         $row = $rows
             //->select($tbl.'.*')
             //->select('cuisine_cat_morph.note as "pivot.note"')
             ->first();
 
         if (null == $row) {
-            dddx(['class_methods' => get_class_methods($rows)]);
+            //dddx(['class_methods' => get_class_methods($rows)]);
+            dddx(DB::getQueryLog());
             throw new \Exception('Not Found ['.$value.'] on ['.$this->getName().']['.$rows->toSql().']');
         }
         $this->row = $row;
