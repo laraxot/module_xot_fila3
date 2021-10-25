@@ -10,24 +10,23 @@ use Illuminate\Http\Request;
 
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Schema;
+use Modules\Tenant\Services\TenantService as Tenant;
 use Modules\Theme\Services\ThemeService;
 use Modules\Xot\Contracts\PanelContract;
 use Modules\Xot\Relations\CustomRelation;
 use Modules\Xot\Services\PanelService;
 use Modules\Xot\Services\PanelService as Panel;
-use Modules\Tenant\Services\TenantService as Tenant;
 
 /**
  * Class HomeController.
  */
-class HomeController extends Controller
-{
+class HomeController extends Controller {
     /**
      * @return mixed
      */
     //public function index(?array $data, $panel = null) {
-    public function index(Request $request, ?PanelContract $panel = null)
-    {
+    public function index(Request $request, ?PanelContract $panel = null) {
+        dddx('a');
         $request = request();
         $home = null;
         try {
@@ -51,8 +50,7 @@ class HomeController extends Controller
             ->with('_panel', $home_panel);
     }
 
-    public function createHomesTable(): void
-    {
+    public function createHomesTable(): void {
         Schema::create('homes', function (Blueprint $table): void {
             $table->increments('id');
 
@@ -67,25 +65,22 @@ class HomeController extends Controller
      * @return mixed
      */
     //public function show(?array $data, $panel=null) {
-    public function show(Request $request, ?PanelContract $panel = null)
-    {
+    public function show(Request $request, ?PanelContract $panel = null) {
         $panel = PanelService::getRequestPanel();
         if ('' != $request->_act) {
-
             return $panel->callItemActionWithGate($request->_act);
         }
 
         return $panel->out();
     }
 
-    public function showOld(Request $request, ?PanelContract $panel = null)
-    {
+    public function showOld(Request $request, ?PanelContract $panel = null) {
         //$request=request();
         $home = null;
         $home = Tenant::model('home');
         $mod_name = Panel::get($home)->getModuleName();
 
-        $home_controller = '\Modules\\' . $mod_name . '\Http\Controllers\HomeController';
+        $home_controller = '\Modules\\'.$mod_name.'\Http\Controllers\HomeController';
 
         //dddx($home_controller);
 
@@ -125,15 +120,11 @@ class HomeController extends Controller
     /**
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
-    public function redirect(Request $request)
-    {
+    public function redirect(Request $request) {
         return redirect($request->url);
     }
 
-
-
-    public function store(Request $request)
-    {
+    public function store(Request $request) {
         return $this->index($request);
     }
 }
