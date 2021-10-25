@@ -62,15 +62,15 @@ class PanelRouteService {
     public function addCacheQueryString(string $route): string {
         $path = '/'.request()->path();
         $cache_key = $path.'_query';
-        //Cache::forever($cache_key, request()->query());
-        Cache::put($cache_key, request()->query(), 60 * 60);
+
+        session()->put($cache_key, request()->query(), 60 * 60);
         //echo '[cache_key['.$cache_key.']['.$route.']]';
 
         //--- aggiungo le query string all'url corrente
         //$queries = collect(request()->query())->except(['_act', 'item0', 'item1'])->all();
         $cache_key = Str::before($route, '?').'_query';
 
-        $queries = Cache::get($cache_key);
+        $queries = session()->get($cache_key);
         if (! is_array($queries)) {
             $queries = [];
         }
