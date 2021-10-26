@@ -197,6 +197,7 @@ class PanelRouteService {
 
             return '#['.__LINE__.']['.__FILE__.']['.$e->getMessage().']';
         }
+
         if ('index' == $act) {
             return $this->addFilterQueryString($route);
         }
