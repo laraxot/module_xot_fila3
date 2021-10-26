@@ -1084,3 +1084,18 @@ if (! function_exists('replace_links')) {
         return $markdown;
     }
 }
+
+if (! function_exists('debugStack')) {
+    function debugStack() {
+        if (! extension_loaded('xdebug')) {
+            throw new \RuntimeException('XDebug must be installed to use this function');
+        }
+
+        \xdebug_set_filter(
+            XDEBUG_FILTER_TRACING, XDEBUG_PATH_EXCLUDE,
+            [LARAVEL_DIR.'/vendor/']
+        );
+
+        \xdebug_print_function_stack();
+    }
+}
