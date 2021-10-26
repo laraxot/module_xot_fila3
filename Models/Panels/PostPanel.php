@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Modules\Xot\Models\Panels;
 
 //--- Services --
-use Modules\Xot\Models\Panels\XotBasePanel;
 
 /**
  * Class PostPanel.
@@ -153,24 +152,11 @@ class PostPanel extends XotBasePanel {
 
     /**
      * Get the actions available for the resource.
-     *
-     * @return array
      */
-    public function actions():array {
+    public function actions(): array {
         return [
             new Actions\ClearDuplicatesAction(),
             new Actions\DeleteNoPostIdAction(),
         ];
     }
-
-    /*
-    public function destroyUrl() {
-    }
-
-    public function editUrl() {
-    }
-
-    public function showUrl() {
-    }
-    */
 }
