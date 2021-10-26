@@ -11,7 +11,6 @@ use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Http\Request;
 //----------  SERVICES --------------------------
 use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Route;
@@ -967,8 +966,6 @@ abstract class XotBasePanel implements PanelContract {
     }
 
     public function url(array $params = []): string {
-        //dddx($params);
-
         return $this->route->{__FUNCTION__}($params);
     }
 
@@ -1170,7 +1167,7 @@ abstract class XotBasePanel implements PanelContract {
 
         /*
         $page = isset($data['page']) ? $data['page'] : 1;
-        Cache::forever('page', $page);
+        Cach1e::forever('page', $page);
         */
         return $query;
     }
