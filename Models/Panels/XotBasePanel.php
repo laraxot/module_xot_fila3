@@ -11,7 +11,7 @@ use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Http\Request;
 //----------  SERVICES --------------------------
 use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Str;
@@ -356,14 +356,19 @@ abstract class XotBasePanel implements PanelContract {
         } else {
             $rows = $rows->where([$pk_full => $value]);
         }
-
+        DB::enableQueryLog();
         $row = $rows
             //->select($tbl.'.*')
             //->select('cuisine_cat_morph.note as "pivot.note"')
             ->first();
 
         if (null == $row) {
-            throw new \Exception('Not Found ['.$value.'] on ['.$this->getName().']');
+            //dddx(['class_methods' => get_class_methods($rows)]);
+            //dddx(DB::getQueryLog());
+            //$query = str_replace(array('?'), array('\'%s\''), $builder->toSql());
+            //$query = vsprintf($query, $builder->getBindings());
+            $sql = Str::replaceArray('?', $rows->getBindings(), $rows->toSql());
+            throw new \Exception('Not Found ['.$value.'] on ['.$this->getName().']['.$sql.']');
         }
         $this->row = $row;
 
@@ -699,7 +704,7 @@ abstract class XotBasePanel implements PanelContract {
     }
 
     public function getXotModelName(): ?string {
-        return collect(config('xra.model'))->search(static::$model);
+        return collect(config('morph_map'))->search(static::$model);
     }
 
     /**
@@ -961,8 +966,6 @@ abstract class XotBasePanel implements PanelContract {
     }
 
     public function url(array $params = []): string {
-        //dddx($params);
-
         return $this->route->{__FUNCTION__}($params);
     }
 
@@ -983,7 +986,7 @@ abstract class XotBasePanel implements PanelContract {
     }
 
     public function postType(): string {
-        $post_type = collect(config('xra.model'))->search(get_class($this->row));
+        $post_type = collect(config('morph_map'))->search(get_class($this->row));
         if (false === $post_type) {
             $post_type = snake_case(class_basename($this->row));
         }
@@ -1164,7 +1167,7 @@ abstract class XotBasePanel implements PanelContract {
 
         /*
         $page = isset($data['page']) ? $data['page'] : 1;
-        Cache::forever('page', $page);
+        Cach1e::forever('page', $page);
         */
         return $query;
     }

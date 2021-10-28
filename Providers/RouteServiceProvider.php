@@ -54,11 +54,11 @@ class RouteServiceProvider extends XotBaseRouteServiceProvider {
     public function registerRoutePattern(Router $router): void {
         //---------- Lang Route Pattern
         $langs = config('laravellocalization.supportedLocales');
-        $pattern = collect(\array_keys($langs))->implode('|');
-        $pattern = '/|'.$pattern.'|/i';
-        $router->pattern('lang', $pattern);
+        $lang_pattern = collect(\array_keys($langs))->implode('|');
+        $lang_pattern = '/|'.$lang_pattern.'|/i';
+        $router->pattern('lang', $lang_pattern);
         //-------------------------------------------------------------
-        $models = TenantService::config('xra.model');
+        $models = TenantService::config('morph_map');
         $models_collect = collect(\array_keys($models));
         $pattern = $models_collect->implode('|');
         $pattern_plural = $models_collect->map(function ($item) {
@@ -66,9 +66,15 @@ class RouteServiceProvider extends XotBaseRouteServiceProvider {
         })->implode('|');
 
         //$pattern = '/|'.$pattern.'|/i';
-        $pattern = '/|'.$pattern.'|'.$pattern_plural.'|/i';
-
-        $router->pattern('container0', $pattern);
+        $container0_pattern = '/|'.$pattern.'|'.$pattern_plural.'|/i';
+        /*--pattern vuoto
+        dddx([
+            'lang_pattern' => $lang_pattern,
+            'container0_pattern' => $container0_pattern,
+            'config_path' => TenantService::getConfigPath('morph_map'),
+        ]);
+        */
+        //$router->pattern('container0', $container0_pattern);
     }
 
     //end registerRoutePattern

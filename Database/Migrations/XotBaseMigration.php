@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Modules\Xot\Database\Migrations;
 
+use Closure;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Support\Facades\Schema;
@@ -174,5 +175,21 @@ abstract class XotBaseMigration extends Migration {
      */
     public function down() {
         $this->getConn()->dropIfExists($this->getTable());
+    }
+
+    public function tableCreate(Closure $next) {
+        if (! $this->tableExists()) {
+            $this->getConn()->create(
+                $this->getTable(),
+                $next
+            );
+        }
+    }
+
+    public function tableUpdate(Closure $next) {
+        $this->getConn()->table(
+            $this->getTable(),
+            $next
+        );
     }
 }//end XotBaseMigration

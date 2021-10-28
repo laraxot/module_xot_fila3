@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 
 /**
  * Trait Updater.
+ * https://dev.to/hasanmn/automatically-update-createdby-and-updatedby-in-laravel-using-bootable-traits-28g9.
  */
 trait Updater {
     /**
