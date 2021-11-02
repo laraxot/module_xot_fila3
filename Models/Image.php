@@ -18,7 +18,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property int|null                        $height
  * @property int|null                        $width
  * @property string|null                     $src_out
- * @property int|null                        $auth_user_id
+ * @property int|null                        $user_id
  * @property string|null                     $note
  * @property string|null                     $created_by
  * @property string|null                     $updated_by
@@ -54,6 +54,6 @@ class Image extends BaseModel {
     protected $fillable = ['src', 'width', 'height', 'src_out'];
 
     public function user(): BelongsTo {
-        return $this->belongsTo(\Modules\LU\Models\User::class, 'auth_user_id', 'auth_user_id');
+        return $this->belongsTo(\Modules\LU\Models\User::class, 'user_id', 'user_id');
     }
 }

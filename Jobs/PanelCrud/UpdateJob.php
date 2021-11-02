@@ -262,7 +262,7 @@ class UpdateJob extends XotBaseJob {
                 echo '<hr/><pre>'.print_r($v['pivot'],1).'</pre><hr/>';
                 $res = $model->$name()
                         ->where('related_id',$k)
-                        ->where('auth_user_id',$v['pivot']['auth_user_id'])
+                        ->where('user_id',$v['pivot']['user_id'])
                         ->update($v['pivot']);
                 */
                 $res = $model->$name()
@@ -271,10 +271,10 @@ class UpdateJob extends XotBaseJob {
                 // $res = $model->$name()
                  //   ->syncWithoutDetaching([$v]);
             }
-            //->where('auth_user_id',1)
+            //->where('user_id',1)
             //->syncWithoutDetaching([$k => $v['pivot']])
 
-                //->updateOrCreate(['related_id'=>$k,'auth_user_id'=>1],$v['pivot']);
+                //->updateOrCreate(['related_id'=>$k,'user_id'=>1],$v['pivot']);
             //$model->$name()->touch();
         }
     }

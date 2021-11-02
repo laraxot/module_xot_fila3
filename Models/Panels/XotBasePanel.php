@@ -781,7 +781,7 @@ abstract class XotBasePanel implements PanelContract {
      * @return RowsContract
      */
     public static function indexQuery(array $data, $query) {
-        //return $query->where('auth_user_id', $request->user()->auth_user_id);
+        //return $query->where('user_id', $request->user()->user_id);
         return $query;
     }
 
@@ -795,7 +795,7 @@ abstract class XotBasePanel implements PanelContract {
      * @return RowsContract
      */
     public static function relatableQuery(Request $request, $query) {
-        //return $query->where('auth_user_id', $request->user()->auth_user_id);
+        //return $query->where('user_id', $request->user()->user_id);
         //return $query->where('user_id', $request->user()->id);
         return $query;
     }
@@ -1525,7 +1525,7 @@ abstract class XotBasePanel implements PanelContract {
         if (
             $post->getAttributeValue('created_by') == $user->handle ||
             $post->getAttributeValue('updated_by') == $user->handle ||
-            $post->getAttributeValue('auth_user_id') == $user->auth_user_id
+            $post->getAttributeValue('user_id') == $user->user_id
         ) {
             return true;
         }

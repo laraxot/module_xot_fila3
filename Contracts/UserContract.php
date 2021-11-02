@@ -7,7 +7,7 @@ namespace Modules\Xot\Contracts;
 /**
  * Modules\Xot\Contracts\UserContract.
  *
- * @property int                                                                                                       $auth_user_id
+ * @property int                                                                                                       $user_id
  * @property string|null                                                                                               $handle
  * @property string|null                                                                                               $passwd
  * @property string|null                                                                                               $lastlogin

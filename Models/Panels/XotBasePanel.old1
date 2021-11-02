@@ -661,7 +661,7 @@ abstract class XotBasePanel implements PanelContract {
      * Build an "index" query for the given resource.
      */
     public static function indexQuery(array $data, Builder $query): Builder {
-        //return $query->where('auth_user_id', $request->user()->auth_user_id);
+        //return $query->where('user_id', $request->user()->user_id);
         return $query;
     }
 
@@ -671,7 +671,7 @@ abstract class XotBasePanel implements PanelContract {
      * This query determines which instances of the model may be attached to other resources.
      */
     public static function relatableQuery(Request $request, Builder $query): Builder {
-        //return $query->where('auth_user_id', $request->user()->auth_user_id);
+        //return $query->where('user_id', $request->user()->user_id);
         //return $query->where('user_id', $request->user()->id);
         return $query;
     }

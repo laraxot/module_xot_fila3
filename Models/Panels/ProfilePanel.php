@@ -72,7 +72,7 @@ class ProfilePanel extends XotBasePanel {
      * @return RowsContract
      */
     public static function indexQuery(array $data, $query) {
-        //return $query->where('auth_user_id', $request->user()->auth_user_id);
+        //return $query->where('user_id', $request->user()->user_id);
         return $query;
     }
 
@@ -89,7 +89,7 @@ class ProfilePanel extends XotBasePanel {
             ],
             1 => (object) [
                 'type' => 'Integer',
-                'name' => 'auth_user_id',
+                'name' => 'user_id',
                 'comment' => null,
             ],
         ];

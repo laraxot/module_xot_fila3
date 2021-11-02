@@ -125,8 +125,8 @@ class CreatePostsTable extends XotBaseMigration {
                     $table->integer('views_count')->nullable(); //contatore di visualizzazioni
                 }
 
-                if (! $this->hasColumn('auth_user_id')) {
-                    $table->integer('auth_user_id')->nullable()->after('id');
+                if (! $this->hasColumn('user_id')) {
+                    $table->integer('user_id')->nullable()->after('id');
                 }
 
                 //------- CHANGE INDEX-------
