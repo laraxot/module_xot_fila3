@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Modules\Vorrey\Models;
+namespace Modules\Xot\Models;
 
 ////use Laravel\Scout\Searchable;
 //---------- traits
