@@ -74,6 +74,7 @@ class ArtisanService {
             case 'module-disable': return ArtisanService::exe('module:disable '.$module_name);
             case 'module-enable': return ArtisanService::exe('module:enable '.$module_name);
             //----------------------------------------------------------------------
+            case 'error':
             case 'error-show':
                 $contents = '';
                 $files = File::files(storage_path('logs'));
