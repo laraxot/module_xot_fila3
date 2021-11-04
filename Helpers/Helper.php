@@ -8,6 +8,7 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
 use Modules\Tenant\Services\TenantService as Tenant;
+use Modules\Xot\Services\ArrayService;
 use Modules\Xot\Services\PanelService;
 use Modules\Xot\Services\RouteService;
 
@@ -134,6 +135,36 @@ if (! \function_exists('dddx')) {
                 //'file_1' => $file, //da sistemare
             ]
         );
+    }
+}
+
+if (! function_exists('debug_methods')) {
+    function debug_methods($rows) {
+        $methods = get_class_methods($rows);
+        //*
+        $methods_get = collect($methods)->filter(
+            function ($item) {
+                return Str::startsWith($item, 'get');
+            }
+        )->map(
+            function ($item) use ($rows) {
+                $value = 'Undefined';
+                try {
+                    $value = $rows->{$item}();
+                } catch (\Exception $e) {
+                    $value = $e->getMessage();
+                } catch (ArgumentCountError $e) {
+                    $value = $e->getMessage();
+                }
+
+                return [
+                    'name' => $item,
+                    'value' => $value,
+                ];
+            }
+        )->all();
+
+        return ArrayService::toHtml(['data' => $methods_get]);
     }
 }
 

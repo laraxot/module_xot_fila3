@@ -4,11 +4,14 @@ declare(strict_types=1);
 
 namespace Modules\Xot\Jobs\PanelCrud;
 
-use Illuminate\Database\Eloquent\Model;
 //----------- Requests ----------
 //------------ services ----------
+use ArgumentCountError;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Str;
 use Modules\Xot\Contracts\PanelContract;
+use Modules\Xot\Services\ArrayService;
 use Modules\Xot\Services\PanelService as Panel;
 
 /**
@@ -140,51 +143,73 @@ class UpdateJob extends XotBaseJob {
      * ManyThrough.
      */
     public function updateRelationshipsHasManyThrough(Model $model, string $name, array $data): void {
-        //$rows = $model->$name();
-        //dddx(get_class_methods($rows));
-
-        /*if (isset($data['to'])) {
-            $rows = $model->$name();
-            dddx(get_class_methods($rows));
-            dddx($rows->getParent());
-            $this->saveMultiselectTwoSides($rows->getParent(), $name, $data);
-        }*/
-
-        /* modificato da davide. tolto wip altrimenti non modifica lo user da profile */
-        /*dddx(['wip']);*/
-
-        //dddx([$model, $name, $data]);
-
-        //es. relazione rights hasmanythrough a modello profile
-        //dddx($model->$name());
         $rows = $model->$name();
-
-        //dddx(get_class_methods($rows));
-
-        $throughKey = $model->$name()->getRelated()->getKeyName();
-
-        //dddx([$rows->getFirstKeyName(), $rows->getForeignKeyName(), $throughKey]);
-
-        //potrebbe essere necessario un foreach
-
-        //dddx($data);
+        $throughKey = $rows->getRelated()->getKeyName();
 
         //from è la tendina di sinistra, to quella di destra
         if (! empty($data['to'])) {
-            //dddx([$rows, $rows->getForeignKeyName() => $this->panel->row->{$rows->getFirstKeyName()}, $throughKey => $data['to'][0]]);
+            //dddx(get_class_methods($rows));
+            //exit(debug_methods($rows));
+            /*
+            dddx([
+                'getQuery' => $rows->getQuery(),
+                'getBaseQuery' => $rows->getBaseQuery(),
+            ]);
+            */
+            /*
+            getQualifiedParentKeyName               perm_users.id
+            getQualifiedFarKeyName                  area_perm_user.perm_user_id
+            getFirstKeyName                         user_id
+            getQualifiedFirstKeyName                perm_users.user_id
+            getForeignKeyName                       perm_user_id
+            getQualifiedForeignKeyName              area_perm_user.perm_user_id
+            getLocalKeyName                         id
+            getQualifiedLocalKeyName                users.id
+            getSecondLocalKeyName                   id
+            getParent                               > Modules\LU\Models\PermUser {#2167
+            getRelated                              > Modules\LU\Models\AreaPermUser {#2193
+            $this->panel->row                       > Modules\LU\Models\User {#2080
+            $rows->getRelated()->getKeyName         id
+            */
+            $row = $this->panel->row;
+            $parent_relation_name = Str::camel(class_basename($rows->getParent()));
+            $related_relation_name = Str::camel(class_basename($rows->getRelated()));
+            $related_relation_name = Str::plural($related_relation_name);
+            //dddx([$parent_relation_name, $related_relation_name]);
+            $bridge = $row->{$parent_relation_name};
+            $bridge_rows = $bridge->{$related_relation_name}();
+            //dddx(get_class_methods($bridge_rows));
+            //$bridge_rows->syncWithoutDetaching(666); //ate\Database\Eloquent\Relations\HasMany::syncWithoutDetaching
+            throw new \Exception('WIP ['.__LINE__.']['.__FILE__.']');
+        //$bridge_rows->save();
+            //$rows->get();
+        /*
+        $rows->update(
+            [
+                'sssperm_user.user_idaa' => $row->id,
+                'areas.area_id' => '666',
+            ]
+        );
+        */
 
-            /*dddx([$rows->getForeignKeyName() => $this->panel->row->{$rows->getFirstKeyName()},
-                $rows->getFirstKeyName() => $this->panel->row->{$rows->getFirstKeyName()}, ]);*/
-
-            $rows->getParent()->updateOrCreate([$rows->getForeignKeyName() => $this->panel->row->{$rows->getFirstKeyName()}, $rows->getFirstKeyName() => $this->panel->row->{$rows->getFirstKeyName()}]);
-
-            $rows->getRelated()->updateOrCreate([$rows->getForeignKeyName() => $this->panel->row->{$rows->getFirstKeyName()}, $throughKey => $data['to'][0]]);
+        /*
+        $parent_data = [
+            $rows->getForeignKeyName() => $this->panel->row->{$rows->getFirstKeyName()},
+            $rows->getFirstKeyName() => $this->panel->row->{$rows->getFirstKeyName()},
+        ];
+        $rows->getParent()->updateOrCreate($parent_data);
+        $related_data = [
+            $rows->getForeignKeyName() => $this->panel->row->{$rows->getFirstKeyName()},
+            $throughKey => $data['to'][0],
+        ];
+        $rows->getRelated()->updateOrCreate($related_data);
+        */
         } else {
             //dddx([$rows->getForeignKeyName() => $this->panel->row->{$rows->getFirstKeyName()}, $throughKey => '']);
             //se non c'è niente su to vuol dire che va cancellato il campo dal modello relativo
 
             //attenzione. in sto caso va bene così ma in realtà solo i from andrebbero cancellati
-            $rows->getRelated()->where([$rows->getForeignKeyName() => $this->panel->row->{$rows->getFirstKeyName()}])->delete();
+            //$rows->getRelated()->where([$rows->getForeignKeyName() => $this->panel->row->{$rows->getFirstKeyName()}])->delete();
         }
 
         //$rows->save();
@@ -381,5 +406,76 @@ class UpdateJob extends XotBaseJob {
         //}
         $status = 'collegati ['.\implode(', ', $items_add->all()).'] scollegati ['.\implode(', ', $items_sub->all()).']';
         \Session::flash('status', $status);
+    }
+
+    public function updateRelationshipsHasManyDeep(Model $model, string $name, array $data): void {
+        /*
+        dddx([
+            'model' => $model,
+            'name' => $name,
+            'data' => $data,
+        ]);
+        */
+        $rows = $model->$name();
+        $methods = get_class_methods($rows);
+        //*
+        $methods_get = collect($methods)->filter(
+            function ($item) {
+                return Str::startsWith($item, 'get');
+            }
+        )->map(
+            function ($item) use ($rows) {
+                $value = 'Undefined';
+                try {
+                    $value = $rows->{$item}();
+                } catch (\Exception $e) {
+                    $value = $e->getMessage();
+                } catch (ArgumentCountError $e) {
+                    $value = $e->getMessage();
+                }
+
+                return [
+                    'name' => $item,
+                    'value' => $value,
+                ];
+            }
+        )->all();
+        exit(ArrayService::toHtml(['data' => $methods_get]));
+        //*/
+        dddx(
+            [
+                'parent' => $rows->getParent(), //PermUser
+                'related' => $rows->getRelated(), //Area
+                'methods' => $methods,
+            ]
+        );
+        //$rows->updateOrCreate(['areas.id' => 666]);
+        /*
+        getThroughParents =>[
+            array=>[
+                 [0] => Modules\LU\Models\PermUser Object
+                 [1] => Modules\LU\Models\AreaPermUser Object
+            ]
+        ]
+        getForeignKeys => [
+            [0] => user_id
+            [1] => perm_user_id
+            [2] => id
+        ]
+        getLocalKeys => [
+            [0] => id
+            [1] => id
+            [2] => area_id
+        ]
+        getQualifiedParentKeyName   =>  perm_users.id
+        getQualifiedFarKeyName      =>  areas.perm_user_id
+        getFirstKeyName             =>  user_id
+        getQualifiedFirstKeyName    =>  perm_users.user_id
+        getForeignKeyName           =>  perm_user_id
+        getQualifiedForeignKeyName  =>  areas.perm_user_id
+        getLocalKeyName             =>  id
+        getQualifiedLocalKeyName    =>  users.id
+        getSecondLocalKeyName       =>  id
+        */
     }
 }
