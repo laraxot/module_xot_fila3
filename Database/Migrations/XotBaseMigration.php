@@ -26,7 +26,7 @@ abstract class XotBaseMigration extends Migration {
         if (null == $this->model) {
             $model = $this->getModel();
             if ('\Modules\LU\Models\Groupright' == $model) {
-                exit(debug_backtrace());
+                dddx(debug_backtrace());
             }
             $this->model = app($model);
         }
