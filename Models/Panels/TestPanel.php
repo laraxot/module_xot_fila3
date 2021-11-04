@@ -69,7 +69,7 @@ class TestPanel extends XotBasePanel {
      * @return \Illuminate\Database\Eloquent\Relations\Relation|\Illuminate\Database\Eloquent\Builder
      */
     public static function indexQuery(array $data, $query) {
-        //return $query->where('user_id', $request->user()->user_id);
+        //return $query->where('user_id', $request->user()->id);
         return $query;
     }
 

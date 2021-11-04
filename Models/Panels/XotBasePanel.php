@@ -781,7 +781,7 @@ abstract class XotBasePanel implements PanelContract {
      * @return RowsContract
      */
     public static function indexQuery(array $data, $query) {
-        //return $query->where('user_id', $request->user()->user_id);
+        //return $query->where('user_id', $request->user()->id);
         return $query;
     }
 
@@ -795,7 +795,7 @@ abstract class XotBasePanel implements PanelContract {
      * @return RowsContract
      */
     public static function relatableQuery(Request $request, $query) {
-        //return $query->where('user_id', $request->user()->user_id);
+        //return $query->where('user_id', $request->user()->id);
         //return $query->where('user_id', $request->user()->id);
         return $query;
     }

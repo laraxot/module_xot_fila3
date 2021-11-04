@@ -408,7 +408,7 @@ trait CrudContainerItemNoPostTrait {
                     $v['pivot']['user_id'] =$model->user_id;
                 }
                 if (! isset($v['pivot']['user_id']) && \Auth::check()) {
-                    $v['pivot']['user_id'] = \Auth::user()->user_id;
+                    $v['pivot']['user_id'] = \Auth::user()->id;
                 }
                 /**
                 * syncWithoutDetaching fa una select a vuoto ma funziona
@@ -529,7 +529,7 @@ trait CrudContainerItemNoPostTrait {
         extract($params);
         //dddx($data);
         /*
-        $user_id=\Auth::user()->user_id;
+        $user_id=\Auth::user()->id;
         $data=collect($data)->map(function($item) use($user_id){
             $item['user_id']=$user_id;
             return $item;
@@ -542,7 +542,7 @@ trait CrudContainerItemNoPostTrait {
                     $v['pivot'] = [];
                 }
                 if ((! isset($v['pivot']['user_id']) || $v['pivot']['user_id']=='') && \Auth::check()) {
-                    $v['pivot']['user_id'] = \Auth::user()->user_id;
+                    $v['pivot']['user_id'] = \Auth::user()->id;
                 }
                 $model->$name()->syncWithoutDetaching([$k => $v['pivot']]);
             } else {
