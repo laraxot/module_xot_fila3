@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Str;
+use Nwidart\Modules\Facades\Module;
 
 //----- models -----
 
@@ -34,27 +35,20 @@ abstract class XotBaseMigration extends Migration {
         if (null != $this->model_class) {
             return $this->model_class;
         }
-        //dddx(class_basename($this));//CreateDevicesTable
-        //dddx(get_class($this));
         $name = class_basename($this);
         $name = Str::before(Str::after($name, 'Create'), 'Table');
         $name = Str::singular($name);
-        //dddx($name);//Device
         $reflection_class = new \ReflectionClass($this);
         $filename = (string) $reflection_class->getFilename();
-        //dddx($filename);//C:\var\www\multi\laravel\Modules\Customer\Database\Migrations\2019_12_11_082626_create_devices_table.php
-        $mod_path = \Module::getPath();
-        //dddx($mod_path);//C:\var\www\multi\laravel\Modules
+        $mod_path = Module::getPath();
+
         $mod_name = Str::after($filename, $mod_path);
         $mod_name = explode(DIRECTORY_SEPARATOR, $mod_name)[1];
 
         $model_ns = '\Modules\\'.$mod_name.'\Models\\'.$name;
-        $model_dir = $mod_path.DIRECTORY_SEPARATOR.$mod_name.DIRECTORY_SEPARATOR.'Models'.DIRECTORY_SEPARATOR.$name.'.php';
-        //dddx($model_ns);//     \Modules\Customer\Models\Device
-        //dddx($model_dir);//    C:\var\www\multi\laravel\Modules\Customer\Models\Device.php
-        //$model = new $model_ns();
-        //return $model;
-        //dddx($model->getTable());
+        $model_dir = $mod_path.'/'.$mod_name.'/'.'Models'.'/'.$name.'.php';
+        $model_dir = Str::replace('/', DIRECTORY_SEPARATOR, $model_dir);
+
         return $model_ns;
     }
 
