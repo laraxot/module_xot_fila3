@@ -24,7 +24,11 @@ abstract class XotBaseMigration extends Migration {
     //*
     public function __construct() {
         if (null == $this->model) {
-            $this->model = app($this->getModel());
+            $model = $this->getModel();
+            if ('\Modules\LU\Models\Groupright' == $model) {
+                exit(debug_backtrace());
+            }
+            $this->model = app($model);
         }
         //$this->model = new $this->model();
     }
