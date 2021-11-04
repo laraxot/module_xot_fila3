@@ -54,6 +54,6 @@ class Image extends BaseModel {
     protected $fillable = ['src', 'width', 'height', 'src_out'];
 
     public function user(): BelongsTo {
-        return $this->belongsTo(\Modules\LU\Models\User::class, 'user_id', 'user_id');
+        return $this->belongsTo(\Modules\LU\Models\User::class);
     }
 }
