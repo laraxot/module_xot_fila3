@@ -30,7 +30,10 @@ class FactoryService {
         if (class_exists($factory_class)) {
             return $factory_class::new();
         }
-        $res = Artisan::call('module:make-factory', ['name' => $model_name, 'module' => $module_name]);
+        //$res = Artisan::call('module:make-factory', ['name' => $model_name, 'module' => $module_name]);
+        //dddx(new $model_name());
+
+        StubService::fromModel(['model' =>new $model_name(), 'stub' => 'factory']);
 
         throw new Exception('Generating Factory press [F5] to refresh page ['.__LINE__.']['.__FILE__.']');
     }
