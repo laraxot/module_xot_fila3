@@ -26,6 +26,9 @@ class RowsService {
      * @return RowsContract
      */
     public static function search($query, ?string $q, array $search_fields = []) {
+        //backtrace(true);
+        //dddx([$query, $q, $search_fields]);
+
         if (! isset($q)) {
             return $query;
         }
@@ -59,12 +62,19 @@ class RowsService {
                         foreach ($search_fields as $k => $v) {
                             if (Str::contains($v, '.')) {
                                 [$rel, $rel_field] = explode('.', $v);
+
+                                //dddx([$rel, $rel_field]);
                                 $subquery = $subquery->orWhereHas(
                                     $rel,
                                     function (Builder $subquery1) use ($rel_field, $q): void {
+                                        //dddx($subquery1->getConnection()->getDatabaseName());
+
                                         $subquery1->where($rel_field, 'like', '%'.$q.'%');
+                                        //dddx($subquery1);
                                     }
                                 );
+
+                            //dddx($subquery);
                             } else {
                                 $subquery = $subquery->orWhere($v, 'like', '%'.$q.'%');
                             }
