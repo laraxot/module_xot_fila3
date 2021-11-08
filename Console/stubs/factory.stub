@@ -22,8 +22,8 @@ class DummyClass extends Factory {
      *
      * @return array
      */
-    /*public function definition() {
-        $name = $this->faker->name();
+    public function definition() {
+        /*$name = $this->faker->name();
 
         return [
             'id' => Str::uuid()->toString(),
@@ -35,6 +35,6 @@ class DummyClass extends Factory {
             'description' => $this->faker->sentence($nbWords = 6, $variableNbWords = true),
             'city' => $this->faker->city(),
             'phone' => $this->faker->phone(),
-        ];
-    }*/
+        ];*/
+    }
 }
