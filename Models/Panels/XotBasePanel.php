@@ -340,6 +340,8 @@ abstract class XotBasePanel implements PanelContract {
         //$pk = $row->getRouteKeyName(); // !!! MI SEMBRA STRANO !!
         $pk_full = $row->getTable().'.'.$pk;
 
+        // dddx($pk);
+
         if ('guid' == $pk) {
             $pk_full = 'guid';
         } // pezza momentanea
@@ -639,6 +641,8 @@ abstract class XotBasePanel implements PanelContract {
             }
         )->collapse()
             ->all();
+
+        //dddx($rules);
 
         return $rules;
     }
@@ -959,8 +963,6 @@ abstract class XotBasePanel implements PanelContract {
     }
 
     public function url(array $params = []): string {
-        //dddx($params);
-
         return $this->route->{__FUNCTION__}($params);
     }
 
@@ -1133,6 +1135,8 @@ abstract class XotBasePanel implements PanelContract {
             $data = request()->all();
         }
 
+        //dddx($data);
+
         $filters = $data;
         $q = isset($data['q']) ? $data['q'] : null;
         $sort = isset($data['sort']) ? $data['sort'] : null;
@@ -1143,6 +1147,7 @@ abstract class XotBasePanel implements PanelContract {
         if (method_exists($query, 'with')) {
             $query = $query->with($with);
         }
+
         /*
         try {
             $query = $query->with($with);

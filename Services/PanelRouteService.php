@@ -105,6 +105,7 @@ class PanelRouteService {
         $route_name = self::getRoutenameN($parz);
 
         $route_params = $panel->getRouteParams();
+
         $i = 0;
 
         foreach ($breads as $bread) {
