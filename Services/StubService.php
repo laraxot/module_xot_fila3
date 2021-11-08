@@ -8,14 +8,12 @@ use Exception;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
-
 use Modules\Xot\Contracts\PanelContract;
 
 /**
  * Class StubService.
  */
-class StubService
-{
+class StubService {
     //-- model (object) or class (string)
     //-- stub_name name of stub
     //-- create yes or not
@@ -26,8 +24,7 @@ class StubService
      *
      * @return false|string|void
      */
-    public static function fromModel(array $params)
-    {
+    public static function fromModel(array $params) {
         extract($params);
 
         if (! isset($model)) {
@@ -170,8 +167,7 @@ class StubService
      * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
      * @throws \ReflectionException
      */
-    public static function getByModel($model, string $name, bool $create = false): PanelContract
-    {
+    public static function getByModel($model, string $name, bool $create = false): PanelContract {
         if (! is_object($model)) {
             //echo '<h3>Model: ['.$model.']</h3>';
             //$params = optional(\Route::current())->parameters();
@@ -190,8 +186,7 @@ class StubService
         return app($panel);
     }
 
-    public static function replaces(array $params): array
-    {
+    public static function replaces(array $params): array {
         extract($params);
         if (! isset($namespace)) {
             throw new \Exception('namespace is missing');
@@ -232,8 +227,7 @@ class StubService
      * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
      * @throws \ReflectionException
      */
-    public static function create($model, string $name): void
-    {
+    public static function create($model, string $name): void {
         $class_full = get_class($model);
         $class_name = class_basename($model);
         //$class=Str::before($class_full,$class_name);
@@ -296,8 +290,7 @@ class StubService
      *
      * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
      */
-    public static function fields($model): array
-    {
+    public static function fields($model): array {
         if (! method_exists($model, 'getFillable')) {
             return [];
         }
@@ -393,8 +386,7 @@ class StubService
      * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
      * @throws \ReflectionException
      */
-    public static function updatePanel(array $params): void
-    {
+    public static function updatePanel(array $params): void {
         extract($params);
         if (! isset($func)) {
             dddx(['err' => 'func is missing']);
