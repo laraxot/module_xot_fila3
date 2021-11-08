@@ -9,56 +9,65 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Str;
+use Nwidart\Modules\Facades\Module;
 
 //----- models -----
 
 /**
  * Class XotBaseMigration.
  */
-abstract class XotBaseMigration extends Migration {
+abstract class XotBaseMigration extends Migration
+{
     protected ?Model $model = null;
 
     protected ?string $model_class = null;
 
     //*
-    public function __construct() {
+    public function __construct()
+    {
         if (null == $this->model) {
-            $this->model = app($this->getModel());
+            $model = $this->getModel();
+            if ('\Modules\LU\Models\Groupright' == $model) {
+                dddx(debug_backtrace());
+            }
+            /*if ($model=="\Modules\Food\Models\FoodProfile") {
+                dddx( $this);
+            }*/
+            try {
+                $this->model = app($model);
+            } catch (\Exception $ex) {
+               throw new \Exception('<br><br>Table '.get_class($this). ' does not have model '. $model.'<br><br>');
+            }
         }
         //$this->model = new $this->model();
     }
 
     //*/
 
-    public function getModel(): string {
+    public function getModel(): string
+    {
         if (null != $this->model_class) {
             return $this->model_class;
         }
-        //dddx(class_basename($this));//CreateDevicesTable
-        //dddx(get_class($this));
         $name = class_basename($this);
         $name = Str::before(Str::after($name, 'Create'), 'Table');
         $name = Str::singular($name);
-        //dddx($name);//Device
         $reflection_class = new \ReflectionClass($this);
         $filename = (string) $reflection_class->getFilename();
-        //dddx($filename);//C:\var\www\multi\laravel\Modules\Customer\Database\Migrations\2019_12_11_082626_create_devices_table.php
-        $mod_path = \Module::getPath();
-        //dddx($mod_path);//C:\var\www\multi\laravel\Modules
+        $mod_path = Module::getPath();
+
         $mod_name = Str::after($filename, $mod_path);
         $mod_name = explode(DIRECTORY_SEPARATOR, $mod_name)[1];
 
         $model_ns = '\Modules\\'.$mod_name.'\Models\\'.$name;
-        $model_dir = $mod_path.DIRECTORY_SEPARATOR.$mod_name.DIRECTORY_SEPARATOR.'Models'.DIRECTORY_SEPARATOR.$name.'.php';
-        //dddx($model_ns);//     \Modules\Customer\Models\Device
-        //dddx($model_dir);//    C:\var\www\multi\laravel\Modules\Customer\Models\Device.php
-        //$model = new $model_ns();
-        //return $model;
-        //dddx($model->getTable());
+        $model_dir = $mod_path.'/'.$mod_name.'/'.'Models'.'/'.$name.'.php';
+        $model_dir = Str::replace('/', DIRECTORY_SEPARATOR, $model_dir);
+
         return $model_ns;
     }
 
-    public function getTable(): string {
+    public function getTable(): string
+    {
         if (null == $this->model) {
             return '';
         }
@@ -74,7 +83,8 @@ abstract class XotBaseMigration extends Migration {
     /**
      * @return \Illuminate\Database\Schema\Builder
      */
-    public function getConn() {
+    public function getConn()
+    {
         //$conn_name=with(new MyModel())->getConnectionName();
         //\DB::reconnect('mysql');
         //dddx(config('database'));
@@ -92,7 +102,8 @@ abstract class XotBaseMigration extends Migration {
     /**
      * @return \Doctrine\DBAL\Schema\AbstractSchemaManager
      */
-    public function getSchemaManager() {
+    public function getSchemaManager()
+    {
         $schema_manager = $this->getConn()
             ->getConnection()
             ->getDoctrineSchemaManager();
@@ -105,7 +116,8 @@ abstract class XotBaseMigration extends Migration {
      *
      * @return \Doctrine\DBAL\Schema\Table
      */
-    public function getTableDetails() {
+    public function getTableDetails()
+    {
         $table_details = $this->getSchemaManager()
             ->listTableDetails($this->getTable());
 
@@ -117,7 +129,8 @@ abstract class XotBaseMigration extends Migration {
      *
      * @return \Doctrine\DBAL\Schema\Index[]
      */
-    public function getTableIndexes() {
+    public function getTableIndexes()
+    {
         $table_indexes = $this->getSchemaManager()
             ->listTableIndexes($this->getTable());
 
@@ -127,7 +140,8 @@ abstract class XotBaseMigration extends Migration {
     /**
      * @return bool
      */
-    public function tableExists(string $table = null) {
+    public function tableExists(string $table = null)
+    {
         if (null == $table) {
             $table = $this->getTable();
         }
@@ -140,27 +154,31 @@ abstract class XotBaseMigration extends Migration {
      *
      * @return bool
      */
-    public function hasColumn($col) {
+    public function hasColumn($col)
+    {
         return $this->getConn()->hasColumn($this->getTable(), $col);
     }
 
     /**
      * @param string $sql
      */
-    public function query($sql): void {
+    public function query($sql): void
+    {
         $this->getConn()->getConnection()->statement($sql);
     }
 
     /**
      * @return bool
      */
-    public function hasPrimaryKey() {
+    public function hasPrimaryKey()
+    {
         $table_details = $this->getTableDetails();
 
         return $table_details->hasPrimaryKey();
     }
 
-    public function dropPrimaryKey(): void {
+    public function dropPrimaryKey(): void
+    {
         $table_details = $this->getTableDetails();
         $table_details->dropPrimaryKey();
         $sql = 'ALTER TABLE '.$this->getTable().' DROP PRIMARY KEY;';
@@ -173,11 +191,13 @@ abstract class XotBaseMigration extends Migration {
      * @return void
      * @return void
      */
-    public function down() {
+    public function down()
+    {
         $this->getConn()->dropIfExists($this->getTable());
     }
 
-    public function tableCreate(Closure $next) {
+    public function tableCreate(Closure $next)
+    {
         if (! $this->tableExists()) {
             $this->getConn()->create(
                 $this->getTable(),
@@ -186,7 +206,8 @@ abstract class XotBaseMigration extends Migration {
         }
     }
 
-    public function tableUpdate(Closure $next) {
+    public function tableUpdate(Closure $next)
+    {
         $this->getConn()->table(
             $this->getTable(),
             $next

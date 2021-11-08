@@ -29,10 +29,10 @@ class StoreJob extends XotBaseJob {
         if (! isset($data['lang']) && in_array('lang', $row->getFillable())) {
             $data['lang'] = app()->getLocale();
         }
-        if (! isset($data['auth_user_id'])
-            && in_array('auth_user_id', $row->getFillable())
-            && 'auth_user_id' != $row->getKeyName()) {
-            $data['auth_user_id'] = \Auth::id();
+        if (! isset($data['user_id'])
+            && in_array('user_id', $row->getFillable())
+            && 'user_id' != $row->getKeyName()) {
+            $data['user_id'] = \Auth::id();
         }
 
         $row = $row->fill($data);
@@ -45,8 +45,8 @@ class StoreJob extends XotBaseJob {
             if (isset($data['pivot'])) {
                 $pivot_data = $data['pivot'];
             }
-            if (! isset($pivot_data['auth_user_id'])) {
-                $pivot_data['auth_user_id'] = \Auth::id();
+            if (! isset($pivot_data['user_id'])) {
+                $pivot_data['user_id'] = \Auth::id();
             }
             try {
                 //*
@@ -163,7 +163,7 @@ class StoreJob extends XotBaseJob {
         //dddx($rows->getParent()); //restaurantMorph
         //dddx($rows->getRelated());//bellboy
         //dddx($rows->getThroughParents());//restaurantMorph , Profile
-        //$arr=['bell_boys.auth_user_id'=>$row->auth_user_id];
+        //$arr=['bell_boys.user_id'=>$row->user_id];
         //$rows->updateOrCreate($arr);
         //$rows->associate($row); //Call to undefined method Staudenmeir\EloquentHasManyDeep\HasManyDeep::associate()
         //$rows->save($row); //Call to undefined method Staudenmeir\EloquentHasManyDeep\HasManyDeep::save()
@@ -194,7 +194,7 @@ class StoreJob extends XotBaseJob {
 
         //la chiave da aggiornare
         $pk = $rows->getRelated()->getKeyName();
-        /* if ('auth_user_id' == $pk) {
+        /* if ('user_id' == $pk) {
              dddx([$model]);
          }*/
 
@@ -204,7 +204,7 @@ class StoreJob extends XotBaseJob {
             //dddx([$model, $name, $data]);
             $related = $rows->create($data);
         } catch (\Exception $e) {
-            //"SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry '1' for key 'PRIMARY' (SQL: insert into `liveuser_users` (`first_name`, `last_name`, `email`, `auth_user_id`, `created_by`, `updated_by`, `updated_at`, `created_at`) values (gfdsfs, fdsfds, fds
+            //"SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry '1' for key 'PRIMARY' (SQL: insert into `liveuser_users` (`first_name`, `last_name`, `email`, `user_id`, `created_by`, `updated_by`, `updated_at`, `created_at`) values (gfdsfs, fdsfds, fds
             //dddx(['e' => $e->getMessage(), 'data' => $data]);
             $data = collect($data)->only($related->getFillable())->all();
             //dddx($data);
@@ -317,11 +317,11 @@ class StoreJob extends XotBaseJob {
                 if (! isset($v['pivot'])) {
                     $v['pivot'] = [];
                 }
-                if (! isset($v['pivot']['auth_user_id']) && isset($model->auth_user_id)) {
-                    $v['pivot']['auth_user_id'] = $model->auth_user_id;
+                if (! isset($v['pivot']['user_id']) && isset($model->user_id)) {
+                    $v['pivot']['user_id'] = $model->user_id;
                 }
-                if (! isset($v['pivot']['auth_user_id']) && \Auth::check()) {
-                    $v['pivot']['auth_user_id'] = \Auth::id();
+                if (! isset($v['pivot']['user_id']) && \Auth::check()) {
+                    $v['pivot']['user_id'] = \Auth::id();
                 }
                 /*
                 * syncWithoutDetaching fa una select a vuoto ma funziona
@@ -383,7 +383,7 @@ class StoreJob extends XotBaseJob {
         $container = ModelService::getPostType($container_obj);
         //$items_key = $container_obj->getKeyName();
         $items_key = $related->getKeyName();
-        //dddx($items_key);//auth_user_id
+        //dddx($items_key);//user_id
         $items_0 = $items->get()->pluck($items_key);
 
         if (! isset($data['to'])) {

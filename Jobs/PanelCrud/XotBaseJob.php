@@ -24,11 +24,11 @@ use Modules\Xot\Services\ModelService;
  * Class XotBaseJob.
  */
 abstract class XotBaseJob implements ShouldQueue {
+    //use Traits\CommonTrait;
     use Dispatchable;
     use InteractsWithQueue;
     use Queueable;
     use SerializesModels;
-    //use Traits\CommonTrait;
 
     protected PanelContract $panel;
 
@@ -59,7 +59,7 @@ abstract class XotBaseJob implements ShouldQueue {
             if (method_exists($this, $func)) {
                 static::$func($model, $v->name, $v->data);
             } else {
-                //dddx(['error'=>$func.' is missing']);
+                dddx(['error' => $func.' is missing']);
             }
         }
         if (isset($data['pivot'])) {

@@ -13,7 +13,7 @@ use Modules\Food\Models\RestaurantOwner;
  * Modules\Xot\Contracts\ModelContract.
  *
  * @property int                             $id
- * @property int|null                        $auth_user_id
+ * @property int|null                        $user_id
  * @property string|null                     $post_type
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at

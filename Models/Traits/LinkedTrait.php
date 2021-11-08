@@ -99,14 +99,14 @@ trait LinkedTrait {
 
     /* -- messo in hasprofileTrait
     public function user():\Illuminate\Database\Eloquent\Relations\HasOne {
-        return $this->hasOne(User::class, 'auth_user_id', 'auth_user_id');
+        return $this->hasOne(User::class);
     }
 
     public function profile() {
         dddx('i');
         $class = Tenant::model('profile');
 
-        return $this->hasOne($class, 'auth_user_id', 'auth_user_id');
+        return $this->hasOne($class, 'user_id', 'user_id');
     }
     */
 
@@ -115,7 +115,7 @@ trait LinkedTrait {
 
     public function myFavorites() {
         return $this->morphMany(Favorite::class, 'post')
-            ->where('auth_user_id', Auth::id());
+            ->where('user_id', Auth::id());
     }
      */
 
@@ -123,7 +123,7 @@ trait LinkedTrait {
      * @return bool
     public function isMyFavorited() {
         return $this->favorites()
-            ->where('auth_user_id', Auth::id())->count() > 0;
+            ->where('user_id', Auth::id())->count() > 0;
     }
     */
 

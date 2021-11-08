@@ -4,28 +4,29 @@ declare(strict_types=1);
 
 namespace Modules\Xot\Models;
 
-use GeneaLabs\LaravelModelCaching\Traits\Cachable;
-//use Laravel\Scout\Searchable;
+////use Laravel\Scout\Searchable;
 //---------- traits
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Modules\Xot\Models\Traits\LinkedTrait;
 use Modules\Xot\Services\FactoryService;
 use Modules\Xot\Traits\Updater;
 
 /**
- * Class BaseModel.
+ * Class BaseModelLang.
  */
-abstract class BaseModel extends Model {
+abstract class BaseModelLang extends Model {
     use Updater;
     //use Searchable;
-    //use Cachable;
+    use LinkedTrait;
     use HasFactory;
 
     /**
      * @var string[]
      */
     protected $fillable = ['id'];
+
     /**
      * @var array
      */
@@ -37,31 +38,35 @@ abstract class BaseModel extends Model {
      * @var string[]
      */
     protected $dates = ['published_at', 'created_at', 'updated_at'];
+
     /**
      * @var string
      */
     protected $primaryKey = 'id';
+
     /**
      * @var bool
      */
     public $incrementing = true;
+
     /**
      * @var array
      */
     protected $hidden = [
         //'password'
     ];
+
     /**
      * @var bool
      */
     public $timestamps = true;
 
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\MorphMany
-     */
-    public function images() {
-        return $this->morphMany(Image::class, 'post');
-    }
+    //-----------
+    /*
+    protected $id;
+    protected $post;
+    protected $lang;
+    */
 
     /**
      * Create a new factory instance for the model.

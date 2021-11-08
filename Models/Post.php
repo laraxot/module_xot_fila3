@@ -19,7 +19,7 @@ use Modules\Xot\Traits\Updater;
  * NO BaseModel.
  *
  * @property int                             $id
- * @property int|null                        $auth_user_id
+ * @property int|null                        $user_id
  * @property int|null                        $post_id
  * @property string|null                     $lang
  * @property string|null                     $title
@@ -117,7 +117,7 @@ class Post extends Model {
      * @var string[]
      */
     protected $fillable = [
-        'id', 'auth_user_id', 'post_id', 'lang', 'guid',
+        'id', 'user_id', 'post_id', 'lang', 'guid',
         'title',
         'subtitle',
         'post_type',

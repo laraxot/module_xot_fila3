@@ -404,11 +404,11 @@ trait CrudContainerItemNoPostTrait {
                 if (! isset($v['pivot'])) {
                     $v['pivot'] = [];
                 }
-                if (! isset($v['pivot']['auth_user_id']) && isset($model->auth_user_id) ) {
-                    $v['pivot']['auth_user_id'] =$model->auth_user_id;
+                if (! isset($v['pivot']['user_id']) && isset($model->user_id) ) {
+                    $v['pivot']['user_id'] =$model->user_id;
                 }
-                if (! isset($v['pivot']['auth_user_id']) && \Auth::check()) {
-                    $v['pivot']['auth_user_id'] = \Auth::user()->auth_user_id;
+                if (! isset($v['pivot']['user_id']) && \Auth::check()) {
+                    $v['pivot']['user_id'] = \Auth::user()->id;
                 }
                 /**
                 * syncWithoutDetaching fa una select a vuoto ma funziona
@@ -529,9 +529,9 @@ trait CrudContainerItemNoPostTrait {
         extract($params);
         //dddx($data);
         /*
-        $auth_user_id=\Auth::user()->auth_user_id;
-        $data=collect($data)->map(function($item) use($auth_user_id){
-            $item['auth_user_id']=$auth_user_id;
+        $user_id=\Auth::user()->id;
+        $data=collect($data)->map(function($item) use($user_id){
+            $item['user_id']=$user_id;
             return $item;
         })->all();
         $res=$model->$name()->syncWithoutDetaching($data);
@@ -541,8 +541,8 @@ trait CrudContainerItemNoPostTrait {
                 if (! isset($v['pivot'])) {
                     $v['pivot'] = [];
                 }
-                if ((! isset($v['pivot']['auth_user_id']) || $v['pivot']['auth_user_id']=='') && \Auth::check()) {
-                    $v['pivot']['auth_user_id'] = \Auth::user()->auth_user_id;
+                if ((! isset($v['pivot']['user_id']) || $v['pivot']['user_id']=='') && \Auth::check()) {
+                    $v['pivot']['user_id'] = \Auth::user()->id;
                 }
                 $model->$name()->syncWithoutDetaching([$k => $v['pivot']]);
             } else {

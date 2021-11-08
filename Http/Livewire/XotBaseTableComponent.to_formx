@@ -70,7 +70,7 @@ abstract class XotBaseTableComponent extends Component {
      */
     public function columns() {
         return [
-            ColumnService::make('auth_user_id')->searchable()->sortable(),
+            ColumnService::make('user_id')->searchable()->sortable(),
             ColumnService::make('first_name')->searchable()->sortable(),
             ColumnService::make('Email')->searchable()->sortable(),
             ColumnService::make('last_login_at')->searchable()->sortable(),
