@@ -140,6 +140,7 @@ class PanelService {
 
     public static function getHomePanel(): PanelContract {
         $home = TenantService::model('home');
+
         try {
             $home = $home->firstOrCreate(['id' => 1]);
         } catch (\Exception $e) {
@@ -219,7 +220,7 @@ class PanelService {
 
         $panel = PanelService::get($row);
         $panel->setRows($rows);
-        $panel->setName($first_container);
+        $panel->setName(Str::plural($first_container)); /// !!! da controllare
         $i = 0;
         if (isset($items[0])) {
             $panel->setInAdmin($in_admin);

@@ -1413,42 +1413,6 @@ abstract class XotBasePanel {
         return $url;
     }
 
-    public function indexEditUrl() {
-        return RouteService::urlPanel(['panel' => $this, 'act' => 'index_edit']);
-    }
-
-    public function editUrl() {
-        return RouteService::urlPanel(['panel' => $this, 'act' => 'edit']);
-    }
-
-    public function updateUrl() {
-        return RouteService::urlPanel(['panel' => $this, 'act' => 'update']);
-    }
-
-    public function showUrl() {
-        return RouteService::urlPanel(['panel' => $this, 'act' => 'show']);
-    }
-
-    public function createUrl() {
-        return RouteService::urlPanel(['panel' => $this, 'act' => 'create']);
-    }
-
-    public function storeUrl() {
-        return RouteService::urlPanel(['panel' => $this, 'act' => 'store']);
-    }
-
-    public function destroyUrl() {
-        return RouteService::urlPanel(['panel' => $this, 'act' => 'destroy']);
-    }
-
-    public function detachUrl() {
-        return RouteService::urlPanel(['panel' => $this, 'act' => 'detach']);
-    }
-
-    public function gearUrl() {
-        return '#';
-    }
-
     /*
     public function postType(){
         $models=config('xra.model');

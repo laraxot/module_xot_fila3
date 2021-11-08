@@ -61,15 +61,16 @@ class PanelRouteService {
 
     public function addCacheQueryString(string $route): string {
         $path = '/'.request()->path();
-        $cache_key = $path.'_query';
-        Cache::forever($cache_key, request()->query());
+        $cache_key = Str::slug($path.'_query');
+
+        session()->put($cache_key, request()->query(), 60 * 60);
         //echo '[cache_key['.$cache_key.']['.$route.']]';
 
         //--- aggiungo le query string all'url corrente
         //$queries = collect(request()->query())->except(['_act', 'item0', 'item1'])->all();
-        $cache_key = Str::before($route, '?').'_query';
+        $cache_key = Str::slug(Str::before($route, '?').'_query');
 
-        $queries = Cache::get($cache_key);
+        $queries = session()->get($cache_key);
         if (! is_array($queries)) {
             $queries = [];
         }
@@ -80,6 +81,44 @@ class PanelRouteService {
             $url = Str::before($url, '?');
         }
         $url = str_replace(url('/'), '/', $url);
+
+        return $url;
+    }
+
+    public function addFilterQueryString(string $url): string {
+        $filters = $this->panel->filters();
+        $row = $this->panel->row;
+        foreach ($filters as $k => $v) {
+            $field_value = $row->{$v->field_name};
+            if (! isset($v->where_method)) {
+                $v->where_method = 'where';
+            }
+            $where = Str::after($v->where_method, 'where');
+
+            $filters[$k]->field_value = $field_value;
+            switch ($where) {
+                case 'Year':
+                    $value = $field_value->year;
+                    break;
+                case 'ofYear':
+                    $value = \Request::input('year', date('Y'));
+                    break;
+                case 'Month':
+                    $value = $field_value->month;
+                    break;
+                default:
+                    $value = $field_value;
+                    break;
+            }
+            $filters[$k]->value = $value;
+        }
+        $queries = collect($filters)->pluck('value', 'param_name')->all();
+        $node = class_basename($row).'-'.$row->getKey();
+        $queries['page'] = Cache::get('page');
+
+        $queries = array_merge(request()->query(), $queries);
+        $queries = collect($queries)->except(['_act'])->all();
+        $url = (url_queries($queries, $url)).'#'.$node;
 
         return $url;
     }
@@ -158,6 +197,10 @@ class PanelRouteService {
             }
 
             return '#['.__LINE__.']['.__FILE__.']['.$e->getMessage().']';
+        }
+
+        if ('index' == $act) {
+            return $this->addFilterQueryString($route);
         }
 
         return $this->addCacheQueryString($route);

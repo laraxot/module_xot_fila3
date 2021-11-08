@@ -16,15 +16,14 @@ use Illuminate\Support\Facades\Route;
 //----- models------
 use Illuminate\Support\Str;
 //use Modules\Blog\Models\Favorite;
-use Modules\Blog\Models\Post;
+use Modules\Xot\Models\Post;
 //----- services -----
 use Modules\LU\Models\User;
-
+use Modules\Tenant\Services\TenantService as Tenant;
 use Modules\Xot\Models\Image;
 use Modules\Xot\Services\PanelService as Panel;
 use Modules\Xot\Services\RouteService;
-use Modules\Xot\Services\StubService;
-use Modules\Tenant\Services\TenantService as Tenant; // per dizionario morph
+use Modules\Xot\Services\StubService; // per dizionario morph
 
 //------ traits ---
 
@@ -49,7 +48,7 @@ trait LinkedTrait {
      * @throws \ReflectionException
      */
     public function post(): MorphOne {
-        $models = Tenant::config('xra.model');
+        $models = Tenant::config('morph_map');
         $class = get_class($this);
         $alias = collect($models)->search($class);
 
@@ -100,14 +99,14 @@ trait LinkedTrait {
 
     /* -- messo in hasprofileTrait
     public function user():\Illuminate\Database\Eloquent\Relations\HasOne {
-        return $this->hasOne(User::class, 'auth_user_id', 'auth_user_id');
+        return $this->hasOne(User::class);
     }
 
     public function profile() {
         dddx('i');
         $class = Tenant::model('profile');
 
-        return $this->hasOne($class, 'auth_user_id', 'auth_user_id');
+        return $this->hasOne($class, 'user_id', 'user_id');
     }
     */
 
@@ -116,7 +115,7 @@ trait LinkedTrait {
 
     public function myFavorites() {
         return $this->morphMany(Favorite::class, 'post')
-            ->where('auth_user_id', Auth::id());
+            ->where('user_id', Auth::id());
     }
      */
 
@@ -124,7 +123,7 @@ trait LinkedTrait {
      * @return bool
     public function isMyFavorited() {
         return $this->favorites()
-            ->where('auth_user_id', Auth::id())->count() > 0;
+            ->where('user_id', Auth::id())->count() > 0;
     }
     */
 
@@ -268,7 +267,7 @@ trait LinkedTrait {
      * @return bool|mixed|string
      */
     public function postType() {
-        $post_type = collect(config('xra.model'))->search(get_class($this));
+        $post_type = collect(config('morph_map'))->search(get_class($this));
         if (false === $post_type) {
             $post_type = Str::snake(class_basename($this));
         }
@@ -292,7 +291,7 @@ trait LinkedTrait {
         if (null !== $value) {
             return $value;
         }
-        $post_type = collect(config('xra.model'))->search(get_class($this));
+        $post_type = collect(config('morph_map'))->search(get_class($this));
         if (false === $post_type) {
             $post_type = Str::snake(class_basename($this));
         }

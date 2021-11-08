@@ -11,7 +11,7 @@ use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Http\Request;
 //----------  SERVICES --------------------------
 use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Str;
@@ -358,14 +358,19 @@ abstract class XotBasePanel implements PanelContract {
         } else {
             $rows = $rows->where([$pk_full => $value]);
         }
-
+        DB::enableQueryLog();
         $row = $rows
             //->select($tbl.'.*')
             //->select('cuisine_cat_morph.note as "pivot.note"')
             ->first();
 
         if (null == $row) {
-            throw new \Exception('Not Found ['.$value.'] on ['.$this->getName().']');
+            //dddx(['class_methods' => get_class_methods($rows)]);
+            //dddx(DB::getQueryLog());
+            //$query = str_replace(array('?'), array('\'%s\''), $builder->toSql());
+            //$query = vsprintf($query, $builder->getBindings());
+            $sql = Str::replaceArray('?', $rows->getBindings(), $rows->toSql());
+            throw new \Exception('Not Found ['.$value.'] on ['.$this->getName().']['.$sql.']');
         }
         $this->row = $row;
 
@@ -701,7 +706,7 @@ abstract class XotBasePanel implements PanelContract {
     }
 
     public function getXotModelName(): ?string {
-        return collect(config('xra.model'))->search(static::$model);
+        return collect(config('morph_map'))->search(static::$model);
     }
 
     /**
@@ -778,7 +783,7 @@ abstract class XotBasePanel implements PanelContract {
      * @return RowsContract
      */
     public static function indexQuery(array $data, $query) {
-        //return $query->where('auth_user_id', $request->user()->auth_user_id);
+        //return $query->where('user_id', $request->user()->id);
         return $query;
     }
 
@@ -792,7 +797,7 @@ abstract class XotBasePanel implements PanelContract {
      * @return RowsContract
      */
     public static function relatableQuery(Request $request, $query) {
-        //return $query->where('auth_user_id', $request->user()->auth_user_id);
+        //return $query->where('user_id', $request->user()->id);
         //return $query->where('user_id', $request->user()->id);
         return $query;
     }
@@ -983,7 +988,7 @@ abstract class XotBasePanel implements PanelContract {
     }
 
     public function postType(): string {
-        $post_type = collect(config('xra.model'))->search(get_class($this->row));
+        $post_type = collect(config('morph_map'))->search(get_class($this->row));
         if (false === $post_type) {
             $post_type = snake_case(class_basename($this->row));
         }
@@ -1003,6 +1008,7 @@ abstract class XotBasePanel implements PanelContract {
         }
         $row = $this->row;
         $key = $row->getRouteKeyName();
+        /*
         $msg = [
             'key' => $key,
             '$row->getKey()' => $row->getKey(),
@@ -1011,6 +1017,7 @@ abstract class XotBasePanel implements PanelContract {
             //'$row->post' => $row->post,
             '$row' => $row,
         ];
+        */
         if (null == $row->getKey()) {
             return null;
         }
@@ -1165,7 +1172,7 @@ abstract class XotBasePanel implements PanelContract {
 
         /*
         $page = isset($data['page']) ? $data['page'] : 1;
-        Cache::forever('page', $page);
+        Cach1e::forever('page', $page);
         */
         return $query;
     }
@@ -1248,7 +1255,7 @@ abstract class XotBasePanel implements PanelContract {
         $action = $this->itemActions()
             ->firstWhere('name', $act);
         if (! is_object($action)) {
-            $msg = '<h3>['.$act.'] not exists in ['.get_class($this).']</h3>Actions Avaible are :';
+            $msg = '<h3>['.$act.'] not exists in ['.get_class($this).']</h3>Items Actions Avaible are :';
             foreach ($this->itemActions() as $act) {
                 $msg .= '<br/>'.$act->getName();
             }
@@ -1523,7 +1530,7 @@ abstract class XotBasePanel implements PanelContract {
         if (
             $post->getAttributeValue('created_by') == $user->handle ||
             $post->getAttributeValue('updated_by') == $user->handle ||
-            $post->getAttributeValue('auth_user_id') == $user->auth_user_id
+            $post->getAttributeValue('user_id') == $user->user_id
         ) {
             return true;
         }

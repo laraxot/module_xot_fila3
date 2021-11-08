@@ -165,7 +165,7 @@ abstract class XotBaseServiceProvider extends ServiceProvider {
         $components_json = $this->module_dir.'/../Http/Livewire/_components.json';
         //$force_recreate = request()->input('force_recreate', true);
         $exists = File::exists($components_json);
-        if ($exists && false) {
+        if ($exists) {
             $content = File::get($components_json);
             $comps = json_decode($content);
         } else {

@@ -8,6 +8,7 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
 use Modules\Tenant\Services\TenantService as Tenant;
+use Modules\Xot\Services\ArrayService;
 use Modules\Xot\Services\PanelService;
 use Modules\Xot\Services\RouteService;
 
@@ -134,6 +135,36 @@ if (! \function_exists('dddx')) {
                 //'file_1' => $file, //da sistemare
             ]
         );
+    }
+}
+
+if (! function_exists('debug_methods')) {
+    function debug_methods($rows) {
+        $methods = get_class_methods($rows);
+        //*
+        $methods_get = collect($methods)->filter(
+            function ($item) {
+                return Str::startsWith($item, 'get');
+            }
+        )->map(
+            function ($item) use ($rows) {
+                $value = 'Undefined';
+                try {
+                    $value = $rows->{$item}();
+                } catch (\Exception $e) {
+                    $value = $e->getMessage();
+                } catch (ArgumentCountError $e) {
+                    $value = $e->getMessage();
+                }
+
+                return [
+                    'name' => $item,
+                    'value' => $value,
+                ];
+            }
+        )->all();
+
+        return ArrayService::toHtml(['data' => $methods_get]);
     }
 }
 
@@ -504,7 +535,6 @@ if (! \function_exists('transFields')) {
 
         $ns = Str::lower($module_name);
         $trans_root = $ns.'::'.Str::snake(class_basename($model));
-        //dddx() );
         //debug_getter_obj(['obj'=>$module]);
         //dddx($module_name->getNamespace());
         $view = 'unknown';
@@ -580,7 +610,6 @@ if (! \function_exists('transFields')) {
         if (! isset($ris->col_bs_size)) {
             $ris->col_bs_size = 12;
         }
-
         $row = \Form::getModel();
 
         $ris->value = (Arr::get($row, $name));
@@ -1060,5 +1089,44 @@ if (! function_exists('is_active')) {
      */
     function is_active($routes): bool {
         return (bool) call_user_func_array([app('router'), 'is'], (array) $routes);
+    }
+}
+
+if (! function_exists('md_to_html')) {
+    /**
+     * Convert Markdown to HTML.
+     */
+    function md_to_html(string $markdown): string {
+        return $markdown;
+        //return app(App\Markdown\Converter::class)->toHtml($markdown);
+    }
+}
+
+if (! function_exists('replace_links')) {
+    /**
+     * Convert Standalone Urls to HTML.
+     */
+    function replace_links(string $markdown): string {
+        /*
+        return (new LinkFinder([
+            'attrs' => ['target' => '_blank', 'rel' => 'nofollow'],
+        ]))->processHtml($markdown);
+        */
+        return $markdown;
+    }
+}
+
+if (! function_exists('debugStack')) {
+    function debugStack() {
+        if (! extension_loaded('xdebug')) {
+            throw new \RuntimeException('XDebug must be installed to use this function');
+        }
+
+        \xdebug_set_filter(
+            XDEBUG_FILTER_TRACING, XDEBUG_PATH_EXCLUDE,
+            [LARAVEL_DIR.'/vendor/']
+        );
+
+        \xdebug_print_function_stack();
     }
 }

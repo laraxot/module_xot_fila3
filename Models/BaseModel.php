@@ -4,18 +4,23 @@ declare(strict_types=1);
 
 namespace Modules\Xot\Models;
 
-use Illuminate\Database\Eloquent\Model;
+use GeneaLabs\LaravelModelCaching\Traits\Cachable;
 //use Laravel\Scout\Searchable;
 //---------- traits
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use Modules\Xot\Services\FactoryService;
 use Modules\Xot\Traits\Updater;
 
 /**
  * Class BaseModel.
  */
-abstract class BaseModel extends Model{
+abstract class BaseModel extends Model {
     use Updater;
     //use Searchable;
+    //use Cachable;
+    use HasFactory;
 
     /**
      * @var string[]
@@ -56,5 +61,14 @@ abstract class BaseModel extends Model{
      */
     public function images() {
         return $this->morphMany(Image::class, 'post');
+    }
+
+    /**
+     * Create a new factory instance for the model.
+     *
+     * @return \Illuminate\Database\Eloquent\Factories\Factory
+     */
+    protected static function newFactory() {
+        return FactoryService::newFactory(get_called_class());
     }
 }

@@ -24,11 +24,11 @@ use Modules\Xot\Services\ModelService;
  * Class XotBaseJob.
  */
 abstract class XotBaseJob implements ShouldQueue {
+    //use Traits\CommonTrait;
     use Dispatchable;
     use InteractsWithQueue;
     use Queueable;
     use SerializesModels;
-    //use Traits\CommonTrait;
 
     protected PanelContract $panel;
 
@@ -59,7 +59,7 @@ abstract class XotBaseJob implements ShouldQueue {
             if (method_exists($this, $func)) {
                 static::$func($model, $v->name, $v->data);
             } else {
-                //dddx(['error'=>$func.' is missing']);
+                dddx(['error' => $func.' is missing']);
             }
         }
         if (isset($data['pivot'])) {
@@ -107,9 +107,16 @@ abstract class XotBaseJob implements ShouldQueue {
     public function prepareAndValidate($data, $panel) {
         $data0 = $data;
         $data = $this->prepareForValidation($data, $panel);
-        //dddx(['data0' => $data0, 'data' => $data]);
         $act = '';
         $rules = $panel->rules(['act' => $act]);
+        $fillable = $panel->row->getFillable();
+        $fillable_from_data = collect($fillable)->intersect(array_keys($data));
+        foreach ($fillable_from_data as $fill) {
+            if (! in_array($fill, array_keys($rules))) {
+                $rules[$fill] = '';
+            }
+        }
+
         //dddx(['data' => $data, 'rules' => $rules, 'panel_class' => get_class($panel), 'act' => $act]);
 
         $validator = Validator::make($data, $rules);

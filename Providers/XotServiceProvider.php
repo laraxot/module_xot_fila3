@@ -46,12 +46,15 @@ class XotServiceProvider extends XotBaseServiceProvider {
         DB::reconnect();
         Schema::defaultStringLength(191);
 
-        $map = config('xra.model');
+        $map = config('morph_map');
 
         Relation::morphMap($map);
         */
 
         Module::enable('Tenant');
+        Module::enable('Rating');
+        Module::enable('Tag');
+
         $this->registerCommands();
 
         $this->redirectSSL();
