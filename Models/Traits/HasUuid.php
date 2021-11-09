@@ -15,7 +15,7 @@ trait HasUuid {
      * Boot function from Laravel.
      */
     protected static function bootHasUuid() {
-        parent::boot();
+        //parent::boot();
         static::creating(function ($model) {
             if (empty($model->{$model->getKeyName()})) {
                 $model->{$model->getKeyName()} = Str::uuid()->toString();

@@ -6,7 +6,7 @@ namespace Modules\Xot\Models\Panels\Policies;
 
 use Illuminate\Auth\Access\HandlesAuthorization;
 //use Illuminate\Contracts\Auth\UserProvider as User;
-use Modules\LU\Services\ProfileService;
+use Modules\Xot\Services\ProfileService;
 use Modules\Xot\Contracts\PanelContract;
 use Modules\Xot\Contracts\UserContract;
 

@@ -8,7 +8,7 @@ namespace Modules\Xot\Http\View\Composers;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Illuminate\View\View;
-use Modules\LU\Services\ProfileService;
+use Modules\Xot\Services\ProfileService;
 
 /**
  * Class XotComposer.

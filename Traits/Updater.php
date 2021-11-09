@@ -26,7 +26,7 @@ trait Updater {
      * @return void
      */
     protected static function bootUpdater() {
-        parent::boot();
+        //parent::boot();
         /**
          * During a model create Eloquent will also update the updated_at field so
          * need to have the updated_by field here as well.
