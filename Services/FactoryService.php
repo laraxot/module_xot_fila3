@@ -16,11 +16,13 @@ use Illuminate\Support\Str;
  * https://github.com/laravel-shift/factory-generator on 10 Aug.
  * https://dev.to/marcosgad/make-factory-more-organized-laravel-3c19.
  */
-class FactoryService {
+class FactoryService
+{
     /**
      * Create a new factory instance for the model.
      */
-    public static function newFactory(string $called_class): Factory {
+    public static function newFactory(string $called_class): Factory
+    {
         //$called_class = get_called_class();
         $model_name = class_basename($called_class);
         $module_name = Str::between($called_class, 'Modules\\', '\\Models\\');
@@ -36,5 +38,7 @@ class FactoryService {
         StubService::fromModel(['model' =>new $model_name(), 'stub' => 'factory']);
 
         throw new Exception('Generating Factory press [F5] to refresh page ['.__LINE__.']['.__FILE__.']');
+ 
+        //per ora è lasciato come prima
     }
 }

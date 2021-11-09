@@ -6,7 +6,8 @@
     "active": 1,
     "order": 2,
     "providers": [
-        "Modules\\Xot\\Providers\\XotServiceProvider"
+        "Modules\\Xot\\Providers\\XotServiceProvider",
+        "Modules\\Xot\\Providers\\XotFactoryGeneratorProvider"
     ],
     "aliases": {},
     "files": [],
