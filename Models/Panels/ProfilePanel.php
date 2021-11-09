@@ -138,9 +138,12 @@ class ProfilePanel extends XotBasePanel {
         //232 Access to an undefined property Illuminate\Database\Eloquent\Model::$user.
         //$user = $this->row->user;
         $user = $this->row->getRelationValue('user');
-
-        if (is_object($user->perm) && $user->perm->perm_type >= 4) {  //superadmin
-            return true;
+        try {
+            if (is_object($user->perm) && $user->perm->perm_type >= 4) {  //superadmin
+                return true;
+            }
+        } catch (\Exception $e) {
+            return false;
         }
 
         return false;
