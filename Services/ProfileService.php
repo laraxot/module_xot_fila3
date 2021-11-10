@@ -9,7 +9,6 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 use Modules\Tenant\Services\TenantService;
 use Modules\Xot\Contracts\PanelContract;
-use Modules\Xot\Services\PanelService;
 use Nwidart\Modules\Facades\Module;
 
 /**
@@ -49,24 +48,20 @@ class ProfileService {
             $profile = $user->profile;
 
             if (null == $profile) {
-                //$profile_model = $user->profile()->getRelated();
-                //dddx($user->getKey());
-                //$profile_model->user_id = $user->getKey();
-                //$profile = $profile_model->create();
-                $profile = $user->profile()->create();
-                //dddx($profile);
                 /*
+                $rows = $user->profile();
+                $sql = Str::replaceArray('?', $rows->getBindings(), $rows->toSql());
                 dddx([
-                    'message' => 'profile is null',
-                    'profile' => $profile_model,
-                    'profile fillable' => $profile_model->getFillable(),
-                    '$user->user_id' => $user->getKey(),
-                    //    'profile_test' => $profile_model->where('user_id', $user->getKey())->firstOrCreate(),
+                    'user' => $user,
+                    'sql' => $sql,
                 ]);
-                //*/
-               // $profile = $profile_model::firstOrCreate(
-                //    ['user_id' => $user->getKey()], $user->toArray()
-                //);
+                */
+                $profile = $user->profile()->create();
+                $profile->user_id = $user->id;
+
+                $profile->post()->firstOrCreate(['guid' => 'profile-'.$user->id, 'lang' => app()->getLocale()]);
+
+                $profile->save();
             }
             if (null == $profile->updated_by) {
                 $profile->updated_by = $user->handle;

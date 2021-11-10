@@ -16,11 +16,11 @@ use Illuminate\Support\Facades\Route;
 //----- models------
 use Illuminate\Support\Str;
 //use Modules\Blog\Models\Favorite;
-use Modules\Xot\Models\Post;
-//----- services -----
 use Modules\LU\Models\User;
+//----- services -----
 use Modules\Tenant\Services\TenantService as Tenant;
 use Modules\Xot\Models\Image;
+use Modules\Xot\Models\Post;
 use Modules\Xot\Services\PanelService as Panel;
 use Modules\Xot\Services\RouteService;
 use Modules\Xot\Services\StubService; // per dizionario morph
