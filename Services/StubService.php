@@ -82,11 +82,18 @@ class StubService {
         $search = [];
         $fields = self::fields($model);
 
-        //$fillable = $this->getFillable();
-        //dddx($fillable);
+        dddx(
+            [
+                'fillable' => $this->getFillable(),
+                'columns' => $this->getColumns(),
+                'factories' => $this->getFactories(),
+            ]
+        );
+
         //$columns = $this->getColumns();
         //dddx($columns);
         //$factories = $this->getFactories();
+        //dddx($factories);
 
         $replaces = [
             'DummyNamespace' => $this->getNamespace(),
@@ -108,6 +115,7 @@ class StubService {
             ->map(
                 function (Column $column) {
                     return $this->mapTableProperties($column);
+                    //return $this->getPropertiesFromMethods();
                 }
             );
     }
@@ -118,7 +126,7 @@ class StubService {
     protected function mapTableProperties(Column $column): array {
         $key = $column->getName();
         /*
-        if (!$this->shouldBeIncluded($column)) {
+        if (! $this->shouldBeIncluded($column)) {
             return $this->mapToFactory($key);
         }
         */
@@ -143,6 +151,30 @@ class StubService {
         $value = '$this->faker->';
 
         return $this->mapToFactory($key, $value.$this->mapToFaker($column));
+    }
+
+    /**
+     * Checks if a given column should be included in the factory.
+     */
+    protected function shouldBeIncluded(Column $column) {
+        $shouldBeIncluded = ($column->getNotNull() /*|| $this->includeNullableColumns */)
+            && ! $column->getAutoincrement();
+
+        if (! $this->getModel()->usesTimestamps()) {
+            return $shouldBeIncluded;
+        }
+
+        $timestamps = [
+            $this->getModel()->getCreatedAtColumn(),
+            $this->getModel()->getUpdatedAtColumn(),
+        ];
+
+        if (method_exists($this->getModel(), 'getDeletedAtColumn')) {
+            $timestamps[] = $this->getModel()->getDeletedAtColumn();
+        }
+
+        return $shouldBeIncluded
+            && ! in_array($column->getName(), $timestamps);
     }
 
     protected function mapToFactory($key, $value = null): array {
@@ -185,10 +217,15 @@ class StubService {
 
     public function getColumns() {
         $model = $this->getModel();
+        $conn = $model->getConnection();
 
         return $this->getFillable()->map(
-            function ($input_name) use ($model) {
-                return $model->getConnection()->getDoctrineColumn($model->getTable(), $input_name);
+            function ($input_name) use ($conn, $model) {
+                try {
+                    return $conn->getDoctrineColumn($conn->getTablePrefix().$model->getTable(), $input_name);
+                } catch (\Exception $e) {
+                    dddx($e);
+                }
             }
         );
     }
