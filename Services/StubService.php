@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Modules\Xot\Services;
 
+use Doctrine\DBAL\Schema\Column;
 use Exception;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\File;
@@ -17,6 +18,267 @@ class StubService {
     //-- model (object) or class (string)
     //-- stub_name name of stub
     //-- create yes or not
+    private static ?self $_instance = null;
+
+    public string $model_class;
+
+    public string $name;
+
+    /**
+     * getInstance.
+     *
+     * this method will return instance of the class
+     */
+    public static function getInstance() {
+        if (! self::$_instance) {
+            self::$_instance = new self();
+        }
+
+        return self::$_instance;
+    }
+
+    public static function setName(string $name): self {
+        $instance = self::getInstance();
+        $instance->name = $name;
+
+        return $instance;
+    }
+
+    public static function setModelClass(string $model_class): self {
+        $instance = self::getInstance();
+        $instance->model_class = $model_class;
+
+        return $instance;
+    }
+
+    public function get() {
+        $file = $this->getClassFile();
+        $class = $this->getClass();
+        /*
+        dddx([
+            'file' => $file,
+            'class' => $class,
+        ]);
+        */
+        if (File::exists($file)) {
+            return $class;
+        }
+        $this->generate();
+
+        return $class;
+    }
+
+    public function getNamespace(): string {
+        return dirname($this->getClass());
+    }
+
+    public function getModel(): Model {
+        return app($this->model_class);
+    }
+
+    public function getReplaces(): array {
+        $model = $this->getModel();
+        $dummy_id = $model->getRouteKeyName();
+        $search = [];
+        $fields = self::fields($model);
+
+        //$fillable = $this->getFillable();
+        //dddx($fillable);
+        //$columns = $this->getColumns();
+        //dddx($columns);
+        //$factories = $this->getFactories();
+
+        $replaces = [
+            'DummyNamespace' => $this->getNamespace(),
+            'DummyClass' => basename($this->getClass()),
+            'DummyFullModel' => $this->getClass(),
+            'dummy_id' => $dummy_id,
+            'dummy_title' => 'title', // prendo il primo campo stringa
+            'dummy_search' => var_export($search, true),
+            'dummy_fields' => var_export($fields, true),
+            'NamespacedDummyUserModel' => 'Modules\LU\Models\User',
+            'NamespacedDummyModel' => $this->model_class,
+        ];
+
+        return $replaces;
+    }
+
+    public function getFactories() {
+        return $this->getColumns()
+            ->map(
+                function (Column $column) {
+                    return $this->mapTableProperties($column);
+                }
+            );
+    }
+
+    /**
+     * Maps properties.
+     */
+    protected function mapTableProperties(Column $column): array {
+        $key = $column->getName();
+        /*
+        if (!$this->shouldBeIncluded($column)) {
+            return $this->mapToFactory($key);
+        }
+        */
+        /*
+        if ($column->isForeignKey()) {
+            return $this->mapToFactory(
+                $key,
+                $this->buildRelationFunction($key)
+            );
+        }
+        */
+
+        if ('password' === $key) {
+            return $this->mapToFactory($key, "Hash::make('password')");
+        }
+
+        /*
+        $value = $column->isUnique()
+            ? '$this->faker->unique()->'
+            : '$this->faker->';
+        */
+        $value = '$this->faker->';
+
+        return $this->mapToFactory($key, $value.$this->mapToFaker($column));
+    }
+
+    protected function mapToFactory($key, $value = null): array {
+        return [
+            $key => is_null($value) ? $value : "'{$key}' => $value",
+        ];
+    }
+
+    /**
+     * Map name to faker method.
+     *
+     * @return string
+     */
+    protected function mapToFaker(Column $column) {
+        return app(TypeGuesser::class)->guess(
+            $column->getName(),
+            $column->getType(),
+            $column->getLength()
+        );
+    }
+
+    public function getFillable(): \Illuminate\Support\Collection {
+        $model = $this->getModel();
+        if (! method_exists($model, 'getFillable')) {
+            return [];
+        }
+        $fillables = $model->getFillable();
+        if (0 == count($fillables)) {
+            $fillables = $model->getConnection()->getSchemaBuilder()->getColumnListing($model->getTable());
+        }
+
+        $fillables = collect($fillables)
+            ->except([
+                'created_at', 'updated_at', 'updated_by', 'created_by', 'deleted_at', 'deleted_by',
+                'deleted_ip', 'created_ip', 'updated_ip',
+            ]);
+
+        return $fillables;
+    }
+
+    public function getColumns() {
+        $model = $this->getModel();
+
+        return $this->getFillable()->map(
+            function ($input_name) use ($model) {
+                return $model->getConnection()->getDoctrineColumn($model->getTable(), $input_name);
+            }
+        );
+    }
+
+    /**
+     * sarebbe create ma in maniera fluent.
+     */
+    public function generate() {
+        $stub_file = __DIR__.'/../Console/stubs/'.$this->name.'.stub';
+        $stub = File::get($stub_file);
+        $replace = $this->getReplaces();
+
+        $stub = str_replace(array_keys($replace), array_values($replace), $stub);
+        $file = $this->getClassFile();
+
+        //File::put($file, $stub);
+        $msg = (' ['.$file.'] is under creating , refresh page');
+
+        \Session::flash($msg);
+    }
+
+    public function getClassName(): string {
+        return class_basename($this->model_class);
+    }
+
+    public function getDirModel(): string {
+        $autoloader_reflector = new \ReflectionClass($this->model_class);
+        //dddx($autoloader_reflector);
+        $class_file_name = $autoloader_reflector->getFileName();
+        if (false === $class_file_name) {
+            throw new \Exception('autoloader_reflector false');
+        }
+
+        return dirname($class_file_name);
+    }
+
+    public function getClass(): string {
+        switch ($this->name) {
+            case 'factory':
+                return Str::replace('\Models\\', '\Database\Factories\\', $this->model_class).'Factory';
+            case 'migration_morph_pivot':
+                return '';
+            case 'morph_pivot':
+                return '';
+            case 'repository':
+                return Str::replace('\Models\\', '\Repositories\\', $this->model_class).'Repository';
+            case 'transformer_collection':
+                return Str::replace('\Models\\', '\Transformers\\', $this->model_class).'Collection';
+            case 'transformer_resource':
+                return Str::replace('\Models\\', '\Transformers\\', $this->model_class).'Resource';
+            case 'policy':
+                return dirname($this->model_class).'\\Policies\\'.class_basename($this->model_class).'Policy';
+            default:
+                throw new \Exception(['['.$this->name.'] Unkwonn !']);
+        }
+    }
+
+    public function getClassFile(): string {
+        $class_name = $this->getClassName();
+        $dir = $this->getDirModel();
+        /*
+        dddx([
+            'class_name' => $class_name, //Comment
+            'dir' => $dir,              //F:\var\www\base_ptvx\laravel\Modules\Blog\Models
+        ]);
+        */
+        switch ($this->name) {
+            case 'factory':
+                return $dir.'/../Database/Factories/'.$class_name.'Factory.php';
+
+            case 'migration_morph_pivot':
+                return $dir.'/../Database/Migrations/'.date('Y_m_d_Hi00').'_create_'.Str::snake($class_name).'_table.php';
+
+            case 'morph_pivot':
+                return $dir.'/'.$class_name.'Morph.php';
+
+            case 'repository':
+                return $dir.'/../Repositories/'.$class_name.'Repository.php';
+
+            case 'transformer_collection':
+                return $dir.'/../Transformers/'.$class_name.'Collection.php';
+
+            case 'transformer_resource':
+                return $dir.'/../Transformers/'.$class_name.'Resource.php';
+            case 'policy':
+                return $dir.'/Policies/'.$class_name.'Policy.php';
+            default:
+                throw new \Exception(['['.$this->name.'] Unkwonn !']);
+        }
+    }
 
     /**
      * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
