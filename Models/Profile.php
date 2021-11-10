@@ -7,6 +7,7 @@ namespace Modules\Xot\Models;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 //use Illuminate\Database\Eloquent\Relations\HasOne;
 use Modules\LU\Models\User;
+use Modules\Tenant\Services\TenantService;
 
 class Profile extends BaseModel {
     /**
@@ -18,6 +19,9 @@ class Profile extends BaseModel {
      * Undocumented function.
      */
     public function user(): BelongsTo {
-        return $this->belongsTo(User::class);
+        $user = TenantService::model('user');
+        $user_class = get_class($user);
+
+        return $this->belongsTo($user_class);
     }
 }
