@@ -15,7 +15,7 @@ class DummyClass extends Factory {
      *
      * @var string
      */
-    protected $model = DummyFullModel;
+    protected $model = DummyModelClass::class;
 
     /**
      * Define the model's default state.
@@ -23,18 +23,10 @@ class DummyClass extends Factory {
      * @return array
      */
     public function definition() {
-        /*$name = $this->faker->name();
+       
 
         return [
-            'id' => Str::uuid()->toString(),
-            'name' => $name,
-            'commission' => $this->faker->randomFloat($nbMaxDecimals = null, $min = 0, $max = 2),
-            'lat' => $this->faker->latitude($min = -90, $max = 90),
-            'lng' => $this->faker->longitude($min = -180, $max = 180),
-            'guid' => Str::slug($name),
-            'description' => $this->faker->sentence($nbWords = 6, $variableNbWords = true),
-            'city' => $this->faker->city(),
-            'phone' => $this->faker->phone(),
-        ];*/
+            dummy_factories
+        ];
     }
 }
