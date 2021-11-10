@@ -16,8 +16,16 @@ use Modules\Xot\Services\HtmlService;
 class PdfPanelPresenter implements PanelPresenterContract {
     protected PanelContract $panel;
 
+    public array $view_params = [];
+
     public function setPanel(PanelContract &$panel): self {
         $this->panel = $panel;
+
+        return $this;
+    }
+
+    public function setViewParams(array $view_params): self {
+        $this->view_params = $view_params;
 
         return $this;
     }
@@ -50,6 +58,8 @@ class PdfPanelPresenter implements PanelPresenterContract {
             'row' => $row,
             'rows' => $rows,
         ];
+
+        $view_params = array_merge($view_params, $this->view_params);
 
         $html = view()->make($view, $view_params);
         $html = $html->render();

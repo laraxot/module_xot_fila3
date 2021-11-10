@@ -1361,6 +1361,8 @@ abstract class XotBasePanel implements PanelContract {
         $presenter = new PdfPanelPresenter();
         $presenter->setPanel($this);
 
+        $presenter->setViewParams($params['view_params'] ?? []);
+
         return $presenter->out($params);
     }
 
