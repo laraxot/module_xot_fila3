@@ -6,10 +6,9 @@ namespace Modules\Xot\Models;
 
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 //use Illuminate\Database\Eloquent\Relations\HasOne;
-use Modules\LU\Models\User;
 use Modules\Tenant\Services\TenantService;
 
-class Profile extends BaseModel {
+class Profile extends BaseModelLang {
     /**
      * @var string[]
      */
