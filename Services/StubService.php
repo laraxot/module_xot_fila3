@@ -81,7 +81,7 @@ class StubService {
         $dummy_id = $model->getRouteKeyName();
         $search = [];
         $fields = self::fields($model);
-
+        /*
         dddx(
             [
                 'fillable' => $this->getFillable(),
@@ -89,7 +89,7 @@ class StubService {
                 'factories' => $this->getFactories(),
             ]
         );
-
+        */
         //$columns = $this->getColumns();
         //dddx($columns);
         //$factories = $this->getFactories();
@@ -98,11 +98,13 @@ class StubService {
         $replaces = [
             'DummyNamespace' => $this->getNamespace(),
             'DummyClass' => basename($this->getClass()),
+            'DummyModelClass' => basename($this->model_class),
             'DummyFullModel' => $this->getClass(),
             'dummy_id' => $dummy_id,
             'dummy_title' => 'title', // prendo il primo campo stringa
             'dummy_search' => var_export($search, true),
             'dummy_fields' => var_export($fields, true),
+            'dummy_factories' => $this->getFactories(),
             'NamespacedDummyUserModel' => 'Modules\LU\Models\User',
             'NamespacedDummyModel' => $this->model_class,
         ];
@@ -117,7 +119,11 @@ class StubService {
                     return $this->mapTableProperties($column);
                     //return $this->getPropertiesFromMethods();
                 }
-            );
+            )->collapse()
+            ->values()
+            ->implode(',
+            ')
+            ;
     }
 
     /**
@@ -241,7 +247,8 @@ class StubService {
         $stub = str_replace(array_keys($replace), array_values($replace), $stub);
         $file = $this->getClassFile();
 
-        //File::put($file, $stub);
+        // dddx($stub);
+        File::put($file, $stub);
         $msg = (' ['.$file.'] is under creating , refresh page');
 
         \Session::flash($msg);
