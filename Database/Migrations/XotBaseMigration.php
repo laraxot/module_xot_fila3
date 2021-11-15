@@ -155,6 +155,9 @@ abstract class XotBaseMigration extends Migration {
      * Undocumented function.
      */
     public function isColumnType(string $column, string $type): bool {
+        if(!$this->hasColumn($column)){
+            return false;
+        }
         return $this->getColumnType($column) == $type;
     }
 
