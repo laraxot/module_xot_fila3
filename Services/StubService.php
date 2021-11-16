@@ -228,6 +228,8 @@ class StubService {
     public function getColumns() {
         $model = $this->getModel();
         $conn = $model->getConnection();
+        $platform = $conn->getDoctrineSchemaManager()->getDatabasePlatform();
+        $platform->registerDoctrineTypeMapping('enum', 'string');
 
         return $this->getFillable()->map(
             function ($input_name) use ($conn, $model) {
