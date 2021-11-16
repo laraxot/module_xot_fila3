@@ -236,7 +236,22 @@ class PanelService {
             $types = Str::camel($containers[$i]);
             //dddx([$row_prev, $panel_parent, $types]);
             $rows = $row_prev->{$types}(); //Relazione
-            $row = $rows->getRelated();
+            try {
+                $row = $rows->getRelated(); //se relazione
+            } catch (\Exception $e) {  //se builder
+                /*
+                dddx(
+                    [
+                        'message' => $e->getMessage(),
+                        'rows' => $rows,
+                        'get_class_methods' => get_class_methods($rows),
+                        'model' => $rows->getModel(),
+                    ]
+                );
+                */
+                $row = $rows->getModel();
+            }
+
             $panel = PanelService::get($row);
             //$rows = $rows->getQuery();
             $panel->setRows($rows);

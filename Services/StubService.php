@@ -234,9 +234,16 @@ class StubService {
         return $this->getFillable()->map(
             function ($input_name) use ($conn, $model) {
                 try {
-                    return $conn->getDoctrineColumn($conn->getTablePrefix().$model->getTable(), $input_name);
+                    $table_name=$conn->getTablePrefix().$model->getTable();
+                    return $conn->getDoctrineColumn($table_name, $input_name);
                 } catch (\Exception $e) {
-                    dddx($e);
+                    dddx([
+                        'message'=>$e->getMessage(),
+                        'name'=>$this->name,
+                        'modelClass'=>$this->model_class,
+                        'e'=>$e,
+                        ]);
+                    //return null;
                 }
             }
         );
