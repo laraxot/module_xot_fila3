@@ -91,10 +91,9 @@ class PanelService {
      */
     public static function panel(): PanelContract {
         if (! is_object(self::$model)) {
-            //dddx(['model' => self::$model, 'message' => 'is not an object', 'url' => url()->current()]);
-            //return null;
             throw new \Exception('model is not an object url:'.url()->current());
         }
+        /*
         $class_full = get_class(self::$model);
         $class_name = class_basename(self::$model);
         //$class = Str::before($class_full, $class_name);
@@ -104,6 +103,10 @@ class PanelService {
         if (! class_exists($panel_class)) {
             $tmp = StubService::getByModel(self::$model, 'panel', $create = true);
         }
+
+        return app($panel_class)->setRow(self::$model);
+        */
+        $panel_class = StubService::setName('panel')->setModel(self::$model)->get();
 
         return app($panel_class)->setRow(self::$model);
     }

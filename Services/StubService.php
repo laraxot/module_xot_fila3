@@ -20,6 +20,8 @@ class StubService {
     //-- create yes or not
     private static ?self $_instance = null;
 
+    //public ?Model $model;
+
     public string $model_class;
 
     public string $name;
@@ -44,6 +46,13 @@ class StubService {
         return $instance;
     }
 
+    public static function setModel(Model $model): self {
+        $instance = self::getInstance();
+        $instance->model_class = get_class($model);
+
+        return $instance;
+    }
+
     public static function setModelClass(string $model_class): self {
         $instance = self::getInstance();
         $instance->model_class = $model_class;
@@ -54,12 +63,7 @@ class StubService {
     public function get() {
         $file = $this->getClassFile();
         $class = $this->getClass();
-        /*
-        dddx([
-            'file' => $file,
-            'class' => $class,
-        ]);
-        */
+
         if (File::exists($file)) {
             return $class;
         }
@@ -285,8 +289,12 @@ class StubService {
                 return Str::replace('\Models\\', '\Transformers\\', $this->model_class).'Resource';
             case 'policy':
                 return dirname($this->model_class).'\\Policies\\'.class_basename($this->model_class).'Policy';
+            case 'panel':
+                return dirname($this->model_class).'\\Panels\\'.class_basename($this->model_class).'Panel';
             default:
-                throw new \Exception(['['.$this->name.'] Unkwonn !']);
+                $msg = '['.$this->name.'] Unkwon !['.__LINE__.']['.basename(__FILE__).']';
+                //dddx($msg);
+                throw new \Exception($msg);
         }
     }
 
@@ -319,8 +327,11 @@ class StubService {
                 return $dir.'/../Transformers/'.$class_name.'Resource.php';
             case 'policy':
                 return $dir.'/Policies/'.$class_name.'Policy.php';
+            case 'panel':
+                 return $dir.'/Panels/'.$class_name.'Panel.php';
             default:
-                throw new \Exception(['['.$this->name.'] Unkwonn !']);
+                $msg = '['.$this->name.'] Unkwon !['.__LINE__.']['.basename(__FILE__).']';
+                throw new \Exception($msg);
         }
     }
 
