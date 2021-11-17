@@ -313,8 +313,6 @@ class StubService {
             case 'policy':
                 return $dir.'\\Policies\\'.class_basename($this->model_class).'Policy';
             case 'panel':
-                dddx($dir);
-
                 return $dir.'\\Panels\\'.class_basename($this->model_class).'Panel';
             default:
                 $msg = '['.$this->name.'] Unkwon !['.__LINE__.']['.basename(__FILE__).']';
