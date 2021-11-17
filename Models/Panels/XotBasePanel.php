@@ -628,7 +628,8 @@ abstract class XotBasePanel implements PanelContract {
                         ->$rel_name()
                         ->getPivotClass();
                     $pivot = new $pivot_class();
-                    $pivot_panel = StubService::getByModel($pivot, 'panel', true);
+                    $pivot_panel = StubService::setModelAndName($pivot, 'panel')->get();
+
                     $pivot_panel->setRows(with(new $this::$model())->$rel_name());
                     $pivot_rules = collect($pivot_panel->rules())
                         ->map(

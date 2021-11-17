@@ -56,7 +56,11 @@ class ModelService {
                         'rows' => $rows,
                     ];
                 }
-            )->all();
+            )
+            ->filter(function ($item) {
+                return $item->is_relation;
+            })
+            ->all();
 
         return $data;
     }

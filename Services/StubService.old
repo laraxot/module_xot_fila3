@@ -53,6 +53,15 @@ class StubService {
         return $instance;
     }
 
+    public static function setModelAndName(Model $model,string $name) : self {
+        $instance = self::getInstance();
+        $instance->setModel($model);
+        $instance->setName($name);
+        return $instance;
+
+    }
+
+
     public static function setModelClass(string $model_class): self {
         $instance = self::getInstance();
         $instance->model_class = $model_class;

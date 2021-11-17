@@ -128,7 +128,7 @@ class Post extends Model {
         //------ IMAGE ---------
         'image_src', 'image_alt', 'image_title',
         //------ SEO FIELDS -----
-        'meta_description', 'meta_keyword', // seo
+        'meta_description', 'meta_keywords', // seo
         'author_id',
         //------ BUFFER ----
         'url', 'url_lang', //buffer
