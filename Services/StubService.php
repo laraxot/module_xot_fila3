@@ -5,11 +5,9 @@ declare(strict_types=1);
 namespace Modules\Xot\Services;
 
 use Doctrine\DBAL\Schema\Column;
-use Exception;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
-use Modules\Xot\Contracts\PanelContract;
 
 /**
  * Class StubService.
@@ -56,6 +54,14 @@ class StubService {
     public static function setModelClass(string $model_class): self {
         $instance = self::getInstance();
         $instance->model_class = $model_class;
+
+        return $instance;
+    }
+
+    public static function setModelAndName(Model $model, string $name): self {
+        $instance = self::getInstance();
+        $instance->setModel($model);
+        $instance->setName($name);
 
         return $instance;
     }
@@ -234,15 +240,16 @@ class StubService {
         return $this->getFillable()->map(
             function ($input_name) use ($conn, $model) {
                 try {
-                    $table_name=$conn->getTablePrefix().$model->getTable();
+                    $table_name = $conn->getTablePrefix().$model->getTable();
+
                     return $conn->getDoctrineColumn($table_name, $input_name);
                 } catch (\Exception $e) {
                     dddx([
-                        'message'=>$e->getMessage(),
-                        'name'=>$this->name,
-                        'modelClass'=>$this->model_class,
-                        'e'=>$e,
-                        ]);
+                        'message' => $e->getMessage(),
+                        'name' => $this->name,
+                        'modelClass' => $this->model_class,
+                        'e' => $e,
+                    ]);
                     //return null;
                 }
             }
@@ -345,273 +352,6 @@ class StubService {
     }
 
     /**
-     * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
-     * @throws \ReflectionException
-     *
-     * @return false|string|void
-     */
-    public static function fromModel(array $params) {
-        extract($params);
-
-        if (! isset($model)) {
-            dddx(['err' => 'model is missing']);
-
-            return;
-        }
-        if (! isset($stub)) {
-            dddx(['err' => 'stub is missing']);
-
-            return;
-        }
-
-        if (! is_object($model)) {
-            //dddx($model);
-            return false;
-        }
-        $class = get_class($model);
-        $class_name = class_basename($model);
-        $class_ns = substr($class, 0, -(strlen($class_name) + 1));
-        $params['class'] = $class;
-        $params['class_name'] = $class_name;
-        $params['namespace'] = $class_ns;
-        $params['namespace_root'] = substr($params['namespace'], 0, -(strlen('Models') + 1));
-        /*
-        if(!isset($model)){ // Cannot instantiate abstract class Modules\Food\Models\BaseModel
-        $model=new $class;
-        $params['model']=$model;
-        }
-         */
-        //$params['dir']=realpath(__DIR__.'/../..');
-        $autoloader_reflector = new \ReflectionClass($class);
-        //dddx($autoloader_reflector);
-        $class_file_name = $autoloader_reflector->getFileName();
-        if (false === $class_file_name) {
-            throw new \Exception('autoloader_reflector false');
-        }
-        $dir = dirname($class_file_name);
-        $params['dir'] = $dir;
-        //$params['dummy_id']=with(new $class)->getRouteKeyName();
-        $params['dummy_id'] = '';
-        $params['search'] = [];
-        $params['fields'] = [];
-        //dddx($params);
-        $stub_name = $stub;
-        $file = '';
-        switch ($stub_name) {
-            case 'factory':
-                $file = $dir.'/../Database/Factories/'.$class_name.'Factory.php';
-                $file = str_replace(['\\', '/'], [DIRECTORY_SEPARATOR, DIRECTORY_SEPARATOR], $file);
-                $params['namespace'] = $params['namespace_root'].'\Database\Factories';
-                $params['class_name'] = $params['class_name'].'Factory';
-                break;
-            case 'migration_morph_pivot':
-                $file = $dir.'/../Database/Migrations/'.date('Y_m_d_Hi00').'_create_'.Str::snake($class_name).'_table.php';
-                break;
-            case 'morph_pivot':
-                $file = $dir.'/'.$class_name.'Morph.php';
-                $file = str_replace(['\\', '/'], [DIRECTORY_SEPARATOR, DIRECTORY_SEPARATOR], $file);
-                $params['namespace'] = $params['namespace_root'].'\Models';
-                $params['class_name'] = $params['class_name'].'Morph';
-                /*
-                $msg=[
-                    'file'=>$file,
-                    'model'=>$model,
-                    'class_name'=>$class_name,
-                ];
-                dddx($msg);
-                dddx(get_class($model));
-                */
-                /*
-                $file = $dir . '/' . $class_name . '.php';
-                self::missingClass([
-                    'class' => $class,
-                    'stub' => 'migration_morph_pivot',
-                    'model' => $model,
-                ]);
-                */
-                break;
-            case 'repository':
-                $file = $dir.'/../Repositories/'.$class_name.'Repository.php';
-                $params['namespace'] = $params['namespace_root'].'\Repositories';
-                $params['class_name'] = $params['class_name'].'Repository';
-                break;
-            case 'transformer_collection':
-                $file = $dir.'/../Transformers/'.$class_name.'Collection.php';
-                $file = str_replace(['\\', '/'], [DIRECTORY_SEPARATOR, DIRECTORY_SEPARATOR], $file);
-                $params['namespace'] = $params['namespace_root'].'\Transformers';
-                $params['class_name'] = $params['class_name'].'Collection';
-                break;
-            case 'transformer_resource':
-                $file = $dir.'/../Transformers/'.$class_name.'Resource.php';
-                $file = str_replace(['\\', '/'], [DIRECTORY_SEPARATOR, DIRECTORY_SEPARATOR], $file);
-                $params['namespace'] = $params['namespace_root'].'\Transformers';
-                $params['class_name'] = $params['class_name'].'Resource';
-                break;
-            case 'policy':
-                $file = $dir.'/Policies/'.$class_name.'Policy.php';
-                $file = str_replace(['\\', '/'], [DIRECTORY_SEPARATOR, DIRECTORY_SEPARATOR], $file);
-                $params['namespace'] = $params['namespace_root'].'\Models\Policies';
-                $params['class_name'] = $params['class_name'].'Policy';
-                break;
-            default:
-                dddx(['['.$stub_name.'] Unkwonn !']);
-                break;
-        }
-
-        $class_full = $params['namespace'].'\\'.$params['class_name'];
-
-        if (File::exists($file)) {
-            return $class_full;
-        }
-        /*
-        if(class_exists($class_full)){ //Cannot instantiate abstract class Modules\Food\Models\BaseModel
-        return $class_full;
-        }
-         */
-
-        $stub_file = __DIR__.'/../Console/stubs/'.$stub_name.'.stub';
-        $stub = File::get($stub_file);
-        $replace = self::replaces($params);
-        $stub = str_replace(array_keys($replace), array_values($replace), $stub);
-
-        //dddx($file);
-
-        //dddx($stub);
-        //dddx($autoloader_reflector);
-        //dddx($params);
-        //
-
-        File::put($file, $stub);
-        $msg = (' ['.$class.'] is under creating , refresh page');
-
-        \Session::flash($msg);
-    }
-
-    /**
-     * @param Model $model
-     *
-     * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
-     * @throws \ReflectionException
-     */
-    public static function getByModel($model, string $name, bool $create = false): PanelContract {
-        if (! is_object($model)) {
-            //echo '<h3>Model: ['.$model.']</h3>';
-            //$params = optional(\Route::current())->parameters();
-            throw new Exception('model is not an object');
-            //return null;
-        }
-        $class_full = get_class($model);
-        $class_name = class_basename($model);
-        //$class=Str::before($class_full,$class_name);
-        $class = substr($class_full, 0, -strlen($class_name));
-        $panel = $class.Str::plural(Str::studly($name)).'\\'.$class_name.Str::studly($name);
-        if (! class_exists($panel)) {
-            self::create($model, $name);
-        }
-
-        return app($panel);
-    }
-
-    public static function replaces(array $params): array {
-        extract($params);
-        if (! isset($namespace)) {
-            throw new \Exception('namespace is missing');
-        }
-        if (! isset($class_name)) {
-            throw new \Exception('class_name is missing');
-        }
-        if (! isset($class)) {
-            throw new \Exception('class is missing');
-        }
-        if (! isset($dummy_id)) {
-            throw new \Exception('dummy_id is missing');
-        }
-        if (! isset($search)) {
-            throw new \Exception('search is missing');
-        }
-        if (! isset($fields)) {
-            throw new \Exception('fields is missing');
-        }
-        $replaces = [
-            'DummyNamespace' => $namespace,
-            'DummyClass' => $class_name,
-            'DummyFullModel' => $class,
-            'dummy_id' => $dummy_id,
-            'dummy_title' => 'title', // prendo il primo campo stringa
-            'dummy_search' => var_export($search, true),
-            'dummy_fields' => var_export($fields, true),
-            'NamespacedDummyUserModel' => 'Modules\LU\Models\User',
-            'NamespacedDummyModel' => $class,
-        ];
-
-        return $replaces;
-    }
-
-    /**
-     * @param Model $model
-     *
-     * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
-     * @throws \ReflectionException
-     */
-    public static function create($model, string $name): void {
-        $class_full = get_class($model);
-        $class_name = class_basename($model);
-        //$class=Str::before($class_full,$class_name);
-        $class = substr($class_full, 0, -strlen($class_name));
-        $panel_namespace = $class.Str::plural(Str::studly($name));
-        $panel = $panel_namespace.'\\'.$class_name.Str::studly($name);
-        //---- creazione panel
-        $autoloader_reflector = new \ReflectionClass($model);
-
-        $class_filename = $autoloader_reflector->getFileName();
-        if (false === $class_filename) {
-            throw new \Exception('autoloader_reflector err');
-        }
-        $model_dir = dirname($class_filename); // /home/vagrant/code/htdocs/lara/multi/laravel/Modules/LU/Models
-        $stub_file = __DIR__.'/../Console/stubs/'.$name.'.stub';
-        $stub = File::get($stub_file);
-
-        $search = [];
-        $fields = self::fields($model);
-
-        $dummy_id = $model->getRouteKeyName();
-        /*
-        Call to function is_array() with string will always evaluate to false.
-        if (is_array($dummy_id)) {
-            echo '<h3>not work with multiple keys</h3>';
-            $dummy_id = var_export($dummy_id, true);
-        }
-        */
-        $replace = [
-            'DummyNamespace' => $panel_namespace,
-            'DummyClass' => $class_name.Str::studly($name),
-            'DummyFullModel' => $class_full,
-            'dummy_id' => $dummy_id,
-            'dummy_title' => 'title', // prendo il primo campo stringa
-            'dummy_search' => var_export($search, true),
-            'dummy_fields' => var_export($fields, true),
-            'NamespacedDummyUserModel' => 'Modules\LU\Models\User',
-            'NamespacedDummyModel' => get_class($model),
-        ];
-        $stub = str_replace(array_keys($replace), array_values($replace), $stub);
-        $stub = str_replace('stdClass::__set_state', '(object)', $stub);
-        //$stub=str_replace('  ','    ',$stub);
-        //$stub=str_replace(chr(13),chr(13).'    ',$stub);
-        //$stub=str_replace(chr(10),chr(10).'    ',$stub);
-
-        $panel_dir = $model_dir.'/'.Str::plural(Str::studly($name));
-        File::makeDirectory($panel_dir, $mode = 0777, true, true);
-        $panel_file = $panel_dir.'/'.$class_name.Str::studly($name).'.php';
-        $panel_file = str_replace(['/', '\\'], [DIRECTORY_SEPARATOR, DIRECTORY_SEPARATOR], $panel_file);
-        if (! File::exists($panel_file)) {
-            File::put($panel_file, $stub);
-        } else {
-            echo '<h3>['.$panel_file.'] Just exists</h3>';
-            dddx(debug_backtrace());
-        }
-    }
-
-    /**
      * @param Model $model
      *
      * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
@@ -706,33 +446,5 @@ class StubService {
         }
 
         return $fields;
-    }
-
-    /**
-     * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
-     * @throws \ReflectionException
-     */
-    public static function updatePanel(array $params): void {
-        extract($params);
-        if (! isset($func)) {
-            dddx(['err' => 'func is missing']);
-
-            return;
-        }
-        if (! isset($panel)) {
-            dddx(['err' => 'panel is missing']);
-
-            return;
-        }
-        $func_file = __DIR__.'/../Console/stubs/panels/'.$func.'.stub';
-        $func_stub = File::get($func_file);
-        $autoloader_reflector = new \ReflectionClass($panel);
-        $panel_file = $autoloader_reflector->getFileName();
-        if (false === $panel_file) {
-            throw new \Exception('autoloader_reflector err');
-        }
-        $panel_stub = File::get($panel_file);
-        $panel_stub = Str::replaceLast('}', $func_stub.chr(13).chr(10).'}', $panel_stub);
-        File::put($panel_file, $panel_stub);
     }
 }
