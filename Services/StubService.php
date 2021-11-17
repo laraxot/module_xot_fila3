@@ -295,7 +295,7 @@ class StubService {
     }
 
     public function getClass(): string {
-        $dir = $this->getDirModel();
+        $dir = collect(explode('\\', $this->model_class))->slice(0, -1)->implode('\\');
 
         switch ($this->name) {
             case 'factory':
