@@ -243,12 +243,22 @@ class StubService {
 
                     return $conn->getDoctrineColumn($table_name, $input_name);
                 } catch (\Exception $e) {
+                    $msg = 'message:['.$e->getMessage().']
+                        file:['.$e->getFile().']
+                        line:['.$e->getLine().']
+                        caller:['.__LINE__.']['.basename(__FILE__).']
+                        ';
+                    throw new \Exception($msg);
+                    /*
                     dddx([
                         'message' => $e->getMessage(),
                         'name' => $this->name,
                         'modelClass' => $this->model_class,
+                        'methods' => get_class_methods($e),
                         'e' => $e,
+                        'msg' => $msg,
                     ]);
+                    */
                     //return null;
                 }
             }
