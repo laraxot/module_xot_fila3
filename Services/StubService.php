@@ -69,7 +69,12 @@ class StubService {
     public function get() {
         $file = $this->getClassFile();
         $class = $this->getClass();
-
+        dddx([
+            'model_class' => $this->model_class,
+            'name' => $this->name,
+            '$file' => $file,
+            '$class' => $class,
+        ]);
         if (File::exists($file)) {
             return $class;
         }
