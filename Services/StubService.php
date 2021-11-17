@@ -295,6 +295,8 @@ class StubService {
     }
 
     public function getClass(): string {
+        $dir = $this->getDirModel();
+
         switch ($this->name) {
             case 'factory':
                 return Str::replace('\Models\\', '\Database\Factories\\', $this->model_class).'Factory';
@@ -309,12 +311,11 @@ class StubService {
             case 'transformer_resource':
                 return Str::replace('\Models\\', '\Transformers\\', $this->model_class).'Resource';
             case 'policy':
-                return dirname($this->model_class).'\\Policies\\'.class_basename($this->model_class).'Policy';
+                return $dir.'\\Policies\\'.class_basename($this->model_class).'Policy';
             case 'panel':
-                $info = pathinfo($this->model_class);
-                dddx($info);
+                dddx($dir);
 
-                return dirname($this->model_class).'\\Panels\\'.class_basename($this->model_class).'Panel';
+                return $dir.'\\Panels\\'.class_basename($this->model_class).'Panel';
             default:
                 $msg = '['.$this->name.'] Unkwon !['.__LINE__.']['.basename(__FILE__).']';
                 //dddx($msg);
