@@ -148,4 +148,30 @@ class ProfilePanel extends XotBasePanel {
 
         return false;
     }
+
+    /**
+     * @param int $size
+     */
+    public function avatar($size = 100): ?string {
+        if (null == $this->row) {
+            throw new \Exception('row is null');
+        }
+        if (! property_exists($this->row, 'user')) {
+            throw new \Exception('in ['.get_class($this->row).'] property [user] not exists');
+        }
+        $user = $this->row->user;
+
+        if (! is_object($user) && is_object($this->row)) {
+            if (isset($this->row->user_id) && method_exists($this->row, 'user')) {
+                $this->row->user()->create();
+            }
+            //dddx($this->row);
+            return null;
+        }
+
+        $email = \md5(\mb_strtolower(\trim((string) $user->email)));
+        $default = \urlencode('https://tracker.moodle.org/secure/attachment/30912/f3.png');
+
+        return "https://www.gravatar.com/avatar/$email?d=$default&s=$size";
+    }
 }
