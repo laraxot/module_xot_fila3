@@ -1435,12 +1435,14 @@ abstract class XotBasePanel implements PanelContract {
     public function getExcerpt($length = 225) {
         $row = $this->row;
         //$content = $row->subtitle ?? $row->txt;
+        /*
         if (! property_exists($row, 'subtitle')) {
             throw new \Exception('in ['.get_class($row).'] property [subtitle] is missing');
         }
         if (! property_exists($row, 'txt')) {
             throw new \Exception('in ['.get_class($row).'] property [txt] is missing');
         }
+        */
 
         if ($row->subtitle) {
             $content = $row->subtitle;
