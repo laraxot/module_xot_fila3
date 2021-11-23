@@ -8,6 +8,9 @@ namespace Modules\Xot\Traits;
  * Trait Getter.
  */
 trait Getter {
+    /**
+     * __merge function.
+     */
     public static function __merge(string $index, array $value): array {
         $tmp = self::__getStatic($index);
         if (! is_array($tmp)) {
