@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Modules\Xot\Providers;
 
-//use Illuminate\Database\Eloquent\Factory;
 use Exception;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Event;
@@ -12,7 +11,6 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Str;
 use Nwidart\Modules\Facades\Module;
-use TypeError;
 
 //use Modules;
 
@@ -32,8 +30,6 @@ abstract class XotBaseServiceProvider extends ServiceProvider {
      * Boot the application events.
      */
     public function boot(): void {
-        //echo '<h3>Time :'.class_basename($this).' '.(microtime(true) - LARAVEL_START).'</h3>';
-
         $this->registerTranslations();
         $this->registerConfig();
         $this->registerViews();
@@ -44,7 +40,6 @@ abstract class XotBaseServiceProvider extends ServiceProvider {
         }
         $this->registerLivewireComponents();
         $this->registerBladeComponents();
-        //echo '<h3>Time :'.class_basename($this).' '.(microtime(true) - LARAVEL_START).'</h3>';
     }
 
     /**
@@ -135,25 +130,7 @@ abstract class XotBaseServiceProvider extends ServiceProvider {
         if (null == $module) {
             throw new \Exception('['.$this->module_name.'] is not found');
         }
-        /*
-        $methods = get_class_methods($module);
-        echo '<table border="1">';
-        foreach ($methods as $method) {
-            if (Str::startsWith($method, 'get')) {
-                try {
-                    echo '<tr><td>'.$method.'</td><td>'.print_r($module->{$method}(), true).'</td></tr>';
-                } catch (\Exception $e) {
-                    echo '<tr><td>'.$method.'</td><td>'.$e->getMessage().'</td></tr>';
-                } catch (TypeError $e) {
-                    echo '<tr><td>'.$method.'</td><td>'.$e->getMessage().'</td></tr>';
-                }
-            }
-        }
-        echo '</table>';
-        dddx('a');
 
-        Blade::componentNamespace('Modules\FormX\View\Components', $this->module_name);
-        */
         $namespace = 'Modules\\'.$module->getName().'\View\Components';
 
         Blade::componentNamespace($namespace, $module->getLowerName());
