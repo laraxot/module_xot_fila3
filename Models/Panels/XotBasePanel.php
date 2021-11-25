@@ -1309,7 +1309,8 @@ abstract class XotBasePanel implements PanelContract {
         try {
             return $this->presenter->out();
         } catch (\Exception $e) {
-            return response()->view('pub_theme::errors.500', ['message' => $e->getMessage()], 500);
+            $view=(view()->exists('pub_theme::errors.500'))?'pub_theme::errors.500':'theme::errors.500';
+            return response()->view($view, ['message' => $e->getMessage()], 500);
         }
     }
 

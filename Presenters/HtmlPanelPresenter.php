@@ -131,7 +131,7 @@ class HtmlPanelPresenter implements PanelPresenterContract {
             $message = 'not exists view [pub_theme::layouts.app]
                 <br/> pub_theme:'.config('xra.pub_theme').'
                 <br/> pub_theme dir: '.collect(\View::getFinder()->getHints())->get('pub_theme')[0];
-            exit($message);
+            throw new \Exception($message);
         }
 
         //return view($view_work)->with($view_params);
