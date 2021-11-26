@@ -4,7 +4,10 @@ declare(strict_types=1);
 
 namespace Modules\Xot\Providers;
 
+<<<<<<< HEAD
 //use Illuminate\Database\Eloquent\Factory;
+=======
+>>>>>>> 62ea534012e9d79473f751b4b12ca7271fa0f629
 use Exception;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Event;
@@ -12,7 +15,10 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Str;
 use Nwidart\Modules\Facades\Module;
+<<<<<<< HEAD
 use TypeError;
+=======
+>>>>>>> 62ea534012e9d79473f751b4b12ca7271fa0f629
 
 //use Modules;
 
@@ -32,8 +38,11 @@ abstract class XotBaseServiceProvider extends ServiceProvider {
      * Boot the application events.
      */
     public function boot(): void {
+<<<<<<< HEAD
         //echo '<h3>Time :'.class_basename($this).' '.(microtime(true) - LARAVEL_START).'</h3>';
 
+=======
+>>>>>>> 62ea534012e9d79473f751b4b12ca7271fa0f629
         $this->registerTranslations();
         $this->registerConfig();
         $this->registerViews();
@@ -44,7 +53,10 @@ abstract class XotBaseServiceProvider extends ServiceProvider {
         }
         $this->registerLivewireComponents();
         $this->registerBladeComponents();
+<<<<<<< HEAD
         //echo '<h3>Time :'.class_basename($this).' '.(microtime(true) - LARAVEL_START).'</h3>';
+=======
+>>>>>>> 62ea534012e9d79473f751b4b12ca7271fa0f629
     }
 
     /**
@@ -135,6 +147,7 @@ abstract class XotBaseServiceProvider extends ServiceProvider {
         if (null == $module) {
             throw new \Exception('['.$this->module_name.'] is not found');
         }
+<<<<<<< HEAD
         /*
         $methods = get_class_methods($module);
         echo '<table border="1">';
@@ -154,6 +167,9 @@ abstract class XotBaseServiceProvider extends ServiceProvider {
 
         Blade::componentNamespace('Modules\FormX\View\Components', $this->module_name);
         */
+=======
+
+>>>>>>> 62ea534012e9d79473f751b4b12ca7271fa0f629
         $namespace = 'Modules\\'.$module->getName().'\View\Components';
 
         Blade::componentNamespace($namespace, $module->getLowerName());
