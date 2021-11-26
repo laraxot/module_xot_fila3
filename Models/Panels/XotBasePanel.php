@@ -22,6 +22,7 @@ use Modules\Xot\Contracts\UserContract;
 use Modules\Xot\Presenters\PdfPanelPresenter;
 use Modules\Xot\Presenters\XlsPanelPresenter;
 use Modules\Xot\Services\ChainService;
+use Modules\Xot\Services\FileService;
 use Modules\Xot\Services\ImageService;
 use Modules\Xot\Services\PanelActionService;
 use Modules\Xot\Services\PanelFormService;
@@ -1309,7 +1310,12 @@ abstract class XotBasePanel implements PanelContract {
         try {
             return $this->presenter->out();
         } catch (\Exception $e) {
-            $view=(view()->exists('pub_theme::errors.500'))?'pub_theme::errors.500':'theme::errors.500';
+            //$view=(view()->exists('pub_theme::errors.500'))?'pub_theme::errors.500':'theme::errors.500';
+            $view = 'pub_theme::errors.500';
+            if (! view()->exists($view)) {
+                FileService::viewCopy('theme::errors.500', 'pub_theme::errors.500');
+            }
+
             return response()->view($view, ['message' => $e->getMessage()], 500);
         }
     }

@@ -9,6 +9,7 @@ use Illuminate\Support\Collection;
 use Modules\Theme\Services\ThemeService;
 use Modules\Xot\Contracts\PanelContract;
 use Modules\Xot\Contracts\PanelPresenterContract;
+use Modules\Xot\Services\FileService;
 
 /**
  * Class HtmlPanelPresenter.
@@ -128,10 +129,24 @@ class HtmlPanelPresenter implements PanelPresenterContract {
         ];
 
         if (! view()->exists('pub_theme::layouts.app')) {
+            $pieces = [
+                'layouts.app',
+                'layouts.plane',
+                'layouts.partials.htmlheader',
+                'layouts.partials.headernav',
+                'layouts.partials.footer',
+                'layouts.partials.scripts',
+            ];
+            foreach ($pieces as $piece) {
+                FileService::viewCopy('theme::'.$piece, 'pub_theme::'.$piece);
+            }
+
+            /*
             $message = 'not exists view [pub_theme::layouts.app]
                 <br/> pub_theme:'.config('xra.pub_theme').'
                 <br/> pub_theme dir: '.collect(\View::getFinder()->getHints())->get('pub_theme')[0];
             throw new \Exception($message);
+            */
         }
 
         //return view($view_work)->with($view_params);
