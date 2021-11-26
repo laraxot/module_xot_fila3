@@ -14,7 +14,13 @@ trait Updater {
     /**
      * Undocumented function.
 <<<<<<< HEAD
+<<<<<<< HEAD
      */
+=======
+     * move to modelservice.
+     */
+    /*
+>>>>>>> 62ea534012e9d79473f751b4b12ca7271fa0f629
 =======
      * move to modelservice.
      */
@@ -26,14 +32,20 @@ trait Updater {
             ->getColumnListing($this->getTable());
     }
 <<<<<<< HEAD
+<<<<<<< HEAD
 
     /**
      * Undocumented function.
 =======
+=======
+>>>>>>> 62ea534012e9d79473f751b4b12ca7271fa0f629
     */
 
     /**
      * bootUpdater function.
+<<<<<<< HEAD
+>>>>>>> 62ea534012e9d79473f751b4b12ca7271fa0f629
+=======
 >>>>>>> 62ea534012e9d79473f751b4b12ca7271fa0f629
      *
      * @return void
@@ -41,7 +53,11 @@ trait Updater {
     protected static function bootUpdater() {
         //parent::boot();
 <<<<<<< HEAD
+<<<<<<< HEAD
         /**
+=======
+        /*
+>>>>>>> 62ea534012e9d79473f751b4b12ca7271fa0f629
 =======
         /*
 >>>>>>> 62ea534012e9d79473f751b4b12ca7271fa0f629
@@ -58,7 +74,11 @@ trait Updater {
         });
 
 <<<<<<< HEAD
+<<<<<<< HEAD
         /**
+=======
+        /*
+>>>>>>> 62ea534012e9d79473f751b4b12ca7271fa0f629
 =======
         /*
 >>>>>>> 62ea534012e9d79473f751b4b12ca7271fa0f629

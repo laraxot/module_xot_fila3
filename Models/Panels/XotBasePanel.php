@@ -23,6 +23,10 @@ use Modules\Xot\Presenters\PdfPanelPresenter;
 use Modules\Xot\Presenters\XlsPanelPresenter;
 use Modules\Xot\Services\ChainService;
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+use Modules\Xot\Services\FileService;
+>>>>>>> 62ea534012e9d79473f751b4b12ca7271fa0f629
 =======
 use Modules\Xot\Services\FileService;
 >>>>>>> 62ea534012e9d79473f751b4b12ca7271fa0f629
@@ -1314,8 +1318,11 @@ abstract class XotBasePanel implements PanelContract {
             return $this->presenter->out();
         } catch (\Exception $e) {
 <<<<<<< HEAD
+<<<<<<< HEAD
             return response()->view('pub_theme::errors.500', ['message' => $e->getMessage()], 500);
 =======
+=======
+>>>>>>> 62ea534012e9d79473f751b4b12ca7271fa0f629
             //$view=(view()->exists('pub_theme::errors.500'))?'pub_theme::errors.500':'theme::errors.500';
             $view = 'pub_theme::errors.500';
             if (! view()->exists($view)) {
@@ -1323,6 +1330,9 @@ abstract class XotBasePanel implements PanelContract {
             }
 
             return response()->view($view, ['message' => $e->getMessage()], 500);
+<<<<<<< HEAD
+>>>>>>> 62ea534012e9d79473f751b4b12ca7271fa0f629
+=======
 >>>>>>> 62ea534012e9d79473f751b4b12ca7271fa0f629
         }
     }
@@ -1555,7 +1565,11 @@ abstract class XotBasePanel implements PanelContract {
         return false;
     }
 <<<<<<< HEAD
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> 62ea534012e9d79473f751b4b12ca7271fa0f629
 =======
 }
 >>>>>>> 62ea534012e9d79473f751b4b12ca7271fa0f629

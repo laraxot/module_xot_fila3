@@ -9,6 +9,12 @@ namespace Modules\Xot\Traits;
  */
 trait Getter {
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+    /**
+     * __merge function.
+     */
+>>>>>>> 62ea534012e9d79473f751b4b12ca7271fa0f629
 =======
     /**
      * __merge function.
