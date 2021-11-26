@@ -1,0 +1,211 @@
+Create a Laravel Marketplace with Stripe using Cashier and this package
+https://hbakouane.medium.com/create-a-laravel-marketplace-with-stripe-using-cashier-and-this-package-9bbf56078215
+
+
+
+https://github.com/driesvints/cashier-paddle-talk
+
+
+https://github.com/christophrumpel/larastreamers
+
+
+------------- videocorsi
+-----------------------------------------------------
+Creating Laravel 6 SaaS with Cashier/Stripe
+https://laraveldaily.teachable.com/p/creating-laravel-saas-with-cashier-stripe  
+costa 12$
+Course length: 3 h 20 min
+-----------------------------------------------------
+Laravel Payment and Subscription Processing: PayPal & Stripe
+Use API calls to integrate PayPal and Stripe in Laravel. Start receiving online payments from a Laravel project.
+https://www.udemy.com/course/laravel-payment-processing-integrating-the-best-gateways-paypal-stripe/
+11,99 €
+------------------------------------------------------
+Laravel 5.2 PHP - Build a Shopping Cart - #10 Stripe Payments View
+https://www.youtube.com/watch?v=jNWDrw3vRU4
+0€
+-------------------------------------------------------
+Build a shopping cart with Laravel Cashier and Vue
+https://morioh.com/p/a5b771b08911
+
+-------------------------------------------------------
+
+https://www.youtube.com/watch?v=oc1_DHfL89k
+----------------------------------------------------------
+Build a shopping cart with Laravel Cashier and Vue
+https://www.youtube.com/watch?v=gvnxd1xne7Q
+https://github.com/aschmelyun/laravel-vue-stripe-cashier
+-------------------------------------------------------------
+Laravel 8 E-Commerce - Checkout With Stripe
+https://www.youtube.com/watch?v=z9e8G4kRfoI
+
+-------------------------------------------------------------
+
+
+
+
+
+
+--- repository ---
+https://github.com/scotch-io/laravel-cashier-course
+https://github.com/JuanDMeGon/laravel-payment-processing
+https://github.com/vaened/laravel-cashier  !!
+https://github.com/Crinsane/LaravelShoppingcart
+https://github.com/moltin/laravel-cart
+https://github.com/anam-hossain/phpcart
+http://aimeos.org/project/laravel-shop-package/
+https://github.com/kingpabel/LaravelShoppingcart
+https://laracasts.com/discuss/channels/general-discussion/simple-shopping-cart
+https://github.com/skn-036/spa-shopping-cart-stripe-payment
+https://github.com/aschmelyun/laravel-vue-stripe-cashier
+
+
+
+
+
+
+
+
+//----------- TUTORIALS -------------
+How to configure Laravel Cashier with multiple models
+https://swapnil.dev/blog/how-to-configure-laravel-cashier-with-multiple-models/
+Laravel 7 — Create a subscription system using Cashier & Stripe
+https://medium.com/fabcoding/laravel-7-create-a-subscription-system-using-cashier-stripe-77cdf5c8ea5d
+Laravel: Implementing a Shopping Cart for Your Website
+https://meritocracy.is/blog/2021/06/08/laravel-implementing-a-shopping-cart-for-your-website/
+w3cubdoc
+https://docs.w3cub.com/laravel~8/docs/8.x/billing
+Examples of using Laravel Cashier v.10
+https://reposhub.com/php/web-frameworks/tnylea-laravel-cashier-examples.html
+Laravel Jetstream Subscription Billing With Stripe Checkout and Customer Portal
+https://nuffing.coutinho.net/2020/12/laravel-jetstream-subscription-billing-with-stripe-checkout-and-customer-portal/
+https://dev.to/cearls/laravel-jetstream-subscription-billing-with-stripe-checkout-and-customer-portal-3hkg
+
+Best Practices for Stripe Elements w/ Livewire & Alpine
+https://forum.laravel-livewire.com/t/best-practices-for-stripe-elements-w-livewire-alpine/1029
+
+Stripe Payments in Laravel: The Ultimate Guide
+https://blog.quickadminpanel.com/stripe-payments-in-laravel-the-ultimate-guide/
+
+How to integrate Stripe payment gateway in laravel
+http://justlaravel.com/integrate-stripe-payment-gateway-laravel/
+
+http://www.qcode.in/subscription-with-coupon-using-laravel-cashier-stripe/
+
+https://www.pakainfo.com/laravel-shopping-cart/
+--------
+Laravel Cashier Package
+https://www.larablocks.com/package/enea/laravel-cashier  !!!!
+---------
+Integrate Stripe Payment Gateway in Laravel 8 Application
+https://www.positronx.io/integrate-stripe-payment-gateway-in-laravel-application/
+---------
+Laravel Livewire Shopping Cart Step by Step Example
+https://larainfo.com/blogs/laravel-livewire-shopping-cart-step-by-step-example
+---------
+Laravel Livewire Shopping Cart Demo - Step by Step Guide
+https://livewire-shopping-cart.demo.lightit.io/products
+https://lightit.io/blog/laravel-livewire-shopping-cart-demo/ !!
+https://github.com/Light-it-labs/laravel-livewire-cart
+---------
+A real-time shopping cart powered by Laravel, Livewire and TailwindCSS
+https://giters.com/udexon/laravel-livewire-shopping-cart?amp=1
+https://github.com/udexon/laravel-livewire-shopping-cart
+https://awesomeopensource.com/project/fhsinchy/laravel-livewire-shopping-cart
+--------
+https://github.com/fhsinchy/laravel-livewire-shopping-cart.git
+--------------------------------------------------------------------------------
+https://thecodelearners.com/laravel-livewire-build-ecommerce-application-with-turbolinks/ !!!!
+
+--------------------------------------------------------------
+https://liveshop.herokuapp.com/
+https://github.com/webong/livewire-eshop !!!!
+---------------------------------------------------------------
+Livewire component that updates the cart counter
+https://navcodes.dev/blog/cart-counter-with-livewire/
+---------------------------------------------------------------+
+https://discoverprograming.com/laravel-livewire-shopping-cart-demo/?fbclid=IwAR3bVIeGcxb_FenSVPRWEYwYdMdz2kr3z9R2FM7dSmXynk5JcUYR17-nhZk
+-----------------------------------------------------------------
+https://www.surfsidemedia.in/post/laravel-8-e-commerce-create-shop-cart-and-checkout-page   !!!!!!
+
+-----------------------------------------------------------------
+https://github.com/mahmudulhsn/shopping-cart-with-laravel-livewire
+------------------------------------------------------------------------
+https://www.codecheef.org/article/laravel-add-to-cart-example-using-ajax-request
+-------------------------------------------------------------------------
+https://larablogger.pl/post/laravel-livewire-shopping-cart-demo
+------------
+https://github.com/Crinsane/LaravelShoppingcart
+---------------
+https://awesomeopensource.com/project/freshbitsweb/laravel-cart-manager
+------------------
+https://newbedev.com/php-laravel-7-shopping-cart-plugins-code-example
+-------------------
+https://packagist.org/packages/bumbummen99/shoppingcart
+----------------------
+https://laravelshopper.io/ !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+-----------------------
+https://therealprogrammer.com/laravel-livewire-blog-store/
+----------------------
+https://therealprogrammer.com/how-to-make-laravel-8-shopping-cart/
+https://github.com/darryldecode/laravelshoppingcart
+-------------------------------------
+https://github.com/fhsinchy/laravel-livewire-shopping-cart
+-------------------------------------
+https://webmobtuts.com/backend-development/creating-a-shopping-cart-with-laravel/
+--------------------------------------
+Webong / Livewire eshop
+-----------------------------------------
+https://kzbin.info/kzcode/laravel+livewire+shopping+cart
+-------------------------------------------
+https://www.youtube.com/watch?v=gvnxd1xne7Q
+--------------------------------------------
+https://www.youtube.com/watch?v=jNWDrw3vRU4
+---------------------------
+
+
+//--- links vari -----
+https://laravel-news.com/links
+https://awesomeopensource.com/projects/jetstream/laravel?ref=hackernoon.com
+https://awesomeopensource.com/projects/blade-template/laravel !!!
+https://awesomeopensource.com/projects/laravel-cashier?category...
+https://freek.dev/1912-how-to-customize-jetstream-and-laravel-spark  !!
+
+//-- contact form livewire
+https://www.laramind.com/blog/laravel-livewire-tutto-cio-che-devi-sapere/
+
+//-- Building a Search Drop Down Component with Laravel Livewire
+https://owenconti.com/posts/building-a-search-drop-down-component-with-laravel-livewire
+
+//-- Replacing Laravel Mix with Vite
+https://owenconti.com/posts/replacing-laravel-mix-with-vite
+
+
+https://freek.dev/1622-replacing-websockets-with-livewire
+
+
+//--- scelta lingua carina
+https://it.player.fm/podcasts/laravel
+
+
+https://spatie.be/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
