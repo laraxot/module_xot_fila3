@@ -604,11 +604,6 @@ class FileService {
 
         return $value;
     }
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-=======
->>>>>>> 62ea534012e9d79473f751b4b12ca7271fa0f629
 
     public static function viewPath(string $key): string {
         $ns_name = Str::before($key, '::');
@@ -647,8 +642,4 @@ class FileService {
         $to_path = FileService::viewPath($to);
         FileService::copy($from_path, $to_path);
     }
-<<<<<<< HEAD
->>>>>>> 62ea534012e9d79473f751b4b12ca7271fa0f629
-=======
->>>>>>> 62ea534012e9d79473f751b4b12ca7271fa0f629
 }
