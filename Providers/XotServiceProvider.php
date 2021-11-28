@@ -115,7 +115,7 @@ class XotServiceProvider extends XotBaseServiceProvider {
         //dddx($res);
     }
 
-    /*
+    //*
     public function mergeConfigs(): void {
         $configs = ['database', 'filesystems', 'auth', 'metatag', 'services', 'xra', 'social'];
         foreach ($configs as $v) {
@@ -128,7 +128,7 @@ class XotServiceProvider extends XotBaseServiceProvider {
     }
 
     //end mergeConfigs
-    */
+    //*/
     public function loadHelpersFrom(string $path): void {
         $files = File::files($path);
         foreach ($files as $file) {
