@@ -34,7 +34,7 @@ class XotServiceProvider extends XotBaseServiceProvider {
     public string $module_name = 'xot';
 
     public function bootCallback(): void {
-        //*
+        /*-- moved to tenant
         $this->mergeConfigs();
 
         if (\Request::has('act') && 'migrate' == \Request::input('act')) {
@@ -115,7 +115,7 @@ class XotServiceProvider extends XotBaseServiceProvider {
         //dddx($res);
     }
 
-    //*
+    /*
     public function mergeConfigs(): void {
         $configs = ['database', 'filesystems', 'auth', 'metatag', 'services', 'xra', 'social'];
         foreach ($configs as $v) {
