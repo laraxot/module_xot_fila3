@@ -235,6 +235,18 @@ https://spatie.be/
 
 
 
+da crinsane
+https://github.com/hardevine/LaravelShoppingcart
+https://github.com/Tefoh/Cart                          !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+https://github.com/overtrue/laravel-shopping-cart
+
+https://github.com/wowpowhub/shopping-cart-php/tree/main/app/Models/Cart   !!!! CON ADDON !!!!
+
+https://git.tibidono.com/package/laravelshoppingcart
+
+
+
+
 
 
 
