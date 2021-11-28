@@ -604,4 +604,42 @@ class FileService {
 
         return $value;
     }
+
+    public static function viewPath(string $key): string {
+        $ns_name = Str::before($key, '::');
+        $group = Str::of($key)->after('::');
+        $ns_dir = self::getViewNameSpacePath($ns_name);
+        $res = $ns_dir.'/'.Str::replace('.', '/', $group).'.blade.php';
+
+        return FileService::fixPath($res);
+    }
+
+    /**
+     * Undocumented function
+     *  Execute copy with makedirectory.
+     */
+    public static function copy(string $from, string $to) {
+        if (! File::exists(\dirname($to))) {
+            try {
+                File::makeDirectory(\dirname($to), 0755, true, true);
+            } catch (Exception $e) {
+                dd('Caught exception: ', $e->getMessage(), '\n['.__LINE__.']['.__FILE__.']');
+            }
+        }
+        if (! File::exists($to)) {//not rewite
+            File::copy($from, $to);
+        }
+    }
+
+    /**
+     * Undocumented function.
+     *
+     * from : theme::errors.500
+     * to  : pub_theme:errors.500
+     */
+    public static function viewCopy(string $from, string $to) {
+        $from_path = FileService::viewPath($from);
+        $to_path = FileService::viewPath($to);
+        FileService::copy($from_path, $to_path);
+    }
 }

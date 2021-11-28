@@ -21,7 +21,6 @@ trait Updater {
             ->getSchemaBuilder()
             ->getColumnListing($this->getTable());
     }
-    */
 
     /**
      * bootUpdater function.

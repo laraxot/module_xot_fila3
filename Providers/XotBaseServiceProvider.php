@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Modules\Xot\Providers;
 
+//use Illuminate\Database\Eloquent\Factory;
 use Exception;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Event;
