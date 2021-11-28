@@ -34,7 +34,7 @@ class XotServiceProvider extends XotBaseServiceProvider {
     public string $module_name = 'xot';
 
     public function bootCallback(): void {
-        /*
+        //*
         $this->mergeConfigs();
 
         if (\Request::has('act') && 'migrate' == \Request::input('act')) {
@@ -49,11 +49,11 @@ class XotServiceProvider extends XotBaseServiceProvider {
         $map = config('morph_map');
 
         Relation::morphMap($map);
-        */
+        //*/
 
         Module::enable('Tenant');
         Module::enable('Rating');
-        Module::enable('Tag');
+        //Module::enable('Tag');
 
         $this->registerCommands();
 
