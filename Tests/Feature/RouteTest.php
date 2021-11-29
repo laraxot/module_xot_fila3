@@ -24,8 +24,8 @@ class RouteTest extends TestCase {
 
         $urls = [
             '/',
-            '/'.App::getlocale().'/',
-            '/home',
+            // '/'.App::getlocale().'/',
+            // '/home',
             //'/'.App::getlocale().'/home', //questo url mi da errore
         ];
 
