@@ -39,7 +39,9 @@ abstract class XotBaseServiceProvider extends ServiceProvider {
         if (method_exists($this, 'bootCallback')) {
             $this->bootCallback();
         }
+        //Illuminate\Contracts\Container\BindingResolutionException: Target class [livewire] does not exist.
         $this->registerLivewireComponents();
+        //Illuminate\Contracts\Container\BindingResolutionException: Target class [modules] does not exist.
         $this->registerBladeComponents();
     }
 
@@ -135,8 +137,6 @@ abstract class XotBaseServiceProvider extends ServiceProvider {
         $namespace = 'Modules\\'.$module->getName().'\View\Components';
 
         Blade::componentNamespace($namespace, $module->getLowerName());
-
-        //Blade::componentNamespace($module->getPath().'/View/Components', $module->getLowerName());
     }
 
     public function registerLivewireComponents(): void {
@@ -204,8 +204,6 @@ abstract class XotBaseServiceProvider extends ServiceProvider {
             foreach ($comps as $comp) {
                 \Livewire\Livewire::component($comp->comp_name, $comp->comp_ns);
             }
-            //Livewire::component($this->module_name.'::calendar', Calendar::class);
-            //Livewire::component($this->module_name.'::numberer', Numberer::class);
         }
     }
 
