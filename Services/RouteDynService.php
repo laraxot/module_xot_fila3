@@ -352,7 +352,7 @@ class RouteDynService {
             $prefix = \mb_substr($prefix, 0, -1);
         }
         if ('' == $prefix || null == $prefix) {
-            return ['index' => $prefix.'index', 'create' => $prefix.'create', 'store' => 'store', 'show' => $prefix.'show', 'edit' => $prefix.'edit', 'update' => $prefix.'update', 'destroy' => $prefix.'destroy'];
+            return ['index' => $prefix.'index', 'create' => $prefix.'create', 'store' => $prefix.'store', 'show' => $prefix.'show', 'edit' => $prefix.'edit', 'update' => $prefix.'update', 'destroy' => $prefix.'destroy'];
         }
         $prefix = \mb_strtolower($prefix);
 

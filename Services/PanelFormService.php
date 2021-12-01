@@ -176,6 +176,7 @@ class PanelFormService {
         if (! in_array('title', array_keys($params))) {
             $params['title'] = '';
         }
+
         foreach ($acts as $act) {
             $params['act'] = $act;
             $html .= $this->btnHtml($params);
@@ -193,6 +194,7 @@ class PanelFormService {
         //$params['panel'] = $this->panel;
         //$params['url'] = RouteService::urlPanel($params);
         //$params['url'] = $this->panel->route->urlPanel($params);
+
         $params['url'] = $this->panel->url($params);
         //dddx([$this->panel->route, $params['panel'], $params['url']]);
         $params['method'] = Str::camel($params['act']);

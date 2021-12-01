@@ -149,7 +149,7 @@ class PanelService {
         } catch (\Exception $e) {
             echo '<h3>'.$e->getMessage().'</h3>';
         }
-        if (inAdmin()) {
+        if (inAdmin() && isset($params['module'])) {
             $params = getRouteParameters();
             $module = Module::find($params['module']);
             if (null == $module) {

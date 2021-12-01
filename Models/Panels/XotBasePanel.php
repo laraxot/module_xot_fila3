@@ -371,7 +371,10 @@ abstract class XotBasePanel implements PanelContract {
             //$query = str_replace(array('?'), array('\'%s\''), $builder->toSql());
             //$query = vsprintf($query, $builder->getBindings());
             $sql = Str::replaceArray('?', $rows->getBindings(), $rows->toSql());
-            throw new \Exception('Not Found ['.$value.'] on ['.$this->getName().']['.$sql.']');
+            throw new \Exception('Not Found ['.$value.'] on ['.$this->getName().']
+                ['.$sql.']
+                ['.__LINE__.']['.basename(__FILE__).']
+                ');
         }
         $this->row = $row;
 

@@ -127,6 +127,35 @@ class PanelRouteService {
         $panel = $this->panel;
         $act = 'show'; //default
         extract($params);
+
+        $breads = $panel->getBreads();
+        $parz = [
+            'module' => $breads->first()->getModuleNameLow(),
+        ];
+        foreach ($breads as $i => $bread) {
+            $parz['container'.$i] = $bread->getName();
+            $parz['item'.$i] = $bread->guid();
+        }
+
+        $route_name = 'item.'.Str::snake($act);
+
+        if (inAdmin($params)) {
+            $route_name = 'admin.'.$route_name;
+        }
+
+        $route = route($route_name, $parz, false);
+
+        if ('index' == $act) {
+            return $this->addFilterQueryString($route);
+        }
+
+        return $this->addCacheQueryString($route);
+    }
+
+    public function urlOLD(array $params = []): string {
+        $panel = $this->panel;
+        $act = 'show'; //default
+        extract($params);
         //panel lo potrei passare da parametro
         $breads = $panel->getBreads();
         $breads_count = $breads->count();
@@ -260,6 +289,19 @@ class PanelRouteService {
     }
 
     public function relatedUrl(array $params): string {
+        $panel = $this->panel;
+        $act = 'show';
+        extract($params);
+        if (! isset($related_name)) {
+            throw new \Exception('err: related_name is missing');
+        }
+        //--- solo per velocita'
+        $url = $panel->url($params);
+
+        return $url.'/'.$related_name;
+    }
+
+    public function relatedUrlOLD(array $params): string {
         $panel = $this->panel;
         $act = 'show';
         extract($params);
