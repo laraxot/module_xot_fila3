@@ -129,12 +129,12 @@ class PanelRouteService {
         extract($params);
 
         $breads = $panel->getBreads();
-        $parz = [
+        $route_params = [
             'module' => $breads->first()->getModuleNameLow(),
         ];
         foreach ($breads as $i => $bread) {
-            $parz['container'.$i] = $bread->getName();
-            $parz['item'.$i] = $bread->guid();
+            $route_params['container'.$i] = $bread->getName();
+            $route_params['item'.$i] = $bread->guid();
         }
 
         $route_name = 'containers.'.Str::snake($act);

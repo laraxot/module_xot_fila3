@@ -40,6 +40,14 @@ $acts = [
         //corretto che sia diverso da name,
         'uri_full' => '/{container0?}/{item0?}/{container1?}/{item1?}/{container2?}/{item2?}/{container3?}/{item3?}/{container4?}',
     ],
+    /*(object) [
+        'name' => 'home',
+        'methods' => ['get', 'head'],
+        'uri' => '',
+        //corretto che sia diverso da name,
+        'uri_full' => '',
+    ],
+    */
     (object) [
         'name' => 'show',
         'methods' => ['get', 'head'],
@@ -69,6 +77,14 @@ $middleware = [
 $namespace = '\Modules\Xot\Http\Controllers';
 $prefix = '/{lang?}';
 $as = null;
+
+Route::middleware($middleware)
+    ->namespace($namespace)
+    ->group(
+    function () use ($controller) {
+        Route::get('/', $controller.'@home')->name('home');
+    }
+);
 
 myRoutes($name, $middleware, $namespace, $prefix, $as, $controller, $front_acts);
 

@@ -6,6 +6,7 @@ namespace Modules\Xot\Models;
 
 //--- TRAITS ---
 use Modules\Xot\Models\Traits\WidgetTrait;
+use Sushi\Sushi;
 
 //------ ext models---
 
@@ -41,9 +42,17 @@ use Modules\Xot\Models\Traits\WidgetTrait;
  */
 class Home extends BaseModel {
     use WidgetTrait;
+    use Sushi;
 
     /**
      * @var string[]
      */
     protected $fillable = ['id', 'article_type', 'icon_src'];
+
+    protected $rows = [
+        [
+            'id' => 'home',
+            'name' => 'New York',
+        ],
+    ];
 }
