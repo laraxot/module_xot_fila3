@@ -4,13 +4,15 @@ declare(strict_types=1);
 
 namespace Modules\Xot\Http\Controllers;
 
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Str;
-use Modules\Theme\Services\ThemeService;
 use Modules\Xot\Contracts\PanelContract;
+use Modules\Xot\Http\Requests\XotRequest;
 use Modules\Xot\Services\PanelService;
 
-class ContainersController extends XotBaseContainerController {
+class ContainersController extends Controller {
     protected PanelContract $panel;
 
     /*
@@ -39,21 +41,6 @@ class ContainersController extends XotBaseContainerController {
         return $this->__call('index', $route_params);
     }
 
-    /*
-    public function home(Request $request) {
-        $action = \Route::current()->getAction();
-        $action['controller'] = __CLASS__.'@'.__FUNCTION__;
-        $action = \Route::current()->setAction($action);
-        $view = ThemeService::getView();
-        $view_params = [
-            'lang' => app()->getLocale(),
-            'view' => $view,
-        ];
-
-        return view()->make($view, $view_params);
-    }
-    */
-
     public function __call($method, $args) {
         $action = \Route::current()->getAction();
         $action['controller'] = __CLASS__.'@'.$method;
@@ -65,14 +52,85 @@ class ContainersController extends XotBaseContainerController {
         }
 
         return $this->__callRouteAct($method, $args);
+    }
 
+    public function getController(): string {
         /*
-        $data = request()->all();
-
-        $func = '\Modules\Xot\Jobs\PanelCrud\\'.Str::studly($method).'Job';
-        $panel = $func::dispatchNow($data, $panel);
-
-        return $panel->out();
+        if (null == $this->panel) {
+            return '\Modules\Xot\Http\Controllers\XotPanelController';
+        }
         */
+        list($containers, $items) = params2ContainerItem();
+
+        $mod_name = $this->panel->getModuleName();
+
+        $tmp = collect($containers)->map(
+            function ($item) {
+                return Str::studly($item);
+            }
+        )->implode('\\');
+        $controller = '\Modules\\'.$mod_name.'\Http\Controllers\\'.$tmp.'Controller';
+        if (class_exists($controller)) {
+            return $controller;
+        }
+
+        return '\Modules\Xot\Http\Controllers\XotPanelController';
+    }
+
+    /**
+     * @return mixed
+     */
+    public function __callRouteAct(string $method, array $args) {
+        $panel = $this->panel;
+        $authorized = Gate::allows($method, $panel);
+
+        if (! $authorized) {
+            //dddx($method, $panel);
+
+            return $this->notAuthorized($method, $panel);
+        }
+        $request = XotRequest::capture();
+
+        $controller = $this->getController();
+
+        $panel = app($controller)->$method($request, $panel);
+
+        return $panel;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function __callPanelAct(string $method, array $args) {
+        $request = request();
+        $act = $request->_act;
+        $method_act = Str::camel($act);
+
+        $panel = $this->panel;
+
+        $authorized = Gate::allows($method_act, $panel);
+        if (! $authorized) {
+            return $this->notAuthorized($method_act, $panel);
+        }
+
+        return $panel->callAction($act);
+    }
+
+    /**
+     * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse|\Illuminate\Http\Response
+     */
+    public function notAuthorized(string $method, PanelContract $panel) {
+        $lang = app()->getLocale();
+
+        if (! \Auth::check()) {
+            $referer = \Request::path();
+
+            return redirect()->route('login', ['lang' => $lang, 'referer' => $referer])
+            ->withErrors(['active' => 'login before']);
+        }
+
+        $msg = 'Auth Id ['.\Auth::id().'] not can ['.$method.'] on ['.get_class($panel).']';
+
+        return response()->view('pub_theme::errors.403', ['msg' => $msg], 403);
     }
 }
