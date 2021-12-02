@@ -6,11 +6,14 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 //--- models --
 use Modules\Xot\Database\Migrations\XotBaseMigration;
+use Modules\Xot\Models\Post;
 
 /**
  * Class CreatePostsTable.
  */
-class CreatePostsTable extends XotBaseMigration {
+class CreateXotPostsTable extends XotBaseMigration {
+    protected ?string $model_class = Post::class;
+
     /**
      * db up.
      *
