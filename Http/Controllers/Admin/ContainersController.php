@@ -14,7 +14,7 @@ use Modules\Xot\Services\PanelService;
 /**
  * Class ItemController.
  */
-class ItemController extends XotBaseContainerController {
+class ContainersController extends XotBaseContainerController {
     /*
     public function index(Request $request) {
         $route_params = getRouteParameters(); // "module" => "lu"
