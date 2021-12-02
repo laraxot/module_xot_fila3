@@ -6,6 +6,8 @@ declare(strict_types=1);
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Str;
 use Modules\Tenant\Services\TenantService as Tenant;
 use Modules\Xot\Services\ArrayService;
@@ -225,6 +227,10 @@ if (! \function_exists('isHome')) {
      * @return bool
      */
     function isHome() {
+        if (URL::current() == url('')) {
+            return true;
+        }
+
         return Route::is('home');
     }
 }

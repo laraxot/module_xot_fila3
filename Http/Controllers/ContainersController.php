@@ -5,10 +5,11 @@ declare(strict_types=1);
 namespace Modules\Xot\Http\Controllers;
 
 use Illuminate\Support\Facades\Request;
+use Illuminate\Support\Str;
 use Modules\Theme\Services\ThemeService;
 use Modules\Xot\Services\PanelService;
 
-class ItemController extends XotBaseContainerController {
+class ContainersController extends XotBaseContainerController {
     /*
     public function myRoutes() {
         dddx(getRouteParameters());
@@ -35,9 +36,10 @@ class ItemController extends XotBaseContainerController {
         return $this->__call('index', $route_params);
     }
 
+    /*
     public function home(Request $request) {
         $action = \Route::current()->getAction();
-        $action['controller'] = 'Modules\Xot\Http\Controllers\ItemController@'.__FUNCTION__;
+        $action['controller'] = __CLASS__.'@'.__FUNCTION__;
         $action = \Route::current()->setAction($action);
         $view = ThemeService::getView();
         $view_params = [
@@ -46,5 +48,19 @@ class ItemController extends XotBaseContainerController {
         ];
 
         return view()->make($view, $view_params);
+    }
+    */
+
+    public function __call($method, $arg) {
+        $action = \Route::current()->getAction();
+        $action['controller'] = __CLASS__.'@'.$method;
+        $action = \Route::current()->setAction($action);
+        $panel = PanelService::getRequestPanel();
+        $data = request()->all();
+
+        $func = '\Modules\Xot\Jobs\PanelCrud\\'.Str::studly($method).'Job';
+        $panel = $func::dispatchNow($data, $panel);
+
+        return $panel->out();
     }
 }

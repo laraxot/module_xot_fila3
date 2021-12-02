@@ -415,6 +415,9 @@ class RouteService {
         $tmp_arr = explode('\\', $tmp);
 
         $params = getRouteParameters();
+        [$containers, $items] = params2ContainerItem($params);
+
+        $params['containers'] = implode('.', $containers);
         $path = collect($tmp_arr)
             ->filter(function ($item) {
                 return ! in_array($item, ['Module', 'Item']);
