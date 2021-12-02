@@ -417,7 +417,7 @@ class RouteService {
         $params = getRouteParameters();
         $path = collect($tmp_arr)
             ->filter(function ($item) {
-                return 'Module' != $item;
+                return ! in_array($item, ['Module', 'Item']);
             })
             ->map(
             function ($item) use ($params) {
