@@ -122,13 +122,14 @@ class ContainersController extends Controller {
      */
     public function notAuthorized(string $method, PanelContract $panel) {
         $lang = app()->getLocale();
-
+        /*
         if (! \Auth::check()) {
             $referer = \Request::path();
 
             return redirect()->route('login', ['lang' => $lang, 'referer' => $referer])
             ->withErrors(['active' => 'login before']);
         }
+        */
 
         $msg = 'Auth Id ['.\Auth::id().'] not can ['.$method.'] on ['.get_class($panel).']';
 
