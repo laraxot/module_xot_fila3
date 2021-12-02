@@ -7,9 +7,12 @@ namespace Modules\Xot\Http\Controllers;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Str;
 use Modules\Theme\Services\ThemeService;
+use Modules\Xot\Contracts\PanelContract;
 use Modules\Xot\Services\PanelService;
 
 class ContainersController extends XotBaseContainerController {
+    protected PanelContract $panel;
+
     /*
     public function myRoutes() {
         dddx(getRouteParameters());
@@ -55,12 +58,20 @@ class ContainersController extends XotBaseContainerController {
         $action = \Route::current()->getAction();
         $action['controller'] = __CLASS__.'@'.$method;
         $action = \Route::current()->setAction($action);
-        $panel = PanelService::getRequestPanel();
+        $this->panel = PanelService::getRequestPanel();
+        if ('' != request()->input('_act', '')) {
+            return $this->__callPanelAct($method, $args);
+        }
+
+        return $this->__callRouteAct($method, $args);
+
+        /*
         $data = request()->all();
 
         $func = '\Modules\Xot\Jobs\PanelCrud\\'.Str::studly($method).'Job';
         $panel = $func::dispatchNow($data, $panel);
 
         return $panel->out();
+        */
     }
 }
