@@ -128,26 +128,29 @@ class HtmlPanelPresenter implements PanelPresenterContract {
             'page' => new \Modules\Theme\Services\Objects\PageObject(),
         ];
 
-        if (! view()->exists('pub_theme::layouts.app')) {
-            $pieces = [
-                'layouts.app',
-                'layouts.plane',
-                'layouts.partials.htmlheader',
-                'layouts.partials.headernav',
-                'layouts.partials.footer',
-                'layouts.partials.scripts',
-            ];
-            foreach ($pieces as $piece) {
-                FileService::viewCopy('theme::'.$piece, 'pub_theme::'.$piece);
-            }
-
-            /*
-            $message = 'not exists view [pub_theme::layouts.app]
-                <br/> pub_theme:'.config('xra.pub_theme').'
-                <br/> pub_theme dir: '.collect(\View::getFinder()->getHints())->get('pub_theme')[0];
-            throw new \Exception($message);
-            */
+        //if (! view()->exists('pub_theme::layouts.app')) {
+        $pieces = [
+            'layouts.app',
+            'layouts.plane',
+            'layouts.partials.htmlheader',
+            'layouts.partials.headernav',
+            'layouts.partials.footer',
+            'layouts.partials.scripts',
+            'auth.links',
+            'layouts.partials.headernav.lang',
+            'layouts.partials.modal',
+        ];
+        foreach ($pieces as $piece) {
+            FileService::viewCopy('theme::'.$piece, 'pub_theme::'.$piece);
         }
+
+        /*
+        $message = 'not exists view [pub_theme::layouts.app]
+            <br/> pub_theme:'.config('xra.pub_theme').'
+            <br/> pub_theme dir: '.collect(\View::getFinder()->getHints())->get('pub_theme')[0];
+        throw new \Exception($message);
+        */
+        //}
 
         //return view($view_work)->with($view_params);
         return view()->make($view_work, $view_params); //->render(); //se metto render , non mi prende piu' i parametri passati con with
