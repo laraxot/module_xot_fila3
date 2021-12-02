@@ -60,6 +60,7 @@ class ContainersController extends XotBaseContainerController {
         $action = \Route::current()->setAction($action);
 
         $this->panel = PanelService::getRequestPanel();
+
         if ('' != request()->input('_act', '')) {
             return $this->__callPanelAct($method, $args);
         }
