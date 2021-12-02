@@ -95,7 +95,7 @@ function myRoutes($name, $middleware, $namespace, $prefix, $as, $controller, $ac
                 //$uri = ($act->uri_full ?? $name).$act->uri;
                 $uri = $act->uri.($act->uri_full ?? $name);
                 Route::match($act->methods, $uri, $controller.'@'.$act->name)
-                ->name('item.'.$act->name)
+                ->name('containers.'.$act->name)
                 //->where(['container1' => '[0-9]+']) //errato solo per test
                 ;
             }
