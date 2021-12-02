@@ -137,7 +137,7 @@ class PanelRouteService {
             $parz['item'.$i] = $bread->guid();
         }
 
-        $route_name = 'item.'.Str::snake($act);
+        $route_name = 'containers.'.Str::snake($act);
 
         if (inAdmin($params)) {
             $route_name = 'admin.'.$route_name;
