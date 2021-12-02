@@ -1,4 +1,4 @@
-@extends('xot::layouts.master')
+@extends('xot::layouts.app')
 
 @section('content')
     <h1>Hello World</h1>
