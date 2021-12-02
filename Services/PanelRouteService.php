@@ -143,7 +143,29 @@ class PanelRouteService {
             $route_name = 'admin.'.$route_name;
         }
 
-        $route = route($route_name, $parz, false);
+        try {
+            $route = route($route_name, $route_params, false);
+        } catch (\Exception $e) {
+            if (request()->input('debug', false)) {
+                dddx(
+                    ['e' => $e->getMessage(),
+                        'params' => $params,
+                        'route_name' => $route_name,
+                        'route_params' => $route_params,
+                        'last row' => $panel->getRow(),
+                        'panel post type' => $panel->postType(),
+                        'panel guid' => $panel->guid(),
+                        'last route key ' => $panel->getRow()->getRouteKey(),
+                        'last route key name' => $panel->getRow()->getRouteKeyName(),
+                        'in_admin' => config()->get('in_admin'),
+                        'in_admin_session' => session()->get('in_admin'),
+                        //'routes' => \Route::getRoutes(),
+                    ]
+                );
+            }
+
+            return '#['.__LINE__.']['.__FILE__.']['.$e->getMessage().']';
+        }
 
         if ('index' == $act) {
             return $this->addFilterQueryString($route);
