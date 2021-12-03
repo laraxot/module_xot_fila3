@@ -1232,6 +1232,7 @@ abstract class XotBasePanel implements PanelContract {
             ->firstWhere('name', $act);
         if (! is_object($action)) {
             $msg = 'action '.$act.' not recognized for ['.get_class($this).']';
+            FileService::viewCopy('theme::errors.403', 'pub_theme::errors.403');
 
             return response()->view('pub_theme::errors.403', ['message' => $msg], 403);
         }
