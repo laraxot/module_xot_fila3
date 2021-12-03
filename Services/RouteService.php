@@ -306,7 +306,7 @@ class RouteService {
         [$containers, $items] = params2ContainerItem($route_params);
         $n_items = count($items);
         //dddx($n_items);//1
-        //dddx($route_name); container0.show
+        //dddx($route_name); containers.show
         for ($i = 0; $i < $n_items; ++$i) {
             $v = $items[$i];
             if (method_exists($v, 'postLang')) {
