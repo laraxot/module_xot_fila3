@@ -71,7 +71,7 @@ class ContainersController extends Controller {
             }
         )->implode('\\');
         $controller = '\Modules\\'.$mod_name.'\Http\Controllers\\'.$tmp.'Controller';
-        if (class_exists($controller)) {
+        if (class_exists($controller) && '' != $tmp) {
             return $controller;
         }
 
