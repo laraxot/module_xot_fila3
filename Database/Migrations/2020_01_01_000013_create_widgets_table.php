@@ -19,26 +19,22 @@ class CreateWidgetsTable extends XotBaseMigration {
      */
     public function up() {
         //-- CREATE --
-        if (! $this->tableExists()) {
-            $this->getConn()->create(
-                $this->getTable(),
-                function (Blueprint $table) {
-                    $table->increments('id');
-                    $table->nullableMorphs('post');
-                    $table->string('blade')->nullable();
-                    $table->string('image_src')->nullable();
-                    $table->integer('pos')->nullable();
-                    $table->string('model')->nullable();
-                    $table->integer('limit')->nullable();
-                    $table->string('order_by')->nullable();
-                    $table->timestamps();
-                }
-            );
-        }//end create
+        $this->tableCreate(
+            function (Blueprint $table) {
+                $table->increments('id');
+                $table->nullableMorphs('post');
+                $table->string('blade')->nullable();
+                $table->string('image_src')->nullable();
+                $table->integer('pos')->nullable();
+                $table->string('model')->nullable();
+                $table->integer('limit')->nullable();
+                $table->string('order_by')->nullable();
+                $table->timestamps();
+            }
+        ); //end create
 
         //-- UPDATE --
-        $this->getConn()->table(
-            $this->getTable(),
+        $this->tableUpdate(
             function (Blueprint $table) {
                 if (! $this->hasColumn('updated_at')) {
                     $table->timestamps();
