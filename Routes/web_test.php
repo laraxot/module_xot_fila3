@@ -78,7 +78,6 @@ $namespace = '\Modules\Xot\Http\Controllers';
 $prefix = '/{lang?}';
 $as = null;
 if (! config('xra.disable_frontend_dynamic_route', false)) {
-    dddx('si');
     Route::middleware($middleware)
         ->namespace($namespace)
         ->group(
@@ -88,8 +87,6 @@ if (! config('xra.disable_frontend_dynamic_route', false)) {
     );
 
     myRoutes($name, $middleware, $namespace, $prefix, $as, $controller, $front_acts);
-} else {
-    dddx('no');
 }
 
 $middleware = [
