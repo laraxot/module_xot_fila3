@@ -23,6 +23,11 @@ abstract class BaseModel extends Model {
     use HasFactory;
 
     /**
+     * @var string
+     */
+    protected $connection = 'mysql'; // this will use the specified database conneciton
+
+    /**
      * @var string[]
      */
     protected $fillable = ['id'];
