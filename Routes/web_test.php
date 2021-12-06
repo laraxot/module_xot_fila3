@@ -77,16 +77,17 @@ $middleware = [
 $namespace = '\Modules\Xot\Http\Controllers';
 $prefix = '/{lang?}';
 $as = null;
+if (! config('xra.disable_frontend_dynamic_route')) {
+    Route::middleware($middleware)
+        ->namespace($namespace)
+        ->group(
+        function () use ($controller) {
+            Route::get('/', $controller.'@home')->name('home');
+        }
+    );
 
-Route::middleware($middleware)
-    ->namespace($namespace)
-    ->group(
-    function () use ($controller) {
-        Route::get('/', $controller.'@home')->name('home');
-    }
-);
-
-myRoutes($name, $middleware, $namespace, $prefix, $as, $controller, $front_acts);
+    myRoutes($name, $middleware, $namespace, $prefix, $as, $controller, $front_acts);
+}
 
 $middleware = [
     'web',
