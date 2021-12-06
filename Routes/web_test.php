@@ -77,7 +77,7 @@ $middleware = [
 $namespace = '\Modules\Xot\Http\Controllers';
 $prefix = '/{lang?}';
 $as = null;
-if (! config('xra.disable_frontend_dynamic_route')) {
+if (! config('xra.disable_frontend_dynamic_route', false)) {
     Route::middleware($middleware)
         ->namespace($namespace)
         ->group(
