@@ -84,7 +84,7 @@ abstract class XotBaseThemeServiceProvider {
                             return Str::slug(Str::snake($item));
                         })->implode('.');
                         $tmp->comp_name .= $piece;
-                        $tmp->comp_name .= '.'.Str::snake(Str::replace('\\', ' ', $class_name));
+                        $tmp->comp_name .= '.'.Str::slug(Str::snake(Str::replace('\\', ' ', $class_name)));
                         $tmp->comp_ns = 'Themes\\'.$this->name.'\View\Components\\'.$v->getRelativePath().'\\'.$class_name;
                         $tmp->class_name = $v->getRelativePath().'\\'.$tmp->class_name;
                     }

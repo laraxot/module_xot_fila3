@@ -1020,9 +1020,10 @@ abstract class XotBasePanel implements PanelContract {
             '$row->getKeyName()' => $row->getKeyName(),
             //'$row->$key' => $row->{$key},
             //'$row->post' => $row->post,
-            '$row' => $row,
+            '$row' => $row->toArray(),
         ];
-        */
+        dddx($msg);
+        //*/
         if (null == $row->getKey()) {
             return null;
         }

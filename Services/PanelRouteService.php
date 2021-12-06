@@ -129,9 +129,10 @@ class PanelRouteService {
         extract($params);
 
         $breads = $panel->getBreads();
-        $route_params = [
-            'module' => $breads->first()->getModuleNameLow(),
-        ];
+        $route_params = [];
+        if (inAdmin()) {
+            $route_params['module'] = $breads->first()->getModuleNameLow();
+        }
         foreach ($breads as $i => $bread) {
             $route_params['container'.$i] = $bread->getName();
             $route_params['item'.$i] = $bread->guid();
