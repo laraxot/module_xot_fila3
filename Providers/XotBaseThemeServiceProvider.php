@@ -56,6 +56,7 @@ abstract class XotBaseThemeServiceProvider {
 
     public function registerBladeComponents(): void {
         $components_json = $this->dir.'/../View/Components/_components.json';
+
         $exists = File::exists($components_json);
         if ($exists && false) {
             $content = File::get($components_json);
