@@ -7,6 +7,7 @@ namespace Modules\Xot\Services;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Str;
+use Modules\Tenant\Services\TenantService;
 use Modules\Xot\Contracts\PanelContract;
 
 /**
@@ -130,9 +131,13 @@ class PanelRouteService {
 
         $breads = $panel->getBreads();
         $route_params = [];
-        if (inAdmin()) {
+        if (inAdmin() && null !== $breads->first()) {
             $route_params['module'] = $breads->first()->getModuleNameLow();
         }
+        if (inAdmin() && null == $breads->first()) {
+            $route_params['module'] = TenantService::config('xra.main_module', 'xot');
+        }
+
         foreach ($breads as $i => $bread) {
             $route_params['container'.$i] = $bread->getName();
             $route_params['item'.$i] = $bread->guid();
