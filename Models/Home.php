@@ -53,6 +53,8 @@ class Home extends BaseModel {
         [
             'id' => 'home',
             'name' => 'New York',
+            'created_by' => 'xot',
+            'updated_by' => 'xot',
         ],
     ];
 }
