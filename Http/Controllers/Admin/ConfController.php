@@ -30,7 +30,7 @@ class ConfController extends Controller {
 
             return (object) [
                 'title' => $key,
-                'url' => route('admin.container0.edit', $route_params, false),
+                'url' => route('admin.containers.edit', $route_params, false),
             ];
         })->all();
 

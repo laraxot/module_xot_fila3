@@ -46,7 +46,7 @@ class RouteTest extends TestCase {
 
             foreach ($roots as $root) {
                 $parz = ['lang' => $lang, 'container0' => $root];
-                $url = route('container0.index', $parz);
+                $url = route('containers.index', $parz);
                 $this->myTestUrl($url);
 
                 if ($populate = 0) {

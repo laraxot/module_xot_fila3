@@ -185,7 +185,7 @@ class RouteService {
     }
     */
     //se n=0 => 'container0'
-    // se n=1 => 'container0.container1'
+    // se n=1 => 'containers.container1'
 
     /**
      * @return string

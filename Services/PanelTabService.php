@@ -122,7 +122,7 @@ class PanelTabService {
                 if ($url_test = 1) {
                     $tmp->active = request()->url() == $url;
                 } else {
-                    $tmp->active = request()->routeIs('admin.container0.'.$act);
+                    $tmp->active = request()->routeIs('admin.containers.'.$act);
                 }
                 */
                 $tmp->active = request()->url() == $url;

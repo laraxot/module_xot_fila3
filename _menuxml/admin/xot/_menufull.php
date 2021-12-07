@@ -24,7 +24,7 @@ $ris = [
             'visibility' => '1',
             'active' => 0,
             'routename' => '',
-            'url' => route('admin.container0.index',
+            'url' => route('admin.containers.index',
                 array_merge($route_params, ['container0' => 'metatag', 'lang' => 'it'])
             ),
         ],
