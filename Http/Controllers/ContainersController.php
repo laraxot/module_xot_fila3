@@ -10,7 +10,9 @@ use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Str;
 use Modules\Xot\Contracts\PanelContract;
 use Modules\Xot\Http\Requests\XotRequest;
+use Modules\Xot\Services\FileService;
 use Modules\Xot\Services\PanelService;
+use Modules\Xot\Services\PolicyService;
 
 class ContainersController extends Controller {
     protected PanelContract $panel;
@@ -130,8 +132,11 @@ class ContainersController extends Controller {
             ->withErrors(['active' => 'login before']);
         }
         */
+        $policy_class = PolicyService::get($panel)->createIfNotExists()->getClass();
+        $msg = 'Auth Id ['.\Auth::id().'] not can ['.$method.'] on ['.$policy_class.']';
 
-        $msg = 'Auth Id ['.\Auth::id().'] not can ['.$method.'] on ['.get_class($panel).']';
+        //$msg = 'Auth Id ['.\Auth::id().'] not can ['.$method.'] on ['.get_class($panel).']';
+        FileService::viewCopy('theme::errors.403', 'pub_theme::errors.403');
 
         return response()->view('pub_theme::errors.403', ['msg' => $msg], 403);
     }
