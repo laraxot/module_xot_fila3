@@ -9,6 +9,7 @@ use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Gate;
 use Modules\Xot\Services\PanelService;
 use Illuminate\Support\Facades\Request;
+use Modules\Xot\Services\PolicyService;
 use Modules\Xot\Contracts\PanelContract;
 use Modules\Xot\Http\Requests\XotRequest;
 
@@ -102,8 +103,8 @@ class ContainersController extends Controller
             return redirect()->route('login', ['lang' => $lang, 'referer' => $referer])
             ->withErrors(['active' => 'login before']);
         }
-
-        $msg = 'Auth Id ['.\Auth::id().'] not can ['.$method.'] on ['.get_class($panel).']';
+        $policy_class = PolicyService::get($panel)->createIfNotExists()->getClass();
+        $msg = 'Auth Id ['.\Auth::id().'] not can ['.$method.'] on ['.$policy_class.']';
 
         return response()->view('pub_theme::errors.403', ['msg' => $msg], 403);
     }
