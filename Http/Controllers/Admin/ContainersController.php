@@ -4,20 +4,23 @@ declare(strict_types=1);
 
 namespace Modules\Xot\Http\Controllers\Admin;
 
+use Illuminate\Support\Str;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Gate;
-use Illuminate\Support\Facades\Request;
-use Illuminate\Support\Str;
-use Modules\Xot\Http\Requests\XotRequest;
 use Modules\Xot\Services\PanelService;
+use Illuminate\Support\Facades\Request;
+use Modules\Xot\Contracts\PanelContract;
+use Modules\Xot\Http\Requests\XotRequest;
 
 //---- services ---
 
 /**
  * Class ItemController.
  */
-class ContainersController extends Controller {
-    public function index(Request $request) {
+class ContainersController extends Controller
+{
+    public function index(Request $request)
+    {
         $route_params = getRouteParameters(); // "module" => "lu"
         [$containers,$items] = params2ContainerItem();
         //dddx(['contianers' => $containers, 'items' => $items]);
@@ -31,7 +34,8 @@ class ContainersController extends Controller {
         return $this->__call('index', $route_params);
     }
 
-    public function __call($method, $args) {
+    public function __call($method, $args)
+    {
         $action = \Route::current()->getAction();
         $action['controller'] = __CLASS__.'@'.$method;
         $action = \Route::current()->setAction($action);
@@ -47,7 +51,8 @@ class ContainersController extends Controller {
     /**
      * @return mixed
      */
-    public function __callRouteAct(string $method, array $args) {
+    public function __callRouteAct(string $method, array $args)
+    {
         $panel = $this->panel;
         $authorized = Gate::allows($method, $panel);
 
@@ -68,7 +73,8 @@ class ContainersController extends Controller {
     /**
      * @return mixed
      */
-    public function __callPanelAct(string $method, array $args) {
+    public function __callPanelAct(string $method, array $args)
+    {
         $request = request();
         $act = $request->_act;
         $method_act = Str::camel($act);
@@ -86,7 +92,8 @@ class ContainersController extends Controller {
     /**
      * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse|\Illuminate\Http\Response
      */
-    public function notAuthorized(string $method, PanelContract $panel) {
+    public function notAuthorized(string $method, PanelContract $panel)
+    {
         $lang = app()->getLocale();
 
         if (! \Auth::check()) {
@@ -101,7 +108,8 @@ class ContainersController extends Controller {
         return response()->view('pub_theme::errors.403', ['msg' => $msg], 403);
     }
 
-    public function getController(): string {
+    public function getController(): string
+    {
         list($containers, $items) = params2ContainerItem();
         $mod_name = $this->panel->getModuleName(); //forse da mettere container0
 
