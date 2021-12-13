@@ -143,14 +143,13 @@ class PanelService {
 
     public static function getHomePanel(): PanelContract {
         $home = TenantService::model('home');
-
+        $params = getRouteParameters();
         try {
             $home = $home->firstOrCreate(['id' => 1]);
         } catch (\Exception $e) {
             echo '<h3>'.$e->getMessage().'</h3>';
         }
         if (inAdmin() && isset($params['module'])) {
-            $params = getRouteParameters();
             $module = Module::find($params['module']);
             if (null == $module) {
                 throw new \Exception('module ['.$params['module'].'] not found');
