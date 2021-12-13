@@ -1,3 +1,4 @@
+trader sistemato
 //---------------------------
 metatrader
 
@@ -40,8 +41,27 @@ https://www.opensourceagenda.com/tags/binance-api
 https://github.com/chrisleekr/binance-trading-bot
 
 
+https://www.campcodes.com/projects/php/online-bitcoin-trading-system/
+
+//----------- VIDEO
 https://www.youtube.com/watch?v=mpAMmHB8wN4
 
 
+//--------------bot
+pionex.com
+
+
+//---- liste exchange
+https://defiprime.com/exchanges
+
+- uniswap
+- kyber
+
+//--- lista tokens
+https://etherscan.io/tokens
+
+
+ropsten.infura.io
+https://infura.io/pricing ??
 
 
