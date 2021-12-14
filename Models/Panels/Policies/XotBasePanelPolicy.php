@@ -8,7 +8,9 @@ use Illuminate\Auth\Access\HandlesAuthorization;
 //use Illuminate\Contracts\Auth\UserProvider as User;
 use Modules\Xot\Contracts\PanelContract;
 use Modules\Xot\Contracts\UserContract;
+use Modules\Xot\Services\PanelService;
 use Modules\Xot\Services\ProfileService;
+use Nwidart\Modules\Facades\Module;
 
 /**
  * Class XotBasePanelPolicy.
@@ -24,11 +26,11 @@ abstract class XotBasePanelPolicy {
      */
     //*
     public function before($user, $ability) {
-        /* se sei user admin quindi perm type è 5 allora tutte le policy ritornano true */
-        //dddx(ProfileService::get($user)->isSuperAdmin()); // Modules\LU\Services\ProfileService
+        //* -- togliere per fare debug
         if (is_object($user) && ProfileService::get($user)->isSuperAdmin()) {
             return true;
         }
+        //*/
 
         return null;
     }
@@ -41,6 +43,18 @@ abstract class XotBasePanelPolicy {
     */
 
     public function home(?UserContract $user, PanelContract $panel): bool {
+        if (inAdmin() && null == $user) {
+            return false;
+        }
+        $route_params = $panel->getRouteParams();
+        if (isset($route_params['module'])) {
+            $module = Module::find($route_params['module']);
+            $panel = PanelService::get($user);
+            $areas = $panel->areas()->firstWhere('area_define_name', $module->getName());
+
+            return is_object($areas);
+        }
+
         return true;
     }
 
