@@ -29,10 +29,6 @@ abstract class XotBaseThemeServiceProvider {
             return '<'."?php echo md_to_html($expression); ?".'>';
         });
 
-        Blade::directive('error', function ($expression) {
-            return '<'."?php echo \$errors->first($expression, '<span class=\"block text-sm text-red-500 mt-2\">:message</span>'); ?".'>';
-        });
-
         Blade::directive('formGroup', function ($expression) {
             return '<div class="form-group<'."?php echo \$errors->has($expression) ? ' has-error' : '' ?".'>">';
         });
