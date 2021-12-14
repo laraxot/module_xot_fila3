@@ -5,14 +5,15 @@ declare(strict_types=1);
 namespace Modules\Xot\Models;
 
 use Illuminate\Database\Eloquent\Relations\MorphPivot;
-
 use Modules\Xot\Traits\Updater;
 
 /**
  * Class BaseMorphPivot.
  */
-abstract class BaseMorphPivot extends MorphPivot{
+abstract class BaseMorphPivot extends MorphPivot {
     use Updater;
+
+    protected $connection = 'mysql'; // this will use the specified database connection
 
     /**
      * @var array
@@ -53,7 +54,7 @@ abstract class BaseMorphPivot extends MorphPivot{
         'id',
         'post_id', 'post_type',
         'related_type',
-        'user_id', //in amenity no, in rating si
+        'user_id',
         'note',
     ];
 }

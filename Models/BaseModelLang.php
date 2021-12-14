@@ -22,6 +22,8 @@ abstract class BaseModelLang extends Model {
     use LinkedTrait;
     use HasFactory;
 
+    protected $connection = 'mysql'; // this will use the specified database connection
+
     /**
      * @var string[]
      */

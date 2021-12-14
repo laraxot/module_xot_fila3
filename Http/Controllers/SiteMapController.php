@@ -71,7 +71,7 @@ class SiteMapController {
         $limit = 50;
         $lang = app()->getLocale();
         $rows = Post::where('lang', $lang)
-            //->whereHas('linkable') //Class 'Modules\Food\Models\Amenity' not found
+            //->whereHas('linkable') /
             ->limit($limit)
             ->get()
             ->filter(function ($item) {
