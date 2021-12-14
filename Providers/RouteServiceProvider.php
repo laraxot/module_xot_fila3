@@ -33,14 +33,7 @@ class RouteServiceProvider extends XotBaseRouteServiceProvider {
     public function bootCallback(): void {
         $router = $this->app['router'];
         //--- cambio lingua --
-        $langs = array_keys(config('laravellocalization.supportedLocales'));
-
-        if (in_array(\Request::segment(1), $langs)) {
-            $lang = \Request::segment(1);
-            if (null !== $lang) {
-                App::setLocale($lang);
-            }
-        }
+        $this->registerLang();
 
         $this->registerRoutePattern($router);
 
@@ -49,6 +42,17 @@ class RouteServiceProvider extends XotBaseRouteServiceProvider {
         //$router->pushMiddlewareToGroup('web', SetDefaultLocaleForUrlsMiddleware::class);
         $router->prependMiddlewareToGroup('web', SetDefaultLocaleForUrlsMiddleware::class);
         $router->prependMiddlewareToGroup('api', SetDefaultLocaleForUrlsMiddleware::class);
+    }
+
+    public function registerLang() {
+        $langs = array_keys(config('laravellocalization.supportedLocales'));
+
+        if (in_array(\Request::segment(1), $langs)) {
+            $lang = \Request::segment(1);
+            if (null !== $lang) {
+                App::setLocale($lang);
+            }
+        }
     }
 
     public function registerRoutePattern(Router $router): void {

@@ -4,14 +4,10 @@ declare(strict_types=1);
 
 namespace Modules\Xot\Providers;
 
-use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Foundation\AliasLoader;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
-use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\View;
-use Modules\Tenant\Services\TenantService as Tenant;
 use Modules\Xot\Http\View\Composers\XotComposer;
 use Nwidart\Modules\Facades\Module;
 
@@ -34,25 +30,8 @@ class XotServiceProvider extends XotBaseServiceProvider {
     public string $module_name = 'xot';
 
     public function bootCallback(): void {
-        /*-- moved to tenant
-        $this->mergeConfigs();
-
-        if (\Request::has('act') && 'migrate' == \Request::input('act')) {
-            DB::purge('mysql'); //Call to a member function prepare() on null
-            DB::reconnect('mysql');
-        }
-        //DB::purge(); //Call to a member function prepare() on null
-        // Database connection [mysql] not configured.
-        DB::reconnect();
-        Schema::defaultStringLength(191);
-
-        $map = config('morph_map');
-
-        Relation::morphMap($map);
-        //*/
-
         Module::enable('Tenant');
-        Module::enable('Rating');
+        //Module::enable('Rating');
         //Module::enable('Tag');
 
         $this->registerCommands();
@@ -115,20 +94,6 @@ class XotServiceProvider extends XotBaseServiceProvider {
         //dddx($res);
     }
 
-    /*
-    public function mergeConfigs(): void {
-        $configs = ['database', 'filesystems', 'auth', 'metatag', 'services', 'xra', 'social'];
-        foreach ($configs as $v) {
-            $tmp = Tenant::config($v);
-            //dddx($tmp);
-        }
-        //DB::purge('mysql');//Call to a member function prepare() on null
-        //DB::purge('liveuser_general');
-        //DB::reconnect();
-    }
-
-    //end mergeConfigs
-    //*/
     public function loadHelpersFrom(string $path): void {
         $files = File::files($path);
         foreach ($files as $file) {
