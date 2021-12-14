@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+use Illuminate\Support\Facades\Route;
+
 $acts = [
     (object) [
         'name' => 'create',
@@ -81,10 +83,11 @@ if (! config('xra.disable_frontend_dynamic_route', false)) {
     Route::middleware($middleware)
         ->namespace($namespace)
         ->group(
-        function () use ($controller) {
-            Route::get('/', $controller.'@home')->name('home');
-        }
-    );
+            function () use ($controller) {
+                Route::get('/', $controller.'@home')->name('home');
+                Route::get('/home', $controller.'@home')->name('wellcome');
+            }
+        );
 
     myRoutes($name, $middleware, $namespace, $prefix, $as, $controller, $front_acts);
 }
@@ -107,15 +110,15 @@ function myRoutes($name, $middleware, $namespace, $prefix, $as, $controller, $ac
         ->prefix($prefix)
         ->as($as)
         ->group(
-        function () use ($name, $controller, $acts) {
-            foreach ($acts as $act) {
-                //$uri = ($act->uri_full ?? $name).$act->uri;
-                $uri = $act->uri.($act->uri_full ?? $name);
-                Route::match($act->methods, $uri, $controller.'@'.$act->name)
-                ->name('containers.'.$act->name)
-                //->where(['container1' => '[0-9]+']) //errato solo per test
-                ;
+            function () use ($name, $controller, $acts) {
+                foreach ($acts as $act) {
+                    //$uri = ($act->uri_full ?? $name).$act->uri;
+                    $uri = $act->uri.($act->uri_full ?? $name);
+                    Route::match($act->methods, $uri, $controller.'@'.$act->name)
+                    ->name('containers.'.$act->name)
+                    //->where(['container1' => '[0-9]+']) //errato solo per test
+                    ;
+                }
             }
-        }
-    );
+        );
 }
