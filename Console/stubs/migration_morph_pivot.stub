@@ -12,7 +12,12 @@ https://www.phpzag.com/star-rating-system-with-ajax-php-and-mysql/
 */
 
 
-class CreateDummyClassTable extends Migration{
+use Modules\Xot\Database\Migrations\XotBaseMigration;
+
+/**
+* Class CreateDummyClassTable
+*/
+class CreateDummyClassTable extends XotBaseMigration{
 
     public function getTable(){
         return with(new MyModel())->getTable();

@@ -6,7 +6,12 @@ use Illuminate\Support\Facades\Schema;
 //----- models -----
 use Modules\Xot\Models\Image as MyModel;
 
-class CreateImageTable extends Migration {
+use Modules\Xot\Database\Migrations\XotBaseMigration;
+
+/**
+* Class CreateImageTable
+*/
+class CreateImageTable extends XotBaseMigration {
     public function getTable() {
         return with(new MyModel())->getTable();
     }

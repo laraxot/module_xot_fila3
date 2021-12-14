@@ -78,7 +78,12 @@ class StubService {
     }
 
     public function getNamespace(): string {
-        return dirname($this->getClass());
+        $ns = dirname($this->getClass());
+        if (Str::startsWith($ns, '\\')) {
+            $ns = Str::after($ns, '\\');
+        }
+
+        return $ns;
     }
 
     public function getModel(): Model {
@@ -86,10 +91,14 @@ class StubService {
     }
 
     public function getReplaces(): array {
-        $model = $this->getModel();
-        $dummy_id = $model->getRouteKeyName();
+        $dummy_id = 'id';
         $search = [];
-        $fields = self::fields($model);
+        $fields = [];
+        if (class_exists($this->model_class)) {
+            $model = $this->getModel();
+            $fields = self::fields($model);
+            $dummy_id = $model->getRouteKeyName();
+        }
         /*
         dddx(
             [
@@ -103,10 +112,11 @@ class StubService {
         //dddx($columns);
         //$factories = $this->getFactories();
         //dddx($factories);
-
+        $dummy_class = basename($this->getClass());
         $replaces = [
             'DummyNamespace' => $this->getNamespace(),
-            'DummyClass' => basename($this->getClass()),
+            'DummyClassLower' => strtolower($dummy_class),
+            'DummyClass' => $dummy_class,
             'DummyModelClass' => basename($this->model_class),
             'DummyFullModel' => $this->getClass(),
             'dummy_id' => $dummy_id,
@@ -121,7 +131,11 @@ class StubService {
         return $replaces;
     }
 
-    public function getFactories() {
+    public function getFactories(): string {
+        if (! class_exists($this->model_class)) {
+            return '';
+        }
+
         return $this->getColumns()
             ->map(
                 function (Column $column) {
@@ -272,11 +286,23 @@ class StubService {
         $stub_file = __DIR__.'/../Console/stubs/'.$this->name.'.stub';
         $stub = File::get($stub_file);
         $replace = $this->getReplaces();
+        /*
+        dddx([
+            'array_keys($replace),' => array_keys($replace),
+            'replace' => $replace,
+            'stub' => $stub,
+            //'file' => $file,
+        ]);
+        //*/
 
-        $stub = str_replace(array_keys($replace), array_values($replace), $stub);
+        $stub = str_replace(
+            array_keys($replace),
+            array_values($replace),
+            $stub
+        );
+
         $file = $this->getClassFile();
 
-        // dddx($stub);
         File::put($file, $stub);
         $msg = (' ['.$file.'] is under creating , refresh page');
 
@@ -288,14 +314,24 @@ class StubService {
     }
 
     public function getDirModel(): string {
-        $autoloader_reflector = new \ReflectionClass($this->model_class);
-        //dddx($autoloader_reflector);
-        $class_file_name = $autoloader_reflector->getFileName();
-        if (false === $class_file_name) {
-            throw new \Exception('autoloader_reflector false');
-        }
+        if (class_exists($this->model_class)) {
+            $autoloader_reflector = new \ReflectionClass($this->model_class);
+            //dddx($autoloader_reflector);
+            $class_file_name = $autoloader_reflector->getFileName();
+            if (false === $class_file_name) {
+                throw new \Exception('autoloader_reflector false');
+            }
 
-        return dirname($class_file_name);
+            return dirname($class_file_name);
+        }
+        $class = $this->model_class;
+
+        if (Str::startsWith($class, '\\')) {
+            $class = Str::after($class, '\\');
+        }
+        $path = base_path($class);
+
+        return dirname($path);
     }
 
     public function getClass(): string {
@@ -318,6 +354,8 @@ class StubService {
                 return $dir.'\\Policies\\'.class_basename($this->model_class).'Policy';
             case 'panel':
                 return $dir.'\\Panels\\'.class_basename($this->model_class).'Panel';
+            case 'model':
+                return $this->model_class;
             default:
                 $msg = '['.$this->name.'] Unkwon !['.__LINE__.']['.basename(__FILE__).']';
                 //dddx($msg);
@@ -355,7 +393,9 @@ class StubService {
             case 'policy':
                 return $dir.'/Policies/'.$class_name.'Policy.php';
             case 'panel':
-                 return $dir.'/Panels/'.$class_name.'Panel.php';
+                return $dir.'/Panels/'.$class_name.'Panel.php';
+            case 'model':
+                return $dir.'/'.$class_name.'.php';
             default:
                 $msg = '['.$this->name.'] Unkwon !['.__LINE__.']['.basename(__FILE__).']';
                 throw new \Exception($msg);

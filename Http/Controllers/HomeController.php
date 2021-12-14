@@ -50,7 +50,8 @@ class HomeController extends Controller {
     }
 
     public function createHomesTable(): void {
-        Schema::create('homes', function (Blueprint $table): void {
+        Schema::create('homes',
+        function (Blueprint $table): void {
             $table->increments('id');
 
             $table->string('created_by')->nullable();
@@ -65,7 +66,6 @@ class HomeController extends Controller {
      */
     //public function show(?array $data, $panel=null) {
     public function show(Request $request, ?PanelContract $panel = null) {
-
         //backtrace(true);
         $panel = PanelService::getRequestPanel();
         if ('' != $request->_act) {

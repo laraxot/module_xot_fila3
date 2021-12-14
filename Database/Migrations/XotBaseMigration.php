@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Str;
+use Modules\Xot\Services\StubService;
 use Nwidart\Modules\Facades\Module;
 
 //----- models -----
@@ -34,6 +35,7 @@ abstract class XotBaseMigration extends Migration {
             try {
                 $this->model = app($model);
             } catch (\Exception $ex) {
+                $res = StubService::setModelClass($model)->setName('model')->get();
                 throw new \Exception('<br><br>Table '.get_class($this).' does not have model '.$model.'<br><br>');
             }
         }
@@ -155,9 +157,10 @@ abstract class XotBaseMigration extends Migration {
      * Undocumented function.
      */
     public function isColumnType(string $column, string $type): bool {
-        if(!$this->hasColumn($column)){
+        if (! $this->hasColumn($column)) {
             return false;
         }
+
         return $this->getColumnType($column) == $type;
     }
 

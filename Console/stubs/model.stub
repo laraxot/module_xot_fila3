@@ -1,0 +1,11 @@
+<?php
+
+namespace DummyNamespace;
+
+/**
+* Model DummyClass.
+*
+*/
+class DummyClass extends BaseModel {
+    //protected $table = 'DummyClassLower';
+}

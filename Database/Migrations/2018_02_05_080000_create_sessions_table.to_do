@@ -4,7 +4,12 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateSessionsTable extends Migration {
+use Modules\Xot\Database\Migrations\XotBaseMigration;
+
+/**
+* Class CreateSessionsTable
+*/
+class CreateSessionsTable extends XotBaseMigration {
     public function getTable() {
         return 'sessions';
     }
