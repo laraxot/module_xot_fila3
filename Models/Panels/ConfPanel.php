@@ -32,25 +32,9 @@ class ConfPanel extends XotBasePanel {
             ],
             (object) [
                 'type' => 'String',
-                'name' => 'appname',
-                'rules' => 'required',
+                'name' => 'name',
+                //'rules' => 'required',
                 'comment' => null,
-            ],
-            (object) [
-                'type' => 'String',
-                'name' => 'description',
-                'rules' => 'required',
-                'comment' => null,
-            ],
-            (object) [
-                'type' => 'Text',
-                'name' => 'keywords',
-                'comment' => 'not in Doctrine',
-            ],
-            (object) [
-                'type' => 'Text',
-                'name' => 'author',
-                'comment' => 'not in Doctrine',
             ],
         ];
     }
