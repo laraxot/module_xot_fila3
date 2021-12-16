@@ -561,7 +561,7 @@ if (! \function_exists('transFields')) {
         }
 
         $start = 0;
-        if (in_admin()) {
+        if (inAdmin()) {
             $start = 1;
         }
         if (! isset($ris->name)) {

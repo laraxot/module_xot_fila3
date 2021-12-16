@@ -28,7 +28,8 @@ Available for free.
 Support all file formats and can work on almost all browsers.
 ---------------------------------------------------------------------------------------------------------------
 4. Projekktor:
-It is a self hosted environment and is available as open source video player. Projekktor was released under GPLv3 for Web and it is written using JavaScript. This platform is capable enough to manage all compatibility issues ad cross browser problems while providing a huge set of powerful features.
+It is a self hosted environment and is available as open source video player. Projekktor was released under GPLv3 for Web and it is written using JavaScript.
+This platform is capable enough to manage all compatibility issues ad cross browser problems while providing a huge set of powerful features.
 
 Key Features:
 
