@@ -46,9 +46,10 @@ class ConfsController extends Controller {
 
         return 'preso';
         */
-        $view = 'formx::standalone.manage.php-array';
+        $view = 'formx::admin.standalone.manage.php-array';
         $view_params = [
             'view' => $view,
+            'filename' => $filename,
         ];
 
         return view()->make($view, $view_params);
