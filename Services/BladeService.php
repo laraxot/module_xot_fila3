@@ -42,9 +42,13 @@ class BladeService {
                     if ('' != $v->getRelativePath()) {
                         //$tmp->comp_name = $this->module_name.'::';
                         $tmp->comp_name = '';
-                        $piece = collect(explode('\\', $v->getRelativePath()))->map(function ($item) {
-                            return Str::slug(Str::snake($item));
-                        })->implode('.');
+                        $piece = collect(explode('\\', $v->getRelativePath()))
+                            ->map(
+                                function ($item) {
+                                    return Str::slug(Str::snake($item));
+                                }
+                            )
+                            ->implode('.');
                         $tmp->comp_name .= $piece;
                         $tmp->comp_name .= '.'.Str::slug(Str::snake(Str::replace('\\', ' ', $class_name)));
                         $tmp->comp_ns = $namespace.'\View\Components\\'.$v->getRelativePath().'\\'.$class_name;
@@ -54,6 +58,7 @@ class BladeService {
                     $comps[] = $tmp;
                 }
             }
+            //dddx(['comps' => $comps]);
 
             $content = json_encode($comps);
             if (false === $content) {
