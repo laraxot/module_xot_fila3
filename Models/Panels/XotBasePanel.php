@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Http\Request;
 //----------  SERVICES --------------------------
+use Illuminate\Pipeline\Pipeline;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
@@ -1137,6 +1138,24 @@ abstract class XotBasePanel implements PanelContract {
     //Return value of Modules\Xot\Models\Panels\XotBasePanel::rows()
     //must be an instance of Illuminate\Database\Eloquent\Builder,
     //instance of Illuminate\Database\Eloquent\Relations\MorphToMany returned
+
+    /**
+     * init + filter + search + sort => ??? trovare nome.
+     *
+     * @return RowsContract
+     */
+    public function rowsTest(?array $data = null) {
+        $query = $this->getRows();
+        $test = app(Pipeline::class)
+        ->send($query)
+        ->through([
+            //'App\QueryFilters\LikeMatch:search,title,excerpt,summary',
+            'Modules\Xot\QueryFilters\Search',
+        ])
+        ->thenReturn()
+        ->get();
+        dddx(['query' => $query, 'test' => $test]);
+    }
 
     /**
      * init + filter + search + sort => ??? trovare nome.
