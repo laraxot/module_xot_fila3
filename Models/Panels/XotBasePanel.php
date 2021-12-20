@@ -1160,14 +1160,17 @@ abstract class XotBasePanel implements PanelContract {
         if (method_exists($query, 'with')) {
             $query = $query->with($with);
         }
-
+        //https://laravelvuejs.com/query-filters-in-laravel-70cafa5d4b64
         /*
-        try {
-            $query = $query->with($with);
-        } catch (\Exception $e) {
-            //Method Illuminate\Database\Eloquent\Collection::with does not exist.
-        }
+        $test=app(Pipeline::class)
+            ->send($query)
+            ->through([
+                'App\QueryFilters\LikeMatch:search,title,excerpt,summary',
+            ])
+            ->thenReturn()
+            ->paginate();
         */
+
         $query = $this->indexQuery($data, $query);
         $query = $this->applyFilter($query, $filters);
         $query = $this->applySearch($query, $q);
