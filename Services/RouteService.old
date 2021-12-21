@@ -433,7 +433,7 @@ class RouteService {
     $act = last(explode('.', $routename));
     extract($params);
     $tmp = [];
-    if (in_admin()) {
+    if (inAdmin()) {
     $tmp[] = 'admin';
     }
     for ($i = 0; $i <= $n + 1; ++$i) {
@@ -456,7 +456,7 @@ class RouteService {
         }
         //*
         $tmp = [];
-        if (in_admin()) {
+        if (inAdmin()) {
             $tmp[] = 'admin';
         }
         for ($i = 0; $i <= $container_i + 1; ++$i) {
@@ -465,7 +465,7 @@ class RouteService {
         $tmp[] = $act;
         $rountename_son = implode('.', $tmp);
         //*/
-        //$rountename_son=in_admin()?'admin.':'';
+        //$rountename_son=inAdmin()?'admin.':'';
         //$rountename_son.=str_repeat()
         //$rountename_son=str_repeat() //da fare
         return $rountename_son;
@@ -517,7 +517,7 @@ class RouteService {
                 $act = 'show';
             }
             $tmp1->title = $act;
-            $tmp1->routename = (in_admin() ? 'admin.' : '').'container0.'.$act;
+            $tmp1->routename = (inAdmin() ? 'admin.' : '').'container0.'.$act;
             $tmp1->url = route($tmp1->routename, $route_params);
             $tmp1->active = ($routename == $tmp1->routename);
             $tabs[] = $tmp1;
@@ -729,7 +729,7 @@ class RouteService {
     public static function getRoutenameN(array $params){
         extract($params);
         $tmp = [];
-        if (in_admin()) {
+        if (inAdmin()) {
             $tmp[] = 'admin';
         }
         for ($i = 0; $i <= $n; ++$i) {
@@ -762,7 +762,7 @@ class RouteService {
         }
 
         $tmp = [];
-        if (in_admin()) {
+        if (inAdmin()) {
             $tmp[] = 'admin';
         }
         for ($i = 0; $i <= $cont_i; ++$i) {
@@ -823,7 +823,7 @@ class RouteService {
         $act = last(explode('.', $routename));
         extract($params);
         $tmp = [];
-        if (in_admin()) {
+        if (inAdmin()) {
             $tmp[] = 'admin';
         }
         for ($i = 0; $i <= $n; ++$i) {

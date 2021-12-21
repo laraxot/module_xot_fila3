@@ -91,7 +91,7 @@ class TenantService {
      * @return \Illuminate\Config\Repository|\Illuminate\Contracts\Foundation\Application|mixed
      */
     public static function config(string $key) {
-        if (in_admin() && Str::startsWith($key, 'xra.model') && null !== (\Request::segment(2))) {
+        if (inAdmin() && Str::startsWith($key, 'xra.model') && null !== (\Request::segment(2))) {
             $module_name = \Request::segment(2);
             $models = getModuleModels($module_name);
             $original_conf = config('xra.model');

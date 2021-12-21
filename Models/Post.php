@@ -168,7 +168,7 @@ class Post extends Model {
 
     /*
     public function getRouteKeyName() {
-        return in_admin() ? 'guid' : 'post_id';
+        return inAdmin() ? 'guid' : 'post_id';
     }
     */
     //-------- relationship ------

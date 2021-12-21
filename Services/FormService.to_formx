@@ -13,7 +13,7 @@ class FormService {
         //$view_path=dirname(\View::getFinder()->find('theme::includes.components.form.text')); //devo dargli una view esistente di partenza
         $view_path = __DIR__.'/../Resources/views/includes/components/form';
         $blade_component = 'components.blade.input';
-        //if(in_admin()){  !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! SOLO PER METTERE SU
+        //if(inAdmin()){  !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! SOLO PER METTERE SU
         //    $blade_component='backend::includes.'.$blade_component;
         //}else{
         $blade_component = 'pub_theme::layouts.'.$blade_component;

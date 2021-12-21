@@ -57,7 +57,7 @@ class PanelRouteService {
 
         return 'admin' == 'aa';
         */
-        //return in_admin();
+        //return inAdmin();
     }
 
     public function addCacheQueryString(string $route): string {

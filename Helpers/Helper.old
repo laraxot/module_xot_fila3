@@ -177,7 +177,7 @@ if (! \function_exists('arraySave')) {
 */
 
 if (! \function_exists('in_admin')) {
-    function in_admin() {
+    function inAdmin() {
         return 'admin' == \Request::segment(1);
     }
 }
@@ -328,7 +328,7 @@ if (! \function_exists('tenantName')) {
 if (! \function_exists('tenantConfig')) {
     function tenantConfig($key) {
         $group = implode('.', array_slice(explode('.', $key), 0, 2));
-        if (in_admin() && Str::startsWith($key, 'xra.model')) {
+        if (inAdmin() && Str::startsWith($key, 'xra.model')) {
             $module_name = \Request::segment(2);
             $models = getModuleModels($module_name);
             $original_conf = config('xra.model');
@@ -387,7 +387,7 @@ if (! \function_exists('transFields')) {
         }
 
         $start = 0;
-        if (in_admin()) {
+        if (inAdmin()) {
             $start = 1;
         }
 
