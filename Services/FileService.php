@@ -643,11 +643,11 @@ class FileService {
         FileService::copy($from_path, $to_path);
     }
 
-    public static function getComponents(string $path, string $namespace, string $prefix) {
+    public static function getComponents(string $path, string $namespace, string $prefix, bool $force_recreate = false) {
         $components_json = $path.'/_components.json';
 
         $exists = File::exists($components_json);
-        if ($exists && false) {
+        if ($exists && ! $force_recreate) {
             $content = File::get($components_json);
             $comps = json_decode($content);
         } else {
