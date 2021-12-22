@@ -263,6 +263,15 @@ if (! \function_exists('isAdmin')) {
     }
 }
 
+if (! \function_exists('isAdmin')) {
+    /**
+     * @return bool
+     */
+    function isModerator() {
+        return true;
+    }
+}
+
 /*
      * Replaces spaces with full text search wildcards
      *
