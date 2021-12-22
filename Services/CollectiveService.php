@@ -27,6 +27,9 @@ class CollectiveService {
             $content = File::get($components_json);
             $json = json_decode($content);
 
+            if(empty($json)){
+                return [];
+            }
             return $json;
         }
 
