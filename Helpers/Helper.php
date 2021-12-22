@@ -1106,7 +1106,7 @@ if (! function_exists('md_to_html')) {
     /**
      * Convert Markdown to HTML.
      */
-    function md_to_html(string $markdown): string {
+    function md_to_html(?string $markdown): ?string {
         return $markdown;
         //return app(App\Markdown\Converter::class)->toHtml($markdown);
     }
