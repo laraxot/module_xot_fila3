@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
 use Modules\Xot\Services\BladeService;
+use Modules\Xot\Services\LivewireService;
 
 /**
  * Class XotBaseThemeServiceProvider.
@@ -52,13 +53,15 @@ abstract class XotBaseThemeServiceProvider {
     }
 
     public function registerBladeComponents(): void {
-        $components_json = $this->dir.'/../View/Components/_components.json';
+        //$components_json = $this->dir.'/../View/Components/_components.json';
         BladeService::registerComponents($this->dir.'/../View/Components', 'Themes\\'.$this->name);
     }
 
     public function registerLivewireComponents(): void {
-        $components_json = $this->dir.'/../Http/Livewire/_components.json';
+        //$components_json = $this->dir.'/../Http/Livewire/_components.json';
+        LivewireService::registerComponents($this->dir.'/../Http/Livewire', 'Themes\\'.$this->name);
         //$force_recreate = request()->input('force_recreate', true);
+        /*
         $exists = File::exists($components_json);
         if ($exists) {
             $content = File::get($components_json);
@@ -114,6 +117,6 @@ abstract class XotBaseThemeServiceProvider {
             foreach ($comps as $comp) {
                 \Livewire\Livewire::component($comp->comp_name, $comp->comp_ns);
             }
-        }
+        }*/
     }
 }

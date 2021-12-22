@@ -15,10 +15,11 @@ class BladeService {
     /**
      * Undocumented function.
      */
-    public static function registerComponents(string $path, string $namespace): void {
+    public static function registerComponents(string $path, string $namespace, string $prefix = ''): void {
         //$components_json = $this->dir.'/../View/Components/_components.json';
-        $components_json = $path.'/_components.json';
-
+        //$components_json = $path.'/_components.json';
+        $comps = FileService::getComponents($path, $namespace.'\View\Components', $prefix);
+        /*
         $exists = File::exists($components_json);
         if ($exists && false) {
             $content = File::get($components_json);
@@ -72,7 +73,7 @@ class BladeService {
                 File::put($components_json, $content);
             }
         }
-
+        */
         foreach ($comps as $comp) {
             Blade::component($comp->comp_name, $comp->comp_ns);
         }

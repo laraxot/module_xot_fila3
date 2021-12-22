@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Str;
+use Modules\Xot\Services\LivewireService;
 use Nwidart\Modules\Facades\Module;
 
 //use Modules;
@@ -141,6 +142,12 @@ abstract class XotBaseServiceProvider extends ServiceProvider {
 
     public function registerLivewireComponents(): void {
         $components_json = $this->module_dir.'/../Http/Livewire/_components.json';
+        LivewireService::registerComponents(
+                $this->module_dir.'/../Http/Livewire',
+                Str::before($this->module_ns, '\Providers'),
+                $this->module_name.'::'
+        );
+        /*
         //$force_recreate = request()->input('force_recreate', true);
         $exists = File::exists($components_json);
         if ($exists) {
@@ -155,16 +162,6 @@ abstract class XotBaseServiceProvider extends ServiceProvider {
                     $tmp = (object) [];
                     //$class_name = Str::before($v->getBasename(), '.php');
                     $class_name = $v->getFilenameWithoutExtension();
-                    /*
-                    dddx(
-                        [
-                            '$class_name' => $class_name,
-                            'getFilenameWithoutExtension' => $v->getFilenameWithoutExtension(),
-                            'methods' => get_class_methods($v),
-                        ]
-                    );
-                    */
-
                     $tmp->class_name = $class_name;
                     $tmp->comp_name = $this->module_name.'::'.Str::snake(Str::replace('\\', ' ', $class_name));
                     $tmp->comp_ns = Str::before($this->module_ns, '\Providers').'\Http\Livewire\\'.$class_name;
@@ -205,6 +202,7 @@ abstract class XotBaseServiceProvider extends ServiceProvider {
                 \Livewire\Livewire::component($comp->comp_name, $comp->comp_ns);
             }
         }
+        */
     }
 
     /**

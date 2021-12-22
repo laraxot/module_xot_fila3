@@ -642,4 +642,62 @@ class FileService {
         $to_path = FileService::viewPath($to);
         FileService::copy($from_path, $to_path);
     }
+
+    public static function getComponents(string $path, string $namespace, string $prefix) {
+        $components_json = $path.'/_components.json';
+
+        $exists = File::exists($components_json);
+        if ($exists && false) {
+            $content = File::get($components_json);
+            $comps = json_decode($content);
+        } else {
+            $files = File::allFiles(dirname($components_json));
+
+            $comps = [];
+            foreach ($files as $k => $v) {
+                if ('php' == $v->getExtension()) {
+                    $tmp = (object) [];
+                    $class_name = $v->getFilenameWithoutExtension();
+
+                    $tmp->class_name = $class_name;
+
+                    $tmp->comp_name = Str::slug(Str::snake(Str::replace('\\', ' ', $class_name)));
+                    $tmp->comp_name = $prefix.$tmp->comp_name;
+
+                    $tmp->comp_ns = $namespace.'\\'.$class_name;
+
+                    if ('' != $v->getRelativePath()) {
+                        $tmp->comp_name = '';
+                        $piece = collect(explode('\\', $v->getRelativePath()))
+                            ->map(
+                                function ($item) {
+                                    return Str::slug(Str::snake($item));
+                                }
+                            )
+                            ->implode('.');
+                        $tmp->comp_name .= $piece;
+                        $tmp->comp_name .= '.'.Str::slug(Str::snake(Str::replace('\\', ' ', $class_name)));
+                        $tmp->comp_name = $prefix.$tmp->comp_name;
+                        $tmp->comp_ns = $namespace.'\\'.$v->getRelativePath().'\\'.$class_name;
+                        $tmp->class_name = $v->getRelativePath().'\\'.$tmp->class_name;
+                    }
+
+                    $comps[] = $tmp;
+                }
+            }
+            $content = json_encode($comps);
+            if (false === $content) {
+                throw new \Exception('can not decode json');
+            }
+            $old_content = '';
+            if (File::exists($components_json)) {
+                $old_content = File::get($components_json);
+            }
+            if ($old_content != $content) {
+                File::put($components_json, $content);
+            }
+        }
+
+        return $comps;
+    }
 }
