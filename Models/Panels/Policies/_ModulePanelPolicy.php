@@ -8,7 +8,10 @@ use Modules\Xot\Contracts\PanelContract;
 use Modules\Xot\Contracts\UserContract;
 
 class _ModulePanelPolicy extends XotBasePanelPolicy {
-    public function chooseAdmTheme(UserContract $user, PanelContract $panel) {
+    /**
+     * Undocumented function.
+     */
+    public function chooseAdmTheme(UserContract $user, PanelContract $panel): bool {
         return true;
     }
 }
