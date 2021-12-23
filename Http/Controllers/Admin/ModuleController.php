@@ -6,10 +6,10 @@ namespace Modules\Xot\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Modules\Tenant\Services\TenantService;
 use Modules\Theme\Services\ThemeService;
 use Modules\Xot\Relations\CustomRelation;
 use Modules\Xot\Services\PanelService;
-use Modules\Tenant\Services\TenantService;
 use Nwidart\Modules\Facades\Module;
 
 /*
@@ -126,6 +126,18 @@ class ModuleController extends Controller {
     }
 
     public function home(Request $request) {
+        $panel = PanelService::getRequestPanel();
+
+        if ('' != $request->_act) {
+            return $panel->callItemActionWithGate($request->_act);
+            //return $panel->callContainerAction($request->_act);
+            //return $panel->callAction($request->_act);
+        }
+
+        return $panel->out();
+    }
+
+    public function dashboard(Request $request) {
         $panel = PanelService::getRequestPanel();
 
         if ('' != $request->_act) {

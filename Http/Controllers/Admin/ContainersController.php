@@ -24,7 +24,9 @@ class ContainersController extends Controller {
         [$containers,$items] = params2ContainerItem();
         //dddx(['contianers' => $containers, 'items' => $items]);
         if (0 == count($containers)) {
-            return $this->home($request);
+            $act = isset($route_params['module']) ? 'home' : 'dashboard';
+
+            return $this->{$act}($request);
         }
         if (count($containers) == count($items)) {
             return $this->show($request);
