@@ -150,7 +150,7 @@ class PanelRouteService {
         }
 
         //---
-        if (Str::startsWith($act, 'index')) {
+        if (Str::startsWith($act, 'index') || Str::startsWith($act, 'create')) {
             [$containers,$items] = \params2ContainerItem($route_params);
             if (count($containers) == count($items) && count($items) > 0) {
                 $k = 'item'.(count($items) - 1);
