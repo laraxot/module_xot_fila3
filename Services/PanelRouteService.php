@@ -135,7 +135,9 @@ class PanelRouteService {
             $route_params['module'] = $breads->first()->getModuleNameLow();
         }
         if (inAdmin() && null == $breads->first()) {
-            $route_params['module'] = TenantService::config('xra.main_module', 'xot');
+            $module_name = $panel->getModuleNameLow();
+            $route_params['module'] = $module_name;
+            //$route_params['module'] = TenantService::config('xra.main_module', 'xot');
         }
 
         foreach ($breads as $i => $bread) {
