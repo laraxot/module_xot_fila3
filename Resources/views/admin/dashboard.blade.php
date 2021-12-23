@@ -5,7 +5,7 @@
 
 
 @foreach(Auth::user()->areas as $area)
-    <x-dashboard.widget :moduleName=$area />
+    <x-dashboard.widget :area=$area />
 @endforeach
 
 
