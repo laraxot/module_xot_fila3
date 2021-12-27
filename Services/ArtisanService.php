@@ -110,12 +110,17 @@ class ArtisanService {
         $pattern = '/url":"([^"]*)"/';
         preg_match_all($pattern, $content, $matches);
 
+        $urls = [];
+        if (isset($matches[1])) {
+            $urls = array_unique($matches[1]);
+        }
+
         $view_params = [
             'view' => $view,
             'lang' => app()->getLocale(),
             'files' => $files,
             'content' => $content,
-            'matches' => $matches,
+            'urls' => $urls,
         ];
 
         return view()->make($view, $view_params);

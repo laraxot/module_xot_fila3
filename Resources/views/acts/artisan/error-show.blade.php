@@ -7,8 +7,14 @@
             </li>
         @endforeach
     </ol>
+    <h3> Ulrs</h3>
+    <ol>
+        @foreach ($urls as $url)
+            <li>
+                <a href="{{ $url }}">{{ $url }}</a>
+            </li>
+    </ol>
     <pre>
-        {{ dddx($matches) }}
     {!! $content !!}
     </pre>
 </x-col>
