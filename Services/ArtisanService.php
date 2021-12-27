@@ -107,7 +107,7 @@ class ArtisanService {
                 $content = File::get(storage_path('logs/'.$log));
             }
         }
-        $pattern = 'url":"([^"]*)"';
+        $pattern = '/url":"([^"]*)"/';
         preg_match_all($pattern, $content, $matches);
 
         $view_params = [
