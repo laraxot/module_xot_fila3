@@ -76,23 +76,7 @@ class ArtisanService {
             //----------------------------------------------------------------------
             case 'error':
             case 'error-show':
-                $contents = '';
-                $files = File::files(storage_path('logs'));
-                echo '<h3>'.count($files).' Error Logs </h3>';
-                echo '<ol>';
-                foreach ($files as $file) {
-                    //dddx(get_class_methods($file));
-                    echo '<li><a href="?_act=artisan&cmd=error-show&log='.$file->getFilename().'">'.$file->getFilename().'</a></li>';
-                }
-                echo '</ol>';
-                $log = \Request::input('log');
-                if ('' != $log) {
-                    if (File::exists(storage_path('logs/'.$log))) {
-                        $contents = File::get(storage_path('logs/'.$log));
-                    }
-                }
-
-                return '<pre>'.$contents.'</pre>';
+                return ArtisanService::errorShow();
             case 'error-clear':
                  return self::errorClear();
 
@@ -111,6 +95,30 @@ class ArtisanService {
         }
 
         return '';
+    }
+
+    public static function errorShow() {
+        $view = 'xot::acts.artisan.error-show';
+        $files = File::files(storage_path('logs'));
+        $log = request('log', '');
+        $content = '';
+        if ('' != $log) {
+            if (File::exists(storage_path('logs/'.$log))) {
+                $content = File::get(storage_path('logs/'.$log));
+            }
+        }
+        $pattern = 'url":"([^"]*)"';
+        preg_match_all($pattern, $content, $matches);
+
+        $view_params = [
+            'view' => $view,
+            'lang' => app()->getLocale(),
+            'files' => $files,
+            'content' => $content,
+            'matches' => $matches,
+        ];
+
+        return view()->make($view, $view_params);
     }
 
     public static function showRouteList() {
