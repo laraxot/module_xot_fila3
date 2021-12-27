@@ -13,6 +13,7 @@
             <li>
                 <a href="{{ $url }}">{{ $url }}</a>
             </li>
+        @endforeach
     </ol>
     <pre>
     {!! $content !!}
