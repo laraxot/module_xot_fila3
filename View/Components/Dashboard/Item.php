@@ -13,6 +13,11 @@ use Illuminate\View\Component;
  */
 class Item extends Component {
     public function render() {
-        return 'ciao';
+        $view = 'xot::components.dashboard.item';
+        $view_params = [
+            'view' => $view,
+        ];
+
+        return view()->make($view, $view_params);
     }
 }
