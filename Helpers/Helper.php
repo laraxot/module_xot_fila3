@@ -129,13 +129,20 @@ if (! \function_exists('dddx')) {
         $dir_piece = \array_slice($dir_piece, 0, -6);
         $dir_copy = \implode(DIRECTORY_SEPARATOR, $dir_piece);
         $file = \str_replace($dir_copy, $doc_root, $file);
+
+        $data = [
+            '_' => $params,
+            'line' => $tmp[0]['line'],
+            'file' => $tmp[0]['file'],
+            //'file_1' => $file, //da sistemare
+        ];
+        if (File::exists($data['file']) && Str::startsWith($data['file'], storage_path('framework/views'))) {
+            //$data['extra'] = 'preso';
+            $content = File::get($data['file']);
+            $data['view_file'] = Str::between($content, '/**PATH ', ' ENDPATH**/');
+        }
         dd(
-            [
-                '_' => $params,
-                'line' => $tmp[0]['line'],
-                'file' => $tmp[0]['file'],
-                //'file_1' => $file, //da sistemare
-            ]
+            $data,
         );
     }
 }
