@@ -3,7 +3,7 @@
 @section('content')
     @include('formx::includes.flash')
 
-    @foreach (Auth::user()->areas as $area)
+    @foreach (Auth::user()->areasUsed as $area)
         <x-dashboard.widget :area=$area />
     @endforeach
 
