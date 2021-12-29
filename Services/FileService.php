@@ -602,6 +602,11 @@ class FileService {
         $data = File::getRequire($path);
         $value = Arr::get($data, $item);
 
+        
+        if ($item===$key) {
+            return $data;
+        }
+
         return $value;
     }
 
