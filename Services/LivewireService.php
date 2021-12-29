@@ -14,7 +14,12 @@ class LivewireService {
      * Undocumented function.
      */
     public static function registerComponents(string $path, string $namespace, string $prefix = ''): void {
-        $comps = FileService::getComponents($path, $namespace.'\Http\Livewire', $prefix);
+        try {
+            $comps = FileService::getComponents($path, $namespace.'\Http\Livewire', $prefix);
+        }catch(\Exception $e){
+            dddx($comps);
+        }
+            
         foreach ($comps as $comp) {
             Livewire::component($comp->comp_name, $comp->comp_ns);
         }
