@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Modules\Xot\Services;
 
+use Illuminate\Support\Facades\File;
 use Livewire\Livewire;
 
 /**
@@ -16,12 +17,15 @@ class LivewireService {
     public static function registerComponents(string $path, string $namespace, string $prefix = ''): void {
         try {
             $comps = FileService::getComponents($path, $namespace.'\Http\Livewire', $prefix);
-        }catch(\Exception $e){
-            dddx($comps);
+        
+            foreach ($comps as $comp) {
+                Livewire::component($comp->comp_name, $comp->comp_ns);
+            }
+
+        } catch (\Exception $e) {
+            //se non ci sono componenti Livewire nella cartella comunque va avanti
         }
-            
-        foreach ($comps as $comp) {
-            Livewire::component($comp->comp_name, $comp->comp_ns);
-        }
+
+       
     }
 }
