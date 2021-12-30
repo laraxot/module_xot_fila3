@@ -655,10 +655,6 @@ class FileService {
             if(Str::endsWith($path,'Http'.DIRECTORY_SEPARATOR.'Livewire')){
                 File::makeDirectory($path, 0755, true, true);
             }
-            dddx([
-                'message'=>'directory not exits',
-                'directory'=>$path,
-            ]);
         }
 
 
