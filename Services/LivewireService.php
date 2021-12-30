@@ -15,17 +15,10 @@ class LivewireService {
      * Undocumented function.
      */
     public static function registerComponents(string $path, string $namespace, string $prefix = ''): void {
-        try {
-            $comps = FileService::getComponents($path, $namespace.'\Http\Livewire', $prefix);
-        
-            foreach ($comps as $comp) {
-                Livewire::component($comp->comp_name, $comp->comp_ns);
-            }
+        $comps = FileService::getComponents($path, $namespace.'\Http\Livewire', $prefix);
 
-        } catch (\Exception $e) {
-            //se non ci sono componenti Livewire nella cartella comunque va avanti
+        foreach ($comps as $comp) {
+            Livewire::component($comp->comp_name, $comp->comp_ns);
         }
-
-       
     }
 }
