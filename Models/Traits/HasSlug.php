@@ -1,4 +1,7 @@
 <?php
+/**
+ * da laravelio
+ */
 
 declare(strict_types=1);
 
@@ -6,6 +9,9 @@ namespace Modules\Xot\Models\Traits;
 
 use Illuminate\Support\Str;
 
+/**
+ * HasSlug
+ */
 trait HasSlug {
     public function slug(): ?string {
         //return $this->slug;
