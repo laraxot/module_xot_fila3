@@ -32,6 +32,7 @@ class LaravelNewsTile extends Component {
     }
 
     public function render() {
+        /*
         $xml = \Illuminate\Support\Facades\Http::get('https://feed.laravel-news.com')->body();
         $data = simplexml_load_string($xml, 'SimpleXMLElement', LIBXML_NOCDATA);
         if ($this->number == config('dashboard.tiles.laravelnews.number_of_articles', 19) - 1) {
@@ -43,5 +44,7 @@ class LaravelNewsTile extends Component {
         $articleTitle = (string) $data->channel->item[$this->number]->title;
 
         return view('xot::livewire.laravel-news-tile', compact('articleContent', 'articleTitle'));
+        */
+        return '<div>ciao</div>';
     }
 }
