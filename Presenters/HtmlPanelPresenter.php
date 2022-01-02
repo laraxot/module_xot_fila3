@@ -156,6 +156,7 @@ class HtmlPanelPresenter implements PanelPresenterContract {
             $message = 'not exists view [pub_theme::layouts.app]
                 <br/> pub_theme:'.config('xra.pub_theme').'
                 <br/> pub_theme dir: '.collect(\View::getFinder()->getHints())->get('pub_theme')[0];
+<<<<<<< HEAD
             exit($message);
 =======
             $pieces = [
@@ -178,6 +179,9 @@ class HtmlPanelPresenter implements PanelPresenterContract {
             */
 >>>>>>> 62ea534012e9d79473f751b4b12ca7271fa0f629
 >>>>>>> 5956023 (.)
+=======
+            throw new \Exception($message);
+>>>>>>> 85e4a86 (.)
         }
 
         /*
