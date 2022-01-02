@@ -23,22 +23,7 @@ use Modules\Xot\Contracts\UserContract;
 use Modules\Xot\Presenters\PdfPanelPresenter;
 use Modules\Xot\Presenters\XlsPanelPresenter;
 use Modules\Xot\Services\ChainService;
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
 use Modules\Xot\Services\FileService;
-=======
-<<<<<<< HEAD
-=======
-use Modules\Xot\Services\FileService;
->>>>>>> 62ea534012e9d79473f751b4b12ca7271fa0f629
->>>>>>> 5956023 (.)
-=======
-use Modules\Xot\Services\FileService;
->>>>>>> ab6eefc (.)
-=======
-use Modules\Xot\Services\FileService;
->>>>>>> c4bc15d (.)
 use Modules\Xot\Services\ImageService;
 use Modules\Xot\Services\PanelActionService;
 use Modules\Xot\Services\PanelFormService;
@@ -1352,41 +1337,12 @@ abstract class XotBasePanel implements PanelContract {
         try {
             return $this->presenter->out();
         } catch (\Exception $e) {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
-            return response()->view('pub_theme::errors.500', ['message' => $e->getMessage()], 500);
-=======
-            //$view=(view()->exists('pub_theme::errors.500'))?'pub_theme::errors.500':'theme::errors.500';
->>>>>>> 5956023 (.)
-=======
-            //$view=(view()->exists('pub_theme::errors.500'))?'pub_theme::errors.500':'theme::errors.500';
->>>>>>> ab6eefc (.)
-=======
->>>>>>> c4bc15d (.)
             $view = 'pub_theme::errors.500';
             if (! view()->exists($view)) {
                 FileService::viewCopy('theme::errors.500', 'pub_theme::errors.500');
             }
 
-<<<<<<< HEAD
             return response()->view($view, ['message' => $e->getMessage()], 500);
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 62ea534012e9d79473f751b4b12ca7271fa0f629
->>>>>>> 5956023 (.)
-=======
-            $view=(view()->exists('pub_theme::errors.500'))?'pub_theme::errors.500':'theme::errors.500';
-=======
->>>>>>> ab6eefc (.)
-            return response()->view($view, ['message' => $e->getMessage()], 500);
->>>>>>> 85e4a86 (.)
-=======
->>>>>>> c4bc15d (.)
         }
     }
 
@@ -1619,16 +1575,3 @@ abstract class XotBasePanel implements PanelContract {
         return false;
     }
 }
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
-}
-=======
-}
->>>>>>> 62ea534012e9d79473f751b4b12ca7271fa0f629
->>>>>>> 5956023 (.)
-=======
-}
->>>>>>> 85e4a86 (.)
-=======
->>>>>>> c4bc15d (.)

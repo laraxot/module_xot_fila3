@@ -13,68 +13,31 @@ use Illuminate\Support\Facades\Auth;
 trait Updater {
     /**
      * Undocumented function.
-<<<<<<< HEAD
-<<<<<<< HEAD
      * move to modelservice.
      */
     /*
-=======
-<<<<<<< HEAD
-     */
-=======
+
      * move to modelservice.
      */
     /*
->>>>>>> 62ea534012e9d79473f751b4b12ca7271fa0f629
->>>>>>> 5956023 (.)
-=======
-     * move to modelservice.
-     */
-    /*
->>>>>>> c4bc15d (.)
     public function getTableColumns(): array {
         return $this->getConnection()
             ->getSchemaBuilder()
             ->getColumnListing($this->getTable());
     }
-<<<<<<< HEAD
-<<<<<<< HEAD
 
     /**
-<<<<<<< HEAD
      * bootUpdater function.
-=======
-     * Undocumented function.
-=======
     */
 
     /**
      * bootUpdater function.
->>>>>>> 62ea534012e9d79473f751b4b12ca7271fa0f629
->>>>>>> 5956023 (.)
-=======
-
-    /**
-     * bootUpdater function.
->>>>>>> c4bc15d (.)
      *
      * @return void
      */
     protected static function bootUpdater() {
         //parent::boot();
-<<<<<<< HEAD
-<<<<<<< HEAD
         /*
-=======
-<<<<<<< HEAD
-        /**
-=======
-        /*
->>>>>>> 62ea534012e9d79473f751b4b12ca7271fa0f629
->>>>>>> 5956023 (.)
-=======
-        /*
->>>>>>> c4bc15d (.)
          * During a model create Eloquent will also update the updated_at field so
          * need to have the updated_by field here as well.
          **/
@@ -87,19 +50,7 @@ trait Updater {
             }
         });
 
-<<<<<<< HEAD
-<<<<<<< HEAD
         /*
-=======
-<<<<<<< HEAD
-        /**
-=======
-        /*
->>>>>>> 62ea534012e9d79473f751b4b12ca7271fa0f629
->>>>>>> 5956023 (.)
-=======
-        /*
->>>>>>> c4bc15d (.)
          * updating.
          */
         static::updating(function ($model) {

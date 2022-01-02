@@ -30,8 +30,6 @@ class XotServiceProvider extends XotBaseServiceProvider {
     public string $module_name = 'xot';
 
     public function bootCallback(): void {
-<<<<<<< HEAD
-=======
         /*-- moved to tenant
         $this->mergeConfigs();
 
@@ -49,7 +47,6 @@ class XotServiceProvider extends XotBaseServiceProvider {
         Relation::morphMap($map);
         //*/
 
->>>>>>> ac18fd3 (.)
         Module::enable('Tenant');
         //Module::enable('Rating');
         //Module::enable('Tag');
@@ -114,13 +111,7 @@ class XotServiceProvider extends XotBaseServiceProvider {
         //dddx($res);
     }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-    //*
-=======
     /*
->>>>>>> ac18fd3 (.)
     public function mergeConfigs(): void {
         $configs = ['database', 'filesystems', 'auth', 'metatag', 'services', 'xra', 'social'];
         foreach ($configs as $v) {
@@ -134,7 +125,6 @@ class XotServiceProvider extends XotBaseServiceProvider {
 
     //end mergeConfigs
     //*/
->>>>>>> 7b09573 (.)
     public function loadHelpersFrom(string $path): void {
         $files = File::files($path);
         foreach ($files as $file) {
