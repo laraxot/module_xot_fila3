@@ -9,6 +9,7 @@ namespace Modules\Xot\Traits;
  */
 trait Getter {
 <<<<<<< HEAD
+<<<<<<< HEAD
     /**
      * __merge function.
      */
@@ -20,6 +21,11 @@ trait Getter {
      */
 >>>>>>> 62ea534012e9d79473f751b4b12ca7271fa0f629
 >>>>>>> 5956023 (.)
+=======
+    /**
+     * __merge function.
+     */
+>>>>>>> c4bc15d (.)
     public static function __merge(string $index, array $value): array {
         $tmp = self::__getStatic($index);
         if (! is_array($tmp)) {

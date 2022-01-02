@@ -611,12 +611,15 @@ class FileService {
     }
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 <<<<<<< HEAD
 =======
 >>>>>>> 5956023 (.)
 =======
 >>>>>>> ab6eefc (.)
+=======
+>>>>>>> c4bc15d (.)
 
     public static function viewPath(string $key): string {
         $ns_name = Str::before($key, '::');
@@ -655,6 +658,7 @@ class FileService {
         $to_path = FileService::viewPath($to);
         FileService::copy($from_path, $to_path);
     }
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 
@@ -732,4 +736,6 @@ class FileService {
 >>>>>>> 5956023 (.)
 =======
 >>>>>>> ab6eefc (.)
+=======
+>>>>>>> c4bc15d (.)
 }

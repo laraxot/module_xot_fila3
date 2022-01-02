@@ -5,9 +5,13 @@ declare(strict_types=1);
 namespace Modules\Xot\Providers;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 //use Illuminate\Database\Eloquent\Factory;
 =======
 >>>>>>> 62ea534012e9d79473f751b4b12ca7271fa0f629
+=======
+//use Illuminate\Database\Eloquent\Factory;
+>>>>>>> c4bc15d (.)
 use Exception;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Event;
@@ -17,12 +21,15 @@ use Illuminate\Support\Str;
 use Modules\Xot\Services\LivewireService;
 use Nwidart\Modules\Facades\Module;
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 <<<<<<< HEAD
 use TypeError;
 =======
 >>>>>>> 62ea534012e9d79473f751b4b12ca7271fa0f629
 >>>>>>> 5956023 (.)
+=======
+>>>>>>> c4bc15d (.)
 
 //use Modules;
 
@@ -43,6 +50,7 @@ abstract class XotBaseServiceProvider extends ServiceProvider {
      */
     public function boot(): void {
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 <<<<<<< HEAD
         //echo '<h3>Time :'.class_basename($this).' '.(microtime(true) - LARAVEL_START).'</h3>';
@@ -50,6 +58,8 @@ abstract class XotBaseServiceProvider extends ServiceProvider {
 =======
 >>>>>>> 62ea534012e9d79473f751b4b12ca7271fa0f629
 >>>>>>> 5956023 (.)
+=======
+>>>>>>> c4bc15d (.)
         $this->registerTranslations();
         $this->registerConfig();
         $this->registerViews();
@@ -63,12 +73,15 @@ abstract class XotBaseServiceProvider extends ServiceProvider {
         //Illuminate\Contracts\Container\BindingResolutionException: Target class [modules] does not exist.
         $this->registerBladeComponents();
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 <<<<<<< HEAD
         //echo '<h3>Time :'.class_basename($this).' '.(microtime(true) - LARAVEL_START).'</h3>';
 =======
 >>>>>>> 62ea534012e9d79473f751b4b12ca7271fa0f629
 >>>>>>> 5956023 (.)
+=======
+>>>>>>> c4bc15d (.)
     }
 
     /**
@@ -160,6 +173,7 @@ abstract class XotBaseServiceProvider extends ServiceProvider {
             throw new \Exception('['.$this->module_name.'] is not found');
         }
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 =======
 <<<<<<< HEAD
@@ -186,6 +200,9 @@ abstract class XotBaseServiceProvider extends ServiceProvider {
 
 >>>>>>> 62ea534012e9d79473f751b4b12ca7271fa0f629
 >>>>>>> 5956023 (.)
+=======
+
+>>>>>>> c4bc15d (.)
         $namespace = 'Modules\\'.$module->getName().'\View\Components';
 
         Blade::componentNamespace($namespace, $module->getLowerName());

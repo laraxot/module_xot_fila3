@@ -11,6 +11,7 @@ use Modules\Xot\Contracts\PanelContract;
 use Modules\Xot\Contracts\PanelPresenterContract;
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 use Modules\Xot\Services\FileService;
 =======
 <<<<<<< HEAD
@@ -21,6 +22,9 @@ use Modules\Xot\Services\FileService;
 =======
 use Modules\Xot\Services\FileService;
 >>>>>>> ab6eefc (.)
+=======
+use Modules\Xot\Services\FileService;
+>>>>>>> c4bc15d (.)
 
 /**
  * Class HtmlPanelPresenter.
@@ -158,6 +162,7 @@ class HtmlPanelPresenter implements PanelPresenterContract {
         if (! view()->exists('pub_theme::layouts.app')) {
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
             $message = 'not exists view [pub_theme::layouts.app]
                 <br/> pub_theme:'.config('xra.pub_theme').'
                 <br/> pub_theme dir: '.collect(\View::getFinder()->getHints())->get('pub_theme')[0];
@@ -166,6 +171,8 @@ class HtmlPanelPresenter implements PanelPresenterContract {
 =======
 =======
 >>>>>>> ab6eefc (.)
+=======
+>>>>>>> c4bc15d (.)
             $pieces = [
                 'layouts.app',
                 'layouts.plane',
@@ -185,6 +192,7 @@ class HtmlPanelPresenter implements PanelPresenterContract {
             throw new \Exception($message);
             */
 <<<<<<< HEAD
+<<<<<<< HEAD
 >>>>>>> 62ea534012e9d79473f751b4b12ca7271fa0f629
 >>>>>>> 5956023 (.)
 =======
@@ -192,6 +200,8 @@ class HtmlPanelPresenter implements PanelPresenterContract {
 >>>>>>> 85e4a86 (.)
 =======
 >>>>>>> ab6eefc (.)
+=======
+>>>>>>> c4bc15d (.)
         }
 
         /*
