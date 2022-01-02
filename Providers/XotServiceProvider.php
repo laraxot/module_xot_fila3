@@ -94,6 +94,23 @@ class XotServiceProvider extends XotBaseServiceProvider {
         //dddx($res);
     }
 
+<<<<<<< HEAD
+=======
+    //*
+    public function mergeConfigs(): void {
+        $configs = ['database', 'filesystems', 'auth', 'metatag', 'services', 'xra', 'social'];
+        foreach ($configs as $v) {
+            $tmp = Tenant::config($v);
+            //dddx($tmp);
+        }
+        //DB::purge('mysql');//Call to a member function prepare() on null
+        //DB::purge('liveuser_general');
+        //DB::reconnect();
+    }
+
+    //end mergeConfigs
+    //*/
+>>>>>>> 7b09573 (.)
     public function loadHelpersFrom(string $path): void {
         $files = File::files($path);
         foreach ($files as $file) {
