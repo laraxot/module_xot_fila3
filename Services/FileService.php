@@ -609,6 +609,11 @@ class FileService {
 
         return $value;
     }
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+>>>>>>> 5956023 (.)
 
     public static function viewPath(string $key): string {
         $ns_name = Str::before($key, '::');
@@ -647,6 +652,7 @@ class FileService {
         $to_path = FileService::viewPath($to);
         FileService::copy($from_path, $to_path);
     }
+<<<<<<< HEAD
 
     public static function getComponents(string $path, string $namespace, string $prefix, bool $force_recreate = false): array {
         $components_json = $path.'/_components.json';
@@ -717,4 +723,7 @@ class FileService {
 
         return $comps;
     }
+=======
+>>>>>>> 62ea534012e9d79473f751b4b12ca7271fa0f629
+>>>>>>> 5956023 (.)
 }

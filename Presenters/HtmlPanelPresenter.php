@@ -9,7 +9,14 @@ use Illuminate\Support\Collection;
 use Modules\Theme\Services\ThemeService;
 use Modules\Xot\Contracts\PanelContract;
 use Modules\Xot\Contracts\PanelPresenterContract;
+<<<<<<< HEAD
 use Modules\Xot\Services\FileService;
+=======
+<<<<<<< HEAD
+=======
+use Modules\Xot\Services\FileService;
+>>>>>>> 62ea534012e9d79473f751b4b12ca7271fa0f629
+>>>>>>> 5956023 (.)
 
 /**
  * Class HtmlPanelPresenter.
@@ -128,6 +135,7 @@ class HtmlPanelPresenter implements PanelPresenterContract {
             'page' => new \Modules\Theme\Services\Objects\PageObject(),
         ];
 
+<<<<<<< HEAD
         //if (! view()->exists('pub_theme::layouts.app')) {
         $pieces = [
             'layouts.app',
@@ -142,6 +150,34 @@ class HtmlPanelPresenter implements PanelPresenterContract {
         ];
         foreach ($pieces as $piece) {
             FileService::viewCopy('theme::'.$piece, 'pub_theme::'.$piece);
+=======
+        if (! view()->exists('pub_theme::layouts.app')) {
+<<<<<<< HEAD
+            $message = 'not exists view [pub_theme::layouts.app]
+                <br/> pub_theme:'.config('xra.pub_theme').'
+                <br/> pub_theme dir: '.collect(\View::getFinder()->getHints())->get('pub_theme')[0];
+            exit($message);
+=======
+            $pieces = [
+                'layouts.app',
+                'layouts.plane',
+                'layouts.partials.htmlheader',
+                'layouts.partials.headernav',
+                'layouts.partials.footer',
+                'layouts.partials.scripts',
+            ];
+            foreach ($pieces as $piece) {
+                FileService::viewCopy('theme::'.$piece, 'pub_theme::'.$piece);
+            }
+
+            /*
+            $message = 'not exists view [pub_theme::layouts.app]
+                <br/> pub_theme:'.config('xra.pub_theme').'
+                <br/> pub_theme dir: '.collect(\View::getFinder()->getHints())->get('pub_theme')[0];
+            throw new \Exception($message);
+            */
+>>>>>>> 62ea534012e9d79473f751b4b12ca7271fa0f629
+>>>>>>> 5956023 (.)
         }
 
         /*
