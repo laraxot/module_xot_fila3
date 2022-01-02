@@ -602,8 +602,7 @@ class FileService {
         $data = File::getRequire($path);
         $value = Arr::get($data, $item);
 
-
-        if ($item===$key) {
+        if ($item === $key) {
             return $data;
         }
 
@@ -650,13 +649,12 @@ class FileService {
 
     public static function getComponents(string $path, string $namespace, string $prefix, bool $force_recreate = false): array {
         $components_json = $path.'/_components.json';
-        $path=FileService::fixPath($path);
-        if(!File::exists($path)){
-            if(Str::endsWith($path,'Http'.DIRECTORY_SEPARATOR.'Livewire')){
+        $path = FileService::fixPath($path);
+        if (! File::exists($path)) {
+            if (Str::endsWith($path, 'Http'.DIRECTORY_SEPARATOR.'Livewire')) {
                 File::makeDirectory($path, 0755, true, true);
             }
         }
-
 
         $exists = File::exists($components_json);
         if ($exists && ! $force_recreate) {
@@ -717,11 +715,4 @@ class FileService {
 
         return $comps;
     }
-=======
->>>>>>> 62ea534012e9d79473f751b4b12ca7271fa0f629
->>>>>>> 5956023 (.)
-=======
->>>>>>> ab6eefc (.)
-=======
->>>>>>> c4bc15d (.)
 }
