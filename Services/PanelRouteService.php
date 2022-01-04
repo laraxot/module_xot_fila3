@@ -114,12 +114,15 @@ class PanelRouteService {
             $filters[$k]->value = $value;
         }
         $queries = collect($filters)->pluck('value', 'param_name')->all();
+        //a che serve $node?
+        //è qui che panel->url() crea quegli url tipo /it/threads?#Thread- (con ?#NomeModello-)
         $node = class_basename($row).'-'.$row->getKey();
         $queries['page'] = Cache::get('page');
 
         $queries = array_merge(request()->query(), $queries);
         $queries = collect($queries)->except(['_act'])->all();
         $url = (url_queries($queries, $url)).'#'.$node;
+        //dddx([$url, $filters, $queries, $node, url_queries($queries, $url).'#'.$node, url_queries($queries, $url), $url]);
 
         return $url;
     }
