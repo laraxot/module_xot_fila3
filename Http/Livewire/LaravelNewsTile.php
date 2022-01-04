@@ -45,6 +45,6 @@ class LaravelNewsTile extends Component {
 
         return view('xot::livewire.laravel-news-tile', compact('articleContent', 'articleTitle'));
         */
-        return '<div>ciao</div>';
+        return '<div></div>';
     }
 }
