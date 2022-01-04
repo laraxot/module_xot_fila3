@@ -15,6 +15,7 @@ use Illuminate\Support\Str;
  * https://github.com/mpociot/laravel-test-factory-helper  on 2 Mar 2020.
  * https://github.com/laravel-shift/factory-generator on 10 Aug.
  * https://dev.to/marcosgad/make-factory-more-organized-laravel-3c19.
+ * https://medium.com/@yohan7788/seeders-and-faker-in-laravel-6806084a0c7.
  */
 class FactoryService {
     /**
