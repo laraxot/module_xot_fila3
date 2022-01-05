@@ -110,6 +110,9 @@ class RowsService {
         //https://github.com/spatie/laravel-query-builder
 
         //$filters_fields = $this->filters();
+        if (null == $query) {
+            return null;
+        }
 
         $filters_rules = collect($filters_fields)
             ->filter(
