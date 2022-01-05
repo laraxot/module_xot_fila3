@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Str;
 use Modules\Tenant\Services\TenantService as Tenant;
 use Modules\Xot\Services\ArrayService;
+use Modules\Xot\Services\FileService;
 use Modules\Xot\Services\PanelService;
 use Modules\Xot\Services\RouteService;
 
@@ -133,13 +134,13 @@ if (! \function_exists('dddx')) {
         $data = [
             '_' => $params,
             'line' => $tmp[0]['line'],
-            'file' => $tmp[0]['file'],
+            'file' => FileService::fixPath($tmp[0]['file']),
             //'file_1' => $file, //da sistemare
         ];
-        if (File::exists($data['file']) && Str::startsWith($data['file'], storage_path('framework/views'))) {
+        if (File::exists($data['file']) && Str::startsWith($data['file'], FileService::fixPath(storage_path('framework/views')))) {
             //$data['extra'] = 'preso';
             $content = File::get($data['file']);
-            $data['view_file'] = Str::between($content, '/**PATH ', ' ENDPATH**/');
+            $data['view_file'] = FileService::fixPath(Str::between($content, '/**PATH ', ' ENDPATH**/'));
         }
         dd(
             $data,

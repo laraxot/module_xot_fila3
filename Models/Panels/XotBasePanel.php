@@ -259,8 +259,10 @@ abstract class XotBasePanel implements PanelContract {
     }
 
     public function getBreads(): Collection {
-        //'_ModulePanel' == //per back, homepanel per front
-        if (in_array(class_basename($this), ['_ModulePanel', 'HomePanel'])) {
+        if (in_array(class_basename($this), ['_ModulePanel'/* 'HomePanel' */])) {
+            return collect();
+        }
+        if ($this->getParents()->count() > 0 && in_array(class_basename($this), ['HomePanel'])) {
             return collect();
         }
         $breads = $this->getParents();
