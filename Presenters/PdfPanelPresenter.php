@@ -48,7 +48,11 @@ class PdfPanelPresenter implements PanelPresenterContract {
         $view = str_replace('.store.', '.show.', $view);
         extract($params);
         $row = $this->panel->getRow();
-        $rows = $this->panel->rows();
+        try {
+            $rows = $this->panel->rows();
+        } catch (\Exception $e) {
+            $rows = collect([]);
+        }
         if (null == $row->getKey()) { //utile per le cose a containers
             $row = $this->panel->rows()->first();
         }
