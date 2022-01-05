@@ -176,7 +176,8 @@ abstract class XotBasePanel implements PanelContract {
     public function getRows() {
         if (null == $this->rows) {
             //dddx(debug_backtrace());
-            throw new \Exception('rows is null [line:'.__LINE__.'][class:'.get_class($this).']');
+            //throw new \Exception('rows is null [line:'.__LINE__.'][class:'.get_class($this).']');
+            //nel caso di stampare un pdf non serve avere le rows
         }
 
         /*
