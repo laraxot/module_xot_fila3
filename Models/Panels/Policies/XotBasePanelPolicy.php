@@ -94,6 +94,11 @@ abstract class XotBasePanelPolicy {
         return true;
     }
 
+    //test delle tabs
+    public function index_edit(UserContract $user, PanelContract $panel):bool{
+        return true;
+    }
+
     /**
      * @return false
      */

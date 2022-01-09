@@ -13,7 +13,8 @@ use Modules\Xot\Contracts\PanelContract;
 /**
  * Class PanelRouteService.
  */
-class PanelRouteService {
+class PanelRouteService
+{
     public PanelContract $panel;
 
     /*
@@ -22,7 +23,8 @@ class PanelRouteService {
     }
     */
 
-    public function setPanel(PanelContract &$panel): self {
+    public function setPanel(PanelContract &$panel): self
+    {
         $this->panel = $panel;
 
         return $this;
@@ -31,7 +33,8 @@ class PanelRouteService {
     /**
      * @return array|bool|mixed
      */
-    public static function inAdmin(array $params = []) {
+    public static function inAdmin(array $params = [])
+    {
         if (isset($params['in_admin'])) {
             return $params['in_admin'];
         }
@@ -60,7 +63,8 @@ class PanelRouteService {
         //return inAdmin();
     }
 
-    public function addCacheQueryString(string $route): string {
+    public function addCacheQueryString(string $route): string
+    {
         $path = '/'.request()->path();
         $cache_key = Str::slug($path.'_query');
 
@@ -86,7 +90,8 @@ class PanelRouteService {
         return $url;
     }
 
-    public function addFilterQueryString(string $url): string {
+    public function addFilterQueryString(string $url): string
+    {
         $filters = $this->panel->filters();
         $row = $this->panel->row;
         foreach ($filters as $k => $v) {
@@ -127,7 +132,8 @@ class PanelRouteService {
         return $url;
     }
 
-    public function url(array $params = []): string {
+    public function url(array $params = []): string
+    {
         $panel = $this->panel;
         $act = 'show'; //default
         extract($params);
@@ -154,14 +160,22 @@ class PanelRouteService {
             $route_name = 'admin.'.$route_name;
         }
 
-        //---
-        if (Str::startsWith($act, 'index') || Str::startsWith($act, 'create')) {
-            [$containers,$items] = \params2ContainerItem($route_params);
-            if (count($containers) == count($items) && count($items) > 0) {
-                $k = 'item'.(count($items) - 1);
-                unset($route_params[$k]);
+      /*  echo "<br>------------<br>";
+        var_dump([$route_params,$params]);
+        echo "<br>------------<br>";*/
+
+        //ho messo questo per far andare le tabs temporaneamente
+        if ($act!=='index_edit') {
+            if (Str::startsWith($act, 'index') || Str::startsWith($act, 'create')) {
+                [$containers,$items] = \params2ContainerItem($route_params);
+                if (count($containers) == count($items) && count($items) > 0) {
+                    $k = 'item'.(count($items) - 1);
+                    unset($route_params[$k]);
+                }
             }
         }
+
+        
 
         try {
             $route = route($route_name, $route_params, false);
@@ -194,14 +208,19 @@ class PanelRouteService {
         return $this->addCacheQueryString($route);
     }
 
-    public function relatedUrl(array $params): string {
+    public function relatedUrl(array $params): string
+    {
         $panel = $this->panel;
         $act = 'show';
+        
+        
         extract($params);
         if (! isset($related_name)) {
             throw new \Exception('err: related_name is missing');
         }
         //--- solo per velocita'
+        
+
         $url = $panel->url($params);
 
         return $url.'/'.$related_name;
@@ -210,7 +229,8 @@ class PanelRouteService {
     /**
      * @return string
      */
-    public static function langUrl(array $params = []) {
+    public static function langUrl(array $params = [])
+    {
         extract($params);
 
         return '?';
