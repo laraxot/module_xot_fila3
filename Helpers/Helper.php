@@ -113,6 +113,17 @@ if (! \function_exists('backtrace')) {
 }
 
 //--------------------------------------------
+if (! \function_exists('superdump')) {
+    function superdump($params)
+    {
+        if(!is_array($params)){
+            $params=[$params];
+        }
+        echo "<br>-------------------------------------<br>";
+        var_dump($params);
+        echo "<br>-------------------------------------<br>";
+    }
+}
 
 if (! \function_exists('dddx')) {
     /**
