@@ -6,6 +6,7 @@ namespace Modules\Xot\Services;
 
 use Collective\Html\FormFacade as Form;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Str;
 use Modules\FormX\Services\FieldService;
@@ -307,9 +308,9 @@ class PanelFormService {
     */
 
     /**
-     * @return array
+     * exceptFields.
      */
-    public function exceptFields(array $params = []) {
+    public function exceptFields(array $params = []): Collection {
         $act = 'show';
         extract($params);
         $panel = $this->panel;
@@ -347,12 +348,12 @@ class PanelFormService {
                     return ! in_array($act, $item->except) &&
                         ! in_array($item->name, $excepts);
                 }
-            )->all();
+            );
 
         return $fields;
     }
 
-    public function getFields(array $params = []): array {
+    public function getFields(array $params = []): Collection {
         $act = isset($params['act']) ? $params['act'] : 'index';
 
         $fields = $this->exceptFields(['act' => $act]);

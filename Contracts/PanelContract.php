@@ -19,8 +19,6 @@ interface PanelContract {
      * Undocumented function.
      *
      * @param Relation|Builder $rows
-     *
-     * @return self
      */
     public function setRows($rows): self;
 
@@ -122,6 +120,8 @@ interface PanelContract {
 
     public function rules(array $params = []): array;
 
+    public function getRules(array $params = []): array;
+
     public function rulesMessages(): array;
 
     /**
@@ -157,7 +157,7 @@ interface PanelContract {
      */
     public function formLivewireEdit(array $params = []);
 
-    public function getFields(array $params = []): array;
+    public function getFields(array $params = []): Collection;
 
     public function isRevisionBy(UserContract $user): bool;
 

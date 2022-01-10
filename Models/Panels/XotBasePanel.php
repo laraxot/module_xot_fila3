@@ -575,6 +575,10 @@ abstract class XotBasePanel implements PanelContract {
         return [];
     }
 
+    public function getRules(array $params = []): array {
+        return $this->rules($params);
+    }
+
     public function rules(array $params = []): array {
         $act = '';
         extract($params);
@@ -921,7 +925,7 @@ abstract class XotBasePanel implements PanelContract {
         return $this->form->{__FUNCTION__}();
     }
 
-    public function getFields(array $params = []): array {
+    public function getFields(array $params = []): Collection {
         return $this->form->{__FUNCTION__}($params);
     }
 
