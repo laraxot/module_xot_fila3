@@ -79,12 +79,15 @@ class ProfileService {
             return null;
         }
         $user = $this->user;
-        if (! property_exists($user, 'first_name')) {
+
+        //dddx([$user, $user->first_name, property_exists($user, 'first_name')]);
+
+        /*if (! property_exists($user, 'first_name')) {
             throw new \Exception('property first_name in $user not exist');
         }
         if (! property_exists($user, 'last_name')) {
             throw new \Exception('property last_name in $user not exist');
-        }
+        }*/
 
         return $user->first_name.' '.$user->last_name;
     }
