@@ -19,6 +19,36 @@ class FileService {
      * @return false|mixed|string
      */
     public static function asset(string $path) {
+        if ('/' == $path[0]) {
+            $path = \mb_substr($path, 1);
+        }
+        $str = 'theme/bc/';
+        if (Str::startsWith($path, $str)) {
+            return asset('/bc/'.\mb_substr($path, \mb_strlen($str)));
+        }
+        $str = 'theme/pub/';
+        if (Str::startsWith($path, $str)) {
+            $path = 'pub_theme::'.\mb_substr($path, \mb_strlen($str));
+        }
+        $str = 'theme/';
+        if (Str::startsWith($path, $str)) {
+            $path = 'adm_theme::'.\mb_substr($path, \mb_strlen($str));
+        }
+
+        $str = 'https://';
+        if (Str::startsWith($path, $str)) {
+            return $path;
+        }
+
+        $str = 'http://';
+        if (Str::startsWith($path, $str)) {
+            return $path;
+        }
+
+        if (! Str::contains($path, '::')) {
+            return $path;
+        }
+
         /*
             to DOOOO
             viewNamespaceToPath     => /images/prova.png
@@ -26,33 +56,6 @@ class FileService {
             viewNamespaceToAsset    => http://example.com/images/prova.png
         */
         //dddx(\Module::asset('blog:img/logo.img')); //localhost/modules/blog/img/logo.img
-        $ns = Str::before($path, '::');
-        $ns_after = Str::after($path, '::');
-        if ($ns === $path) {
-            $ns = inAdmin() ? 'adm_theme' : 'pub_theme';
-        }
-
-        if (in_array($ns, ['pub_theme', 'adm_theme'])) {
-            $theme = config('xra.'.$ns);
-            $filename_from = self::fixPath(base_path('Themes/'.$theme.'/Resources/'.$ns_after));
-            $asset = 'themes/'.$theme.'/'.$ns_after;
-            $filename_to = self::fixPath(public_path($asset));
-            $asset = Str::replace(url(''), '', asset($asset));
-            if (! File::exists($filename_to)) {
-                if (! File::exists(\dirname($filename_to))) {
-                    File::makeDirectory(\dirname($filename_to), 0755, true, true);
-                }
-
-                File::copy($filename_from, $filename_to);
-            }
-
-            return $asset;
-        }
-
-        dddx([
-            'message' => 'gli assets son stati spostati da dentro views a dentro Resources',
-            'path' => $path,
-        ]);
 
         return asset(self::viewNamespaceToAsset($path));
     }
@@ -61,8 +64,16 @@ class FileService {
      * @return string|string[]
      */
     public static function viewNamespaceToDir(string $view) {
+        //$pos = \mb_strpos($view, '::');
+        //$pack = \mb_substr($view, 0, $pos);
         $ns = Str::before($view, '::');
+        //$relative_path = \str_replace('.', '/', \mb_substr($view, $pos + 2));
         $relative_path = \str_replace('.', '/', Str::after($view, '::'));
+
+        /*
+        $viewHints = View::getFinder()->getHints();
+        $pack_dir = $viewHints[$pack][0];
+        */
         $pack_dir = self::getViewNameSpacePath($ns);
         $view_dir = $pack_dir.'/'.$relative_path;
         $view_dir = \str_replace('/', \DIRECTORY_SEPARATOR, $view_dir);
@@ -77,6 +88,9 @@ class FileService {
         if (null == $ns) {
             return null;
         }
+        //dirname(\View::getFinder()->find('theme::includes.components.form.text'));
+        //View::getFinder()
+        // View finder.
         $finder = view()->getFinder();
         $viewHints = [];
         if (method_exists($finder, 'getHints')) {
