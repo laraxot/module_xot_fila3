@@ -26,6 +26,14 @@ class FileService {
             viewNamespaceToAsset    => http://example.com/images/prova.png
         */
         //dddx(\Module::asset('blog:img/logo.img')); //localhost/modules/blog/img/logo.img
+
+        if (Str::startsWith($path, 'https://')) {
+            return $path;
+        }
+        if (Str::startsWith($path, 'http://')) {
+            return $path;
+        }
+
         $ns = Str::before($path, '::');
         $ns_after = Str::after($path, '::');
         if ($ns === $path) {
