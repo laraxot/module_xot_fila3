@@ -49,12 +49,25 @@ class FileService {
             return $asset;
         }
 
-        dddx([
-            'message' => 'gli assets son stati spostati da dentro views a dentro Resources',
-            'path' => $path,
-        ]);
+        $module_path = Module::getModulePath($ns);
+        if (Str::endsWith($module_path, '/')) {
+            $module_path = Str::beforeLast($module_path, '/');
+        }
+        $filename_from = self::fixPath($module_path.'/Resources/'.$ns_after);
+        $asset = 'assets/'.$ns.'/'.$ns_after;
+        $filename_to = self::fixPath(public_path($asset));
+        $asset = Str::replace(url(''), '', asset($asset));
+        if (! File::exists($filename_to)) {
+            if (! File::exists(\dirname($filename_to))) {
+                File::makeDirectory(\dirname($filename_to), 0755, true, true);
+            }
 
-        return asset(self::viewNamespaceToAsset($path));
+            File::copy($filename_from, $filename_to);
+        }
+
+        return $asset;
+
+        //return asset(self::viewNamespaceToAsset($path));
     }
 
     /**
