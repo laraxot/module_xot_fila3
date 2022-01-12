@@ -59,6 +59,7 @@ class FileService {
                     File::makeDirectory(\dirname($filename_to), 0755, true, true);
                 }
                 try {
+                    //dddx([$filename_from, $filename_to]);
                     File::copy($filename_from, $filename_to);
                 } catch (\Exception $e) {
                     throw new Exception('path :['.$path.'] file from ['.$filename_from.']');
