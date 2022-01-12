@@ -34,6 +34,10 @@ class FileService {
             return $path;
         }
 
+        if (File::exists(public_path($path))) {
+            return $path;
+        }
+
         if (Str::startsWith($path, '/theme/pub')) {
             $path = 'pub_theme::'.Str::after($path, '/theme/pub');
         }
