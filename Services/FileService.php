@@ -42,6 +42,10 @@ class FileService {
             $path = 'pub_theme::'.Str::after($path, '/theme/pub');
         }
 
+        if (Str::startsWith($path, 'theme/pub')) {
+            $path = 'pub_theme::'.Str::after($path, 'theme/pub');
+        }
+
         $ns = Str::before($path, '::');
         $ns_after = Str::after($path, '::');
         if ($ns === $path) {
