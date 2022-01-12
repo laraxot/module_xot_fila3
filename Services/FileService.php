@@ -55,7 +55,9 @@ class FileService {
                     File::makeDirectory(\dirname($filename_to), 0755, true, true);
                 }
 
-                File::copy($filename_from, $filename_to);
+                if (File::exists($filename_from)) {
+                    File::copy($filename_from, $filename_to);
+                }
             }
 
             return $asset;
