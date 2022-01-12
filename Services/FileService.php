@@ -42,11 +42,19 @@ class FileService {
             $path = 'pub_theme::'.Str::after($path, '/theme/pub');
         }
 
+        if (Str::startsWith($path, 'theme/pub')) {
+            $path = 'pub_theme::'.Str::after($path, 'theme/pub');
+        }
+
         $ns = Str::before($path, '::');
         $ns_after = Str::after($path, '::');
         if ($ns === $path) {
             $ns = inAdmin() ? 'adm_theme' : 'pub_theme';
         }
+
+        $ns_after0 = Str::before($ns_after, '/');
+        $ns_after1 = Str::after($ns_after, '/');
+        $ns_after = str_replace('.', '/', $ns_after0).'/'.$ns_after1;
 
         if (in_array($ns, ['pub_theme', 'adm_theme'])) {
             $theme = config('xra.'.$ns);
@@ -54,6 +62,7 @@ class FileService {
             $asset = 'themes/'.$theme.'/'.$ns_after;
             $filename_to = self::fixPath(public_path($asset));
             $asset = Str::replace(url(''), '', asset($asset));
+
             if (! File::exists($filename_to)) {
                 if (! File::exists(\dirname($filename_to))) {
                     File::makeDirectory(\dirname($filename_to), 0755, true, true);
@@ -77,6 +86,10 @@ class FileService {
         $asset = 'assets/'.$ns.'/'.$ns_after;
         $filename_to = self::fixPath(public_path($asset));
         $asset = Str::replace(url(''), '', asset($asset));
+        if (! File::exists($filename_from)) {
+            throw new Exception('file ['.$filename_from.'] not Exists , path ['.$path.']');
+        }
+
         if (! File::exists($filename_to)) {
             if (! File::exists(\dirname($filename_to))) {
                 File::makeDirectory(\dirname($filename_to), 0755, true, true);
