@@ -54,16 +54,10 @@ class FileService {
                 if (! File::exists(\dirname($filename_to))) {
                     File::makeDirectory(\dirname($filename_to), 0755, true, true);
                 }
-<<<<<<< HEAD
                 try {
                     File::copy($filename_from, $filename_to);
                 } catch (\Exception $e) {
                     throw new Exception('path :['.$path.'] file from ['.$filename_from.']');
-=======
-
-                if (File::exists($filename_from)) {
-                    File::copy($filename_from, $filename_to);
->>>>>>> 0e50c61f342ff49e0da102f9063cf98ea5f70a71
                 }
             }
 
