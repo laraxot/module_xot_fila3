@@ -52,12 +52,16 @@ class FileService {
             $ns = inAdmin() ? 'adm_theme' : 'pub_theme';
         }
 
+        $info = pathinfo($path);
+        dddx($info);
+
         if (in_array($ns, ['pub_theme', 'adm_theme'])) {
             $theme = config('xra.'.$ns);
             $filename_from = self::fixPath(base_path('Themes/'.$theme.'/Resources/'.$ns_after));
             $asset = 'themes/'.$theme.'/'.$ns_after;
             $filename_to = self::fixPath(public_path($asset));
             $asset = Str::replace(url(''), '', asset($asset));
+
             if (! File::exists($filename_to)) {
                 if (! File::exists(\dirname($filename_to))) {
                     File::makeDirectory(\dirname($filename_to), 0755, true, true);
