@@ -34,8 +34,16 @@ class FileService {
             return $path;
         }
 
+        if (File::exists(public_path($path))) {
+            return $path;
+        }
+
         if (Str::startsWith($path, '/theme/pub')) {
             $path = 'pub_theme::'.Str::after($path, '/theme/pub');
+        }
+
+        if (Str::startsWith($path, 'theme/pub')) {
+            $path = 'pub_theme::'.Str::after($path, 'theme/pub');
         }
 
         $ns = Str::before($path, '::');
@@ -44,18 +52,27 @@ class FileService {
             $ns = inAdmin() ? 'adm_theme' : 'pub_theme';
         }
 
+        $ns_after0 = Str::before($ns_after, '/');
+        $ns_after1 = Str::after($ns_after, '/');
+        $ns_after = str_replace('.', '/', $ns_after0).'/'.$ns_after1;
+
         if (in_array($ns, ['pub_theme', 'adm_theme'])) {
             $theme = config('xra.'.$ns);
             $filename_from = self::fixPath(base_path('Themes/'.$theme.'/Resources/'.$ns_after));
             $asset = 'themes/'.$theme.'/'.$ns_after;
             $filename_to = self::fixPath(public_path($asset));
             $asset = Str::replace(url(''), '', asset($asset));
+
             if (! File::exists($filename_to)) {
                 if (! File::exists(\dirname($filename_to))) {
                     File::makeDirectory(\dirname($filename_to), 0755, true, true);
                 }
-
-                File::copy($filename_from, $filename_to);
+                try {
+                    //dddx([$filename_from, $filename_to]);
+                    File::copy($filename_from, $filename_to);
+                } catch (\Exception $e) {
+                    throw new Exception('path :['.$path.'] file from ['.$filename_from.']');
+                }
             }
 
             return $asset;
@@ -69,12 +86,17 @@ class FileService {
         $asset = 'assets/'.$ns.'/'.$ns_after;
         $filename_to = self::fixPath(public_path($asset));
         $asset = Str::replace(url(''), '', asset($asset));
+        if (! File::exists($filename_from)) {
+            throw new Exception('file ['.$filename_from.'] not Exists , path ['.$path.']');
+        }
+
         if (! File::exists($filename_to)) {
             if (! File::exists(\dirname($filename_to))) {
                 File::makeDirectory(\dirname($filename_to), 0755, true, true);
             }
-
-            File::copy($filename_from, $filename_to);
+            if (File::exists($filename_from)) {
+                File::copy($filename_from, $filename_to);
+            }
         }
 
         return $asset;
