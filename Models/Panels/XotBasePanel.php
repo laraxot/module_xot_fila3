@@ -344,7 +344,7 @@ abstract class XotBasePanel implements PanelContract {
         $rows = $this->getRows();
         $tbl = $row->getTable();
 
-        $pk = $row->getRouteKeyName($this->in_admin);
+        $pk = $row->getRouteKeyName($this->in_admin); //adesso restituisce guid, gli facciamo restituire "posts.guid" ?
 
         //$pk = $row->getRouteKeyName(); // !!! MI SEMBRA STRANO !!
         $pk_full = $row->getTable().'.'.$pk;
@@ -356,7 +356,7 @@ abstract class XotBasePanel implements PanelContract {
         } // pezza momentanea
 
         $value = Str::slug($guid); //retrocompatibilita'
-        if ('guid' == $pk_full) {
+        if ('guid' == $pk_full  && method_exists($row,'posts')) {
             // 301    Call to an undefined method Illuminate\Database\Eloquent\Builder|Illuminate\Database\Eloquent\Relations\Relation::whereHas().
             $rows = $rows->whereHas(
                 'posts',
