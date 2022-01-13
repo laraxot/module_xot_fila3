@@ -87,6 +87,7 @@ class FileService {
      */
     public static function viewNamespaceToDir(string $view) {
         $ns = Str::before($view, '::');
+        //dddx(Str::after($view, '::'));
         $relative_path = \str_replace('.', '/', Str::after($view, '::'));
         $pack_dir = self::getViewNameSpacePath($ns);
         $view_dir = $pack_dir.'/'.$relative_path;

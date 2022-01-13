@@ -310,10 +310,12 @@ abstract class XotBasePanel implements PanelContract {
     }
 
     /*
-     * @return void
+     * ----
      */
-    public function setInAdmin(?bool $in_admin): void {
+    public function setInAdmin(?bool $in_admin): self {
         $this->in_admin = $in_admin;
+
+        return $this;
     }
 
     /*
@@ -341,7 +343,9 @@ abstract class XotBasePanel implements PanelContract {
         //$rows = $this->getBuilder();
         $rows = $this->getRows();
         $tbl = $row->getTable();
+
         $pk = $row->getRouteKeyName($this->in_admin);
+
         //$pk = $row->getRouteKeyName(); // !!! MI SEMBRA STRANO !!
         $pk_full = $row->getTable().'.'.$pk;
 
@@ -1015,12 +1019,17 @@ abstract class XotBasePanel implements PanelContract {
     public function guid(?bool $is_admin = null): ?string {
         if (isset($is_admin) && $is_admin) {
             return (string) $this->row->getKey();
-        }
+        }/*
         if (null !== $this->getInAdmin() && $this->getInAdmin()) {
+            return (string) $this->row->getKey();
+        }
+        */
+        if (inAdmin()) {
             return (string) $this->row->getKey();
         }
         $row = $this->row;
         $key = $row->getRouteKeyName();
+
         /*
         $msg = [
             'key' => $key,
