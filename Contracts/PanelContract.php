@@ -80,7 +80,7 @@ interface PanelContract {
 
     public function pdfFilename(array $params = []): string;
 
-    public function setInAdmin(bool $in_admin): void;
+    public function setInAdmin(bool $in_admin): self;
 
     public function setRouteParams(array $route_params): void;
 
