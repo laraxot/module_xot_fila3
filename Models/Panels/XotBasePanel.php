@@ -356,7 +356,7 @@ abstract class XotBasePanel implements PanelContract {
         } // pezza momentanea
 
         $value = Str::slug($guid); //retrocompatibilita'
-        if ('guid' == $pk_full  && method_exists($row,'posts')) {
+        if ('guid' == $pk_full && method_exists($row, 'posts')) {
             // 301    Call to an undefined method Illuminate\Database\Eloquent\Builder|Illuminate\Database\Eloquent\Relations\Relation::whereHas().
             $rows = $rows->whereHas(
                 'posts',
@@ -984,8 +984,8 @@ abstract class XotBasePanel implements PanelContract {
         return $this->route->{__FUNCTION__}(['lang' => $lang]);
     }
 
-    public function url(array $params = []): string {
-        return $this->route->{__FUNCTION__}($params);
+    public function url(string $act = 'act'): string {
+        return $this->route->{__FUNCTION__}($act);
     }
 
     public function relatedName(string $name, ?int $id = null): PanelContract {
@@ -1113,7 +1113,7 @@ abstract class XotBasePanel implements PanelContract {
         $trad_mod = $this->getTradMod();
         $actions = [];
         foreach ($acts as $act) {
-            $url = $this->url(['act' => $act]);
+            $url = $this->url($act);
             $url1 = Str::before($url, '?');
             $req_path = '/'.request()->path();
             $active = $url1 == $req_path;

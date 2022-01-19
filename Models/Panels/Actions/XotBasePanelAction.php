@@ -154,17 +154,16 @@ abstract class XotBasePanelAction {
         return $this->btnContainer($params);
     }
 
-    public function url(array $params = []): string {
+    public function url(string $act = 'show'): string {
         if (isset($this->onItem) && $this->onItem) {
-            return $this->urlItem($params);
+            return $this->urlItem($act);
         }
 
-        return $this->urlContainer($params);
+        return $this->urlContainer($act);
     }
 
-    public function urlContainer(array $params = []): string {
+    public function urlContainer(string $act = 'show'): string {
         $panel = $this->panel;
-        extract($params);
         //$request = \Request::capture();
         $name = $this->getName();
         //$url = $request->fullUrlWithQuery(['_act' => $name]);
@@ -181,7 +180,7 @@ abstract class XotBasePanelAction {
         //$this->data = collect($this->data)->except(['fingerprint', 'serverMemo', 'updates'])->all();
 
         //$url = $panel->url(['act'=>'index']);
-        $url = $panel->url(['act' => 'index']);
+        $url = $panel->url('index');
         $url = url_queries(['_act' => $name], $url);
         //$this->data['page'] = 1;
         $this->data['_act'] = $name;
@@ -259,7 +258,7 @@ abstract class XotBasePanelAction {
 
     //end btnContainer
 
-    public function urlItem(array $params = []): string {
+    public function urlItem(string $act = 'show'): string {
         //dddx($params);
         $url = '';
         $query_params = [];
@@ -272,7 +271,7 @@ abstract class XotBasePanelAction {
         }
         $name = $this->getName();
         try {
-            $url = $this->panel->url(['act' => 'show']);
+            $url = $this->panel->url('show');
         } catch (Exception $e) {
             dddx($e->getMessage());
         }/* catch (ErrorException $e) {

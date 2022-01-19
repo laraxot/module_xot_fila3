@@ -143,7 +143,7 @@ class PanelFormService {
         $parz = [
             'id' => $this->panel->getRow()->getKey(),
             'btn_class' => 'btn '.$class,
-            'route' => $this->panel->url(['act' => 'destroy']),
+            'route' => $this->panel->url('destroy'),
             'act' => $act,
             'title' => $title,
         ];

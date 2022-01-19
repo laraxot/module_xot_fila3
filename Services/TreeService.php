@@ -22,11 +22,11 @@ class TreeService {
                         $acts = [
                             [
                                 'title' => 'modifica '.$panel->getXotModelName(),
-                                'url' => $panel->url(['act' => 'edit']),
+                                'url' => $panel->url('edit'),
                             ],
                             [
                                 'title' => 'crea '.$panel->getXotModelName(),
-                                'url' => $panel->url(['act' => 'create']),
+                                'url' => $panel->url('create'),
                             ],
                         ];
                     }

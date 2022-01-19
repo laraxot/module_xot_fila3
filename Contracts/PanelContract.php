@@ -86,7 +86,7 @@ interface PanelContract {
 
     public function getXotModelName(): ?string;
 
-    public function url(array $params = []): string;
+    public function url(string $act = 'show'): string;
 
     public function itemActions(array $params = []): Collection;
 

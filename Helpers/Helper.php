@@ -510,7 +510,7 @@ if (! \function_exists('getModuleModelsMenu')) {
             function ($item, $key) {
                 $obj = new $item();
                 $panel = PanelService::get($obj);
-                $url = $panel->url(['act' => 'index']);
+                $url = $panel->url('index');
 
                 return (object) [
                     'title' => $key,
