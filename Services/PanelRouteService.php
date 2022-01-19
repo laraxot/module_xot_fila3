@@ -202,7 +202,7 @@ class PanelRouteService {
         }
         //--- solo per velocita'
 
-        $url = $panel->url($params);
+        $url = $panel->url($act);
 
         return $url.'/'.$related_name;
     }
