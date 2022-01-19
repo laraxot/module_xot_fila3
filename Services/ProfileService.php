@@ -132,9 +132,9 @@ class ProfileService
         return (string) optional($this->user)->first_name;
     }
 
-    public function url(array $params = []): string
+    public function url(string $act='show'): string
     {
-        return $this->profile_panel->url($params);
+        return $this->profile_panel->url($act);
     }
 
     /**
