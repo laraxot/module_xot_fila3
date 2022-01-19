@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace Modules\Xot\Models\Panels\Actions;
 
-use ErrorException;
-use Exception;
 use Illuminate\Database\Eloquent\Builder;
 //use Illuminate\Database\Eloquent\Model;
 //use Laravel\Scout\Searchable;
@@ -272,13 +270,7 @@ abstract class XotBasePanelAction {
             $this->panel = Panel::get($this->row);
         }
         $name = $this->getName();
-        try {
-            $url = $this->panel->url('show');
-        } catch (Exception $e) {
-            dddx($e->getMessage());
-        }/* catch (ErrorException $e) {
-            dddx($e->getMessage());
-        }*/
+        $url = $this->panel->url('show');
         $query_params['_act'] = $name;
         /*
         if (isset($modal)) {

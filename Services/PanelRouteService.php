@@ -148,16 +148,10 @@ class PanelRouteService {
 
         $route_name = 'containers.'.Str::snake($act);
 
-        if (inAdmin($params)) {
+        if (inAdmin()) {
             $route_name = 'admin.'.$route_name;
         }
 
-        /*  echo "<br>------------<br>";
-          var_dump([$route_params,$params]);
-          echo "<br>------------<br>";*/
-
-        //dddx($panel);
-        //ho messo questo per far andare le tabs temporaneamente
         if ('index_edit' !== $act) {
             if (Str::startsWith($act, 'index') || Str::startsWith($act, 'create')) {
                 [$containers,$items] = \params2ContainerItem($route_params);
@@ -174,7 +168,6 @@ class PanelRouteService {
             if (request()->input('debug', false)) {
                 dddx(
                     ['e' => $e->getMessage(),
-                        'params' => $params,
                         'route_name' => $route_name,
                         'route_params' => $route_params,
                         'last row' => $panel->getRow(),
