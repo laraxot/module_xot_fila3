@@ -258,8 +258,7 @@ abstract class XotBasePanelAction {
 
     //end btnContainer
 
-    public function urlItem(string $act = 'show'): string {
-        //dddx($params);
+    public function urlItem(/*string $act = 'show'*/): string {
         $url = '';
         $query_params = [];
 
