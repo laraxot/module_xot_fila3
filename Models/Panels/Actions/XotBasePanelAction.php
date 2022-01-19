@@ -264,7 +264,7 @@ abstract class XotBasePanelAction {
         //dddx($params);
         $url = '';
         $query_params = [];
-        extract($params);
+
         if (isset($row)) {
             $this->setRow($row);
         }
