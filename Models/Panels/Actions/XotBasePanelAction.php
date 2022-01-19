@@ -206,7 +206,6 @@ abstract class XotBasePanelAction {
 
     public function btnHtml(array $params = []): string {
         $params['panel'] = $this->panel;
-        $params['url'] = $this->getUrl($params);
 
         if (isset($params['debug']) && true === $params['debug']) {
             dddx($params);
@@ -220,6 +219,9 @@ abstract class XotBasePanelAction {
                 $params['act'] = 'show';
             }
         }
+
+        $params['url'] = $this->getUrl($params['act']);
+
         if (! isset($params['title'])) {
             $params['title'] = ''; // $this->getTitle();
         }
