@@ -45,8 +45,8 @@ class ArtisanService {
             case 'routelist1': return ArtisanService::showRouteList();
             case 'optimize': return ArtisanService::exe('optimize');
             case 'clear':
-                echo self::debugbarClear();
-                //echo self::errorClear();
+                //echo self::debugbarClear();
+                echo self::errorClear();
                 //echo ArtisanService::exe('cache:clear');
                 //echo ArtisanService::exe('config:clear');
                 //echo ArtisanService::exe('event:clear');
@@ -180,7 +180,6 @@ class ArtisanService {
      */
     public static function debugbarClear() {
         $files = File::files(storage_path('debugbar'));
-        dddx($files);
         foreach ($files as $file) {
             if ('json' == $file->getExtension() && false !== $file->getRealPath()) {
                 echo '<br/>'.$file->getRealPath();
