@@ -180,6 +180,7 @@ class ArtisanService {
      */
     public static function debugbarClear() {
         $files = File::files(storage_path('debugbar'));
+        dddx($files);
         foreach ($files as $file) {
             if ('json' == $file->getExtension() && false !== $file->getRealPath()) {
                 echo '<br/>'.$file->getRealPath();
