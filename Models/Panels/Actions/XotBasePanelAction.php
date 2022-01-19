@@ -177,7 +177,7 @@ abstract class XotBasePanelAction {
         $this->data = array_merge($request_query, $this->data);
         //$this->data = collect($this->data)->except(['fingerprint', 'serverMemo', 'updates'])->all();
 
-        //$url = $panel->url(['act'=>'index']);
+        //$url = $panel->url('index');
         $url = $panel->url('index');
         $url = url_queries(['_act' => $name], $url);
         //$this->data['page'] = 1;
