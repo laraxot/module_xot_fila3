@@ -192,11 +192,7 @@ class PanelFormService {
     }
 
     public function btnHtml(array $params): ?string {
-        //$params['panel'] = $this->panel;
-        //$params['url'] = RouteService::urlPanel($params);
-        //$params['url'] = $this->panel->route->urlPanel($params);
-
-        $params['url'] = $this->panel->url($params);
+        $params['url'] = $this->panel->url($params['act']);
         //dddx([$this->panel->route, $params['panel'], $params['url']]);
         $params['method'] = Str::camel($params['act']);
         if ('index_order' == $params['act']) {
