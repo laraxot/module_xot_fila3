@@ -56,6 +56,7 @@ class ArtisanService {
                 echo ArtisanService::exe('key:generate');
 
                 //-- non artisan
+                echo self::sessionClear();
                 echo self::errorClear();
                 echo self::debugbarClear();
                 echo 'DONE';
@@ -175,6 +176,25 @@ class ArtisanService {
         }
 
         return '<pre>laravel.log cleared !</pre> ('.count($files).' Files )';
+    }
+
+    /**
+     * @return string
+     */
+    public static function sessionClear() {
+        $files = File::files(storage_path('framework/sessions'));
+        dddx($files);
+        foreach ($files as $file) {
+            //if ('json' == $file->getExtension() && false !== $file->getRealPath()) {
+                //echo '<br/>'.$file->getRealPath();
+
+                //File::delete($file->getRealPath());
+
+                //$file->delete();
+            //}
+        }
+
+        return 'Debugbar Storage cleared! ('.count($files).' Files )';
     }
 
     /**
