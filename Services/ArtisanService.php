@@ -186,15 +186,15 @@ class ArtisanService {
 
         foreach ($files as $file) {
             if ('' == $file->getExtension() && false !== $file->getRealPath()) {
-                echo '<br/>'.$file->getRealPath();
+                //echo '<br/>'.$file->getRealPath();
 
                 //File::delete($file->getRealPath());
 
-                //$file->delete();
+                $file->delete();
             }
         }
 
-        return 'Debugbar Storage cleared! ('.count($files).' Files )';
+        return 'Session cleared! ('.count($files).' Files )';
     }
 
     /**
