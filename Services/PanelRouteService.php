@@ -127,10 +127,8 @@ class PanelRouteService {
         return $url;
     }
 
-    public function url(array $params = []): string {
+    public function url(string $act = 'show'): string {
         $panel = $this->panel;
-        $act = 'show'; //default
-        extract($params);
 
         $breads = $panel->getBreads();
         $route_params = [];
