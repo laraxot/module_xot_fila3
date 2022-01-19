@@ -45,18 +45,18 @@ class ArtisanService {
             case 'routelist1': return ArtisanService::showRouteList();
             case 'optimize': return ArtisanService::exe('optimize');
             case 'clear':
-                echo self::debugbarClear();
-                echo self::errorClear();
-                echo ArtisanService::exe('cache:clear');
-                echo ArtisanService::exe('config:clear');
-                echo ArtisanService::exe('event:clear');
-                echo ArtisanService::exe('route:clear');
-                echo ArtisanService::exe('view:clear');
-                echo ArtisanService::exe('debugbar:clear');
-                echo ArtisanService::exe('opcache:clear');
-                echo ArtisanService::exe('optimize:clear');
-                echo ArtisanService::exe('key:generate');
-
+                //echo self::debugbarClear();
+                //echo self::errorClear();
+                //echo ArtisanService::exe('cache:clear');
+                //echo ArtisanService::exe('config:clear');
+                //echo ArtisanService::exe('event:clear');
+                //echo ArtisanService::exe('route:clear');
+                //echo ArtisanService::exe('view:clear');
+                //echo ArtisanService::exe('debugbar:clear');
+                //echo ArtisanService::exe('opcache:clear');
+                //echo ArtisanService::exe('optimize:clear');
+                //echo ArtisanService::exe('key:generate');
+                echo 'DONE';
             break;
             case 'clearcache': return ArtisanService::exe('cache:clear');
             case 'routecache': return ArtisanService::exe('route:cache');
