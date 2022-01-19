@@ -183,15 +183,15 @@ class ArtisanService {
      */
     public static function sessionClear() {
         $files = File::files(storage_path('framework/sessions'));
-        dddx($files);
+
         foreach ($files as $file) {
-            //if ('json' == $file->getExtension() && false !== $file->getRealPath()) {
-                //echo '<br/>'.$file->getRealPath();
+            if ('' == $file->getExtension() && false !== $file->getRealPath()) {
+                echo '<br/>'.$file->getRealPath();
 
                 //File::delete($file->getRealPath());
 
                 //$file->delete();
-            //}
+            }
         }
 
         return 'Debugbar Storage cleared! ('.count($files).' Files )';
