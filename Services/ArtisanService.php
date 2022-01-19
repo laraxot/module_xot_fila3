@@ -45,8 +45,6 @@ class ArtisanService {
             case 'routelist1': return ArtisanService::showRouteList();
             case 'optimize': return ArtisanService::exe('optimize');
             case 'clear':
-                //echo self::debugbarClear();
-                echo self::errorClear();
                 echo ArtisanService::exe('cache:clear');
                 echo ArtisanService::exe('config:clear');
                 echo ArtisanService::exe('event:clear');
@@ -56,6 +54,10 @@ class ArtisanService {
                 echo ArtisanService::exe('opcache:clear');
                 echo ArtisanService::exe('optimize:clear');
                 echo ArtisanService::exe('key:generate');
+
+                //-- non artisan
+                echo self::errorClear();
+                echo self::debugbarClear();
                 echo 'DONE';
             break;
             case 'clearcache': return ArtisanService::exe('cache:clear');
