@@ -15,9 +15,8 @@ class CreateImagesTable extends XotBaseMigration {
      */
     public function up() {
         //-- CREATE --
-        if (! $this->tableExists()) {
-            $this->getConn()->create($this->getTable(),
-                function (Blueprint $table) {
+        $this->tableCreate(
+            function (Blueprint $table) {
                     $table->increments('id'); //->primary();
                     $table->nullableMorphs('post');
                     $table->text('src')->nullable();
@@ -28,9 +27,10 @@ class CreateImagesTable extends XotBaseMigration {
                     $table->timestamps();
                 }
             );
-        }
+
+
         //-- UPDATE --
-        $this->getConn()->table($this->getTable(),
+        $this->tableUpdate(
             function (Blueprint $table) {
                 if (! $this->hasColumn('src_out')) {
                     $table->text('src_out')->nullable()->after('src');

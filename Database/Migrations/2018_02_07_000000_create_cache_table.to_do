@@ -19,8 +19,9 @@ class CreateCacheTable extends XotBaseMigration {
    * @return void
      */
     public function up() {
-        if (! Schema::hasTable($this->getTable())) {
-            Schema::create($this->getTable(), function (Blueprint $table) {
+//-- CREATE --
+$this->tableCreate(
+            function (Blueprint $table) {
                 $table->string('key', 64)->unique();
                 $table->text('value');
                 $table->integer('expiration');
@@ -32,7 +33,5 @@ class CreateCacheTable extends XotBaseMigration {
      * Reverse the migrations.
      * @return void
 */
-    public function down() {
-        Schema::dropIfExists($this->getTable());
-    }
+
 }

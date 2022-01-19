@@ -19,8 +19,8 @@ class CreateMetatagsTable extends XotBaseMigration {
      */
     public function up() {
         //-- CREATE --
-        if (! $this->tableExists()) {
-            $this->getConn()->create($this->getTable(), function (Blueprint $table) {
+        $this->tableCreate(
+            function (Blueprint $table) {
                 $table->increments('id');
                 $table->string('sitename')->nullable();
                 $table->string('title')->nullable();
@@ -32,11 +32,13 @@ class CreateMetatagsTable extends XotBaseMigration {
                 $table->string('logo_src')->nullable();
                 $table->string('logo_footer_src')->nullable();
                 $table->string('tennant_name')->nullable();
-            });
-        }//end create
+           }
+            );
+
 
         //-- UPDATE --
-        $this->getConn()->table($this->getTable(), function (Blueprint $table) {
+        $this->tableUpdate(
+            function (Blueprint $table) {
             if (! $this->hasColumn('updated_at')) {
                 $table->timestamps();
             }

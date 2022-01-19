@@ -21,10 +21,8 @@ class CreateXotPostsTable extends XotBaseMigration {
      */
     public function up() {
         //-- CREATE --
-        if (! $this->tableExists()) {
-            $this->getConn()->create(
-                $this->getTable(),
-                function (Blueprint $table) {
+        $this->tableCreate(
+            function (Blueprint $table) {
                     $table->increments('id');
                     $table->nullableMorphs('post');
                     $table->string('lang', 2)->nullable();
@@ -41,10 +39,10 @@ class CreateXotPostsTable extends XotBaseMigration {
                     $table->timestamps();
                 }
             );
-        }
+
+
         //-- UPDATE --
-        $this->getConn()->table(
-            $this->getTable(),
+        $this->tableUpdate(
             function (Blueprint $table) {
                 // if (!$this->hasColumn( 'post_type')) {
                 //     $table->string('post_type', 40)->after('type')->index()->nullable();
