@@ -45,7 +45,7 @@ class ArtisanService {
             case 'routelist1': return ArtisanService::showRouteList();
             case 'optimize': return ArtisanService::exe('optimize');
             case 'clear':
-                //echo self::debugbarClear();
+                echo self::debugbarClear();
                 //echo self::errorClear();
                 //echo ArtisanService::exe('cache:clear');
                 //echo ArtisanService::exe('config:clear');
