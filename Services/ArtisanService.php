@@ -184,7 +184,7 @@ class ArtisanService {
         $files = File::files(storage_path('debugbar'));
         foreach ($files as $file) {
             if ('json' == $file->getExtension() && false !== $file->getRealPath()) {
-                echo '<br/>'.$file->getRealPath();
+                //echo '<br/>'.$file->getRealPath();
 
                 File::delete($file->getRealPath());
 
