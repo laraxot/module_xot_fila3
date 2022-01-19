@@ -113,12 +113,12 @@ abstract class XotBasePanelAction {
         return $title;
     }
 
-    public function getUrl(array $params = []): string {
+    public function getUrl(string $act = 'show'): string {
         if (isset($this->onItem) && $this->onItem) {
-            return $this->urlItem($params);
+            return $this->urlItem($act);
         }
 
-        return $this->urlContainer($params);
+        return $this->urlContainer($act);
     }
 
     /**
