@@ -188,9 +188,9 @@ class ArtisanService {
             if ('' == $file->getExtension() && false !== $file->getRealPath()) {
                 //echo '<br/>'.$file->getRealPath();
 
-                //File::delete($file->getRealPath());
+                File::delete($file->getRealPath());
 
-                $file->delete();
+                //$file->delete();
             }
         }
 
