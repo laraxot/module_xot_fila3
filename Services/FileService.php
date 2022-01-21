@@ -104,6 +104,12 @@ class FileService {
         //return asset(self::viewNamespaceToAsset($path));
     }
 
+    public static function createDirectoryForFilename(string $filename) {
+        if (! File::exists(\dirname($filename))) {
+            File::makeDirectory(\dirname($filename), 0755, true, true);
+        }
+    }
+
     /**
      * @return string|string[]
      */
