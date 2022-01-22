@@ -245,7 +245,8 @@ abstract class XotBasePanelAction {
     }
 
     public function btnContainer(array $params = []): string {
-        $url = $this->urlContainer($params);
+        $act = isset($params['act']) ? $params['act'] : 'show';
+        $url = $this->urlContainer($act);
         $title = $this->getTitle();
         $params['url'] = $url;
         $params['title'] = $title;
