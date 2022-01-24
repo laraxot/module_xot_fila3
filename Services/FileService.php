@@ -90,7 +90,8 @@ class FileService {
             throw new Exception('file ['.$filename_from.'] not Exists , path ['.$path.']');
         }
 
-        if (! File::exists($filename_to)) {
+        //dddx(app()->environment());// local
+        if (! File::exists($filename_to) || 'production' != app()->environment()) {
             if (! File::exists(\dirname($filename_to))) {
                 File::makeDirectory(\dirname($filename_to), 0755, true, true);
             }
