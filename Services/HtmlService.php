@@ -8,6 +8,8 @@ namespace Modules\Xot\Services;
 //use PHPExcel;
 //use PhpOffice\PhpSpreadsheet\Spreadsheet;
 //use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
+
+use Mpdf\Mpdf;
 use Spipu\Html2Pdf\Exception\Html2PdfException;
 /*
 ExceptionFormatter
@@ -24,11 +26,9 @@ use Spipu\Html2Pdf\Html2Pdf;
  */
 class HtmlService {
     /**
-     * @param array $params
-     *
      * @return string|void
      */
-    public static function toPdf(array $params){
+    public static function toPdf(array $params) {
         require_once __DIR__.'/vendor/autoload.php';
         $pdforientation = 'L'; //default;
         $out = 'show';
@@ -62,5 +62,14 @@ class HtmlService {
             \print_r($e);
             echo '</pre>';
         }
+    }
+
+    public static function toMpdf($html) {
+        require_once __DIR__.'/vendor/autoload.php';
+
+        $mpdf = new Mpdf();
+        $mpdf->WriteHTML($html);
+        $mpdf->Output();
+
     }
 }
