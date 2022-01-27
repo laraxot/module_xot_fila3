@@ -24,6 +24,6 @@ class CreateSessionsTable extends XotBaseMigration {
                     $table->integer('last_activity')->index();
                 }
             );
-        }//end create
+
     }
 }
