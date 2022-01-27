@@ -6,6 +6,7 @@ namespace Modules\Xot\Services;
 
 use Collective\Html\FormFacade as Form;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Str;
 use Modules\FormX\Services\FieldService;
@@ -41,7 +42,7 @@ class PanelFormService {
         $fields = $this->getFields(['act' => 'create']);
         $row = $this->panel->getRow();
         $res = '';
-        //$res.='<h3>'.$this->url(['act'=>'store']).'</h3>'; //4 debug
+        //$res.='<h3>'.$this->url('store').'</h3>'; //4 debug
         $res .= Form::bsOpenPanel($this, 'store');
         $res .= '<div class="clearfix">';
         foreach ($fields as $field) {
@@ -68,7 +69,7 @@ class PanelFormService {
         $fields = $this->getFields(['act' => 'edit']);
         $row = $this->panel->getRow();
         $res = '';
-        //$res.='<h3>'.$this->url(['act'=>'store']).'</h3>'; //4 debug
+        //$res.='<h3>'.$this->url('store').'</h3>'; //4 debug
         $res .= Form::bsOpenPanel($this->panel, 'update');
 
         $col_size = 0;
@@ -142,7 +143,7 @@ class PanelFormService {
         $parz = [
             'id' => $this->panel->getRow()->getKey(),
             'btn_class' => 'btn '.$class,
-            'route' => $this->panel->url(['act' => 'destroy']),
+            'route' => $this->panel->url('destroy'),
             'act' => $act,
             'title' => $title,
         ];
@@ -157,7 +158,7 @@ class PanelFormService {
         $parz = [
             'id' => $this->panel->getRow()->getKey(),
             'btn_class' => 'btn '.$class,
-            'route' => $this->url(['act'=>'detach']),
+            'route' => $this->url('detach'),
             'act' => $act,
         ];
 
@@ -191,11 +192,7 @@ class PanelFormService {
     }
 
     public function btnHtml(array $params): ?string {
-        //$params['panel'] = $this->panel;
-        //$params['url'] = RouteService::urlPanel($params);
-        //$params['url'] = $this->panel->route->urlPanel($params);
-
-        $params['url'] = $this->panel->url($params);
+        $params['url'] = $this->panel->url($params['act']);
         //dddx([$this->panel->route, $params['panel'], $params['url']]);
         $params['method'] = Str::camel($params['act']);
         if ('index_order' == $params['act']) {
@@ -307,9 +304,9 @@ class PanelFormService {
     */
 
     /**
-     * @return array
+     * exceptFields.
      */
-    public function exceptFields(array $params = []) {
+    public function exceptFields(array $params = []): Collection {
         $act = 'show';
         extract($params);
         $panel = $this->panel;
@@ -347,12 +344,12 @@ class PanelFormService {
                     return ! in_array($act, $item->except) &&
                         ! in_array($item->name, $excepts);
                 }
-            )->all();
+            );
 
         return $fields;
     }
 
-    public function getFields(array $params = []): array {
+    public function getFields(array $params = []): Collection {
         $act = isset($params['act']) ? $params['act'] : 'index';
 
         $fields = $this->exceptFields(['act' => $act]);

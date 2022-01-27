@@ -22,8 +22,8 @@ class CreateImageTable extends XotBaseMigration {
 */
     public function up() {
         //----- create -----
-        if (! Schema::hasTable($this->getTable())) {
-            Schema::create($this->getTable(), function (Blueprint $table) {
+        $this->tableCreate(
+            function (Blueprint $table) {
                 $table->increments('id');
                 $table->nullableMorphs('post');
                 $table->string('src');
@@ -35,14 +35,15 @@ class CreateImageTable extends XotBaseMigration {
                 $table->string('updated_by')->nullable();
                 $table->string('deleted_by')->nullable();
                 $table->timestamps();
-            });
-        }
-        //----- update -----
-        Schema::table($this->getTable(), function (Blueprint $table) {
+            }
+            );
+
+
+        //-- UPDATE --
+        $this->tableUpdate(
+            function (Blueprint $table) {
         });
     }
 
-    public function down() {
-        Schema::dropIfExists($this->getTable());
-    }
+
 }

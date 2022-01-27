@@ -33,6 +33,10 @@ class TranslatorService extends BaseTranslator
      */
     public function get($key, array $replace = [], $locale = null, $fallback = true)
     {
+        //backtrace(true);
+        //trans parte da xotbasepanel riga 1109 (per ora)
+        //superdump([$key, $replace , $locale , $fallback ]);
+
         $translation = parent::get($key, $replace, $locale, $fallback);
         //echo '<br>['.$key.']['.$translation.']';
         //$langs=ThemeService::__merge('langs', [$key=>$translation]);

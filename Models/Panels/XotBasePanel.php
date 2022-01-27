@@ -310,10 +310,12 @@ abstract class XotBasePanel implements PanelContract {
     }
 
     /*
-     * @return void
+     * ----
      */
-    public function setInAdmin(?bool $in_admin): void {
+    public function setInAdmin(?bool $in_admin): self {
         $this->in_admin = $in_admin;
+
+        return $this;
     }
 
     /*
@@ -341,7 +343,9 @@ abstract class XotBasePanel implements PanelContract {
         //$rows = $this->getBuilder();
         $rows = $this->getRows();
         $tbl = $row->getTable();
-        $pk = $row->getRouteKeyName($this->in_admin);
+
+        $pk = $row->getRouteKeyName($this->in_admin); //adesso restituisce guid, gli facciamo restituire "posts.guid" ?
+
         //$pk = $row->getRouteKeyName(); // !!! MI SEMBRA STRANO !!
         $pk_full = $row->getTable().'.'.$pk;
 
@@ -352,7 +356,7 @@ abstract class XotBasePanel implements PanelContract {
         } // pezza momentanea
 
         $value = Str::slug($guid); //retrocompatibilita'
-        if ('guid' == $pk_full) {
+        if ('guid' == $pk_full && method_exists($row, 'posts')) {
             // 301    Call to an undefined method Illuminate\Database\Eloquent\Builder|Illuminate\Database\Eloquent\Relations\Relation::whereHas().
             $rows = $rows->whereHas(
                 'posts',
@@ -573,6 +577,10 @@ abstract class XotBasePanel implements PanelContract {
      */
     public function fields(): array {
         return [];
+    }
+
+    public function getRules(array $params = []): array {
+        return $this->rules($params);
     }
 
     public function rules(array $params = []): array {
@@ -921,7 +929,7 @@ abstract class XotBasePanel implements PanelContract {
         return $this->form->{__FUNCTION__}();
     }
 
-    public function getFields(array $params = []): array {
+    public function getFields(array $params = []): Collection {
         return $this->form->{__FUNCTION__}($params);
     }
 
@@ -976,8 +984,8 @@ abstract class XotBasePanel implements PanelContract {
         return $this->route->{__FUNCTION__}(['lang' => $lang]);
     }
 
-    public function url(array $params = []): string {
-        return $this->route->{__FUNCTION__}($params);
+    public function url(string $act = 'act'): string {
+        return $this->route->{__FUNCTION__}($act);
     }
 
     public function relatedName(string $name, ?int $id = null): PanelContract {
@@ -1011,12 +1019,17 @@ abstract class XotBasePanel implements PanelContract {
     public function guid(?bool $is_admin = null): ?string {
         if (isset($is_admin) && $is_admin) {
             return (string) $this->row->getKey();
-        }
+        }/*
         if (null !== $this->getInAdmin() && $this->getInAdmin()) {
+            return (string) $this->row->getKey();
+        }
+        */
+        if (inAdmin()) {
             return (string) $this->row->getKey();
         }
         $row = $this->row;
         $key = $row->getRouteKeyName();
+
         /*
         $msg = [
             'key' => $key,
@@ -1100,7 +1113,7 @@ abstract class XotBasePanel implements PanelContract {
         $trad_mod = $this->getTradMod();
         $actions = [];
         foreach ($acts as $act) {
-            $url = $this->url(['act' => $act]);
+            $url = $this->url($act);
             $url1 = Str::before($url, '?');
             $req_path = '/'.request()->path();
             $active = $url1 == $req_path;
@@ -1442,14 +1455,14 @@ abstract class XotBasePanel implements PanelContract {
         $bread[] = $tmp;
         foreach ($parents as $parent) {
             $tmp = (object) [];
-            $tmp->url = $parent->url(['act'=>'index']);
+            $tmp->url = $parent->url('index');
             $tmp->title = $parent->postType();
             $tmp->obj = \Theme::xotModel($tmp->title);
             $tmp->method = 'index';
             $bread[] = $tmp;
             try {
                 $tmp = (object) [];
-                $tmp->url = $parent->url(['act'=>'show']);
+                $tmp->url = $parent->url('show');
                 $tmp->title = $parent->getRow()->title;
                 $tmp->obj = \Theme::xotModel($parent->postType());
                 $tmp->method = 'show';

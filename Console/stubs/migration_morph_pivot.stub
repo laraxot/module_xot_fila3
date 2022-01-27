@@ -28,9 +28,9 @@ class CreateDummyClassTable extends XotBaseMigration{
 * @return void
 */
     public function up(){
-        //----- create -----
-        if (!Schema::hasTable($this->getTable())) {
-            Schema::create($this->getTable(), function (Blueprint $table) {
+        //-- CREATE --
+        $this->tableCreate(
+            function (Blueprint $table) {
                 $table->increments('id');
                 $table->nullableMorphs('post');
                 $table->nullableMorphs('related');
@@ -43,20 +43,23 @@ class CreateDummyClassTable extends XotBaseMigration{
                 $table->string('updated_by')->nullable();
                 $table->string('deleted_by')->nullable();
                 $table->timestamps();
-            });
-        }
-        //----- update -----
-        Schema::table($this->getTable(), function (Blueprint $table) {
+            }
+            );
+
+
+        //-- UPDATE --
+        $this->tableUpdate(
+            function (Blueprint $table) {
             /*
-            if (!Schema::hasColumn($this->getTable(), 'post_id')) {
+            if (!$this->hasColumn( 'post_id')) {
                 $table->morphs('post');
             };
-            if (!Schema::hasColumn($this->getTable(), 'date_start')) {
+            if (!$this->hasColumn( 'date_start')) {
                 $table->dateTime('date_start')->nullable();
                 $table->dateTime('date_end')->nullable();
             };
 
-            if (!Schema::hasColumn($this->getTable(), 'created_by')) {
+            if (!$this->hasColumn( 'created_by')) {
                 $table->string('created_by')->nullable();
                 $table->string('updated_by')->nullable();
                 $table->string('deleted_by')->nullable();
@@ -65,7 +68,5 @@ class CreateDummyClassTable extends XotBaseMigration{
         });
     }
 
-    public function down(){
-        Schema::dropIfExists($this->getTable());
-    }
+
 }

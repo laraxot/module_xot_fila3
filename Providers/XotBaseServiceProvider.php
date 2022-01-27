@@ -12,7 +12,6 @@ use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Str;
 use Modules\Xot\Services\LivewireService;
 use Nwidart\Modules\Facades\Module;
-use TypeError;
 
 //use Modules;
 
@@ -50,16 +49,8 @@ abstract class XotBaseServiceProvider extends ServiceProvider {
      * Register the service provider.
      */
     public function register(): void {
-        //dd($this->module_name.' '.RouteServiceProvider::class);
-        //dd(dirname(get_class($this))); //Modules\Backend\Providers\BackendServiceProvider
-        //dd(__NAMESPACE__);
-        //$ns=dirname(get_class($this));
-        //dd(get_class($this).' '.$this->module_ns);
-        //echo '<h3>Time :'.class_basename($this).' '.(microtime(true) - LARAVEL_START).'</h3>';
-
-        $this->app->register(''.$this->module_ns.'\RouteServiceProvider');
-        //get_called_class
-        //dd(get_class($this));
+        $this->module_ns = collect(explode('\\', $this->module_ns))->slice(0, -1)->implode('\\');
+        $this->app->register(''.$this->module_ns.'\Providers\RouteServiceProvider');
         if (method_exists($this, 'registerCallback')) {
             $this->registerCallback();
         }
@@ -130,32 +121,18 @@ abstract class XotBaseServiceProvider extends ServiceProvider {
     }
 
     public function registerBladeComponents(): void {
+        /*
         $module = Module::find($this->module_name);
         if (null == $module) {
             throw new \Exception('['.$this->module_name.'] is not found');
         }
-        /*
-        $methods = get_class_methods($module);
-        echo '<table border="1">';
-        foreach ($methods as $method) {
-            if (Str::startsWith($method, 'get')) {
-                try {
-                    echo '<tr><td>'.$method.'</td><td>'.print_r($module->{$method}(), true).'</td></tr>';
-                } catch (\Exception $e) {
-                    echo '<tr><td>'.$method.'</td><td>'.$e->getMessage().'</td></tr>';
-                } catch (TypeError $e) {
-                    echo '<tr><td>'.$method.'</td><td>'.$e->getMessage().'</td></tr>';
-                }
-            }
-        }
-        echo '</table>';
-        dddx('a');
 
-        Blade::componentNamespace('Modules\FormX\View\Components', $this->module_name);
-        */
         $namespace = 'Modules\\'.$module->getName().'\View\Components';
 
         Blade::componentNamespace($namespace, $module->getLowerName());
+        */
+        $namespace = $this->module_ns.'\View\Components';
+        Blade::componentNamespace($namespace, $this->module_name);
     }
 
     public function registerLivewireComponents(): void {

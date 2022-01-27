@@ -19,8 +19,9 @@ class CreateSessionsTable extends XotBaseMigration {
    * @return void
      */
     public function up() {
-        if (! Schema::hasTable($this->getTable())) {
-            Schema::create($this->getTable(), function (Blueprint $table) {
+//-- CREATE --
+$this->tableCreate(
+            function (Blueprint $table) {
                 $table->string('id', 191)->unique();
                 $table->unsignedInteger('user_id')->nullable();
                 $table->string('ip_address', 45)->nullable();

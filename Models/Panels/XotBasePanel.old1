@@ -1646,14 +1646,14 @@ abstract class XotBasePanel implements PanelContract {
         $bread[] = $tmp;
         foreach ($parents as $parent) {
             $tmp = (object) [];
-            $tmp->url = $parent->url(['act'=>'index']);
+            $tmp->url = $parent->url('index');
             $tmp->title = $parent->postType();
             $tmp->obj = \Theme::xotModel($tmp->title);
             $tmp->method = 'index';
             $bread[] = $tmp;
             try {
                 $tmp = (object) [];
-                $tmp->url = $parent->url(['act'=>'show']);
+                $tmp->url = $parent->url('show');
                 $tmp->title = $parent->getRow()->title;
                 $tmp->obj = \Theme::xotModel($parent->postType());
                 $tmp->method = 'show';

@@ -19,8 +19,6 @@ interface PanelContract {
      * Undocumented function.
      *
      * @param Relation|Builder $rows
-     *
-     * @return self
      */
     public function setRows($rows): self;
 
@@ -82,13 +80,13 @@ interface PanelContract {
 
     public function pdfFilename(array $params = []): string;
 
-    public function setInAdmin(bool $in_admin): void;
+    public function setInAdmin(bool $in_admin): self;
 
     public function setRouteParams(array $route_params): void;
 
     public function getXotModelName(): ?string;
 
-    public function url(array $params = []): string;
+    public function url(string $act = 'show'): string;
 
     public function itemActions(array $params = []): Collection;
 
@@ -121,6 +119,8 @@ interface PanelContract {
     public function getName(): string;
 
     public function rules(array $params = []): array;
+
+    public function getRules(array $params = []): array;
 
     public function rulesMessages(): array;
 
@@ -157,7 +157,7 @@ interface PanelContract {
      */
     public function formLivewireEdit(array $params = []);
 
-    public function getFields(array $params = []): array;
+    public function getFields(array $params = []): Collection;
 
     public function isRevisionBy(UserContract $user): bool;
 

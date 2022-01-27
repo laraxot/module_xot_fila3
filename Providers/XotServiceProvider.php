@@ -30,24 +30,7 @@ class XotServiceProvider extends XotBaseServiceProvider {
     public string $module_name = 'xot';
 
     public function bootCallback(): void {
-        /*-- moved to tenant
-        $this->mergeConfigs();
-
-        if (\Request::has('act') && 'migrate' == \Request::input('act')) {
-            DB::purge('mysql'); //Call to a member function prepare() on null
-            DB::reconnect('mysql');
-        }
-        //DB::purge(); //Call to a member function prepare() on null
-        // Database connection [mysql] not configured.
-        DB::reconnect();
-        Schema::defaultStringLength(191);
-
-        $map = config('morph_map');
-
-        Relation::morphMap($map);
-        //*/
-
-        Module::enable('Tenant');
+        //Module::enable('Tenant');
         //Module::enable('Rating');
         //Module::enable('Tag');
 

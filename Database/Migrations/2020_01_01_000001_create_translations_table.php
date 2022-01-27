@@ -18,10 +18,8 @@ class CreateTranslationsTable extends XotBaseMigration {
      */
     public function up() {
         //-- CREATE --
-        if (! $this->tableExists()) {
-            $this->getConn()->create(
-                $this->getTable(),
-                function (Blueprint $table) {
+        $this->tableCreate(
+            function (Blueprint $table) {
                     $table->increments('id');
                     $table->string('lang')->nullable();
                     $table->string('key')->nullable();
@@ -32,10 +30,10 @@ class CreateTranslationsTable extends XotBaseMigration {
                     $table->timestamps();
                 }
             );
-        }
+
+
         //-- UPDATE --
-        $this->getConn()->table(
-            $this->getTable(),
+        $this->tableUpdate(
             function (Blueprint $table) {
                 if (! $this->hasColumn('created_by')) {
                     $table->string('created_by')->nullable();

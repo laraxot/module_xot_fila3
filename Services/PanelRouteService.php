@@ -127,10 +127,8 @@ class PanelRouteService {
         return $url;
     }
 
-    public function url(array $params = []): string {
+    public function url(string $act = 'show'): string {
         $panel = $this->panel;
-        $act = 'show'; //default
-        extract($params);
 
         $breads = $panel->getBreads();
         $route_params = [];
@@ -150,16 +148,17 @@ class PanelRouteService {
 
         $route_name = 'containers.'.Str::snake($act);
 
-        if (inAdmin($params)) {
+        if (inAdmin()) {
             $route_name = 'admin.'.$route_name;
         }
 
-        //---
-        if (Str::startsWith($act, 'index') || Str::startsWith($act, 'create')) {
-            [$containers,$items] = \params2ContainerItem($route_params);
-            if (count($containers) == count($items) && count($items) > 0) {
-                $k = 'item'.(count($items) - 1);
-                unset($route_params[$k]);
+        if ('index_edit' !== $act) {
+            if (Str::startsWith($act, 'index') || Str::startsWith($act, 'create')) {
+                [$containers,$items] = \params2ContainerItem($route_params);
+                if (count($containers) == count($items) && count($items) > 0) {
+                    $k = 'item'.(count($items) - 1);
+                    unset($route_params[$k]);
+                }
             }
         }
 
@@ -169,7 +168,6 @@ class PanelRouteService {
             if (request()->input('debug', false)) {
                 dddx(
                     ['e' => $e->getMessage(),
-                        'params' => $params,
                         'route_name' => $route_name,
                         'route_params' => $route_params,
                         'last row' => $panel->getRow(),
@@ -197,12 +195,14 @@ class PanelRouteService {
     public function relatedUrl(array $params): string {
         $panel = $this->panel;
         $act = 'show';
+
         extract($params);
         if (! isset($related_name)) {
             throw new \Exception('err: related_name is missing');
         }
         //--- solo per velocita'
-        $url = $panel->url($params);
+
+        $url = $panel->url($act);
 
         return $url.'/'.$related_name;
     }

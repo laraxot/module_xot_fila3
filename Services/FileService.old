@@ -19,6 +19,36 @@ class FileService {
      * @return false|mixed|string
      */
     public static function asset(string $path) {
+        if ('/' == $path[0]) {
+            $path = \mb_substr($path, 1);
+        }
+        $str = 'theme/bc/';
+        if (Str::startsWith($path, $str)) {
+            return asset('/bc/'.\mb_substr($path, \mb_strlen($str)));
+        }
+        $str = 'theme/pub/';
+        if (Str::startsWith($path, $str)) {
+            $path = 'pub_theme::'.\mb_substr($path, \mb_strlen($str));
+        }
+        $str = 'theme/';
+        if (Str::startsWith($path, $str)) {
+            $path = 'adm_theme::'.\mb_substr($path, \mb_strlen($str));
+        }
+
+        $str = 'https://';
+        if (Str::startsWith($path, $str)) {
+            return $path;
+        }
+
+        $str = 'http://';
+        if (Str::startsWith($path, $str)) {
+            return $path;
+        }
+
+        if (! Str::contains($path, '::')) {
+            return $path;
+        }
+
         /*
             to DOOOO
             viewNamespaceToPath     => /images/prova.png
@@ -27,97 +57,23 @@ class FileService {
         */
         //dddx(\Module::asset('blog:img/logo.img')); //localhost/modules/blog/img/logo.img
 
-        if (Str::startsWith($path, 'https://')) {
-            return $path;
-        }
-        if (Str::startsWith($path, 'http://')) {
-            return $path;
-        }
-
-        if (File::exists(public_path($path))) {
-            return $path;
-        }
-
-        if (Str::startsWith($path, '/theme/pub')) {
-            $path = 'pub_theme::'.Str::after($path, '/theme/pub');
-        }
-
-        if (Str::startsWith($path, 'theme/pub')) {
-            $path = 'pub_theme::'.Str::after($path, 'theme/pub');
-        }
-
-        $ns = Str::before($path, '::');
-        $ns_after = Str::after($path, '::');
-        if ($ns === $path) {
-            $ns = inAdmin() ? 'adm_theme' : 'pub_theme';
-        }
-
-        $ns_after0 = Str::before($ns_after, '/');
-        $ns_after1 = Str::after($ns_after, '/');
-        $ns_after = str_replace('.', '/', $ns_after0).'/'.$ns_after1;
-
-        if (in_array($ns, ['pub_theme', 'adm_theme'])) {
-            $theme = config('xra.'.$ns);
-            $filename_from = self::fixPath(base_path('Themes/'.$theme.'/Resources/'.$ns_after));
-            $asset = 'themes/'.$theme.'/'.$ns_after;
-            $filename_to = self::fixPath(public_path($asset));
-            $asset = Str::replace(url(''), '', asset($asset));
-
-            if (! File::exists($filename_to)) {
-                if (! File::exists(\dirname($filename_to))) {
-                    File::makeDirectory(\dirname($filename_to), 0755, true, true);
-                }
-                try {
-                    //dddx([$filename_from, $filename_to]);
-                    File::copy($filename_from, $filename_to);
-                } catch (\Exception $e) {
-                    throw new Exception('path :['.$path.'] file from ['.$filename_from.']');
-                }
-            }
-
-            return $asset;
-        }
-
-        $module_path = Module::getModulePath($ns);
-        if (Str::endsWith($module_path, '/')) {
-            $module_path = Str::beforeLast($module_path, '/');
-        }
-        $filename_from = self::fixPath($module_path.'/Resources/'.$ns_after);
-        $asset = 'assets/'.$ns.'/'.$ns_after;
-        $filename_to = self::fixPath(public_path($asset));
-        $asset = Str::replace(url(''), '', asset($asset));
-        if (! File::exists($filename_from)) {
-            throw new Exception('file ['.$filename_from.'] not Exists , path ['.$path.']');
-        }
-
-        //dddx(app()->environment());// local
-        if (! File::exists($filename_to) || 'production' != app()->environment()) {
-            if (! File::exists(\dirname($filename_to))) {
-                File::makeDirectory(\dirname($filename_to), 0755, true, true);
-            }
-            if (File::exists($filename_from)) {
-                File::copy($filename_from, $filename_to);
-            }
-        }
-
-        return $asset;
-
-        //return asset(self::viewNamespaceToAsset($path));
-    }
-
-    public static function createDirectoryForFilename(string $filename) {
-        if (! File::exists(\dirname($filename))) {
-            File::makeDirectory(\dirname($filename), 0755, true, true);
-        }
+        return asset(self::viewNamespaceToAsset($path));
     }
 
     /**
      * @return string|string[]
      */
     public static function viewNamespaceToDir(string $view) {
+        //$pos = \mb_strpos($view, '::');
+        //$pack = \mb_substr($view, 0, $pos);
         $ns = Str::before($view, '::');
-        //dddx(Str::after($view, '::'));
+        //$relative_path = \str_replace('.', '/', \mb_substr($view, $pos + 2));
         $relative_path = \str_replace('.', '/', Str::after($view, '::'));
+
+        /*
+        $viewHints = View::getFinder()->getHints();
+        $pack_dir = $viewHints[$pack][0];
+        */
         $pack_dir = self::getViewNameSpacePath($ns);
         $view_dir = $pack_dir.'/'.$relative_path;
         $view_dir = \str_replace('/', \DIRECTORY_SEPARATOR, $view_dir);
@@ -132,6 +88,9 @@ class FileService {
         if (null == $ns) {
             return null;
         }
+        //dirname(\View::getFinder()->find('theme::includes.components.form.text'));
+        //View::getFinder()
+        // View finder.
         $finder = view()->getFinder();
         $viewHints = [];
         if (method_exists($finder, 'getHints')) {

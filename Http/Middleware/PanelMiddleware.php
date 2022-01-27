@@ -16,18 +16,10 @@ use Modules\Xot\Services\PanelService;
  * Class PanelMiddleware.
  */
 class PanelMiddleware {
-    /*
-    public function __construct(array $params){
-        dddx($params);
-    }
-    */
-
     /**
      * @return \Illuminate\Http\Response|mixed
      */
     public function handle(Request $request, Closure $next) {
-        //$parameters = request()->route()->parameters();
-        //$parameters = optional(\Route::current())->parameters();
         $route_params = getRouteParameters();
         try {
             $panel = PanelService::getByParams($route_params);

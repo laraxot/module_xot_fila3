@@ -131,7 +131,7 @@ class PanelActionService {
         $itemAction = $this->itemAction($act);
         if (is_object($itemAction)) {
             //return $itemAction->urlItem(['row' => $this->panel->getRow(), 'panel' => $this->panel]);
-            return $itemAction->urlItem($params);
+            return $itemAction->urlItem($act);
         }
     }
 

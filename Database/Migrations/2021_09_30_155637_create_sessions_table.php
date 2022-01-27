@@ -14,10 +14,8 @@ class CreateSessionsTable extends XotBaseMigration {
      */
     public function up() {
         //-- CREATE --
-        if (! $this->tableExists()) {
-            $this->getConn()->create(
-                $this->getTable(),
-                function (Blueprint $table) {
+        $this->tableCreate(
+            function (Blueprint $table) {
                     $table->string('id')->primary();
                     $table->foreignId('user_id')->nullable()->index();
                     $table->string('ip_address', 45)->nullable();
@@ -26,6 +24,6 @@ class CreateSessionsTable extends XotBaseMigration {
                     $table->integer('last_activity')->index();
                 }
             );
-        }//end create
+
     }
 }

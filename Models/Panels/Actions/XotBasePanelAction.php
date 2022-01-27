@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace Modules\Xot\Models\Panels\Actions;
 
-use ErrorException;
-use Exception;
 use Illuminate\Database\Eloquent\Builder;
 //use Illuminate\Database\Eloquent\Model;
 //use Laravel\Scout\Searchable;
@@ -113,12 +111,12 @@ abstract class XotBasePanelAction {
         return $title;
     }
 
-    public function getUrl(array $params = []): string {
+    public function getUrl(string $act = 'show'): string {
         if (isset($this->onItem) && $this->onItem) {
-            return $this->urlItem($params);
+            return $this->urlItem($act);
         }
 
-        return $this->urlContainer($params);
+        return $this->urlContainer($act);
     }
 
     /**
@@ -154,17 +152,16 @@ abstract class XotBasePanelAction {
         return $this->btnContainer($params);
     }
 
-    public function url(array $params = []): string {
+    public function url(string $act = 'show'): string {
         if (isset($this->onItem) && $this->onItem) {
-            return $this->urlItem($params);
+            return $this->urlItem($act);
         }
 
-        return $this->urlContainer($params);
+        return $this->urlContainer($act);
     }
 
-    public function urlContainer(array $params = []): string {
+    public function urlContainer(string $act = 'show'): string {
         $panel = $this->panel;
-        extract($params);
         //$request = \Request::capture();
         $name = $this->getName();
         //$url = $request->fullUrlWithQuery(['_act' => $name]);
@@ -180,8 +177,8 @@ abstract class XotBasePanelAction {
         $this->data = array_merge($request_query, $this->data);
         //$this->data = collect($this->data)->except(['fingerprint', 'serverMemo', 'updates'])->all();
 
-        //$url = $panel->url(['act'=>'index']);
-        $url = $panel->url(['act' => 'index']);
+        //$url = $panel->url('index');
+        $url = $panel->url('index');
         $url = url_queries(['_act' => $name], $url);
         //$this->data['page'] = 1;
         $this->data['_act'] = $name;
@@ -207,7 +204,6 @@ abstract class XotBasePanelAction {
 
     public function btnHtml(array $params = []): string {
         $params['panel'] = $this->panel;
-        $params['url'] = $this->getUrl($params);
 
         if (isset($params['debug']) && true === $params['debug']) {
             dddx($params);
@@ -221,6 +217,9 @@ abstract class XotBasePanelAction {
                 $params['act'] = 'show';
             }
         }
+
+        $params['url'] = $this->getUrl($params['act']);
+
         if (! isset($params['title'])) {
             $params['title'] = ''; // $this->getTitle();
         }
@@ -246,7 +245,8 @@ abstract class XotBasePanelAction {
     }
 
     public function btnContainer(array $params = []): string {
-        $url = $this->urlContainer($params);
+        $act = isset($params['act']) ? $params['act'] : 'show';
+        $url = $this->urlContainer($act);
         $title = $this->getTitle();
         $params['url'] = $url;
         $params['title'] = $title;
@@ -259,11 +259,10 @@ abstract class XotBasePanelAction {
 
     //end btnContainer
 
-    public function urlItem(array $params = []): string {
-        //dddx($params);
+    public function urlItem(/*string $act = 'show'*/): string {
         $url = '';
         $query_params = [];
-        extract($params);
+
         if (isset($row)) {
             $this->setRow($row);
         }
@@ -271,13 +270,7 @@ abstract class XotBasePanelAction {
             $this->panel = Panel::get($this->row);
         }
         $name = $this->getName();
-        try {
-            $url = $this->panel->url(['act' => 'show']);
-        } catch (Exception $e) {
-            dddx($e->getMessage());
-        }/* catch (ErrorException $e) {
-            dddx($e->getMessage());
-        }*/
+        $url = $this->panel->url('show');
         $query_params['_act'] = $name;
         /*
         if (isset($modal)) {

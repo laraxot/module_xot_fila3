@@ -14,16 +14,18 @@ use Nwidart\Modules\Facades\Module;
 /**
  * Class ProfileService.
  */
-class ProfileService {
+class ProfileService
+{
     private Model $user;
 
-    private Model $profile;
+    private ?Model $profile=null;
 
     private PanelContract $profile_panel;
 
     private static ?ProfileService $instance = null;
 
-    public static function getInstance(): self {
+    public static function getInstance(): self
+    {
         if (null === self::$instance) {
             self::$instance = new self();
         }
@@ -36,7 +38,8 @@ class ProfileService {
      *
      * @throws \ReflectionException
      */
-    public static function get($user): self {
+    public static function get($user): self
+    {
         $self = self::getInstance();
 
         if (is_object($user)) {
@@ -45,7 +48,12 @@ class ProfileService {
                 dddx('Aggiungi profile a xra.php');
             }
             $self->user = $user;
-            $profile = $user->profile;
+            try {
+                $profile = $user->profile;
+            } catch (\Exception $e) {
+                echo '<h3>'.$e->getMessage().'</h3>';
+                return $self;
+            }
 
             if (null == $profile) {
                 /*
@@ -74,26 +82,32 @@ class ProfileService {
         return $self;
     }
 
-    public function fullName(): ?string {
+    public function fullName(): ?string
+    {
         if (null == $this->user) {
             return null;
         }
         $user = $this->user;
-        if (! property_exists($user, 'first_name')) {
+
+        //dddx([$user, $user->first_name, property_exists($user, 'first_name')]);
+
+        /*if (! property_exists($user, 'first_name')) {
             throw new \Exception('property first_name in $user not exist');
         }
         if (! property_exists($user, 'last_name')) {
             throw new \Exception('property last_name in $user not exist');
-        }
+        }*/
 
         return $user->first_name.' '.$user->last_name;
     }
 
-    public function handle(): string {
+    public function handle(): string
+    {
         return optional($this->user)->handle;
     }
 
-    public function permType(): int {
+    public function permType(): int
+    {
         // 89     Access to an undefined property Illuminate\Database\Eloquent\Model::$perm.
         // perchè lo prende come property quando è una relazione?
         // se metto property_exists non visualizzo il sito
@@ -113,12 +127,14 @@ class ProfileService {
         return intval($this->user->getRelationValue('perm')->perm_type);
     }
 
-    public function name(): string {
+    public function name(): string
+    {
         return (string) optional($this->user)->first_name;
     }
 
-    public function url(array $params = []): string {
-        return $this->profile_panel->url($params);
+    public function url(string $act='show'): string
+    {
+        return $this->profile_panel->url($act);
     }
 
     /**
@@ -126,7 +142,8 @@ class ProfileService {
      *
      * @return string|null
      */
-    public function avatar($size = 100) {
+    public function avatar($size = 100)
+    {
         if (null == $this->user) {
             return null;
         }
@@ -166,7 +183,8 @@ class ProfileService {
      *
      * @return bool
      */
-    public function hasRole($role_name) {
+    public function hasRole($role_name)
+    {
         if (null == $this->profile) {
             return false;
         }
@@ -180,7 +198,8 @@ class ProfileService {
      *
      * @return mixed|null
      */
-    public function role($role_name) {
+    public function role($role_name)
+    {
         if (null == $this->profile) {
             return null;
         }
@@ -189,11 +208,13 @@ class ProfileService {
         return $this->profile->{$role_method};
     }
 
-    public function email(): ?string {
+    public function email(): ?string
+    {
         return $this->user->email;
     }
 
-    public function getPanel(): PanelContract {
+    public function getPanel(): PanelContract
+    {
         if (null == $this->profile) {
             dddx(['message' => 'to fix', 'user' => $this->user, 'profile' => $this->profile]);
         }
@@ -203,7 +224,8 @@ class ProfileService {
         return $profile_panel;
     }
 
-    public function getProfilePanel(): PanelContract {
+    public function getProfilePanel(): PanelContract
+    {
         if (null == $this->profile) {
             dddx(['message' => 'to fix', 'user' => $this->user, 'profile' => $this->profile]);
         }
@@ -213,13 +235,18 @@ class ProfileService {
         return $profile_panel;
     }
 
-    public function getUserPanel(): PanelContract {
+    public function getUserPanel(): PanelContract
+    {
         $user_panel = PanelService::get($this->user);
 
         return $user_panel;
     }
 
-    public function isSuperAdmin(array $params = []): bool {
+    public function isSuperAdmin(array $params = []): bool
+    {
+        if (null == $this->profile) {
+            return false;
+        }
         $panel = $this->getPanel();
         //dddx($panel);//Modules\Food\Models\Panels\ProfilePanel
         if (! method_exists($panel, 'isSuperAdmin')) {
@@ -229,11 +256,13 @@ class ProfileService {
         return $panel->isSuperAdmin($params);
     }
 
-    public function getUser(): object {
+    public function getUser(): object
+    {
         return $this->user;
     }
 
-    public function areas(): Collection {
+    public function areas(): Collection
+    {
         $areas = $this->getUser()->areas;
 
         $modules = Module::all();
@@ -247,7 +276,8 @@ class ProfileService {
         return $areas;
     }
 
-    public function panelAreas(): Collection {
+    public function panelAreas(): Collection
+    {
         return $this->areas()->map(function ($area) {
             return PanelService::get($area);
         });

@@ -45,18 +45,21 @@ class ArtisanService {
             case 'routelist1': return ArtisanService::showRouteList();
             case 'optimize': return ArtisanService::exe('optimize');
             case 'clear':
-                echo self::debugbarClear();
-                echo self::errorClear();
-                echo ArtisanService::exe('cache:clear');
-                echo ArtisanService::exe('config:clear');
-                echo ArtisanService::exe('event:clear');
-                echo ArtisanService::exe('route:clear');
-                echo ArtisanService::exe('view:clear');
-                echo ArtisanService::exe('debugbar:clear');
-                echo ArtisanService::exe('opcache:clear');
-                echo ArtisanService::exe('optimize:clear');
-                echo ArtisanService::exe('key:generate');
+                echo ArtisanService::exe('cache:clear').PHP_EOL;
+                echo ArtisanService::exe('config:clear').PHP_EOL;
+                echo ArtisanService::exe('event:clear').PHP_EOL;
+                echo ArtisanService::exe('route:clear').PHP_EOL;
+                echo ArtisanService::exe('view:clear').PHP_EOL;
+                echo ArtisanService::exe('debugbar:clear').PHP_EOL;
+                echo ArtisanService::exe('opcache:clear').PHP_EOL;
+                echo ArtisanService::exe('optimize:clear').PHP_EOL;
+                echo ArtisanService::exe('key:generate').PHP_EOL;
 
+                //-- non artisan
+                echo self::sessionClear().PHP_EOL;
+                echo self::errorClear().PHP_EOL;
+                echo self::debugbarClear().PHP_EOL;
+                echo PHP_EOL.'DONE'.PHP_EOL;
             break;
             case 'clearcache': return ArtisanService::exe('cache:clear');
             case 'routecache': return ArtisanService::exe('route:cache');
@@ -178,11 +181,30 @@ class ArtisanService {
     /**
      * @return string
      */
+    public static function sessionClear() {
+        $files = File::files(storage_path('framework/sessions'));
+
+        foreach ($files as $file) {
+            if ('' == $file->getExtension() && false !== $file->getRealPath()) {
+                //echo '<br/>'.$file->getRealPath();
+
+                File::delete($file->getRealPath());
+
+                //$file->delete();
+            }
+        }
+
+        return 'Session cleared! ('.count($files).' Files )';
+    }
+
+    /**
+     * @return string
+     */
     public static function debugbarClear() {
         $files = File::files(storage_path('debugbar'));
         foreach ($files as $file) {
             if ('json' == $file->getExtension() && false !== $file->getRealPath()) {
-                echo '<br/>'.$file->getRealPath();
+                //echo '<br/>'.$file->getRealPath();
 
                 File::delete($file->getRealPath());
 

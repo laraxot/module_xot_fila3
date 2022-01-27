@@ -189,12 +189,16 @@ class PanelService {
         if (isset($route_params['in_admin'])) {
             $in_admin = $route_params['in_admin'];
         }
+        if (null == $in_admin) {
+            $in_admin = inAdmin();
+        }
+
         if (0 == count($containers)) {
             $panel = self::getHomePanel();
 
             return $panel;
         }
-        //$home_row = self::getHomePanel()->getRow();
+
         $row = null;
         $first_container = Str::singular($containers[0]);
         if (isset($route_params['module'])) {
@@ -221,13 +225,16 @@ class PanelService {
         );
 
         $panel = PanelService::get($row);
+
         $panel->setRows($rows);
+
         $panel->setName(Str::plural($first_container)); /// !!! da controllare
         $i = 0;
+
         if (isset($items[0])) {
-            $panel->setInAdmin($in_admin);
-            $panel->setItem($items[0]);
+            $panel->setInAdmin($in_admin)->setItem($items[0]);
         }
+
         $panel_parent = $panel;
 
         for ($i = 1; $i < count($containers); ++$i) {
@@ -258,8 +265,8 @@ class PanelService {
             $panel->setParent($panel_parent);
 
             if (isset($items[$i])) {
-                $panel->setInAdmin($in_admin);
-                $panel->setItem($items[$i]);
+                $panel->setInAdmin($in_admin)
+                    ->setItem($items[$i]);
             }
             $panel_parent = $panel;
         }

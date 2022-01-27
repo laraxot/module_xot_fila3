@@ -19,10 +19,8 @@ class CreateConfsTable extends XotBaseMigration {
      */
     public function up() {
         //-- CREATE --
-        if (! $this->tableExists()) {
-            $this->getConn()->create(
-                $this->getTable(),
-                function (Blueprint $table) {
+        $this->tableCreate(
+            function (Blueprint $table) {
                     $table->increments('id');
                     $table->string('note')->nullable();
                     $table->timestamps();
@@ -33,8 +31,7 @@ class CreateConfsTable extends XotBaseMigration {
         }//end create
 
         //-- UPDATE --
-        $this->getConn()->table(
-            $this->getTable(),
+        $this->tableUpdate(
             function (Blueprint $table) {
             }
         ); //end update
