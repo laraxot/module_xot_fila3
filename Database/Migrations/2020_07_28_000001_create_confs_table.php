@@ -28,7 +28,6 @@ class CreateConfsTable extends XotBaseMigration {
                     $table->string('created_by')->nullable();
                 }
             );
-        }//end create
 
         //-- UPDATE --
         $this->tableUpdate(

@@ -31,10 +31,11 @@ class UpdateJob extends XotBaseJob {
         //https://medium.com/@taylorotwell/tap-tap-tap-1fc6fc1f93a6
         //  30     Call to an undefined method Illuminate\Support\HigherOrderTapProxy<mixed>::update().
         $row = tap($row)->update($data);
-        //dd([/*'row' => $row, */'data' => $data, 'ris' => $ris, __LINE__, __FILE__]);
 
         $this->manageRelationships($row, $data, 'update');
-        \Session::flash('status', 'aggiornato! ['.$row->getKey().']!'); //.implode(',',$row->getChanges())
+        $msg='aggiornato! ['.$row->getKey().']!'.'['.implode(',',$row->getChanges()).']';
+
+        \Session::flash('status', $msg); //.
 
         return $this->panel;
     }
