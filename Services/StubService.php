@@ -97,6 +97,7 @@ class StubService {
         if (class_exists($this->model_class)) {
             $model = $this->getModel();
             $fields = self::fields($model);
+
             $dummy_id = $model->getRouteKeyName();
         }
         /*
@@ -412,7 +413,9 @@ class StubService {
             return [];
         }
         $fillables = $model->getFillable();
-        if (0 == count($fillables)) {
+        //dddx($fillables);
+
+        if (count($fillables) <= 1) {
             $fillables = $model->getConnection()->getSchemaBuilder()->getColumnListing($model->getTable());
             $fillables = collect($fillables)->except([
                 'created_at', 'updated_at', 'updated_by', 'created_by', 'deleted_at', 'deleted_by',
