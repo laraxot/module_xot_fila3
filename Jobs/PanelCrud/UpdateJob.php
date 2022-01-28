@@ -33,7 +33,7 @@ class UpdateJob extends XotBaseJob {
         $row = tap($row)->update($data);
 
         $this->manageRelationships($row, $data, 'update');
-        $msg='aggiornato! ['.$row->getKey().']!'.'['.implode(',',$row->getChanges()).']';
+        $msg='aggiornato! ['.$row->getKey().']!';//.'['.implode(',',$row->getChanges()).']';
 
         \Session::flash('status', $msg); //.
 
