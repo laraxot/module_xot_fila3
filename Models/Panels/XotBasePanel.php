@@ -1001,7 +1001,7 @@ abstract class XotBasePanel implements PanelContract {
         return $panel;
         */
 
-        $related = $this->panel->row->{$name}()->getRelated();
+        $related = $this->row->{$name}()->getRelated();
         $relatedPanel = PanelService::get($related);
         $relatedPanel->setName($name);
         $relatedPanel->setParent($this);

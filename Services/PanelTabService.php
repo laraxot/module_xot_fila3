@@ -70,26 +70,26 @@ class PanelTabService {
 
     public function getTabs(): array {
         $breads = $this->panel->getBreads();
+        [$containers, $items] = params2ContainerItem();
         $data = [];
-
         foreach ($breads as $bread) {
             $tabs = $bread->tabs();
             $row = [];
-            foreach ($tabs as $tab) {
-                //if (Gate::allows('index', $bread)) {
-                //}
-                //$tab_panel=
-
-                $tmp = (object) [
-                    'title' => $tab,
-                    'url' => $bread->relatedUrl(['related_name' => $tab, 'act' => 'index']),
-                    'active' => false,
-                ];
-                $row[] = $tmp;
+            if ('' != $bread->guid()) {
+                foreach ($tabs as $tab) {
+                    $tab_panel = $bread->relatedName($tab);
+                    if (Gate::allows('index', $tab_panel)) {
+                        $tmp = (object) [
+                            'title' => $tab,
+                            'url' => $tab_panel->url('index'),
+                            'active' => in_array($tab, $containers),
+                        ];
+                        $row[] = $tmp;
+                    }
+                }
             }
             $data[] = $row;
         }
-        //dddx($data);
 
         return $data;
     }
