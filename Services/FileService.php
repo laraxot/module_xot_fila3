@@ -56,10 +56,13 @@ class FileService {
         $ns_after1 = Str::after($ns_after, '/');
         $ns_after = str_replace('.', '/', $ns_after0).'/'.$ns_after1;
 
+        if (Str::startsWith($ns_after, '/')) {
+            $ns_after = Str::after($ns_after, '/');
+        }
         if (in_array($ns, ['pub_theme', 'adm_theme'])) {
             $theme = config('xra.'.$ns);
             $filename_from = self::fixPath(base_path('Themes/'.$theme.'/Resources/'.$ns_after));
-            $filename_from = Str::replace('/Resources//', '/Resources/', $filename_from);
+            //$filename_from = Str::replace('/Resources//', '/Resources/', $filename_from);
             $asset = 'themes/'.$theme.'/'.$ns_after;
             $filename_to = self::fixPath(public_path($asset));
             $asset = Str::replace(url(''), '', asset($asset));
