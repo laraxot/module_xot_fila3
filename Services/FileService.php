@@ -59,6 +59,7 @@ class FileService {
         if (in_array($ns, ['pub_theme', 'adm_theme'])) {
             $theme = config('xra.'.$ns);
             $filename_from = self::fixPath(base_path('Themes/'.$theme.'/Resources/'.$ns_after));
+            $filename_from = Str::replace('/Resources//', '/Resources/', $filename_from);
             $asset = 'themes/'.$theme.'/'.$ns_after;
             $filename_to = self::fixPath(public_path($asset));
             $asset = Str::replace(url(''), '', asset($asset));
@@ -71,7 +72,10 @@ class FileService {
                     //dddx([$filename_from, $filename_to]);
                     File::copy($filename_from, $filename_to);
                 } catch (\Exception $e) {
-                    throw new Exception('path :['.$path.'] file from ['.$filename_from.']');
+                    throw new Exception('message:['.$e->getMessage().'] 
+                        path :['.$path.'] 
+                        file from ['.$filename_from.'] 
+                        file to ['.$filename_from.']');
                 }
             }
 
