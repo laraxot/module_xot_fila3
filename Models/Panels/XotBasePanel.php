@@ -989,19 +989,24 @@ abstract class XotBasePanel implements PanelContract {
     }
 
     public function relatedName(string $name, ?int $id = null): PanelContract {
-        //bell_boy => Modules\Food\Models\BellBoy
+        //-- il name e' il nome della relazione ..
+        /*
         $model = xotModel($name);
         if (null != $id) {
             $model = $model->find($id);
         }
         $panel = Panel::get($model);
-        //if (! is_object($panel)) {
-
-        //    return null;
-        //}
         $panel = $panel->setParent($this);
 
         return $panel;
+        */
+
+        $related = $this->panel->row->{$name}()->getRelated();
+        $relatedPanel = PanelService::get($related);
+        $relatedPanel->setName($name);
+        $relatedPanel->setParent($this);
+
+        return $relatedPanel;
     }
 
     public function postType(): string {

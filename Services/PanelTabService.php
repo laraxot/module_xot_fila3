@@ -69,6 +69,32 @@ class PanelTabService {
     }
 
     public function getTabs(): array {
+        $breads = $this->panel->getBreads();
+        $data = [];
+
+        foreach ($breads as $bread) {
+            $tabs = $bread->tabs();
+            $row = [];
+            foreach ($tabs as $tab) {
+                //if (Gate::allows('index', $bread)) {
+                //}
+                //$tab_panel=
+
+                $tmp = (object) [
+                    'title' => $tab,
+                    'url' => $bread->relatedUrl(['related_name' => $tab, 'act' => 'index']),
+                    'active' => false,
+                ];
+                $row[] = $tmp;
+            }
+            $data[] = $row;
+        }
+        //dddx($data);
+
+        return $data;
+    }
+
+    public function getTabsOld(): array {
         $request = \Request::capture();
         $routename = (string) \Route::currentRouteName();
         $act = last(explode('.', $routename));

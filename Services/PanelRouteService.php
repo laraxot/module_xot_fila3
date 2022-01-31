@@ -194,8 +194,17 @@ class PanelRouteService {
 
     public function relatedUrl(array $params): string {
         $panel = $this->panel;
-        $act = 'show';
+        $act = 'index';
+        extract($params);
+        $name = $params['related_name'];
+        $related = $this->panel->row->{$name}()->getRelated();
+        $relatedPanel = PanelService::get($related);
+        $relatedPanel->setName($name);
+        $relatedPanel->setParent($this->panel);
 
+        return $relatedPanel->url($act);
+
+        /*
         extract($params);
         if (! isset($related_name)) {
             throw new \Exception('err: related_name is missing');
@@ -205,6 +214,7 @@ class PanelRouteService {
         $url = $panel->url($act);
 
         return $url.'/'.$related_name;
+        */
     }
 
     /**
