@@ -78,7 +78,7 @@ class FileService {
                     throw new Exception('message:['.$e->getMessage().'] 
                         path :['.$path.'] 
                         file from ['.$filename_from.'] 
-                        file to ['.$filename_from.']');
+                        file to ['.$filename_to.']');
                 }
             }
 
