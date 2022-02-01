@@ -1515,9 +1515,9 @@ abstract class XotBasePanel {
         foreach ($this->tabs() as $tab) {
             $tmp = (object) [];
             $tmp->title = $tab;
-            $tmp->url = $this->relatedUrl(['related_name' => $tab, 'act' => 'index']);
-            $tmp->index_edit_url = $this->relatedUrl(['related_name' => $tab, 'act' => 'index_edit']);
-            $tmp->create_url = $this->relatedUrl(['related_name' => $tab, 'act' => 'create']);
+            $tmp->url = $this->relatedUrl('$tab','index');
+            $tmp->index_edit_url = $this->relatedUrl('$tab','index_edit');
+            $tmp->create_url = $this->relatedUrl('$tab','create');
             $tmp->active = false;
             $data[] = $tmp;
         }
@@ -1591,7 +1591,7 @@ abstract class XotBasePanel {
                 } else {
                     $tab_act = 'index';
                 }
-                $tmp->url = $panel->relatedUrl(['related_name' => $tab, 'act' => $tab_act]);
+                $tmp->url = $panel->relatedUrl($tab, $tab_act);
                 $tmp->active = in_array($tab, $containers);
                 $row[] = $tmp;
             }

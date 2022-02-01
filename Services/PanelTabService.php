@@ -36,7 +36,7 @@ class PanelTabService {
             } else {
                 $tab_act = 'index';
             }
-            $tmp->url = $this->panel->relatedUrl(['related_name' => $tab, 'act' => $tab_act]);
+            $tmp->url = $this->panel->relatedUrl($tab, $tab_act);
             $tmp->active = false; //in_array($tab,$containers);
             $row[] = $tmp;
         }
@@ -53,14 +53,14 @@ class PanelTabService {
         foreach ($this->panel->tabs() as $tab) {
             $tmp = (object) [];
             $tmp->title = trans($this->panel->getModuleNameLow().'::'.class_basename($this->panel->getRow()).'.tab.'.$tab);
-            $tmp->url = $this->panel->relatedUrl(['related_name' => $tab, 'act' => 'index']);
+            $tmp->url = $this->panel->relatedUrl('$tab','index');
             /*
             if ('#' != $tmp->url[0]) {
                 dddx(['tmp' => $tmp, 'panel' => $this->panel]);
             }
             */
-            $tmp->index_edit_url = $this->panel->relatedUrl(['related_name' => $tab, 'act' => 'index_edit']);
-            $tmp->create_url = $this->panel->relatedUrl(['related_name' => $tab, 'act' => 'create']);
+            $tmp->index_edit_url = $this->panel->relatedUrl('$tab','index_edit');
+            $tmp->create_url = $this->panel->relatedUrl('$tab','create');
             $tmp->active = false;
             $data[] = $tmp;
         }
@@ -173,7 +173,7 @@ class PanelTabService {
                     } else {
                         $tab_act = 'index';
                     }
-                    $tmp->url = $panel->relatedUrl(['related_name' => $tab, 'act' => $tab_act]);
+                    $tmp->url = $panel->relatedUrl($tab, $tab_act);
                     $tmp->active = in_array($tab, $containers);
                 } else {
                     //  dddx($tmp);
