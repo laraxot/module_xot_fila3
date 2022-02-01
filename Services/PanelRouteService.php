@@ -127,6 +127,9 @@ class PanelRouteService {
     }
 
     public function url(string $act = 'show'): string {
+        if ('act' == $act) {
+            dddx($act);
+        }
         $panel = $this->panel;
 
         $breads = $panel->getBreads();
