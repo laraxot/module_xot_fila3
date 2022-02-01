@@ -59,7 +59,7 @@ interface PanelContract {
      */
     public function itemAction(string $act);
 
-    public function relatedUrl(array $params = []): string;
+    public function relatedUrl(string $name, string $act = 'index'): string;
 
     public function setLabel(string $label): Model;
 
