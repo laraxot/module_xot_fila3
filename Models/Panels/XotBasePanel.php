@@ -1001,6 +1001,7 @@ abstract class XotBasePanel implements PanelContract {
         return $panel;
         */
 
+        $name = Str::camel($name); //nome relazioni sono per convenzione in camel case
         $related = $this->row->{$name}()->getRelated();
         $relatedPanel = PanelService::get($related);
         $relatedPanel->setName($name);
