@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Str;
-use Modules\Tenant\Services\TenantService as Tenant;
+use Modules\Tenant\Services\TenantService;
 use Modules\Xot\Services\ArrayService;
 use Modules\Xot\Services\FileService;
 use Modules\Xot\Services\PanelService;
@@ -114,14 +114,13 @@ if (! \function_exists('backtrace')) {
 
 //--------------------------------------------
 if (! \function_exists('superdump')) {
-    function superdump($params)
-    {
-        if(!is_array($params)){
-            $params=[$params];
+    function superdump($params) {
+        if (! is_array($params)) {
+            $params = [$params];
         }
-        echo "<br>-------------------------------------<br>";
+        echo '<br>-------------------------------------<br>';
         var_dump($params);
-        echo "<br>-------------------------------------<br>";
+        echo '<br>-------------------------------------<br>';
     }
 }
 
@@ -410,7 +409,7 @@ if (! \function_exists('getModuleNameFromModel')) {
 
 if (! \function_exists('getModuleNameFromModelName')) {
     function getModuleNameFromModelName(string $model_name): string {
-        $model = Tenant::model($model_name);
+        $model = TenantService::model($model_name);
 
         return getModuleNameFromModel($model);
     }
@@ -531,7 +530,7 @@ if (! \function_exists('xotModel')) {
      * @return array|false|mixed
      */
     function xotModel($name) {
-        return Tenant::model($name);
+        return TenantService::model($name);
     }
 }
 
@@ -542,7 +541,7 @@ if (! \function_exists('xotModelEager')) {
      * @return array|false|mixed
      */
     function xotModelEager($name) {
-        return Tenant::modelEager($name);
+        return TenantService::modelEager($name);
     }
 }
 

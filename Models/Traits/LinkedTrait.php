@@ -18,7 +18,7 @@ use Illuminate\Support\Str;
 //use Modules\Blog\Models\Favorite;
 use Modules\LU\Models\User;
 //----- services -----
-use Modules\Tenant\Services\TenantService as Tenant;
+use Modules\Tenant\Services\TenantService;
 use Modules\Xot\Models\Image;
 use Modules\Xot\Models\Post;
 use Modules\Xot\Services\PanelService as Panel;
@@ -48,7 +48,7 @@ trait LinkedTrait {
      * @throws \ReflectionException
      */
     public function post(): MorphOne {
-        $models = Tenant::config('morph_map');
+        $models = TenantService::config('morph_map');
         $class = get_class($this);
         $alias = collect($models)->search($class);
 
@@ -57,7 +57,7 @@ trait LinkedTrait {
             $panel = Panel::get($this);
             $alias = $panel->postType();
             $data['model'][$alias] = $class;
-            Tenant::saveConfig(['name' => 'xra', 'data' => $data]);
+            TenantService::saveConfig(['name' => 'xra', 'data' => $data]);
         }
 
         if (null == Relation::getMorphedModel($alias)) {
@@ -104,7 +104,7 @@ trait LinkedTrait {
 
     public function profile() {
         dddx('i');
-        $class = Tenant::model('profile');
+        $class = TenantService::model('profile');
 
         return $this->hasOne($class, 'user_id', 'user_id');
     }

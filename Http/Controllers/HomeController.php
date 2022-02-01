@@ -10,7 +10,7 @@ use Illuminate\Http\Request;
 
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Schema;
-use Modules\Tenant\Services\TenantService as Tenant;
+use Modules\Tenant\Services\TenantService;
 use Modules\Theme\Services\ThemeService;
 use Modules\Xot\Contracts\PanelContract;
 use Modules\Xot\Relations\CustomRelation;
@@ -29,7 +29,7 @@ class HomeController extends Controller {
         $request = request();
         $home = null;
         try {
-            $model = Tenant::modelEager('home');
+            $model = TenantService::modelEager('home');
             $home = $model->firstOrCreate(['id' => 1]);
         } catch (\Exception $e) {
             dddx('run migrations');
@@ -78,7 +78,7 @@ class HomeController extends Controller {
     public function showOld(Request $request, ?PanelContract $panel = null) {
         //$request=request();
         $home = null;
-        $home = Tenant::model('home');
+        $home = TenantService::model('home');
         $mod_name = Panel::get($home)->getModuleName();
 
         $home_controller = '\Modules\\'.$mod_name.'\Http\Controllers\HomeController';
@@ -86,7 +86,7 @@ class HomeController extends Controller {
         //dddx($home_controller);
 
         if ('' != $request->_act) {
-            $home = Tenant::model('home');
+            $home = TenantService::model('home');
             $panel = Panel::get($home);
 
             return $panel->callItemActionWithGate($request->_act);
@@ -97,7 +97,7 @@ class HomeController extends Controller {
         }
 
         try {
-            $home = Tenant::modelEager('home');
+            $home = TenantService::modelEager('home');
             $home = $home->firstOrCreate(['id' => 1]);
         } catch (\Exception $e) {
             dddx(['exception' => $e, 'model' => $home]);

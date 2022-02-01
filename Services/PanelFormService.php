@@ -9,8 +9,8 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Str;
-use Modules\FormX\Services\FieldService;
-use Modules\FormX\Services\FormXService;
+use Modules\Theme\Services\FieldService;
+use Modules\Theme\Services\FormXService;
 use Modules\Theme\Services\ThemeService;
 use Modules\Xot\Contracts\PanelContract;
 
@@ -148,7 +148,7 @@ class PanelFormService {
             'title' => $title,
         ];
 
-        return view()->make('formx::includes.components.btn.'.$act)->with($parz);
+        return view()->make('theme::includes.components.btn.'.$act)->with($parz);
     }
 
     public function btnDetach(array $params = []) {
@@ -162,7 +162,7 @@ class PanelFormService {
             'act' => $act,
         ];
 
-        return view()->make('formx::includes.components.btn.'.$act)->with($parz);
+        return view()->make('theme::includes.components.btn.'.$act)->with($parz);
     }
     */
 
@@ -291,10 +291,10 @@ class PanelFormService {
             'act' => $act,
         ];
         if (isset($modal) && $modal) {
-            return view()->make('formx::includes.components.btn.modal')->with($parz);
+            return view()->make('theme::includes.components.btn.modal')->with($parz);
         }
 
-        return view()->make('formx::includes.components.btn.'.$act)->with($parz);
+        return view()->make('theme::includes.components.btn.'.$act)->with($parz);
     }
     */
     /* deprecated
