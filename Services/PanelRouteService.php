@@ -190,32 +190,8 @@ class PanelRouteService {
         return $this->addCacheQueryString($route);
     }
 
-    public function relatedUrl(array $params): string {
-        $panel = $this->panel;
-        $act = 'index';
-        extract($params);
-        $name = $params['related_name'];
-        /*
-        $related = $this->panel->row->{$name}()->getRelated();
-        $relatedPanel = PanelService::get($related);
-        $relatedPanel->setName($name);
-        $relatedPanel->setParent($this->panel);
-        */
-        $relatedPanel = $this->panel->relatedName($name);
-
-        return $relatedPanel->url($act);
-
-        /*
-        extract($params);
-        if (! isset($related_name)) {
-            throw new \Exception('err: related_name is missing');
-        }
-        //--- solo per velocita'
-
-        $url = $panel->url($act);
-
-        return $url.'/'.$related_name;
-        */
+    public function relatedUrl(string $name, string $act = 'index'): string {
+        return $this->panel->relatedUrl($name, $act);
     }
 
     /**
