@@ -197,10 +197,13 @@ class PanelRouteService {
         $act = 'index';
         extract($params);
         $name = $params['related_name'];
+        /*
         $related = $this->panel->row->{$name}()->getRelated();
         $relatedPanel = PanelService::get($related);
         $relatedPanel->setName($name);
         $relatedPanel->setParent($this->panel);
+        */
+        $relatedPanel = $this->panel->relatedName($name);
 
         return $relatedPanel->url($act);
 
