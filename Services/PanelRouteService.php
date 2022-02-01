@@ -128,7 +128,10 @@ class PanelRouteService {
 
     public function url(string $act = 'show'): string {
         if ('act' == $act) {
-            dddx($act);
+            dddx([
+                'act' => $act,
+                'backtrace' => debug_backtrace(),
+            ]);
         }
         $panel = $this->panel;
 
