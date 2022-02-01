@@ -976,8 +976,8 @@ abstract class XotBasePanel implements PanelContract {
         return [];
     }
 
-    public function relatedUrl(array $params = []): string {
-        return $this->route->{__FUNCTION__}($params);
+    public function relatedUrl(string $name, string $act = 'index'): string {
+        return $this->route->{__FUNCTION__}($name, $act);
     }
 
     public function langUrl(string $lang): string {
