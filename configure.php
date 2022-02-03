@@ -1,4 +1,3 @@
-#!/usr/bin/env php
 <?php
 
 function ask(string $question, string $default = ''): string {
