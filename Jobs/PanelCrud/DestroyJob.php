@@ -19,8 +19,7 @@ class DestroyJob extends XotBaseJob {
         if (method_exists($this->panel, 'destroyCallback')) {
             $this->panel->destroyCallback(['row' => $row]);
         }
-        //dd(get_class_methods($this->panel->getRow()));
-        //dd([__LINE__, __FILE__, $this->panel->getRow()->getRelations()]);
+
         $res = $row->delete();
         if ($res) {
             \Session::flash('status', 'eliminato');
