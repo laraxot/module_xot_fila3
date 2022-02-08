@@ -143,6 +143,7 @@ class PanelService {
 
     public static function getHomePanel(): PanelContract {
         $home = TenantService::model('home');
+        
         $params = getRouteParameters();
         try {
             $home = $home->firstOrCreate(['id' => 1]);
