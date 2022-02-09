@@ -164,4 +164,6 @@ interface PanelContract {
     public function relatedName(string $name, ?int $id = null): PanelContract;
 
     public function getBuilder(): Builder;
+
+    public function getTradMod(): string;
 }
