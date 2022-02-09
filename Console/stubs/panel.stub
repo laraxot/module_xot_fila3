@@ -32,7 +32,6 @@ class DummyClass extends XotBasePanel {
     /**
      * The relationships that should be eager loaded on index queries.
      *
-     * @var array
      */
     public function with():array {
         return [];
@@ -46,7 +45,7 @@ class DummyClass extends XotBasePanel {
     /**
      * on select the option id
      *
-     * quando aggiungi un campo select, è il numero della chiave 
+     * quando aggiungi un campo select, è il numero della chiave
      * che viene messo come valore su value="id"
      *
      */

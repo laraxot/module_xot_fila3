@@ -33,7 +33,6 @@ class FeedPanel extends XotBasePanel {
     /**
      * The relationships that should be eager loaded on index queries.
      *
-     * @var array
      */
     public function with():array {
         return [];
@@ -47,7 +46,7 @@ class FeedPanel extends XotBasePanel {
     /**
      * on select the option id
      *
-     * quando aggiungi un campo select, è il numero della chiave 
+     * quando aggiungi un campo select, è il numero della chiave
      * che viene messo come valore su value="id"
      *
      */
@@ -96,7 +95,7 @@ class FeedPanel extends XotBasePanel {
      */
     public function fields(): array {
         return array (
-  0 => 
+  0 =>
   (object) array(
      'type' => 'Text',
      'name' => 'id',
