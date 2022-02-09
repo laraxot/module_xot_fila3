@@ -29,6 +29,9 @@ class HtmlService {
      * @return string|void
      */
     public static function toPdf(array $params) {
+
+        //dddx($params);
+
         require_once __DIR__.'/vendor/autoload.php';
         $pdforientation = 'L'; //default;
         $out = 'show';
