@@ -444,7 +444,7 @@ class ImportService {
         if (false === $resource) {
             throw new Exception('can open '.$filename);
         }
-        $stream = \GuzzleHttp\Psr7\stream_for($resource);
+        $stream = \GuzzleHttp\Psr7\Utils::streamFor($resource);
         self::gRequest(
             'get',
             $url,
@@ -457,34 +457,6 @@ class ImportService {
             ]
         );
         fclose($resource);
-        /*
-        Call to undefined function GuzzleHttp\Stream\create
-        $resource_in=fopen($url, 'r');
-        $resource_out=fopen($filename, 'w');
-        $original = Stream\create($resource_in);
-        $local = Stream\create($resource_out);
-        $local->write($original->getContents());
-        fclose($resource_out);
-        fclose($resource_in);
-        */
-
-        /*
-        $fp = fopen($path, "wb");
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-            // curl_setopt($ch,CURLOPT_CONNECTTIMEOUT,$timeout);
-        curl_setopt($ch, CURLOPT_FILE, $fp);
-        curl_setopt($ch, CURLOPT_HEADER, 0);
-        //$headerArr = array("HTTP/1.1","Accept-Encoding: gzip;q=1.0,compress;q=0.5,identity;q=0");
-        //curl_setopt($ch,CURLOPT_HTTPHEADER,$headerArr);
-        curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
-        //'choice1'=>'Scarica',
-        //'choice1001'=>'ZIP'
-        $result =curl_exec($ch);
-            // 'param0'=>'ced03f',
-            // 'choice1'=>"  Scarica  ",
-        curl_close($ch);
-        fclose($fp);
-        */
     }
 
     /*
@@ -512,11 +484,9 @@ class ImportService {
     //end function
 
     /**
-     * @param array $params
-     *
      * @return mixed|null
      */
-    public static function pixabay(array $params){
+    public static function pixabay(array $params) {
         $lang = app()->getLocale();
         $image_type = 'photo';
         $q = 'necessary';
@@ -537,11 +507,9 @@ class ImportService {
     }
 
     /**
-     * @param array $params
-     *
      * @return mixed|null
      */
-    public static function pexels(array $params){
+    public static function pexels(array $params) {
         $lang = app()->getLocale();
         $q = 'necessary';
         \extract($params);
@@ -553,11 +521,9 @@ class ImportService {
     //-------------------------------------------------------------------------
 
     /**
-     * @param array $params
-     *
      * @return mixed|string|void
      */
-    public static function trans(array $params){
+    public static function trans(array $params) {
         $i = \rand(0, 20);
         if ($i > 0 && $i < 10) {
             return self::googleTrans($params);
@@ -567,11 +533,9 @@ class ImportService {
     }
 
     /**
-     * @param array $params
-     *
      * @return mixed|null
      */
-    public static function apertiumTrans(array $params){
+    public static function apertiumTrans(array $params) {
         //https://github.com/24aitor/Laralang/blob/master/src/Builder/ApertiumTrans.php
         //$host = 'api.apertium.org';
         //$urldata = file_get_contents("http://$host/json/translate?q=$urlString&langpair=$this->from|$this->to");
@@ -579,11 +543,9 @@ class ImportService {
     }
 
     /**
-     * @param array $params
-     *
      * @return string
      */
-    public static function googleTrans(array $params){
+    public static function googleTrans(array $params) {
         $host = 'translate.googleapis.com';
         $q = 'necessary';
         $from = 'en';
@@ -605,11 +567,9 @@ class ImportService {
     }
 
     /**
-     * @param array $params
-     *
      * @return mixed|void
      */
-    public static function mymemoryTrans(array $params){
+    public static function mymemoryTrans(array $params) {
         $host = 'api.mymemory.translated.net';
         $q = 'necessary';
         $from = 'en';
@@ -641,11 +601,9 @@ class ImportService {
     //end mymemoryTrans;
 
     /**
-     * @param array $params
-     *
      * @return array
      */
-    public static function getForms(array $params){
+    public static function getForms(array $params) {
         $html = '';
         $node_tag = '';
         extract($params);
@@ -670,9 +628,6 @@ class ImportService {
 
     //ret \Exception|GuzzleException|string|Crawler
 
-    /**
-     * @param array $params
-     */
     public static function formRequest(array $params): ?string {
         $form = ['method' => '?', 'action' => '?', 'fields' => '?'];
         extract($params);

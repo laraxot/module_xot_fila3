@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Modules\Xot\Http\Controllers\Admin;
 
+use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Request;
@@ -16,9 +17,14 @@ use Modules\Xot\Services\PolicyService;
 //---- services ---
 
 /**
- * Class ItemController.
+ * Undocumented class.
+ *
+ * @method Renderable home(Request $request)
+ * @method Renderable show(Request $request)
  */
 class ContainersController extends Controller {
+    public PanelContract $panel;
+
     public function index(Request $request) {
         $route_params = getRouteParameters(); // "module" => "lu"
         [$containers,$items] = params2ContainerItem();

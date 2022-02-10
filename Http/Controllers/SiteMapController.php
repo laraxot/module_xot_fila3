@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Modules\Xot\Http\Controllers;
 
+use Illuminate\Http\Response;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use Modules\Blog\Models\Post;
@@ -67,7 +68,8 @@ class SiteMapController {
     }
     */
 
-    public function index(): \Illuminate\Http\Response {
+    public function index(): ?Response {
+        /*
         $limit = 50;
         $lang = app()->getLocale();
         $rows = Post::where('lang', $lang)
@@ -93,5 +95,7 @@ class SiteMapController {
 
         return response()->view($view, $view_params)
             ->header('Content-Type', 'text/xml');
+        */
+        return null;
     }
 }

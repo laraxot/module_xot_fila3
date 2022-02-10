@@ -33,7 +33,7 @@ class UpdateJob extends XotBaseJob {
         $row = tap($row)->update($data);
 
         $this->manageRelationships($row, $data, 'update');
-        $msg='aggiornato! ['.$row->getKey().']!';//.'['.implode(',',$row->getChanges()).']';
+        $msg = 'aggiornato! ['.$row->getKey().']!'; //.'['.implode(',',$row->getChanges()).']';
 
         \Session::flash('status', $msg); //.
 
@@ -77,8 +77,8 @@ class UpdateJob extends XotBaseJob {
      * @param string|int|array $data
      */
     public function updateRelationshipsBelongsTo(Model $model, string $name, $data): void {
+        $rows = $model->$name();
         if (! is_array($data)) {
-            $rows = $model->$name();
             $related = $rows->getRelated();
             $related = $related->find($data);
             $res = $rows->associate($related);

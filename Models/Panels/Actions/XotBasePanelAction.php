@@ -154,10 +154,10 @@ abstract class XotBasePanelAction {
 
     public function url(string $act = 'show'): string {
         if (isset($this->onItem) && $this->onItem) {
-            return $this->urlItem($act);
+            return $this->urlItem();
         }
 
-        return $this->urlContainer($act);
+        return $this->urlContainer();
     }
 
     public function urlContainer(/*string $act = 'show'*/): string {
@@ -246,7 +246,7 @@ abstract class XotBasePanelAction {
 
     public function btnContainer(array $params = []): string {
         $act = isset($params['act']) ? $params['act'] : 'show';
-        $url = $this->urlContainer($act);
+        $url = $this->urlContainer();
         $title = $this->getTitle();
         $params['url'] = $url;
         $params['title'] = $title;
@@ -263,9 +263,6 @@ abstract class XotBasePanelAction {
         $url = '';
         $query_params = [];
 
-        if (isset($row)) {
-            $this->setRow($row);
-        }
         if (! isset($this->panel)) {
             $this->panel = Panel::get($this->row);
         }
@@ -286,7 +283,7 @@ abstract class XotBasePanelAction {
     }
 
     public function btnItem(array $params = []): string {
-        $url = $this->urlItem($params);
+        $url = $this->urlItem();
         $title = $this->getTitle();
         $method = Str::camel($this->getName());
 
