@@ -179,5 +179,5 @@ interface PanelContract {
      */
     public function optionId(object $row);
 
-    public function isInternalPage(): bool;
+    //public function isInternalPage(): bool;
 }
