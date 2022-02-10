@@ -9,7 +9,7 @@ namespace Modules\Xot\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Modules\Xot\Models\Traits\LinkedTrait;
+use Modules\Lang\Models\Traits\LinkedTrait;
 use Modules\Xot\Services\FactoryService;
 use Modules\Xot\Traits\Updater;
 
