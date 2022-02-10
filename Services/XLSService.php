@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Modules\Xot\Services;
 
 class XLSService {
+    /*
     public static function toArray($filename) {
         require_once __DIR__.'/vendor/autoload.php';
 
@@ -13,4 +14,5 @@ class XLSService {
 
         dddx($results);
     }
+    */
 }

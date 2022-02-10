@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Modules\Xot\Services;
 
 use Illuminate\Support\Str;
+use Modules\Tenant\Services\TenantService;
 use Modules\Xot\Contracts\PanelTreeContract;
 use Modules\Xot\Relations\CustomRelation;
 use Nwidart\Modules\Laravel\Module;

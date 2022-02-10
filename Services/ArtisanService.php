@@ -227,7 +227,9 @@ class ArtisanService {
 
             return $output;  // dato che mi carico solo le route minime menufull.delete non esiste.. impostare delle route comuni.
         } catch (Exception $e) {
+            throw new Exception('['.__LINE__.']['.class_basename(__CLASS__).']');
             //dddx(get_class_methods($e));
+            /*
             $vendor_dir = (realpath(LARAVEL_DIR.'/vendor'));
             if (false === $vendor_dir) {
                 throw new \Exception('not recognize realpath laravel_dir/vendor');
@@ -250,6 +252,7 @@ class ArtisanService {
             }
 
             return $msg;
+            */
         } /*
         //Dead catch - Symfony\Component\Console\Exception\CommandNotFoundException is already caught by Exception above.
         catch (\Symfony\Component\Console\Exception\CommandNotFoundException $e) {
