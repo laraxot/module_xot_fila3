@@ -110,6 +110,11 @@ abstract class XotBasePanel implements PanelContract {
         return $this;
     }
 
+    /**
+     * Undocumented function.
+     *
+     * @return \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Query\Builder
+     */
     public function getBuilder(): Builder {
         if (null != $this->builder) {
             return $this->builder;

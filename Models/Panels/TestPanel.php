@@ -29,8 +29,7 @@ class TestPanel extends XotBasePanel {
 
     /**
      * The relationships that should be eager loaded on index queries.
-     *
-         */
+     */
     public function with(): array {
         return [];
     }
@@ -41,6 +40,8 @@ class TestPanel extends XotBasePanel {
 
     /**
      * on select the option id.
+     *
+     * @return string|int|null
      */
     public function optionId(object $row) {
         return $row->area_id;
