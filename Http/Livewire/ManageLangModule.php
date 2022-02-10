@@ -19,6 +19,11 @@ class ManageLangModule extends Component {
     public string $lang_name;
     public string $path;
 
+    /**
+     * Listener di eventi di Livewire
+     *
+     * @var array
+     */
     protected $listeners = ['updateArray'];
 
     public function mount(string $module_name): void {

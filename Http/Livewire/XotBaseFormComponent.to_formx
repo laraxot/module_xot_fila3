@@ -20,6 +20,11 @@ abstract class XotBaseFormComponent extends Component {
     private static $storage_disk;
     private static $storage_path;
 
+    /**
+     * Listener di eventi di Livewire
+     *
+     * @var array
+     */
     protected $listeners = ['fileUpdate'];
 
     public function mount($model = null) {

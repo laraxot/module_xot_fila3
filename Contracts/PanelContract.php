@@ -166,4 +166,6 @@ interface PanelContract {
     public function getBuilder(): Builder;
 
     public function getTradMod(): string;
+
+    public function isInternalPage(): bool;
 }
