@@ -10,6 +10,9 @@ use Modules\Xot\Services\LivewireService;
 
 /**
  * Class XotBaseThemeServiceProvider.
+ *
+ * @property string $dir
+ * @property string $name
  */
 abstract class XotBaseThemeServiceProvider {
     public function bootCallback(): void {

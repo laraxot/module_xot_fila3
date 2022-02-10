@@ -9,6 +9,8 @@ declare(strict_types=1);
 namespace Modules\Xot\QueryFilters;
 
 use Closure;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Str;
 
 class Search {
     public function handle($query, Closure $next, ...$args) {

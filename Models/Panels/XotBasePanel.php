@@ -1161,11 +1161,7 @@ abstract class XotBasePanel implements PanelContract {
     //must be an instance of Illuminate\Database\Eloquent\Builder,
     //instance of Illuminate\Database\Eloquent\Relations\MorphToMany returned
 
-    /**
-     * init + filter + search + sort => ??? trovare nome.
-     *
-     * @return RowsContract
-     */
+    /*
     public function rowsTest(?array $data = null) {
         $query = $this->getRows();
         $test = app(Pipeline::class)
@@ -1178,6 +1174,7 @@ abstract class XotBasePanel implements PanelContract {
         ->get();
         dddx(['query' => $query, 'test' => $test]);
     }
+    */
 
     /**
      * init + filter + search + sort => ??? trovare nome.

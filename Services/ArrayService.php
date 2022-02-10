@@ -83,6 +83,7 @@ class ArrayService {
     }
 
     public static function getHeader(array $params): array {
+        $data = [];
         \extract($params);
 
         $firstrow = collect($data)->first();
