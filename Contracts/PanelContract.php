@@ -172,10 +172,14 @@ interface PanelContract {
 
     public function getTradMod(): string;
 
+<<<<<<< HEAD
     public function filters();
 
     /**
      * @return int|string|null
      */
     public function optionId(object $row);
+=======
+    public function isInternalPage(): bool;
+>>>>>>> c13a6ac64374ced81cab668408a82acf83a2bb5e
 }
