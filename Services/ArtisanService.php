@@ -227,7 +227,8 @@ class ArtisanService {
 
             return $output;  // dato che mi carico solo le route minime menufull.delete non esiste.. impostare delle route comuni.
         } catch (Exception $e) {
-            throw new Exception('['.__LINE__.']['.class_basename(__CLASS__).']');
+            //throw new Exception('['.__LINE__.']['.class_basename(__CLASS__).']');
+            return '[<pre>'.$e->getMessage().'</pre>]';
             //dddx(get_class_methods($e));
             /*
             $vendor_dir = (realpath(LARAVEL_DIR.'/vendor'));
