@@ -44,7 +44,7 @@ use Spatie\QueryBuilder\Filters\Filter;
 abstract class XotBasePanel implements PanelContract {
     protected static string $model;
 
-    public Model $row;
+    //public Model $row;
 
     //e se fosse relation ?
     //Typed property Modules\Xot\Models\Panels\XotBasePanel::$rows must not be accessed before initialization
@@ -303,9 +303,9 @@ abstract class XotBasePanel implements PanelContract {
     /**
      * @return int|string|null
      */
-    public function optionId(object $row) {
-        return $row->getKey();
-    }
+    //public function optionId(Model $row) {
+    //    return $row->getKey();
+    //}
 
     /*
      * ----
@@ -426,9 +426,9 @@ abstract class XotBasePanel implements PanelContract {
     /**
      * on select the option label.
      */
-    public function optionLabel(object $row): string {
-        return $row->matr.' ['.$row->email.']['.$row->ha_diritto.'] '.$row->cognome.' '.$row->cognome.' ';
-    }
+    //public function optionLabel(Model $row): string {
+    //    return $row->matr.' ['.$row->email.']['.$row->ha_diritto.'] '.$row->cognome.' '.$row->cognome.' ';
+    //}
 
     public function title(): ?string {
         return optional($this->row)->title;

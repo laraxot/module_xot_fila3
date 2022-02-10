@@ -72,8 +72,6 @@ interface PanelContract {
 
     public function imgSrc(array $params): string;
 
-    public function optionLabel(object $row): string;
-
     public function getRow(): Model;
 
     /**
@@ -174,10 +172,12 @@ interface PanelContract {
 
     public function filters();
 
-    /**
+    /*
      * @return int|string|null
      */
-    public function optionId(object $row);
+    //public function optionId(Model $row);
+
+    //public function optionLabel($row): string;
 
     //public function isInternalPage(): bool;
 }
