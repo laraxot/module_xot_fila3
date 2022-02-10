@@ -45,8 +45,8 @@ trait Updater {
             if (null != Auth::user()) {
                 // Cannot call method getAttribute() on Modules\LU\Models\User|null.
                 // Cannot access property $handle on Modules\LU\Models\User|null.
-                $model->created_by = optional(Auth::user())->handle.'';
-                $model->updated_by = optional(Auth::user())->handle.'';
+                $model->created_by = Auth::user()->handle ?? '';
+                $model->updated_by = Auth::user()->handle ?? '';
             }
         });
 

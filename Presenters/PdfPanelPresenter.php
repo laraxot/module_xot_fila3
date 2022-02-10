@@ -36,10 +36,7 @@ class PdfPanelPresenter implements PanelPresenterContract {
     public function index(?Collection $items) {
     }
 
-    /**
-     * @return mixed
-     */
-    public function out(?array $params = null) {
+    public function out(?array $params = null): string {
         if (! isset($params['view_params'])) {
             $params['view_params'] = [];
         }

@@ -1405,10 +1405,8 @@ abstract class XotBasePanel implements PanelContract {
 
     /**
      * Undocumented function.
-     *
-     * @return mixed
      */
-    public function pdf(array $params = []) {
+    public function pdf(array $params = []): string {
         $presenter = new PdfPanelPresenter();
         $presenter->setPanel($this);
 

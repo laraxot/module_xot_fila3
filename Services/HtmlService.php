@@ -9,6 +9,7 @@ namespace Modules\Xot\Services;
 //use PhpOffice\PhpSpreadsheet\Spreadsheet;
 //use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
+use Exception;
 use Mpdf\Mpdf;
 use Spipu\Html2Pdf\Exception\Html2PdfException;
 /*
@@ -26,10 +27,9 @@ use Spipu\Html2Pdf\Html2Pdf;
  */
 class HtmlService {
     /**
-     * @return string|void
+     * @return string
      */
     public static function toPdf(array $params) {
-
         //dddx($params);
 
         require_once __DIR__.'/vendor/autoload.php';
@@ -38,9 +38,7 @@ class HtmlService {
         $filename = 'test';
         extract($params);
         if (! isset($html)) {
-            dddx(['err' => 'html is missing']);
-
-            return;
+            throw new Exception(['err' => 'html is missing']);
         }
 
         if (request('debug', false)) {
@@ -73,6 +71,5 @@ class HtmlService {
         $mpdf = new Mpdf();
         $mpdf->WriteHTML($html);
         $mpdf->Output();
-
     }
 }
