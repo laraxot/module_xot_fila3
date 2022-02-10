@@ -151,8 +151,6 @@ abstract class XotBasePanel implements PanelContract {
 
     /**
      * Undocumented function.
-     *
-     * @param Relation|Builder
      */
     public function setRows($rows): self {
         $this->rows = $rows;
@@ -303,7 +301,7 @@ abstract class XotBasePanel implements PanelContract {
     }
 
     /**
-     * @return mixed
+     * @return int|string|null
      */
     public function optionId(object $row) {
         return $row->getKey();
@@ -344,9 +342,9 @@ abstract class XotBasePanel implements PanelContract {
         $rows = $this->getRows();
         $tbl = $row->getTable();
 
-        $pk = $row->getRouteKeyName($this->in_admin); //adesso restituisce guid, gli facciamo restituire "posts.guid" ?
-
-        //$pk = $row->getRouteKeyName(); // !!! MI SEMBRA STRANO !!
+        //347    Method Illuminate\Database\Eloquent\Model::getRouteKeyName() invoked with 1 parameter, 0 required.
+        //$pk = $row->getRouteKeyName($this->in_admin); //adesso restituisce guid, gli facciamo restituire "posts.guid" ?
+        $pk = $row->getRouteKeyName(); // !!! MI SEMBRA STRANO !!
         $pk_full = $row->getTable().'.'.$pk;
 
         // dddx($pk);
@@ -1495,10 +1493,10 @@ abstract class XotBasePanel implements PanelContract {
         }
         //*/
 
-        if ($row->subtitle) {
-            $content = $row->subtitle;
+        if ($row->getAttributeValue('subtitle')) {
+            $content = $row->getAttributeValue('subtitle');
         } else {
-            $content = $row->txt;
+            $content = $row->getAttributeValue('txt');
         }
 
         // 1737   Parameter #1 $str of function strip_tags expects string, array|string|null given.

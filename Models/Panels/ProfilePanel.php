@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Modules\Xot\Models\Panels;
 
 use Illuminate\Http\Request;
+use Modules\Xot\Contracts\RowsContract;
 
 //--- Services --
 
@@ -29,8 +30,7 @@ class ProfilePanel extends XotBasePanel {
 
     /**
      * The relationships that should be eager loaded on index queries.
-     *
-         */
+     */
     public function with(): array {
         return [];
     }

@@ -107,14 +107,6 @@ myRoutes($name, $middleware, $namespace, $prefix, $as, $controller, $acts);
 /**
  * Undocumented function.
  *
- * @param [type] $name
- * @param [type] $middleware
- * @param [type] $namespace
- * @param [type] $prefix
- * @param [type] $as
- * @param [type] $controller
- * @param [type] $acts
- *
  * @return void
  */
 function myRoutes($name, $middleware, $namespace, $prefix, $as, $controller, $acts) {

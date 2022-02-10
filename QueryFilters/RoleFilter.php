@@ -7,17 +7,23 @@ declare(strict_types=1);
 namespace Modules\Xot\QueryFilters;
 
 use Closure;
+use Illuminate\Support\Facades\Request;
 
+/**
+ * Undocumented class.
+ */
 class RoleFilter {
     /**
      * we need to use laravel convention so we need to create the
      * method name 'handle' because when we use pipeline in laravel
      * then default method name is handle.
      *
-     * @param $request => argument that you passed in send() method
-     * @param Closure $next => this closure will pass your argument to
+     * request => argument that you passed in send() method
+     * next => this closure will pass your argument to
      *                      next element in array that you have passed
      *                      in through() method
+     *
+     * @param Request $request
      *
      * @return mixed => you need to return your filtered data to next element
      */

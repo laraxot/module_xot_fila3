@@ -10,6 +10,11 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Support\Collection;
 
+/**
+ * Undocumented interface.
+ *
+ * @property Model $row
+ */
 interface PanelContract {
     public function setRow(Model $row): self;
 
@@ -166,4 +171,11 @@ interface PanelContract {
     public function getBuilder(): Builder;
 
     public function getTradMod(): string;
+
+    public function filters();
+
+    /**
+     * @return int|string|null
+     */
+    public function optionId(object $row);
 }

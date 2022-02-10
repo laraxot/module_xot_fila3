@@ -113,7 +113,7 @@ class RowsService {
         if (null == $query) {
             return null;
         }
-
+        //124    Access to an undefined property object::$param_name.
         $filters_rules = collect($filters_fields)
             ->filter(
                 function ($item) {

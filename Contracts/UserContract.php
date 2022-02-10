@@ -40,4 +40,11 @@ interface UserContract {
      * @return mixed
      */
     public function getRelationValue($key);
+
+    /**
+     * Undocumented function.
+     *
+     * @return Model
+     */
+    public function newInstance();
 }

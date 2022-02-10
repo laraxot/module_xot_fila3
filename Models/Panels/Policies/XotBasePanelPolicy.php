@@ -49,10 +49,13 @@ abstract class XotBasePanelPolicy {
         $route_params = $panel->getRouteParams();
         if (isset($route_params['module'])) {
             $module = Module::find($route_params['module']);
-            $panel = PanelService::get($user);
-            $areas = $panel->areas()->firstWhere('area_define_name', $module->getName());
+            //$panel = PanelService::get($user);
+            //$areas = $panel->areas()->firstWhere('area_define_name', $module->getName());
+            //return is_object($areas);
 
-            return is_object($areas);
+            $profile = ProfileService::get($user);
+
+            return $profile->hasArea($module->getName());
         }
 
         return true;
@@ -95,7 +98,7 @@ abstract class XotBasePanelPolicy {
     }
 
     //test delle tabs
-    public function index_edit(UserContract $user, PanelContract $panel):bool{
+    public function index_edit(UserContract $user, PanelContract $panel): bool {
         return true;
     }
 
