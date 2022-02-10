@@ -30,8 +30,7 @@ class TestPanel extends XotBasePanel {
     /**
      * The relationships that should be eager loaded on index queries.
      *
-     * @var array
-     */
+         */
     public function with(): array {
         return [];
     }

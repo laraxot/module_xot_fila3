@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
 use Modules\Tenant\Services\TenantService;
 use Modules\Xot\Contracts\PanelContract;
+use Modules\Xot\Contracts\UserContract;
 use Modules\Xot\Relations\CustomRelation;
 use Nwidart\Modules\Facades\Module;
 
@@ -77,6 +78,12 @@ class PanelService {
         return $panel;
     }
 
+    public static function getByUser(UserContract $user): PanelContract {
+        $model = $user->newInstance();
+
+        return self::get($model);
+    }
+
     public static function setModel(Model $model): self {
         self::$model = $model;
 
@@ -143,7 +150,7 @@ class PanelService {
 
     public static function getHomePanel(): PanelContract {
         $home = TenantService::model('home');
-        
+
         $params = getRouteParameters();
         try {
             $home = $home->firstOrCreate(['id' => 1]);
