@@ -359,9 +359,10 @@ class PanelFormService {
 
     public function editObjFields(): array {
         $fields = collect($this->getFields(['act' => 'edit']))->map(function ($field) {
-            return FieldService::make($field->name)
-                ->type($field->type)
-                ->setColSize($field->col_bs_size ?? 12)
+            return FieldService::make()
+                ->setVars(get_object_vars($field))
+                //->type($field->type)
+                //->setColSize($field->col_bs_size ?? 12)
                 ;
         })->all();
 

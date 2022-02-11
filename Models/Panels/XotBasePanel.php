@@ -674,7 +674,7 @@ abstract class XotBasePanel implements PanelContract {
                 }
             );
 
-        $rules_msg_fields = collect($this->fields())->filter(function ($value, $key) use ($lang) {
+        $rules_msg_fields = $fields->filter(function ($value, $key) use ($lang) {
             return isset($value->rules_messages) && isset($value->rules_messages[$lang]);
         })
             ->map(function ($item) use ($lang) {
