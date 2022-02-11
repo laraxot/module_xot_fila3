@@ -44,25 +44,25 @@ class HtmlService {
         if (request('debug', false)) {
             return $html;
         }
-        try {
-            $html2pdf = new Html2Pdf($pdforientation, 'A4', 'it');
-            $html2pdf->setTestTdInOnePage(false);
-            $html2pdf->WriteHTML($html);
+        //try {
+        $html2pdf = new Html2Pdf($pdforientation, 'A4', 'it');
+        $html2pdf->setTestTdInOnePage(false);
+        $html2pdf->WriteHTML($html);
 
-            switch ($out) {
+        switch ($out) {
                 case 'content_PDF':return $html2pdf->Output($filename.'.pdf', 'S');
                 case 'file': $html2pdf->Output($filename.'.pdf', 'F');
 
                 return $filename;
             }
 
-            return $html2pdf->Output();
-            //} catch (HTML2PDF_exception $e) {
-        } catch (Html2PdfException $e) {
-            echo '<pre>';
-            \print_r($e);
-            echo '</pre>';
-        }
+        return $html2pdf->Output();
+        //} catch (HTML2PDF_exception $e) {
+        //} catch (Html2PdfException $e) {
+        //    echo '<pre>';
+        //    \print_r($e);
+        //    echo '</pre>';
+        //}
     }
 
     public static function toMpdf($html) {
