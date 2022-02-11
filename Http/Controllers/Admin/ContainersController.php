@@ -25,6 +25,11 @@ use Modules\Xot\Services\PolicyService;
 class ContainersController extends Controller {
     public PanelContract $panel;
 
+    /**
+     * Undocumented function.
+     *
+     * @return mixed
+     */
     public function index(Request $request) {
         $route_params = getRouteParameters(); // "module" => "lu"
         [$containers,$items] = params2ContainerItem();
@@ -41,6 +46,14 @@ class ContainersController extends Controller {
         return $this->__call('index', $route_params);
     }
 
+    /**
+     * Undocumented function.
+     *
+     * @param string $method
+     * @param array  $args
+     *
+     * @return mixed
+     */
     public function __call($method, $args) {
         $action = \Route::current()->getAction();
         $action['controller'] = __CLASS__.'@'.$method;

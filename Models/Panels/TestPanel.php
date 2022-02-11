@@ -20,60 +20,6 @@ class TestPanel extends XotBasePanel {
     public static string $title = 'title';
 
     /**
-     * The columns that should be searched.
-     *
-     * @var array
-     */
-    public static $search = [
-    ];
-
-    /**
-     * The relationships that should be eager loaded on index queries.
-     */
-    public function with(): array {
-        return [];
-    }
-
-    public function search(): array {
-        return [];
-    }
-
-    /**
-     * on select the option id.
-     *
-     * @return string|int|null
-     */
-    public function optionId(object $row) {
-        return $row->area_id;
-    }
-
-    /**
-     * on select the option label.
-     */
-    public function optionLabel($row): string {
-        return $row->area_define_name;
-    }
-
-    /**
-     * index navigation.
-     */
-    public function indexNav(): ?\Illuminate\Contracts\Support\Renderable {
-        return null;
-    }
-
-    /**
-     * Build an "index" query for the given resource.
-     *
-     * @param \Illuminate\Database\Eloquent\Relations\Relation|\Illuminate\Database\Eloquent\Builder $query
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\Relation|\Illuminate\Database\Eloquent\Builder
-     */
-    public static function indexQuery(array $data, $query) {
-        //return $query->where('user_id', $request->user()->id);
-        return $query;
-    }
-
-    /**
      * Get the fields displayed by the resource.
         'value'=>'..',
      */

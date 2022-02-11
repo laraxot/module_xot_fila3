@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Modules\Xot\Http\Livewire;
 
+use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Lang;
 use Livewire\Component;
@@ -35,7 +36,10 @@ class ManageLangModule extends Component {
         $this->path = $path;
     }
 
-    public function render():\Illuminate\Contracts\Support\Renderable {
+    /**
+     * Undocumented function.
+     */
+    public function render(): Renderable {
         //$model->translations  ???
 
         $files = File::files($this->path);
@@ -55,7 +59,10 @@ class ManageLangModule extends Component {
         return view()->make($view, $view_params);
     }
 
-    public function edit(string $lang_name) {
+    /**
+     * Undocumented function.
+     */
+    public function edit(string $lang_name): void {
         $this->lang_name = $lang_name;
         $mod_trad = $this->module_name.'::'.$this->lang_name;
         $form_data = Lang::get($mod_trad, []); //progressioni::prova
@@ -65,7 +72,10 @@ class ManageLangModule extends Component {
         $this->emit('editModalArray', $form_data);
     }
 
-    public function updateArray(array $form_data) {
+    /**
+     * Undocumented function.
+     */
+    public function updateArray(array $form_data): void {
         $filename = $this->path.'/'.$this->lang_name.'.php';
         ArrayService::save(['filename' => $filename, 'data' => $form_data]);
     }

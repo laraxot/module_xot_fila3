@@ -125,6 +125,11 @@ class ModuleController extends Controller {
         */
     }
 
+    /**
+     * Undocumented function.
+     *
+     * @return mixed
+     */
     public function home(Request $request) {
         $panel = PanelService::getRequestPanel();
 
@@ -137,6 +142,11 @@ class ModuleController extends Controller {
         return $panel->out();
     }
 
+    /**
+     * Undocumented function.
+     *
+     * @return mixed
+     */
     public function dashboard(Request $request) {
         $panel = PanelService::getRequestPanel();
 
