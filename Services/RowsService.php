@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Modules\Xot\Services;
 
+use Exception;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
@@ -111,7 +112,8 @@ class RowsService {
 
         //$filters_fields = $this->filters();
         if (null == $query) {
-            return null;
+            //return null;
+            throw new Exception('['.__LINE__.']['.class_basename(__CLASS__).']');
         }
         //124    Access to an undefined property object::$param_name.
         $filters_rules = collect($filters_fields)

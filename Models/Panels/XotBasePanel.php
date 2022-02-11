@@ -214,7 +214,7 @@ abstract class XotBasePanel implements PanelContract {
         return $this;
     }
 
-    public function getSonModel(Model $model): self {
+    public function getSonModel(Model $model): PanelContract {
         $panel = PanelService::get($model)->setParent($this);
         $name = Str::plural($panel->postType());
         $panel->setName($name);
@@ -1091,6 +1091,7 @@ abstract class XotBasePanel implements PanelContract {
     public function getCrudActions(): array {
         $acts = ['index', 'create'];
         if (
+            //1095   Cannot call method getName() on object|string.
             Str::endsWith(
                 request()
                     ->route()
@@ -1578,7 +1579,7 @@ abstract class XotBasePanel implements PanelContract {
         if (
             $post->getAttributeValue('created_by') == $user->handle ||
             $post->getAttributeValue('updated_by') == $user->handle ||
-            $post->getAttributeValue('user_id') == $user->user_id
+            $post->getAttributeValue('user_id') == $user->id
         ) {
             return true;
         }
