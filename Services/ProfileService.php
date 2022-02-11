@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Modules\Xot\Services;
 
+use Exception;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
@@ -45,6 +46,10 @@ class ProfileService {
             if (null == $profile_model) {
                 dddx('Aggiungi profile a xra.php');
             }
+            if (! $user instanceof UserContract) {
+                throw new Exception('['.__LINE__.']['.class_basename(__CLASS__).']');
+            }
+
             $self->user = $user;
             //51     Dead catch - Exception is never thrown in the try block.
             //try {
@@ -65,6 +70,7 @@ class ProfileService {
                 ]);
                 */
                 $profile = $user->profile()->create();
+
                 $profile->user_id = $user->id;
 
                 $profile->post()->firstOrCreate(['guid' => 'profile-'.$user->id, 'lang' => app()->getLocale()]);

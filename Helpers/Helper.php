@@ -5,6 +5,7 @@ declare(strict_types=1);
 //use Illuminate\Support\Facades\Storage;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\URL;
@@ -113,6 +114,7 @@ if (! \function_exists('backtrace')) {
 }
 
 //--------------------------------------------
+/*
 if (! \function_exists('superdump')) {
     function superdump($params) {
         if (! is_array($params)) {
@@ -123,6 +125,7 @@ if (! \function_exists('superdump')) {
         echo '<br>-------------------------------------<br>';
     }
 }
+*/
 
 if (! \function_exists('dddx')) {
     /**
@@ -159,7 +162,7 @@ if (! \function_exists('dddx')) {
 }
 
 if (! function_exists('debug_methods')) {
-    function debug_methods($rows) {
+    function debug_methods(object $rows): string {
         $methods = get_class_methods($rows);
         //*
         $methods_get = collect($methods)->filter(
@@ -503,7 +506,7 @@ if (! \function_exists('getModuleModels')) {
 }
 
 if (! \function_exists('getModuleModelsMenu')) {
-    function getModuleModelsMenu($module) {
+    function getModuleModelsMenu(string $module): Collection {
         $models = getModuleModels($module);
         $menu = collect($models)->map(
             function ($item, $key) {
@@ -1115,7 +1118,7 @@ if (! function_exists('is_active')) {
     /**
      * Determines if the given routes are active.
      */
-    function is_active($routes): bool {
+    function is_active(array $routes): bool {
         return (bool) call_user_func_array([app('router'), 'is'], (array) $routes);
     }
 }
@@ -1145,6 +1148,11 @@ if (! function_exists('replace_links')) {
 }
 
 if (! function_exists('debugStack')) {
+    /**
+     * Undocumented function.
+     *
+     * @return void
+     */
     function debugStack() {
         if (! extension_loaded('xdebug')) {
             throw new \RuntimeException('XDebug must be installed to use this function');

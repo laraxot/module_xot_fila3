@@ -31,6 +31,11 @@ interface UserContract {
     */
     public function profile(): HasOne;
 
+    /**
+     * Undocumented function.
+     *
+     * @return bool
+     */
     public function update(array $attributes = [], array $options = []);
 
     /**

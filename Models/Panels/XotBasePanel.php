@@ -249,7 +249,12 @@ abstract class XotBasePanel implements PanelContract {
         return $this->parent;
     }
 
-    public function getParents(): Collection {
+    /**
+     * Undocumented function.
+     *
+     * @return Collection<PanelContract>
+     */
+    public function getParents() {
         $parents = collect([]);
         $panel_curr = $this->getParent();
         while (null != $panel_curr) {
@@ -729,7 +734,12 @@ abstract class XotBasePanel implements PanelContract {
         return null;
     }
 
-    public function getActions(array $params = []): Collection {
+    /**
+     * Undocumented function.
+     *
+     * @return Collection<PanelContract>
+     */
+    public function getActions(array $params = []) {
         return (new PanelActionService($this))->{__FUNCTION__}($params);
     }
 
@@ -1272,6 +1282,7 @@ abstract class XotBasePanel implements PanelContract {
 
         $action = $this->getActions()
             ->firstWhere('name', $act);
+
         if (! is_object($action)) {
             $msg = 'action '.$act.' not recognized for ['.get_class($this).']';
             FileService::viewCopy('theme::errors.403', 'pub_theme::errors.403');

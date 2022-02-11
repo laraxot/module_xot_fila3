@@ -198,6 +198,11 @@ abstract class XotBaseMigration extends Migration {
         $this->getConn()->dropIfExists($this->getTable());
     }
 
+    /**
+     * Undocumented function.
+     *
+     * @return void
+     */
     public function tableCreate(Closure $next) {
         if (! $this->tableExists()) {
             $this->getConn()->create(
@@ -207,6 +212,11 @@ abstract class XotBaseMigration extends Migration {
         }
     }
 
+    /**
+     * Undocumented function.
+     *
+     * @return void
+     */
     public function tableUpdate(Closure $next) {
         $this->getConn()->table(
             $this->getTable(),

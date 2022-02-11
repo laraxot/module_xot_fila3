@@ -148,7 +148,12 @@ interface PanelContract {
      */
     public function callItemActionWithGate(string $act);
 
-    public function getParents(): Collection;
+    /**
+     * Undocumented function.
+     *
+     * @return Collection<PanelContract>
+     */
+    public function getParents();
 
     /**
      * @return mixed
@@ -165,9 +170,14 @@ interface PanelContract {
 
     public function getTradMod(): string;
 
+    /**
+     * Undocumented function.
+     *
+     * @return mixed
+     */
     public function filters();
 
-    /*
+    /**
      * @return int|string|null
      */
     public function optionId(Model $row);

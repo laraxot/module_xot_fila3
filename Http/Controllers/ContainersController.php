@@ -36,6 +36,11 @@ class ContainersController extends Controller {
         return $panel->out();
     }
     */
+    /**
+     * Undocumented function.
+     *
+     * @return mixed
+     */
     public function index(Request $request) {
         $route_params = getRouteParameters(); // "module" => "lu"
         [$containers,$items] = params2ContainerItem();

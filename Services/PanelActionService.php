@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Modules\Xot\Services;
 
+use Illuminate\Support\Collection;
 use Modules\Xot\Contracts\PanelContract;
 use Modules\Xot\Models\Panels\Actions\XotBasePanelAction;
 
@@ -21,7 +22,7 @@ class PanelActionService {
     }
 
     /**
-     * @return \Illuminate\Support\Collection
+     * @return Collection|PanelContract[]
      */
     public function getActions(array $params = []) {
         $panel = $this->panel;
@@ -57,7 +58,7 @@ class PanelActionService {
     }
 
     /**
-     * @return \Illuminate\Support\Collection
+     * @return \Illuminate\Support\Collection|PanelContract[]
      */
     public function containerActions(array $params = []) {
         $params['filters']['onContainer'] = true;

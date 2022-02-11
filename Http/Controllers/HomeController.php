@@ -75,6 +75,11 @@ class HomeController extends Controller {
         return $panel->out();
     }
 
+    /**
+     * Undocumented function.
+     *
+     * @return mixed
+     */
     public function showOld(Request $request, ?PanelContract $panel = null) {
         //$request=request();
         $home = null;
@@ -125,6 +130,11 @@ class HomeController extends Controller {
         return redirect($request->url);
     }
 
+    /**
+     * Undocumented function.
+     *
+     * @return mixed
+     */
     public function store(Request $request) {
         return $this->index($request);
     }

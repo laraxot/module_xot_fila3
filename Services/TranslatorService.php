@@ -57,8 +57,8 @@ class TranslatorService extends BaseTranslator {
     /**
      * getFromJson.
      *
-     * @param string|array $key
-     * @param string|null  $locale
+     * @param string      $key
+     * @param string|null $locale
      *
      * @return array|string
      */

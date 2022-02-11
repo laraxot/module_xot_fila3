@@ -49,6 +49,11 @@ class Home extends BaseModel {
      */
     protected $fillable = ['id', 'article_type', 'icon_src'];
 
+    /**
+     * Undocumented variable.
+     *
+     * @var array
+     */
     protected $rows = [
         [
             'id' => 'home',

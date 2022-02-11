@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace Modules\Xot\Models\Panels;
 
-use Modules\Xot\Models\Home;
-
 //--- Services --
 
 /**
@@ -21,40 +19,6 @@ class HomePanel extends XotBasePanel {
      * The single value that should be used to represent the resource when being displayed.
      */
     public static string $title = 'title';
-
-    /**
-     * The columns that should be searched.
-     */
-    public static array $search = [];
-
-    /**
-     * The relationships that should be eager loaded on index queries.
-     */
-    public function with(): array {
-        return ['widgets'];
-    }
-
-    public function search(): array {
-        return [];
-    }
-
-    /**
-     * on select the option id.
-     *
-     * @return mixed
-     */
-    public function optionId(object $row) {
-        return $row->area_id;
-    }
-
-    /**
-     * on select the option label.
-     *
-     * @param Home $row
-     */
-    public function optionLabel($row): string {
-        return $row->area_define_name;
-    }
 
     /**
      * Get the fields displayed by the resource.
