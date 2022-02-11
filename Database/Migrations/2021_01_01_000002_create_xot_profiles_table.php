@@ -63,8 +63,8 @@ class CreateXotProfilesTable extends XotBaseMigration {
                     $table->integer('user_id')->nullable()->index();
                 }
 
-                if ($this->hasColumn('user_id') && ! $this->hasColumn('user_id')) {
-                    $table->renameColumn('user_id', 'user_id');
+                if ($this->hasColumn('auth_user_id') && ! $this->hasColumn('user_id')) {
+                    $table->renameColumn('auth_user_id', 'user_id');
                 }
 
                 if ($this->hasColumn('auth_user_id')) {

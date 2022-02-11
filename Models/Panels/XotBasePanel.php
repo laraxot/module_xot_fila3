@@ -1044,11 +1044,12 @@ abstract class XotBasePanel implements PanelContract {
         if (null == $row->getKey()) {
             return null;
         }
-        try {
-            $guid = $row->$key;
-        } catch (\Exception $e) {
-            $guid = '';
-        }
+        //1049   Dead catch - Exception is never thrown in the try block.
+        //try {
+        $guid = $row->$key;
+        //} catch (\Exception $e) {
+        //     $guid = '';
+        // }
         if ('' == $guid && method_exists($row, 'post') && 'guid' == $key && property_exists($row, 'post')) {
             //if ('' == $row->id && '' != $row->post_id) {
             //    $row->id = $row->post_id; //finche netson non riabilita migrazioni

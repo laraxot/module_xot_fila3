@@ -20,7 +20,7 @@ class ManageLangModule extends Component {
     public string $path;
 
     /**
-     * Listener di eventi di Livewire
+     * Listener di eventi di Livewire.
      *
      * @var array
      */
@@ -53,8 +53,6 @@ class ManageLangModule extends Component {
         ];
 
         return view()->make($view, $view_params);
-
-        return '<div>PAsso</div>';
     }
 
     public function edit(string $lang_name) {
