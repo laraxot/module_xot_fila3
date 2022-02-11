@@ -121,12 +121,6 @@ interface PanelContract {
 
     public function getName(): string;
 
-    public function rules(array $params = []): array;
-
-    public function getRules(array $params = []): array;
-
-    public function rulesMessages(): array;
-
     /**
      * @return mixed
      */
@@ -175,9 +169,15 @@ interface PanelContract {
     /*
      * @return int|string|null
      */
-    //public function optionId(Model $row);
+    public function optionId(Model $row);
 
-    //public function optionLabel($row): string;
+    public function optionLabel(Model $row): string;
 
     //public function isInternalPage(): bool;
+
+    public function rules(array $params = []): array;
+
+    public function getRules(array $params = []): array;
+
+    public function rulesMessages(): array;
 }

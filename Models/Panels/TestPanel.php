@@ -50,7 +50,7 @@ class TestPanel extends XotBasePanel {
     /**
      * on select the option label.
      */
-    public function optionLabel(object $row): string {
+    public function optionLabel($row): string {
         return $row->area_define_name;
     }
 

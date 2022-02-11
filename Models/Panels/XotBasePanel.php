@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Str;
+use Modules\Theme\Services\FieldService;
 use Modules\Xot\Contracts\PanelContract;
 use Modules\Xot\Contracts\PanelPresenterContract;
 use Modules\Xot\Contracts\RowsContract;
@@ -112,8 +113,6 @@ abstract class XotBasePanel implements PanelContract {
 
     /**
      * Undocumented function.
-     *
-     * @return \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Query\Builder
      */
     public function getBuilder(): Builder {
         if (null != $this->builder) {
@@ -178,7 +177,6 @@ abstract class XotBasePanel implements PanelContract {
      */
     public function getRows() {
         if (null == $this->rows) {
-            //dddx(debug_backtrace());
             //throw new \Exception('rows is null [line:'.__LINE__.'][class:'.get_class($this).']');
             //nel caso di stampare un pdf non serve avere le rows
         }
@@ -308,9 +306,25 @@ abstract class XotBasePanel implements PanelContract {
     /**
      * @return int|string|null
      */
-    //public function optionId(Model $row) {
-    //    return $row->getKey();
-    //}
+    public function optionId(Model $row) {
+        return $row->getKey();
+    }
+
+    public function optionIdName(): string {
+        return $this->row->getKeyName();
+    }
+
+    /**
+     * on select the option label.
+     */
+    public function optionLabel(Model $row): string {
+        //return $row->matr.' ['.$row->email.']['.$row->ha_diritto.'] '.$row->cognome.' '.$row->cognome.' ';
+        return $row->getAttributeValue('title').''; //matr.' ['.$row->email.']['.$row->ha_diritto.'] '.$row->cognome.' '.$row->cognome.' ';
+    }
+
+    //public function optionLabelName():string {
+    //    return 'matr';
+    // }
 
     /*
      * ----
@@ -352,8 +366,6 @@ abstract class XotBasePanel implements PanelContract {
         $pk = $row->getRouteKeyName(); // !!! MI SEMBRA STRANO !!
         $pk_full = $row->getTable().'.'.$pk;
 
-        // dddx($pk);
-
         if ('guid' == $pk) {
             $pk_full = 'guid';
         } // pezza momentanea
@@ -377,8 +389,6 @@ abstract class XotBasePanel implements PanelContract {
             ->first();
 
         if (null == $row) {
-            //dddx(['class_methods' => get_class_methods($rows)]);
-            //dddx(DB::getQueryLog());
             //$query = str_replace(array('?'), array('\'%s\''), $builder->toSql());
             //$query = vsprintf($query, $builder->getBindings());
             $sql = Str::replaceArray('?', $rows->getBindings(), $rows->toSql());
@@ -409,7 +419,6 @@ abstract class XotBasePanel implements PanelContract {
             return $res;
         }
         $me = $model->create();
-        // dddx([$me, $me->getKey()]);
         if (! method_exists($model, 'post')) {
             throw new \Exception('in ['.get_class($model).'] method [post] is missing');
         }
@@ -427,13 +436,6 @@ abstract class XotBasePanel implements PanelContract {
 
         return $me;
     }
-
-    /**
-     * on select the option label.
-     */
-    //public function optionLabel(Model $row): string {
-    //    return $row->matr.' ['.$row->email.']['.$row->ha_diritto.'] '.$row->cognome.' '.$row->cognome.' ';
-    //}
 
     public function title(): ?string {
         return optional($this->row)->title;
@@ -539,20 +541,6 @@ abstract class XotBasePanel implements PanelContract {
     }
 
     /**
-     * @return mixed
-     */
-    public function optionIdName() {
-        return $this->row->getKeyName();
-    }
-
-    /**
-     * @return string
-     */
-    public function optionLabelName() {
-        return 'matr';
-    }
-
-    /**
      * inserisco i campi dove si applicherà la funzione di ricerca testuale (solo nel pannello admin?)
      * se il pannello interessato rilascia un array vuoto, fa la ricerca tra i fillable del modello
      * esempio post.title, post.subtitle.
@@ -647,8 +635,8 @@ abstract class XotBasePanel implements PanelContract {
                         ->$rel_name()
                         ->getPivotClass();
                     $pivot = new $pivot_class();
-                    $pivot_panel = StubService::setModelAndName($pivot, 'panel')->get();
-
+                    $pivot_panel_name = StubService::setModelAndName($pivot, 'panel')->get();
+                    $pivot_panel = app($pivot_panel_name);
                     $pivot_panel->setRows(with(new $this::$model())->$rel_name());
                     $pivot_rules = collect($pivot_panel->rules())
                         ->map(
@@ -667,8 +655,6 @@ abstract class XotBasePanel implements PanelContract {
         )->collapse()
             ->all();
 
-        //dddx($rules);
-
         return $rules;
     }
 
@@ -680,15 +666,20 @@ abstract class XotBasePanel implements PanelContract {
 
     public function rulesMessages(): array {
         $lang = app()->getLocale();
+
+        $fields = collect($this->fields())
+            ->map(
+                function ($item) {
+                    return (new FieldService())->setVars(get_object_vars($item));
+                }
+            );
+
         $rules_msg_fields = collect($this->fields())->filter(function ($value, $key) use ($lang) {
             return isset($value->rules_messages) && isset($value->rules_messages[$lang]);
         })
             ->map(function ($item) use ($lang) {
                 $tmp = [];
-                /*
-            * togliere la lang dai messaggi usare la stringa come id di validazione
-            * se la traduzione non esiste, restituire la stringa normale
-            **/
+
                 foreach ($item->rules_messages[$lang] as $k => $v) {
                     $tmp[$item->name.'.'.$k] = $v;
                 }
