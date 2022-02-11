@@ -6,7 +6,7 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 //--- models --
 use Modules\Xot\Database\Migrations\XotBaseMigration;
-use Modules\Xot\Models\Post;
+use Modules\Lang\Models\Post;
 
 /**
  * Class CreatePostsTable.
