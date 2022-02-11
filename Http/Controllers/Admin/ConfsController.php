@@ -15,6 +15,11 @@ use Modules\Xot\Services\PanelService;
  * Class ConfController.
  */
 class ConfsController extends Controller {
+    /**
+     * Undocumented function.
+     *
+     * @return mixed
+     */
     public function index(Request $request) {
         //$rows = TenantService::getConfigNames();
         $panel = PanelService::getRequestPanel();

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Modules\Xot\Http\Livewire;
 
+use Illuminate\Contracts\Support\Renderable;
 use Livewire\Component;
 
 class LaravelNewsTile extends Component {
@@ -17,7 +18,10 @@ class LaravelNewsTile extends Component {
 
     public int $refreshIntervalInSeconds;
 
-    public function mount(string $position, ?string $title = null, string $configurationName = 'default') {
+    /**
+     * Undocumented function.
+     */
+    public function mount(string $position, ?string $title = null, string $configurationName = 'default'): void {
         $this->position = $position;
 
         $this->title = $title;
@@ -27,7 +31,10 @@ class LaravelNewsTile extends Component {
         $this->configurationName = $configurationName;
     }
 
-    public function render(): \Illuminate\Contracts\Support\Renderable {
+    /**
+     * Undocumented function.
+     */
+    public function render(): Renderable {
         /*
         $xml = \Illuminate\Support\Facades\Http::get('https://feed.laravel-news.com')->body();
         $data = simplexml_load_string($xml, 'SimpleXMLElement', LIBXML_NOCDATA);
