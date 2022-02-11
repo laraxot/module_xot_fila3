@@ -48,6 +48,18 @@ class LaravelNewsTile extends Component {
 
         return view('xot::livewire.laravel-news-tile', compact('articleContent', 'articleTitle'));
         */
-        return '<div></div>';
+        $view = 'theme::empty';
+        $view_params = [
+            'view' => $view,
+        ];
+
+        return view()->make($view, $view_params);
+    }
+
+    /**
+     * Undocumented function.
+     */
+    public function shouldRender(): bool {
+        return false;
     }
 }
