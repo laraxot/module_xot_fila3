@@ -43,7 +43,10 @@ class RouteServiceProvider extends XotBaseRouteServiceProvider {
         $router->prependMiddlewareToGroup('api', SetDefaultLocaleForUrlsMiddleware::class);
     }
 
-    public function registerLang() {
+    /**
+     * Undocumented function.
+     */
+    public function registerLang(): void {
         $langs = array_keys(config('laravellocalization.supportedLocales'));
 
         if (in_array(\Request::segment(1), $langs)) {
