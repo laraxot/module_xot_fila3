@@ -19,6 +19,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
  * @property string|null                                                        $last_name
  * @property string|null                                                        $email
  * @property \Illuminate\Database\Eloquent\Collection|\Modules\LU\Models\Area[] $areas
+ * @property \Modules\LU\Models\PermUser|null                                   $perm
  * @mixin \Eloquent
  */
 interface UserContract {
