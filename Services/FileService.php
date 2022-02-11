@@ -75,9 +75,9 @@ class FileService {
                     //dddx([$filename_from, $filename_to]);
                     File::copy($filename_from, $filename_to);
                 } catch (\Exception $e) {
-                    throw new Exception('message:['.$e->getMessage().'] 
-                        path :['.$path.'] 
-                        file from ['.$filename_from.'] 
+                    throw new Exception('message:['.$e->getMessage().']
+                        path :['.$path.']
+                        file from ['.$filename_from.']
                         file to ['.$filename_to.']');
                 }
             }
@@ -102,9 +102,10 @@ class FileService {
             if (! File::exists(\dirname($filename_to))) {
                 File::makeDirectory(\dirname($filename_to), 0755, true, true);
             }
-            if (File::exists($filename_from)) {
-                File::copy($filename_from, $filename_to);
-            }
+            // 105    If condition is always true.
+            //if (File::exists($filename_from)) {
+            File::copy($filename_from, $filename_to);
+            //}
         }
 
         return $asset;

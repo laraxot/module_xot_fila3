@@ -441,8 +441,8 @@ class UpdateJob extends XotBaseJob {
                 ];
             }
         )->all();
-        exit(ArrayService::toHtml(['data' => $methods_get]));
-        //*/
+        //exit(ArrayService::toHtml(['data' => $methods_get]));
+        /*/
         dddx(
             [
                 'parent' => $rows->getParent(), //PermUser

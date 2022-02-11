@@ -170,11 +170,12 @@ class DocxService {
         $arr = [];
         $fields = $row->getFillable();
         foreach ($fields as $field) {
-            try {
-                $arr[$field] = $row->$field;
-            } catch (\Exception $e1) {
-                $arr[$field] = '';
-            }
+            //175    Dead catch - Exception is never thrown in the try block.
+            //try {
+            $arr[$field] = $row->$field;
+            //} catch (\Exception $e1) {
+            //    $arr[$field] = '';
+            //}
         }
 
         //$arr = $row->toArray();

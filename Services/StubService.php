@@ -235,7 +235,7 @@ class StubService {
     public function getFillable(): \Illuminate\Support\Collection {
         $model = $this->getModel();
         if (! method_exists($model, 'getFillable')) {
-            return [];
+            return collect([]);
         }
         $fillables = $model->getFillable();
         if (0 == count($fillables)) {
