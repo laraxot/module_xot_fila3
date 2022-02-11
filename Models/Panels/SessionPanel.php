@@ -5,9 +5,8 @@ declare(strict_types=1);
 namespace Modules\Xot\Models\Panels;
 
 use Illuminate\Http\Request;
-//--- Services --
 
-use Modules\Xot\Contracts\RowsContract;
+//--- Services --
 
 class SessionPanel extends XotBasePanel {
     /**
@@ -19,61 +18,6 @@ class SessionPanel extends XotBasePanel {
      * The single value that should be used to represent the resource when being displayed.
      */
     public static string $title = 'title';
-
-    /**
-     * The columns that should be searched.
-     *
-     * @var array
-     */
-    public static $search = [
-    ];
-
-    /**
-     * The relationships that should be eager loaded on index queries.
-     */
-    public function with(): array {
-        return [];
-    }
-
-    public function search(): array {
-        return [];
-    }
-
-    /**
-     * on select the option id.
-     *
-     * quando aggiungi un campo select, è il numero della chiave
-     * che viene messo come valore su value="id"
-     */
-    public function optionId(object $row) {
-        return $row->getKey();
-    }
-
-    /**
-     * on select the option label.
-     */
-    public function optionLabel($row): string {
-        return $row->area_define_name;
-    }
-
-    /**
-     * index navigation.
-     */
-    public function indexNav(): ?\Illuminate\Contracts\Support\Renderable {
-        return null;
-    }
-
-    /**
-     * Build an "index" query for the given resource.
-     *
-     * @param RowsContract $query
-     *
-     * @return RowsContract
-     */
-    public static function indexQuery(array $data, $query) {
-        //return $query->where('user_id', $request->user()->id);
-        return $query;
-    }
 
     /**
      * Get the fields displayed by the resource.

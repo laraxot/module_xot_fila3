@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Modules\Xot\Services;
 
 use Exception;
+use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Route;
@@ -25,7 +26,7 @@ class ArtisanService {
     /**
      * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
      *
-     * @return string
+     * @return string|Renderable
      */
     public static function act(string $act) { //da fare anche in noconsole, e magari mettere un policy
         $module_name = \Request::input('module');
@@ -100,7 +101,7 @@ class ArtisanService {
         return '';
     }
 
-    public static function errorShow() {
+    public static function errorShow(): Renderable {
         $view = 'xot::acts.artisan.error-show';
         $files = File::files(storage_path('logs'));
         $log = request('log', '');
@@ -129,7 +130,7 @@ class ArtisanService {
         return view()->make($view, $view_params);
     }
 
-    public static function showRouteList() {
+    public static function showRouteList(): Renderable {
         $routeCollection = Route::getRoutes();
         /*
         $view = ThemeService::getViewModule();

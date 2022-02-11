@@ -293,7 +293,7 @@ class StubService {
     /**
      * sarebbe create ma in maniera fluent.
      */
-    public function generate() {
+    public function generate(): self {
         $stub_file = __DIR__.'/../Console/stubs/'.$this->name.'.stub';
         $stub = File::get($stub_file);
         $replace = $this->getReplaces();
@@ -318,6 +318,8 @@ class StubService {
         $msg = (' ['.$file.'] is under creating , refresh page');
 
         \Session::flash($msg);
+
+        return $this;
     }
 
     public function getClassName(): string {

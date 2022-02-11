@@ -256,6 +256,11 @@ class TranslatorService extends BaseTranslator {
         */
     }
 
+    /**
+     * Undocumented function.
+     *
+     * @return void
+     */
     public static function addMissing(string $key, array $data) {
         $missing = collect($data)
             ->filter(

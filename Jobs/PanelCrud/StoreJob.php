@@ -230,7 +230,8 @@ class StoreJob extends XotBaseJob {
 
     /**
      * Undocumented function.
-     * array|string|integet $data.
+     *
+     * @param array|string|int $data
      */
     public function storeRelationshipsBelongsTo(Model $model, string $name, $data): void {
         if (is_string($data) || is_integer($data)) {

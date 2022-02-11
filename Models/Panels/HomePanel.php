@@ -47,6 +47,8 @@ class HomePanel extends XotBasePanel {
 
     /**
      * on select the option label.
+     *
+     * @param Home $row
      */
     public function optionLabel($row): string {
         return $row->area_define_name;

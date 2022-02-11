@@ -12,7 +12,18 @@ use Closure;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Str;
 
+/**
+ * Undocumented class.
+ */
 class Search {
+    /**
+     * Undocumented function.
+     *
+     * @param Builder $query
+     * @param array   ...$args
+     *
+     * @return Closure
+     */
     public function handle($query, Closure $next, ...$args) {
         $search_fields = [];
         $model = $query->getModel();

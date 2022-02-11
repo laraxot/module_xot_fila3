@@ -27,7 +27,10 @@ abstract class XotBaseThemeServiceProvider {
         $this->registerLivewireComponents();
     }
 
-    public function registerBladeDirective() {
+    /**
+     * Undocumented function.
+     */
+    public function registerBladeDirective(): void {
         Blade::directive('md', function ($expression) {
             return '<'."?php echo md_to_html($expression); ?".'>';
         });

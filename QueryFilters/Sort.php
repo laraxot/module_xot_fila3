@@ -11,6 +11,13 @@ namespace Modules\Xot\QueryFilters;
 use Closure;
 
 class Sort {
+    /**
+     * Undocumented function.
+     *
+     * @param mixed $request
+     *
+     * @return Closure
+     */
     public function handle($request, Closure $next) {
         if (! request()->has('sort')) {
             return $next($request);

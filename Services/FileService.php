@@ -113,6 +113,11 @@ class FileService {
         //return asset(self::viewNamespaceToAsset($path));
     }
 
+    /**
+     * Undocumented function.
+     *
+     * @return void
+     */
     public static function createDirectoryForFilename(string $filename) {
         if (! File::exists(\dirname($filename))) {
             File::makeDirectory(\dirname($filename), 0755, true, true);
@@ -615,7 +620,7 @@ class FileService {
         return ''.$path;
     }
 
-    public static function allDirectories(string $path, array $except = [], string $dir = '') {
+    public static function allDirectories(string $path, array $except = [], string $dir = ''): array {
         $dirs = File::directories($path);
         $data = [];
         foreach ($dirs as $v) {
@@ -639,6 +644,11 @@ class FileService {
         return $path;
     }
 
+    /**
+     * Undocumented function.
+     *
+     * @return int|string|array
+     */
     public static function config(string $key) {
         $ns_name = Str::before($key, '::');
         $group = Str::of($key)->after('::')->before('.');
@@ -671,7 +681,7 @@ class FileService {
      * Undocumented function
      *  Execute copy with makedirectory.
      */
-    public static function copy(string $from, string $to) {
+    public static function copy(string $from, string $to): void {
         if (! File::exists(\dirname($to))) {
             try {
                 File::makeDirectory(\dirname($to), 0755, true, true);
@@ -690,7 +700,7 @@ class FileService {
      * from : theme::errors.500
      * to  : pub_theme:errors.500
      */
-    public static function viewCopy(string $from, string $to) {
+    public static function viewCopy(string $from, string $to): void {
         $from_path = FileService::viewPath($from);
         $to_path = FileService::viewPath($to);
         FileService::copy($from_path, $to_path);

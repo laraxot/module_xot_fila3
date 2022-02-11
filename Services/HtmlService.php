@@ -65,11 +65,14 @@ class HtmlService {
         //}
     }
 
-    public static function toMpdf($html) {
+    /*
+    public static function toMpdf($html): string {
         require_once __DIR__.'/vendor/autoload.php';
 
         $mpdf = new Mpdf();
         $mpdf->WriteHTML($html);
-        $mpdf->Output();
+
+        return $mpdf->Output();
     }
+    */
 }

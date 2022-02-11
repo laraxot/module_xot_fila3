@@ -17,7 +17,7 @@ class Conf extends BaseModel {
         'id', 'name',
     ];
 
-    public function getRows() {
+    public function getRows(): array {
         return TenantService::getConfigNames(); //  local/ptvx
     }
 
@@ -26,6 +26,12 @@ class Conf extends BaseModel {
         return false;
     }
     */
+
+    /**
+     * Undocumented function.
+     *
+     * @return string
+     */
     public function getRouteKeyName() {
         return 'name';
     }

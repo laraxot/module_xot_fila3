@@ -109,7 +109,14 @@ myRoutes($name, $middleware, $namespace, $prefix, $as, $controller, $acts);
  *
  * @return void
  */
-function myRoutes($name, $middleware, $namespace, $prefix, $as, $controller, $acts) {
+function myRoutes(
+    string $name,
+    array $middleware,
+    string $namespace,
+    string $prefix,
+    ?string $as,
+    ?string $controller,
+    ?array $acts) {
     Route::middleware($middleware)
         ->namespace($namespace)
         ->prefix($prefix)
