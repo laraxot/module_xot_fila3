@@ -35,7 +35,7 @@ class ManageLangModule extends Component {
         $this->path = $path;
     }
 
-    public function render() {
+    public function render():\Illuminate\Contracts\Support\Renderable {
         //$model->translations  ???
 
         $files = File::files($this->path);

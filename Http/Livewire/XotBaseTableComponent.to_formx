@@ -50,7 +50,7 @@ abstract class XotBaseTableComponent extends Component {
      *
      * @return \Illuminate\View\View
      */
-    public function render() {
+    public function render():\Illuminate\Contracts\Support\Renderable {
         return $this->tableView();
     }
 

@@ -43,7 +43,7 @@ abstract class XotBaseComponent extends Component {
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function render() { //per fare copia ed incolla
+    public function render():\Illuminate\Contracts\Support\Renderable { //per fare copia ed incolla
         $view = $this->getView();
         $view_params = [
             'view' => $view,

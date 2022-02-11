@@ -31,7 +31,7 @@ class LaravelNewsTile extends Component {
         $this->configurationName = $configurationName;
     }
 
-    public function render() {
+    public function render():\Illuminate\Contracts\Support\Renderable {
         /*
         $xml = \Illuminate\Support\Facades\Http::get('https://feed.laravel-news.com')->body();
         $data = simplexml_load_string($xml, 'SimpleXMLElement', LIBXML_NOCDATA);

@@ -63,7 +63,7 @@ class Test extends Component {
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function render() {
+    public function render():\Illuminate\Contracts\Support\Renderable {
         $view_params = [];
         $this->products = $this->fix($this->products);
         $this->change_cats = $this->fix($this->change_cats);
