@@ -79,6 +79,7 @@ class TypeGuesser {
             case 'county':
                 return $this->predictCountyType();
             case 'country':
+                // Parameter #1 $size of method Modules\Xot\Services\TypeGuesser::predictCountryType() expects int, int|null  given.
                 return $this->predictCountryType($size);
             case 'currency':
                 return 'currencyCode';
@@ -88,6 +89,7 @@ class TypeGuesser {
             case 'employer':
                 return 'company';
             case 'title':
+            // 91     Parameter #1 $size of method Modules\Xot\Services\TypeGuesser::predictTitleType() expects int, int|null   given.
                 return $this->predictTitleType($size);
             default:
                 return self::$default;
@@ -150,7 +152,7 @@ class TypeGuesser {
     /**
      * Predicts county type by locale.
      */
-    protected function predictCountyType() {
+    protected function predictCountyType(): string {
         if ('en_US' == $this->generator->locale) {
             return "sprintf('%s County', \$faker->city)";
         }
@@ -160,10 +162,8 @@ class TypeGuesser {
 
     /**
      * Predicts country code based on $size.
-     *
-     * @param int $size
      */
-    protected function predictCountryType($size) {
+    protected function predictCountryType(?int $size): string {
         switch ($size) {
             case 2:
                 return 'countryCode';
@@ -179,10 +179,8 @@ class TypeGuesser {
 
     /**
      * Predicts type of title by $size.
-     *
-     * @param int $size
      */
-    protected function predictTitleType($size) {
+    protected function predictTitleType(?int $size): string {
         if (null === $size || $size <= 10) {
             return 'title';
         }

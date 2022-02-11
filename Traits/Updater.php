@@ -54,9 +54,7 @@ trait Updater {
          * updating.
          */
         static::updating(function ($model) {
-            if (Auth::check()) {
-                $model->updated_by = optional(Auth::user())->handle.'';
-            }
+            $model->updated_by = Auth::user()->handle ?? '';
         });
         //-------------------------------------------------------------------------------------
         /*
