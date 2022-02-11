@@ -144,44 +144,6 @@ trait Getter {
     }
 
     /**
-     * @get variables
-     *
-     * @param mixed $index
-     *
-     * @return mixed
-     */
-    public function __getOLD($index) {
-        if (isset($this->vars[$index])) {
-            return $this->vars[$index];
-        }
-        /*
-        //$params=array();
-        if(isset($this->registry)){
-         $params=$this->registry->getParams('params');
-        }else{
-         $params=$this->getParams('params');
-        }
-        */
-        $params = [];
-        $func = 'get_'.$index;
-        if (! \method_exists($this, $func)) {
-            if (\class_exists($index)) {
-                $obj = new $index($this);
-                //echo '<h3>CLASSE ['.$index.']</h3>';
-                $this->__set($index, $obj);
-
-                return $obj;
-            }
-            dddx('<h3>'.\get_class($this).'->'.$func.'</h3>');
-        }
-
-        $ris = $this->$func($params);
-        $this->__set($index, $ris);
-
-        return $ris;
-    }
-
-    /**
      * @return mixed|null
      */
     public function __getVars(array $params = []) {
