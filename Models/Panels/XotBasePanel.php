@@ -1054,23 +1054,24 @@ abstract class XotBasePanel implements PanelContract {
             //if ('' == $row->id && '' != $row->post_id) {
             //    $row->id = $row->post_id; //finche netson non riabilita migrazioni
             //}
-            try {
-                return $row->post->guid;
-            } catch (\Exception $e) {
-                $title = $this->postType().' '.$this->row->getKey();
+            //1059   Dead catch - Exception is never thrown in the try block.
+            //try {
+            return $row->post->guid;
+            //} catch (\Exception $e) {
+//                $title = $this->postType().' '.$this->row->getKey();
 
-                $post = $row->post()->firstOrCreate(
-                    [
-                        'lang' => app()->getLocale(),
-                    ],
-                    [
-                        'title' => $title,
-                        'guid' => Str::slug($title),
-                    ]
-                );
+            //    $post = $row->post()->firstOrCreate(
+            //        [
+            //            'lang' => app()->getLocale(),
+            //        ],
+            //        [
+            //            'title' => $title,
+            //            'guid' => Str::slug($title),
+            //        ]
+            //    );
 
-                return $post->guid;
-            }
+            //    return $post->guid;
+            //}
         }
 
         return (string) $guid;
@@ -1091,8 +1092,10 @@ abstract class XotBasePanel implements PanelContract {
 
     public function getCrudActions(): array {
         $acts = ['index', 'create'];
+        /* indexedit in via di deprecazione
         if (
             //1095   Cannot call method getName() on object|string.
+
             Str::endsWith(
                 request()
                     ->route()
@@ -1102,6 +1105,7 @@ abstract class XotBasePanel implements PanelContract {
         ) {
             $acts = ['indexEdit', 'create'];
         }
+        */
         /*
         $route_params = getRouteParameters();
         $panel = PanelService::getByParams($route_params);

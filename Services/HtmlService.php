@@ -38,7 +38,7 @@ class HtmlService {
         $filename = 'test';
         extract($params);
         if (! isset($html)) {
-            throw new Exception(['err' => 'html is missing']);
+            throw new Exception('err html is missing');
         }
 
         if (request('debug', false)) {

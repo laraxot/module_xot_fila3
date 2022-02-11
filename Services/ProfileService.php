@@ -46,13 +46,14 @@ class ProfileService {
                 dddx('Aggiungi profile a xra.php');
             }
             $self->user = $user;
-            try {
-                $profile = $user->profile;
-            } catch (\Exception $e) {
-                echo '<h3>'.$e->getMessage().'</h3>';
+            //51     Dead catch - Exception is never thrown in the try block.
+            //try {
+            $profile = $user->profile;
+            //} catch (\Exception $e) {
+            //    echo '<h3>'.$e->getMessage().'</h3>';
 
-                return $self;
-            }
+            //    return $self;
+            //}
 
             if (null == $profile) {
                 /*
@@ -224,7 +225,8 @@ class ProfileService {
     }
 
     public function getUserPanel(): PanelContract {
-        $user_panel = PanelService::get($this->user);
+        $model = $this->user->newInstance();
+        $user_panel = PanelService::get($model);
 
         return $user_panel;
     }

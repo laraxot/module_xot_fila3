@@ -1086,7 +1086,7 @@ if (! function_exists('getRouteParameters')) {
 }
 
 if (! function_exists('getModTradFilepath')) {
-    function getModTradFilepath(string $file_path): ?string {
+    function getModTradFilepath(string $file_path): string {
         $file_path = Str::replace('\\', '/', $file_path);
 
         $ns = Str::of($file_path)->after('/Modules/')->before('/')->lower();

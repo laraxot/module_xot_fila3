@@ -8,6 +8,7 @@ use Exception;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
+use Modules\Theme\Services\FieldFilter;
 use Modules\Xot\Contracts\RowsContract;
 
 //----------- Requests ----------
@@ -107,7 +108,7 @@ class RowsService {
      *
      * @return RowsContract
      */
-    public static function filter($query, array $filters, $filters_fields) {
+    public static function filter($query, array $filters, array $filters_fields) {
         //https://github.com/spatie/laravel-query-builder
 
         //$filters_fields = $this->filters();
@@ -115,8 +116,19 @@ class RowsService {
             //return null;
             throw new Exception('['.__LINE__.']['.class_basename(__CLASS__).']');
         }
+        /*
+        dddx([
+            'filters' => $filters,
+            'filters_fields' => $filters_fields,
+        ]);
+        */
+        $filters_fields = collect($filters_fields)
+            ->map(function ($item) {
+                return FieldFilter::make()->setVars(get_object_vars($item));
+            });
+
         //124    Access to an undefined property object::$param_name.
-        $filters_rules = collect($filters_fields)
+        $filters_rules = $filters_fields
             ->filter(
                 function ($item) {
                     return isset($item->rules);
@@ -136,9 +148,12 @@ class RowsService {
             return $query->whereNull($id); //restituisco query vuota
         }
 
-        $filters_fields = collect($filters_fields)->filter(function ($item) use ($filters) {
-            return in_array($item->param_name, array_keys($filters));
-        })
+        $filters_fields = collect($filters_fields)
+            ->filter(
+                function ($item) use ($filters) {
+                    return in_array($item->param_name, array_keys($filters));
+                }
+            )
             ->all();
 
         foreach ($filters_fields as $k => $v) {

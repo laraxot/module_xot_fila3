@@ -35,15 +35,15 @@ class PanelRouteService {
             return $params['in_admin'];
         }
         //dddx(ThemeService::__getStatic('in_admin'));
-        if (null !== config()->get('in_admin')) {
-            return config()->get('in_admin');
+        if (null !== config('in_admin')) {
+            return config('in_admin');
         }
         if ('admin' == \Request::segment(1)) {
             return true;
         }
         $segments = (\Request::segments());
         if (count($segments) > 0 && 'livewire' == $segments[0]) {
-            if (true == session()->get('in_admin')) {
+            if (true == session('in_admin')) {
                 return true;
             }
         }

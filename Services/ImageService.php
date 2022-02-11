@@ -54,9 +54,6 @@ class ImageService {
 
     //---- setter
 
-    /**
-     * @param array $params
-     */
     public static function init(array $params): void {
         //dddx($params);
         //$instance == self::getInstance();
@@ -145,11 +142,9 @@ class ImageService {
     }
 
     /**
-     * @param array $params
-     *
      * @return mixed
      */
-    public static function image_resized_cropped(array $params){
+    public static function image_resized_cropped(array $params) {
         $width = self::$width;
         $height = self::$height;
         \extract($params);
@@ -304,7 +299,7 @@ class ImageService {
             ->first();
 
         if (is_object($img)) {
-            if($img->src_out==null){
+            if (null == $img->src_out) {
                 throw new \Exception('$img->src_out==null ['.__LINE__.']['.__FILE__.']');
             }
             if (Str::startsWith($img->src_out, Storage::disk('photos')->url(''))) {
@@ -392,11 +387,9 @@ class ImageService {
     }
 
     /**
-     * @param array $params
-     *
      * @return string|void|null
      */
-    public static function image_resized_canvas(array $params){
+    public static function image_resized_canvas(array $params) {
         $width = self::$width;
         $height = self::$height;
         \extract($params);
@@ -426,9 +419,11 @@ class ImageService {
             $pathinfo['extension'] = \mb_substr($pathinfo['extension'], 0, $pos);
         }
 
-        if (! isset($pathinfo['extension'])) {
-            return $image_path;
-        }
+        //429    Offset 'extension' on array{dirname: string, basename: string, filename: string, extension: string} in isset() always exists and is not nullable.
+        //if (! isset($pathinfo['extension'])) {
+        //    return $image_path;
+        //}
+
         if (! \in_array($pathinfo['extension'], $allowedExtensions, true)) {
             return $image_path;
         }

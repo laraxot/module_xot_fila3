@@ -660,7 +660,7 @@ class FileService {
 
     public static function viewPath(string $key): string {
         $ns_name = Str::before($key, '::');
-        $group = Str::of($key)->after('::');
+        $group = (string) Str::of($key)->after('::');
         $ns_dir = self::getViewNameSpacePath($ns_name);
         $res = $ns_dir.'/'.Str::replace('.', '/', $group).'.blade.php';
 

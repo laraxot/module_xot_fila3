@@ -6,6 +6,7 @@ namespace Modules\Xot\Services;
 
 use Doctrine\DBAL\Schema\Column;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
 
@@ -232,7 +233,7 @@ class StubService {
         );
     }
 
-    public function getFillable(): \Illuminate\Support\Collection {
+    public function getFillable(): Collection {
         $model = $this->getModel();
         if (! method_exists($model, 'getFillable')) {
             return collect([]);
@@ -251,7 +252,10 @@ class StubService {
         return $fillables;
     }
 
-    public function getColumns() {
+    /**
+     * Undocumented function.
+     */
+    public function getColumns(): Collection {
         $model = $this->getModel();
         $conn = $model->getConnection();
         $platform = $conn->getDoctrineSchemaManager()->getDatabasePlatform();

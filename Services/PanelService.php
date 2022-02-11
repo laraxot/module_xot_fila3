@@ -23,7 +23,8 @@ class PanelService {
 
     private ?PanelContract $panel = null;
 
-    private array $route_params;
+    //26     Property Modules\Xot\Services\PanelService::$route_params is never read, only written.
+    private static array $route_params;
 
     /*
     public function __construct($model){
@@ -115,7 +116,9 @@ class PanelService {
         */
         $panel_class = StubService::setModelAndName(self::$model, 'panel')->get();
 
-        return app($panel_class)->setRow(self::$model);
+        return app($panel_class)
+            ->setRow(self::$model)
+            ->setRouteParams(self::$route_params);
     }
 
     public function imageHtml(?array $params): string {
