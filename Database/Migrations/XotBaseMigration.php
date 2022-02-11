@@ -32,12 +32,13 @@ abstract class XotBaseMigration extends Migration {
             /*if ($model=="\Modules\Food\Models\FoodProfile") {
                 dddx( $this);
             }*/
-            try {
-                $this->model = app($model);
-            } catch (\Exception $ex) {
-                $res = StubService::setModelClass($model)->setName('model')->get();
-                throw new \Exception('<br><br>Table '.get_class($this).' does not have model '.$model.'<br><br>');
-            }
+            // 37     Dead catch - Exception is never thrown in the try block.
+            //try {
+            $this->model = app($model);
+            //} catch (\Exception $ex) {
+            //    $res = StubService::setModelClass($model)->setName('model')->get();
+            //    throw new \Exception('<br><br>Table '.get_class($this).' does not have model '.$model.'<br><br>');
+            //}
         }
         //$this->model = new $this->model();
     }
