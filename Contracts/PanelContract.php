@@ -77,7 +77,7 @@ interface PanelContract {
     /**
      * Undocumented function.
      *
-     * @return mixed
+     * @return \Illuminate\Http\File|\Illuminate\Http\UploadedFile|\Psr\Http\Message\StreamInterface|resource|string
      */
     public function pdf(array $params = []);
 

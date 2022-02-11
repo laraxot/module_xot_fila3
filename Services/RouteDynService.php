@@ -297,16 +297,16 @@ class RouteDynService {
 
         $controller = self::getController($v, $namespace);
         foreach ($v['acts'] as $k1 => $v1) {
-            try {
+            //try {
                 $v1['controller'] = $controller; //le acts hanno il controller del padre
-            } catch (\Exception $e) {
-                dddx([
-                    'message' => $e->getMessage(),
-                    'k1' => $k1,
-                    'v1' => $v1,
-                    'controller' => $controller,
-                ]);
-            }
+            //} catch (\Exception $e) {
+            //    dddx([
+            //        'message' => $e->getMessage(),
+            //        'k1' => $k1,
+            //        'v1' => $v1,
+            //        'controller' => $controller,
+            //    ]);
+           // }
             $method = self::getMethod($v1, $namespace);
             $uri = self::getUri($v1, $namespace);
             $callback = self::getCallback($v1, $namespace, $curr);

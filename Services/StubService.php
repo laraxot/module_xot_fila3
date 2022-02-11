@@ -29,7 +29,7 @@ class StubService {
      *
      * this method will return instance of the class
      */
-    public static function getInstance() {
+    public static function getInstance(): self {
         if (! self::$_instance) {
             self::$_instance = new self();
         }
@@ -66,7 +66,7 @@ class StubService {
         return $instance;
     }
 
-    public function get() {
+    public function get(): string {
         $file = $this->getClassFile();
         $class = $this->getClass();
         if (File::exists($file)) {
@@ -186,7 +186,7 @@ class StubService {
     /**
      * Checks if a given column should be included in the factory.
      */
-    protected function shouldBeIncluded(Column $column) {
+    protected function shouldBeIncluded(Column $column): bool {
         $shouldBeIncluded = ($column->getNotNull() /*|| $this->includeNullableColumns */)
             && ! $column->getAutoincrement();
 
@@ -207,6 +207,12 @@ class StubService {
             && ! in_array($column->getName(), $timestamps);
     }
 
+    /**
+     * Undocumented function.
+     *
+     * @param string $key
+     * @param string $value
+     */
     protected function mapToFactory($key, $value = null): array {
         return [
             $key => is_null($value) ? $value : "'{$key}' => $value",

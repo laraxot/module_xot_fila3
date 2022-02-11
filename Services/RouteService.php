@@ -23,9 +23,11 @@ class RouteService {
             return $params['in_admin'];
         }
         //dddx(ThemeService::__getStatic('in_admin'));
+        /* Cannot call method get() on mixed
         if (null !== config()->get('in_admin')) {
             return config()->get('in_admin');
         }
+        */
         if ('admin' == \Request::segment(1)) {
             return true;
         }

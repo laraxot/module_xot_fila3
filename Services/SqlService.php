@@ -10,15 +10,18 @@ use Illuminate\Database\Eloquent\Model;
  * Class SqlService.
  */
 class SqlService {
-    public static function getCoalesceDateRange(Model $model, ?int $date_min = null, ?int $date_max = null,
+    public static function getCoalesceDateRange(
+        Model $model,
+        ?int $date_min = null,
+        ?int $date_max = null,
         ?string $from_field = null,
         ?string $to_field = null
     ): string {
         if (null == $from_field) {
-            $from_field = $model->getAttributeValue($from_field);
+            $from_field = $model->getAttributeValue('from_field');
         }
         if (null == $to_field) {
-            $to_field = $model->getAttributeValue($to_field);
+            $to_field = $model->getAttributeValue('to_field');
         }
         if (null != $date_min) {
             $dal = 'if('.$from_field.'=0 or '.$from_field.'<'.$date_min.' ,'.$date_min.','.$from_field.')';

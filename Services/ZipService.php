@@ -130,7 +130,10 @@ class ZipService {
             if (! File::exists($path)) {
                 $pdf_parz['filename'] = $filename;
                 $pdf_content = $panel->pdf($pdf_parz);
-
+                //134    Parameter #2 $contents of method Illuminate\Filesystem\FilesystemAdapter::put()
+                //expects
+                //Illuminate\Http\File|Illuminate\Http\UploadedFile|Psr\Http\Message\StreamInterface|resource|string,
+                //mixed   given.
                 $res = Storage::disk('cache')->put($filename, $pdf_content);
             }
             $zip->addFile($path, $filename);

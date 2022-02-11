@@ -200,6 +200,11 @@ class TranslatorService extends BaseTranslator {
         return $file_path;
     }
 
+    /**
+     * Undocumented function.
+     *
+     * @return void
+     */
     public static function add(string $key, array $data) {
         $file_path = self::getFilePath($key);
         $original = [];
