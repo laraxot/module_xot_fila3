@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Support\Collection;
+use Illuminate\View\View;
 
 /**
  * Undocumented interface.
@@ -51,9 +52,9 @@ interface PanelContract {
     public function update(array $data);
 
     /**
-     * Undocumented function.
+     * Ritorna la view.
      *
-     * @return mixed
+     * @return View
      */
     public function view(?array $params = null);
 

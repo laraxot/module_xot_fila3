@@ -57,11 +57,12 @@ class TranslatorService extends BaseTranslator {
     /**
      * getFromJson.
      *
-     * @param string|null $locale
+     * @param string|array $key
+     * @param string|null  $locale
      *
      * @return array|string
      */
-    public function getFromJson(string $key, array $replace = [], $locale = null) {
+    public function getFromJson($key, array $replace = [], $locale = null) {
         return $this->get($key, $replace, $locale);
     }
 
