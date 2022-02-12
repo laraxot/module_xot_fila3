@@ -33,8 +33,9 @@ class PanelService {
      */
 
     public function __construct(array $route_params) {
-        $this->route_params = $route_params;
+        //$this->route_params = $route_params;
         //static::$panel = $this->getByRouteParams($route_params);
+        static::$route_params =  $route_params;
     }
 
     public static function getInstance(): self {
@@ -118,7 +119,8 @@ class PanelService {
 
         return app($panel_class)
             ->setRow(self::$model)
-            ->setRouteParams(self::$route_params);
+            //->setRouteParams(self::$route_params)
+            ;
     }
 
     public function imageHtml(?array $params): string {
