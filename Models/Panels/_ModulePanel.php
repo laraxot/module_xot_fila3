@@ -7,5 +7,6 @@ namespace Modules\Xot\Models\Panels;
 /**
  * Class _ModulePanel.
  */
-class _ModulePanel extends XotBasePanel {
+class _ModulePanel extends XotBasePanel
+{
 }

@@ -9,17 +9,21 @@ use Illuminate\Routing\Controller;
 use Illuminate\Support\Str;
 use Modules\Tenant\Services\TenantService;
 
-class PrivacyPolicyController extends Controller {
+class PrivacyPolicyController extends Controller
+{
     /**
      * Show the privacy policy for the application.
      *
      * @return \Illuminate\View\View
      */
-    public function show(Request $request) {
+    public function show(Request $request)
+    {
         $policyFile = TenantService::localizedMarkdownPath('policy.md');
 
-        return view('xot::gdpr.policy', [
+        return view(
+            'xot::gdpr.policy', [
             'policy' => Str::markdown(file_get_contents($policyFile)),
-        ]);
+            ]
+        );
     }
 }

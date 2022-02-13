@@ -22,86 +22,102 @@ if (! defined('STDIN')) {
 /**
  * Class ArtisanService.
  */
-class ArtisanService {
+class ArtisanService
+{
     /**
      * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
      *
      * @return string|Renderable
      */
-    public static function act(string $act) { //da fare anche in noconsole, e magari mettere un policy
+    public static function act(string $act)
+    {
+        //da fare anche in noconsole, e magari mettere un policy
         $module_name = \Request::input('module');
         switch ($act) {
-            case 'migrate':
-                \DB::purge('mysql');
-                \DB::reconnect('mysql');
-                if ('' != $module_name) {
-                    echo '<h3>Module '.$module_name.'</h3>';
+        case 'migrate':
+            \DB::purge('mysql');
+            \DB::reconnect('mysql');
+            if ('' != $module_name) {
+                echo '<h3>Module '.$module_name.'</h3>';
 
-                    return ArtisanService::exe('module:migrate '.$module_name.' --force');
-                } else {
-                    return ArtisanService::exe('migrate --force');
-                }
-                // no break
-            case 'routelist': return ArtisanService::exe('route:list');
-            case 'routelist1': return ArtisanService::showRouteList();
-            case 'optimize': return ArtisanService::exe('optimize');
-            case 'clear':
-                echo ArtisanService::exe('cache:clear').PHP_EOL;
-                echo ArtisanService::exe('config:clear').PHP_EOL;
-                echo ArtisanService::exe('event:clear').PHP_EOL;
-                echo ArtisanService::exe('route:clear').PHP_EOL;
-                echo ArtisanService::exe('view:clear').PHP_EOL;
-                echo ArtisanService::exe('debugbar:clear').PHP_EOL;
-                echo ArtisanService::exe('opcache:clear').PHP_EOL;
-                echo ArtisanService::exe('optimize:clear').PHP_EOL;
-                echo ArtisanService::exe('key:generate').PHP_EOL;
+                return ArtisanService::exe('module:migrate '.$module_name.' --force');
+            } else {
+                return ArtisanService::exe('migrate --force');
+            }
+            // no break
+        case 'routelist': 
+            return ArtisanService::exe('route:list');
+        case 'routelist1': 
+            return ArtisanService::showRouteList();
+        case 'optimize': 
+            return ArtisanService::exe('optimize');
+        case 'clear':
+            echo ArtisanService::exe('cache:clear').PHP_EOL;
+            echo ArtisanService::exe('config:clear').PHP_EOL;
+            echo ArtisanService::exe('event:clear').PHP_EOL;
+            echo ArtisanService::exe('route:clear').PHP_EOL;
+            echo ArtisanService::exe('view:clear').PHP_EOL;
+            echo ArtisanService::exe('debugbar:clear').PHP_EOL;
+            echo ArtisanService::exe('opcache:clear').PHP_EOL;
+            echo ArtisanService::exe('optimize:clear').PHP_EOL;
+            echo ArtisanService::exe('key:generate').PHP_EOL;
 
-                //-- non artisan
-                echo self::sessionClear().PHP_EOL;
-                echo self::errorClear().PHP_EOL;
-                echo self::debugbarClear().PHP_EOL;
-                echo PHP_EOL.'DONE'.PHP_EOL;
+            //-- non artisan
+            echo self::sessionClear().PHP_EOL;
+            echo self::errorClear().PHP_EOL;
+            echo self::debugbarClear().PHP_EOL;
+            echo PHP_EOL.'DONE'.PHP_EOL;
             break;
-            case 'clearcache': return ArtisanService::exe('cache:clear');
-            case 'routecache': return ArtisanService::exe('route:cache');
-            case 'routeclear': return ArtisanService::exe('route:clear');
-            case 'viewclear': return ArtisanService::exe('view:clear');
-            case 'configcache': return ArtisanService::exe('config:cache');
+        case 'clearcache': 
+            return ArtisanService::exe('cache:clear');
+        case 'routecache': 
+            return ArtisanService::exe('route:cache');
+        case 'routeclear': 
+            return ArtisanService::exe('route:clear');
+        case 'viewclear': 
+            return ArtisanService::exe('view:clear');
+        case 'configcache': 
+            return ArtisanService::exe('config:cache');
             //-------------------------------------------------------------------
-            case 'debugbar:clear':
-                self::debugbarClear();
+        case 'debugbar:clear':
+            self::debugbarClear();
             break;
 
             //------------------------------------------------------------------
 
-            case 'module-list': return ArtisanService::exe('module:list');
-            case 'module-disable': return ArtisanService::exe('module:disable '.$module_name);
-            case 'module-enable': return ArtisanService::exe('module:enable '.$module_name);
+        case 'module-list': 
+            return ArtisanService::exe('module:list');
+        case 'module-disable': 
+            return ArtisanService::exe('module:disable '.$module_name);
+        case 'module-enable': 
+            return ArtisanService::exe('module:enable '.$module_name);
             //----------------------------------------------------------------------
-            case 'error':
-            case 'error-show':
-                return ArtisanService::errorShow();
-            case 'error-clear':
-                 return self::errorClear();
+        case 'error':
+        case 'error-show':
+            return ArtisanService::errorShow();
+        case 'error-clear':
+            return self::errorClear();
 
             //-------------------------------------------------------------------------
-            case 'spatiecache-clear':
-                /* da vedere se e' necessaria
-                try {
-                    return \Spatie\ResponseCache\Facades\ResponseCache::clear();
-                } catch (\Exception $e) {
-                    dddx($e);
-                }
-                */
+        case 'spatiecache-clear':
+            /* da vedere se e' necessaria
+            try {
+                return \Spatie\ResponseCache\Facades\ResponseCache::clear();
+            } catch (\Exception $e) {
+                dddx($e);
+            }
+            */
             //case 'spatiecache-clear1': return ArtisanService::exe('responsecache:clear'); //The command "responsecache:clear" does not exist.
 
-            default: return '';
+        default: 
+            return '';
         }
 
         return '';
     }
 
-    public static function errorShow(): Renderable {
+    public static function errorShow(): Renderable
+    {
         $view = 'xot::acts.artisan.error-show';
         $files = File::files(storage_path('logs'));
         $log = request('log', '');
@@ -130,7 +146,8 @@ class ArtisanService {
         return view()->make($view, $view_params);
     }
 
-    public static function showRouteList(): Renderable {
+    public static function showRouteList(): Renderable
+    {
         $routeCollection = Route::getRoutes();
         /*
         $view = ThemeService::getViewModule();
@@ -164,7 +181,8 @@ class ArtisanService {
     /**
      * @return string
      */
-    public static function errorClear() {
+    public static function errorClear()
+    {
         $files = File::files(storage_path('logs'));
 
         foreach ($files as $file) {
@@ -182,7 +200,8 @@ class ArtisanService {
     /**
      * @return string
      */
-    public static function sessionClear() {
+    public static function sessionClear()
+    {
         $files = File::files(storage_path('framework/sessions'));
 
         foreach ($files as $file) {
@@ -201,7 +220,8 @@ class ArtisanService {
     /**
      * @return string
      */
-    public static function debugbarClear() {
+    public static function debugbarClear()
+    {
         $files = File::files(storage_path('debugbar'));
         foreach ($files as $file) {
             if ('json' == $file->getExtension() && false !== $file->getRealPath()) {
@@ -219,7 +239,8 @@ class ArtisanService {
     /**
      * @param string $command
      */
-    public static function exe($command, array $arguments = []): string {
+    public static function exe($command, array $arguments = []): string
+    {
         try {
             $output = '';
 

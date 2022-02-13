@@ -15,7 +15,8 @@ use Illuminate\Support\Str;
 /**
  * Undocumented class.
  */
-class Search {
+class Search
+{
     /**
      * Undocumented function.
      *
@@ -24,7 +25,8 @@ class Search {
      *
      * @return Closure
      */
-    public function handle($query, Closure $next, ...$args) {
+    public function handle($query, Closure $next, ...$args)
+    {
         $search_fields = [];
         $model = $query->getModel();
         $q = request('q', '');
@@ -34,28 +36,30 @@ class Search {
         }
         //$table = $model->getTable();
         if (strlen($q) > 1) {
-            $query = $query->where(function ($subquery) use ($search_fields, $q): void {
-                foreach ($search_fields as $k => $v) {
-                    if (Str::contains($v, '.')) {
-                        [$rel, $rel_field] = explode('.', $v);
+            $query = $query->where(
+                function ($subquery) use ($search_fields, $q): void {
+                    foreach ($search_fields as $k => $v) {
+                        if (Str::contains($v, '.')) {
+                            [$rel, $rel_field] = explode('.', $v);
 
-                        //dddx([$rel, $rel_field]);
-                        $subquery = $subquery->orWhereHas(
-                            $rel,
-                            function (Builder $subquery1) use ($rel_field, $q): void {
-                                //dddx($subquery1->getConnection()->getDatabaseName());
+                            //dddx([$rel, $rel_field]);
+                            $subquery = $subquery->orWhereHas(
+                                $rel,
+                                function (Builder $subquery1) use ($rel_field, $q): void {
+                                    //dddx($subquery1->getConnection()->getDatabaseName());
 
-                                $subquery1->where($rel_field, 'like', '%'.$q.'%');
-                                //dddx($subquery1);
-                            }
-                        );
+                                    $subquery1->where($rel_field, 'like', '%'.$q.'%');
+                                    //dddx($subquery1);
+                                }
+                            );
 
-                    //dddx($subquery);
-                    } else {
-                        $subquery = $subquery->orWhere($v, 'like', '%'.$q.'%');
+                            //dddx($subquery);
+                        } else {
+                            $subquery = $subquery->orWhere($v, 'like', '%'.$q.'%');
+                        }
                     }
                 }
-            });
+            );
         }
         //dddx(['q' => $q, 'sql' => $query->toSql()]);
 

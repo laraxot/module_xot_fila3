@@ -43,17 +43,19 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @method static \Illuminate\Database\Eloquent\Builder|Image whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Image whereUpdatedBy($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Image whereWidth($value)
- * @mixin \Eloquent
+ * @mixin  \Eloquent
  *
  * @property \Modules\LU\Models\User|null $user
  */
-class Image extends BaseModel {
+class Image extends BaseModel
+{
     /**
      * @var string[]
      */
     protected $fillable = ['src', 'width', 'height', 'src_out'];
 
-    public function user(): BelongsTo {
+    public function user(): BelongsTo
+    {
         return $this->belongsTo(\Modules\LU\Models\User::class);
     }
 }

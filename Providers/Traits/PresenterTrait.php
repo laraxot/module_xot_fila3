@@ -9,8 +9,10 @@ use Modules\Xot\Presenters\GeoJsonPanelPresenter;
 use Modules\Xot\Presenters\HtmlPanelPresenter;
 use Modules\Xot\Presenters\JsonPanelPresenter;
 
-trait PresenterTrait {
-    private function registerPresenter(): void {
+trait PresenterTrait
+{
+    private function registerPresenter(): void
+    {
         $responseType = request()->input('responseType');
         $responses = [
             //'html'=> HtmlPanelPresenter::class,//default

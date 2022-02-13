@@ -16,7 +16,8 @@ use Modules\Xot\Services\PolicyService;
 /**
  * Class XotBaseContainerController.
  */
-abstract class XotBaseContainerController extends Controller {
+abstract class XotBaseContainerController extends Controller
+{
     protected PanelContract $panel;
 
     /**
@@ -25,7 +26,8 @@ abstract class XotBaseContainerController extends Controller {
      *
      * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse|\Illuminate\Http\Response|mixed
      */
-    public function __call($method, $args) {
+    public function __call($method, $args)
+    {
         $panel = Panel::getRequestPanel();
         if (null == $panel) {
             throw new \Exception('uston gavemo un problemon');
@@ -39,7 +41,8 @@ abstract class XotBaseContainerController extends Controller {
         return $this->__callRouteAct($method, $args);
     }
 
-    public function getController(): string {
+    public function getController(): string
+    {
         list($containers, $items) = params2ContainerItem();
         $mod_name = $this->panel->getModuleName(); //forse da mettere container0
 
@@ -65,7 +68,8 @@ abstract class XotBaseContainerController extends Controller {
     /**
      * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse|\Illuminate\Http\Response
      */
-    public function __callRouteAct(string $method, array $args) {
+    public function __callRouteAct(string $method, array $args)
+    {
         $panel = $this->panel;
 
         $authorized = Gate::allows($method, $panel);
@@ -89,7 +93,8 @@ abstract class XotBaseContainerController extends Controller {
      *
      * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse|\Illuminate\Http\Response
      */
-    public function __callPanelAct($method, $args) {
+    public function __callPanelAct($method, $args)
+    {
         $request = request();
         $act = $request->_act;
         $method_act = Str::camel($act);
@@ -107,7 +112,8 @@ abstract class XotBaseContainerController extends Controller {
     /**
      * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse|\Illuminate\Http\Response
      */
-    public function notAuthorized(string $method, PanelContract $panel) {
+    public function notAuthorized(string $method, PanelContract $panel)
+    {
         $lang = app()->getLocale();
         if (! \Auth::check()) {
             //$request = \Modules\Xot\Http\Requests\XotRequest::capture();

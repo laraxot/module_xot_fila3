@@ -20,7 +20,8 @@ use Modules\Theme\Services\ThemeService;
 /**
  * Class TranslatorService.
  */
-class TranslatorService extends BaseTranslator {
+class TranslatorService extends BaseTranslator
+{
     /**
      * get.
      *
@@ -30,7 +31,8 @@ class TranslatorService extends BaseTranslator {
      *
      * @return array|string
      */
-    public function get($key, array $replace = [], $locale = null, $fallback = true) {
+    public function get($key, array $replace = [], $locale = null, $fallback = true)
+    {
         //backtrace(true);
         //trans parte da xotbasepanel riga 1109 (per ora)
         //superdump([$key, $replace , $locale , $fallback ]);
@@ -62,11 +64,13 @@ class TranslatorService extends BaseTranslator {
      *
      * @return array|string
      */
-    public function getFromJson($key, array $replace = [], $locale = null) {
+    public function getFromJson($key, array $replace = [], $locale = null)
+    {
         return $this->get($key, $replace, $locale);
     }
 
-    public static function parse(array $params): array {
+    public static function parse(array $params): array
+    {
         $lang = app()->getLocale();
         extract($params);
         if (! isset($key)) {
@@ -101,7 +105,8 @@ class TranslatorService extends BaseTranslator {
     /**
      * @return void
      */
-    public static function store(array $data) {
+    public static function store(array $data)
+    {
         $data = collect($data)->map(
             function ($v, $k) {
                 $item = self::parse(['key' => $k]);
@@ -111,9 +116,11 @@ class TranslatorService extends BaseTranslator {
             }
         )
         //->dd()
-        ->filter(function ($v, $k) {
-            return $v['dir_exists'] && strlen($v['lang_dir']) > 3;
-        })
+            ->filter(
+                function ($v, $k) {
+                    return $v['dir_exists'] && strlen($v['lang_dir']) > 3;
+                }
+            )
         ->groupBy(['ns_group'])  //risparmio salvataggi
         ->all();
         //dddx($data);
@@ -148,7 +155,8 @@ class TranslatorService extends BaseTranslator {
      *
      * @return void
      */
-    public static function set($key, $value) {
+    public static function set($key, $value)
+    {
         $lang = app()->getLocale();
         if (trans($key) == $value) {
             return;
@@ -185,11 +193,12 @@ class TranslatorService extends BaseTranslator {
 
         dddx($item_keys);
 
-    	dddx($filename);
-    	*/
+        dddx($filename);
+        */
     }
 
-    public static function getFilePath(string $key): string {
+    public static function getFilePath(string $key): string
+    {
         $lang = app()->getLocale();
         $translator = app('translator');
         [$namespace,$group,$item] = ($translator->parseKey($key));
@@ -206,7 +215,8 @@ class TranslatorService extends BaseTranslator {
      *
      * @return void
      */
-    public static function add(string $key, array $data) {
+    public static function add(string $key, array $data)
+    {
         $file_path = self::getFilePath($key);
         $original = [];
         if (File::exists($file_path)) {
@@ -215,14 +225,16 @@ class TranslatorService extends BaseTranslator {
         }
 
         if (! is_array($original)) {
-            dddx([
+            dddx(
+                [
                 'message' => 'original is not an array',
                 'file_path' => $file_path,
                 'original' => $original,
                 //'ori1' => File::getRequire($file_path),
                 'key' => $key,
                 'data' => $data,
-            ]);
+                ]
+            );
         }
         //$merged = collect($original)->merge($data)->all();
         $merged = array_merge($original, $data);
@@ -261,7 +273,8 @@ class TranslatorService extends BaseTranslator {
      *
      * @return void
      */
-    public static function addMissing(string $key, array $data) {
+    public static function addMissing(string $key, array $data)
+    {
         $missing = collect($data)
             ->filter(
                 function ($item) use ($key) {
@@ -275,15 +288,18 @@ class TranslatorService extends BaseTranslator {
         self::add($key, $missing);
     }
 
-    public static function getArrayTranslated(string $key, array $data): array {
+    public static function getArrayTranslated(string $key, array $data): array
+    {
         TranslatorService::addMissing($key, $data);
 
-        $data = collect($data)->map(function ($item) use ($key) {
-            $k = $key.'.'.$item;
-            $v = trans($k);
+        $data = collect($data)->map(
+            function ($item) use ($key) {
+                $k = $key.'.'.$item;
+                $v = trans($k);
 
-            return $v;
-        })->all();
+                return $v;
+            }
+        )->all();
 
         return $data;
     }

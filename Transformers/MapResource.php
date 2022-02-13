@@ -10,7 +10,8 @@ use Illuminate\Http\Resources\Json\JsonResource;
 /**
  * Class MapResource.
  */
-class MapResource extends JsonResource {
+class MapResource extends JsonResource
+{
     protected float $longitude;
     protected float $latitude;
 
@@ -19,7 +20,8 @@ class MapResource extends JsonResource {
      *
      * @return array
      */
-    public function toArray($request) {
+    public function toArray($request)
+    {
         return [
             'type' => 'Feature',
             'properties' => [

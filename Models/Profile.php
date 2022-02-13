@@ -8,7 +8,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 //use Illuminate\Database\Eloquent\Relations\HasOne;
 use Modules\Tenant\Services\TenantService;
 
-class Profile extends BaseModelLang {
+class Profile extends BaseModelLang
+{
     /**
      * @var string[]
      */
@@ -17,7 +18,8 @@ class Profile extends BaseModelLang {
     /**
      * Undocumented function.
      */
-    public function user(): BelongsTo {
+    public function user(): BelongsTo
+    {
         $user = TenantService::model('user');
         $user_class = get_class($user);
 

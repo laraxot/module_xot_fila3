@@ -21,7 +21,7 @@ namespace Modules\Xot\Models;
  * @method static \Illuminate\Database\Eloquent\Builder|Feed whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Feed wherePostId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Feed whereUpdatedAt($value)
- * @mixin \Eloquent
+ * @mixin  \Eloquent
  *
  * @property string|null $created_by
  * @property string|null $updated_by
@@ -29,7 +29,8 @@ namespace Modules\Xot\Models;
  * @method static \Illuminate\Database\Eloquent\Builder|Feed whereCreatedBy($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Feed whereUpdatedBy($value)
  */
-class Feed extends BaseModel {
+class Feed extends BaseModel
+{
     /**
      * @var string[]
      */

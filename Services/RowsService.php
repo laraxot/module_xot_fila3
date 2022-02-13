@@ -19,7 +19,8 @@ use Modules\Xot\Contracts\RowsContract;
 /**
  * Class ModelService.
  */
-class RowsService {
+class RowsService
+{
     /**
      * Undocumented function.
      *
@@ -27,7 +28,8 @@ class RowsService {
      *
      * @return RowsContract
      */
-    public static function search($query, ?string $q, array $search_fields = []) {
+    public static function search($query, ?string $q, array $search_fields = [])
+    {
         //backtrace(true);
         //dddx([$query, $q, $search_fields]);
 
@@ -53,14 +55,15 @@ class RowsService {
 
         $tipo = 0; //0 a mano , 1 repository, 2 = scout
         switch ($tipo) {
-            case 0:
-                //$search_fields = $this->search(); //campi di ricerca
-                if (0 == count($search_fields)) { //se non gli passo nulla, cerco in tutti i fillable
-                    $search_fields = $model->getFillable();
-                }
-                //$table = $model->getTable();
-                if (strlen($q) > 1) {
-                    $query = $query->where(function ($subquery) use ($search_fields, $q): void {
+        case 0:
+            //$search_fields = $this->search(); //campi di ricerca
+            if (0 == count($search_fields)) { //se non gli passo nulla, cerco in tutti i fillable
+                $search_fields = $model->getFillable();
+            }
+            //$table = $model->getTable();
+            if (strlen($q) > 1) {
+                $query = $query->where(
+                    function ($subquery) use ($search_fields, $q): void {
                         foreach ($search_fields as $k => $v) {
                             if (Str::contains($v, '.')) {
                                 [$rel, $rel_field] = explode('.', $v);
@@ -76,24 +79,25 @@ class RowsService {
                                     }
                                 );
 
-                            //dddx($subquery);
+                                //dddx($subquery);
                             } else {
                                 $subquery = $subquery->orWhere($v, 'like', '%'.$q.'%');
                             }
                         }
-                    });
-                }
-                //dddx(['q' => $q, 'sql' => $query->toSql()]);
+                    }
+                );
+            }
+            //dddx(['q' => $q, 'sql' => $query->toSql()]);
 
-                return $query;
+            return $query;
                 // break;
-            case 1:
-                //$repo = with(new \Modules\Food\Repositories\RestaurantRepository())->search('grom');
-                //dddx($repo->paginate());
-                //return $repo;
-                break;
-            case 2:
-                break;
+        case 1:
+            //$repo = with(new \Modules\Food\Repositories\RestaurantRepository())->search('grom');
+            //dddx($repo->paginate());
+            //return $repo;
+            break;
+        case 2:
+            break;
         } //end switch
 
         return $query;
@@ -108,7 +112,8 @@ class RowsService {
      *
      * @return RowsContract
      */
-    public static function filter($query, array $filters, array $filters_fields) {
+    public static function filter($query, array $filters, array $filters_fields)
+    {
         //https://github.com/spatie/laravel-query-builder
 
         //$filters_fields = $this->filters();
@@ -123,9 +128,11 @@ class RowsService {
         ]);
         */
         $filters_fields = collect($filters_fields)
-            ->map(function ($item) {
-                return FieldFilter::make()->setVars(get_object_vars($item));
-            });
+            ->map(
+                function ($item) {
+                    return FieldFilter::make()->setVars(get_object_vars($item));
+                }
+            );
 
         //124    Access to an undefined property object::$param_name.
         $filters_rules = $filters_fields

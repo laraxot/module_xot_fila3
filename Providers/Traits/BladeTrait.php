@@ -6,13 +6,15 @@ namespace Modules\Xot\Providers\Traits;
 
 use Illuminate\View\Compilers\BladeCompiler;
 
-trait BladeTrait {
+trait BladeTrait
+{
     /**
      * Register Blade directives.
      *
      * @return void
      */
-    protected function registerBladeDirectives() {
+    protected function registerBladeDirectives()
+    {
         $this->app->afterResolving(
             'blade.compiler',
             function (BladeCompiler $bladeCompiler) {

@@ -25,7 +25,8 @@ use PhpOffice\PhpWord\TemplateProcessor;
 /**
  * Class DocxService.
  */
-class DocxService {
+class DocxService
+{
     public string $docx_input;
 
     public array $values;
@@ -35,7 +36,8 @@ class DocxService {
     /**
      * @return DocxService|null
      */
-    public static function getInstance() {
+    public static function getInstance()
+    {
         if (null === self::$instance) {
             self::$instance = new self();
         }
@@ -53,7 +55,8 @@ class DocxService {
     //should return Modules\Xot\Services\DocxService
     //but returns Modules\Xot\Services\DocxService|null.
 
-    public static function setDocxInput(string $filename): self {
+    public static function setDocxInput(string $filename): self
+    {
         $obj = self::getInstance();
         if (null == $obj) {
             throw new Exception('instance error');
@@ -66,7 +69,8 @@ class DocxService {
     /**
      * @param mixed $values
      */
-    public static function setValues($values): self {
+    public static function setValues($values): self
+    {
         $obj = self::getInstance();
 
         if (null == $obj) {
@@ -84,7 +88,8 @@ class DocxService {
      *
      * @return \Symfony\Component\HttpFoundation\BinaryFileResponse
      */
-    public function out(array $params = []) {
+    public function out(array $params = [])
+    {
         extract($params);
         include __DIR__.'/vendor/autoload.php'; //carico la mia libreria che uso solo qui..
 
@@ -112,7 +117,8 @@ class DocxService {
      *
      * @return array
      */
-    public static function rows2Data_test($row, $prefix) {
+    public static function rows2Data_test($row, $prefix)
+    {
         if (! is_object($row)) {
             return [];
         }
@@ -162,7 +168,8 @@ class DocxService {
      *
      * @return array
      */
-    public static function rows2Data($row, $prefix) {
+    public static function rows2Data($row, $prefix)
+    {
         if (! is_object($row)) {
             return [];
         }

@@ -19,11 +19,13 @@ use Spatie\Sitemap\SitemapGenerator;
 /**
  * Class SitemapXmlController.
  */
-class SitemapXmlController extends Controller {
+class SitemapXmlController extends Controller
+{
     /**
      *  __invoke.
      */
-    public function __invoke(): \Spatie\Sitemap\Sitemap {
+    public function __invoke(): \Spatie\Sitemap\Sitemap
+    {
         // ...
 
         $url = $_SERVER['REQUEST_SCHEME'].'://'.$_SERVER['SERVER_NAME'];

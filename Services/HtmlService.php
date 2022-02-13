@@ -25,14 +25,16 @@ use Spipu\Html2Pdf\Html2Pdf;
 /**
  * Class HtmlService.
  */
-class HtmlService {
+class HtmlService
+{
     /**
      * @return string
      */
-    public static function toPdf(array $params) {
+    public static function toPdf(array $params)
+    {
         //dddx($params);
 
-        require_once __DIR__.'/vendor/autoload.php';
+        include_once __DIR__.'/vendor/autoload.php';
         $pdforientation = 'L'; //default;
         $out = 'show';
         $filename = 'test';
@@ -50,11 +52,12 @@ class HtmlService {
         $html2pdf->WriteHTML($html);
 
         switch ($out) {
-                case 'content_PDF':return $html2pdf->Output($filename.'.pdf', 'S');
-                case 'file': $html2pdf->Output($filename.'.pdf', 'F');
+        case 'content_PDF':
+            return $html2pdf->Output($filename.'.pdf', 'S');
+        case 'file': $html2pdf->Output($filename.'.pdf', 'F');
 
-                return $filename;
-            }
+            return $filename;
+        }
 
         return $html2pdf->Output();
         //} catch (HTML2PDF_exception $e) {

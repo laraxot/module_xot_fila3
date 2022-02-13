@@ -13,7 +13,8 @@ use Illuminate\Support\Str;
 /**
  * Class StubService.
  */
-class StubService {
+class StubService
+{
     //-- model (object) or class (string)
     //-- stub_name name of stub
     //-- create yes or not
@@ -30,7 +31,8 @@ class StubService {
      *
      * this method will return instance of the class
      */
-    public static function getInstance(): self {
+    public static function getInstance(): self
+    {
         if (! self::$_instance) {
             self::$_instance = new self();
         }
@@ -38,28 +40,32 @@ class StubService {
         return self::$_instance;
     }
 
-    public static function setName(string $name): self {
+    public static function setName(string $name): self
+    {
         $instance = self::getInstance();
         $instance->name = $name;
 
         return $instance;
     }
 
-    public static function setModel(Model $model): self {
+    public static function setModel(Model $model): self
+    {
         $instance = self::getInstance();
         $instance->model_class = get_class($model);
 
         return $instance;
     }
 
-    public static function setModelClass(string $model_class): self {
+    public static function setModelClass(string $model_class): self
+    {
         $instance = self::getInstance();
         $instance->model_class = $model_class;
 
         return $instance;
     }
 
-    public static function setModelAndName(Model $model, string $name): self {
+    public static function setModelAndName(Model $model, string $name): self
+    {
         $instance = self::getInstance();
         $instance->setModel($model);
         $instance->setName($name);
@@ -67,7 +73,8 @@ class StubService {
         return $instance;
     }
 
-    public function get(): string {
+    public function get(): string
+    {
         $file = $this->getClassFile();
         $class = $this->getClass();
         if (File::exists($file)) {
@@ -78,7 +85,8 @@ class StubService {
         return $class;
     }
 
-    public function getNamespace(): string {
+    public function getNamespace(): string
+    {
         $ns = dirname($this->getClass());
         if (Str::startsWith($ns, '\\')) {
             $ns = Str::after($ns, '\\');
@@ -87,11 +95,13 @@ class StubService {
         return $ns;
     }
 
-    public function getModel(): Model {
+    public function getModel(): Model
+    {
         return app($this->model_class);
     }
 
-    public function getReplaces(): array {
+    public function getReplaces(): array
+    {
         $dummy_id = 'id';
         $search = [];
         $fields = [];
@@ -133,7 +143,8 @@ class StubService {
         return $replaces;
     }
 
-    public function getFactories(): string {
+    public function getFactories(): string
+    {
         if (! class_exists($this->model_class)) {
             return '';
         }
@@ -146,15 +157,17 @@ class StubService {
                 }
             )->collapse()
             ->values()
-            ->implode(',
-            ')
-            ;
+            ->implode(
+                ',
+            '
+            );
     }
 
     /**
      * Maps properties.
      */
-    protected function mapTableProperties(Column $column): array {
+    protected function mapTableProperties(Column $column): array
+    {
         $key = $column->getName();
         /*
         if (! $this->shouldBeIncluded($column)) {
@@ -187,7 +200,8 @@ class StubService {
     /**
      * Checks if a given column should be included in the factory.
      */
-    protected function shouldBeIncluded(Column $column): bool {
+    protected function shouldBeIncluded(Column $column): bool
+    {
         $shouldBeIncluded = ($column->getNotNull() /*|| $this->includeNullableColumns */)
             && ! $column->getAutoincrement();
 
@@ -214,7 +228,8 @@ class StubService {
      * @param string $key
      * @param string $value
      */
-    protected function mapToFactory($key, $value = null): array {
+    protected function mapToFactory($key, $value = null): array
+    {
         return [
             $key => is_null($value) ? $value : "'{$key}' => $value",
         ];
@@ -225,7 +240,8 @@ class StubService {
      *
      * @return string
      */
-    protected function mapToFaker(Column $column) {
+    protected function mapToFaker(Column $column)
+    {
         return app(TypeGuesser::class)->guess(
             $column->getName(),
             $column->getType(),
@@ -233,7 +249,8 @@ class StubService {
         );
     }
 
-    public function getFillable(): Collection {
+    public function getFillable(): Collection
+    {
         $model = $this->getModel();
         if (! method_exists($model, 'getFillable')) {
             return collect([]);
@@ -244,10 +261,12 @@ class StubService {
         }
 
         $fillables = collect($fillables)
-            ->except([
+            ->except(
+                [
                 'created_at', 'updated_at', 'updated_by', 'created_by', 'deleted_at', 'deleted_by',
                 'deleted_ip', 'created_ip', 'updated_ip',
-            ]);
+                ]
+            );
 
         return $fillables;
     }
@@ -255,7 +274,8 @@ class StubService {
     /**
      * Undocumented function.
      */
-    public function getColumns(): Collection {
+    public function getColumns(): Collection
+    {
         $model = $this->getModel();
         $conn = $model->getConnection();
         $platform = $conn->getDoctrineSchemaManager()->getDatabasePlatform();
@@ -293,7 +313,8 @@ class StubService {
     /**
      * sarebbe create ma in maniera fluent.
      */
-    public function generate(): self {
+    public function generate(): self
+    {
         $stub_file = __DIR__.'/../Console/stubs/'.$this->name.'.stub';
         $stub = File::get($stub_file);
         $replace = $this->getReplaces();
@@ -322,11 +343,13 @@ class StubService {
         return $this;
     }
 
-    public function getClassName(): string {
+    public function getClassName(): string
+    {
         return class_basename($this->model_class);
     }
 
-    public function getDirModel(): string {
+    public function getDirModel(): string
+    {
         if (class_exists($this->model_class)) {
             $autoloader_reflector = new \ReflectionClass($this->model_class);
             //dddx($autoloader_reflector);
@@ -347,36 +370,38 @@ class StubService {
         return dirname($path);
     }
 
-    public function getClass(): string {
+    public function getClass(): string
+    {
         $dir = collect(explode('\\', $this->model_class))->slice(0, -1)->implode('\\');
 
         switch ($this->name) {
-            case 'factory':
-                return Str::replace('\Models\\', '\Database\Factories\\', $this->model_class).'Factory';
-            case 'migration_morph_pivot':
-                return '';
-            case 'morph_pivot':
-                return '';
-            case 'repository':
-                return Str::replace('\Models\\', '\Repositories\\', $this->model_class).'Repository';
-            case 'transformer_collection':
-                return Str::replace('\Models\\', '\Transformers\\', $this->model_class).'Collection';
-            case 'transformer_resource':
-                return Str::replace('\Models\\', '\Transformers\\', $this->model_class).'Resource';
-            case 'policy':
-                return $dir.'\\Policies\\'.class_basename($this->model_class).'Policy';
-            case 'panel':
-                return $dir.'\\Panels\\'.class_basename($this->model_class).'Panel';
-            case 'model':
-                return $this->model_class;
-            default:
-                $msg = '['.$this->name.'] Unkwon !['.__LINE__.']['.basename(__FILE__).']';
-                //dddx($msg);
-                throw new \Exception($msg);
+        case 'factory':
+            return Str::replace('\Models\\', '\Database\Factories\\', $this->model_class).'Factory';
+        case 'migration_morph_pivot':
+            return '';
+        case 'morph_pivot':
+            return '';
+        case 'repository':
+            return Str::replace('\Models\\', '\Repositories\\', $this->model_class).'Repository';
+        case 'transformer_collection':
+            return Str::replace('\Models\\', '\Transformers\\', $this->model_class).'Collection';
+        case 'transformer_resource':
+            return Str::replace('\Models\\', '\Transformers\\', $this->model_class).'Resource';
+        case 'policy':
+            return $dir.'\\Policies\\'.class_basename($this->model_class).'Policy';
+        case 'panel':
+            return $dir.'\\Panels\\'.class_basename($this->model_class).'Panel';
+        case 'model':
+            return $this->model_class;
+        default:
+            $msg = '['.$this->name.'] Unkwon !['.__LINE__.']['.basename(__FILE__).']';
+            //dddx($msg);
+            throw new \Exception($msg);
         }
     }
 
-    public function getClassFile(): string {
+    public function getClassFile(): string
+    {
         $class_name = $this->getClassName();
         $dir = $this->getDirModel();
         /*
@@ -386,32 +411,32 @@ class StubService {
         ]);
         */
         switch ($this->name) {
-            case 'factory':
-                return $dir.'/../Database/Factories/'.$class_name.'Factory.php';
+        case 'factory':
+            return $dir.'/../Database/Factories/'.$class_name.'Factory.php';
 
-            case 'migration_morph_pivot':
-                return $dir.'/../Database/Migrations/'.date('Y_m_d_Hi00').'_create_'.Str::snake($class_name).'_table.php';
+        case 'migration_morph_pivot':
+            return $dir.'/../Database/Migrations/'.date('Y_m_d_Hi00').'_create_'.Str::snake($class_name).'_table.php';
 
-            case 'morph_pivot':
-                return $dir.'/'.$class_name.'Morph.php';
+        case 'morph_pivot':
+            return $dir.'/'.$class_name.'Morph.php';
 
-            case 'repository':
-                return $dir.'/../Repositories/'.$class_name.'Repository.php';
+        case 'repository':
+            return $dir.'/../Repositories/'.$class_name.'Repository.php';
 
-            case 'transformer_collection':
-                return $dir.'/../Transformers/'.$class_name.'Collection.php';
+        case 'transformer_collection':
+            return $dir.'/../Transformers/'.$class_name.'Collection.php';
 
-            case 'transformer_resource':
-                return $dir.'/../Transformers/'.$class_name.'Resource.php';
-            case 'policy':
-                return $dir.'/Policies/'.$class_name.'Policy.php';
-            case 'panel':
-                return $dir.'/Panels/'.$class_name.'Panel.php';
-            case 'model':
-                return $dir.'/'.$class_name.'.php';
-            default:
-                $msg = '['.$this->name.'] Unkwon !['.__LINE__.']['.basename(__FILE__).']';
-                throw new \Exception($msg);
+        case 'transformer_resource':
+            return $dir.'/../Transformers/'.$class_name.'Resource.php';
+        case 'policy':
+            return $dir.'/Policies/'.$class_name.'Policy.php';
+        case 'panel':
+            return $dir.'/Panels/'.$class_name.'Panel.php';
+        case 'model':
+            return $dir.'/'.$class_name.'.php';
+        default:
+            $msg = '['.$this->name.'] Unkwon !['.__LINE__.']['.basename(__FILE__).']';
+            throw new \Exception($msg);
         }
     }
 
@@ -420,7 +445,8 @@ class StubService {
      *
      * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
      */
-    public static function fields($model): array {
+    public static function fields($model): array
+    {
         if (! method_exists($model, 'getFillable')) {
             return [];
         }
@@ -429,10 +455,12 @@ class StubService {
 
         if (count($fillables) <= 1) {
             $fillables = $model->getConnection()->getSchemaBuilder()->getColumnListing($model->getTable());
-            $fillables = collect($fillables)->except([
+            $fillables = collect($fillables)->except(
+                [
                 'created_at', 'updated_at', 'updated_by', 'created_by', 'deleted_at', 'deleted_by',
                 'deleted_ip', 'created_ip', 'updated_ip',
-            ])->all();
+                ]
+            )->all();
             $autoloader_reflector = new \ReflectionClass($model);
             $class_filename = $autoloader_reflector->getFileName();
             if (false === $class_filename) {
@@ -504,11 +532,11 @@ class StubService {
              */
 
             /*
-        $tmp=new \stdClass();
-        $tmp->type=(string)$input_type;
-        $tmp->name=$input_name;
-        $fields[]=$tmp;
-         */
+            $tmp=new \stdClass();
+            $tmp->type=(string)$input_type;
+            $tmp->name=$input_name;
+            $fields[]=$tmp;
+            */
         }
 
         return $fields;

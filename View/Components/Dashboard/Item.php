@@ -11,8 +11,10 @@ use Illuminate\View\Component;
 /**
  * Class Field.
  */
-class Item extends Component {
-    public function render():\Illuminate\Contracts\Support\Renderable {
+class Item extends Component
+{
+    public function render():\Illuminate\Contracts\Support\Renderable
+    {
         $view = 'xot::components.dashboard.item';
         $view_params = [
             'view' => $view,

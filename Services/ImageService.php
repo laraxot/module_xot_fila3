@@ -16,7 +16,8 @@ use Intervention\Image\Facades\Image;
 /**
  * Class ImageService.
  */
-class ImageService {
+class ImageService
+{
     private static ?ImageService $instance = null;
 
     /**
@@ -37,7 +38,8 @@ class ImageService {
     /**
      * @return ImageService|null
      */
-    public static function getInstance(array $params = []) {
+    public static function getInstance(array $params = [])
+    {
         if (null === self::$instance) {
             self::$instance = new self($params);
         }
@@ -48,13 +50,15 @@ class ImageService {
     /**
      * ImageService constructor.
      */
-    public function __construct(array $params = []) {
+    public function __construct(array $params = [])
+    {
         $this->init($params);
     }
 
     //---- setter
 
-    public static function init(array $params): void {
+    public static function init(array $params): void
+    {
         //dddx($params);
         //$instance == self::getInstance();
         foreach ($params as $k => $v) {
@@ -66,12 +70,13 @@ class ImageService {
             self::$func($v);
             //} else {
             //    self::$k = $v;
-           // }
+            // }
         }
         //return self::getInstance();
     }
 
-    public static function setDirname(string $dirname): void {
+    public static function setDirname(string $dirname): void
+    {
         self::$dirname = $dirname;
     }
 
@@ -80,11 +85,13 @@ class ImageService {
      *
      * @return mixed
      */
-    public function getImg() {
+    public function getImg()
+    {
         return self::$img;
     }
 
-    public static function setImg(string $val): void {
+    public static function setImg(string $val): void
+    {
         $nophoto_path = public_path('img/nophoto.jpg');
         if ('' == $val) {
             $val = $nophoto_path;
@@ -102,21 +109,25 @@ class ImageService {
         }
     }
 
-    public static function setWxh(string $val): void {
+    public static function setWxh(string $val): void
+    {
         list($w, $h) = \explode('x', $val);
         self::setWidth((int) $w);
         self::setHeight((int) $h);
     }
 
-    public static function setWidth(int $val): void {
+    public static function setWidth(int $val): void
+    {
         self::$width = $val;
     }
 
-    public static function setHeight(int $val): void {
+    public static function setHeight(int $val): void
+    {
         self::$height = $val;
     }
 
-    public static function setSrc(string $val): void {
+    public static function setSrc(string $val): void
+    {
         if ('' == $val) {
             $val = public_path('img/nophoto.jpg');
         }
@@ -138,13 +149,15 @@ class ImageService {
      *
      * @return mixed
      */
-    public static function toHtml() {
+    public static function toHtml()
+    {
     }
 
     /**
      * @return mixed
      */
-    public static function image_resized_cropped(array $params) {
+    public static function image_resized_cropped(array $params)
+    {
         $width = self::$width;
         $height = self::$height;
         \extract($params);
@@ -184,9 +197,11 @@ class ImageService {
 
         $img = Image::make($image_path);
 
-        $img->resize($width, null, function ($constraint): void {
-            $constraint->aspectRatio();
-        });
+        $img->resize(
+            $width, null, function ($constraint): void {
+                $constraint->aspectRatio();
+            }
+        );
 
         if ($img->height() > $height) {
             /* //voglio croppare l'immagine per non lasciare bordi brutti
@@ -215,7 +230,8 @@ class ImageService {
     //Method Modules\Xot\Services\ImageService::fit()
     //should return Modules\Xot\Services\ImageService
     //but returns Modules\Xot\Services\ImageService|null.
-    public static function fit(array $params = []): self {
+    public static function fit(array $params = []): self
+    {
         $me = self::getInstance($params);
 
         $img = self::$img;
@@ -232,7 +248,8 @@ class ImageService {
         return $me;
     }
 
-    public static function crop(array $params = []): self {
+    public static function crop(array $params = []): self
+    {
         $me = self::getInstance($params);
 
         $img = self::$img;
@@ -240,9 +257,11 @@ class ImageService {
         $height = self::$height;
 
         if ($width > $height) {
-            $img->resize($width, null, function ($constraint): void {
-                $constraint->aspectRatio();
-            });
+            $img->resize(
+                $width, null, function ($constraint): void {
+                    $constraint->aspectRatio();
+                }
+            );
 
             if ($img->height() > $height) {
                 /* //voglio croppare l'immagine per non lasciare bordi brutti
@@ -256,9 +275,11 @@ class ImageService {
                 $img->crop($width, $height, $x0, $y0);
             }
         } else {
-            $img->resize(null, $height, function ($constraint): void {
-                $constraint->aspectRatio();
-            });
+            $img->resize(
+                null, $height, function ($constraint): void {
+                    $constraint->aspectRatio();
+                }
+            );
 
             if ($img->width() > $width) {
                 /* //voglio croppare l'immagine per non lasciare bordi brutti
@@ -289,7 +310,8 @@ class ImageService {
         /// per il fluent, o chaining
     }
 
-    public function url(array $params = []): string {
+    public function url(array $params = []): string
+    {
         /**
          * passare image da xra.. ma forse per performance predisporre anche elemento passato.
          */
@@ -309,7 +331,7 @@ class ImageService {
                 }
 
                 return $out;
-            //return $img->src_out;
+                //return $img->src_out;
             } else {
                 $img->delete();
             }
@@ -330,7 +352,8 @@ class ImageService {
         return $src_out;
     }
 
-    public static function save(array $params = []): self {
+    public static function save(array $params = []): self
+    {
         $info = pathinfo(self::$src);
         if (! isset($info['extension'])) {
             $info['extension'] = 'jpg';
@@ -366,14 +389,16 @@ class ImageService {
     /**
      * @return mixed
      */
-    public static function out(array $params = []) {
+    public static function out(array $params = [])
+    {
         return self::$img->encode('jpg', 60);
     }
 
     /**
      * @return string|string[]
      */
-    public static function src(array $params = []) {
+    public static function src(array $params = [])
+    {
         $src = '/'.str_replace(public_path('/'), '', self::$filename);
         $src = str_replace('//', '/', $src);
 
@@ -389,7 +414,8 @@ class ImageService {
     /**
      * @return string|void|null
      */
-    public static function image_resized_canvas(array $params) {
+    public static function image_resized_canvas(array $params)
+    {
         $width = self::$width;
         $height = self::$height;
         \extract($params);
@@ -433,8 +459,9 @@ class ImageService {
         $str1 = 'http://s2.qwant.com';
         $str2 = 'https://s2.qwant.com'; //questo fa un redirect
         $str3 = 'http://s2.qwant.com';
-        if (\mb_substr($image_path, 0, \mb_strlen($str0)) == $str0 || \mb_substr($image_path, 0, \mb_strlen($str1)) == $str1 ||
-           \mb_substr($image_path, 0, \mb_strlen($str2)) == $str2 || \mb_substr($image_path, 0, \mb_strlen($str3)) == $str3) {
+        if (\mb_substr($image_path, 0, \mb_strlen($str0)) == $str0 || \mb_substr($image_path, 0, \mb_strlen($str1)) == $str1 
+            || \mb_substr($image_path, 0, \mb_strlen($str2)) == $str2 || \mb_substr($image_path, 0, \mb_strlen($str3)) == $str3
+        ) {
             $pos = \mb_strpos($image_path, '?');
             $image_path1 = \mb_substr($image_path, $pos + 1);
             \parse_str($image_path1, $output);
@@ -494,14 +521,18 @@ class ImageService {
             //*/
         }
 
-        $img->resize($width, null, function ($constraint): void {
-            $constraint->aspectRatio();
-        });
+        $img->resize(
+            $width, null, function ($constraint): void {
+                $constraint->aspectRatio();
+            }
+        );
 
         if ($img->height() > $height) {
-            $img->resize(null, $height, function ($constraint): void {
-                $constraint->aspectRatio();
-            });
+            $img->resize(
+                null, $height, function ($constraint): void {
+                    $constraint->aspectRatio();
+                }
+            );
         }
 
         $w0 = $img->width();

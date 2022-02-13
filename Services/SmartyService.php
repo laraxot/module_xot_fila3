@@ -48,7 +48,8 @@ namespace Modules\Xot\Services;
 
 use Illuminate\Support\Facades\File;
 
-class SmartyService {
+class SmartyService
+{
     /**
      * stack for conditional and closers.
      */
@@ -58,7 +59,8 @@ class SmartyService {
      * The core work of parsing a smarty template and converting it into flexy.
      * the contents of the smarty template.
      */
-    public function convert(string $file): string {
+    public function convert(string $file): string
+    {
         if (! File::exists($file)) {
             dddx(['message' => $file.' not exists']);
         }
@@ -68,16 +70,16 @@ class SmartyService {
         }
         /* solo per test
         $content = '\t{if $isMobile}
-      \t{include file="../templates/interno/header_mobile.tpl"}
-      \t{/if}';
-      //*/
+        \t{include file="../templates/interno/header_mobile.tpl"}
+        \t{/if}';
+        //*/
 
         /* solo per test 2
         // https://stackoverflow.com/questions/17097499/convert-smarty-to-normal-php
 
         $content = '{if $error != ""}
-<div class="short_error">{$error}</div>
-{/if}';
+        <div class="short_error">{$error}</div>
+        {/if}';
         //*/
 
         $leftq = preg_quote('{', '!');
@@ -111,18 +113,19 @@ class SmartyService {
         return $data;
     }
 
-    public function compileTag(string $str): string {
+    public function compileTag(string $str): string
+    {
         // skip comments
         if (('*' == $str[0]) && ('*' == substr($str, -1, 1))) {
             return '';
         }
         switch ($str[0]) {
-            case '$':
-                return '{{ '.$this->convertVarToObject($str).' }}'; //.'['.__LINE__.']'; // its a var
-            case '#':
-                return $this->convertConfigVar($str); // its a config var
-            case '%':
-                return "<!-- what is this? $str -->"; // wtf does this do
+        case '$':
+            return '{{ '.$this->convertVarToObject($str).' }}'; //.'['.__LINE__.']'; // its a var
+        case '#':
+            return $this->convertConfigVar($str); // its a config var
+        case '%':
+            return "<!-- what is this? $str -->"; // wtf does this do
         }
 
         // this is where it gets messy
@@ -132,191 +135,191 @@ class SmartyService {
         //   - it doesnt infringe on copyright...
 
         switch (true) {
-            case preg_match('/^config_load\s/', $str):
-                // convert to $t->TemplateConfigLoad()
+        case preg_match('/^config_load\s/', $str):
+            // convert to $t->TemplateConfigLoad()
 
-                $args = $this->convertAttributesToKeyVal(substr($str, (int) strpos($str, ' ')));
+            $args = $this->convertAttributesToKeyVal(substr($str, (int) strpos($str, ' ')));
 
-                return '{plugin(#smartyConfigLoad#,#'.$args['file'].'#,#'.$args['section'].'#)}';
+            return '{plugin(#smartyConfigLoad#,#'.$args['file'].'#,#'.$args['section'].'#)}';
 
-            case preg_match('/^include\s/', $str):
-                // convert to $t->TemplateConfigLoad()
+        case preg_match('/^include\s/', $str):
+            // convert to $t->TemplateConfigLoad()
 
-                $args = $this->convertAttributesToKeyVal(substr($str, (int) strpos($str, ' ')));
+            $args = $this->convertAttributesToKeyVal(substr($str, (int) strpos($str, ' ')));
 
-                //return '{plugin(#smartyInclude#,#'.$args['file'].'#)}';
-                $blade_file = str_replace('.tpl', '', $args['file']);
-                $blade_file = str_replace("'", '', $blade_file);
-                if (! is_string($blade_file)) {
-                    throw new \Exception('blade_file not a string');
-                }
+            //return '{plugin(#smartyInclude#,#'.$args['file'].'#)}';
+            $blade_file = str_replace('.tpl', '', $args['file']);
+            $blade_file = str_replace("'", '', $blade_file);
+            if (! is_string($blade_file)) {
+                throw new \Exception('blade_file not a string');
+            }
 
-                return '@include(\''.$blade_file.'\')';
+            return '@include(\''.$blade_file.'\')';
 
-            case 'ldelim' == $str:
-                return '{';
+        case 'ldelim' == $str:
+            return '{';
 
-            case 'rdelim' == $str:
-                return '}';
+        case 'rdelim' == $str:
+            return '}';
 
-            case preg_match('/^if \$(\S+)$/', $str, $matches):
-            case preg_match('/^if \$(\S+)\seq\s""$/', $str, $matches):
-                // simple if variable..
+        case preg_match('/^if \$(\S+)$/', $str, $matches):
+        case preg_match('/^if \$(\S+)\seq\s""$/', $str, $matches):
+            // simple if variable..
 
-                // convert to : {if:sssssss}
+            // convert to : {if:sssssss}
 
-                $this->stack['if']++;
+            $this->stack['if']++;
 
-                $var = $this->convertVarToObject('$'.$matches[1]);
+            $var = $this->convertVarToObject('$'.$matches[1]);
 
-                return '@if('.$var.')';
+            return '@if('.$var.')';
                 //return '@if('.substr($var, 1, -1).')'; //'['.__LINE__.']';
 
-            case preg_match('/^if #(\S+)#$/', $str, $matches):
-            case preg_match('/^if #(\S+)#\sne\s""$/', $str, $matches):
-                // simple if variable..
+        case preg_match('/^if #(\S+)#$/', $str, $matches):
+        case preg_match('/^if #(\S+)#\sne\s""$/', $str, $matches):
+            // simple if variable..
 
-                // convert to : {if:sssssss}
+            // convert to : {if:sssssss}
 
-                $this->stack['if']++;
+            $this->stack['if']++;
 
-                $var = $this->convertConfigVar('#'.$matches[1].'#');
+            $var = $this->convertConfigVar('#'.$matches[1].'#');
 
-                //return '{if:'.substr($var, 1);
-                return '@if('.substr($var, 1).')'; //.'['.__LINE__.']';//4 debug
+            //return '{if:'.substr($var, 1);
+            return '@if('.substr($var, 1).')'; //.'['.__LINE__.']';//4 debug
 
                 // negative matches
 
-            case preg_match('/^if\s!\s\$(\S+)$/', $str, $matches):
-            case preg_match('/^if \$(\S+)\seq\s""$/', $str, $matches):
-                // simple if variable..
+        case preg_match('/^if\s!\s\$(\S+)$/', $str, $matches):
+        case preg_match('/^if \$(\S+)\seq\s""$/', $str, $matches):
+            // simple if variable..
 
-                // convert to : {if:sssssss}
+            // convert to : {if:sssssss}
 
-                $this->stack['if']++;
+            $this->stack['if']++;
 
-                $var = $this->convertVar('$'.$matches[1]);
+            $var = $this->convertVar('$'.$matches[1]);
 
-                //return '{if:!'.substr($var, 1);
-                return '@if(!'.substr($var, 1).')';
+            //return '{if:!'.substr($var, 1);
+            return '@if(!'.substr($var, 1).')';
 
-            case preg_match('/^elseif (\S+)(==|!=)(\S+)$/', $str, $matches):
-                ++$this->stack['if'];
-                $var1 = $this->convertVarToObject('$'.$matches[1]);
-                $op = $matches[2];
-                $var2 = $this->convertVarToObject('$'.$matches[3]);
+        case preg_match('/^elseif (\S+)(==|!=)(\S+)$/', $str, $matches):
+            ++$this->stack['if'];
+            $var1 = $this->convertVarToObject('$'.$matches[1]);
+            $op = $matches[2];
+            $var2 = $this->convertVarToObject('$'.$matches[3]);
 
-                return '@elseif('.substr($var1, 1, -1).' '.$op.' '.substr($var2, 1, -1).')';
+            return '@elseif('.substr($var1, 1, -1).' '.$op.' '.substr($var2, 1, -1).')';
 
-            case 'else' == $str:
-                if (! $this->stack['if']) {
-                    break;
-                }
+        case 'else' == $str:
+            if (! $this->stack['if']) {
+                break;
+            }
 
-                //return '{else:}';
-                return '@else';
+            //return '{else:}';
+            return '@else';
 
-            case '/if' == $str:
-                if (! $this->stack['if']) {
-                    break;
-                }
+        case '/if' == $str:
+            if (! $this->stack['if']) {
+                break;
+            }
 
-                --$this->stack['if'];
+            --$this->stack['if'];
 
-                //return '{end:}';
-                return '@endif';
-            case preg_match('/^if \((\S+)\)$/', $str, $matches):
-                $this->stack['if']++;
+            //return '{end:}';
+            return '@endif';
+        case preg_match('/^if \((\S+)\)$/', $str, $matches):
+            $this->stack['if']++;
 
-                $var = $this->convertVar('$'.$matches[1]);
+            $var = $this->convertVar('$'.$matches[1]);
 
-                return '@if('.substr($var, 1, -1).')';
+            return '@if('.substr($var, 1, -1).')';
 
-            case preg_match('/^if \((\S+) (\S+) (\S+)\)$/', $str, $matches):
-                ++$this->stack['if'];
-                $var1 = $this->convertVar('$'.$matches[1]);
-                $op = $matches[2];
+        case preg_match('/^if \((\S+) (\S+) (\S+)\)$/', $str, $matches):
+            ++$this->stack['if'];
+            $var1 = $this->convertVar('$'.$matches[1]);
+            $op = $matches[2];
 
-                $var2 = $this->convertVar('$'.$matches[3]);
+            $var2 = $this->convertVar('$'.$matches[3]);
 
-                return '@if('.substr($var1, 1, -1).' '.$op.' '.substr($var2, 1, -1).')';
+            return '@if('.substr($var1, 1, -1).' '.$op.' '.substr($var2, 1, -1).')';
 
-            case preg_match('/^foreach from=(\S+) item=(\S+)$/', $str, $matches):
-                $this->stack['foreach']++;
+        case preg_match('/^foreach from=(\S+) item=(\S+)$/', $str, $matches):
+            $this->stack['foreach']++;
 
-                //dddx($matches);
+            //dddx($matches);
 
-                $var = $this->convertVarToObject($matches[1]);
+            $var = $this->convertVarToObject($matches[1]);
 
-                $var2 = '$'.$this->convertVarToObject($matches[2]);
+            $var2 = '$'.$this->convertVarToObject($matches[2]);
 
-                return '@foreach('.$var.' as '.$var2.')';
+            return '@foreach('.$var.' as '.$var2.')';
 
-            case preg_match('/^foreach from=(\S+) item=(\S+) name=(\S+)$/', $str, $matches):
-                $this->stack['foreach']++;
+        case preg_match('/^foreach from=(\S+) item=(\S+) name=(\S+)$/', $str, $matches):
+            $this->stack['foreach']++;
 
-                //dddx($matches);
+            //dddx($matches);
 
-                $from = $this->convertVarToObject($matches[1]);
+            $from = $this->convertVarToObject($matches[1]);
 
-                $item = '$'.$this->convertVarToObject($matches[2]);
+            $item = '$'.$this->convertVarToObject($matches[2]);
 
-                $name = '$'.$this->convertVarToObject($matches[3]);
+            $name = '$'.$this->convertVarToObject($matches[3]);
 
-                return '@foreach('.$from.' as '.$item.')';
+            return '@foreach('.$from.' as '.$item.')';
 
-            case preg_match('/^foreach name=(\S+) from=(\S+) item=(\S+)$/', $str, $matches):
-                $this->stack['foreach']++;
+        case preg_match('/^foreach name=(\S+) from=(\S+) item=(\S+)$/', $str, $matches):
+            $this->stack['foreach']++;
 
-                //dddx($matches);
+            //dddx($matches);
 
-                $from = $this->convertVarToObject($matches[2]);
+            $from = $this->convertVarToObject($matches[2]);
 
-                $item = '$'.$this->convertVarToObject($matches[3]);
+            $item = '$'.$this->convertVarToObject($matches[3]);
 
-                $name = '$'.$this->convertVarToObject($matches[1]);
+            $name = '$'.$this->convertVarToObject($matches[1]);
 
-                return '@foreach('.$from.' as '.$item.')';
+            return '@foreach('.$from.' as '.$item.')';
 
-            case preg_match('/^foreach from=(\S+) item=(\S+) key=(\S+) name=(\S+)$/', $str, $matches):
-                $this->stack['foreach']++;
+        case preg_match('/^foreach from=(\S+) item=(\S+) key=(\S+) name=(\S+)$/', $str, $matches):
+            $this->stack['foreach']++;
 
-                //dddx($matches);
+            //dddx($matches);
 
-                $from = $this->convertVarToObject($matches[1]);
+            $from = $this->convertVarToObject($matches[1]);
 
-                $item = '$'.$this->convertVarToObject($matches[2]);
+            $item = '$'.$this->convertVarToObject($matches[2]);
 
-                $key = '$'.$this->convertVarToObject($matches[3]);
+            $key = '$'.$this->convertVarToObject($matches[3]);
 
-                $name = '$'.$this->convertVarToObject($matches[4]);
+            $name = '$'.$this->convertVarToObject($matches[4]);
 
-                return '@foreach('.$from.' as '.$key.'=>'.$item.')';
+            return '@foreach('.$from.' as '.$key.'=>'.$item.')';
 
-            case '/foreach' == $str:
-                if (! $this->stack['foreach']) {
-                    break;
-                }
+        case '/foreach' == $str:
+            if (! $this->stack['foreach']) {
+                break;
+            }
 
-                --$this->stack['foreach'];
+            --$this->stack['foreach'];
 
-                //return '{end:}';
-                return '@endforeach';
+            //return '{end:}';
+            return '@endforeach';
 
                 //case preg_match($this->getOpeningTagPattern('if'), $str, $matches):
                 //    dddx($matches);
-            case 'php' == $str:
-                return '@php ';
-            case '/php' == $str:
-                return '@endphp';
-            case 'literal' == $str:
-                return '@verbatim';
-            case '/literal' == $str:
-                return '@endverbatim';
-            case 'strip' == $str:
-                return '';
-            case '/strip' == $str:
-                return '';
+        case 'php' == $str:
+            return '@php ';
+        case '/php' == $str:
+            return '@endphp';
+        case 'literal' == $str:
+            return '@verbatim';
+        case '/literal' == $str:
+            return '@endverbatim';
+        case 'strip' == $str:
+            return '';
+        case '/strip' == $str:
+            return '';
         }
 
         return "<!--   UNSUPPORTED TAG: [$str] FOUND -->";
@@ -332,7 +335,8 @@ class SmartyService {
      *   $matches[1] should contain a string with all other configuration coming with a tag i.e.
      *   'foo = "bar" something="somevalue"'
      */
-    public function getOpeningTagPattern(string $tagName): string {
+    public function getOpeningTagPattern(string $tagName): string
+    {
         return sprintf("#\[\{\s*%s\b\s*((?:(?!\[\{|\}\]).(?<!\[\{)(?<!\}\]))+)?\}\]#is", preg_quote($tagName, '#'));
     }
 
@@ -341,7 +345,8 @@ class SmartyService {
      * str      the inside of the smart tag
      * return a string a flexy version of it.
      */
-    public function convertVar(string $str): string {
+    public function convertVar(string $str): string
+    {
         // look for modfiers first.
 
         $mods = explode('|', $str);
@@ -385,7 +390,8 @@ class SmartyService {
      * str       the inside of the smart tag
      * return string a flexy version of it.
      */
-    public function convertVarToObject(string $str): string {
+    public function convertVarToObject(string $str): string
+    {
         $var = $str; // strip $
 
         $bits = explode('.', $var);
@@ -405,7 +411,8 @@ class SmartyService {
      * str     the key value part of the tag..
      * return array key value array.
      */
-    public function convertAttributesToKeyVal(string $str): array {
+    public function convertAttributesToKeyVal(string $str): array
+    {
         $atts = explode(' ', $str);
         $ret = [];
         foreach ($atts as $bit) {
@@ -425,7 +432,8 @@ class SmartyService {
      * str       the inside of the smart tag
      * return string a flexy version of it.
      */
-    public function convertConfigVar(string $str): string {
+    public function convertConfigVar(string $str): string
+    {
         $mods = explode('|', $str);
         $var = array_shift($mods);
         $var = substr($var, 1, -1); // strip #'s

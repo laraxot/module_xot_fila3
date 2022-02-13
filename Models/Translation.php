@@ -14,7 +14,7 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|Translation newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Translation newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Translation query()
- * @mixin \Eloquent
+ * @mixin  \Eloquent
  *
  * @property int                             $id
  * @property string|null                     $lang
@@ -34,5 +34,6 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|Translation whereUpdatedBy($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Translation whereValue($value)
  */
-class Translation extends Model {
+class Translation extends Model
+{
 }

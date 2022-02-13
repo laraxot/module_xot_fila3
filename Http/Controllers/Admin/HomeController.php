@@ -17,11 +17,13 @@ use Nwidart\Modules\Facades\Module;
 /**
  * Class HomeController.
  */
-class HomeController extends Controller {
+class HomeController extends Controller
+{
     /**
      * @return mixed
      */
-    public function index(Request $request) {
+    public function index(Request $request)
+    {
         //$out = ArtisanService::act($request->act);
         //if ('' != $out) {
         //    return $out;
@@ -66,7 +68,8 @@ class HomeController extends Controller {
     /**
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
-    public function redirect(Request $request) {
+    public function redirect(Request $request)
+    {
         return redirect($request->url);
     }
 }

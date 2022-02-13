@@ -16,11 +16,13 @@ use Modules\Xot\Services\PanelService as Panel;
 /**
  * Trait CommonTrait.
  */
-trait CommonTrait {
+trait CommonTrait
+{
     /**
      * @return array
      */
-    public function getData() {
+    public function getData()
+    {
         $panel = Panel::get($this->row);
         if (! is_object($panel)) {
             //dddx($this->row);
@@ -43,7 +45,8 @@ trait CommonTrait {
      *
      * @param array $params
      */
-    public function manageRelationships(array $params): void {
+    public function manageRelationships(array $params): void
+    {
         $act = 'show';
         extract($params);
         if (! isset($model)) {
@@ -69,27 +72,31 @@ trait CommonTrait {
         }
         */
         //dddx($params);
-        $data1 = collect($data)->filter(function ($item, $key) use ($methods) {
-            return in_array($key, $methods);
-        })->map(function ($v, $k) use ($model, $data) {
-            if (! is_string($k)) {
-                dddx([$k, $v, $data]);
+        $data1 = collect($data)->filter(
+            function ($item, $key) use ($methods) {
+                return in_array($key, $methods);
             }
-            $rows = $model->$k();
-            $related = null;
-            if (method_exists($rows, 'getRelated')) {
-                $related = $rows->getRelated();
-            }
+        )->map(
+            function ($v, $k) use ($model, $data) {
+                if (! is_string($k)) {
+                    dddx([$k, $v, $data]);
+                }
+                $rows = $model->$k();
+                $related = null;
+                if (method_exists($rows, 'getRelated')) {
+                    $related = $rows->getRelated();
+                }
 
-            return (object) [
+                return (object) [
                 'relationship_type' => class_basename($rows),
                 'is_relation' => $rows instanceof \Illuminate\Database\Eloquent\Relations\Relation,
                 'related' => $related,
                 'data' => $v,
                 'name' => $k,
                 'rows' => $rows,
-            ];
-        })->all();
+                ];
+            }
+        )->all();
 
         foreach ($data1 as $k => $v) {
             //Relation::morphMap();
@@ -136,7 +143,8 @@ trait CommonTrait {
      *
      * @return mixed
      */
-    public function prepareForValidation($data, $panel) {
+    public function prepareForValidation($data, $panel)
+    {
         $date_fields = collect($panel->fields())->filter(
             function ($item) use ($data) {
                 return Str::startsWith($item->type, 'Date') && isset($data[$item->name]);
@@ -166,7 +174,8 @@ trait CommonTrait {
      *
      * @return array
      */
-    public function prepareAndValidate($data, $panel) {
+    public function prepareAndValidate($data, $panel)
+    {
         //$data0 = $data;
         $data = $this->prepareForValidation($data, $panel);
         //dddx($data0, $data);
@@ -184,7 +193,8 @@ trait CommonTrait {
      *
      * @return Carbon|false|null
      */
-    public function ConvDate($field, $value) {
+    public function ConvDate($field, $value)
+    {
         if (null == $value) {
             return $value;
         }
@@ -199,7 +209,8 @@ trait CommonTrait {
      *
      * @return Carbon|false|null
      */
-    public function ConvDateTime($field, $value) {
+    public function ConvDateTime($field, $value)
+    {
         if (null == $value) {
             return $value;
         }
@@ -214,7 +225,8 @@ trait CommonTrait {
      *
      * @return Carbon|false|null
      */
-    public function ConvDateTime2Fields($field, $value) {
+    public function ConvDateTime2Fields($field, $value)
+    {
         if (null == $value) {
             return $value;
         }

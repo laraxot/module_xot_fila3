@@ -14,8 +14,10 @@ use Modules\Xot\Services\LivewireService;
  * @property string $dir
  * @property string $name
  */
-abstract class XotBaseThemeServiceProvider {
-    public function bootCallback(): void {
+abstract class XotBaseThemeServiceProvider
+{
+    public function bootCallback(): void
+    {
         /*
         $blade_component_path = '\Themes\LaravelIo\View\Components';
         foreach ($this->blade_components as $name => $class) {
@@ -30,37 +32,52 @@ abstract class XotBaseThemeServiceProvider {
     /**
      * Undocumented function.
      */
-    public function registerBladeDirective(): void {
-        Blade::directive('md', function ($expression) {
-            return '<'."?php echo md_to_html($expression); ?".'>';
-        });
+    public function registerBladeDirective(): void
+    {
+        Blade::directive(
+            'md', function ($expression) {
+                return '<'."?php echo md_to_html($expression); ?".'>';
+            }
+        );
 
-        Blade::directive('formGroup', function ($expression) {
-            return '<div class="form-group<'."?php echo \$errors->has($expression) ? ' has-error' : '' ?".'>">';
-        });
+        Blade::directive(
+            'formGroup', function ($expression) {
+                return '<div class="form-group<'."?php echo \$errors->has($expression) ? ' has-error' : '' ?".'>">';
+            }
+        );
 
-        Blade::directive('endFormGroup', function ($expression) {
-            return '</div>';
-        });
+        Blade::directive(
+            'endFormGroup', function ($expression) {
+                return '</div>';
+            }
+        );
 
-        Blade::directive('title', function ($expression) {
-            return '<'."?php \$title = $expression ?".'>';
-        });
+        Blade::directive(
+            'title', function ($expression) {
+                return '<'."?php \$title = $expression ?".'>';
+            }
+        );
 
-        Blade::directive('shareImage', function ($expression) {
-            return '<'."?php \$shareImage = $expression ?".'>';
-        });
+        Blade::directive(
+            'shareImage', function ($expression) {
+                return '<'."?php \$shareImage = $expression ?".'>';
+            }
+        );
 
-        Blade::directive('canonical', function ($expression) {
-            return '<'."?php \$canonical = $expression ?".'>';
-        });
+        Blade::directive(
+            'canonical', function ($expression) {
+                return '<'."?php \$canonical = $expression ?".'>';
+            }
+        );
     }
 
-    public function registerBladeComponents(): void {
+    public function registerBladeComponents(): void
+    {
         BladeService::registerComponents($this->dir.'/../View/Components', 'Themes\\'.$this->name);
     }
 
-    public function registerLivewireComponents(): void {
+    public function registerLivewireComponents(): void
+    {
         LivewireService::registerComponents($this->dir.'/../Http/Livewire', 'Themes\\'.$this->name);
     }
 }

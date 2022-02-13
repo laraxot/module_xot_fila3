@@ -38,9 +38,10 @@ use Sushi\Sushi;
  * @method static \Illuminate\Database\Eloquent\Builder|Home whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Home whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Home whereUpdatedBy($value)
- * @mixin \Eloquent
+ * @mixin  \Eloquent
  */
-class Home extends BaseModel {
+class Home extends BaseModel
+{
     use WidgetTrait;
     use Sushi;
 

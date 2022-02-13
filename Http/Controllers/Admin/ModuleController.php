@@ -25,11 +25,13 @@ use Nwidart\Modules\Facades\Module;
 //}
 //*/
 //*
-class ModuleController extends Controller {
+class ModuleController extends Controller
+{
     /**
      * @return mixed
      */
-    public function index(Request $request) {
+    public function index(Request $request)
+    {
         $panel = PanelService::getRequestPanel();
 
         if ('' != $request->_act) {
@@ -85,7 +87,8 @@ class ModuleController extends Controller {
      *
      * @return mixed
      */
-    public function store(Request $request) {
+    public function store(Request $request)
+    {
         return $this->index($request);
         /*
         $params = optional(\Route::current())->parameters();
@@ -130,7 +133,8 @@ class ModuleController extends Controller {
      *
      * @return mixed
      */
-    public function home(Request $request) {
+    public function home(Request $request)
+    {
         $panel = PanelService::getRequestPanel();
 
         if ('' != $request->_act) {
@@ -147,7 +151,8 @@ class ModuleController extends Controller {
      *
      * @return mixed
      */
-    public function dashboard(Request $request) {
+    public function dashboard(Request $request)
+    {
         $panel = PanelService::getRequestPanel();
 
         if ('' != $request->_act) {

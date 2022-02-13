@@ -7,11 +7,13 @@ namespace Modules\Xot\Services;
 /**
  * Class CSVService.
  */
-class CSVService {
+class CSVService
+{
     /**
      * Undocumented function.
      */
-    public static function toArray(string $filename): array {
+    public static function toArray(string $filename): array
+    {
         $lines = file($filename, FILE_IGNORE_NEW_LINES);
 
         $csv = [];

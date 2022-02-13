@@ -14,10 +14,12 @@ use Modules\Xot\Services\FileService;
 /**
  * Class HtmlPanelPresenter.
  */
-class HtmlPanelPresenter implements PanelPresenterContract {
+class HtmlPanelPresenter implements PanelPresenterContract
+{
     protected PanelContract $panel;
 
-    public function setPanel(PanelContract &$panel): self {
+    public function setPanel(PanelContract &$panel): self
+    {
         $this->panel = $panel;
 
         return $this;
@@ -26,7 +28,8 @@ class HtmlPanelPresenter implements PanelPresenterContract {
     /**
      * @return mixed|void
      */
-    public function index(?Collection $items) {
+    public function index(?Collection $items)
+    {
         /*
         $count = $items->count();
         $last_update = $items
@@ -47,7 +50,8 @@ class HtmlPanelPresenter implements PanelPresenterContract {
 
     //eturn \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response|string
 
-    public function out(?array $params = null): Renderable {
+    public function out(?array $params = null): Renderable
+    {
         //$route_params = optional(\Route::current())->parameters();
 
         [$containers, $items] = params2ContainerItem();

@@ -16,23 +16,27 @@ use Modules\Tenant\Services\TenantService;
 /**
  * Class ConfController.
  */
-class ConfController extends Controller {
+class ConfController extends Controller
+{
     /**
      * @return mixed
      */
-    public function index(Request $request) {
+    public function index(Request $request)
+    {
         $route_params = optional(\Route::current())->parameters();
         //$confs = Config::all('localhost');
         $tenant_name = TenantService::getName();
         $confs = Config::get($tenant_name);
-        $rows = collect($confs)->map(function ($item, $key) use ($route_params) {
-            $route_params['item0'] = $key;
+        $rows = collect($confs)->map(
+            function ($item, $key) use ($route_params) {
+                $route_params['item0'] = $key;
 
-            return (object) [
+                return (object) [
                 'title' => $key,
                 'url' => route('admin.containers.edit', $route_params, false),
-            ];
-        })->all();
+                ];
+            }
+        )->all();
 
         return ThemeService::view()
                 ->with('rows', $rows)
@@ -40,7 +44,8 @@ class ConfController extends Controller {
                 ;
     }
 
-    public function edit(Request $request): Renderable {
+    public function edit(Request $request): Renderable
+    {
         $route_params = optional(\Route::current())->parameters();
         extract($route_params);
         if (! isset($item0)) {
@@ -56,7 +61,8 @@ class ConfController extends Controller {
     /**
      * @return \Illuminate\Http\RedirectResponse|void
      */
-    public function update(Request $request) {
+    public function update(Request $request)
+    {
         $data = $request->all();
         $route_params = optional(\Route::current())->parameters();
         //dddx([$data, $route_params]);

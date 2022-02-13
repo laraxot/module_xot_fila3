@@ -45,9 +45,10 @@ namespace Modules\Xot\Models;
  * @method static \Illuminate\Database\Eloquent\Builder|Metatag whereTitle($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Metatag whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Metatag whereUpdatedBy($value)
- * @mixin \Eloquent
+ * @mixin  \Eloquent
  */
-class Metatag extends BaseModel {
+class Metatag extends BaseModel
+{
     /**
      * @var string[]
      */

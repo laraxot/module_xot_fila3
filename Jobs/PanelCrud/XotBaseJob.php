@@ -39,7 +39,8 @@ abstract class XotBaseJob /*implements ShouldQueue*/
     /**
      * __construct.
      */
-    public function __construct(array $data, PanelContract $panel) {
+    public function __construct(array $data, PanelContract $panel)
+    {
         $this->panel = $panel;
         $this->data = $data;
     }
@@ -47,14 +48,16 @@ abstract class XotBaseJob /*implements ShouldQueue*/
     /**
      * Execute the job.
      */
-    public function handle(): PanelContract {
+    public function handle(): PanelContract
+    {
         return $this->panel;
     }
 
     /**
      * manage the relationships.
      */
-    public function manageRelationships(Model $model, array $data, string $act): void {
+    public function manageRelationships(Model $model, array $data, string $act): void
+    {
         $relationships = ModelService::getRelationshipsAndData($model, $data);
         /*
         dddx([
@@ -91,7 +94,8 @@ abstract class XotBaseJob /*implements ShouldQueue*/
      *
      * @return mixed
      */
-    public function prepareForValidation($data, $panel) {
+    public function prepareForValidation($data, $panel)
+    {
         $date_fields = collect($panel->fields())->filter(
             function ($item) use ($data) {
                 return Str::startsWith($item->type, 'Date') && isset($data[$item->name]);
@@ -121,7 +125,8 @@ abstract class XotBaseJob /*implements ShouldQueue*/
      *
      * @return array
      */
-    public function prepareAndValidate($data, $panel) {
+    public function prepareAndValidate($data, $panel)
+    {
         $data0 = $data;
         $data = $this->prepareForValidation($data, $panel);
         $act = '';
@@ -149,7 +154,8 @@ abstract class XotBaseJob /*implements ShouldQueue*/
      *
      * @return mixed
      */
-    public function ConvDateList($field, $value) {
+    public function ConvDateList($field, $value)
+    {
         return $value;
     }
 
@@ -161,7 +167,8 @@ abstract class XotBaseJob /*implements ShouldQueue*/
      *
      * @return mixed
      */
-    public function ConvDate($field, $value) {
+    public function ConvDate($field, $value)
+    {
         if (null == $value) {
             return $value;
         }
@@ -178,7 +185,8 @@ abstract class XotBaseJob /*implements ShouldQueue*/
      *
      * @return mixed
      */
-    public function ConvDateTime($field, $value) {
+    public function ConvDateTime($field, $value)
+    {
         if (null == $value) {
             return $value;
         }
@@ -199,7 +207,8 @@ abstract class XotBaseJob /*implements ShouldQueue*/
      *
      * @return mixed
      */
-    public function ConvDateTime2Fields($field, $value) {
+    public function ConvDateTime2Fields($field, $value)
+    {
         if (null == $value) {
             return $value;
         }

@@ -10,8 +10,10 @@ use Illuminate\Support\Facades\Response;
  * Class RssFeedController.
  * https://devdojo.com/bobbyiliev/how-to-add-a-simple-rss-feed-to-laravel-without-using-package.
  */
-class RssFeedController {
-    public function feed(string $lang, string $item): \Illuminate\Http\Response {
+class RssFeedController
+{
+    public function feed(string $lang, string $item): \Illuminate\Http\Response
+    {
         $items = xotModel($item)::with('post')
             ->orderBy('created_at', 'desc')
             ->limit(50)
