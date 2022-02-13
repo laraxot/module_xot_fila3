@@ -11,7 +11,8 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 /**
  * Class PostFactory.
  */
-class PostFactory extends Factory {
+class PostFactory extends Factory
+{
     /**
      * The name of the factory's corresponding model.
      *
@@ -24,7 +25,8 @@ class PostFactory extends Factory {
      *
      * @return array
      */
-    public function definition() {
+    public function definition()
+    {
         return [
             'title' => $this->faker->sentence,
             'guid' => $this->faker->slug,

@@ -15,7 +15,8 @@ use Symfony\Component\Console\Input\InputArgument;
 /**
  * Class FixProvidersCommand.
  */
-class FixProvidersCommand extends Command {
+class FixProvidersCommand extends Command
+{
     /**
      * @var string
      */
@@ -34,17 +35,17 @@ class FixProvidersCommand extends Command {
         return __DIR__.'/stubs/module_provider.stub';
     }
     protected function getTemplateContents(){
-    	$stub=File::get($this->getStub());
-    	$module_name =$this->argument('name');
+        $stub=File::get($this->getStub());
+        $module_name =$this->argument('name');
         $module = \Module::findOrFail($module_name);
         $module_ns=$this->laravel['modules']->config('namespace');
         $replaces=[
-        	'DummyNamespace'	=> $module_ns.'\\'.$module->getStudlyName().'\Providers',
-        	'DummyClass'		=> $module->getStudlyName().'Provider',
-        	'dummy_name'		=> $module->getLowerName(),
-    	];
-    	$stub=str_replace(array_keys($replaces),array_values($replaces),$stub);
-    	return $stub;
+            'DummyNamespace'    => $module_ns.'\\'.$module->getStudlyName().'\Providers',
+            'DummyClass'        => $module->getStudlyName().'Provider',
+            'dummy_name'        => $module->getLowerName(),
+        ];
+        $stub=str_replace(array_keys($replaces),array_values($replaces),$stub);
+        return $stub;
     }
 
     public function getDestinationFilePath(){
@@ -81,7 +82,8 @@ class FixProvidersCommand extends Command {
     /**
      * @return array[]
      */
-    protected function getArguments() {
+    protected function getArguments()
+    {
         return [
             ['name', InputArgument::REQUIRED, 'The name of the module.'],
         ];
@@ -114,7 +116,8 @@ class FixProvidersCommand extends Command {
     }
     */
 
-    public function handle(): void {
+    public function handle(): void
+    {
         $module_name = $this->argument('name');
         if (is_array($module_name)) {
             $module_name = implode(' ', $module_name);
@@ -144,7 +147,7 @@ class FixProvidersCommand extends Command {
             $tmp = File::get($filename);
             if (Str::contains($tmp, 'XotBaseServiceProvider')) {
                 $this->error($filename.' just fixed!');
-            //return false;
+                //return false;
             } else {
                 File::put($filename, $module_provider_stub);
             }

@@ -13,7 +13,8 @@ use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 /**
  * Class ArrayService.
  */
-class ArrayService {
+class ArrayService
+{
     protected static int $export_processor = 1;
 
     //ret array|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|string|\Symfony\Component\HttpFoundation\BinaryFileResponse
@@ -23,11 +24,12 @@ class ArrayService {
      *
      * @return mixed
      */
-    public static function toXLS(array $params) {
+    public static function toXLS(array $params)
+    {
         if (1 == request()->input('debug')) {
             return self::toHtml($params);
         }
-        require_once __DIR__.'/vendor/autoload.php';
+        include_once __DIR__.'/vendor/autoload.php';
         $data = $params['data'];
         $res = [];
         foreach ($data as $k => $v) {
@@ -40,16 +42,18 @@ class ArrayService {
         $params['data'] = $res;
 
         switch (self::$export_processor) {
-            case 1:return self::toXLS_phpoffice($params); //break;
+        case 1:
+            return self::toXLS_phpoffice($params); //break;
             //case 2:return self::toXLS_Maatwebsite($params); //break;
             //case 3:return self::toXLS_phpexcel($params); //break;
-            default:
-                dddx(['unknown export_processor ['.self::$export_processor.']']);
+        default:
+            dddx(['unknown export_processor ['.self::$export_processor.']']);
             break;
         }
     }
 
-    public static function toHtml(array $params): string {
+    public static function toHtml(array $params): string
+    {
         $header = self::getHeader($params);
         $data = $params['data'];
         $html = '';
@@ -82,7 +86,8 @@ class ArrayService {
         return $html;
     }
 
-    public static function getHeader(array $params): array {
+    public static function getHeader(array $params): array
+    {
         $data = [];
         \extract($params);
 
@@ -109,7 +114,8 @@ class ArrayService {
      *
      * @return mixed
      */
-    public static function toXLS_phpoffice(array $params) {
+    public static function toXLS_phpoffice(array $params)
+    {
         $filename = 'test';
         \extract($params);
         if (! isset($data)) {
@@ -156,10 +162,10 @@ class ArrayService {
 
         $sheet->fromArray($header, null, 'A1');
         $sheet->fromArray(
-            $data,  	// The data to set
+            $data,      // The data to set
             null,        // Array values with this value will not be set
             'A2'         // Top left coordinate of the worksheet range where
-                         //    we want to set these values (default is A1)
+            //    we want to set these values (default is A1)
         );
         //$sheet->setCellValue('A1', 'Hello World !');
         $writer = new Xlsx($spreadsheet);
@@ -173,18 +179,21 @@ class ArrayService {
             $text = 'text';
         }
         switch ($out) {
-            case 'link': return view()->make('theme::download_icon')->with('file', $pathToFile)->with('ext', 'xls')->with('text', $text);
-            case 'download': response()->download($pathToFile);
+        case 'link': 
+            return view()->make('theme::download_icon')->with('file', $pathToFile)->with('ext', 'xls')->with('text', $text);
+        case 'download': response()->download($pathToFile);
             // no break
-            case 'file':  return $pathToFile;
-            case 'link_file':
-                $link = view('theme::download_icon')->with('file', $pathToFile)->with('ext', 'xls')->with('text', $text);
+        case 'file':  
+            return $pathToFile;
+        case 'link_file':
+            $link = view('theme::download_icon')->with('file', $pathToFile)->with('ext', 'xls')->with('text', $text);
 
-                return [$link, $pathToFile];
+            return [$link, $pathToFile];
         }
     }
 
-    public static function save(array $params): void {
+    public static function save(array $params): void
+    {
         extract($params);
         if (! isset($data)) {
             dddx(['err' => 'data is missing']);
@@ -215,7 +224,8 @@ class ArrayService {
      *
      * @return array
      */
-    public static function fromObjects($arrObjData, $arrSkipIndices = []) {
+    public static function fromObjects($arrObjData, $arrSkipIndices = [])
+    {
         $arrData = [];
 
         // if input is object, convert into array
@@ -248,7 +258,8 @@ class ArrayService {
      *
      * @return array|bool
      */
-    public static function rangeIntersect($a0, $b0, $a1, $b1) {
+    public static function rangeIntersect($a0, $b0, $a1, $b1)
+    {
         if ($a1 >= $a0 && $a1 <= $b0 && $b0 <= $b1) {
             return [$a1, $b0];
         }
@@ -271,16 +282,19 @@ class ArrayService {
      * @param array $arr_1
      * @param array $arr_2
      */
-    public static function diff_assoc_recursive($arr_1, $arr_2): array {
+    public static function diff_assoc_recursive($arr_1, $arr_2): array
+    {
         $coll_1 = collect($arr_1);
         $coll_2 = collect($arr_2);
-        $ris = $coll_1->filter(function ($value, $key) use ($arr_2) {
-            try {
-                return ! in_array($value, $arr_2);
-            } catch (\Exception $e) {
-                dddx(['err' => $e->getMessage(), 'value' => $value, 'key' => $key, 'arr_2' => $arr_2]);
+        $ris = $coll_1->filter(
+            function ($value, $key) use ($arr_2) {
+                try {
+                    return ! in_array($value, $arr_2);
+                } catch (\Exception $e) {
+                    dddx(['err' => $e->getMessage(), 'value' => $value, 'key' => $key, 'arr_2' => $arr_2]);
+                }
             }
-        });
+        );
 
         return $ris->all();
     }

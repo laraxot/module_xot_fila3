@@ -20,9 +20,10 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
  * @property string|null                                                        $email
  * @property \Illuminate\Database\Eloquent\Collection|\Modules\LU\Models\Area[] $areas
  * @property \Modules\LU\Models\PermUser|null                                   $perm
- * @mixin \Eloquent
+ * @mixin    \Eloquent
  */
-interface UserContract {
+interface UserContract
+{
     /*
     public function isSuperAdmin();
     public function name();

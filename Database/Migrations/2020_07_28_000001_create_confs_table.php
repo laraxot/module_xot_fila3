@@ -11,13 +11,15 @@ use Modules\Xot\Database\Migrations\XotBaseMigration;
 /**
  * Class CreateConfsTable.
  */
-class CreateConfsTable extends XotBaseMigration {
+class CreateConfsTable extends XotBaseMigration
+{
     /**
      * db up.
      *
      * @return void
      */
-    public function up() {
+    public function up()
+    {
         //-- CREATE --
         $this->tableCreate(
             function (Blueprint $table) {
@@ -26,8 +28,8 @@ class CreateConfsTable extends XotBaseMigration {
                     $table->timestamps();
                     $table->string('updated_by')->nullable();
                     $table->string('created_by')->nullable();
-                }
-            );
+            }
+        );
 
         //-- UPDATE --
         $this->tableUpdate(

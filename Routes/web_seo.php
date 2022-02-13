@@ -11,9 +11,9 @@ $middleware = [
 ];
 
 Route::middleware($middleware)
-        ->namespace($namespace)
-        ->group(
-            function () {
-                Route::get('/sitemap.xml', 'SitemapXmlController')->name('sitemap_xml');
-            }
-        );
+    ->namespace($namespace)
+    ->group(
+        function () {
+            Route::get('/sitemap.xml', 'SitemapXmlController')->name('sitemap_xml');
+        }
+    );

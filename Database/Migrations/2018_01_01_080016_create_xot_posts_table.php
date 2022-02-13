@@ -11,7 +11,8 @@ use Modules\Lang\Models\Post;
 /**
  * Class CreatePostsTable.
  */
-class CreateXotPostsTable extends XotBaseMigration {
+class CreateXotPostsTable extends XotBaseMigration
+{
     protected ?string $model_class = Post::class;
 
     /**
@@ -19,7 +20,8 @@ class CreateXotPostsTable extends XotBaseMigration {
      *
      * @return void
      */
-    public function up() {
+    public function up()
+    {
         //-- CREATE --
         $this->tableCreate(
             function (Blueprint $table) {
@@ -37,8 +39,8 @@ class CreateXotPostsTable extends XotBaseMigration {
                     $table->text('meta_keywords')->nullable();
                     $table->integer('author_id')->nullable();
                     $table->timestamps();
-                }
-            );
+            }
+        );
 
 
         //-- UPDATE --

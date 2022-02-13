@@ -11,13 +11,15 @@ namespace Modules\Xot\Tests\Feature;
 use Illuminate\Support\Facades\App;
 use Tests\TestCase;
 
-class RouteTest extends TestCase {
+class RouteTest extends TestCase
+{
     /**
      * A basic test example.
      *
      * @return void
      */
-    public function testRoutes() {
+    public function testRoutes()
+    {
         //dddx('/'.App::getlocale().'/home');
 
         $appURL = env('APP_URL');

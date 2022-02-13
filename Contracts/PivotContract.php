@@ -18,7 +18,8 @@ use Illuminate\Database\Eloquent\Collection;
  * @property Collection|ChangeCatContract[] $changeCats
  *
  * @method mixed update($params)
- * @mixin \Eloquent
+ * @mixin  \Eloquent
  */
-interface PivotContract {
+interface PivotContract
+{
 }

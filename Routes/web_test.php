@@ -116,7 +116,8 @@ function myRoutes(
     string $prefix,
     ?string $as,
     ?string $controller,
-    ?array $acts) {
+    ?array $acts
+) {
     Route::middleware($middleware)
         ->namespace($namespace)
         ->prefix($prefix)

@@ -14,7 +14,8 @@ use Symfony\Component\Console\Input\InputArgument;
 /**
  * Class PanelMakeCommand.
  */
-class PanelMakeCommand extends GeneratorCommand {
+class PanelMakeCommand extends GeneratorCommand
+{
     use ModuleCommandTrait;
 
     /**
@@ -39,7 +40,8 @@ class PanelMakeCommand extends GeneratorCommand {
     /**
      * @return string
      */
-    public function getTemplateContents() {
+    public function getTemplateContents()
+    {
         $module = $this->laravel['modules']->findOrFail($this->getModuleName());
 
         return 'testinaaaa';
@@ -54,7 +56,8 @@ class PanelMakeCommand extends GeneratorCommand {
     /**
      * @return string
      */
-    public function getDestinationFilePath() {
+    public function getDestinationFilePath()
+    {
         $path = $this->laravel['modules']->getModulePath($this->getModuleName());
 
         $panelPath = GenerateConfigReader::read('panel');
@@ -65,7 +68,8 @@ class PanelMakeCommand extends GeneratorCommand {
     /**
      * @return string
      */
-    protected function getFileName() {
+    protected function getFileName()
+    {
         $name = $this->argument('name');
         if (is_array($name)) {
             $name = implode(' ', $name);
@@ -77,7 +81,8 @@ class PanelMakeCommand extends GeneratorCommand {
         return Str::studly($name);
     }
 
-    public function getDefaultNamespace(): string {
+    public function getDefaultNamespace(): string
+    {
         return $this->laravel['modules']->config('paths.generator.panel.path', 'panels');
     }
 
@@ -86,7 +91,8 @@ class PanelMakeCommand extends GeneratorCommand {
      *
      * @return array
      */
-    protected function getArguments() {
+    protected function getArguments()
+    {
         return [
             ['name', InputArgument::REQUIRED, 'The name of the panel.'],
             ['module', InputArgument::OPTIONAL, 'The name of module will be used.'],

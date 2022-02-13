@@ -46,7 +46,8 @@ use Modules\Food\Models\RestaurantOwner;
  * @method mixed     bellBoys()
  * @method array     toArray()
  * @method BelongsTo user()
- * @mixin \Eloquent
+ * @mixin  \Eloquent
  */
-interface ModelContract {
+interface ModelContract
+{
 }

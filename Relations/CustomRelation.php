@@ -19,7 +19,8 @@ use Modules\Xot\Contracts\RowsContract;
 /**
  * Class CustomRelation.
  */
-class CustomRelation extends Relation {
+class CustomRelation extends Relation
+{
     /**
      * The baseConstraints callback.
      */
@@ -42,7 +43,8 @@ class CustomRelation extends Relation {
     /**
      * Create a new belongs to relationship instance.
      */
-    public function __construct(Builder $query, Model $parent, Closure $baseConstraints, ?Closure $eagerConstraints, ?Closure $eagerMatcher) {
+    public function __construct(Builder $query, Model $parent, Closure $baseConstraints, ?Closure $eagerConstraints, ?Closure $eagerMatcher)
+    {
         $this->baseConstraints = $baseConstraints;
         $this->eagerConstraints = $eagerConstraints;
         $this->eagerMatcher = $eagerMatcher;
@@ -55,7 +57,8 @@ class CustomRelation extends Relation {
      *
      * @return void
      */
-    public function addConstraints() {
+    public function addConstraints()
+    {
         call_user_func($this->baseConstraints, $this);
     }
 
@@ -64,7 +67,8 @@ class CustomRelation extends Relation {
      *
      * @return void
      */
-    public function addEagerConstraints(array $models) {
+    public function addEagerConstraints(array $models)
+    {
         //Parameter #1 $function of function call_user_func expects callable(): mixed, Closure|null given.
         if (! is_callable($this->eagerConstraints)) {
             throw new \Exception('eagerConstraints is not callable');
@@ -79,7 +83,8 @@ class CustomRelation extends Relation {
      *
      * @return array
      */
-    public function initRelation(array $models, $relation) {
+    public function initRelation(array $models, $relation)
+    {
         foreach ($models as $model) {
             $model->setRelation($relation, $this->related->newCollection());
         }
@@ -94,7 +99,8 @@ class CustomRelation extends Relation {
      *
      * @return array
      */
-    public function match(array $models, Collection $results, $relation) {
+    public function match(array $models, Collection $results, $relation)
+    {
         //Trying to invoke Closure|null but it might not be a callable.
         if (! is_callable($this->eagerMatcher)) {
             throw new \Exception('eagerMatcher is not callable');
@@ -108,7 +114,8 @@ class CustomRelation extends Relation {
      *
      * @return mixed
      */
-    public function getResults() {
+    public function getResults()
+    {
         return $this->get();
     }
 
@@ -119,7 +126,8 @@ class CustomRelation extends Relation {
      *
      * @return \Illuminate\Database\Eloquent\Collection
      */
-    public function get($columns = ['*']) {
+    public function get($columns = ['*'])
+    {
         // First we'll add the proper select columns onto the query so it is run with
         // the proper columns. Then, we will get the results and hydrate out pivot
         // models with the result of those columns as a separate model relation.

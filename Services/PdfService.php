@@ -10,12 +10,14 @@ use Illuminate\Support\Str;
 /**
  * Class PdfService.
  */
-class PdfService {
+class PdfService
+{
     public array $filenames = [];
 
     private static ?self $instance = null;
 
-    public static function getInstance(): self {
+    public static function getInstance(): self
+    {
         if (null === self::$instance) {
             self::$instance = new self();
         }
@@ -25,7 +27,8 @@ class PdfService {
 
     //include __DIR__.'/vendor/autoload.php';
 
-    public function mergePdf(string $path): self {
+    public function mergePdf(string $path): self
+    {
         include __DIR__.'/vendor/autoload.php';
         //$path = $this->get('path');
         $pdf = new \Jurosh\PDFMerge\PDFMerger();
@@ -51,7 +54,8 @@ class PdfService {
         return $this;
     }
 
-    public function addFilenames(array $filenames): self {
+    public function addFilenames(array $filenames): self
+    {
         $this->filenames = array_merge($this->filenames, $filenames);
 
         return $this;
