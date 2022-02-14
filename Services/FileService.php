@@ -727,7 +727,7 @@ class FileService {
             $content = File::get($components_json);
             $comps = (array) json_decode($content);
             if (null == $comps) {
-                File::delete($components_json);
+                //File::delete($components_json);
                 $comps = [];
             }
 
