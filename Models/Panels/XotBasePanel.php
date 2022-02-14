@@ -1129,27 +1129,32 @@ abstract class XotBasePanel implements PanelContract
         }
         $row = $this->row;
         $key = $row->getRouteKeyName();
+        //if (! in_array($key, $row->getFillable())) {
+        //    throw new \Exception('field ['.$key.'] not set in model ['.class_basename($row).'] fillable ');
+        //}
 
-        /*
-        $msg = [
-            'key' => $key,
-            '$row->getKey()' => $row->getKey(),
-            '$row->getKeyName()' => $row->getKeyName(),
-            //'$row->$key' => $row->{$key},
-            //'$row->post' => $row->post,
-            '$row' => $row->toArray(),
-        ];
-        dddx($msg);
-        //*/
         if (null == $row->getKey()) {
             return null;
         }
+<<<<<<< HEAD
         //1049   Dead catch - Exception is never thrown in the try block.
         //try {
         $guid = $row->$key;
         //} catch (\Exception $e) {
         //     $guid = '';
         // }
+=======
+        //try {
+        $guid = $row->$key;
+        if ('' == $guid && in_array($key, $row->getFillable())) {
+            $guid = Str::slug($this->title());
+            $row->{$key} = $guid;
+            $row->save();
+        }
+        //} catch (\Exception $e) {
+        //    $guid = '';
+        //}
+>>>>>>> ab0fe2e (.)
         if ('' == $guid && method_exists($row, 'post') && 'guid' == $key && property_exists($row, 'post')) {
             //if ('' == $row->id && '' != $row->post_id) {
             //    $row->id = $row->post_id; //finche netson non riabilita migrazioni
