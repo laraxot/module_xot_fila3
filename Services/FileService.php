@@ -15,6 +15,9 @@ use Nwidart\Modules\Facades\Module;
  * Class FileService.
  */
 class FileService {
+    /**
+     * 18     Method Modules\Xot\Services\FileService::asset() should return string but return statement is missing.
+     */
     public static function asset(string $path): string {
         /*
             to DOOOO
