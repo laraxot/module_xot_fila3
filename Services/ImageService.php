@@ -97,7 +97,7 @@ class ImageService {
         return Storage::disk('photos')->url($this->filename);
     }
 
-    public function out(array $params = []): string {
+    public function out(array $params = []): \Intervention\Image\Image {
         return $this->img->encode('jpg', 60);
     }
 
