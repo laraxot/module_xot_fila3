@@ -13,20 +13,18 @@ use Modules\Xot\Services\ProfileService;
 /**
  * Class XotComposer.
  */
-class XotComposer
-{
+class XotComposer {
     /**
      * Bind data to the view.
      *
      * @return void
      */
-    public function compose(View $view)
-    {
+    public function compose(View $view) {
         $user = Auth::user();
         if (null == $user) {
             return;
         }
-        $profile = ProfileService::get($user);
+        $profile = ProfileService::make()->get($user);
         $lang = app()->getLocale();
         $params = [];
         $route_current = Route::current();

@@ -29,7 +29,7 @@ abstract class XotBasePanelPolicy
     public function before($user, $ability)
     {
         //* -- togliere per fare debug
-        if (is_object($user) && ProfileService::get($user)->isSuperAdmin()) {
+        if (is_object($user) && ProfileService::make()->get($user)->isSuperAdmin()) {
             return true;
         }
         //*/
@@ -56,7 +56,7 @@ abstract class XotBasePanelPolicy
             //$areas = $panel->areas()->firstWhere('area_define_name', $module->getName());
             //return is_object($areas);
 
-            $profile = ProfileService::get($user);
+            $profile = ProfileService::make()->get($user);
 
             return $profile->hasArea($module->getName());
         }

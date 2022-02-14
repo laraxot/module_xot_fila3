@@ -169,7 +169,10 @@ interface PanelContract {
 
     public function relatedName(string $name, ?int $id = null): PanelContract;
 
-    public function getBuilder(): Builder;
+    /**
+     * @return \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Query\Builder
+     */
+    public function getBuilder();
 
     public function getTradMod(): string;
 
