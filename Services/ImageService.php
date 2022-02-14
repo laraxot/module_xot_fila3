@@ -85,7 +85,8 @@ class ImageService {
         $this->filename = $this->dirname.'/'.$this->width.'x'.$this->height.'/'.$basename;
 
         try {
-            Storage::disk('photos')->put($this->filename, $this->out());
+            //Storage::disk('photos')->put($this->filename, $this->out());
+            $this->img->save($this->filename);
         } catch (Exception $e) {//ftp_mkdir(): Can't create directory: File exists
              //$r = $this->img->save(self::$filename, 75);
         }
