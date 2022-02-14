@@ -237,6 +237,7 @@ abstract class XotBasePanel implements PanelContract {
      *
      * @param object|Model $data
      */
+    /* non usata ?
     public function getHydrate($data): PanelContract {
         if ('stdClass' == get_class($data)) {
             //$row = $this->row->hydrate((array) $data);
@@ -249,7 +250,11 @@ abstract class XotBasePanel implements PanelContract {
 
         return $panel;
     }
+    */
 
+    /**
+     * getParent.
+     */
     public function getParent(): ?PanelContract {
         return $this->parent;
     }
@@ -967,7 +972,7 @@ abstract class XotBasePanel implements PanelContract {
             throw new \Exception('in ['.get_class($this->row).'] property [image_src] is missing');
         }
         $params['src'] = $this->row->image_src;
-        $img = new ImageService($params);
+        $img = ImageService::make()->setVars($params);
         $src = $img->fit()->save()->src();
         if (! is_string($src)) {
             throw new \Exception('src is not a string');
@@ -979,7 +984,7 @@ abstract class XotBasePanel implements PanelContract {
     public function imgSrc(array $params): string {
         $params['dirname'] = '/photos/'.$this->postType().'/'.$this->guid();
         $params['src'] = optional($this->row)->image_src;
-        $img = new ImageService($params);
+        $img = ImageService::make()->setVars($params);
 
         return $img->url();
     }

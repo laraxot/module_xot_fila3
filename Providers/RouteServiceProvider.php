@@ -70,7 +70,7 @@ class RouteServiceProvider extends XotBaseRouteServiceProvider {
         $pattern = $models_collect->implode('|');
         $pattern_plural = $models_collect->map(
             function ($item) {
-                return Str::plural($item);
+                return Str::plural((string) $item);
             }
         )->implode('|');
 
