@@ -21,6 +21,7 @@ use Modules\Xot\Contracts\PanelContract;
 use Modules\Xot\Contracts\PanelPresenterContract;
 use Modules\Xot\Contracts\RowsContract;
 use Modules\Xot\Contracts\UserContract;
+use Modules\Xot\Models\Panels\Actions\XotBasePanelAction;
 use Modules\Xot\Presenters\PdfPanelPresenter;
 use Modules\Xot\Presenters\XlsPanelPresenter;
 use Modules\Xot\Services\ChainService;
@@ -769,10 +770,8 @@ abstract class XotBasePanel implements PanelContract {
 
     /**
      * crea l'oggetto del pannello Container (quello dove passi $rowS).
-     *
-     * @return mixed
      */
-    public function containerAction(string $act) {
+    public function containerAction(string $act): XotBasePanelAction {
         return (new PanelActionService($this))->{__FUNCTION__}($act);
     }
 

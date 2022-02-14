@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Support\Collection;
 use Illuminate\View\View;
+use Modules\Xot\Models\Panels\Actions\XotBasePanelAction;
 
 /**
  * Undocumented interface.
@@ -201,8 +202,6 @@ interface PanelContract {
 
     /**
      * crea l'oggetto del pannello Container (quello dove passi $rowS).
-     *
-     * @return mixed
      */
-    public function containerAction(string $act);
+    public function containerAction(string $act): XotBasePanelAction;
 }

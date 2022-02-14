@@ -625,7 +625,7 @@ abstract class XotBasePanel implements PanelContract {
     /**
      * @return mixed
      */
-    public function containerAction(string $act) {
+    public function containerAction(string $act):XotBasePanelAction {
         return (new PanelActionService($this))->containerAction($act);
     }
 

@@ -9,12 +9,12 @@ use Illuminate\Support\Collection;
 /**
  * https://github.com/Tinyportal/TinyPortal/blob/master/Sources/TPSubs.php.
  *
- * @param string $primary_field
- * @param string $parent_field
- * @param string $sort_field
- * @param object $rows
- * @param int    $root_id
- * @param int    $maxlevel
+ * @param string     $primary_field
+ * @param string     $parent_field
+ * @param string     $sort_field
+ * @param Collection $rows
+ * @param int        $root_id
+ * @param int        $maxlevel
  *
  * @return mixed
  */

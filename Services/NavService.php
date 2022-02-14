@@ -67,8 +67,8 @@ class NavService {
             $params = $route_current->parameters();
         }
 
-        $year = $request->input('year', date('Y'));
-        $month = $request->input('month', date('m'));
+        $year = $request->input('year', date('Y')) * 1;
+        $month = $request->input('month', date('m')) * 1;
 
         $q = 2;
         $date = Carbon::create($year, $month, 1);

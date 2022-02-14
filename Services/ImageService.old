@@ -9,7 +9,7 @@ use Exception;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use ImageOptimizer;
-use Intervention\Image\Facades\Image;
+use Intervention\Image\Image;
 
 //---- services ----
 
@@ -17,58 +17,58 @@ use Intervention\Image\Facades\Image;
  * Class ImageService.
  */
 class ImageService {
-    private static ?ImageService $instance = null;
+    private static ?self $instance = null;
 
-    protected static ?Image $img = null;
+    protected  ?Image $img = null;
 
-    protected static int $width;
+    protected  int $width;
 
-    protected static int $height;
+    protected  int $height;
 
-    protected static string $src;
+    protected  string $src;
 
-    protected static string $filename;
+    protected  string $filename;
 
-    protected static string $dirname = '/imgz';
+    protected  string $dirname = '/imgz';
 
-    /**
-     * @return ImageService|null
-     */
-    public static function getInstance(array $params = []) {
+    public static function getInstance(): self {
         if (null === self::$instance) {
-            self::$instance = new self($params);
+            self::$instance = new self();
         }
 
         return self::$instance;
     }
 
+    public static function make(): self {
+        return static::getInstance();
+    }
+
     /**
      * ImageService constructor.
      */
-    public function __construct(array $params = []) {
-        $this->init($params);
+    public function __construct(/*array $params = []*/) {
+        //$this->init($params);
     }
 
     //---- setter
 
-    public static function init(array $params): void {
-        //dddx($params);
-        //$instance == self::getInstance();
+    public function init(array $params): self {
+
         foreach ($params as $k => $v) {
             $func = 'set'.Str::studly((string) $k);
             if (null == $v) {
                 $v = '';
             }
             //if (method_exists($instance, $func)) {
-            self::$func($v);
+            $this->{$func}($v);
             //} else {
             //    self::$k = $v;
             // }
         }
-        //return self::getInstance();
+        return $this;
     }
 
-    public static function setDirname(string $dirname): void {
+    public  function setDirname(string $dirname): void {
         self::$dirname = $dirname;
     }
 
@@ -78,10 +78,10 @@ class ImageService {
      * @return mixed
      */
     public function getImg() {
-        return self::$img;
+        return $this->img;
     }
 
-    public static function setImg(string $val): void {
+    public  function setImg(string $val): void {
         $nophoto_path = public_path('img/nophoto.jpg');
         if ('' == $val) {
             $val = $nophoto_path;
@@ -93,27 +93,27 @@ class ImageService {
             $val = public_path($val);
         }
         try {
-            self::$img = Image::make($val);
+            $this->img = Image::make($val);
         } catch (\Exception $e) {
-            self::$img = Image::make($nophoto_path);
+            $this->img = Image::make($nophoto_path);
         }
     }
 
-    public static function setWxh(string $val): void {
+    public  function setWxh(string $val): void {
         list($w, $h) = \explode('x', $val);
         self::setWidth((int) $w);
         self::setHeight((int) $h);
     }
 
-    public static function setWidth(int $val): void {
-        self::$width = $val;
+    public  function setWidth(int $val): void {
+        $this->width = $val;
     }
 
-    public static function setHeight(int $val): void {
-        self::$height = $val;
+    public  function setHeight(int $val): void {
+        $this->height = $val;
     }
 
-    public static function setSrc(string $val): void {
+    public  function setSrc(string $val): void {
         if ('' == $val) {
             $val = public_path('img/nophoto.jpg');
         }
@@ -135,15 +135,15 @@ class ImageService {
      *
      * @return mixed
      */
-    public static function toHtml() {
+    public  function toHtml() {
     }
 
     /**
      * @return mixed
      */
-    public static function image_resized_cropped(array $params) {
-        $width = self::$width;
-        $height = self::$height;
+    public  function image_resized_cropped(array $params) {
+        $width = $this->width;
+        $height = $this->height;
         \extract($params);
         if (! isset($image_path)) {
             dddx(['err' => 'image_path is missing']);
@@ -163,9 +163,7 @@ class ImageService {
             $image_path = 'http:'.$image_path;
         }
 
-        if (! \File::exists($image_path)) {
-            //return false;
-        }
+
 
         $allowedMimeTypes = ['image/jpeg', 'image/gif', 'image/png', 'image/bmp', 'image/svg+xml'];
         $allowedExtensions = ['jpg', 'png', 'gif'];
@@ -175,9 +173,6 @@ class ImageService {
         if (! \in_array($pathinfo['extension'], $allowedExtensions, true)) {
             return $image_path;
         }
-        //if(!in_array($contentType,$allowedMimeTypes)) return $image_path;
-
-        //return $image_path;
 
         $img = Image::make($image_path);
 
@@ -188,11 +183,7 @@ class ImageService {
         );
 
         if ($img->height() > $height) {
-            /* //voglio croppare l'immagine per non lasciare bordi brutti
-            $img->resize(null, $height, function ($constraint) {
-                $constraint->aspectRatio();
-            });
-            */
+
             $x0 = 0;
             $y0 = \rand(0, $img->height() - $height);
             $img->crop($width, $height, $x0, $y0);
@@ -211,32 +202,21 @@ class ImageService {
         return $image_resized;
     }
 
-    //Method Modules\Xot\Services\ImageService::fit()
-    //should return Modules\Xot\Services\ImageService
-    //but returns Modules\Xot\Services\ImageService|null.
-    public static function fit(array $params = []): self {
-        $me = self::getInstance($params);
 
-        $img = self::$img;
-        $width = self::$width;
-        $height = self::$height;
+    public  function fit(array $params = []): self {
+        $img = $this->img;
+        $width = $this->width;
+        $height = $this->height;
 
-        self::$img->fit($width, $height);
-
-        //return self::getInstance();
-        if (null == $me) {
-            throw new Exception('something gone wrong');
-        }
-
-        return $me;
+        $this->img->fit($width, $height);
+        return $this;
     }
+    /*
+    public  function crop(array $params = []): self {
 
-    public static function crop(array $params = []): self {
-        $me = self::getInstance($params);
-
-        $img = self::$img;
-        $width = self::$width;
-        $height = self::$height;
+        $img = $this->img;
+        $width = $this->width;
+        $height = $this->height;
 
         if ($width > $height) {
             $img->resize(
@@ -246,13 +226,8 @@ class ImageService {
             );
 
             if ($img->height() > $height) {
-                /* //voglio croppare l'immagine per non lasciare bordi brutti
-                    $img->resize(null, $height, function ($constraint) {
-                    $constraint->aspectRatio();
-                });
-                */
+
                 $x0 = 0;
-                //$y0 = \rand(0, $img->height() - $height);
                 $y0 = round(($img->height() + $height) / 2, 0);
                 $img->crop($width, $height, $x0, $y0);
             }
@@ -264,12 +239,7 @@ class ImageService {
             );
 
             if ($img->width() > $width) {
-                /* //voglio croppare l'immagine per non lasciare bordi brutti
-                    $img->resize(null, $height, function ($constraint) {
-                    $constraint->aspectRatio();
-                });
-                */
-                //$x0 = \rand(0, $img->width() - $width);
+
                 $x0 = round(($img->width() + $width) / 2, 0);
                 $y0 = 0;
                 $img->crop($width, $height, $x0, $y0);
@@ -281,24 +251,15 @@ class ImageService {
         $x = \round(($width - $w0) / 2, 0);
         $y = \round(($height - $h0) / 2, 0);
         $canvas->insert($img, 'top-left', (int) $x, (int) $y);
-        self::$img = $canvas;
-
-        //return self::getInstance();
-        if (null == $me) {
-            throw new Exception('something gone wrong');
-        }
-
-        return $me;
-        /// per il fluent, o chaining
+        $this->img = $canvas;
+        return $this;
     }
+    */
 
-    public function url(array $params = []): string {
-        /**
-         * passare image da xra.. ma forse per performance predisporre anche elemento passato.
-         */
+    public url(array $params = []): string {
         $img = \Modules\Xot\Models\Image::where('src', self::$src)
-            ->where('width', self::$width)
-            ->where('height', self::$height)
+            ->where('width', $this->width)
+            ->where('height', $this->height)
             ->first();
 
         if (is_object($img)) {
@@ -312,7 +273,6 @@ class ImageService {
                 }
 
                 return $out;
-            //return $img->src_out;
             } else {
                 $img->delete();
             }
@@ -324,8 +284,8 @@ class ImageService {
         \Modules\Xot\Models\Image::create(
             [
                 'src' => self::$src,
-                'width' => self::$width,
-                'height' => self::$height,
+                'width' => $this->width,
+                'height' => $this->height,
                 'src_out' => $src_out,
             ]
         );
@@ -333,7 +293,7 @@ class ImageService {
         return $src_out;
     }
 
-    public static function save(array $params = []): self {
+    public function save(array $params = []): self {
         $info = pathinfo(self::$src);
         if (! isset($info['extension'])) {
             $info['extension'] = 'jpg';
@@ -341,21 +301,13 @@ class ImageService {
 
         $basename = Str::slug($info['filename']).'.'.$info['extension'];
 
-        self::$filename = self::$dirname.'/'.self::$width.'x'.self::$height.'/'.$basename;
+        self::$filename = self::$dirname.'/'.$this->width.'x'.$this->height.'/'.$basename;
 
-        /* qui volevo creare una sottocartella per progetto, non so se ti piace
-
-        self::$filename = '/'.config('metatag.sitename').self::$dirname.'/'.self::$width.'x'.self::$height.'/'.$basename;
-
-        if (! Storage::disk('photos')->exists(config('metatag.sitename'))) {
-            Storage::disk('photos')->makeDirectory(config('metatag.sitename'));
-        }
-        */
 
         try {
             Storage::disk('photos')->put(self::$filename, self::out());
         } catch (\Exception $e) {//ftp_mkdir(): Can't create directory: File exists
-             //$r = self::$img->save(self::$filename, 75);
+             //$r = $this->img->save(self::$filename, 75);
         }
 
         $me = self::getInstance();
@@ -367,34 +319,22 @@ class ImageService {
     }
 
     /**
-     * @return mixed
+     * @return string
      */
-    public static function out(array $params = []) {
-        return self::$img->encode('jpg', 60);
+    public function out(array $params = []) {
+        return $this->img->encode('jpg', 60);
     }
 
-    /**
-     * @return string|string[]
-     */
-    public static function src(array $params = []) {
+    public function src(array $params = []) :string{
         $src = '/'.str_replace(public_path('/'), '', self::$filename);
         $src = str_replace('//', '/', $src);
-
-        //come faccio a recuperare l'url dell'immagine dal cdn?
-        //forse non mettere mani qui ma in themeservice->asset(), cioè in FileService->asset()?
-        //perchè è giusto che nel db si salvi url relativo?
-        //dddx($src);
-        //dddx(\Storage::disk('infinityfree')->get($src));
 
         return $src;
     }
 
-    /**
-     * @return string|void|null
-     */
-    public static function image_resized_canvas(array $params) {
-        $width = self::$width;
-        $height = self::$height;
+    public function image_resized_canvas(array $params):string {
+        $width = $this->width;
+        $height = $this->height;
         \extract($params);
         if (! isset($image_path)) {
             dddx(['err' => 'image_path is missing']);

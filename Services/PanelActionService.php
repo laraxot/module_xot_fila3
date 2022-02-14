@@ -93,10 +93,7 @@ class PanelActionService {
         return $itemAction;
     }
 
-    /**
-     * @return mixed
-     */
-    public function containerAction(string $act) {
+    public function containerAction(string $act): ?XotBasePanelAction {
         $actions = $this->containerActions();
         $action = $actions->firstWhere('name', $act);
         if (! is_object($action)) {
@@ -116,27 +113,25 @@ class PanelActionService {
         return $action;
     }
 
-    /**
-     * @return mixed
-     */
-    public function urlContainerAction(string $act, array $params = []) {
-        $containerActions = $this->containerActions();
-        $containerAction = $containerActions->firstWhere('name', $act);
+    public function urlContainerAction(string $act, array $params = []): string {
+        //$containerActions = $this->containerActions();
+        //$containerAction = $containerActions->firstWhere('name', $act);
+        $containerAction = $this->containerAction($act);
         //123    Call to an undefined method object::urlContainer().
-        if (is_object($containerAction)) {
-            return $containerAction->urlContainer(['rows' => $this->panel->getRows(), 'panel' => $this->panel]);
+        if (is_object($containerAction) /* && $containerAction instanceof XotBasePanelAction */) {
+            return $containerAction->urlContainer();
         }
+
+        return '#';
     }
 
-    /**
-     * @return mixed
-     */
-    public function urlItemAction(string $act, array $params = []) {
+    public function urlItemAction(string $act, array $params = []): string {
         $itemAction = $this->itemAction($act);
         if (is_object($itemAction)) {
-            //return $itemAction->urlItem(['row' => $this->panel->getRow(), 'panel' => $this->panel]);
             return $itemAction->urlItem();
         }
+
+        return '#';
     }
 
     /**

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Modules\Xot\Services;
 
+use Exception;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
@@ -139,7 +140,12 @@ class PanelService {
     }
 
     public function imageHtml(?array $params): string {
-        return optional($this->model)->image_src;
+        $res = $this->model->getAttributeValue('image_src');
+        if (! is_string($res)) {
+            throw new Exception('['.__LINE__.']['.class_basename(__CLASS__).']');
+        }
+
+        return $res;
     }
 
     public function tabs(): array {

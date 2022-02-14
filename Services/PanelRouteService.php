@@ -187,8 +187,8 @@ class PanelRouteService {
                         'panel guid' => $panel->guid(),
                         'last route key ' => $panel->getRow()->getRouteKey(),
                         'last route key name' => $panel->getRow()->getRouteKeyName(),
-                        'in_admin' => config()->get('in_admin'),
-                        'in_admin_session' => session()->get('in_admin'),
+                        'in_admin' => config('in_admin'),
+                        'in_admin_session' => Session::get('in_admin'),
                         //'routes' => \Route::getRoutes(),
                     ]
                 );

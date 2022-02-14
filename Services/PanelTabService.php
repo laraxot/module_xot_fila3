@@ -13,20 +13,17 @@ use Modules\Xot\Models\Panels\XotBasePanel;
 /**
  * Class PanelTabService.
  */
-class PanelTabService
-{
+class PanelTabService {
     protected XotBasePanel $panel;
 
     /**
      * PanelTabService constructor.
      */
-    public function __construct(XotBasePanel &$panel)
-    {
+    public function __construct(XotBasePanel &$panel) {
         $this->panel = $panel;
     }
 
-    public function getItemTabs(): array
-    {
+    public function getItemTabs(): array {
         /*
         $item = $this->panel->getRow();
         $tabs = $this->panel->tabs();
@@ -52,8 +49,7 @@ class PanelTabService
         return $this->getBreadTabs($this->panel);
     }
 
-    public function getRowTabs(): array
-    {
+    public function getRowTabs(): array {
         return $this->getBreadTabs($this->panel);
         /*
         $data = [];
@@ -80,8 +76,7 @@ class PanelTabService
         */
     }
 
-    public function getBreadTabs(PanelContract $bread): array
-    {
+    public function getBreadTabs(PanelContract $bread): array {
         [$containers, $items] = params2ContainerItem();
         $tabs = $bread->tabs();
         $row = [];
@@ -104,8 +99,7 @@ class PanelTabService
         return $row;
     }
 
-    public function getTabs(): array
-    {
+    public function getTabs(): array {
         $breads = $this->panel->getBreads();
 
         $data = [];
@@ -116,8 +110,7 @@ class PanelTabService
         return $data;
     }
 
-    public function getTabsOld(): array
-    {
+    public function getTabsOld(): array {
         $request = \Request::capture();
         $routename = (string) \Route::currentRouteName();
         $act = last(explode('.', $routename));
@@ -207,7 +200,7 @@ class PanelTabService
                         $panel1 = $panel1->related($tab['related']);
                     }
                     if (isset($tab['container_action'])) {
-                        $tmp->url = $panel1->containerAction($tab['container_action'])->url();
+                        $tmp->url = $panel1->urlContainerAction($tab['container_action']);
                     }
                     //$tmp->url = $tab['page'];
                     $tmp->active = false;
