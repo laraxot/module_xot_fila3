@@ -71,6 +71,15 @@ abstract class XotBasePanelAction {
     }
     */
 
+    /**
+     * @return mixed
+     */
+    public function postHandle() {
+        dddx('a');
+
+        return 'a';
+    }
+
     public function setPanel(PanelContract &$panel): self {
         $this->panel = $panel;
 

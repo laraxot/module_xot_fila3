@@ -105,7 +105,10 @@ interface PanelContract {
 
     public function tabs(): array;
 
-    public function getBreads(): Collection;
+    /**
+     * @return Collection&iterable<PanelContract>
+     */
+    public function getBreads();
 
     public function getRouteParams(): array;
 

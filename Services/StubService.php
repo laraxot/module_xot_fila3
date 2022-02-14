@@ -13,8 +13,7 @@ use Illuminate\Support\Str;
 /**
  * Class StubService.
  */
-class StubService
-{
+class StubService {
     //-- model (object) or class (string)
     //-- stub_name name of stub
     //-- create yes or not
@@ -31,8 +30,7 @@ class StubService
      *
      * this method will return instance of the class
      */
-    public static function getInstance(): self
-    {
+    public static function getInstance(): self {
         if (! self::$_instance) {
             self::$_instance = new self();
         }
@@ -40,41 +38,36 @@ class StubService
         return self::$_instance;
     }
 
-    public static function setName(string $name): self
-    {
-        $instance = self::getInstance();
-        $instance->name = $name;
-
-        return $instance;
+    public static function make(): self {
+        return static::getInstance();
     }
 
-    public static function setModel(Model $model): self
-    {
-        $instance = self::getInstance();
-        $instance->model_class = get_class($model);
+    public function setName(string $name): self {
+        $this->name = $name;
 
-        return $instance;
+        return $this;
     }
 
-    public static function setModelClass(string $model_class): self
-    {
-        $instance = self::getInstance();
-        $instance->model_class = $model_class;
+    public function setModel(Model $model): self {
+        $this->model_class = get_class($model);
 
-        return $instance;
+        return $this;
     }
 
-    public static function setModelAndName(Model $model, string $name): self
-    {
-        $instance = self::getInstance();
-        $instance->setModel($model);
-        $instance->setName($name);
+    public function setModelClass(string $model_class): self {
+        $this->model_class = $model_class;
 
-        return $instance;
+        return $this;
     }
 
-    public function get(): string
-    {
+    public function setModelAndName(Model $model, string $name): self {
+        $this->setModel($model);
+        $this->setName($name);
+
+        return $this;
+    }
+
+    public function get(): string {
         $file = $this->getClassFile();
         $class = $this->getClass();
         if (File::exists($file)) {
@@ -85,8 +78,7 @@ class StubService
         return $class;
     }
 
-    public function getNamespace(): string
-    {
+    public function getNamespace(): string {
         $ns = dirname($this->getClass());
         if (Str::startsWith($ns, '\\')) {
             $ns = Str::after($ns, '\\');
@@ -95,13 +87,11 @@ class StubService
         return $ns;
     }
 
-    public function getModel(): Model
-    {
+    public function getModel(): Model {
         return app($this->model_class);
     }
 
-    public function getReplaces(): array
-    {
+    public function getReplaces(): array {
         $dummy_id = 'id';
         $search = [];
         $fields = [];
@@ -143,8 +133,7 @@ class StubService
         return $replaces;
     }
 
-    public function getFactories(): string
-    {
+    public function getFactories(): string {
         if (! class_exists($this->model_class)) {
             return '';
         }
@@ -166,8 +155,7 @@ class StubService
     /**
      * Maps properties.
      */
-    protected function mapTableProperties(Column $column): array
-    {
+    protected function mapTableProperties(Column $column): array {
         $key = $column->getName();
         /*
         if (! $this->shouldBeIncluded($column)) {
@@ -200,8 +188,7 @@ class StubService
     /**
      * Checks if a given column should be included in the factory.
      */
-    protected function shouldBeIncluded(Column $column): bool
-    {
+    protected function shouldBeIncluded(Column $column): bool {
         $shouldBeIncluded = ($column->getNotNull() /*|| $this->includeNullableColumns */)
             && ! $column->getAutoincrement();
 
@@ -228,8 +215,7 @@ class StubService
      * @param string $key
      * @param string $value
      */
-    protected function mapToFactory($key, $value = null): array
-    {
+    protected function mapToFactory($key, $value = null): array {
         return [
             $key => is_null($value) ? $value : "'{$key}' => $value",
         ];
@@ -240,8 +226,7 @@ class StubService
      *
      * @return string
      */
-    protected function mapToFaker(Column $column)
-    {
+    protected function mapToFaker(Column $column) {
         return app(TypeGuesser::class)->guess(
             $column->getName(),
             $column->getType(),
@@ -249,8 +234,7 @@ class StubService
         );
     }
 
-    public function getFillable(): Collection
-    {
+    public function getFillable(): Collection {
         $model = $this->getModel();
         if (! method_exists($model, 'getFillable')) {
             return collect([]);
@@ -263,8 +247,8 @@ class StubService
         $fillables = collect($fillables)
             ->except(
                 [
-                'created_at', 'updated_at', 'updated_by', 'created_by', 'deleted_at', 'deleted_by',
-                'deleted_ip', 'created_ip', 'updated_ip',
+                    'created_at', 'updated_at', 'updated_by', 'created_by', 'deleted_at', 'deleted_by',
+                    'deleted_ip', 'created_ip', 'updated_ip',
                 ]
             );
 
@@ -274,8 +258,7 @@ class StubService
     /**
      * Undocumented function.
      */
-    public function getColumns(): Collection
-    {
+    public function getColumns(): Collection {
         $model = $this->getModel();
         $conn = $model->getConnection();
         $platform = $conn->getDoctrineSchemaManager()->getDatabasePlatform();
@@ -313,8 +296,7 @@ class StubService
     /**
      * sarebbe create ma in maniera fluent.
      */
-    public function generate(): self
-    {
+    public function generate(): self {
         $stub_file = __DIR__.'/../Console/stubs/'.$this->name.'.stub';
         $stub = File::get($stub_file);
         $replace = $this->getReplaces();
@@ -343,13 +325,11 @@ class StubService
         return $this;
     }
 
-    public function getClassName(): string
-    {
+    public function getClassName(): string {
         return class_basename($this->model_class);
     }
 
-    public function getDirModel(): string
-    {
+    public function getDirModel(): string {
         if (class_exists($this->model_class)) {
             $autoloader_reflector = new \ReflectionClass($this->model_class);
             //dddx($autoloader_reflector);
@@ -370,8 +350,7 @@ class StubService
         return dirname($path);
     }
 
-    public function getClass(): string
-    {
+    public function getClass(): string {
         $dir = collect(explode('\\', $this->model_class))->slice(0, -1)->implode('\\');
 
         switch ($this->name) {
@@ -400,8 +379,7 @@ class StubService
         }
     }
 
-    public function getClassFile(): string
-    {
+    public function getClassFile(): string {
         $class_name = $this->getClassName();
         $dir = $this->getDirModel();
         /*
@@ -445,8 +423,7 @@ class StubService
      *
      * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
      */
-    public static function fields($model): array
-    {
+    public static function fields($model): array {
         if (! method_exists($model, 'getFillable')) {
             return [];
         }
@@ -457,8 +434,8 @@ class StubService
             $fillables = $model->getConnection()->getSchemaBuilder()->getColumnListing($model->getTable());
             $fillables = collect($fillables)->except(
                 [
-                'created_at', 'updated_at', 'updated_by', 'created_by', 'deleted_at', 'deleted_by',
-                'deleted_ip', 'created_ip', 'updated_ip',
+                    'created_at', 'updated_at', 'updated_by', 'created_by', 'deleted_at', 'deleted_by',
+                    'deleted_ip', 'created_ip', 'updated_ip',
                 ]
             )->all();
             $autoloader_reflector = new \ReflectionClass($model);

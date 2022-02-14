@@ -4,12 +4,13 @@ declare(strict_types=1);
 
 namespace Modules\Xot\Models\Panels;
 
+use Exception;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\Relation;
-use Illuminate\Http\Request;
 //----------  SERVICES --------------------------
+use Illuminate\Http\Request;
 use Illuminate\Pipeline\Pipeline;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
@@ -262,7 +263,7 @@ abstract class XotBasePanel implements PanelContract {
     /**
      * Undocumented function.
      *
-     * @return Collection<PanelContract>
+     * @return Collection&iterable<PanelContract>
      */
     public function getParents() {
         $parents = collect([]);
@@ -275,7 +276,10 @@ abstract class XotBasePanel implements PanelContract {
         return $parents;
     }
 
-    public function getBreads(): Collection {
+    /**
+     * @return Collection&iterable<PanelContract>
+     */
+    public function getBreads() {
         if (in_array(class_basename($this), ['_ModulePanel'/* 'HomePanel' */])) {
             return collect();
         }
@@ -292,6 +296,7 @@ abstract class XotBasePanel implements PanelContract {
     public function getParentsGuid(): array {
         $parents = $this->getParents();
         $parent_first = $parents->first();
+        // 300    Access to an undefined property object::$row.
         if (is_object($parent_first)) {
             while (null != $parent_first->row->parent) {
                 $parent_first = PanelService::make()->get($parent_first->row->parent);
@@ -390,6 +395,9 @@ abstract class XotBasePanel implements PanelContract {
         $value = Str::slug($guid); //retrocompatibilita'
         if ('guid' == $pk_full && method_exists($row, 'posts')) {
             // 301    Call to an undefined method Illuminate\Database\Eloquent\Builder|Illuminate\Database\Eloquent\Relations\Relation::whereHas().
+            if (! method_exists($rows, 'whereHas')) {
+                throw new Exception('['.__LINE__.']['.class_basename(__CLASS__).']');
+            }
             $rows = $rows->whereHas(
                 'posts',
                 function (Builder $query) use ($value): void {
@@ -397,6 +405,9 @@ abstract class XotBasePanel implements PanelContract {
                 }
             );
         } else {
+            if (! method_exists($rows, 'where')) {
+                throw new Exception('['.__LINE__.']['.class_basename(__CLASS__).']');
+            }
             $rows = $rows->where([$pk_full => $value]);
         }
         DB::enableQueryLog();
@@ -653,8 +664,9 @@ abstract class XotBasePanel implements PanelContract {
                     $pivot_class = with(new $this::$model())
                         ->$rel_name()
                         ->getPivotClass();
-                    $pivot = new $pivot_class();
-                    $pivot_panel_name = StubService::setModelAndName($pivot, 'panel')->get();
+                    //$pivot = new $pivot_class();
+                    $pivot = app($pivot_class());
+                    $pivot_panel_name = StubService::make()->setModelAndName($pivot, 'panel')->get();
                     $pivot_panel = app($pivot_panel_name);
                     $pivot_panel->setRows(with(new $this::$model())->$rel_name());
                     $pivot_rules = collect($pivot_panel->rules())
@@ -740,7 +752,12 @@ abstract class XotBasePanel implements PanelContract {
     }
 
     public function getXotModelName(): ?string {
-        return collect(config('morph_map'))->search(static::$model);
+        $res = collect(config('morph_map'))->search(static::$model);
+        if (false === $res || is_int($res)) {
+            return null;
+        }
+
+        return $res;
     }
 
     /**
@@ -769,12 +786,14 @@ abstract class XotBasePanel implements PanelContract {
         return (new PanelActionService($this))->{__FUNCTION__}($params);
     }
 
+    public function getAction(string $name): XotBasePanelAction {
+        return (new PanelActionService($this))->{__FUNCTION__}($name);
+    }
+
     /**
      * crea l'oggetto del pannello item (quello dove passi $row).
-     *
-     * @return mixed
      */
-    public function itemAction(string $act) {
+    public function itemAction(string $act): XotBasePanelAction {
         return (new PanelActionService($this))->{__FUNCTION__}($act);
     }
 
@@ -1289,8 +1308,9 @@ abstract class XotBasePanel implements PanelContract {
     public function callAction(string $act) {
         //$act = Str::camel($act);
 
-        $action = $this->getActions()
-            ->firstWhere('name', $act);
+        //$action = $this->getActions()
+        //    ->firstWhere('name', $act);
+        $action = $this->getAction($act);
 
         if (! is_object($action)) {
             $msg = 'action '.$act.' not recognized for ['.get_class($this).']';
@@ -1320,8 +1340,10 @@ abstract class XotBasePanel implements PanelContract {
         if (null == $act) {
             return null;
         }
-        $action = $this->itemActions()
-            ->firstWhere('name', $act);
+        //$action = $this->itemActions()
+        //    ->firstWhere('name', $act);
+        $action = $this->itemAction($act);
+
         if (! is_object($action)) {
             $msg = '<h3>['.$act.'] not exists in ['.get_class($this).']</h3>Items Actions Avaible are :';
             foreach ($this->itemActions() as $act) {
@@ -1349,8 +1371,10 @@ abstract class XotBasePanel implements PanelContract {
         if (null == $act) {
             return null;
         }
-        $action = $this->containerActions()
-            ->firstWhere('name', $act);
+        //$action = $this->containerActions()
+        //    ->firstWhere('name', $act);
+        $action = $this->containerAction($act);
+
         if (! is_object($action)) {
             abort(403, 'action '.$act.' not recognized');
         }

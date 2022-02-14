@@ -75,6 +75,13 @@ class PanelActionService {
         return $this->getActions($params);
     }
 
+    public function getAction(string $name): XotBasePanelAction {
+        $action = $this->getActions()
+            ->firstWhere('name', $name);
+
+        return $action;
+    }
+
     public function itemAction(string $act): ?XotBasePanelAction {
         $itemActions = $this->itemActions();
         $itemAction = $itemActions->firstWhere('name', $act);
