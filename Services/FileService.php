@@ -15,7 +15,7 @@ use Nwidart\Modules\Facades\Module;
  * Class FileService.
  */
 class FileService {
-    public static function asset(string $path): ?string {
+    public static function asset(string $path): string {
         /*
             to DOOOO
             viewNamespaceToPath     => /images/prova.png
