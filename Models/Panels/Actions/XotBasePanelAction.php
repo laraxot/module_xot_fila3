@@ -11,19 +11,18 @@ use Illuminate\Database\Eloquent\Builder;
 //----------  SERVICES --------------------------
 //------------ jobs ----------------------------
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Str;
 use Modules\Theme\Services\FormXService;
 use Modules\Xot\Contracts\PanelContract;
+use Modules\Xot\Contracts\RowsContract;
 use Modules\Xot\Services\PanelService;
 
 /**
  * Class XotBasePanelAction.
  */
-abstract class XotBasePanelAction
-{
+abstract class XotBasePanelAction {
     public bool $onContainer = false;
 
     public bool $onItem = false;
@@ -33,7 +32,7 @@ abstract class XotBasePanelAction
     /**
      * Undocumented variable.
      *
-     * @var Relation|Builder
+     * @var RowsContract
      */
     public $rows;
 
@@ -72,15 +71,13 @@ abstract class XotBasePanelAction
     }
     */
 
-    public function setPanel(PanelContract &$panel): self
-    {
+    public function setPanel(PanelContract &$panel): self {
         $this->panel = $panel;
 
         return $this;
     }
 
-    public function getName(): string
-    {
+    public function getName(): string {
         if (Str::contains((string) $this->name, '::')) {
             $this->name = null;
         }
@@ -96,8 +93,7 @@ abstract class XotBasePanelAction
         return $this->name;
     }
 
-    public function getTitle(): string
-    {
+    public function getTitle(): string {
         $name = $this->getName();
 
         $row = $this->panel->getRow();
@@ -115,8 +111,7 @@ abstract class XotBasePanelAction
         return $title;
     }
 
-    public function getUrl(string $act = 'show'): string
-    {
+    public function getUrl(string $act = 'show'): string {
         if (isset($this->onItem) && $this->onItem) {
             return $this->urlItem();
         }
@@ -125,27 +120,24 @@ abstract class XotBasePanelAction
     }
 
     /**
-     * @param object $rows
+     * @param RowsContract $rows
      */
-    public function setRows($rows): self
-    {
+    public function setRows($rows): self {
         $this->rows = $rows;
 
         return $this;
     }
 
     /**
-     * @param object $row
+     * @param Model $row
      */
-    public function setRow($row): self
-    {
+    public function setRow($row): self {
         $this->row = $row;
 
         return $this;
     }
 
-    public function btn(array $params = []): string
-    {
+    public function btn(array $params = []): string {
         extract($params);
         if (isset($row)) {
             $this->setRow($row);
@@ -160,8 +152,7 @@ abstract class XotBasePanelAction
         return $this->btnContainer($params);
     }
 
-    public function url(string $act = 'show'): string
-    {
+    public function url(string $act = 'show'): string {
         if (isset($this->onItem) && $this->onItem) {
             return $this->urlItem();
         }
@@ -169,8 +160,7 @@ abstract class XotBasePanelAction
         return $this->urlContainer();
     }
 
-    public function urlContainer(/*string $act = 'show'*/): string
-    {
+    public function urlContainer(/*string $act = 'show'*/): string {
         $panel = $this->panel;
         //$request = \Request::capture();
         $name = $this->getName();
@@ -202,8 +192,7 @@ abstract class XotBasePanelAction
      * @param array|string $key
      * @param mixed        $value
      */
-    public function with($key, $value = null): self
-    {
+    public function with($key, $value = null): self {
         if (is_array($key)) {
             $this->data = array_merge($this->data, $key);
         } else {
@@ -213,8 +202,7 @@ abstract class XotBasePanelAction
         return $this;
     }
 
-    public function btnHtml(array $params = []): string
-    {
+    public function btnHtml(array $params = []): string {
         $params['panel'] = $this->panel;
 
         if (isset($params['debug']) && true === $params['debug']) {
@@ -256,8 +244,7 @@ abstract class XotBasePanelAction
         return FormXService::btnHtml($params);
     }
 
-    public function btnContainer(array $params = []): string
-    {
+    public function btnContainer(array $params = []): string {
         $act = isset($params['act']) ? $params['act'] : 'show';
         $url = $this->urlContainer();
         $title = $this->getTitle();
@@ -272,8 +259,7 @@ abstract class XotBasePanelAction
 
     //end btnContainer
 
-    public function urlItem(/*string $act = 'show'*/): string
-    {
+    public function urlItem(/*string $act = 'show'*/): string {
         $url = '';
         $query_params = [];
 
@@ -296,8 +282,7 @@ abstract class XotBasePanelAction
         return $url;
     }
 
-    public function btnItem(array $params = []): string
-    {
+    public function btnItem(array $params = []): string {
         $url = $this->urlItem();
         $title = $this->getTitle();
         $method = Str::camel($this->getName());
@@ -328,8 +313,7 @@ abstract class XotBasePanelAction
 
     //end btnItem
     //* --
-    public function updateRow(array $params = []): PanelContract
-    {
+    public function updateRow(array $params = []): PanelContract {
         $row = $this->row;
         extract($params);
         $this->panel->setRow($row);
@@ -351,8 +335,7 @@ abstract class XotBasePanelAction
      *
      * @return mixed
      */
-    public function pdf(array $params = [])
-    {
+    public function pdf(array $params = []) {
         /*
         if (null == $this->row) {
             $this->row = clone($this->rows)->get()[0];

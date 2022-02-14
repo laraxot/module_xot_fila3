@@ -644,7 +644,7 @@ class FileService {
     /**
      * Undocumented function.
      *
-     * @return int|float|string|array
+     * @return int|float|string|array|null
      */
     public static function config(string $key) {
         $ns_name = Str::before($key, '::');
@@ -665,8 +665,8 @@ class FileService {
             return $data;
         }
 
-        if (! is_numeric($value) && ! is_array($value) && ! is_string($value)) {
-            throw new Exception('['.__LINE__.']['.class_basename(__CLASS__).']');
+        if (! is_numeric($value) && ! is_array($value) && ! is_string($value) && ! is_null($value)) {
+            throw new Exception('['.__LINE__.']['.class_basename(__CLASS__).']['.var_dump($value).']');
         }
 
         return $value;
