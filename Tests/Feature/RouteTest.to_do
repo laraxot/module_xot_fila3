@@ -61,7 +61,7 @@ class RouteTest extends TestCase {
                 $model = xotModel($root);
                 $rows = $model->limit(5)->get();
                 foreach ($rows as $k => $row) {
-                    $panel = PanelService::get($row);
+                    $panel = PanelService::make()->get($row);
                     $url = $panel->url();
                     echo PHP_EOL.' post_id: '.$row->post_id.'  post_type: '.$row->post_type.'  lang: '.$row->lang;
                     $this->myTestUrl($url);

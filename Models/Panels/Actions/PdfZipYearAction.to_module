@@ -45,7 +45,7 @@ class PdfZipYearAction extends XotBasePanelAction {
         //$zip->open(
 
         foreach ($rows as $row) {
-            $panel = PanelService::get($row);
+            $panel = PanelService::make()->get($row);
             $filename = 'Scheda_'.$row->id.'_'.$row->matr.'_'.$row->cognome.'_'.$row->nome.'_'.$row->anno.'_'.date('Ymd').'.pdf';
 
             $path = Storage::disk('cache')->path($filename);

@@ -48,7 +48,7 @@ class GeoJsonResource extends ResCollection {
                 //"index"=> 0,
                 'isActive' => true,
                 //"logo"=> "http://placehold.it/32x32",
-                //'image' => PanelService::get($this)->imgSrc(['width' => 200, 'height' => 200]),
+                //'image' => PanelService::make()->get($this)->imgSrc(['width' => 200, 'height' => 200]),
                 'link' => $this->url,
                 'url' => '#',
                 'name' => $this->title,

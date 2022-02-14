@@ -127,7 +127,7 @@ abstract class XotBaseContainerController extends Controller {
             return $this->notAuthorized($method_act, $model);
         }
 
-        $panel = PanelService::get($model);
+        $panel = PanelService::make()->get($model);
 
         return $panel->callAction($act);
         /*

@@ -315,7 +315,7 @@ class StoreJob extends XotBaseJob
                         return $item;
                     }
                     $related = $model->$name()->getRelated();
-                    $related_panel = PanelService::get($related);
+                    $related_panel = PanelService::make()->get($related);
                     $res = $related_panel->setLabel($item);
 
                     return $res->getKey().'';

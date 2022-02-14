@@ -23,7 +23,7 @@ trait CommonTrait
      */
     public function getData()
     {
-        $panel = PanelService::get($this->row);
+        $panel = PanelService::make()->get($this->row);
         if (! is_object($panel)) {
             //dddx($this->row);
         }

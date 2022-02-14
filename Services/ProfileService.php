@@ -234,7 +234,8 @@ class ProfileService {
 
     public function getProfilePanel(): PanelContract {
         if (null == $this->profile) {
-            dddx(['message' => 'to fix', 'user' => $this->user, 'profile' => $this->profile]);
+            //dddx(['message' => 'to fix', 'user' => $this->user, 'profile' => $this->profile]);
+            throw new Exception('['.__LINE__.']['.class_basename(__CLASS__).']');
         }
 
         $profile_panel = PanelService::make()->get($this->profile);

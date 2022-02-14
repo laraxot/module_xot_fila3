@@ -284,7 +284,7 @@ abstract class XotBasePanel implements PanelContract {
         $parent_first = $parents->first();
         if (is_object($parent_first)) {
             while (null != $parent_first->row->parent) {
-                $parent_first = PanelService::get($parent_first->row->parent);
+                $parent_first = PanelService::make()->get($parent_first->row->parent);
                 $parents->prepend($parent_first);
             }
         }
@@ -1008,7 +1008,7 @@ abstract class XotBasePanel implements PanelContract {
         if (null != $id) {
             $model = $model->find($id);
         }
-        $panel = PanelService::get($model);
+        $panel = PanelService::make()->get($model);
         $panel = $panel->setParent($this);
 
         return $panel;
@@ -1432,7 +1432,7 @@ abstract class XotBasePanel implements PanelContract {
     //Method Modules\Xot\Models\Panels\XotBasePanelService::related() should return Modules\Xot\Models\Panels\XotBasePanel but returns Modules\Xot\Contracts\PanelContract|null.
     public function related(string $relationship): PanelContract {
         $related = $this->row->$relationship()->getRelated();
-        $panel_related = PanelService::get($related);
+        $panel_related = PanelService::make()->get($related);
         $panel_related->setParent($this);
 
         return $panel_related;

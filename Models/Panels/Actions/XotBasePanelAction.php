@@ -278,7 +278,7 @@ abstract class XotBasePanelAction
         $query_params = [];
 
         if (! isset($this->panel)) {
-            $this->panel = PanelService::get($this->row);
+            $this->panel = PanelService::make()->get($this->row);
         }
         $name = $this->getName();
         $url = $this->panel->url('show');
@@ -361,7 +361,7 @@ abstract class XotBasePanelAction
                 //$this->row=$this->rows->getModel();
             }
         }
-        $panel = PanelService::get($this->row);
+        $panel = PanelService::make()->get($this->row);
         $panel->setRowzs($this->rows);
         */
         return $this->panel->pdf($params);

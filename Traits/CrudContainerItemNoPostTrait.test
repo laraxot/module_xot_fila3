@@ -120,7 +120,7 @@ trait CrudContainerItemNoPostTrait {
     public function update(Request $request, $container, $item) {
         $data = $request->all();
         $row = $item;
-        $panel=PanelService::get($row);
+        $panel=PanelService::make()->get($row);
         $ris = $row->update($data);
         //$row->post()->save($data); //save vuole un oggetto
         /* ----
@@ -363,7 +363,7 @@ trait CrudContainerItemNoPostTrait {
 
         //return ThemeService::action($request, $row);
         /*
-        $panel=PanelService::get($item_new);
+        $panel=PanelService::make()->get($item_new);
 
 
         return ThemeService::view(['panel' => $panel, 'row' => $item_new])

@@ -122,7 +122,7 @@ abstract class XotBaseContainerController extends Controller {
             return $this->notAuthorized($method_act, $model);
         }
 
-        $panel=PanelService::get($model);
+        $panel=PanelService::make()->get($model);
 
         return $panel->out(
             [
@@ -265,7 +265,7 @@ abstract class XotBaseContainerController extends Controller {
         /*
         $row=app($controller)->$method($request, $this->container_last, $this->item_last);
         $rows=app($controller)::$rows;
-        $panel=PanelService::get($row);
+        $panel=PanelService::make()->get($row);
         $html=ThemeService::view(['panel' => $panel, 'row' => $row])
                 ->with('row', $row)
                 ->with('rows', $rows)

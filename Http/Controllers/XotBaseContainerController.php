@@ -30,7 +30,7 @@ abstract class XotBaseContainerController extends Controller
 
     public function __call($method, $args)
     {
-        $panel = PanelService::getRequestPanel();
+        $panel = PanelService::make()->getRequestPanel();
         if (null == $panel) {
             throw new \Exception('uston gavemo un problemon');
         }
