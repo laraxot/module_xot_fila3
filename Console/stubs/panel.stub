@@ -49,9 +49,9 @@ class DummyClass extends XotBasePanel {
      * quando aggiungi un campo select, è il numero della chiave
      * che viene messo come valore su value="id"
      *
-     * @return mixed
+     * @return int|string|null
      */
-    public function optionId(object $row) {
+    public function optionId(Model $row) {
         return $row->getKey();
     }
 
