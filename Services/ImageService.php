@@ -96,4 +96,15 @@ class ImageService {
     public function url(): string {
         return Storage::disk('photos')->url($this->filename);
     }
+
+    public function out(array $params = []): string {
+        return $this->img->encode('jpg', 60);
+    }
+
+    public function src(): string {
+        $src = '/'.str_replace(public_path('/'), '', $this->filename);
+        $src = str_replace('//', '/', $src);
+
+        return $src;
+    }
 }
