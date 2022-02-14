@@ -1028,7 +1028,7 @@ abstract class XotBasePanel implements PanelContract {
             $post_type = snake_case(class_basename($this->row));
         }
 
-        return $post_type;
+        return (string) $post_type;
     }
 
     /**
