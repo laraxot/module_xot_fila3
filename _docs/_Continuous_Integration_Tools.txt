@@ -1,0 +1,12 @@
+//----------
+PHP Mess Detector
+
+php phpmd.phar ./Modules html codesize,unusedcode,naming >phpmd.html
+
+//------------
+PHP Copy Paste Detector
+
+https://phpqa.io/projects/phpcpd.html
+
+//-----------
+

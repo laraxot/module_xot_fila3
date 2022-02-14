@@ -1136,25 +1136,12 @@ abstract class XotBasePanel implements PanelContract
         if (null == $row->getKey()) {
             return null;
         }
-<<<<<<< HEAD
         //1049   Dead catch - Exception is never thrown in the try block.
         //try {
         $guid = $row->$key;
         //} catch (\Exception $e) {
         //     $guid = '';
         // }
-=======
-        //try {
-        $guid = $row->$key;
-        if ('' == $guid && in_array($key, $row->getFillable())) {
-            $guid = Str::slug($this->title());
-            $row->{$key} = $guid;
-            $row->save();
-        }
-        //} catch (\Exception $e) {
-        //    $guid = '';
-        //}
->>>>>>> ab0fe2e (.)
         if ('' == $guid && method_exists($row, 'post') && 'guid' == $key && property_exists($row, 'post')) {
             //if ('' == $row->id && '' != $row->post_id) {
             //    $row->id = $row->post_id; //finche netson non riabilita migrazioni
@@ -1715,8 +1702,8 @@ abstract class XotBasePanel implements PanelContract
     public function isRevisionBy(UserContract $user): bool
     {
         $post = $this->getRow();
-        if ($post->getAttributeValue('created_by') == $user->handle 
-            || $post->getAttributeValue('updated_by') == $user->handle 
+        if ($post->getAttributeValue('created_by') == $user->handle
+            || $post->getAttributeValue('updated_by') == $user->handle
             || $post->getAttributeValue('user_id') == $user->id
         ) {
             return true;
