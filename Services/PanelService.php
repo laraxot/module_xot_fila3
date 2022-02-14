@@ -131,7 +131,7 @@ class PanelService {
 
         return app($panel_class)->setRow($this->model);
         */
-        $panel_class = StubService::setModelAndName($this->model, 'panel')->get();
+        $panel_class = StubService::make()->setModelAndName($this->model, 'panel')->get();
 
         return app($panel_class)
             ->setRow($this->model)

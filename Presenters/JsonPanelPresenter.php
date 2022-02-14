@@ -39,7 +39,7 @@ class JsonPanelPresenter implements PanelPresenterContract
     public function outContainer(?array $params = null)
     {
         $model = $this->panel->getRow();
-        $transformer = StubService::setModelAndName($model, 'transformer_collection')->get();
+        $transformer = StubService::make()->setModelAndName($model, 'transformer_collection')->get();
         $rows = $this->panel->rows()->paginate(20);
         $out = new $transformer($rows);
 
@@ -55,7 +55,7 @@ class JsonPanelPresenter implements PanelPresenterContract
     public function outItem(?array $params = null)
     {
         $model = $this->panel->getRow();
-        $transformer = StubService::setModelAndName($model, 'transformer_resource')->get();
+        $transformer = StubService::make()->setModelAndName($model, 'transformer_resource')->get();
         $out = new $transformer($model);
 
         return $out;

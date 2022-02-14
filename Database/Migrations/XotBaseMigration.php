@@ -38,7 +38,7 @@ abstract class XotBaseMigration extends Migration
             //try {
             $this->model = app($model);
             //} catch (\Exception $ex) {
-            //    $res = StubService::setModelClass($model)->setName('model')->get();
+            //    $res = StubService::make()->setModelClass($model)->setName('model')->get();
             //    throw new \Exception('<br><br>Table '.get_class($this).' does not have model '.$model.'<br><br>');
             //}
         }

@@ -17,13 +17,11 @@ use Illuminate\Support\Str;
  * https://dev.to/marcosgad/make-factory-more-organized-laravel-3c19.
  * https://medium.com/@yohan7788/seeders-and-faker-in-laravel-6806084a0c7.
  */
-class FactoryService
-{
+class FactoryService {
     /**
      * Create a new factory instance for the model.
      */
-    public static function newFactory(string $called_class): Factory
-    {
+    public static function newFactory(string $called_class): Factory {
         /*
         $model_name = class_basename($called_class);
         $module_name = Str::between($called_class, 'Modules\\', '\\Models\\');
@@ -37,7 +35,7 @@ class FactoryService
         $res = Artisan::call('module:make-factory', ['name' => $model_name, 'module' => $module_name]);
         //*/
 
-        $factory_class = StubService::setModelClass($called_class)
+        $factory_class = StubService::make()->setModelClass($called_class)
             ->setName('factory')
             ->get();
 
