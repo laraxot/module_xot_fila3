@@ -15,7 +15,6 @@ use Modules\Theme\Services\ThemeService;
 use Modules\Xot\Contracts\PanelContract;
 use Modules\Xot\Relations\CustomRelation;
 use Modules\Xot\Services\PanelService;
-use Modules\Xot\Services\PanelService;
 
 /**
  * Class HomeController.

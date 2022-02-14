@@ -30,7 +30,6 @@ use Modules\Xot\Services\PanelActionService;
 use Modules\Xot\Services\PanelFormService;
 use Modules\Xot\Services\PanelRouteService;
 use Modules\Xot\Services\PanelService;
-use Modules\Xot\Services\PanelService;
 use Modules\Xot\Services\PanelTabService;
 use Modules\Xot\Services\PolicyService;
 use Modules\Xot\Services\RowsService;
