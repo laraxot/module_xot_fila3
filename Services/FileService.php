@@ -16,10 +16,7 @@ use Nwidart\Modules\Facades\Module;
  */
 class FileService
 {
-    /**
-     * @return false|mixed|string
-     */
-    public static function asset(string $path)
+    public static function asset(string $path): ?string
     {
         /*
             to DOOOO
