@@ -666,7 +666,7 @@ class FileService {
         }
 
         if (! is_numeric($value) && ! is_array($value) && ! is_string($value) && ! is_null($value)) {
-            throw new Exception('['.__LINE__.']['.class_basename(__CLASS__).']['.var_dump($value).']');
+            throw new Exception('['.__LINE__.']['.class_basename(__CLASS__).']');
         }
 
         return $value;

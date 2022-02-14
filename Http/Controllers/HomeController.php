@@ -19,14 +19,11 @@ use Modules\Xot\Services\PanelService;
 /**
  * Class HomeController.
  */
-class HomeController extends Controller
-{
+class HomeController extends Controller {
     /**
      * @return mixed
      */
-    //public function index(?array $data, $panel = null) {
-    public function index(Request $request, ?PanelContract $panel = null)
-    {
+    public function index(Request $request, ?PanelContract $panel = null) {
         $request = request();
         $home = null;
         try {
@@ -50,8 +47,7 @@ class HomeController extends Controller
             ->with('_panel', $home_panel);
     }
 
-    public function createHomesTable(): void
-    {
+    public function createHomesTable(): void {
         Schema::create(
             'homes',
             function (Blueprint $table): void {
@@ -69,8 +65,7 @@ class HomeController extends Controller
      * @return mixed
      */
     //public function show(?array $data, $panel=null) {
-    public function show(Request $request, ?PanelContract $panel = null)
-    {
+    public function show(Request $request, ?PanelContract $panel = null) {
         //backtrace(true);
         $panel = PanelService::make()->getRequestPanel();
         if ('' != $request->_act) {
@@ -85,8 +80,7 @@ class HomeController extends Controller
      *
      * @return mixed
      */
-    public function showOld(Request $request, ?PanelContract $panel = null)
-    {
+    public function showOld(Request $request, ?PanelContract $panel = null) {
         //$request=request();
         $home = null;
         $home = TenantService::model('home');
@@ -132,8 +126,7 @@ class HomeController extends Controller
     /**
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
-    public function redirect(Request $request)
-    {
+    public function redirect(Request $request) {
         return redirect($request->url);
     }
 
@@ -142,8 +135,7 @@ class HomeController extends Controller
      *
      * @return mixed
      */
-    public function store(Request $request)
-    {
+    public function store(Request $request) {
         return $this->index($request);
     }
 }

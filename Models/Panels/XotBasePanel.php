@@ -233,8 +233,11 @@ abstract class XotBasePanel implements PanelContract {
         return $cloned;
     }
 
-    // se uso in rows() getQuery il dato ottenuto e' una collezione di items non di modelli
-    public function getHydrate(object $data): PanelContract {
+    /**  se uso in rows() getQuery il dato ottenuto e' una collezione di items non di modelli.
+     *
+     * @param object|Model $data
+     */
+    public function getHydrate($data): PanelContract {
         if ('stdClass' == get_class($data)) {
             //$row = $this->row->hydrate((array) $data);
             $row = $this->row->forceFill((array) $data);
