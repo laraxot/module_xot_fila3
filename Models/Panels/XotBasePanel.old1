@@ -165,7 +165,7 @@ abstract class XotBasePanel implements PanelContract {
         } else {
             $row = $data;
         }
-        $panel = PanelService::get($row);
+        $panel = PanelService::make()->get($row);
         $panel->setParent($this->getParent());
 
         return $panel;

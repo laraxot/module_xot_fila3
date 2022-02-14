@@ -62,7 +62,7 @@ class ContainersController extends Controller
         $action['controller'] = __CLASS__.'@'.$method;
         $action = \Route::current()->setAction($action);
 
-        $this->panel = PanelService::getRequestPanel();
+        $this->panel = PanelService::make()->getRequestPanel();
         if ('' != request()->input('_act', '')) {
             return $this->__callPanelAct($method, $args);
         }

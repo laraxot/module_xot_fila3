@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Modules\Xot\Services;
 
+use Exception;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Str;
@@ -14,13 +15,11 @@ use Illuminate\Support\Str;
  *
  * @method string urlAct($params)
  */
-class RouteService
-{
+class RouteService {
     /**
      * @return array|bool|mixed
      */
-    public static function inAdmin(array $params = [])
-    {
+    public static function inAdmin(array $params = []) {
         if (isset($params['in_admin'])) {
             return $params['in_admin'];
         }
@@ -35,7 +34,7 @@ class RouteService
         }
         $segments = (\Request::segments());
         if (count($segments) > 0 && 'livewire' == $segments[0]) {
-            if (true == session()->get('in_admin')) {
+            if (true == session('in_admin')) {
                 return true;
             }
         }
@@ -45,8 +44,7 @@ class RouteService
 
     //--- sarebbe deprecata ma il mal di testa
 
-    public static function urlAct(array $params): string
-    {
+    public static function urlAct(array $params): string {
         $query = [];
         $act = 'show';
         $row = (object) [];
@@ -64,6 +62,9 @@ class RouteService
         //Cannot call method getName() on mixed.
         $routename = ''; //Request::route()->getName();
         $old_act_route = last(explode('.', $routename));
+        if (! is_string($old_act_route)) {
+            throw new Exception('['.__LINE__.']['.class_basename(__CLASS__).']');
+        }
 
         $routename_act = Str::before($routename, $old_act_route).''.$act;
         $route_current = \Route::current();
@@ -195,8 +196,7 @@ class RouteService
     /**
      * @return string
      */
-    public static function getRoutenameN(array $params)
-    {
+    public static function getRoutenameN(array $params) {
         //default vars
         $n = 0;
         $act = 'show';
@@ -297,8 +297,7 @@ class RouteService
     /**
      * @return string
      */
-    public static function urlLang(array $params = [])
-    {
+    public static function urlLang(array $params = []) {
         extract($params);
 
         return '?';
@@ -368,8 +367,7 @@ class RouteService
      *
      * @throws \Exception
      */
-    public static function getAct(): string
-    {
+    public static function getAct(): string {
         $route_action = \Route::currentRouteAction();
         if (null == $route_action) {
             throw new \Exception('$route_action is null');
@@ -393,8 +391,7 @@ class RouteService
      *
      * @throws \Exception
      */
-    public static function getModuleName(): string
-    {
+    public static function getModuleName(): string {
         $route_action = \Route::currentRouteAction();
         if (null == $route_action) {
             throw new \Exception('$route_action is null');
@@ -409,8 +406,7 @@ class RouteService
      *
      * @throws \Exception
      */
-    public static function getControllerName(): string
-    {
+    public static function getControllerName(): string {
         $route_action = \Route::currentRouteAction();
         if (null == $route_action) {
             throw new \Exception('$route_action is null');
@@ -420,8 +416,7 @@ class RouteService
         return $name;
     }
 
-    public static function getView(): string
-    {
+    public static function getView(): string {
         $tmp = self::getControllerName();
         $tmp_arr = explode('\\', $tmp);
 

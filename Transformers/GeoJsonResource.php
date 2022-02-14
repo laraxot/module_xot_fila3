@@ -27,8 +27,7 @@ use Modules\Xot\Services\PanelService as Panel;
  * @property float  $latitude
  * @property float  $longitude
  */
-class GeoJsonResource extends ResCollection
-{
+class GeoJsonResource extends ResCollection {
     /**
      * @param \Illuminate\Http\Request $request
      *
@@ -37,10 +36,9 @@ class GeoJsonResource extends ResCollection
      *
      * @return array
      */
-    public function toArray($request)
-    {
+    public function toArray($request) {
         $lang = app()->getLocale();
-        //34     Parameter #1 $model of static method Modules\Xot\Services\PanelService::get() expects Illuminate\Database\Eloquent\Model, $this(Modules\Xot\Transformers\GeoJsonResource) given.
+        //34     Parameter #1 $model of static method Modules\Xot\Services\PanelService::make()->get() expects Illuminate\Database\Eloquent\Model, $this(Modules\Xot\Transformers\GeoJsonResource) given.
 
         //33     Access to an undefined property Modules\Xot\Transformers\GeoJsonResource::$post_id.
         return [

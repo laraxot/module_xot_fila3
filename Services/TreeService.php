@@ -13,7 +13,7 @@ class TreeService
     {
         return $coll->map(
             function ($item) use ($parent, $route_params) {
-                $panel = PanelService::get($item)->setParent($parent);
+                $panel = PanelService::make()->get($item)->setParent($parent);
                 $panel->setInAdmin(true);
                 $panel->setRouteParams($route_params);
                 //dddx($panel->getXotModelName());

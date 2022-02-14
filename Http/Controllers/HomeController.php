@@ -73,7 +73,7 @@ class HomeController extends Controller
     public function show(Request $request, ?PanelContract $panel = null)
     {
         //backtrace(true);
-        $panel = PanelService::getRequestPanel();
+        $panel = PanelService::make()->getRequestPanel();
         if ('' != $request->_act) {
             return $panel->callItemActionWithGate($request->_act);
         }

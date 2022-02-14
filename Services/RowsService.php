@@ -19,8 +19,7 @@ use Modules\Xot\Contracts\RowsContract;
 /**
  * Class ModelService.
  */
-class RowsService
-{
+class RowsService {
     /**
      * Undocumented function.
      *
@@ -28,8 +27,7 @@ class RowsService
      *
      * @return RowsContract
      */
-    public static function search($query, ?string $q, array $search_fields = [])
-    {
+    public static function search($query, ?string $q, array $search_fields = []) {
         //backtrace(true);
         //dddx([$query, $q, $search_fields]);
 
@@ -58,6 +56,7 @@ class RowsService
         case 0:
             //$search_fields = $this->search(); //campi di ricerca
             if (0 == count($search_fields)) { //se non gli passo nulla, cerco in tutti i fillable
+                //61     Call to an undefined method Illuminate\Database\Eloquent\Model|Modules\Xot\Contracts\RowsContract::getFillable().
                 $search_fields = $model->getFillable();
             }
             //$table = $model->getTable();
@@ -79,7 +78,7 @@ class RowsService
                                     }
                                 );
 
-                                //dddx($subquery);
+                            //dddx($subquery);
                             } else {
                                 $subquery = $subquery->orWhere($v, 'like', '%'.$q.'%');
                             }
@@ -112,8 +111,7 @@ class RowsService
      *
      * @return RowsContract
      */
-    public static function filter($query, array $filters, array $filters_fields)
-    {
+    public static function filter($query, array $filters, array $filters_fields) {
         //https://github.com/spatie/laravel-query-builder
 
         //$filters_fields = $this->filters();

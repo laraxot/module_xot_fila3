@@ -31,7 +31,7 @@ class HomeController extends Controller
         //
         /*
         $home = TenantService::model('home');
-        $panel = PanelService::get($home);
+        $panel = PanelService::make()->get($home);
 
         return $panel->view(); //mi restituisce la index delle "homes"
         */
@@ -41,7 +41,7 @@ class HomeController extends Controller
             $params = $route_current->parameters();
         }
 
-        //dddx(PanelService::getRequestPanel());//null
+        //dddx(PanelService::make()->getRequestPanel());//null
         $module_name = collect($params)->get('module');
         $module = Module::find($module_name);
         if (! is_object($module)) {

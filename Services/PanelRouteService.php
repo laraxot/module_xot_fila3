@@ -7,14 +7,14 @@ namespace Modules\Xot\Services;
 use Exception;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
 use Modules\Xot\Contracts\PanelContract;
 
 /**
  * Class PanelRouteService.
  */
-class PanelRouteService
-{
+class PanelRouteService {
     public PanelContract $panel;
 
     /*
@@ -23,8 +23,7 @@ class PanelRouteService
     }
     */
 
-    public function setPanel(PanelContract &$panel): self
-    {
+    public function setPanel(PanelContract &$panel): self {
         $this->panel = $panel;
 
         return $this;
@@ -33,8 +32,7 @@ class PanelRouteService
     /**
      * @return array|bool|mixed
      */
-    public static function inAdmin(array $params = [])
-    {
+    public static function inAdmin(array $params = []) {
         if (isset($params['in_admin'])) {
             return $params['in_admin'];
         }
@@ -63,19 +61,18 @@ class PanelRouteService
         //return inAdmin();
     }
 
-    public function addCacheQueryString(string $route): string
-    {
+    public function addCacheQueryString(string $route): string {
         $path = '/'.request()->path();
         $cache_key = Str::slug($path.'_query');
-
-        session()->put($cache_key, request()->query(), 60 * 60);
+        Session::put($cache_key, request()->query());
+        //session()->put($cache_key, request()->query(), 60 * 60);
         //echo '[cache_key['.$cache_key.']['.$route.']]';
 
         //--- aggiungo le query string all'url corrente
         //$queries = collect(request()->query())->except(['_act', 'item0', 'item1'])->all();
         $cache_key = Str::slug(Str::before($route, '?').'_query');
 
-        $queries = session()->get($cache_key);
+        $queries = Session::get($cache_key);
         if (! is_array($queries)) {
             $queries = [];
         }
@@ -90,8 +87,7 @@ class PanelRouteService
         return $url;
     }
 
-    public function addFilterQueryString(string $url): string
-    {
+    public function addFilterQueryString(string $url): string {
         $filters = $this->panel->filters();
         $row = $this->panel->row;
         foreach ($filters as $k => $v) {
@@ -136,13 +132,12 @@ class PanelRouteService
         return $url;
     }
 
-    public function url(string $act = 'show'): string
-    {
+    public function url(string $act = 'show'): string {
         if ('act' == $act) {
             dddx(
                 [
-                'act' => $act,
-                'backtrace' => debug_backtrace(),
+                    'act' => $act,
+                    'backtrace' => debug_backtrace(),
                 ]
             );
         }
@@ -209,16 +204,14 @@ class PanelRouteService
         return $this->addCacheQueryString($route);
     }
 
-    public function relatedUrl(string $name, string $act = 'index'): string
-    {
+    public function relatedUrl(string $name, string $act = 'index'): string {
         return $this->panel->relatedUrl($name, $act);
     }
 
     /**
      * @return string
      */
-    public static function langUrl(array $params = [])
-    {
+    public static function langUrl(array $params = []) {
         extract($params);
 
         return '?';

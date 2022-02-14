@@ -19,7 +19,7 @@
         $n_containers=count($containers);
         if($n_containers>1){
             $item_last=last($items);
-            $panel=PanelService::getByModel($item_last);
+            $panel=PanelService::make()->getByModel($item_last);
             $tabs_parent=$panel->tabs();
         }
         $tabs=array_merge($tabs,$tabs_parent);

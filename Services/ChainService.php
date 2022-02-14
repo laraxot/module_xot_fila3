@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Modules\Xot\Services;
 
+use Illuminate\Support\Collection;
+
 /**
  * https://github.com/Tinyportal/TinyPortal/blob/master/Sources/TPSubs.php.
  *
@@ -26,8 +28,7 @@ foreach($ordered as $item){
 
 */
 
-function chain($primary_field, $parent_field, $sort_field, $rows, $root_id = 0, $maxlevel = 25)
-{
+function chain($primary_field, $parent_field, $sort_field, $rows, $root_id = 0, $maxlevel = 25) {
     $c = new ChainService($primary_field, $parent_field, $sort_field, $rows, $root_id, $maxlevel);
 
     return $c->chain_table;
@@ -36,12 +37,11 @@ function chain($primary_field, $parent_field, $sort_field, $rows, $root_id = 0, 
 /**
  * Class ChainService.
  */
-class ChainService
-{
+class ChainService {
     public array $table;
 
     //public \Illuminate\Database\Eloquent\Collection $rows;
-    public \Illuminate\Support\Collection $rows;
+    public Collection $rows;
 
     public array $chain_table;
 
@@ -54,15 +54,14 @@ class ChainService
     /**
      * ChainService constructor.
      *
-     * @param string $primary_field
-     * @param string $parent_field
-     * @param string $sort_field
-     * @param object $rows
-     * @param int    $root_id
-     * @param int    $maxlevel
+     * @param string     $primary_field
+     * @param string     $parent_field
+     * @param string     $sort_field
+     * @param Collection $rows
+     * @param int        $root_id
+     * @param int        $maxlevel
      */
-    public function __construct($primary_field, $parent_field, $sort_field, $rows, $root_id = 0, $maxlevel = 25)
-    {
+    public function __construct($primary_field, $parent_field, $sort_field, $rows, $root_id = 0, $maxlevel = 25) {
         $this->rows = $rows;
         $this->primary_field = $primary_field;
         $this->parent_field = $parent_field;
@@ -77,8 +76,7 @@ class ChainService
      * @param int $rootcatid
      * @param int $maxlevel
      */
-    public function buildChain($rootcatid, $maxlevel): void
-    {
+    public function buildChain($rootcatid, $maxlevel): void {
         foreach ($this->rows as $row) {
             //considerando che ChainService viene utilizzato da XotBasePanel->optionsTree()
             //che a sua volta viene utilizzato in FormX\Resources\views\collective\fields\select\field_parent.blade.php
@@ -98,8 +96,7 @@ class ChainService
      * @param int $level
      * @param int $maxlevel
      */
-    public function makeBranch($parent_id, $level, $maxlevel): void
-    {
+    public function makeBranch($parent_id, $level, $maxlevel): void {
         if (! is_array($this->table)) {
             $this->table = [];
         }
@@ -127,8 +124,7 @@ class ChainService
      *
      * @return int
      */
-    public function chainCMP($a, $b)
-    {
+    public function chainCMP($a, $b) {
         if ($a[$a['key']] == $b[$b['key']]) {
             return 0;
         }

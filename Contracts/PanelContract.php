@@ -16,8 +16,7 @@ use Illuminate\View\View;
  *
  * @property Model $row
  */
-interface PanelContract
-{
+interface PanelContract {
     public function setRow(Model $row): self;
 
     //public function setRows(Relation $rows): self;
@@ -165,6 +164,8 @@ interface PanelContract
 
     public function isRevisionBy(UserContract $user): bool;
 
+    public function related(string $relationship): PanelContract;
+
     public function relatedName(string $name, ?int $id = null): PanelContract;
 
     public function getBuilder(): Builder;
@@ -173,10 +174,8 @@ interface PanelContract
 
     /**
      * Undocumented function.
-     *
-     * @return mixed
      */
-    public function filters();
+    public function filters(): array;
 
     /**
      * @return int|string|null
@@ -192,4 +191,18 @@ interface PanelContract
     public function getRules(array $params = []): array;
 
     public function rulesMessages(): array;
+
+    //--------------------- ACTIONS -------------------
+
+    /**
+     * @return mixed
+     */
+    public function urlContainerAction(string $act, array $params = []);
+
+    /**
+     * crea l'oggetto del pannello Container (quello dove passi $rowS).
+     *
+     * @return mixed
+     */
+    public function containerAction(string $act);
 }

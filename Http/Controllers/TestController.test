@@ -15,7 +15,7 @@ class TestController extends Controller {
 
     public function index(Request $request) {
         $params = getRouteParameters();
-        $panel = PanelService::getByParams($params);
+        $panel = PanelService::make()->getByParams($params);
 
         return $panel->out();
     }

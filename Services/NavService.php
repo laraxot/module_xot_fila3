@@ -11,10 +11,8 @@ use Illuminate\Contracts\Support\Renderable;
 /**
  * Class NavService.
  */
-class NavService
-{
-    public static function yearNav(): Renderable
-    {
+class NavService {
+    public static function yearNav(): Renderable {
         $request = \Request::capture();
         $routename = \Route::currentRouteName();
         //$request->route('parameter_name')
@@ -58,8 +56,7 @@ class NavService
         return view()->make($view, $view_params);
     }
 
-    public static function monthYearNav(): Renderable
-    {
+    public static function monthYearNav(): Renderable {
         //possiamo trasformarlo in una macro
         $request = \Request::capture();
         $routename = \Route::currentRouteName();
@@ -72,6 +69,7 @@ class NavService
 
         $year = $request->input('year', date('Y'));
         $month = $request->input('month', date('m'));
+
         $q = 2;
         $date = Carbon::create($year, $month, 1);
         if (false === $date) {

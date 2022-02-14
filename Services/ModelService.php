@@ -18,13 +18,11 @@ use ReflectionMethod;
 /**
  * Class ModelService.
  */
-class ModelService
-{
+class ModelService {
     /**
      * Undocumented function.
      */
-    public static function getRelationshipsAndData(Model $model, array $data): array
-    {
+    public static function getRelationshipsAndData(Model $model, array $data): array {
         $methods = get_class_methods($model);
 
         /* se metto questa eccezzione si blokka
@@ -69,8 +67,7 @@ class ModelService
         return $data;
     }
 
-    public static function getPostType(Model $model): string
-    {
+    public static function getPostType(Model $model): string {
         //da trovare la funzione che fa l'inverso
         //static string|null getMorphedModel(string $alias) Get the model associated with a custom polymorphic type.
         //static array morphMap(array $map = null, bool $merge = true) Set or get the morph map for polymorphic relations.
@@ -80,15 +77,14 @@ class ModelService
             Relation::morphMap([$post_type => get_class($model)]);
         }
 
-        return $post_type;
+        return (string) $post_type;
     }
 
     /**
      * Undocumented function
      * funziona leggendo o il "commento" prima della funzione o quello che si dichiara come returnType.
      */
-    public static function getRelations(Model $model): array
-    {
+    public static function getRelations(Model $model): array {
         $reflector = new ReflectionClass($model);
         $relations = [];
         $methods = $reflector->getMethods();
@@ -120,13 +116,12 @@ class ModelService
 
      *              https://laracasts.com/discuss/channels/eloquent/get-all-model-relationships.
      */
-    public static function getRelationships(Model $model): array
-    {
+    public static function getRelationships(Model $model): array {
         $relationships = [];
 
         foreach ((new ReflectionClass($model))->getMethods(ReflectionMethod::IS_PUBLIC) as $method) {
-            if ($method->class != get_class($model) 
-                || ! empty($method->getParameters()) 
+            if ($method->class != get_class($model)
+                || ! empty($method->getParameters())
                 || __FUNCTION__ == $method->getName()
             ) {
                 continue;
@@ -149,8 +144,7 @@ class ModelService
         return $relationships;
     }
 
-    public static function getNameRelationships(Model $model): array
-    {
+    public static function getNameRelationships(Model $model): array {
         $relations = self::getRelationships($model);
         $names = collect($relations)->map(
             function ($item) {
@@ -164,8 +158,7 @@ class ModelService
     /**
      * @param array|string $index
      */
-    public static function indexIfNotExists(Model $model, $index): void
-    {
+    public static function indexIfNotExists(Model $model, $index): void {
         if (\is_array($index)) {
             foreach ($index as $i) {
                 self::indexIfNotExists($model, $i);
@@ -187,13 +180,11 @@ class ModelService
         }
     }
 
-    public static function fieldExists(Model $model, string $field_name): bool
-    {
+    public static function fieldExists(Model $model, string $field_name): bool {
         return \Schema::connection($model->getConnectionName())->hasColumn($model->getTable(), $field_name);
     }
 
-    public static function addField(Model $model, string $field_name, string $field_type, array $attrs = []): void
-    {
+    public static function addField(Model $model, string $field_name, string $field_type, array $attrs = []): void {
         if (! \Schema::connection($model->getConnectionName())->hasColumn($model->getTable(), $field_name)) {
             \Schema::connection($model->getConnectionName())
                 ->table(
@@ -208,8 +199,7 @@ class ModelService
     /**
      * execute a query.
      */
-    public static function query(Model $model, string $sql): void
-    {
+    public static function query(Model $model, string $sql): void {
         $model->getConnection()->statement($sql);
     }
 

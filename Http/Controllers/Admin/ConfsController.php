@@ -24,7 +24,7 @@ class ConfsController extends Controller
     public function index(Request $request)
     {
         //$rows = TenantService::getConfigNames();
-        $panel = PanelService::getRequestPanel();
+        $panel = PanelService::make()->getRequestPanel();
 
         return $panel->out();
     }

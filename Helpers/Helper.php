@@ -540,7 +540,7 @@ if (! \function_exists('getModuleModelsMenu')) {
         $menu = collect($models)->map(
             function ($item, $key) {
                 $obj = new $item();
-                $panel = PanelService::get($obj);
+                $panel = PanelService::make()->get($obj);
                 $url = $panel->url('index');
 
                 return (object) [

@@ -39,7 +39,7 @@ class GeoJsonPanelPresenter implements PanelPresenterContract
     {
         $model = $this->panel->getRow();
         $model_table = $model->getTable();
-        $model_type = PanelService::get($model)->postType();
+        $model_type = PanelService::make()->get($model)->postType();
         $transformer = \Modules\Xot\Transformers\GeoJsonCollection::class;
         //--------
 

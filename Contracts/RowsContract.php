@@ -12,8 +12,7 @@ use Closure;
 /**
  * Modules\Xot\Contracts\RowsContract.
  */
-interface RowsContract
-{
+interface RowsContract {
     /**
      * Paginate the given query.
      *
@@ -127,8 +126,9 @@ interface RowsContract
 
     /**
      * Get the model instance being queried.
+     *  il return era con |static.
      *
-     * @return \Illuminate\Database\Eloquent\Model|static
+     * @return \Illuminate\Database\Eloquent\Model
      */
     public function getModel();
 

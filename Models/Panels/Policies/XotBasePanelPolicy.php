@@ -52,7 +52,7 @@ abstract class XotBasePanelPolicy
         $route_params = $panel->getRouteParams();
         if (isset($route_params['module'])) {
             $module = Module::find($route_params['module']);
-            //$panel = PanelService::get($user);
+            //$panel = PanelService::make()->get($user);
             //$areas = $panel->areas()->firstWhere('area_define_name', $module->getName());
             //return is_object($areas);
 
