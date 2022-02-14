@@ -23,7 +23,7 @@ trait PanelTrait
         //dddx(request()->route()->parameters());
         /*
         $this->app->singleton(
-            Panel::class,
+            PanelService::class,
             function (Container $app) {
                 return new Panel(
                     $app['events'],

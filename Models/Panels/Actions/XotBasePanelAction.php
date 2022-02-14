@@ -17,7 +17,7 @@ use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Str;
 use Modules\Theme\Services\FormXService;
 use Modules\Xot\Contracts\PanelContract;
-use Modules\Xot\Services\PanelService as Panel;
+use Modules\Xot\Services\PanelService;
 
 /**
  * Class XotBasePanelAction.
@@ -278,7 +278,7 @@ abstract class XotBasePanelAction
         $query_params = [];
 
         if (! isset($this->panel)) {
-            $this->panel = Panel::get($this->row);
+            $this->panel = PanelService::get($this->row);
         }
         $name = $this->getName();
         $url = $this->panel->url('show');
@@ -361,7 +361,7 @@ abstract class XotBasePanelAction
                 //$this->row=$this->rows->getModel();
             }
         }
-        $panel = Panel::get($this->row);
+        $panel = PanelService::get($this->row);
         $panel->setRowzs($this->rows);
         */
         return $this->panel->pdf($params);

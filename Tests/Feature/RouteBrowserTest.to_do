@@ -13,7 +13,7 @@ use Modules\Food\Models\Restaurant;
 use Modules\Food\Models\RestaurantOwner;
 use Modules\LU\Models\User;
 //use Tests\TestCase;
-use Modules\Xot\Services\PanelService as Panel;
+use Modules\Xot\Services\PanelService;
 use Tests\BrowserKitTestCase as TestCase;
 
 class RouteBrowserTest extends TestCase {
@@ -28,14 +28,14 @@ class RouteBrowserTest extends TestCase {
             $t->post()->save(factory(Post::class)->make());
         });
 
-        $this->restaurant_panel = Panel::get($this->restaurant);
+        $this->restaurant_panel = PanelService::get($this->restaurant);
 
         $this->restaurant_owner = factory(RestaurantOwner::class)->create();
         $this->restaurant_owner->each(function ($t) {
             $t->post()->save(factory(Post::class)->make());
         });
 
-        $this->restaurant_owner_panel = Panel::get($this->restaurant_owner);
+        $this->restaurant_owner_panel = PanelService::get($this->restaurant_owner);
     }
 
     public function testAddRestaurantNotLogged() {

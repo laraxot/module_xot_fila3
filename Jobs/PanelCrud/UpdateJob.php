@@ -12,7 +12,7 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use Modules\Xot\Contracts\PanelContract;
 use Modules\Xot\Services\ArrayService;
-use Modules\Xot\Services\PanelService as Panel;
+use Modules\Xot\Services\PanelService;
 
 /**
  * Class UpdateJob.
@@ -275,7 +275,7 @@ class UpdateJob extends XotBaseJob
                         return $item;
                     }
                     $related = $model->$name()->getRelated();
-                    $related_panel = Panel::get($related);
+                    $related_panel = PanelService::get($related);
                     $res = $related_panel->setLabel($item);
 
                     return $res->getKey().'';

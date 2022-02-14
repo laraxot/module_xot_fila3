@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str; // per dizionario morph
 //------------ services ----------
 use Modules\Xot\Http\Requests\XotRequest;
-use Modules\Xot\Services\PanelService as Panel;
+use Modules\Xot\Services\PanelService;
 
 /**
  * Trait CommonTrait.
@@ -23,7 +23,7 @@ trait CommonTrait
      */
     public function getData()
     {
-        $panel = Panel::get($this->row);
+        $panel = PanelService::get($this->row);
         if (! is_object($panel)) {
             //dddx($this->row);
         }

@@ -10,7 +10,7 @@ namespace Modules\Xot\Transformers;
 **/
 
 use Illuminate\Http\Resources\Json\JsonResource as ResCollection;
-use Modules\Xot\Services\PanelService as Panel;
+use Modules\Xot\Services\PanelService;
 
 /**
  * Class GeoJsonResource.
@@ -48,7 +48,7 @@ class GeoJsonResource extends ResCollection {
                 //"index"=> 0,
                 'isActive' => true,
                 //"logo"=> "http://placehold.it/32x32",
-                //'image' => Panel::get($this)->imgSrc(['width' => 200, 'height' => 200]),
+                //'image' => PanelService::get($this)->imgSrc(['width' => 200, 'height' => 200]),
                 'link' => $this->url,
                 'url' => '#',
                 'name' => $this->title,

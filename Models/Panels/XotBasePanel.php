@@ -30,7 +30,7 @@ use Modules\Xot\Services\PanelActionService;
 use Modules\Xot\Services\PanelFormService;
 use Modules\Xot\Services\PanelRouteService;
 use Modules\Xot\Services\PanelService;
-use Modules\Xot\Services\PanelService as Panel;
+use Modules\Xot\Services\PanelService;
 use Modules\Xot\Services\PanelTabService;
 use Modules\Xot\Services\PolicyService;
 use Modules\Xot\Services\RowsService;
@@ -48,7 +48,7 @@ abstract class XotBasePanel implements PanelContract {
     //public Model $row;
 
     //e se fosse relation ?
-    //Typed property Modules\Xot\Models\Panels\XotBasePanel::$rows must not be accessed before initialization
+    //Typed property Modules\Xot\Models\Panels\XotBasePanelService::$rows must not be accessed before initialization
 
     /**
      * Undocumented variable.
@@ -284,7 +284,7 @@ abstract class XotBasePanel implements PanelContract {
         $parent_first = $parents->first();
         if (is_object($parent_first)) {
             while (null != $parent_first->row->parent) {
-                $parent_first = Panel::get($parent_first->row->parent);
+                $parent_first = PanelService::get($parent_first->row->parent);
                 $parents->prepend($parent_first);
             }
         }
@@ -1008,7 +1008,7 @@ abstract class XotBasePanel implements PanelContract {
         if (null != $id) {
             $model = $model->find($id);
         }
-        $panel = Panel::get($model);
+        $panel = PanelService::get($model);
         $panel = $panel->setParent($this);
 
         return $panel;
@@ -1168,7 +1168,7 @@ abstract class XotBasePanel implements PanelContract {
         return (new PanelTabService($this))->{__FUNCTION__}();
     }
 
-    //Return value of Modules\Xot\Models\Panels\XotBasePanel::rows()
+    //Return value of Modules\Xot\Models\Panels\XotBasePanelService::rows()
     //must be an instance of Illuminate\Database\Eloquent\Builder,
     //instance of Illuminate\Database\Eloquent\Relations\MorphToMany returned
 
@@ -1429,10 +1429,10 @@ abstract class XotBasePanel implements PanelContract {
         return $presenter->out($params);
     }
 
-    //Method Modules\Xot\Models\Panels\XotBasePanel::related() should return Modules\Xot\Models\Panels\XotBasePanel but returns Modules\Xot\Contracts\PanelContract|null.
+    //Method Modules\Xot\Models\Panels\XotBasePanelService::related() should return Modules\Xot\Models\Panels\XotBasePanel but returns Modules\Xot\Contracts\PanelContract|null.
     public function related(string $relationship): PanelContract {
         $related = $this->row->$relationship()->getRelated();
-        $panel_related = Panel::get($related);
+        $panel_related = PanelService::get($related);
         $panel_related->setParent($this);
 
         return $panel_related;

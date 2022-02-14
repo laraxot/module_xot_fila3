@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Str;
 use Modules\Xot\Contracts\PanelContract;
 use Modules\Xot\Http\Requests\XotRequest;
-use Modules\Xot\Services\PanelService as Panel;
+use Modules\Xot\Services\PanelService;
 
 /**
  * Class XotBaseContainerController.
@@ -30,7 +30,7 @@ abstract class XotBaseContainerController extends Controller
 
     public function __call($method, $args)
     {
-        $panel = Panel::getRequestPanel();
+        $panel = PanelService::getRequestPanel();
         if (null == $panel) {
             throw new \Exception('uston gavemo un problemon');
         }

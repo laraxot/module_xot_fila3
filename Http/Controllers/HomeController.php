@@ -15,7 +15,7 @@ use Modules\Theme\Services\ThemeService;
 use Modules\Xot\Contracts\PanelContract;
 use Modules\Xot\Relations\CustomRelation;
 use Modules\Xot\Services\PanelService;
-use Modules\Xot\Services\PanelService as Panel;
+use Modules\Xot\Services\PanelService;
 
 /**
  * Class HomeController.
@@ -40,7 +40,7 @@ class HomeController extends Controller
             throw new \Exception('home is null');
         }
 
-        $home_panel = Panel::get($home);
+        $home_panel = PanelService::get($home);
 
         if ('' != $request->_act) {
             return $home_panel->callItemActionWithGate($request->_act);
@@ -91,7 +91,7 @@ class HomeController extends Controller
         //$request=request();
         $home = null;
         $home = TenantService::model('home');
-        $mod_name = Panel::get($home)->getModuleName();
+        $mod_name = PanelService::get($home)->getModuleName();
 
         $home_controller = '\Modules\\'.$mod_name.'\Http\Controllers\HomeController';
 
@@ -99,7 +99,7 @@ class HomeController extends Controller
 
         if ('' != $request->_act) {
             $home = TenantService::model('home');
-            $panel = Panel::get($home);
+            $panel = PanelService::get($home);
 
             return $panel->callItemActionWithGate($request->_act);
         }
@@ -114,7 +114,7 @@ class HomeController extends Controller
         } catch (\Exception $e) {
             dddx(['exception' => $e, 'model' => $home]);
         }
-        $panel = Panel::get($home);
+        $panel = PanelService::get($home);
 
         $rows = new CustomRelation(
             $home->newQuery(),
