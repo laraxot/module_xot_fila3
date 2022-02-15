@@ -33,7 +33,10 @@ class RouteServiceProvider extends XotBaseRouteServiceProvider {
 
     public function bootCallback(): void {
         //36     Cannot access offset 'router' on Illuminate\Contracts\Foundation\Application
-        $router = $this->app['router'];
+        //$router = $this->app['router'];
+        $router = app('router');
+        //dddx([$router, $router1]);
+
         $this->registerLang();
         $this->registerRoutePattern($router);
         $this->registerMyMiddleware($router);

@@ -114,8 +114,9 @@ abstract class XotBasePanel implements PanelContract {
 
     /**
      * Undocumented function.
+     * ret_old also |\Illuminate\Database\Query\Builder.
      *
-     * @return \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Query\Builder
+     * @return \Illuminate\Database\Eloquent\Builder
      */
     public function getBuilder() {
         if (null != $this->builder) {
@@ -125,7 +126,15 @@ abstract class XotBasePanel implements PanelContract {
         //return $this->rows->with();
         //145    Call to an undefined method Illuminate\Database\Eloquent\Relations\Relation::where().
         //return $this->rows->where('1=1');
-        return $this->rows->getQuery(); //Get the underlying query for the relation.
+        //return $this->rows->getQuery(); //Get the underlying query for the relation.
+
+        $res = $this->getRows()->getQuery();
+        if (! $res instanceof \Illuminate\Database\Eloquent\Builder) {
+            throw new Exception('['.__LINE__.']['.class_basename(__CLASS__).']');
+        }
+
+        return $res;
+
         //return $this->rows->getBaseQuery();//Get the base query builder driving the Eloquent builder.
     }
 
@@ -380,8 +389,8 @@ abstract class XotBasePanel implements PanelContract {
 
     public function setItem(string $guid): self {
         $row = $this->row;
-        //$rows = $this->getBuilder();
-        $rows = $this->getRows();
+        $rows = $this->getBuilder();
+        //$rows = $this->getRows();
         $tbl = $row->getTable();
 
         //347    Method Illuminate\Database\Eloquent\Model::getRouteKeyName() invoked with 1 parameter, 0 required.
@@ -396,20 +405,43 @@ abstract class XotBasePanel implements PanelContract {
         $value = Str::slug($guid); //retrocompatibilita'
         if ('guid' == $pk_full && method_exists($row, 'posts')) {
             // 301    Call to an undefined method Illuminate\Database\Eloquent\Builder|Illuminate\Database\Eloquent\Relations\Relation::whereHas().
-            if (! method_exists($rows, 'whereHas')) {
-                throw new Exception('['.__LINE__.']['.class_basename(__CLASS__).']');
-            }
-            $rows = $rows->whereHas(
+            //if (! method_exists($rows, 'whereHas')) {
+            //    throw new Exception('['.__LINE__.']['.class_basename(__CLASS__).']');
+            //}
+            $builder = $rows;
+            //if ($rows instanceof Relation) {
+            //    $builder = $rows->getQuery();
+            //}
+
+            $rows = $builder->whereHas(
                 'posts',
                 function (Builder $query) use ($value): void {
                     $query->where('guid', $value);
                 }
             );
         } else {
+            //* phpstan rompe per il where dentro il customrelation
+            //dddx($rows instanceof Relation);
+            /*
             if (! method_exists($rows, 'where')) {
-                throw new Exception('['.__LINE__.']['.class_basename(__CLASS__).']');
+                throw new Exception('[class: '.class_basename($rows).'][method: where]['.__LINE__.']['.class_basename(__CLASS__).']');
             }
-            $rows = $rows->where([$pk_full => $value]);
+            //*/
+            //try {
+            $builder = $rows;
+            //if ($rows instanceof Relation) {
+            //    $builder = $rows->getQuery();
+            //}
+            $rows = $builder->where([$pk_full => $value]);
+            /*
+            } catch (Exception $e) {
+                throw new Exception('
+                    [message: '.$e->getMessage().']
+                    [class: '.get_class($rows).']
+                    [method: where]
+                    ['.__LINE__.']['.class_basename(__CLASS__).']');
+            }
+            */
         }
         DB::enableQueryLog();
         $row = $rows
