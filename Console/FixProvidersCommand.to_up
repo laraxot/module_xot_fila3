@@ -15,8 +15,7 @@ use Symfony\Component\Console\Input\InputArgument;
 /**
  * Class FixProvidersCommand.
  */
-class FixProvidersCommand extends Command
-{
+class FixProvidersCommand extends Command {
     /**
      * @var string
      */
@@ -82,8 +81,7 @@ class FixProvidersCommand extends Command
     /**
      * @return array[]
      */
-    protected function getArguments()
-    {
+    protected function getArguments() {
         return [
             ['name', InputArgument::REQUIRED, 'The name of the module.'],
         ];
@@ -116,8 +114,7 @@ class FixProvidersCommand extends Command
     }
     */
 
-    public function handle(): void
-    {
+    public function handle(): void {
         $module_name = $this->argument('name');
         if (is_array($module_name)) {
             $module_name = implode(' ', $module_name);
@@ -131,6 +128,8 @@ class FixProvidersCommand extends Command
         $module_name = $module->getStudlyName();
         $route_provider_stub = File::get(__DIR__.'/stubs/route_provider.stub');
         $module_provider_stub = File::get(__DIR__.'/stubs/module_provider.stub');
+
+        // 134    Cannot access offset 'modules' on Illuminate\Contracts\Foundation\Application.
         $module_ns = $this->laravel['modules']->config('namespace');
         $dummy_class = $module_name.'ServiceProvider';
         $replaces = [
@@ -147,7 +146,7 @@ class FixProvidersCommand extends Command
             $tmp = File::get($filename);
             if (Str::contains($tmp, 'XotBaseServiceProvider')) {
                 $this->error($filename.' just fixed!');
-                //return false;
+            //return false;
             } else {
                 File::put($filename, $module_provider_stub);
             }

@@ -14,8 +14,7 @@ use Nwidart\Modules\Facades\Module;
 /**
  * Class XotServiceProvider.
  */
-class XotServiceProvider extends XotBaseServiceProvider
-{
+class XotServiceProvider extends XotBaseServiceProvider {
     use Traits\TranslatorTrait;
     use Traits\PresenterTrait;
     /**
@@ -30,8 +29,7 @@ class XotServiceProvider extends XotBaseServiceProvider
 
     public string $module_name = 'xot';
 
-    public function bootCallback(): void
-    {
+    public function bootCallback(): void {
         //Module::enable('Tenant');
         //Module::enable('Rating');
         //Module::enable('Tag');
@@ -54,8 +52,7 @@ class XotServiceProvider extends XotBaseServiceProvider
 
     //end bootCallback
 
-    public function registerCallback(): void
-    {
+    public function registerCallback(): void {
         $this->loadHelpersFrom(__DIR__.'/../Helpers');
         $loader = AliasLoader::getInstance();
         $loader->alias('Panel', 'Modules\Xot\Services\PanelService');
@@ -65,8 +62,7 @@ class XotServiceProvider extends XotBaseServiceProvider
         //$this->registerBladeDirectives(); //non intercetta
     }
 
-    private function redirectSSL(): void
-    {
+    private function redirectSSL(): void {
         if (config('xra.forcessl')) {
             // --- meglio ficcare un controllo anche sull'env
             if (isset($_SERVER['SERVER_NAME']) && 'localhost' != $_SERVER['SERVER_NAME']
@@ -83,19 +79,20 @@ class XotServiceProvider extends XotBaseServiceProvider
         }
     }
 
-    private function registerCommands(): void
-    {
+    /**
+     * Undocumented function.
+     */
+    private function registerCommands(): void {
         $this->commands(
             [
-            \Modules\Xot\Console\CreateAllRepositoriesCommand::class,
-            \Modules\Xot\Console\PanelMakeCommand::class,
-            \Modules\Xot\Console\FixProvidersCommand::class,
+                //\Modules\Xot\Console\CreateAllRepositoriesCommand::class,
+                //\Modules\Xot\Console\PanelMakeCommand::class,
+                //\Modules\Xot\Console\FixProvidersCommand::class,
             ]
         );
     }
 
-    private function registerViewComposers(): void
-    {
+    private function registerViewComposers(): void {
         //Factory $view
         //$view->composer('bootstrap-italia::page', BootstrapItaliaComposer::class);
         View::composer('*', XotComposer::class);
@@ -116,8 +113,7 @@ class XotServiceProvider extends XotBaseServiceProvider
 
     //end mergeConfigs
     //*/
-    public function loadHelpersFrom(string $path): void
-    {
+    public function loadHelpersFrom(string $path): void {
         $files = File::files($path);
         foreach ($files as $file) {
             if ('php' == $file->getExtension() && false !== $file->getRealPath()) {

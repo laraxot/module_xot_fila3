@@ -10,8 +10,7 @@ use Illuminate\Support\Facades\Route;
 /**
  * Class XotBaseRouteServiceProvider.
  */
-abstract class XotBaseRouteServiceProvider extends RouteServiceProvider
-{
+abstract class XotBaseRouteServiceProvider extends RouteServiceProvider {
     /**
      * The module namespace to assume when generating URLs to actions.
      */
@@ -32,8 +31,7 @@ abstract class XotBaseRouteServiceProvider extends RouteServiceProvider
      *
      * @return void
      */
-    public function boot()
-    {
+    public function boot() {
         \Config::set('extra_conn', \Request::segment(2)); //Se configurato va a prendere db diverso
         if (method_exists($this, 'bootCallback')) {
             $this->bootCallback();
@@ -46,8 +44,7 @@ abstract class XotBaseRouteServiceProvider extends RouteServiceProvider
      *
      * @return void
      */
-    public function map()
-    {
+    public function map() {
         $this->mapApiRoutes();
         $this->mapWebRoutes();
     }
@@ -57,8 +54,7 @@ abstract class XotBaseRouteServiceProvider extends RouteServiceProvider
      *
      * @return void
      */
-    protected function mapWebRoutes()
-    {
+    protected function mapWebRoutes() {
         Route::middleware('web')
             ->namespace($this->moduleNamespace)
             ->group($this->module_dir.'/../Routes/web.php');
@@ -69,8 +65,7 @@ abstract class XotBaseRouteServiceProvider extends RouteServiceProvider
      *
      * @return void
      */
-    protected function mapApiRoutes()
-    {
+    protected function mapApiRoutes() {
         Route::prefix('api')
             ->middleware('api')
             ->namespace($this->moduleNamespace)

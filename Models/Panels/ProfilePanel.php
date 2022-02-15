@@ -5,11 +5,11 @@ declare(strict_types=1);
 namespace Modules\Xot\Models\Panels;
 
 use Illuminate\Http\Request;
+use Modules\LU\Models\User;
 
 //--- Services --
 
-class ProfilePanel extends XotBasePanel
-{
+class ProfilePanel extends XotBasePanel {
     /**
      * The model the resource corresponds to.
      */
@@ -24,8 +24,7 @@ class ProfilePanel extends XotBasePanel
      * Get the fields displayed by the resource.
         'value'=>'..',
      */
-    public function fields(): array
-    {
+    public function fields(): array {
         return [
             (object) [
                 'type' => 'Id',
@@ -43,8 +42,7 @@ class ProfilePanel extends XotBasePanel
     /**
      * Get the tabs available.
      */
-    public function tabs(): array
-    {
+    public function tabs(): array {
         $tabs_name = [];
 
         return $tabs_name;
@@ -53,8 +51,7 @@ class ProfilePanel extends XotBasePanel
     /**
      * Get the cards available for the request.
      */
-    public function cards(Request $request): array
-    {
+    public function cards(Request $request): array {
         return [];
     }
 
@@ -63,32 +60,35 @@ class ProfilePanel extends XotBasePanel
      *
      * @param \Illuminate\Http\Request $request
      */
-    public function filters(Request $request = null): array
-    {
+    public function filters(Request $request = null): array {
         return [];
     }
 
     /**
      * Get the lenses available for the resource.
      */
-    public function lenses(Request $request): array
-    {
+    public function lenses(Request $request): array {
         return [];
     }
 
     /**
      * Get the actions available for the resource.
      */
-    public function actions(): array
-    {
+    public function actions(): array {
         return [];
     }
 
-    public function isSuperAdmin(): bool
-    {
+    /**
+     * Undocumented function.
+     */
+    public function isSuperAdmin(): bool {
         //232 Access to an undefined property Illuminate\Database\Eloquent\Model::$user.
         //$user = $this->row->user;
-        $user = $this->row->getRelationValue('user');
+        //$user = $this->row->getRelationValue('user');
+        // 89     Access to an undefined property object::$perm_type
+        $user_id = $this->row->getAttributeValue('user_id');
+        $user = User::where('id', $user_id)->first();
+
         try {
             if (is_object($user->perm) && $user->perm->perm_type >= 4) {  //superadmin
                 return true;
@@ -101,10 +101,9 @@ class ProfilePanel extends XotBasePanel
     }
 
     /**
-     * @param int $size
+     * Avatar function.
      */
-    public function avatar($size = 100): ?string
-    {
+    public function avatar(int $size = 100): ?string {
         if (null == $this->row) {
             throw new \Exception('row is null');
         }

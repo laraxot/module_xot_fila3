@@ -3,16 +3,13 @@
 declare(strict_types=1);
 
 use Illuminate\Database\Schema\Blueprint;
-use Modules\Geo\Models\Place;
-//----- models-------
 use Modules\Xot\Database\Migrations\XotBaseMigration;
 use Modules\Xot\Models\Profile;
 
 /**
  * Class CreateProfilesTable.
  */
-class CreateXotProfilesTable extends XotBaseMigration
-{
+class CreateXotProfilesTable extends XotBaseMigration {
     protected ?string $model_class = Profile::class;
 
     /**
@@ -20,8 +17,7 @@ class CreateXotProfilesTable extends XotBaseMigration
      *
      * @return void
      */
-    public function up()
-    {
+    public function up() {
         //-- CREATE --
         $this->tableCreate(
             function (Blueprint $table) {

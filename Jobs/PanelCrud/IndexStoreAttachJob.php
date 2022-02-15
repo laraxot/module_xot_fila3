@@ -13,10 +13,8 @@ use Modules\Xot\Contracts\PanelContract;
 /**
  * Class IndexStoreAttachJob.
  */
-class IndexStoreAttachJob extends XotBaseJob
-{
-    public function handle(): PanelContract
-    {
+class IndexStoreAttachJob extends XotBaseJob {
+    public function handle(): PanelContract {
         $name = Str::plural($this->panel->postType());
         $rows = $this->panel->getRows();
         $to = $this->data[$name]['to'];
@@ -28,6 +26,9 @@ class IndexStoreAttachJob extends XotBaseJob
         }
         if (! method_exists($rows, 'attach')) {
             throw new \Exception('in ['.get_class($rows).'] method [attach] not exists ['.__LINE__.']['.__FILE__.']');
+        }
+        if (! method_exists($rows, 'getRelated')) {
+            throw new \Exception('in ['.get_class($rows).'] method [getRelated] not exists ['.__LINE__.']['.__FILE__.']');
         }
 
         $related = $rows->getRelated();

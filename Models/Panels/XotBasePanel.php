@@ -293,6 +293,7 @@ abstract class XotBasePanel implements PanelContract {
     }
 
     // questa funzione rilascia un array dei guid dell'url attuale
+    /*
     public function getParentsGuid(): array {
         $parents = $this->getParents();
         $parent_first = $parents->first();
@@ -313,7 +314,7 @@ abstract class XotBasePanel implements PanelContract {
 
         return $parents_guid;
     }
-
+    */
     /**
      * @return mixed
      */
