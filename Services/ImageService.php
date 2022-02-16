@@ -83,6 +83,26 @@ class ImageService {
     /**
      * Undocumented function.
      */
+    public function setSrc(string $val): self {
+        if ('' == $val) {
+            $val = public_path('img/nophoto.jpg');
+        }
+        if (Str::startsWith($val, url(''))) { //se e' una immagine locale
+            $val = public_path(\substr($val, strlen(url(''))));
+        }
+        $str = '/laravel-filemanager/';
+        if (Str::startsWith($val, $str)) {
+            $val = public_path(\substr($val, strlen($str)));
+        }
+        $this->src = $val;
+        $this->setImg($val);
+
+        return $this;
+    }
+
+    /**
+     * Undocumented function.
+     */
     public function fit(): self {
         $this->img->fit($this->width, $this->height);
 
