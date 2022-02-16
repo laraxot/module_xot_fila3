@@ -153,4 +153,13 @@ class ImageService {
 
         return $this;
     }
+
+    /**
+     * Undocumented function.
+     */
+    public function setDirname(string $dirname): self {
+        $this->dirname = $dirname;
+
+        return $this;
+    }
 }
