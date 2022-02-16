@@ -8,11 +8,38 @@ declare(strict_types=1);
 namespace Modules\Xot\Services;
 
 use Exception;
+use Illuminate\Support\Collection;
 
 /**
  * Class CSVService.
  */
 class CSVService {
+    protected Collection $data;
+    private static ?self $instance = null;
+
+    public function __construct() {
+        //---
+        //require_once __DIR__.'/vendor/autoload.php';
+    }
+
+    /**
+     * Undocumented function.
+     */
+    public static function getInstance(): self {
+        if (null === self::$instance) {
+            self::$instance = new self();
+        }
+
+        return self::$instance;
+    }
+
+    /**
+     * Undocumented function.
+     */
+    public static function make(): self {
+        return static::getInstance();
+    }
+
     /**
      * Undocumented function.
      */
