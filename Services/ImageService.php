@@ -15,27 +15,36 @@ use Intervention\Image\Facades\Image;
  * Class ImageService.
  */
 class ImageService {
-    private \Intervention\Image\Image $img;
+    protected \Intervention\Image\Image $img;
     protected int $width;
     protected int $height;
     protected string $src;
     protected string $dirname;
     protected string $filename;
 
-    private static ?self $instance = null;
+    private static ?self $_instance = null;
 
+    /**
+     * Undocumented function.
+     */
     public static function getInstance(): self {
-        if (null === self::$instance) {
-            self::$instance = new self();
+        if (null === self::$_instance) {
+            self::$_instance = new self();
         }
 
-        return self::$instance;
+        return self::$_instance;
     }
 
+    /**
+     * Undocumented function.
+     */
     public static function make(): self {
         return static::getInstance();
     }
 
+    /**
+     * Undocumented function.
+     */
     public function setVars(array $params): self {
         foreach ($params as $k => $v) {
             $func = 'set'.Str::studly((string) $k);
@@ -48,6 +57,9 @@ class ImageService {
         return $this;
     }
 
+    /**
+     * Undocumented function.
+     */
     public function setImg(string $val): self {
         $nophoto_path = public_path('img/nophoto.jpg');
         if ('' == $val) {
@@ -68,12 +80,18 @@ class ImageService {
         return $this;
     }
 
+    /**
+     * Undocumented function.
+     */
     public function fit(): self {
         $this->img->fit($this->width, $this->height);
 
         return $this;
     }
 
+    /**
+     * Undocumented function.
+     */
     public function save(): self {
         $info = pathinfo($this->src);
         if (! isset($info['extension'])) {
@@ -94,18 +112,45 @@ class ImageService {
         return $this;
     }
 
+    /**
+     * Undocumented function.
+     */
     public function url(): string {
         return Storage::disk('photos')->url($this->filename);
     }
 
+    /**
+     * Undocumented function.
+     */
     public function out(array $params = []): \Intervention\Image\Image {
         return $this->img->encode('jpg', 60);
     }
 
+    /**
+     * Undocumented function.
+     */
     public function src(): string {
         $src = '/'.str_replace(public_path('/'), '', $this->filename);
         $src = str_replace('//', '/', $src);
 
         return $src;
+    }
+
+    /**
+     * Undocumented function.
+     */
+    public function setWidth(int $val): self {
+        $this->width = $val;
+
+        return $this;
+    }
+
+    /**
+     * Undocumented function.
+     */
+    public function setHeight(int $val): self {
+        $this->height = $val;
+
+        return $this;
     }
 }
