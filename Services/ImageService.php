@@ -1,5 +1,9 @@
 <?php
-
+/**
+ * ImageService.
+ *
+ * @category Services
+ */
 declare(strict_types=1);
 
 namespace Modules\Xot\Services;
