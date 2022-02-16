@@ -116,7 +116,7 @@ abstract class XotBaseContainerController extends Controller {
             return $this->notAuthorized($method_act, $model);
         }
 
-        //$panel = Panel::get($model);
+        //$panel = Panel::make()->get($model);
         $panel = $this->ContainerItem2Panel($this->container_last, $this->item_last);
 
         return $panel->callAction($act);
@@ -193,7 +193,7 @@ abstract class XotBaseContainerController extends Controller {
     public function __call_new_not_working_now($method, $args) {
         $params = optional(\Route::current())->parameters();
         //$panel = request()->panel;
-        $panel = Panel::getRequestPanel();
+        $panel = Panel::make()->getRequestPanel();
 
         if (null == $panel) {
             $request = \Modules\Xot\Http\Requests\XotRequest::capture();
@@ -296,13 +296,13 @@ abstract class XotBaseContainerController extends Controller {
                 $row = xotModel($container);
                 $rows = $row; // o NULL ???
             }
-            $panel = Panel::get($row);
+            $panel = Panel::make()->get($row);
             //$panel->setRow($row);
             $panel->setRows($rows);
 
             return $panel;
         }
-        $panel = Panel::get($item);
+        $panel = Panel::make()->get($item);
 
         return $panel;
     }

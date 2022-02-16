@@ -52,7 +52,7 @@ class CreateJob implements ShouldQueue {
             $row = xotModel($container);
         }
         //$rows = $rows->paginate(20);
-        $panel = Panel::get($row);
+        $panel = Panel::make()->get($row);
         $panel->setRows($rows);
 
         $this->row = $row;

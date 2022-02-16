@@ -16,7 +16,7 @@
     --}}
     @foreach ($items as $item)
         <url>
-            <loc>{{ url(Panel::get($item)->url()) }}</loc>
+            <loc>{{ url(Panel::make()->get($item)->url()) }}</loc>
             <lastmod>{{ $item->created_at->tz('UTC')->toAtomString() }}</lastmod>
             {{-- questi non so se servono veramente
             <changefreq>weekly</changefreq>

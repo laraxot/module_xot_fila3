@@ -56,7 +56,7 @@ class IndexUpdateJob implements ShouldQueue {
         }
         $this->row = $row;
         $this->rows = $rows;
-        $this->panel = Panel::get($row);
+        $this->panel = Panel::make()->get($row);
         $this->panel->setRows($rows);
         //dddx($this->panel);
 

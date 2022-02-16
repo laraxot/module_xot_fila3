@@ -88,7 +88,7 @@ class StoreJob implements ShouldQueue {
 
         $row = $row->fill($data);
         $row->save();
-        $panel = Panel::get($row);
+        $panel = Panel::make()->get($row);
 
         if (is_object($item)) {
             $pivot_data = [];
@@ -276,7 +276,7 @@ class StoreJob implements ShouldQueue {
                         return $item;
                     }
                     $related = $model->$name()->getRelated();
-                    $related_panel = Panel::get($related);
+                    $related_panel = Panel::make()->get($related);
                     $res = $related_panel->setLabel($item);
 
                     return $res->getKey().'';

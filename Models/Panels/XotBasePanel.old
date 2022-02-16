@@ -1354,7 +1354,7 @@ abstract class XotBasePanel {
         if (null != $id) {
             $model = $model->find($id);
         }
-        $panel = Panel::get($model);
+        $panel = Panel::make()->get($model);
         if (! is_object($panel)) {
             //dddx($model);
             return null;
@@ -1845,7 +1845,7 @@ abstract class XotBasePanel {
 
     public function related($relationship) {
         $related = $this->row->$relationship()->getRelated();
-        $panel_related = Panel::get($related);
+        $panel_related = Panel::make()->get($related);
         $panel_related->setParent($this);
 
         return $panel_related;

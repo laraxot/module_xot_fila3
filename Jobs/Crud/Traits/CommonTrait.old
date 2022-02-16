@@ -10,7 +10,7 @@ use Modules\Xot\Services\PanelService as Panel;
 
 trait CommonTrait {
     public function getData() {
-        $panel = Panel::get($this->row);
+        $panel = Panel::make()->get($this->row);
         if (! is_object($panel)) {
             //dddx($this->row);
         }

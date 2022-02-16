@@ -391,7 +391,7 @@ class RouteService {
                 if (is_string($item_prev)) {
                     $container_prev = $container_types[$i - 1];
                     $container_prev_obj = new $container_prev();
-                    $container_prev_panel = Panel::get($container_prev_obj);
+                    $container_prev_panel = Panel::make()->get($container_prev_obj);
                     $other_lang = \Modules\Blog\Models\Post::where('post_type', $container_prev_panel->postType())
                         ->where('guid', $item_prev)
                         ->first();
@@ -754,7 +754,7 @@ class RouteService {
         }
         if (is_object($parent)) {
             $parent_cont_i = RouteService::containerN(['model' => get_class($parent), 'route_params' => $route_params]);
-            $route_params['container'.($parent_cont_i)] = Panel::get($parent)->postType();
+            $route_params['container'.($parent_cont_i)] = Panel::make()->get($parent)->postType();
             $route_params['item'.($parent_cont_i)] = $parent;
             if ($parent_cont_i == $cont_i) {
                 ++$cont_i;
@@ -771,7 +771,7 @@ class RouteService {
         $tmp[] = $act;
         $routename = implode('.', $tmp);
         $route_params['lang'] = $lang;
-        $post_type = Panel::get($model)->postType();
+        $post_type = Panel::make()->get($model)->postType();
         //if(!isset($route_params['container'.($cont_i)]) ){
         $route_params['container'.($cont_i)] = $post_type;
         //}

@@ -25,7 +25,7 @@ trait CrudContainerItemNoPostTrait {
             $row = $rows->getRelated();
         }
         //$rows = $rows->paginate(20);
-        $panel = Panel::get($row);
+        $panel = Panel::make()->get($row);
         $panel->setRows($rows);
 
         return $panel;
@@ -41,7 +41,7 @@ trait CrudContainerItemNoPostTrait {
             $row = xotModel($container);
         }
         //$rows = $rows->paginate(20);
-        $panel = Panel::get($row);
+        $panel = Panel::make()->get($row);
         $panel->setRows($rows);
 
         return $panel;
@@ -84,27 +84,27 @@ trait CrudContainerItemNoPostTrait {
             $item_new = $panel->storeCallback(['row' => $item_new, 'data' => $data]);
         }
         \Session::flash('status', 'aggiornato! ['.$row->getKey().']!'); //.implode(',',$row->getChanges())
-        $panel = Panel::get($item_new);
+        $panel = Panel::make()->get($item_new);
 
         return $panel;
     }
 
     public function edit(Request $request, $container, $item) {
-        return Panel::get($item);
+        return Panel::make()->get($item);
     }
 
     public function update(Request $request, $container, $item) {
         $data = $request->all();
         $row = $item;
-        $panel = Panel::get($row);
+        $panel = Panel::make()->get($row);
         $ris = $row->update($data);
         $this->manageRelationships(['model' => $item, 'data' => $data, 'act' => 'update']);
         \Session::flash('status', 'aggiornato! ['.$row->getKey().']!'); //.implode(',',$row->getChanges())
-        return Panel::get($item);
+        return Panel::make()->get($item);
     }
 
     public function show(Request $request, $container, $item) {
-        return Panel::get($item);
+        return Panel::make()->get($item);
     }
 
     /**
@@ -474,7 +474,7 @@ trait CrudContainerItemNoPostTrait {
         $status = 'scollegato';
         \Session::flash('status', $status);
 
-        return Panel::get($item);
+        return Panel::make()->get($item);
     }
 
     //end detach
@@ -484,7 +484,7 @@ trait CrudContainerItemNoPostTrait {
         $status = 'eliminato';
         \Session::flash('status', $status);
 
-        return Panel::get($item);
+        return Panel::make()->get($item);
     }
 
     //end detach
