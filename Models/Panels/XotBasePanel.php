@@ -1215,7 +1215,7 @@ abstract class XotBasePanel implements PanelContract {
 
     public function getTradMod(): string {
         $mod_low = $this->getModulenameLow();
-        $str = $mod_low.'::'.$this->getName();
+        $str = $mod_low.'::'.Str::snake($this->getName());
 
         return $str;
     }
