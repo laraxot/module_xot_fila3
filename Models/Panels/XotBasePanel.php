@@ -502,6 +502,10 @@ abstract class XotBasePanel implements PanelContract {
         return optional($this->row)->title;
     }
 
+    public function txt(): ?string {
+        return optional($this->row)->txt;
+    }
+
     public function optionsModelClass(string $model_class, array $where = []): array {
         $data = [];
 
