@@ -20,7 +20,7 @@ class ImageService {
     protected int $height;
     protected string $src;
     protected string $dirname;
-    protected string $filename;
+    protected ?string $filename = null;
 
     private static ?self $_instance = null;
 
@@ -95,6 +95,7 @@ class ImageService {
             $val = public_path(\substr($val, strlen($str)));
         }
         $this->src = $val;
+
         $this->setImg($val);
 
         return $this;
@@ -109,10 +110,7 @@ class ImageService {
         return $this;
     }
 
-    /**
-     * Undocumented function.
-     */
-    public function save(): self {
+    public function getFilename(): string {
         $info = pathinfo($this->src);
         if (! isset($info['extension'])) {
             $info['extension'] = 'jpg';
@@ -122,9 +120,17 @@ class ImageService {
 
         $this->filename = $this->dirname.'/'.$this->width.'x'.$this->height.'/'.$basename;
 
+        return $this->filename;
+    }
+
+    /**
+     * Undocumented function.
+     */
+    public function save(): self {
+        $filename = $this->getFilename();
         try {
             //Storage::disk('photos')->put($this->filename, $this->out());
-            $this->img->save($this->filename);
+            $this->img->save($filename);
         } catch (Exception $e) {//ftp_mkdir(): Can't create directory: File exists
              //$r = $this->img->save(self::$filename, 75);
         }
@@ -136,7 +142,9 @@ class ImageService {
      * Undocumented function.
      */
     public function url(): string {
-        return Storage::disk('photos')->url($this->filename);
+        $filename = $this->getFilename();
+
+        return Storage::disk('photos')->url($filename);
     }
 
     /**
