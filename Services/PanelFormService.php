@@ -85,7 +85,7 @@ class PanelFormService
                 echo '</div><div class="row">';
                 $col_size = 0;
             }
-            $col_size += $field->col_bs_size ?? 12;
+            $col_size += $field->col_size ?? 12;
             $res .= ThemeService::inputHtml(['row' => $row, 'field' => $field]);
         }
         $res .= '</div>';
@@ -377,7 +377,7 @@ class PanelFormService
                 return FieldService::make()
                 ->setVars(get_object_vars($field))
                 //->type($field->type)
-                //->setColSize($field->col_bs_size ?? 12)
+                //->setColSize($field->col_size ?? 12)
                 ;
             }
         )->all();
