@@ -1621,6 +1621,16 @@ abstract class XotBasePanel implements PanelContract {
         return $this->presenter->out($params);
     }
 
+    /**
+     * under costruction,.
+     */
+    public function getViews(): array {
+        $views = [];
+        $views[] = $this->getModuleNameLow().'::'.(inAdmin() ? 'admin.' : '').$this->getName();
+
+        return $views;
+    }
+
     public function id(?bool $is_admin = null): string {
         $curr = $this;
         $data = collect([]);
