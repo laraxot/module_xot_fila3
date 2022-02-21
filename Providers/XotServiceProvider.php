@@ -88,6 +88,7 @@ class XotServiceProvider extends XotBaseServiceProvider {
                 //\Modules\Xot\Console\CreateAllRepositoriesCommand::class,
                 //\Modules\Xot\Console\PanelMakeCommand::class,
                 //\Modules\Xot\Console\FixProvidersCommand::class,
+                \Modules\Xot\Console\Commands\DatabaseBackUpCommand::class,
             ]
         );
     }
