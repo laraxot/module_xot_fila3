@@ -48,6 +48,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property-read \Illuminate\Database\Eloquent\Collection|Image[] $images
  * @property-read int|null $images_count
  * @method static \Modules\Xot\Database\Factories\ImageFactory factory(...$parameters)
+ * @method static \Illuminate\Database\Eloquent\Builder|Image whereUserId($value)
  */
 class Image extends BaseModel
 {
