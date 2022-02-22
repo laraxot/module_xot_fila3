@@ -39,7 +39,7 @@ class DatabaseBackUpCommand extends Command {
     /**
      * Execute the console command.
      *
-     * @return int
+     * @return void
      */
     public function handle() {
         $filename = 'backup-'.Carbon::now()->format('Y-m-d').'.gz';
