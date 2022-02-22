@@ -5,10 +5,11 @@ declare(strict_types=1);
 namespace Modules\Xot\Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Illuminate\Support\Str;
-
 use Modules\Xot\Models\JobBatch;
 
+/**
+ * Undocumented class.
+ */
 class JobBatchFactory extends Factory {
     /**
      * The name of the factory's corresponding model.
@@ -23,8 +24,6 @@ class JobBatchFactory extends Factory {
      * @return array
      */
     public function definition() {
-       
-
         return [
             'id' => $this->faker->word,
             'name' => $this->faker->name,
@@ -35,7 +34,7 @@ class JobBatchFactory extends Factory {
             'options' => $this->faker->text,
             'cancelled_at' => $this->faker->randomNumber,
             'created_at' => $this->faker->randomNumber,
-            'finished_at' => $this->faker->randomNumber
+            'finished_at' => $this->faker->randomNumber,
         ];
     }
 }

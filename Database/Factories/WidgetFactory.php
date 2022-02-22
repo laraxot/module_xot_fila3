@@ -5,10 +5,11 @@ declare(strict_types=1);
 namespace Modules\Xot\Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Illuminate\Support\Str;
-
 use Modules\Xot\Models\Widget;
 
+/**
+ * Undocumented class.
+ */
 class WidgetFactory extends Factory {
     /**
      * The name of the factory's corresponding model.
@@ -23,8 +24,6 @@ class WidgetFactory extends Factory {
      * @return array
      */
     public function definition() {
-       
-
         return [
             'id' => $this->faker->randomNumber,
             'post_type' => $this->faker->word,
@@ -36,7 +35,7 @@ class WidgetFactory extends Factory {
             'limit' => $this->faker->randomNumber,
             'order_by' => $this->faker->word,
             'image_src' => $this->faker->word,
-            'layout_position' => $this->faker->word
+            'layout_position' => $this->faker->word,
         ];
     }
 }
