@@ -25,20 +25,13 @@ namespace Modules\Xot\Models;
  * @property string|null $updated_by
  * @method static \Illuminate\Database\Eloquent\Builder|Feed whereCreatedBy($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Feed whereUpdatedBy($value)
- * @property int $id
- * @property-read \Illuminate\Database\Eloquent\Collection|\Modules\Xot\Models\Image[] $images
- * @property-read int|null $images_count
+ * @property int                                                                  $id
+ * @property \Illuminate\Database\Eloquent\Collection|\Modules\Xot\Models\Image[] $images
+ * @property int|null                                                             $images_count
  * @method static \Modules\Xot\Database\Factories\FeedFactory factory(...$parameters)
  * @method static \Illuminate\Database\Eloquent\Builder|Feed whereId($value)
  */
-<<<<<<< HEAD
 class Feed extends BaseModel {
-=======
-class Feed extends BaseModel
-{
-    protected $fillable=['id','created_by','updated_by','created_at','updated_at'];
-
->>>>>>> 05f4961 (.)
     /**
      * @var string[]
      */

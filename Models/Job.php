@@ -10,15 +10,15 @@ namespace Modules\Xot\Models;
 /**
  * Undocumented class.
  *
- * @property int $id
- * @property string $queue
- * @property string $payload
- * @property int $attempts
- * @property int|null $reserved_at
- * @property int $available_at
- * @property \Illuminate\Support\Carbon $created_at
- * @property-read \Illuminate\Database\Eloquent\Collection|\Modules\Xot\Models\Image[] $images
- * @property-read int|null $images_count
+ * @property int                                                                  $id
+ * @property string                                                               $queue
+ * @property string                                                               $payload
+ * @property int                                                                  $attempts
+ * @property int|null                                                             $reserved_at
+ * @property int                                                                  $available_at
+ * @property \Illuminate\Support\Carbon                                           $created_at
+ * @property \Illuminate\Database\Eloquent\Collection|\Modules\Xot\Models\Image[] $images
+ * @property int|null                                                             $images_count
  * @method static \Modules\Xot\Database\Factories\JobFactory factory(...$parameters)
  * @method static \Illuminate\Database\Eloquent\Builder|Job newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Job newQuery()
@@ -33,7 +33,6 @@ namespace Modules\Xot\Models;
  * @mixin \Eloquent
  */
 class Job extends BaseModel {
-<<<<<<< HEAD
     protected $fillable = [
         'id',
         'queue',
@@ -44,8 +43,3 @@ class Job extends BaseModel {
         'created_at',
     ];
 }
-=======
-    protected $fillable=[''];
-
-}
->>>>>>> 05f4961 (.)

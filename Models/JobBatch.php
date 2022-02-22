@@ -10,18 +10,18 @@ namespace Modules\Xot\Models;
 /**
  * Undocumented class.
  *
- * @property int $id
- * @property string $name
- * @property int $total_jobs
- * @property int $pending_jobs
- * @property int $failed_jobs
- * @property string $failed_job_ids
- * @property string|null $options
- * @property int|null $cancelled_at
- * @property \Illuminate\Support\Carbon $created_at
- * @property int|null $finished_at
- * @property-read \Illuminate\Database\Eloquent\Collection|\Modules\Xot\Models\Image[] $images
- * @property-read int|null $images_count
+ * @property int                                                                  $id
+ * @property string                                                               $name
+ * @property int                                                                  $total_jobs
+ * @property int                                                                  $pending_jobs
+ * @property int                                                                  $failed_jobs
+ * @property string                                                               $failed_job_ids
+ * @property string|null                                                          $options
+ * @property int|null                                                             $cancelled_at
+ * @property \Illuminate\Support\Carbon                                           $created_at
+ * @property int|null                                                             $finished_at
+ * @property \Illuminate\Database\Eloquent\Collection|\Modules\Xot\Models\Image[] $images
+ * @property int|null                                                             $images_count
  * @method static \Modules\Xot\Database\Factories\JobBatchFactory factory(...$parameters)
  * @method static \Illuminate\Database\Eloquent\Builder|JobBatch newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|JobBatch newQuery()
@@ -39,7 +39,6 @@ namespace Modules\Xot\Models;
  * @mixin \Eloquent
  */
 class JobBatch extends BaseModel {
-<<<<<<< HEAD
     protected $fillable = [
         'id',
         'name',
@@ -53,8 +52,3 @@ class JobBatch extends BaseModel {
         'finished_at',
     ];
 }
-=======
-    protected $fillable=[''];
-
-}
->>>>>>> 05f4961 (.)
