@@ -29,10 +29,9 @@ namespace Modules\Xot\Models;
  * @method static \Illuminate\Database\Eloquent\Builder|Feed whereCreatedBy($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Feed whereUpdatedBy($value)
  */
-class Feed extends BaseModel
-{
+class Feed extends BaseModel {
     /**
      * @var string[]
      */
-    protected $fillable = ['id'];
+    protected $fillable = ['id', 'created_at', 'updated_at'];
 }

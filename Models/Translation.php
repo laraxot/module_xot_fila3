@@ -14,8 +14,7 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|Translation newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Translation newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Translation query()
- * @mixin  \Eloquent
- *
+ * @mixin \Eloquent
  * @property int                             $id
  * @property string|null                     $lang
  * @property string|null                     $key
@@ -24,7 +23,6 @@ use Illuminate\Database\Eloquent\Model;
  * @property string|null                     $updated_by
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
- *
  * @method static \Illuminate\Database\Eloquent\Builder|Translation whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Translation whereCreatedBy($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Translation whereId($value)
