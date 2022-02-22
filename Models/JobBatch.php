@@ -39,6 +39,7 @@ namespace Modules\Xot\Models;
  * @mixin \Eloquent
  */
 class JobBatch extends BaseModel {
+<<<<<<< HEAD
     protected $fillable = [
         'id',
         'name',
@@ -52,3 +53,8 @@ class JobBatch extends BaseModel {
         'finished_at',
     ];
 }
+=======
+    protected $fillable=[''];
+
+}
+>>>>>>> 05f4961 (.)

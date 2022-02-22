@@ -31,7 +31,14 @@ namespace Modules\Xot\Models;
  * @method static \Modules\Xot\Database\Factories\FeedFactory factory(...$parameters)
  * @method static \Illuminate\Database\Eloquent\Builder|Feed whereId($value)
  */
+<<<<<<< HEAD
 class Feed extends BaseModel {
+=======
+class Feed extends BaseModel
+{
+    protected $fillable=['id','created_by','updated_by','created_at','updated_at'];
+
+>>>>>>> 05f4961 (.)
     /**
      * @var string[]
      */

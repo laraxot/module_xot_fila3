@@ -12,6 +12,7 @@ use Modules\Tenant\Services\TenantService;
  * Modules\Xot\Models\Profile
  *
  * @property int $id
+<<<<<<< HEAD
  * @property string|null $created_by
  * @property string|null $updated_by
  * @property string|null $deleted_by
@@ -21,6 +22,21 @@ use Modules\Tenant\Services\TenantService;
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property string|null $deleted_at
+=======
+ * @property string|null $post_type
+ * @property string|null $bio
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property string|null $created_by
+ * @property string|null $updated_by
+ * @property string|null $deleted_by
+ * @property string|null $firstname
+ * @property string|null $surname
+ * @property string|null $email
+ * @property string|null $phone
+ * @property string|null $address
+ * @property int|null $user_id
+>>>>>>> 05f4961 (.)
  * @property string|null $premise
  * @property string|null $premise_short
  * @property string|null $locality
@@ -49,6 +65,7 @@ use Modules\Tenant\Services\TenantService;
  * @property string|null $political_short
  * @property string|null $campground
  * @property string|null $campground_short
+<<<<<<< HEAD
  * @property string|null $phone
  * @property string|null $website
  * @property string|null $email
@@ -70,6 +87,11 @@ use Modules\Tenant\Services\TenantService;
  * @property string|null $image_src
  * @property-read string|null $lang
  * @property-read string|null $post_type
+=======
+ * @property string|null $guid
+ * @property string|null $image_src
+ * @property-read string|null $lang
+>>>>>>> 05f4961 (.)
  * @property-read string|null $subtitle
  * @property-read string|null $title
  * @property string|null $txt
@@ -93,12 +115,17 @@ use Modules\Tenant\Services\TenantService;
  * @method static \Illuminate\Database\Eloquent\Builder|Profile whereAdministrativeAreaLevel2Short($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Profile whereAdministrativeAreaLevel3($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Profile whereAdministrativeAreaLevel3Short($value)
+<<<<<<< HEAD
+=======
+ * @method static \Illuminate\Database\Eloquent\Builder|Profile whereBio($value)
+>>>>>>> 05f4961 (.)
  * @method static \Illuminate\Database\Eloquent\Builder|Profile whereCampground($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Profile whereCampgroundShort($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Profile whereCountry($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Profile whereCountryShort($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Profile whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Profile whereCreatedBy($value)
+<<<<<<< HEAD
  * @method static \Illuminate\Database\Eloquent\Builder|Profile whereCreatedIp($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Profile whereDeletedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Profile whereDeletedBy($value)
@@ -117,27 +144,47 @@ use Modules\Tenant\Services\TenantService;
  * @method static \Illuminate\Database\Eloquent\Builder|Profile whereLongitude($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Profile whereMinOrder($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Profile whereOrderAction($value)
+=======
+ * @method static \Illuminate\Database\Eloquent\Builder|Profile whereDeletedBy($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Profile whereEmail($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Profile whereFirstname($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Profile whereGoogleplaceUrl($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Profile whereGoogleplaceUrlShort($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Profile whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Profile whereLocality($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Profile whereLocalityShort($value)
+>>>>>>> 05f4961 (.)
  * @method static \Illuminate\Database\Eloquent\Builder|Profile wherePhone($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Profile wherePointOfInterest($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Profile wherePointOfInterestShort($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Profile wherePolitical($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Profile wherePoliticalShort($value)
+<<<<<<< HEAD
+=======
+ * @method static \Illuminate\Database\Eloquent\Builder|Profile wherePostType($value)
+>>>>>>> 05f4961 (.)
  * @method static \Illuminate\Database\Eloquent\Builder|Profile wherePostalCode($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Profile wherePostalCodeShort($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Profile wherePostalTown($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Profile wherePostalTownShort($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Profile wherePremise($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Profile wherePremiseShort($value)
+<<<<<<< HEAD
  * @method static \Illuminate\Database\Eloquent\Builder|Profile wherePriceCurrency($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Profile wherePriceRange($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Profile whereRoute($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Profile whereRouteShort($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Profile whereStatus($value)
+=======
+ * @method static \Illuminate\Database\Eloquent\Builder|Profile whereRoute($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Profile whereRouteShort($value)
+>>>>>>> 05f4961 (.)
  * @method static \Illuminate\Database\Eloquent\Builder|Profile whereStreetNumber($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Profile whereStreetNumberShort($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Profile whereSurname($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Profile whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Profile whereUpdatedBy($value)
+<<<<<<< HEAD
  * @method static \Illuminate\Database\Eloquent\Builder|Profile whereUpdatedIp($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Profile whereUserId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Profile whereWebsite($value)
@@ -146,6 +193,11 @@ use Modules\Tenant\Services\TenantService;
  * @property string|null $bio
  * @method static \Illuminate\Database\Eloquent\Builder|Profile whereBio($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Profile wherePostType($value)
+=======
+ * @method static \Illuminate\Database\Eloquent\Builder|Profile whereUserId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|BaseModelLang withPost(string $guid)
+ * @mixin \Eloquent
+>>>>>>> 05f4961 (.)
  */
 class Profile extends BaseModelLang
 {

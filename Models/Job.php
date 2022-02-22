@@ -33,6 +33,7 @@ namespace Modules\Xot\Models;
  * @mixin \Eloquent
  */
 class Job extends BaseModel {
+<<<<<<< HEAD
     protected $fillable = [
         'id',
         'queue',
@@ -43,3 +44,8 @@ class Job extends BaseModel {
         'created_at',
     ];
 }
+=======
+    protected $fillable=[''];
+
+}
+>>>>>>> 05f4961 (.)
