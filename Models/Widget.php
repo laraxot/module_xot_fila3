@@ -32,7 +32,6 @@ use Modules\Xot\Models\Traits\WidgetTrait;
  * @property \Illuminate\Database\Eloquent\Model|\Eloquent                        $linked
  * @property \Illuminate\Database\Eloquent\Collection|Widget[]                    $widgets
  * @property int|null                                                             $widgets_count
- *
  * @method static \Illuminate\Database\Eloquent\Builder|Widget newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Widget newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Widget ofLayoutPosition($layout_position)
@@ -52,10 +51,10 @@ use Modules\Xot\Models\Traits\WidgetTrait;
  * @method static \Illuminate\Database\Eloquent\Builder|Widget whereTitle($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Widget whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Widget whereUpdatedBy($value)
- * @mixin  \Eloquent
+ * @mixin \Eloquent
+ * @method static \Modules\Xot\Database\Factories\WidgetFactory factory(...$parameters)
  */
-class Widget extends BaseModel
-{
+class Widget extends BaseModel {
     use WidgetTrait;
 
     /**
@@ -64,7 +63,8 @@ class Widget extends BaseModel
     protected $fillable = [
         'id',
         'post_type', 'post_id', //nullablemorph
-        'title', 'subtitle',
+        'title',
+        //'subtitle',
         'blade', 'pos', 'model', 'limit',
         'order_by', 'image_src', 'layout_position',
     ];
@@ -72,8 +72,7 @@ class Widget extends BaseModel
     /**
      * @return \Illuminate\Database\Eloquent\Relations\MorphTo
      */
-    public function linked()
-    {
+    public function linked() {
         return $this->morphTo('post');
     }
 
@@ -82,8 +81,7 @@ class Widget extends BaseModel
      *
      * @return int|mixed
      */
-    public function getPosAttribute($value)
-    {
+    public function getPosAttribute($value) {
         if (null !== $value) {
             return $value;
         }
@@ -95,8 +93,7 @@ class Widget extends BaseModel
     /**
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
-    public function toHtml(array $params = null)
-    {
+    public function toHtml(array $params = null) {
         $view = 'pub_theme::layouts.widgets';
         if (null != $this->layout_position) {
             $view .= '.'.$this->layout_position;

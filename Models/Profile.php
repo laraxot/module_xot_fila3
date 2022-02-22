@@ -143,6 +143,9 @@ use Modules\Tenant\Services\TenantService;
  * @method static \Illuminate\Database\Eloquent\Builder|Profile whereWebsite($value)
  * @method static \Illuminate\Database\Eloquent\Builder|BaseModelLang withPost(string $guid)
  * @mixin \Eloquent
+ * @property string|null $bio
+ * @method static \Illuminate\Database\Eloquent\Builder|Profile whereBio($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Profile wherePostType($value)
  */
 class Profile extends BaseModelLang
 {
