@@ -40,13 +40,13 @@ class ArrayService {
         $params['data'] = $res;
 
         switch (self::$export_processor) {
-        case 1:
-            return self::toXLS_phpoffice($params); //break;
-            //case 2:return self::toXLS_Maatwebsite($params); //break;
-            //case 3:return self::toXLS_phpexcel($params); //break;
-        default:
-            dddx(['unknown export_processor ['.self::$export_processor.']']);
-            break;
+            case 1:
+                return self::toXLS_phpoffice($params); //break;
+                //case 2:return self::toXLS_Maatwebsite($params); //break;
+                //case 3:return self::toXLS_phpexcel($params); //break;
+            default:
+                dddx(['unknown export_processor ['.self::$export_processor.']']);
+                break;
         }
     }
 
