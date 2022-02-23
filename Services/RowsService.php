@@ -6,6 +6,7 @@ namespace Modules\Xot\Services;
 
 use Exception;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 use Modules\Theme\Services\FieldFilter;
@@ -55,12 +56,12 @@ class RowsService {
         switch ($tipo) {
         case 0:
             //$search_fields = $this->search(); //campi di ricerca
-            if (0 == count($search_fields)) { //se non gli passo nulla, cerco in tutti i fillable
+            if (0 === \count($search_fields)) { //se non gli passo nulla, cerco in tutti i fillable
                 //61     Call to an undefined method Illuminate\Database\Eloquent\Model|Modules\Xot\Contracts\RowsContract::getFillable().
                 $search_fields = $model->getFillable();
             }
             //$table = $model->getTable();
-            if (strlen($q) > 1) {
+            if (\strlen($q) > 1) {
                 $query = $query->where(
                     function ($subquery) use ($search_fields, $q): void {
                         foreach ($search_fields as $k => $v) {
@@ -115,7 +116,7 @@ class RowsService {
         //https://github.com/spatie/laravel-query-builder
 
         //$filters_fields = $this->filters();
-        if (null == $query) {
+        if (null === $query) {
             //return null;
             throw new Exception('['.__LINE__.']['.class_basename(__CLASS__).']');
         }
@@ -128,7 +129,10 @@ class RowsService {
         $filters_fields = collect($filters_fields)
             ->map(
                 function ($item) {
-                    return FieldFilter::make()->setVars(get_object_vars($item));
+                    $vars = get_object_vars($item);
+                    //dddx($vars);
+
+                    return FieldFilter::make()->setVars($vars);
                 }
             );
 
@@ -147,7 +151,7 @@ class RowsService {
 
         $validator = Validator::make($filters, $filters_rules);
         if ($validator->fails()) {
-            \Session::flash('error', 'error');
+            Session::flash('error', 'error');
             $id = $query->getModel()->getKeyName();
 
             return $query->whereNull($id); //restituisco query vuota
@@ -156,14 +160,14 @@ class RowsService {
         $filters_fields = collect($filters_fields)
             ->filter(
                 function ($item) use ($filters) {
-                    return in_array($item->param_name, array_keys($filters));
+                    return \in_array($item->param_name, array_keys($filters), true);
                 }
             )
             ->all();
 
         foreach ($filters_fields as $k => $v) {
             $filter_val = $filters[$v->param_name];
-            if ('' != $filter_val) {
+            if ('' !== $filter_val) {
                 if (! isset($v->op)) {
                     $v->op = '=';
                 }

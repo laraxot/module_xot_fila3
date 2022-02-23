@@ -83,14 +83,15 @@ class ProfilePanel extends XotBasePanel {
      */
     public function isSuperAdmin(): bool {
         //232 Access to an undefined property Illuminate\Database\Eloquent\Model::$user.
-        //$user = $this->row->user;
+
         //$user = $this->row->getRelationValue('user');
         // 89     Access to an undefined property object::$perm_type
-        $user_id = $this->row->getAttributeValue('user_id');
-        $user = User::where('id', $user_id)->first();
-
+        //$user_id = $this->row->getAttributeValue('user_id');
+        //$user = User::where('id', $user_id)->first();
+        //coi metodi sopra fa contento phpstan ma fa troppe query
+        $user = $this->row->user;
         try {
-            if (is_object($user->perm) && $user->perm->perm_type >= 4) {  //superadmin
+            if (\is_object($user->perm) && $user->perm->perm_type >= 4) {  //superadmin
                 return true;
             }
         } catch (\Exception $e) {
@@ -104,15 +105,15 @@ class ProfilePanel extends XotBasePanel {
      * Avatar function.
      */
     public function avatar(int $size = 100): ?string {
-        if (null == $this->row) {
+        if (null === $this->row) {
             throw new \Exception('row is null');
         }
         if (! property_exists($this->row, 'user')) {
-            throw new \Exception('in ['.get_class($this->row).'] property [user] not exists');
+            throw new \Exception('in ['.\get_class($this->row).'] property [user] not exists');
         }
         $user = $this->row->user;
 
-        if (! is_object($user) && is_object($this->row)) {
+        if (! \is_object($user) && \is_object($this->row)) {
             if (isset($this->row->user_id) && method_exists($this->row, 'user')) {
                 $this->row->user()->create();
             }
@@ -120,8 +121,8 @@ class ProfilePanel extends XotBasePanel {
             return null;
         }
 
-        $email = \md5(\mb_strtolower(\trim((string) $user->email)));
-        $default = \urlencode('https://tracker.moodle.org/secure/attachment/30912/f3.png');
+        $email = md5(mb_strtolower(trim((string) $user->email)));
+        $default = urlencode('https://tracker.moodle.org/secure/attachment/30912/f3.png');
 
         return "https://www.gravatar.com/avatar/$email?d=$default&s=$size";
     }

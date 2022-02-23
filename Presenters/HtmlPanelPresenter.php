@@ -6,6 +6,7 @@ namespace Modules\Xot\Presenters;
 
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\View;
 use Modules\Theme\Services\ThemeService;
 use Modules\Xot\Contracts\PanelContract;
 use Modules\Xot\Contracts\PanelPresenterContract;
@@ -14,12 +15,10 @@ use Modules\Xot\Services\FileService;
 /**
  * Class HtmlPanelPresenter.
  */
-class HtmlPanelPresenter implements PanelPresenterContract
-{
+class HtmlPanelPresenter implements PanelPresenterContract {
     protected PanelContract $panel;
 
-    public function setPanel(PanelContract &$panel): self
-    {
+    public function setPanel(PanelContract &$panel): self {
         $this->panel = $panel;
 
         return $this;
@@ -28,8 +27,7 @@ class HtmlPanelPresenter implements PanelPresenterContract
     /**
      * @return mixed|void
      */
-    public function index(?Collection $items)
-    {
+    public function index(?Collection $items) {
         /*
         $count = $items->count();
         $last_update = $items
@@ -50,8 +48,7 @@ class HtmlPanelPresenter implements PanelPresenterContract
 
     //eturn \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response|string
 
-    public function out(?array $params = null): Renderable
-    {
+    public function out(?array $params = null): Renderable {
         //$route_params = optional(\Route::current())->parameters();
 
         [$containers, $items] = params2ContainerItem();
@@ -59,17 +56,17 @@ class HtmlPanelPresenter implements PanelPresenterContract
         $view_work = ThemeService::getViewWork(); //view effettiva
         $views = ThemeService::getDefaultViewArray(); //views possibili
 
-        $mod_trad = $this->panel->getModuleNameLow().'::'.last($containers);
-
+        //$mod_trad = $this->panel->getModuleNameLow().'::'.last($containers);
+        $mod_trad = $this->panel->getTradMod();
         //--- per passare la view all'interno dei componenti
-        \View::composer(
+        View::composer(
             '*',
             function ($view_params) use ($view): void {
-                \View::share('view', $view);
-                $trad = implode('.', array_slice(explode('.', $view), 0, -1));
-                \View::share('trad', $trad);
-                \View::share('lang', \App::getLocale());
-                \View::share('_panel', $this->panel);
+                View::share('view', $view);
+                $trad = implode('.', \array_slice(explode('.', $view), 0, -1));
+                View::share('trad', $trad);
+                View::share('lang', \App::getLocale());
+                View::share('_panel', $this->panel);
                 //\View::share('mod_trad', $mod_trad);
             }
         );
@@ -77,33 +74,12 @@ class HtmlPanelPresenter implements PanelPresenterContract
         $modal = null;
         if (\Request::ajax()) {
             $modal = 'ajax';
-        } elseif ('iframe' == \Request::input('format')) {
+        } elseif ('iframe' === \Request::input('format')) {
             $modal = 'iframe';
         }
 
         $rows_err = '';
         $rows = $this->panel->rows()->paginate(20);
-
-        /*
-        try {
-            $rows = $this->panel->rows()->paginate(20);
-        } catch (\Exception $e) {
-            $data = [
-                'message' => $e->getMessage(),
-            ];
-
-            return response()->view('pub_theme::errors.500', $data, 500);
-        } catch (\Error $e) {
-            $rows = null;
-            $rows_err = $e;
-            $data = [
-                'message' => $e->getMessage(),
-            ];
-
-            return response()->view('pub_theme::errors.500', $data, 500);
-        }
-        */
-        //dddx($this->panel->rows->toSql());
 
         $route_params = [];
         $route_name = '';
