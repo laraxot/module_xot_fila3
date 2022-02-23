@@ -4,19 +4,20 @@ declare(strict_types=1);
 
 namespace Modules\Xot\Jobs\PanelCrud;
 
-use Carbon\Carbon;
+use stdClass;
 use Exception;
-use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Foundation\Bus\Dispatchable;
-use Illuminate\Http\Request;
-use Illuminate\Queue\InteractsWithQueue;
-use Illuminate\Queue\SerializesModels;
-use Illuminate\Support\Facades\Validator;
+use Carbon\Carbon;
 use Illuminate\Support\Str;
-use Modules\Xot\Contracts\PanelContract;
+use Illuminate\Http\Request;
+use Illuminate\Bus\Queueable;
+use Illuminate\Queue\SerializesModels;
 use Modules\Xot\Services\ModelService;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Queue\InteractsWithQueue;
+use Modules\Xot\Contracts\PanelContract;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Foundation\Bus\Dispatchable;
 
 //----------- Requests ----------
 //------------ services ----------
@@ -172,7 +173,8 @@ abstract class XotBaseJob /*implements ShouldQueue*/
     /**
      * Method Modules\Xot\Jobs\PanelCrud\XotBaseJob::ConvDateTime() should return Carbon\Carbon|false|null but returns 0|0.0|''|'0'|array()|false|null.
      */
-    public function ConvDateTime(string $field, string $value): ?Carbon {
+    public function ConvDateTime(stdClass $field, string $value): ?Carbon {
+        
         if (null == $value) {
             return null;
         }
@@ -188,12 +190,9 @@ abstract class XotBaseJob /*implements ShouldQueue*/
     /**
      *  Method Modules\Xot\Jobs\PanelCrud\XotBaseJob::ConvDateTime2Fields() should return Carbon\Carbon|false|null but returns 0|0.0|''|'0'|array()|false|null.
      *
-     * @param mixed $field
-     * @param mixed $value
-     *
-     * @return mixed
+     
      */
-    public function ConvDateTime2Fields($field, $value) {
+    public function ConvDateTime2Fields(stdClass $field, string $value):?Carbon {
         if (null == $value) {
             return $value;
         }
