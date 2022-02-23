@@ -14,7 +14,49 @@ use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
  * Class ArrayService.
  */
 class ArrayService {
-    protected static int $export_processor = 1;
+
+    protected int $export_processor = 1;
+
+    public array $array;
+    public ?string $filename=null;
+
+    private static ?self $instance = null;
+
+    public function __construct() {
+        //---
+        include_once __DIR__.'/vendor/autoload.php';
+    }
+
+    public static function getInstance(): self {
+        if (null === self::$instance) {
+            self::$instance = new self();
+        }
+
+        return self::$instance;
+    }
+
+    public static function make(): self {
+        return static::getInstance();
+    }
+
+    public function getArray():array {
+		return $this->array;
+	}
+
+	public function setArray(array $array):self {
+		$this->array = $array;
+        return $this;
+	}
+
+    public function getFilename():string{
+        $filename=$this->filename;
+        if($filename!==null){
+            return $filename;
+        }
+        //dddx(debug_backtrace());
+        return 'test';
+    }
+
 
     //ret array|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|string|\Symfony\Component\HttpFoundation\BinaryFileResponse
 
@@ -23,12 +65,12 @@ class ArrayService {
      *
      * @return mixed
      */
-    public static function toXLS(array $params) {
+    public function toXLS() {
         if (1 == request()->input('debug')) {
-            return self::toHtml($params);
+            return self::toHtml();
         }
-        include_once __DIR__.'/vendor/autoload.php';
-        $data = $params['data'];
+        //include_once __DIR__.'/vendor/autoload.php';
+        $data = $this->array;
         $res = [];
         foreach ($data as $k => $v) {
             foreach ($v as $k0 => $v0) {
@@ -37,11 +79,11 @@ class ArrayService {
                 }
             }
         }
-        $params['data'] = $res;
+        $this->array = $res;
 
-        switch (self::$export_processor) {
+        switch ($this->export_processor) {
             case 1:
-                return self::toXLS_phpoffice($params); //break;
+                return self::toXLS_phpoffice(); //break;
                 //case 2:return self::toXLS_Maatwebsite($params); //break;
                 //case 3:return self::toXLS_phpexcel($params); //break;
             default:
@@ -50,9 +92,9 @@ class ArrayService {
         }
     }
 
-    public static function toHtml(array $params): string {
-        $header = self::getHeader($params);
-        $data = $params['data'];
+    public function toHtml(): string {
+        $header = $this->getHeader();
+        $data = $this->array();
         $html = '';
         $html .= '<table border="1">';
         $html .= '<thead>';
@@ -83,10 +125,8 @@ class ArrayService {
         return $html;
     }
 
-    public static function getHeader(array $params): array {
-        $data = [];
-        \extract($params);
-
+    public function getHeader(): array {
+        $data=$this->array;
         $firstrow = collect($data)->first();
         if (! is_array($firstrow)) {
             $firstrow = [];
@@ -110,50 +150,19 @@ class ArrayService {
      *
      * @return mixed
      */
-    public static function toXLS_phpoffice(array $params) {
-        $filename = 'test';
-        \extract($params);
-        if (! isset($data)) {
-            $data = [];
-        }
-        if (! is_array($data)) {
-            $data = [];
-        }
+    public function toXLS_phpoffice() {
+
         $spreadsheet = new Spreadsheet();
         //----
         $ltr = 'A1';
-        //$res=$spreadsheet->getActiveSheet()->getStyle($ltr)->getAlignment()->setWrapText(true);
         //----
         $sheet = $spreadsheet->getActiveSheet();
         $sheet->getStyle($ltr)->getAlignment()->setWrapText(true);
 
-        /*
-        $firstrow = collect($data)->first();
-        if (! is_array($firstrow)) {
-            $firstrow = [];
-        }
-        $header = \array_keys($firstrow);
 
-        $debug = debug_backtrace();
-        if (isset($debug[1]['file'])) {
-            $mod_trad = getModTradFilepath($debug[1]['file']);
-        }
-
-        //$mod_trad = 'progressioni::xls_rows';
-
-        $header = collect($header)->map(function ($item) use ($mod_trad) {
-            $k = $mod_trad.'.'.$item;
-            $v = trans($k);
-            if ($v == $k) { //vuol dire che non ha trovato traduzione
-                TranslatorService::add($mod_trad, [$item => $item]);
-            } else {
-                echo '<hr> '.$k.' : '.$v;
-            }
-
-            return $v;
-        })->all();
-        */
-        $header = self::getHeader($params);
+        $header = $this->getHeader();
+        $data=$this->array;
+        $filename=$this->getFilename();
 
         $sheet->fromArray($header, null, 'A1');
         $sheet->fromArray(
@@ -164,24 +173,35 @@ class ArrayService {
         );
         //$sheet->setCellValue('A1', 'Hello World !');
         $writer = new Xlsx($spreadsheet);
-        //$pathToFile = 'c:\\download\\xls\\'.$filename.'.xlsx';
+
         $pathToFile = Storage::disk('local')->path($filename.'.xlsx');
         $writer->save($pathToFile); //$writer->save('php://output'); // per out diretto ?
+
+        $view_params=[
+            'file'=> $pathToFile,
+            'ext'=>'xls',
+            'text'=>'.',
+            //'text'=>$text,
+        ];
+
         if (! isset($out)) {
-            return response()->download($pathToFile);
+            //return response()->download($pathToFile);
+            $out='link';
+            //exit(response()->download($pathToFile));
         }
         if (! isset($text)) {
             $text = 'text';
         }
         switch ($out) {
         case 'link':
-            return view()->make('theme::download_icon')->with('file', $pathToFile)->with('ext', 'xls')->with('text', $text);
+
+            return view()->make('theme::download_icon',$view_params);
         case 'download': response()->download($pathToFile);
             // no break
         case 'file':
             return $pathToFile;
         case 'link_file':
-            $link = view('theme::download_icon')->with('file', $pathToFile)->with('ext', 'xls')->with('text', $text);
+            return view()->make('theme::download_icon',$view_params);
 
             return [$link, $pathToFile];
         }

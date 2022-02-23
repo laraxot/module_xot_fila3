@@ -1,6 +1,5 @@
-https://itnext.io/how-i-designed-and-built-lumenos-recruitment-search-engine-d8918b3500
-
 <?php
+//https://itnext.io/how-i-designed-and-built-lumenos-recruitment-search-engine-d8918b3500
 namespace App\Search\Filters;
 use App\Models\Vacancy;
 use App\Search\Contracts\Clause;
@@ -31,7 +30,6 @@ class MemberFilter implements Clause
 
 //--------------------------------------------------------------------
 
-<?php
 namespace App\Search\Sorters;
 use App\Models\Vacancy;
 use App\Search\Contracts\Clause;

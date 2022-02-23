@@ -69,7 +69,8 @@ class RouteServiceProvider extends XotBaseRouteServiceProvider {
         $lang_pattern = '/|'.$lang_pattern.'|/i';
         $router->pattern('lang', $lang_pattern);
         //-------------------------------------------------------------
-        $models = TenantService::config('morph_map');
+        //$models = TenantService::config('morph_map');
+        $models = config('morph_map');
         if (! is_array($models)) {
             throw new Exception('['.__LINE__.']['.class_basename(__CLASS__).']');
         }
