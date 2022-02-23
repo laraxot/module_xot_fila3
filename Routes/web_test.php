@@ -78,7 +78,7 @@ $middleware = [
 ];
 $namespace = '\Modules\Xot\Http\Controllers';
 $prefix = '/{lang?}';
-$as = null;
+$as = ''; //null
 if (! config('xra.disable_frontend_dynamic_route', false)) {
     Route::middleware($middleware)
         ->namespace($namespace)
@@ -107,17 +107,17 @@ myRoutes($name, $middleware, $namespace, $prefix, $as, $controller, $acts);
 /**
  * Undocumented function.
  *
- * @param [type] $name
- * @param [type] $middleware
- * @param [type] $namespace
- * @param [type] $prefix
- * @param [type] $as
- * @param [type] $controller
- * @param [type] $acts
- *
  * @return void
  */
-function myRoutes($name, $middleware, $namespace, $prefix, $as, $controller, $acts) {
+function myRoutes(
+    string $name,
+    array $middleware,
+    string $namespace,
+    string $prefix,
+    string $as,
+    string $controller,
+    array $acts
+) {
     Route::middleware($middleware)
         ->namespace($namespace)
         ->prefix($prefix)

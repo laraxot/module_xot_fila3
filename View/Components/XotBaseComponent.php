@@ -12,16 +12,19 @@ use Illuminate\View\Component as IlluminateComponent;
 /**
  * Class XotBaseComponent.
  */
-abstract class XotBaseComponent extends IlluminateComponent {
+abstract class XotBaseComponent extends IlluminateComponent
+{
     protected static array $assets = [];
 
     public array $attrs = [];
 
-    public static function assets(): array {
+    public static function assets(): array
+    {
         return static::$assets;
     }
 
-    public function getView(): string {
+    public function getView(): string
+    {
         $class = get_class($this);
 
         $module_name = Str::between($class, 'Modules\\', '\Views\\');
@@ -35,10 +38,12 @@ abstract class XotBaseComponent extends IlluminateComponent {
 
         //fare distinzione fra inAdmin o no ?
         if (! view()->exists($view)) {
-            dddx([
+            dddx(
+                [
                 'err' => 'View not Exists',
                 'view' => $view,
-            ]);
+                ]
+            );
         }
 
         return $view;
@@ -46,7 +51,9 @@ abstract class XotBaseComponent extends IlluminateComponent {
 
     // ret \Closure|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Support\Htmlable|\Illuminate\Contracts\View\Factory|View|string
 
-    public function render(): Renderable { //per fare copia ed incolla
+    public function render(): Renderable
+    {
+        //per fare copia ed incolla
         $view = $this->getView();
         $view_params = [
             'view' => $view,

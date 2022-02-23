@@ -16,7 +16,7 @@ class DateTimeRule implements Rule {
 
     /**
      * @param string $attribute
-     * @param mixed  $value
+     * @param string $value
      *
      * @return bool
      */

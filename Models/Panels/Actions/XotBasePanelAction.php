@@ -11,13 +11,13 @@ use Illuminate\Database\Eloquent\Builder;
 //----------  SERVICES --------------------------
 //------------ jobs ----------------------------
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Str;
-use Modules\FormX\Services\FormXService;
+use Modules\Theme\Services\FormXService;
 use Modules\Xot\Contracts\PanelContract;
-use Modules\Xot\Services\PanelService as Panel;
+use Modules\Xot\Contracts\RowsContract;
+use Modules\Xot\Services\PanelService;
 
 /**
  * Class XotBasePanelAction.
@@ -32,7 +32,7 @@ abstract class XotBasePanelAction {
     /**
      * Undocumented variable.
      *
-     * @var Relation|Builder
+     * @var RowsContract
      */
     public $rows;
 
@@ -70,6 +70,13 @@ abstract class XotBasePanelAction {
         }
     }
     */
+
+    /**
+     * @return mixed
+     */
+    public function postHandle() {
+        return 'Add postHandle Method to Action !';
+    }
 
     public function setPanel(PanelContract &$panel): self {
         $this->panel = $panel;
@@ -113,14 +120,14 @@ abstract class XotBasePanelAction {
 
     public function getUrl(string $act = 'show'): string {
         if (isset($this->onItem) && $this->onItem) {
-            return $this->urlItem($act);
+            return $this->urlItem();
         }
 
-        return $this->urlContainer($act);
+        return $this->urlContainer();
     }
 
     /**
-     * @param object $rows
+     * @param RowsContract $rows
      */
     public function setRows($rows): self {
         $this->rows = $rows;
@@ -129,7 +136,7 @@ abstract class XotBasePanelAction {
     }
 
     /**
-     * @param object $row
+     * @param Model $row
      */
     public function setRow($row): self {
         $this->row = $row;
@@ -154,13 +161,13 @@ abstract class XotBasePanelAction {
 
     public function url(string $act = 'show'): string {
         if (isset($this->onItem) && $this->onItem) {
-            return $this->urlItem($act);
+            return $this->urlItem();
         }
 
-        return $this->urlContainer($act);
+        return $this->urlContainer();
     }
 
-    public function urlContainer(string $act = 'show'): string {
+    public function urlContainer(/*string $act = 'show'*/): string {
         $panel = $this->panel;
         //$request = \Request::capture();
         $name = $this->getName();
@@ -246,7 +253,7 @@ abstract class XotBasePanelAction {
 
     public function btnContainer(array $params = []): string {
         $act = isset($params['act']) ? $params['act'] : 'show';
-        $url = $this->urlContainer($act);
+        $url = $this->urlContainer();
         $title = $this->getTitle();
         $params['url'] = $url;
         $params['title'] = $title;
@@ -263,11 +270,8 @@ abstract class XotBasePanelAction {
         $url = '';
         $query_params = [];
 
-        if (isset($row)) {
-            $this->setRow($row);
-        }
         if (! isset($this->panel)) {
-            $this->panel = Panel::get($this->row);
+            $this->panel = PanelService::make()->get($this->row);
         }
         $name = $this->getName();
         $url = $this->panel->url('show');
@@ -286,7 +290,7 @@ abstract class XotBasePanelAction {
     }
 
     public function btnItem(array $params = []): string {
-        $url = $this->urlItem($params);
+        $url = $this->urlItem();
         $title = $this->getTitle();
         $method = Str::camel($this->getName());
 
@@ -294,14 +298,14 @@ abstract class XotBasePanelAction {
         if (Gate::allows($method, $this->panel)) {
             if (isset($modal)) {
                 switch ($modal) {
-                    case 'iframe':
-                        return
+                case 'iframe':
+                    return
                         '<button type="button" data-title="'.$title.'"
 						data-href="'.$url.'" data-toggle="modal" class="btn btn-secondary mb-2" data-target="#myModalIframe">
                         '.$this->icon.'
                         </button>';
                     //break;
-                    case 'ajax':
+                case 'ajax':
                     break;
                 }
             }
@@ -347,7 +351,7 @@ abstract class XotBasePanelAction {
                 //$this->row=$this->rows->getModel();
             }
         }
-        $panel = Panel::get($this->row);
+        $panel = PanelService::make()->get($this->row);
         $panel->setRowzs($this->rows);
         */
         return $this->panel->pdf($params);

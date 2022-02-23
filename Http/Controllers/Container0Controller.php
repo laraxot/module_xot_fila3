@@ -7,5 +7,6 @@ namespace Modules\Xot\Http\Controllers;
 /**
  * Class Container0Controller.
  */
-class Container0Controller extends XotBaseContainerController {
+class Container0Controller extends XotBaseContainerController
+{
 }

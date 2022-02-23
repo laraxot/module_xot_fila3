@@ -34,17 +34,17 @@ class FixProvidersCommand extends Command {
         return __DIR__.'/stubs/module_provider.stub';
     }
     protected function getTemplateContents(){
-    	$stub=File::get($this->getStub());
-    	$module_name =$this->argument('name');
+        $stub=File::get($this->getStub());
+        $module_name =$this->argument('name');
         $module = \Module::findOrFail($module_name);
         $module_ns=$this->laravel['modules']->config('namespace');
         $replaces=[
-        	'DummyNamespace'	=> $module_ns.'\\'.$module->getStudlyName().'\Providers',
-        	'DummyClass'		=> $module->getStudlyName().'Provider',
-        	'dummy_name'		=> $module->getLowerName(),
-    	];
-    	$stub=str_replace(array_keys($replaces),array_values($replaces),$stub);
-    	return $stub;
+            'DummyNamespace'    => $module_ns.'\\'.$module->getStudlyName().'\Providers',
+            'DummyClass'        => $module->getStudlyName().'Provider',
+            'dummy_name'        => $module->getLowerName(),
+        ];
+        $stub=str_replace(array_keys($replaces),array_values($replaces),$stub);
+        return $stub;
     }
 
     public function getDestinationFilePath(){
@@ -128,6 +128,8 @@ class FixProvidersCommand extends Command {
         $module_name = $module->getStudlyName();
         $route_provider_stub = File::get(__DIR__.'/stubs/route_provider.stub');
         $module_provider_stub = File::get(__DIR__.'/stubs/module_provider.stub');
+
+        // 134    Cannot access offset 'modules' on Illuminate\Contracts\Foundation\Application.
         $module_ns = $this->laravel['modules']->config('namespace');
         $dummy_class = $module_name.'ServiceProvider';
         $replaces = [

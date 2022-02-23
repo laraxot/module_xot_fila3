@@ -81,7 +81,7 @@
                                         </td>
                                     @endforeach
                                     <td>
-                                        {!! Panel::get($model)
+                                        {!! Panel::make()->get($model)
                                         ->setParent($this->panel->getParent())
                                         ->btnCrud() !!}
                                     </td>

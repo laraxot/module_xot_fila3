@@ -4,24 +4,26 @@ declare(strict_types=1);
 
 namespace Modules\Xot\Http\Livewire;
 
+use Illuminate\Contracts\Support\Renderable;
 use Livewire\Component;
 
-class LaravelNewsTile extends Component {
-    /** @var string */
-    public $position;
+class LaravelNewsTile extends Component
+{
+    public string $position;
 
-    /** @var string|null */
-    public $title;
+    public ?string $title;
 
-    /** @var int */
-    public $number = 0;
+    public int $number = 0;
 
-    /** @var string */
-    public $configurationName;
+    public string $configurationName;
 
-    public $refreshIntervalInSeconds;
+    public int $refreshIntervalInSeconds;
 
-    public function mount(string $position, ?string $title = null, string $configurationName = 'default') {
+    /**
+     * Undocumented function.
+     */
+    public function mount(string $position, ?string $title = null, string $configurationName = 'default'): void
+    {
         $this->position = $position;
 
         $this->title = $title;
@@ -31,7 +33,11 @@ class LaravelNewsTile extends Component {
         $this->configurationName = $configurationName;
     }
 
-    public function render() {
+    /**
+     * Undocumented function.
+     */
+    public function render(): Renderable
+    {
         /*
         $xml = \Illuminate\Support\Facades\Http::get('https://feed.laravel-news.com')->body();
         $data = simplexml_load_string($xml, 'SimpleXMLElement', LIBXML_NOCDATA);
@@ -45,6 +51,19 @@ class LaravelNewsTile extends Component {
 
         return view('xot::livewire.laravel-news-tile', compact('articleContent', 'articleTitle'));
         */
-        return '<div></div>';
+        $view = 'theme::empty';
+        $view_params = [
+            'view' => $view,
+        ];
+
+        return view()->make($view, $view_params);
+    }
+
+    /**
+     * Undocumented function.
+     */
+    public function shouldRender(): bool
+    {
+        return false;
     }
 }

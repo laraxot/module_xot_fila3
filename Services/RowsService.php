@@ -4,9 +4,12 @@ declare(strict_types=1);
 
 namespace Modules\Xot\Services;
 
+use Exception;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
+use Modules\Theme\Services\FieldFilter;
 use Modules\Xot\Contracts\RowsContract;
 
 //----------- Requests ----------
@@ -51,14 +54,16 @@ class RowsService {
 
         $tipo = 0; //0 a mano , 1 repository, 2 = scout
         switch ($tipo) {
-            case 0:
-                //$search_fields = $this->search(); //campi di ricerca
-                if (0 == count($search_fields)) { //se non gli passo nulla, cerco in tutti i fillable
-                    $search_fields = $model->getFillable();
-                }
-                //$table = $model->getTable();
-                if (strlen($q) > 1) {
-                    $query = $query->where(function ($subquery) use ($search_fields, $q): void {
+        case 0:
+            //$search_fields = $this->search(); //campi di ricerca
+            if (0 === \count($search_fields)) { //se non gli passo nulla, cerco in tutti i fillable
+                //61     Call to an undefined method Illuminate\Database\Eloquent\Model|Modules\Xot\Contracts\RowsContract::getFillable().
+                $search_fields = $model->getFillable();
+            }
+            //$table = $model->getTable();
+            if (\strlen($q) > 1) {
+                $query = $query->where(
+                    function ($subquery) use ($search_fields, $q): void {
                         foreach ($search_fields as $k => $v) {
                             if (Str::contains($v, '.')) {
                                 [$rel, $rel_field] = explode('.', $v);
@@ -79,19 +84,20 @@ class RowsService {
                                 $subquery = $subquery->orWhere($v, 'like', '%'.$q.'%');
                             }
                         }
-                    });
-                }
-                //dddx(['q' => $q, 'sql' => $query->toSql()]);
+                    }
+                );
+            }
+            //dddx(['q' => $q, 'sql' => $query->toSql()]);
 
-                return $query;
+            return $query;
                 // break;
-            case 1:
-                //$repo = with(new \Modules\Food\Repositories\RestaurantRepository())->search('grom');
-                //dddx($repo->paginate());
-                //return $repo;
-                break;
-            case 2:
-                break;
+        case 1:
+            //$repo = with(new \Modules\Food\Repositories\RestaurantRepository())->search('grom');
+            //dddx($repo->paginate());
+            //return $repo;
+            break;
+        case 2:
+            break;
         } //end switch
 
         return $query;
@@ -106,15 +112,32 @@ class RowsService {
      *
      * @return RowsContract
      */
-    public static function filter($query, array $filters, $filters_fields) {
+    public static function filter($query, array $filters, array $filters_fields) {
         //https://github.com/spatie/laravel-query-builder
 
         //$filters_fields = $this->filters();
-        if (null == $query) {
-            return null;
+        if (null === $query) {
+            //return null;
+            throw new Exception('['.__LINE__.']['.class_basename(__CLASS__).']');
         }
+        /*
+        dddx([
+            'filters' => $filters,
+            'filters_fields' => $filters_fields,
+        ]);
+        */
+        $filters_fields = collect($filters_fields)
+            ->map(
+                function ($item) {
+                    $vars = get_object_vars($item);
+                    //dddx($vars);
 
-        $filters_rules = collect($filters_fields)
+                    return FieldFilter::make()->setVars($vars);
+                }
+            );
+
+        //124    Access to an undefined property object::$param_name.
+        $filters_rules = $filters_fields
             ->filter(
                 function ($item) {
                     return isset($item->rules);
@@ -128,20 +151,23 @@ class RowsService {
 
         $validator = Validator::make($filters, $filters_rules);
         if ($validator->fails()) {
-            \Session::flash('error', 'error');
+            Session::flash('error', 'error');
             $id = $query->getModel()->getKeyName();
 
             return $query->whereNull($id); //restituisco query vuota
         }
 
-        $filters_fields = collect($filters_fields)->filter(function ($item) use ($filters) {
-            return in_array($item->param_name, array_keys($filters));
-        })
+        $filters_fields = collect($filters_fields)
+            ->filter(
+                function ($item) use ($filters) {
+                    return \in_array($item->param_name, array_keys($filters), true);
+                }
+            )
             ->all();
 
         foreach ($filters_fields as $k => $v) {
             $filter_val = $filters[$v->param_name];
-            if ('' != $filter_val) {
+            if ('' !== $filter_val) {
                 if (! isset($v->op)) {
                     $v->op = '=';
                 }

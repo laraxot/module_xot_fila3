@@ -9,7 +9,7 @@ namespace Modules\Xot\Models\Traits;
 //----- models------
 
 //---- services -----
-//use Modules\Xot\Services\PanelService as Panel;
+//use Modules\Xot\Services\PanelService;
 
 //------ traits ---
 
@@ -21,13 +21,15 @@ namespace Modules\Xot\Models\Traits;
  * @property string $price_complete
  * @property int    $qty
  */
-trait HasPriceTrait {
+trait HasPriceTrait
+{
     /**
      * @param mixed $value
      *
      * @return \Cknow\Money\Money
      */
-    public function getPriceCurrencyAttribute($value) {
+    public function getPriceCurrencyAttribute($value)
+    {
         return @money((int) $this->price * 100, $this->currency);
     }
 
@@ -36,7 +38,8 @@ trait HasPriceTrait {
      *
      * @return \Cknow\Money\Money
      */
-    public function getPriceCompleteCurrencyAttribute($value) {
+    public function getPriceCompleteCurrencyAttribute($value)
+    {
         return @money((int) $this->price_complete * 100, $this->currency);
     }
 
@@ -45,7 +48,8 @@ trait HasPriceTrait {
      *
      * @return \Cknow\Money\Money
      */
-    public function getSubtotalCurrencyAttribute($value) {
+    public function getSubtotalCurrencyAttribute($value)
+    {
         if ($this->qty > 0) {
             $value = $this->qty * $this->price;
         } else {
@@ -60,7 +64,8 @@ trait HasPriceTrait {
      *
      * @return \Cknow\Money\Money
      */
-    public function getCurrency($number) {
+    public function getCurrency($number)
+    {
         return @money((int) $number * 100, $this->currency);
     }
 }

@@ -11,7 +11,7 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use Modules\Xot\Contracts\PanelContract;
 use Modules\Xot\Services\ModelService;
-use Modules\Xot\Services\PanelService as Panel;
+use Modules\Xot\Services\PanelService;
 
 /**
  * Class StoreJob.
@@ -324,7 +324,7 @@ class StoreJob extends XotBaseJob {
                         return $item;
                     }
                     $related = $model->$name()->getRelated();
-                    $related_panel = Panel::get($related);
+                    $related_panel = PanelService::make()->get($related);
                     $res = $related_panel->setLabel($item);
 
                     return $res->getKey().'';

@@ -14,18 +14,21 @@ use Modules\Xot\Services\TranslatorService;
 /**
  * Class TranslationController.
  */
-class TranslationController extends Controller {
+class TranslationController extends Controller
+{
     /**
      * @return mixed
      */
-    public function index(Request $request) {
+    public function index(Request $request)
+    {
         return ThemeService::view();
     }
 
     /**
      * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
      */
-    public function store(Request $request) {
+    public function store(Request $request)
+    {
         $data = $request->all();
         $trans = $data['trans'];
         TranslatorService::store($trans);

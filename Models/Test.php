@@ -14,6 +14,7 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|Test query()
  * @mixin \Eloquent
  */
-class Test extends Model {
+class Test extends Model
+{
     protected $fillable = [''];
 }

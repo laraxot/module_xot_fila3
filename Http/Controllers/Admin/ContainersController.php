@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Modules\Xot\Http\Controllers\Admin;
 
+use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Request;
@@ -16,10 +17,22 @@ use Modules\Xot\Services\PolicyService;
 //---- services ---
 
 /**
- * Class ItemController.
+ * Undocumented class.
+ *
+ * @method Renderable home(Request $request)
+ * @method Renderable show(Request $request)
  */
-class ContainersController extends Controller {
-    public function index(Request $request) {
+class ContainersController extends Controller
+{
+    public PanelContract $panel;
+
+    /**
+     * Undocumented function.
+     *
+     * @return mixed
+     */
+    public function index(Request $request)
+    {
         $route_params = getRouteParameters(); // "module" => "lu"
         [$containers,$items] = params2ContainerItem();
         //dddx(['contianers' => $containers, 'items' => $items]);
@@ -35,12 +48,21 @@ class ContainersController extends Controller {
         return $this->__call('index', $route_params);
     }
 
-    public function __call($method, $args) {
+    /**
+     * Undocumented function.
+     *
+     * @param string $method
+     * @param array  $args
+     *
+     * @return mixed
+     */
+    public function __call($method, $args)
+    {
         $action = \Route::current()->getAction();
         $action['controller'] = __CLASS__.'@'.$method;
         $action = \Route::current()->setAction($action);
 
-        $this->panel = PanelService::getRequestPanel();
+        $this->panel = PanelService::make()->getRequestPanel();
         if ('' != request()->input('_act', '')) {
             return $this->__callPanelAct($method, $args);
         }
@@ -51,7 +73,8 @@ class ContainersController extends Controller {
     /**
      * @return mixed
      */
-    public function __callRouteAct(string $method, array $args) {
+    public function __callRouteAct(string $method, array $args)
+    {
         $panel = $this->panel;
         $authorized = Gate::allows($method, $panel);
 
@@ -72,7 +95,8 @@ class ContainersController extends Controller {
     /**
      * @return mixed
      */
-    public function __callPanelAct(string $method, array $args) {
+    public function __callPanelAct(string $method, array $args)
+    {
         $request = request();
         $act = $request->_act;
         $method_act = Str::camel($act);
@@ -90,14 +114,15 @@ class ContainersController extends Controller {
     /**
      * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse|\Illuminate\Http\Response
      */
-    public function notAuthorized(string $method, PanelContract $panel) {
+    public function notAuthorized(string $method, PanelContract $panel)
+    {
         $lang = app()->getLocale();
 
         if (! \Auth::check()) {
             $referer = \Request::path();
 
             return redirect()->route('login', ['lang' => $lang, 'referer' => $referer])
-            ->withErrors(['active' => 'login before']);
+                ->withErrors(['active' => 'login before']);
         }
         $policy_class = PolicyService::get($panel)->createIfNotExists()->getClass();
         $msg = 'Auth Id ['.\Auth::id().'] not can ['.$method.'] on ['.$policy_class.']';
@@ -105,7 +130,8 @@ class ContainersController extends Controller {
         return response()->view('pub_theme::errors.403', ['msg' => $msg], 403);
     }
 
-    public function getController(): string {
+    public function getController(): string
+    {
         list($containers, $items) = params2ContainerItem();
         $mod_name = $this->panel->getModuleName(); //forse da mettere container0
 

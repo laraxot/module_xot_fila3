@@ -34,7 +34,7 @@ class PanelCrudTest extends TestCase {
         //$data = collect($data)->only(['handle', 'first_name', 'last_name', 'email', 'passwd'])->all();
         $data['areas'] = [];
         $data['areas']['to'] = $areas;
-        $panel = PanelService::get($user);
+        $panel = PanelService::make()->get($user);
         //$this->assertTrue(true);
         $panel->update($data);
 

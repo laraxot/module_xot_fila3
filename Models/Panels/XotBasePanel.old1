@@ -26,7 +26,6 @@ use Modules\Xot\Services\PanelActionService;
 use Modules\Xot\Services\PanelFormService;
 use Modules\Xot\Services\PanelRouteService;
 use Modules\Xot\Services\PanelService;
-use Modules\Xot\Services\PanelService as Panel;
 use Modules\Xot\Services\PanelTabService;
 use Modules\Xot\Services\PolicyService;
 use Modules\Xot\Services\RouteService;
@@ -165,7 +164,7 @@ abstract class XotBasePanel implements PanelContract {
         } else {
             $row = $data;
         }
-        $panel = PanelService::get($row);
+        $panel = PanelService::make()->get($row);
         $panel->setParent($this->getParent());
 
         return $panel;
@@ -199,7 +198,7 @@ abstract class XotBasePanel implements PanelContract {
         $parent_first = $parents->first();
         if (is_object($parent_first)) {
             while (null != $parent_first->row->parent) {
-                $parent_first = Panel::get($parent_first->row->parent);
+                $parent_first = PanelService::make()->get($parent_first->row->parent);
                 $parents->prepend($parent_first);
             }
         }
@@ -334,7 +333,7 @@ abstract class XotBasePanel implements PanelContract {
     /**
      * on select the option label.
      */
-    public function optionLabel(object $row): string {
+    public function optionLabel($row): string {
         return $row->matr.' ['.$row->email.']['.$row->ha_diritto.'] '.$row->cognome.' '.$row->cognome.' ';
     }
 
@@ -626,7 +625,7 @@ abstract class XotBasePanel implements PanelContract {
     /**
      * @return mixed
      */
-    public function containerAction(string $act) {
+    public function containerAction(string $act):XotBasePanelAction {
         return (new PanelActionService($this))->containerAction($act);
     }
 
@@ -838,7 +837,7 @@ abstract class XotBasePanel implements PanelContract {
         return $query;
     }
 
-    //Method Modules\Xot\Models\Panels\XotBasePanel::indexRows() has parameter $query with no typehint specified.
+    //Method Modules\Xot\Models\Panels\XotBasePanelService::indexRows() has parameter $query with no typehint specified.
     /* deprecated ??
     public function indexRows(Request $request, $query): Builder {
         dddx([get_class($query)]);
@@ -1022,7 +1021,7 @@ abstract class XotBasePanel implements PanelContract {
             throw new \Exception('in ['.get_class($this->row).'] property [image_src] is missing');
         }
         $params['src'] = $this->row->image_src;
-        $img = new ImageService($params);
+        $img = ImageService::make()->setVars($params);
         $src = $img->fit()->save()->src();
         if (! is_string($src)) {
             throw new \Exception('src is not a string');
@@ -1034,7 +1033,7 @@ abstract class XotBasePanel implements PanelContract {
     public function imgSrc(array $params): string {
         $params['dirname'] = '/photos/'.$this->postType().'/'.$this->guid();
         $params['src'] = optional($this->row)->image_src;
-        $img = new ImageService($params);
+        $img = ImageService::make()->setVars($params);
 
         return $img->url();
     }
@@ -1075,7 +1074,7 @@ abstract class XotBasePanel implements PanelContract {
         $params['dirname'] = '/photos/'.$this->postType().'/'.$this->guid();
 
         try {
-            $img = new ImageService($params);
+            $img = ImageService::make()->setVars($params);
             $src_out = $img->fit()->save()->src();
 
             $row->images()->create([
@@ -1161,7 +1160,7 @@ abstract class XotBasePanel implements PanelContract {
         if (null != $id) {
             $model = $model->find($id);
         }
-        $panel = Panel::get($model);
+        $panel = PanelService::make()->get($model);
         if (! is_object($panel)) {
             //dddx($model);
             return null;
@@ -1608,10 +1607,10 @@ abstract class XotBasePanel implements PanelContract {
         return $presenter->out($params);
     }
 
-    //Method Modules\Xot\Models\Panels\XotBasePanel::related() should return Modules\Xot\Models\Panels\XotBasePanel but returns Modules\Xot\Contracts\PanelContract|null.
+    //Method Modules\Xot\Models\Panels\XotBasePanelService::related() should return Modules\Xot\Models\Panels\XotBasePanel but returns Modules\Xot\Contracts\PanelContract|null.
     public function related(string $relationship): PanelContract {
         $related = $this->row->$relationship()->getRelated();
-        $panel_related = Panel::get($related);
+        $panel_related = PanelService::make()->get($related);
         $panel_related->setParent($this);
 
         return $panel_related;

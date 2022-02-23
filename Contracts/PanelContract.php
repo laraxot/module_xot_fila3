@@ -9,7 +9,14 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Support\Collection;
+use Illuminate\View\View;
+use Modules\Xot\Models\Panels\Actions\XotBasePanelAction;
 
+/**
+ * Undocumented interface.
+ *
+ * @property Model $row
+ */
 interface PanelContract {
     public function setRow(Model $row): self;
 
@@ -46,9 +53,9 @@ interface PanelContract {
     public function update(array $data);
 
     /**
-     * Undocumented function.
+     * Ritorna la view.
      *
-     * @return mixed
+     * @return View
      */
     public function view(?array $params = null);
 
@@ -59,7 +66,7 @@ interface PanelContract {
      */
     public function itemAction(string $act);
 
-    public function relatedUrl(array $params = []): string;
+    public function relatedUrl(string $name, string $act = 'index'): string;
 
     public function setLabel(string $label): Model;
 
@@ -67,14 +74,12 @@ interface PanelContract {
 
     public function imgSrc(array $params): string;
 
-    public function optionLabel(object $row): string;
-
     public function getRow(): Model;
 
     /**
      * Undocumented function.
      *
-     * @return mixed
+     * @return \Illuminate\Http\File|\Illuminate\Http\UploadedFile|\Psr\Http\Message\StreamInterface|resource|string
      */
     public function pdf(array $params = []);
 
@@ -100,7 +105,10 @@ interface PanelContract {
 
     public function tabs(): array;
 
-    public function getBreads(): Collection;
+    /**
+     * @return Collection&iterable<PanelContract>
+     */
+    public function getBreads();
 
     public function getRouteParams(): array;
 
@@ -117,12 +125,6 @@ interface PanelContract {
     public function getModuleName(): string;
 
     public function getName(): string;
-
-    public function rules(array $params = []): array;
-
-    public function getRules(array $params = []): array;
-
-    public function rulesMessages(): array;
 
     /**
      * @return mixed
@@ -150,7 +152,12 @@ interface PanelContract {
      */
     public function callItemActionWithGate(string $act);
 
-    public function getParents(): Collection;
+    /**
+     * Undocumented function.
+     *
+     * @return Collection<PanelContract>
+     */
+    public function getParents();
 
     /**
      * @return mixed
@@ -161,7 +168,46 @@ interface PanelContract {
 
     public function isRevisionBy(UserContract $user): bool;
 
+    public function related(string $relationship): PanelContract;
+
     public function relatedName(string $name, ?int $id = null): PanelContract;
 
-    public function getBuilder(): Builder;
+    /**
+     * @return \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Query\Builder
+     */
+    public function getBuilder();
+
+    public function getTradMod(): string;
+
+    /**
+     * Undocumented function.
+     */
+    public function filters(): array;
+
+    /**
+     * @return int|string|null
+     */
+    public function optionId(Model $row);
+
+    public function optionLabel(Model $row): string;
+
+    //public function isInternalPage(): bool;
+
+    public function rules(array $params = []): array;
+
+    public function getRules(array $params = []): array;
+
+    public function rulesMessages(): array;
+
+    //--------------------- ACTIONS -------------------
+
+    /**
+     * @return mixed
+     */
+    public function urlContainerAction(string $act, array $params = []);
+
+    /**
+     * crea l'oggetto del pannello Container (quello dove passi $rowS).
+     */
+    public function containerAction(string $act): XotBasePanelAction;
 }

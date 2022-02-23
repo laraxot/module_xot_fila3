@@ -12,8 +12,17 @@ namespace Modules\Xot\QueryFilters;
 
 use Closure;
 
-class Active {
-    public function handle($request, Closure $next) {
+class Active
+{
+    /**
+     * Undocumented function.
+     *
+     * @param mixed $request
+     *
+     * @return Closure
+     */
+    public function handle($request, Closure $next)
+    {
         if (! request()->has('active')) {
             return $next($request);
         }

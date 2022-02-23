@@ -14,7 +14,6 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\Relation;
-use Modules\Xot\Contracts\RowsContract;
 
 /**
  * Class CustomRelation.
@@ -142,4 +141,18 @@ class CustomRelation extends Relation {
 
         return $this->related->newCollection($models);
     }
+
+    /*
+     * Add a basic where clause to the query.
+     *
+     * @param \Closure|string|array|\Illuminate\Database\Query\Expression $column
+     * @param mixed                                                       $operator
+     * @param mixed                                                       $value
+     * @param string                                                      $boolean
+     *
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    //public function where($column, $operator = null, $value = null, $boolean = 'and') {
+    //    return $this->query->where($column, $operator, $value, $boolean);
+    //}
 }

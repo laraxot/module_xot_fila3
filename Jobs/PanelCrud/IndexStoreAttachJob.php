@@ -27,6 +27,9 @@ class IndexStoreAttachJob extends XotBaseJob {
         if (! method_exists($rows, 'attach')) {
             throw new \Exception('in ['.get_class($rows).'] method [attach] not exists ['.__LINE__.']['.__FILE__.']');
         }
+        if (! method_exists($rows, 'getRelated')) {
+            throw new \Exception('in ['.get_class($rows).'] method [getRelated] not exists ['.__LINE__.']['.__FILE__.']');
+        }
 
         $related = $rows->getRelated();
         $items_key = $related->getKeyName();

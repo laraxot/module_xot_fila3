@@ -36,30 +36,32 @@ class ModelService {
             function ($item, $key) use ($methods) {
                 return in_array($key, $methods);
             }
-            )->map(
-                function ($v, $k) use ($model, $data) {
-                    if (! is_string($k)) {
-                        dddx([$k, $v, $data]);
-                    }
-                    $rows = $model->$k();
-                    $related = null;
-                    if (is_object($rows) && method_exists($rows, 'getRelated')) {
-                        $related = $rows->getRelated();
-                    }
+        )->map(
+            function ($v, $k) use ($model, $data) {
+                if (! is_string($k)) {
+                    dddx([$k, $v, $data]);
+                }
+                $rows = $model->$k();
+                $related = null;
+                if (is_object($rows) && method_exists($rows, 'getRelated')) {
+                    $related = $rows->getRelated();
+                }
 
-                    return (object) [
-                        'relationship_type' => class_basename($rows),
-                        'is_relation' => $rows instanceof \Illuminate\Database\Eloquent\Relations\Relation,
-                        'related' => $related,
-                        'data' => $v,
-                        'name' => $k,
-                        'rows' => $rows,
-                    ];
+                return (object) [
+                    'relationship_type' => class_basename($rows),
+                    'is_relation' => $rows instanceof \Illuminate\Database\Eloquent\Relations\Relation,
+                    'related' => $related,
+                    'data' => $v,
+                    'name' => $k,
+                    'rows' => $rows,
+                ];
+            }
+        )
+            ->filter(
+                function ($item) {
+                    return $item->is_relation;
                 }
             )
-            ->filter(function ($item) {
-                return $item->is_relation;
-            })
             ->all();
 
         return $data;
@@ -75,7 +77,7 @@ class ModelService {
             Relation::morphMap([$post_type => get_class($model)]);
         }
 
-        return $post_type;
+        return (string) $post_type;
     }
 
     /**
@@ -118,9 +120,10 @@ class ModelService {
         $relationships = [];
 
         foreach ((new ReflectionClass($model))->getMethods(ReflectionMethod::IS_PUBLIC) as $method) {
-            if ($method->class != get_class($model) ||
-                ! empty($method->getParameters()) ||
-                __FUNCTION__ == $method->getName()) {
+            if ($method->class != get_class($model)
+                || ! empty($method->getParameters())
+                || __FUNCTION__ == $method->getName()
+            ) {
                 continue;
             }
 
@@ -184,7 +187,8 @@ class ModelService {
     public static function addField(Model $model, string $field_name, string $field_type, array $attrs = []): void {
         if (! \Schema::connection($model->getConnectionName())->hasColumn($model->getTable(), $field_name)) {
             \Schema::connection($model->getConnectionName())
-                ->table($model->getTable(),
+                ->table(
+                    $model->getTable(),
                     function ($table) use ($field_name, $field_type): void {
                         $table->{$field_type}($field_name);
                     }

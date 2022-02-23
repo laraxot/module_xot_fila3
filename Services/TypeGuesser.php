@@ -10,7 +10,8 @@ use Faker\Generator as Faker;
 use Illuminate\Support\Str;
 use InvalidArgumentException;
 
-class TypeGuesser {
+class TypeGuesser
+{
     /**
      * @var \Faker\Generator
      */
@@ -24,18 +25,19 @@ class TypeGuesser {
     /**
      * Create a new TypeGuesser instance.
      */
-    public function __construct(Faker $generator) {
+    public function __construct(Faker $generator)
+    {
         $this->generator = $generator;
     }
 
     /**
-     * @param string                   $name
-     * @param Doctrine\DBAL\Types\Type $type
-     * @param int|null                 $size Length of field, if known
+     * @param string   $name
+     * @param int|null $size Length of field, if known
      *
      * @return string
      */
-    public function guess($name, Type $type, $size = null) {
+    public function guess($name, Type $type, $size = null)
+    {
         $name = Str::of($name)->lower();
 
         if ($name->endsWith('_id')) {
@@ -63,35 +65,38 @@ class TypeGuesser {
      *
      * @return string
      */
-    private function guessBasedOnName($name, $size = null) {
+    private function guessBasedOnName($name, $size = null)
+    {
         switch ($name) {
-            case 'login':
-                return 'userName';
-            case 'emailaddress':
-                return 'email';
-            case 'phone':
-            case 'telephone':
-            case 'telnumber':
-                return 'phoneNumber';
-            case 'town':
-                return 'city';
-            case 'zipcode':
-                return 'postcode';
-            case 'county':
-                return $this->predictCountyType();
-            case 'country':
-                return $this->predictCountryType($size);
-            case 'currency':
-                return 'currencyCode';
-            case 'website':
-                return 'url';
-            case 'companyname':
-            case 'employer':
-                return 'company';
-            case 'title':
-                return $this->predictTitleType($size);
-            default:
-                return self::$default;
+        case 'login':
+            return 'userName';
+        case 'emailaddress':
+            return 'email';
+        case 'phone':
+        case 'telephone':
+        case 'telnumber':
+            return 'phoneNumber';
+        case 'town':
+            return 'city';
+        case 'zipcode':
+            return 'postcode';
+        case 'county':
+            return $this->predictCountyType();
+        case 'country':
+            // Parameter #1 $size of method Modules\Xot\Services\TypeGuesser::predictCountryType() expects int, int|null  given.
+            return $this->predictCountryType($size);
+        case 'currency':
+            return 'currencyCode';
+        case 'website':
+            return 'url';
+        case 'companyname':
+        case 'employer':
+            return 'company';
+        case 'title':
+            // 91     Parameter #1 $size of method Modules\Xot\Services\TypeGuesser::predictTitleType() expects int, int|null   given.
+            return $this->predictTitleType($size);
+        default:
+            return self::$default;
         }
     }
 
@@ -102,7 +107,8 @@ class TypeGuesser {
      *
      * @return bool
      */
-    protected function hasNativeResolverFor($property) {
+    protected function hasNativeResolverFor($property)
+    {
         try {
             $this->generator->getFormatter($property);
         } catch (InvalidArgumentException $e) {
@@ -119,39 +125,41 @@ class TypeGuesser {
      *
      * @return string
      */
-    protected function guessBasedOnType(Type $type, $size) {
+    protected function guessBasedOnType(Type $type, $size)
+    {
         $typeName = $type->getName();
 
         switch ($typeName) {
-            case Types::BOOLEAN:
-                return 'boolean';
-            case Types::BIGINT:
-            case Types::INTEGER:
-            case Types::SMALLINT:
-                return 'randomNumber'.($size ? "($size)" : '');
-            case Types::DATE_MUTABLE:
-            case Types::DATE_IMMUTABLE:
-                return 'date';
-            case Types::DATETIME_MUTABLE:
-            case Types::DATETIME_IMMUTABLE:
-                return 'dateTime';
-            case Types::DECIMAL:
-            case Types::FLOAT:
-                return 'randomFloat'.($size ? "($size)" : '');
-            case Types::TEXT:
-                return 'text';
-            case Types::TIME_MUTABLE:
-            case Types::TIME_IMMUTABLE:
-                return 'time';
-            default:
-                return self::$default;
+        case Types::BOOLEAN:
+            return 'boolean';
+        case Types::BIGINT:
+        case Types::INTEGER:
+        case Types::SMALLINT:
+            return 'randomNumber'.($size ? "($size)" : '');
+        case Types::DATE_MUTABLE:
+        case Types::DATE_IMMUTABLE:
+            return 'date';
+        case Types::DATETIME_MUTABLE:
+        case Types::DATETIME_IMMUTABLE:
+            return 'dateTime';
+        case Types::DECIMAL:
+        case Types::FLOAT:
+            return 'randomFloat'.($size ? "($size)" : '');
+        case Types::TEXT:
+            return 'text';
+        case Types::TIME_MUTABLE:
+        case Types::TIME_IMMUTABLE:
+            return 'time';
+        default:
+            return self::$default;
         }
     }
 
     /**
      * Predicts county type by locale.
      */
-    protected function predictCountyType() {
+    protected function predictCountyType(): string
+    {
         if ('en_US' == $this->generator->locale) {
             return "sprintf('%s County', \$faker->city)";
         }
@@ -161,18 +169,17 @@ class TypeGuesser {
 
     /**
      * Predicts country code based on $size.
-     *
-     * @param int $size
      */
-    protected function predictCountryType($size) {
+    protected function predictCountryType(?int $size): string
+    {
         switch ($size) {
-            case 2:
-                return 'countryCode';
-            case 3:
-                return 'countryISOAlpha3';
-            case 5:
-            case 6:
-                return 'locale';
+        case 2:
+            return 'countryCode';
+        case 3:
+            return 'countryISOAlpha3';
+        case 5:
+        case 6:
+            return 'locale';
         }
 
         return 'country';
@@ -180,10 +187,9 @@ class TypeGuesser {
 
     /**
      * Predicts type of title by $size.
-     *
-     * @param int $size
      */
-    protected function predictTitleType($size) {
+    protected function predictTitleType(?int $size): string
+    {
         if (null === $size || $size <= 10) {
             return 'title';
         }

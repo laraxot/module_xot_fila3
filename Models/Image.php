@@ -25,7 +25,6 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property string|null                     $deleted_by
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
- *
  * @method static \Illuminate\Database\Eloquent\Builder|Image newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Image newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Image query()
@@ -44,16 +43,22 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @method static \Illuminate\Database\Eloquent\Builder|Image whereUpdatedBy($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Image whereWidth($value)
  * @mixin \Eloquent
- *
  * @property \Modules\LU\Models\User|null $user
+ * @property int|null $auth_user_id
+ * @property-read \Illuminate\Database\Eloquent\Collection|Image[] $images
+ * @property-read int|null $images_count
+ * @method static \Modules\Xot\Database\Factories\ImageFactory factory(...$parameters)
+ * @method static \Illuminate\Database\Eloquent\Builder|Image whereUserId($value)
  */
-class Image extends BaseModel {
+class Image extends BaseModel
+{
     /**
      * @var string[]
      */
     protected $fillable = ['src', 'width', 'height', 'src_out'];
 
-    public function user(): BelongsTo {
+    public function user(): BelongsTo
+    {
         return $this->belongsTo(\Modules\LU\Models\User::class);
     }
 }

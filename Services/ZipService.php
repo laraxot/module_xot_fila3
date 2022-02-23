@@ -7,7 +7,6 @@ namespace Modules\Xot\Services;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 //----services ---
-use Modules\Xot\Services\PanelService as Panel;
 //---- pear
 use ZipArchive;
 
@@ -72,51 +71,51 @@ class ZipService {
         //dddx(get_class_methods($zip));
         /*
         0 => "open"
-    1 => "setPassword"
-    2 => "close"
-    3 => "count"
-    4 => "getStatusString"
-    5 => "addEmptyDir"
-    6 => "addFromString"
-    7 => "addFile"
-    8 => "addGlob"
-    9 => "addPattern"
-    10 => "renameIndex"
-    11 => "renameName"
-    12 => "setArchiveComment"
-    13 => "getArchiveComment"
-    14 => "setCommentIndex"
-    15 => "setCommentName"
-    16 => "getCommentIndex"
-    17 => "getCommentName"
-    18 => "deleteIndex"
-    19 => "deleteName"
-    20 => "statName"
-    21 => "statIndex"
-    22 => "locateName"
-    23 => "getNameIndex"
-    24 => "unchangeArchive"
-    25 => "unchangeAll"
-    26 => "unchangeIndex"
-    27 => "unchangeName"
-    28 => "extractTo"
-    29 => "getFromName"
-    30 => "getFromIndex"
-    31 => "getStream"
-    32 => "setExternalAttributesName"
-    33 => "setExternalAttributesIndex"
-    34 => "getExternalAttributesName"
-    35 => "getExternalAttributesIndex"
-    36 => "setCompressionName"
-    37 => "setCompressionIndex"
-    38 => "setEncryptionName"
-    39 => "setEncryptionIndex"
-    */
+        1 => "setPassword"
+        2 => "close"
+        3 => "count"
+        4 => "getStatusString"
+        5 => "addEmptyDir"
+        6 => "addFromString"
+        7 => "addFile"
+        8 => "addGlob"
+        9 => "addPattern"
+        10 => "renameIndex"
+        11 => "renameName"
+        12 => "setArchiveComment"
+        13 => "getArchiveComment"
+        14 => "setCommentIndex"
+        15 => "setCommentName"
+        16 => "getCommentIndex"
+        17 => "getCommentName"
+        18 => "deleteIndex"
+        19 => "deleteName"
+        20 => "statName"
+        21 => "statIndex"
+        22 => "locateName"
+        23 => "getNameIndex"
+        24 => "unchangeArchive"
+        25 => "unchangeAll"
+        26 => "unchangeIndex"
+        27 => "unchangeName"
+        28 => "extractTo"
+        29 => "getFromName"
+        30 => "getFromIndex"
+        31 => "getStream"
+        32 => "setExternalAttributesName"
+        33 => "setExternalAttributesIndex"
+        34 => "getExternalAttributesName"
+        35 => "getExternalAttributesIndex"
+        36 => "setCompressionName"
+        37 => "setCompressionIndex"
+        38 => "setEncryptionName"
+        39 => "setEncryptionIndex"
+        */
         if (0 == $rows->count()) {
             return '<h3>Non ci sono file da aggiungere</h3>';
         }
         foreach ($rows as $row) {
-            $panel = Panel::get($row);
+            $panel = PanelService::make()->get($row);
             if (null == $panel) {
                 return;
             }
@@ -130,7 +129,10 @@ class ZipService {
             if (! File::exists($path)) {
                 $pdf_parz['filename'] = $filename;
                 $pdf_content = $panel->pdf($pdf_parz);
-
+                //134    Parameter #2 $contents of method Illuminate\Filesystem\FilesystemAdapter::put()
+                //expects
+                //Illuminate\Http\File|Illuminate\Http\UploadedFile|Psr\Http\Message\StreamInterface|resource|string,
+                //mixed   given.
                 $res = Storage::disk('cache')->put($filename, $pdf_content);
             }
             $zip->addFile($path, $filename);

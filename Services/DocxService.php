@@ -6,10 +6,10 @@ namespace Modules\Xot\Services;
 
 use Carbon\Carbon;
 use Exception;
+use Illuminate\Database\Eloquent\Model;
 /*
 use PhpOffice\PhpWord\PhpWord;
 use Illuminate\Support\Facades\Storage;
-use PhpOffice\PhpSpreadsheet\Writer\Csv;
 
 \PhpOffice\PhpWord\TemplateProcessor($file);
 https://stackoverflow.com/questions/41296206/read-and-replace-contents-in-docx-word-file
@@ -30,52 +30,37 @@ class DocxService {
 
     public array $values;
 
-    private static ?DocxService $instance = null;
+    private static ?self $instance = null;
 
-    /**
-     * @return DocxService|null
-     */
-    public static function getInstance() {
+    public function __construct() {
+    }
+
+    public static function getInstance(): self {
         if (null === self::$instance) {
             self::$instance = new self();
         }
-        /*
-        //Strict comparison using === between null and Modules\Xot\Services\DocxService will always evaluate to false
-        if (null === self::$instance) {
-            throw new Exception('cant be null');
-        }
-        */
 
         return self::$instance;
+    }
+
+    public static function make(): self {
+        return static::getInstance();
     }
 
     //Method Modules\Xot\Services\DocxService::setDocxInput()
     //should return Modules\Xot\Services\DocxService
     //but returns Modules\Xot\Services\DocxService|null.
 
-    public static function setDocxInput(string $filename): self {
-        $obj = self::getInstance();
-        if (null == $obj) {
-            throw new Exception('instance error');
-        }
-        $obj->docx_input = $filename;
+    public function setDocxInput(string $filename): self {
+        $this->docx_input = $filename;
 
-        return $obj;
+        return $this;
     }
 
-    /**
-     * @param mixed $values
-     */
-    public static function setValues($values): self {
-        $obj = self::getInstance();
+    public function setValues(array $values): self {
+        $this->values = $values;
 
-        if (null == $obj) {
-            throw new Exception('instance error');
-        }
-
-        $obj->values = $values;
-
-        return $obj;
+        return $this;
     }
 
     /**
@@ -112,7 +97,7 @@ class DocxService {
      *
      * @return array
      */
-    public static function rows2Data_test($row, $prefix) {
+    public function rows2Data_test($row, $prefix) {
         if (! is_object($row)) {
             return [];
         }
@@ -131,7 +116,7 @@ class DocxService {
 
                 if (isJson($row->$key)) {
                     //dddx($row->$key);
-                    $tmp = json_decode($row->$key);
+                    $tmp = (array) json_decode($row->$key);
                     $data = [];
                     foreach ($tmp as $k => $v) {
                         if (! is_array($v) && ! is_object($v)) {
@@ -157,12 +142,12 @@ class DocxService {
     }
 
     /**
-     * @param object $row
+     * @param Model  $row
      * @param string $prefix
      *
      * @return array
      */
-    public static function rows2Data($row, $prefix) {
+    public function rows2Data($row, $prefix) {
         if (! is_object($row)) {
             return [];
         }
@@ -170,11 +155,12 @@ class DocxService {
         $arr = [];
         $fields = $row->getFillable();
         foreach ($fields as $field) {
-            try {
-                $arr[$field] = $row->$field;
-            } catch (\Exception $e1) {
-                $arr[$field] = '';
-            }
+            //175    Dead catch - Exception is never thrown in the try block.
+            //try {
+            $arr[$field] = $row->$field;
+            //} catch (\Exception $e1) {
+            //    $arr[$field] = '';
+            //}
         }
 
         //$arr = $row->toArray();
@@ -204,7 +190,7 @@ class DocxService {
 
                 if (isJson($row->$key)) {
                     //dddx($row->$key);
-                    $tmp = json_decode($row->$key);
+                    $tmp = (array) json_decode($row->$key);
                     $data = [];
                     foreach ($tmp as $k => $v) {
                         if (! is_array($v) && ! is_object($v)) {

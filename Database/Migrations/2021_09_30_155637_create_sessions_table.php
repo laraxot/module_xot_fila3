@@ -6,13 +6,15 @@ use Modules\Xot\Database\Migrations\XotBaseMigration;
 /**
  * Undocumented class
  */
-class CreateSessionsTable extends XotBaseMigration {
+class CreateSessionsTable extends XotBaseMigration
+{
     /**
      * Run the migrations.
      *
      * @return void
      */
-    public function up() {
+    public function up()
+    {
         //-- CREATE --
         $this->tableCreate(
             function (Blueprint $table) {
@@ -22,8 +24,8 @@ class CreateSessionsTable extends XotBaseMigration {
                     $table->text('user_agent')->nullable();
                     $table->text('payload');
                     $table->integer('last_activity')->index();
-                }
-            );
+            }
+        );
 
     }
 }

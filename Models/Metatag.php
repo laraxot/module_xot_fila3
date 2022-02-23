@@ -26,7 +26,6 @@ namespace Modules\Xot\Models;
  * @property string|null                                                          $updated_by
  * @property \Illuminate\Database\Eloquent\Collection|\Modules\Xot\Models\Image[] $images
  * @property int|null                                                             $images_count
- *
  * @method static \Illuminate\Database\Eloquent\Builder|Metatag newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Metatag newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Metatag query()
@@ -46,8 +45,10 @@ namespace Modules\Xot\Models;
  * @method static \Illuminate\Database\Eloquent\Builder|Metatag whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Metatag whereUpdatedBy($value)
  * @mixin \Eloquent
+ * @method static \Modules\Xot\Database\Factories\MetatagFactory factory(...$parameters)
  */
-class Metatag extends BaseModel {
+class Metatag extends BaseModel
+{
     /**
      * @var string[]
      */

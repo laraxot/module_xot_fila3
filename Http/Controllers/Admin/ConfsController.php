@@ -14,10 +14,17 @@ use Modules\Xot\Services\PanelService;
 /**
  * Class ConfController.
  */
-class ConfsController extends Controller {
-    public function index(Request $request) {
+class ConfsController extends Controller
+{
+    /**
+     * Undocumented function.
+     *
+     * @return mixed
+     */
+    public function index(Request $request)
+    {
         //$rows = TenantService::getConfigNames();
-        $panel = PanelService::getRequestPanel();
+        $panel = PanelService::make()->getRequestPanel();
 
         return $panel->out();
     }
@@ -27,7 +34,8 @@ class ConfsController extends Controller {
      *
      * @return Renderable|string
      */
-    public function edit(Request $request) {
+    public function edit(Request $request)
+    {
         $data = $request->all();
         $route_params = getRouteParameters();
         [$containers,$items] = params2ContainerItem($route_params);
@@ -46,7 +54,7 @@ class ConfsController extends Controller {
 
         return 'preso';
         */
-        $view = 'formx::admin.standalone.manage.php-array';
+        $view = 'theme::admin.standalone.manage.php-array';
         $view_params = [
             'view' => $view,
             'filename' => $filename,

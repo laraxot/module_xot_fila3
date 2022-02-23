@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Modules\Xot\Presenters;
 
 use Illuminate\Support\Collection;
-use Modules\Blog\Models\Post;
 use Modules\Xot\Contracts\PanelContract;
 use Modules\Xot\Contracts\PanelPresenterContract;
 use Modules\Xot\Services\PanelService;
@@ -35,7 +34,7 @@ class GeoJsonPanelPresenter implements PanelPresenterContract {
     public function outContainer(?array $params = null): \Modules\Xot\Transformers\GeoJsonCollection {
         $model = $this->panel->getRow();
         $model_table = $model->getTable();
-        $model_type = PanelService::get($model)->postType();
+        $model_type = PanelService::make()->get($model)->postType();
         $transformer = \Modules\Xot\Transformers\GeoJsonCollection::class;
         //--------
 

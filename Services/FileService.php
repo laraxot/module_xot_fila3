@@ -16,9 +16,9 @@ use Nwidart\Modules\Facades\Module;
  */
 class FileService {
     /**
-     * @return false|mixed|string
+     * 18     Method Modules\Xot\Services\FileService::asset() should return string but return statement is missing.
      */
-    public static function asset(string $path) {
+    public static function asset(string $path): string {
         /*
             to DOOOO
             viewNamespaceToPath     => /images/prova.png
@@ -75,9 +75,9 @@ class FileService {
                     //dddx([$filename_from, $filename_to]);
                     File::copy($filename_from, $filename_to);
                 } catch (\Exception $e) {
-                    throw new Exception('message:['.$e->getMessage().'] 
-                        path :['.$path.'] 
-                        file from ['.$filename_from.'] 
+                    throw new Exception('message:['.$e->getMessage().']
+                        path :['.$path.']
+                        file from ['.$filename_from.']
                         file to ['.$filename_to.']');
                 }
             }
@@ -102,9 +102,10 @@ class FileService {
             if (! File::exists(\dirname($filename_to))) {
                 File::makeDirectory(\dirname($filename_to), 0755, true, true);
             }
-            if (File::exists($filename_from)) {
-                File::copy($filename_from, $filename_to);
-            }
+            // 105    If condition is always true.
+            //if (File::exists($filename_from)) {
+            File::copy($filename_from, $filename_to);
+            //}
         }
 
         return $asset;
@@ -112,6 +113,11 @@ class FileService {
         //return asset(self::viewNamespaceToAsset($path));
     }
 
+    /**
+     * Undocumented function.
+     *
+     * @return void
+     */
     public static function createDirectoryForFilename(string $filename) {
         if (! File::exists(\dirname($filename))) {
             File::makeDirectory(\dirname($filename), 0755, true, true);
@@ -495,11 +501,9 @@ class FileService {
     //*
 
     /**
-     * @param mixed[] $files
-     *
-     * @return mixed
+     * @param string[] $files
      */
-    public static function viewNamespaceToUrl($files) {
+    public static function viewNamespaceToUrl($files): array {
         foreach ($files as $k => $filePath) {
             //TODO testare con ARTISAN vendor:publish
             $pos = \mb_strpos($filePath, '::');
@@ -598,15 +602,17 @@ class FileService {
         if (Str::startsWith($path, $str)) {
             $info = pathinfo($path);
             switch (collect($info)->get('extension')) {
-                case 'css': $filename = public_path('/css/'.$info['basename']); break;
-                case 'js':  $filename = public_path('/js/'.$info['basename']); break;
-                default:
-                    echo '<h3>Unknown Extension</h3>';
-                    echo '<h3>['.$path.']</h3>';
-                    dddx($info);
+            case 'css': $filename = public_path('/css/'.$info['basename']);
+                break;
+            case 'js':  $filename = public_path('/js/'.$info['basename']);
+                break;
+            default:
+                echo '<h3>Unknown Extension</h3>';
+                echo '<h3>['.$path.']</h3>';
+                dddx($info);
                 break;
             }
-            ImportService::download(['url' => $path, 'filename' => $filename]);
+            ImportService::make()->download(['url' => $path, 'filename' => $filename]);
 
             return $filename;
         }
@@ -614,7 +620,7 @@ class FileService {
         return ''.$path;
     }
 
-    public static function allDirectories(string $path, array $except = [], string $dir = '') {
+    public static function allDirectories(string $path, array $except = [], string $dir = ''): array {
         $dirs = File::directories($path);
         $data = [];
         foreach ($dirs as $v) {
@@ -638,6 +644,11 @@ class FileService {
         return $path;
     }
 
+    /**
+     * Undocumented function.
+     *
+     * @return int|float|string|array|null
+     */
     public static function config(string $key) {
         $ns_name = Str::before($key, '::');
         $group = Str::of($key)->after('::')->before('.');
@@ -648,10 +659,17 @@ class FileService {
             ArrayService::save(['filename' => $path, 'data' => []]);
         }
         $data = File::getRequire($path);
+        if (! is_array($data)) {
+            throw new Exception('['.__LINE__.']['.class_basename(__CLASS__).']');
+        }
         $value = Arr::get($data, $item);
 
         if ($item === $key) {
             return $data;
+        }
+
+        if (! is_numeric($value) && ! is_array($value) && ! is_string($value) && ! is_null($value)) {
+            throw new Exception('['.__LINE__.']['.class_basename(__CLASS__).']');
         }
 
         return $value;
@@ -659,7 +677,7 @@ class FileService {
 
     public static function viewPath(string $key): string {
         $ns_name = Str::before($key, '::');
-        $group = Str::of($key)->after('::');
+        $group = (string) Str::of($key)->after('::');
         $ns_dir = self::getViewNameSpacePath($ns_name);
         $res = $ns_dir.'/'.Str::replace('.', '/', $group).'.blade.php';
 
@@ -670,7 +688,7 @@ class FileService {
      * Undocumented function
      *  Execute copy with makedirectory.
      */
-    public static function copy(string $from, string $to) {
+    public static function copy(string $from, string $to): void {
         if (! File::exists(\dirname($to))) {
             try {
                 File::makeDirectory(\dirname($to), 0755, true, true);
@@ -689,7 +707,7 @@ class FileService {
      * from : theme::errors.500
      * to  : pub_theme:errors.500
      */
-    public static function viewCopy(string $from, string $to) {
+    public static function viewCopy(string $from, string $to): void {
         $from_path = FileService::viewPath($from);
         $to_path = FileService::viewPath($to);
         FileService::copy($from_path, $to_path);
@@ -707,9 +725,9 @@ class FileService {
         $exists = File::exists($components_json);
         if ($exists && ! $force_recreate) {
             $content = File::get($components_json);
-            $comps = json_decode($content);
-            if (null === $comps) {
-                File::delete($components_json);
+            $comps = (array) json_decode($content);
+            if (null == $comps) {
+                //File::delete($components_json);
                 $comps = [];
             }
 
@@ -762,5 +780,25 @@ class FileService {
         }
 
         return $comps;
+    }
+
+    /**
+     * Undocumented function.
+     */
+    public static function getNiceFileSize(int $bytes, bool $binaryPrefix = true): string {
+        if ($binaryPrefix) {
+            $unit = ['B', 'KiB', 'MiB', 'GiB', 'TiB', 'PiB'];
+            if (0 == $bytes) {
+                return '0 '.$unit[0];
+            }
+
+            return @round($bytes / pow(1024, ($i = floor(log($bytes, 1024)))), 2).' '.(isset($unit[$i]) ? $unit[$i] : 'B');
+        }
+        $unit = ['B', 'KB', 'MB', 'GB', 'TB', 'PB'];
+        if (0 == $bytes) {
+            return '0 '.$unit[0];
+        }
+
+        return @round($bytes / pow(1000, ($i = floor(log($bytes, 1000)))), 2).' '.(isset($unit[$i]) ? $unit[$i] : 'B');
     }
 }

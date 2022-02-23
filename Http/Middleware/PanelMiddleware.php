@@ -15,19 +15,21 @@ use Modules\Xot\Services\PanelService;
 /**
  * Class PanelMiddleware.
  */
-class PanelMiddleware {
+class PanelMiddleware
+{
     /**
      * @return \Illuminate\Http\Response|mixed
      */
-    public function handle(Request $request, Closure $next) {
+    public function handle(Request $request, Closure $next)
+    {
         $route_params = getRouteParameters();
         try {
-            $panel = PanelService::getByParams($route_params);
+            $panel = PanelService::make()->getByParams($route_params);
         } catch (\Exception $e) {
             return response()->view('theme::errors.404', ['message' => $e->getMessage(), 'lang' => 'it'], 404);
         }
 
-        PanelService::setRequestPanel($panel);
+        PanelService::make()->setRequestPanel($panel);
 
         return $next($request);
     }

@@ -27,7 +27,7 @@ class ArrayService {
         if (1 == request()->input('debug')) {
             return self::toHtml($params);
         }
-        require_once __DIR__.'/vendor/autoload.php';
+        include_once __DIR__.'/vendor/autoload.php';
         $data = $params['data'];
         $res = [];
         foreach ($data as $k => $v) {
@@ -40,11 +40,12 @@ class ArrayService {
         $params['data'] = $res;
 
         switch (self::$export_processor) {
-            case 1:return self::toXLS_phpoffice($params); //break;
+        case 1:
+            return self::toXLS_phpoffice($params); //break;
             //case 2:return self::toXLS_Maatwebsite($params); //break;
             //case 3:return self::toXLS_phpexcel($params); //break;
-            default:
-                dddx(['unknown export_processor ['.self::$export_processor.']']);
+        default:
+            dddx(['unknown export_processor ['.self::$export_processor.']']);
             break;
         }
     }
@@ -66,7 +67,7 @@ class ArrayService {
         foreach ($data as $k => $v) {
             $html .= '<tr>';
             foreach ($v as $v0) {
-                if (is_string($v0)) {
+                if (is_string($v0) || is_numeric($v0) || is_null($v0)) {
                     $html .= '<td><pre>'.$v0.'</pre></td>';
                 } elseif (is_array($v0)) {
                     $html .= '<td><pre>'.print_r($v0, true).'</pre></td>';
@@ -83,6 +84,7 @@ class ArrayService {
     }
 
     public static function getHeader(array $params): array {
+        $data = [];
         \extract($params);
 
         $firstrow = collect($data)->first();
@@ -155,10 +157,10 @@ class ArrayService {
 
         $sheet->fromArray($header, null, 'A1');
         $sheet->fromArray(
-            $data,  	// The data to set
+            $data,      // The data to set
             null,        // Array values with this value will not be set
             'A2'         // Top left coordinate of the worksheet range where
-                         //    we want to set these values (default is A1)
+            //    we want to set these values (default is A1)
         );
         //$sheet->setCellValue('A1', 'Hello World !');
         $writer = new Xlsx($spreadsheet);
@@ -172,14 +174,16 @@ class ArrayService {
             $text = 'text';
         }
         switch ($out) {
-            case 'link': return view()->make('theme::download_icon')->with('file', $pathToFile)->with('ext', 'xls')->with('text', $text);
-            case 'download': response()->download($pathToFile);
+        case 'link':
+            return view()->make('theme::download_icon')->with('file', $pathToFile)->with('ext', 'xls')->with('text', $text);
+        case 'download': response()->download($pathToFile);
             // no break
-            case 'file':  return $pathToFile;
-            case 'link_file':
-                $link = view('theme::download_icon')->with('file', $pathToFile)->with('ext', 'xls')->with('text', $text);
+        case 'file':
+            return $pathToFile;
+        case 'link_file':
+            $link = view('theme::download_icon')->with('file', $pathToFile)->with('ext', 'xls')->with('text', $text);
 
-                return [$link, $pathToFile];
+            return [$link, $pathToFile];
         }
     }
 
@@ -273,13 +277,15 @@ class ArrayService {
     public static function diff_assoc_recursive($arr_1, $arr_2): array {
         $coll_1 = collect($arr_1);
         $coll_2 = collect($arr_2);
-        $ris = $coll_1->filter(function ($value, $key) use ($arr_2) {
-            try {
-                return ! in_array($value, $arr_2);
-            } catch (\Exception $e) {
-                dddx(['err' => $e->getMessage(), 'value' => $value, 'key' => $key, 'arr_2' => $arr_2]);
+        $ris = $coll_1->filter(
+            function ($value, $key) use ($arr_2) {
+                try {
+                    return ! in_array($value, $arr_2);
+                } catch (\Exception $e) {
+                    dddx(['err' => $e->getMessage(), 'value' => $value, 'key' => $key, 'arr_2' => $arr_2]);
+                }
             }
-        });
+        );
 
         return $ris->all();
     }

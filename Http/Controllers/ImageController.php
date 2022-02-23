@@ -14,15 +14,18 @@ use Illuminate\Support\Str;
 /**
  * Class ImageController.
  */
-class ImageController extends Controller {
-    public function index(Request $request): void {
+class ImageController extends Controller
+{
+    public function index(Request $request): void
+    {
         dddx('index');
     }
 
     /**
      * @return mixed
      */
-    public function show(Request $request) {
+    public function show(Request $request)
+    {
         $params = optional(\Route::current())->parameters();
         list($containers, $items) = params2ContainerItem($params);
         $last_item = last($items);
@@ -33,14 +36,16 @@ class ImageController extends Controller {
     /**
      * @return \Illuminate\Http\JsonResponse
      */
-    public function store(Request $request) {
+    public function store(Request $request)
+    {
         return $this->canvas($request);
     }
 
     /**
      * @return \Illuminate\Http\JsonResponse
      */
-    public function canvas(Request $request) {
+    public function canvas(Request $request)
+    {
         $data = $request->all();
         $path_parts = \pathinfo($data['name']);
         $error = false;

@@ -56,7 +56,8 @@ class NavService {
         return view()->make($view, $view_params);
     }
 
-    public static function monthYearNav(): Renderable { //possiamo trasformarlo in una macro
+    public static function monthYearNav(): Renderable {
+        //possiamo trasformarlo in una macro
         $request = \Request::capture();
         $routename = \Route::currentRouteName();
 
@@ -66,8 +67,9 @@ class NavService {
             $params = $route_current->parameters();
         }
 
-        $year = $request->input('year', date('Y'));
-        $month = $request->input('month', date('m'));
+        $year = $request->input('year', date('Y')) * 1;
+        $month = $request->input('month', date('m')) * 1;
+
         $q = 2;
         $date = Carbon::create($year, $month, 1);
         if (false === $date) {

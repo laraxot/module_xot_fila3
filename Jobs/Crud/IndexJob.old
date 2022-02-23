@@ -59,11 +59,11 @@ class IndexJob implements ShouldQueue {
         $panel = null;
         $panel_parent = null;
         foreach ($items as $k => $v) {
-            $panel = Panel::get($v);
+            $panel = Panel::make()->get($v);
             $panel->setParent($panel_parent);
             $panel_parent = $panel;
         }
-        $this->panel = Panel::get($row);
+        $this->panel = Panel::make()->get($row);
         if (null != $panel) {
             $this->panel->setParent($panel);
         }

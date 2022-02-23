@@ -79,12 +79,18 @@ class XotServiceProvider extends XotBaseServiceProvider {
         }
     }
 
+    /**
+     * Undocumented function.
+     */
     private function registerCommands(): void {
-        $this->commands([
-            \Modules\Xot\Console\CreateAllRepositoriesCommand::class,
-            \Modules\Xot\Console\PanelMakeCommand::class,
-            \Modules\Xot\Console\FixProvidersCommand::class,
-        ]);
+        $this->commands(
+            [
+                //\Modules\Xot\Console\CreateAllRepositoriesCommand::class,
+                //\Modules\Xot\Console\PanelMakeCommand::class,
+                //\Modules\Xot\Console\FixProvidersCommand::class,
+                \Modules\Xot\Console\Commands\DatabaseBackUpCommand::class,
+            ]
+        );
     }
 
     private function registerViewComposers(): void {
@@ -112,7 +118,7 @@ class XotServiceProvider extends XotBaseServiceProvider {
         $files = File::files($path);
         foreach ($files as $file) {
             if ('php' == $file->getExtension() && false !== $file->getRealPath()) {
-                require_once $file->getRealPath();
+                include_once $file->getRealPath();
             }
         }
     }

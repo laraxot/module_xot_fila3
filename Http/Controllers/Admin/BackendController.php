@@ -16,11 +16,13 @@ use Modules\Xot\Services\ArtisanService;
 /**
  * Class BackendController.
  */
-class BackendController extends Controller {
+class BackendController extends Controller
+{
     /**
      * @return mixed|string
      */
-    public function index(Request $request) {
+    public function index(Request $request)
+    {
         if ('routelist' == $request->act) {
             return ArtisanService::exe('route:list');
         }
@@ -28,7 +30,8 @@ class BackendController extends Controller {
         return ThemeService::view();
     }
 
-    public function dashboard(Request $request): View {
+    public function dashboard(Request $request): View
+    {
         /*
         $out = ArtisanService::act($request->act);
         if ('' != $out) {

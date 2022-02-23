@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Modules\Xot\Services;
 
+use Exception;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Str;
@@ -23,15 +24,17 @@ class RouteService {
             return $params['in_admin'];
         }
         //dddx(ThemeService::__getStatic('in_admin'));
+        /* Cannot call method get() on mixed
         if (null !== config()->get('in_admin')) {
             return config()->get('in_admin');
         }
+        */
         if ('admin' == \Request::segment(1)) {
             return true;
         }
         $segments = (\Request::segments());
         if (count($segments) > 0 && 'livewire' == $segments[0]) {
-            if (true == session()->get('in_admin')) {
+            if (true == session('in_admin')) {
                 return true;
             }
         }
@@ -59,6 +62,9 @@ class RouteService {
         //Cannot call method getName() on mixed.
         $routename = ''; //Request::route()->getName();
         $old_act_route = last(explode('.', $routename));
+        if (! is_string($old_act_route)) {
+            throw new Exception('['.__LINE__.']['.class_basename(__CLASS__).']');
+        }
 
         $routename_act = Str::before($routename, $old_act_route).''.$act;
         $route_current = \Route::current();
@@ -419,16 +425,18 @@ class RouteService {
 
         $params['containers'] = implode('.', $containers);
         $path = collect($tmp_arr)
-            ->filter(function ($item) {
-                return ! in_array($item, ['Module', 'Item']);
-            })
+            ->filter(
+                function ($item) {
+                    return ! in_array($item, ['Module', 'Item']);
+                }
+            )
             ->map(
-            function ($item) use ($params) {
-                $item = Str::snake($item);
+                function ($item) use ($params) {
+                    $item = Str::snake($item);
 
-                return $params[$item] ?? $item;
-            }
-        )->implode('.');
+                    return $params[$item] ?? $item;
+                }
+            )->implode('.');
 
         return $path;
     }

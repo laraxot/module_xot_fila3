@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Modules\Xot\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Str;
@@ -14,7 +15,14 @@ use Modules\Xot\Services\FileService;
 use Modules\Xot\Services\PanelService;
 use Modules\Xot\Services\PolicyService;
 
-class ContainersController extends Controller {
+/**
+ * Undocumented class.
+ *
+ * @method Renderable home(Request $request)
+ * @method Renderable show(Request $request)
+ */
+class ContainersController extends Controller
+{
     protected PanelContract $panel;
 
     /*
@@ -24,12 +32,18 @@ class ContainersController extends Controller {
 
     public function index(Request $request) {
         $params = getRouteParameters();
-        $panel = PanelService::getByParams($params);
+        $panel = PanelService::make()->getByParams($params);
 
         return $panel->out();
     }
     */
-    public function index(Request $request) {
+    /**
+     * Undocumented function.
+     *
+     * @return mixed
+     */
+    public function index(Request $request)
+    {
         $route_params = getRouteParameters(); // "module" => "lu"
         [$containers,$items] = params2ContainerItem();
         //dddx(['contianers' => $containers, 'items' => $items]);
@@ -43,12 +57,13 @@ class ContainersController extends Controller {
         return $this->__call('index', $route_params);
     }
 
-    public function __call($method, $args) {
+    public function __call($method, $args)
+    {
         $action = \Route::current()->getAction();
         $action['controller'] = __CLASS__.'@'.$method;
         $action = \Route::current()->setAction($action);
 
-        $this->panel = PanelService::getRequestPanel();
+        $this->panel = PanelService::make()->getRequestPanel();
 
         if ('' != request()->input('_act', '')) {
             return $this->__callPanelAct($method, $args);
@@ -57,7 +72,8 @@ class ContainersController extends Controller {
         return $this->__callRouteAct($method, $args);
     }
 
-    public function getController(): string {
+    public function getController(): string
+    {
         /*
         if (null == $this->panel) {
             return '\Modules\Xot\Http\Controllers\XotPanelController';
@@ -83,7 +99,8 @@ class ContainersController extends Controller {
     /**
      * @return mixed
      */
-    public function __callRouteAct(string $method, array $args) {
+    public function __callRouteAct(string $method, array $args)
+    {
         $panel = $this->panel;
         $authorized = Gate::allows($method, $panel);
 
@@ -104,7 +121,8 @@ class ContainersController extends Controller {
     /**
      * @return mixed
      */
-    public function __callPanelAct(string $method, array $args) {
+    public function __callPanelAct(string $method, array $args)
+    {
         $request = request();
         $act = $request->_act;
         $method_act = Str::camel($act);
@@ -122,7 +140,8 @@ class ContainersController extends Controller {
     /**
      * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse|\Illuminate\Http\Response
      */
-    public function notAuthorized(string $method, PanelContract $panel) {
+    public function notAuthorized(string $method, PanelContract $panel)
+    {
         $lang = app()->getLocale();
         /*
         if (! \Auth::check()) {

@@ -56,7 +56,7 @@ class AttachJob implements ShouldQueue {
             $row = xotModel($container);
         }
         //$rows = $rows->paginate(20);
-        $panel = Panel::get($row);
+        $panel = Panel::make()->get($row);
         $panel->setRows($rows);
         if (! method_exists($rows, 'getPivotClass')) {
             abort(403, 'not a pivot ');
@@ -64,7 +64,7 @@ class AttachJob implements ShouldQueue {
         $pivot_class = $rows->getPivotClass();
         $pivot = new $pivot_class();
         //$panel = StubService::getByModel($pivot, 'panel', true);
-        $panel = Panel::get($pivot);
+        $panel = Panel::make()->get($pivot);
         $panel->pivot_key_names = [];
         $panel->pivot_key_names[] = $rows->getForeignPivotKeyName();
         if (method_exists($rows, 'getMorphType')) {

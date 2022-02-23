@@ -201,7 +201,7 @@ class TenantService {
             //return null;
             throw new \Exception('model is null');
         }
-        $panel = PanelService::get($model);
+        $panel = PanelService::make()->get($model);
         if (null == $panel) {
             //return null;
             throw new \Exception('panel is null');

@@ -4,10 +4,11 @@ declare(strict_types=1);
 
 namespace Modules\Xot\Services;
 
+use Exception;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
-use Modules\Tenant\Services\TenantService;
 use Modules\Xot\Contracts\PanelContract;
 
 /**
@@ -36,15 +37,15 @@ class PanelRouteService {
             return $params['in_admin'];
         }
         //dddx(ThemeService::__getStatic('in_admin'));
-        if (null !== config()->get('in_admin')) {
-            return config()->get('in_admin');
+        if (null !== config('in_admin')) {
+            return config('in_admin');
         }
         if ('admin' == \Request::segment(1)) {
             return true;
         }
         $segments = (\Request::segments());
         if (count($segments) > 0 && 'livewire' == $segments[0]) {
-            if (true == session()->get('in_admin')) {
+            if (true == session('in_admin')) {
                 return true;
             }
         }
@@ -63,15 +64,15 @@ class PanelRouteService {
     public function addCacheQueryString(string $route): string {
         $path = '/'.request()->path();
         $cache_key = Str::slug($path.'_query');
-
-        session()->put($cache_key, request()->query(), 60 * 60);
+        Session::put($cache_key, request()->query());
+        //session()->put($cache_key, request()->query(), 60 * 60);
         //echo '[cache_key['.$cache_key.']['.$route.']]';
 
         //--- aggiungo le query string all'url corrente
         //$queries = collect(request()->query())->except(['_act', 'item0', 'item1'])->all();
         $cache_key = Str::slug(Str::before($route, '?').'_query');
 
-        $queries = session()->get($cache_key);
+        $queries = Session::get($cache_key);
         if (! is_array($queries)) {
             $queries = [];
         }
@@ -98,18 +99,18 @@ class PanelRouteService {
 
             $filters[$k]->field_value = $field_value;
             switch ($where) {
-                case 'Year':
-                    $value = $field_value->year;
-                    break;
-                case 'ofYear':
-                    $value = \Request::input('year', date('Y'));
-                    break;
-                case 'Month':
-                    $value = $field_value->month;
-                    break;
-                default:
-                    $value = $field_value;
-                    break;
+            case 'Year':
+                $value = $field_value->year;
+                break;
+            case 'ofYear':
+                $value = \Request::input('year', date('Y'));
+                break;
+            case 'Month':
+                $value = $field_value->month;
+                break;
+            default:
+                $value = $field_value;
+                break;
             }
             $filters[$k]->value = $value;
         }
@@ -119,7 +120,11 @@ class PanelRouteService {
         $node = class_basename($row).'-'.$row->getKey();
         $queries['page'] = Cache::get('page');
 
-        $queries = array_merge(request()->query(), $queries);
+        $request_query = request()->query();
+        if (! is_array($request_query)) {
+            throw new Exception('['.__LINE__.']['.class_basename(__CLASS__).']');
+        }
+        $queries = array_merge($request_query, $queries);
         $queries = collect($queries)->except(['_act'])->all();
         $url = (url_queries($queries, $url)).'#'.$node;
         //dddx([$url, $filters, $queries, $node, url_queries($queries, $url).'#'.$node, url_queries($queries, $url), $url]);
@@ -128,6 +133,14 @@ class PanelRouteService {
     }
 
     public function url(string $act = 'show'): string {
+        if ('act' == $act) {
+            dddx(
+                [
+                    'act' => $act,
+                    'backtrace' => debug_backtrace(),
+                ]
+            );
+        }
         $panel = $this->panel;
 
         $breads = $panel->getBreads();
@@ -138,7 +151,6 @@ class PanelRouteService {
         if (inAdmin() && null == $breads->first()) {
             $module_name = $panel->getModuleNameLow();
             $route_params['module'] = $module_name;
-            //$route_params['module'] = TenantService::config('xra.main_module', 'xot');
         }
 
         foreach ($breads as $i => $bread) {
@@ -175,8 +187,8 @@ class PanelRouteService {
                         'panel guid' => $panel->guid(),
                         'last route key ' => $panel->getRow()->getRouteKey(),
                         'last route key name' => $panel->getRow()->getRouteKeyName(),
-                        'in_admin' => config()->get('in_admin'),
-                        'in_admin_session' => session()->get('in_admin'),
+                        'in_admin' => config('in_admin'),
+                        'in_admin_session' => Session::get('in_admin'),
                         //'routes' => \Route::getRoutes(),
                     ]
                 );
@@ -192,19 +204,8 @@ class PanelRouteService {
         return $this->addCacheQueryString($route);
     }
 
-    public function relatedUrl(array $params): string {
-        $panel = $this->panel;
-        $act = 'show';
-
-        extract($params);
-        if (! isset($related_name)) {
-            throw new \Exception('err: related_name is missing');
-        }
-        //--- solo per velocita'
-
-        $url = $panel->url($act);
-
-        return $url.'/'.$related_name;
+    public function relatedUrl(string $name, string $act = 'index'): string {
+        return $this->panel->relatedUrl($name, $act);
     }
 
     /**

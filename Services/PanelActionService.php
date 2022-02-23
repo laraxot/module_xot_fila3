@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Modules\Xot\Services;
 
+use Illuminate\Support\Collection;
 use Modules\Xot\Contracts\PanelContract;
 use Modules\Xot\Models\Panels\Actions\XotBasePanelAction;
 
@@ -21,7 +22,7 @@ class PanelActionService {
     }
 
     /**
-     * @return \Illuminate\Support\Collection
+     * @return Collection|PanelContract[]
      */
     public function getActions(array $params = []) {
         $panel = $this->panel;
@@ -57,7 +58,7 @@ class PanelActionService {
     }
 
     /**
-     * @return \Illuminate\Support\Collection
+     * @return Collection&iterable<PanelContract>
      */
     public function containerActions(array $params = []) {
         $params['filters']['onContainer'] = true;
@@ -66,12 +67,19 @@ class PanelActionService {
     }
 
     /**
-     * @return \Illuminate\Support\Collection
+     * @return Collection&iterable<PanelContract>
      */
     public function itemActions(array $params = []) {
         $params['filters']['onItem'] = true;
 
         return $this->getActions($params);
+    }
+
+    public function getAction(string $name): XotBasePanelAction {
+        $action = $this->getActions()
+            ->firstWhere('name', $name);
+
+        return $action;
     }
 
     public function itemAction(string $act): ?XotBasePanelAction {
@@ -92,47 +100,45 @@ class PanelActionService {
         return $itemAction;
     }
 
-    /**
-     * @return mixed
-     */
-    public function containerAction(string $act) {
+    public function containerAction(string $act): ?XotBasePanelAction {
         $actions = $this->containerActions();
         $action = $actions->firstWhere('name', $act);
         if (! is_object($action)) {
-            dddx([
-                'error' => 'nessuna azione con questo nome',
-                'act' => $act,
-                'this' => $this,
-                'Container Actions' => $actions,
-                'panel' => $this->panel,
-                'All Actions' => $this->panel->actions(),
-            ]);
+            dddx(
+                [
+                    'error' => 'nessuna azione con questo nome',
+                    'act' => $act,
+                    'this' => $this,
+                    'Container Actions' => $actions,
+                    'panel' => $this->panel,
+                    'All Actions' => $this->panel->actions(),
+                ]
+            );
         }
         //$action->setPanel($this);
 
         return $action;
     }
 
-    /**
-     * @return mixed
-     */
-    public function urlContainerAction(string $act, array $params = []) {
-        $containerActions = $this->containerActions();
-        $containerAction = $containerActions->firstWhere('name', $act);
-        if (is_object($containerAction)) {
-            return $containerAction->urlContainer(['rows' => $this->panel->getRows(), 'panel' => $this->panel]);
+    public function urlContainerAction(string $act, array $params = []): string {
+        //$containerActions = $this->containerActions();
+        //$containerAction = $containerActions->firstWhere('name', $act);
+        $containerAction = $this->containerAction($act);
+        //123    Call to an undefined method object::urlContainer().
+        if (is_object($containerAction) /* && $containerAction instanceof XotBasePanelAction */) {
+            return $containerAction->urlContainer();
         }
+
+        return '#';
     }
 
-    /**
-     * @return mixed
-     */
-    public function urlItemAction(string $act, array $params = []) {
+    public function urlItemAction(string $act, array $params = []): string {
         $itemAction = $this->itemAction($act);
         if (is_object($itemAction)) {
-            //return $itemAction->urlItem(['row' => $this->panel->getRow(), 'panel' => $this->panel]);
-            return $itemAction->urlItem($act);
+            return $itemAction->urlItem();
         }
+
+        return '#';
     }
 
     /**

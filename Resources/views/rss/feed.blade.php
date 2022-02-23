@@ -14,7 +14,7 @@
                 <title><![CDATA[{{ $item->title }}]]></title>
                 <subtitle><![CDATA[{{ $item->subtitle }}]]></subtitle>
                 {{-- guid o cosa? --}}
-                <link> {{ url(Panel::get($item)->url()) }} </link>
+                <link> {{ url(Panel::make()->get($item)->url()) }} </link>
                 <description><![CDATA[{!! $item->txt !!}]]></description>
                 {{-- in category post_type? oppure togliamo il tag? oppure cosa?--}}
                 <category>{{ $item->post_type }}</category>

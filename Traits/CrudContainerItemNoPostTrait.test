@@ -15,7 +15,7 @@ use Modules\Theme\Services\ThemeService;
 //use Modules\Xot\Services\PanelService;
 //use Modules\Xot\Services\PolicyService;
 use Modules\Xot\Services\StubService;
-use Modules\Xot\Services\PanelService as Panel;
+use Modules\Xot\Services\PanelService;
 
 
 trait CrudContainerItemNoPostTrait {
@@ -120,7 +120,7 @@ trait CrudContainerItemNoPostTrait {
     public function update(Request $request, $container, $item) {
         $data = $request->all();
         $row = $item;
-        $panel=Panel::get($row);
+        $panel=PanelService::make()->get($row);
         $ris = $row->update($data);
         //$row->post()->save($data); //save vuole un oggetto
         /* ----
@@ -363,7 +363,7 @@ trait CrudContainerItemNoPostTrait {
 
         //return ThemeService::action($request, $row);
         /*
-        $panel=Panel::get($item_new);
+        $panel=PanelService::make()->get($item_new);
 
 
         return ThemeService::view(['panel' => $panel, 'row' => $item_new])

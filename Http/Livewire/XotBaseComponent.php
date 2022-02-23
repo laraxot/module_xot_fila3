@@ -11,11 +11,13 @@ use Livewire\Component;
 /**
  * Class XotBaseComponent.
  */
-abstract class XotBaseComponent extends Component {
+abstract class XotBaseComponent extends Component
+{
     /**
      * @return string
      */
-    public function getView() {
+    public function getView()
+    {
         $class = get_class($this);
         $module_name = Str::between($class, 'Modules\\', '\Http\\');
         $module_name_low = Str::lower($module_name);
@@ -26,10 +28,12 @@ abstract class XotBaseComponent extends Component {
         $view = str_replace('._', '.', $view);
         //fare distinzione fra inAdmin o no ?
         if (! view()->exists($view)) {
-            dddx([
+            dddx(
+                [
                 'err' => 'View not Exists',
                 'view' => $view,
-            ]);
+                ]
+            );
         }
 
         return $view;
@@ -43,7 +47,9 @@ abstract class XotBaseComponent extends Component {
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function render() { //per fare copia ed incolla
+    public function render():\Illuminate\Contracts\Support\Renderable
+    {
+        //per fare copia ed incolla
         $view = $this->getView();
         $view_params = [
             'view' => $view,

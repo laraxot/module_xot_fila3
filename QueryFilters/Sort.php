@@ -9,8 +9,16 @@ declare(strict_types=1);
 namespace Modules\Xot\QueryFilters;
 
 use Closure;
+use Illuminate\Support\Facades\Request;
 
 class Sort {
+    /**
+     * Undocumented function.
+     *
+     * @param Request $request
+     *
+     * @return Closure
+     */
     public function handle($request, Closure $next) {
         if (! request()->has('sort')) {
             return $next($request);

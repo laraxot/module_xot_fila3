@@ -4,15 +4,17 @@ declare(strict_types=1);
 
 namespace Modules\Xot\Services;
 
+use Illuminate\Support\Collection;
+
 /**
  * https://github.com/Tinyportal/TinyPortal/blob/master/Sources/TPSubs.php.
  *
- * @param string $primary_field
- * @param string $parent_field
- * @param string $sort_field
- * @param object $rows
- * @param int    $root_id
- * @param int    $maxlevel
+ * @param string     $primary_field
+ * @param string     $parent_field
+ * @param string     $sort_field
+ * @param Collection $rows
+ * @param int        $root_id
+ * @param int        $maxlevel
  *
  * @return mixed
  */
@@ -38,7 +40,8 @@ function chain($primary_field, $parent_field, $sort_field, $rows, $root_id = 0, 
 class ChainService {
     public array $table;
 
-    public \Illuminate\Database\Eloquent\Collection $rows;
+    //public \Illuminate\Database\Eloquent\Collection $rows;
+    public Collection $rows;
 
     public array $chain_table;
 
@@ -51,12 +54,12 @@ class ChainService {
     /**
      * ChainService constructor.
      *
-     * @param string $primary_field
-     * @param string $parent_field
-     * @param string $sort_field
-     * @param object $rows
-     * @param int    $root_id
-     * @param int    $maxlevel
+     * @param string     $primary_field
+     * @param string     $parent_field
+     * @param string     $sort_field
+     * @param Collection $rows
+     * @param int        $root_id
+     * @param int        $maxlevel
      */
     public function __construct($primary_field, $parent_field, $sort_field, $rows, $root_id = 0, $maxlevel = 25) {
         $this->rows = $rows;

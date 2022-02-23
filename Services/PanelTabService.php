@@ -6,6 +6,8 @@ namespace Modules\Xot\Services;
 
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Request;
+use Illuminate\Support\Str;
+use Modules\Xot\Contracts\PanelContract;
 use Modules\Xot\Models\Panels\XotBasePanel;
 
 /**
@@ -22,6 +24,7 @@ class PanelTabService {
     }
 
     public function getItemTabs(): array {
+        /*
         $item = $this->panel->getRow();
         $tabs = $this->panel->tabs();
         $routename = (string) \Route::currentRouteName();
@@ -36,15 +39,19 @@ class PanelTabService {
             } else {
                 $tab_act = 'index';
             }
-            $tmp->url = $this->panel->relatedUrl(['related_name' => $tab, 'act' => $tab_act]);
+            $tmp->url = $this->panel->relatedUrl($tab, $tab_act);
             $tmp->active = false; //in_array($tab,$containers);
             $row[] = $tmp;
         }
 
         return [$row];
+        */
+        return $this->getBreadTabs($this->panel);
     }
 
     public function getRowTabs(): array {
+        return $this->getBreadTabs($this->panel);
+        /*
         $data = [];
         if (null == $this->panel->getRow()) {
             return $data;
@@ -53,22 +60,57 @@ class PanelTabService {
         foreach ($this->panel->tabs() as $tab) {
             $tmp = (object) [];
             $tmp->title = trans($this->panel->getModuleNameLow().'::'.class_basename($this->panel->getRow()).'.tab.'.$tab);
-            $tmp->url = $this->panel->relatedUrl(['related_name' => $tab, 'act' => 'index']);
-            /*
-            if ('#' != $tmp->url[0]) {
-                dddx(['tmp' => $tmp, 'panel' => $this->panel]);
-            }
-            */
-            $tmp->index_edit_url = $this->panel->relatedUrl(['related_name' => $tab, 'act' => 'index_edit']);
-            $tmp->create_url = $this->panel->relatedUrl(['related_name' => $tab, 'act' => 'create']);
+            $tmp->url = $this->panel->relatedUrl('$tab', 'index');
+
+            //if ('#' != $tmp->url[0]) {
+            //    dddx(['tmp' => $tmp, 'panel' => $this->panel]);
+            //}
+
+            $tmp->index_edit_url = $this->panel->relatedUrl('$tab', 'index_edit');
+            $tmp->create_url = $this->panel->relatedUrl('$tab', 'create');
             $tmp->active = false;
             $data[] = $tmp;
         }
 
         return $data;
+        */
+    }
+
+    public function getBreadTabs(PanelContract $bread): array {
+        [$containers, $items] = params2ContainerItem();
+        $tabs = $bread->tabs();
+        $row = [];
+        if ('' != $bread->guid()) {
+            foreach ($tabs as $tab) {
+                $tab_panel = $bread->relatedName($tab);
+                if (Gate::allows('index', $tab_panel)) {
+                    $trans_key = $bread->getTradMod().'.tab.'.Str::snake($tab);
+                    $tmp = (object) [
+                        'title' => trans($trans_key.'.label'),
+                        'icon' => trans($trans_key.'.icon'),
+                        'url' => $tab_panel->url('index'),
+                        'active' => in_array($tab, $containers),
+                    ];
+                    $row[] = $tmp;
+                }
+            }
+        }
+
+        return $row;
     }
 
     public function getTabs(): array {
+        $breads = $this->panel->getBreads();
+
+        $data = [];
+        foreach ($breads as $bread) {
+            $data[] = $this->getBreadTabs($bread);
+        }
+
+        return $data;
+    }
+
+    public function getTabsOld(): array {
         $request = \Request::capture();
         $routename = (string) \Route::currentRouteName();
         $act = last(explode('.', $routename));
@@ -147,7 +189,7 @@ class PanelTabService {
                     } else {
                         $tab_act = 'index';
                     }
-                    $tmp->url = $panel->relatedUrl(['related_name' => $tab, 'act' => $tab_act]);
+                    $tmp->url = $panel->relatedUrl($tab, $tab_act);
                     $tmp->active = in_array($tab, $containers);
                 } else {
                     //  dddx($tmp);
@@ -158,7 +200,7 @@ class PanelTabService {
                         $panel1 = $panel1->related($tab['related']);
                     }
                     if (isset($tab['container_action'])) {
-                        $tmp->url = $panel1->containerAction($tab['container_action'])->url();
+                        $tmp->url = $panel1->urlContainerAction($tab['container_action']);
                     }
                     //$tmp->url = $tab['page'];
                     $tmp->active = false;

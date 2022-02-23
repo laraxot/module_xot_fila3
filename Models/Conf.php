@@ -7,7 +7,23 @@ namespace Modules\Xot\Models;
 use Modules\Tenant\Services\TenantService;
 use Sushi\Sushi;
 
-class Conf extends BaseModel {
+/**
+ * Modules\Xot\Models\Conf
+ *
+ * @property int $id
+ * @property string|null $name
+ * @property-read \Illuminate\Database\Eloquent\Collection|\Modules\Xot\Models\Image[] $images
+ * @property-read int|null $images_count
+ * @method static \Modules\Xot\Database\Factories\ConfFactory factory(...$parameters)
+ * @method static \Illuminate\Database\Eloquent\Builder|Conf newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Conf newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Conf query()
+ * @method static \Illuminate\Database\Eloquent\Builder|Conf whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Conf whereName($value)
+ * @mixin \Eloquent
+ */
+class Conf extends BaseModel
+{
     use Sushi;
 
     /**
@@ -17,7 +33,8 @@ class Conf extends BaseModel {
         'id', 'name',
     ];
 
-    public function getRows() {
+    public function getRows(): array
+    {
         return TenantService::getConfigNames(); //  local/ptvx
     }
 
@@ -26,7 +43,14 @@ class Conf extends BaseModel {
         return false;
     }
     */
-    public function getRouteKeyName() {
+
+    /**
+     * Undocumented function.
+     *
+     * @return string
+     */
+    public function getRouteKeyName()
+    {
         return 'name';
     }
 }

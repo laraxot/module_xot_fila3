@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Modules\Xot\Jobs\PanelCrud;
 
 use Carbon\Carbon;
+use Exception;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Database\Eloquent\Model;
@@ -155,37 +156,30 @@ abstract class XotBaseJob /*implements ShouldQueue*/
 
     /**
      *  Method Modules\Xot\Jobs\PanelCrud\XotBaseJob::ConvDate() should return Carbon\Carbon|false|null but returns 0|0.0|''|'0'|array()|false|null.
-     *
-     * @param mixed $field
-     * @param mixed $value
-     *
-     * @return mixed
      */
-    public function ConvDate($field, $value) {
+    public function ConvDate(string $field, string $value): ?Carbon {
         if (null == $value) {
-            return $value;
+            return null;
         }
         $value_new = Carbon::createFromFormat('d/m/Y', $value);
+        if (false === $value_new) {
+            throw new Exception('['.__LINE__.']['.class_basename(__CLASS__).']');
+        }
 
         return $value_new;
     }
 
     /**
      * Method Modules\Xot\Jobs\PanelCrud\XotBaseJob::ConvDateTime() should return Carbon\Carbon|false|null but returns 0|0.0|''|'0'|array()|false|null.
-     *
-     * @param mixed $field
-     * @param mixed $value
-     *
-     * @return mixed
      */
-    public function ConvDateTime($field, $value) {
+    public function ConvDateTime(string $field, string $value): ?Carbon {
         if (null == $value) {
-            return $value;
+            return null;
         }
-        try {
-            $value_new = Carbon::createFromFormat('d/m/Y H:i', $value);
-        } catch (\Exception $e) {
-            return $value;
+
+        $value_new = Carbon::createFromFormat('d/m/Y H:i', $value);
+        if (false === $value_new) {
+            throw new Exception('['.__LINE__.']['.class_basename(__CLASS__).']');
         }
 
         return $value_new;

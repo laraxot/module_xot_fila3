@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Modules\Xot\Models\Panels;
 
 use Illuminate\Http\Request;
+use Modules\LU\Models\User;
 
 //--- Services --
 
@@ -20,74 +21,17 @@ class ProfilePanel extends XotBasePanel {
     public static string $title = 'title';
 
     /**
-     * The columns that should be searched.
-     *
-     * @var array
-     */
-    public static $search = [
-    ];
-
-    /**
-     * The relationships that should be eager loaded on index queries.
-     *
-     * @var array
-     */
-    public function with(): array {
-        return [];
-    }
-
-    public function search(): array {
-        return [];
-    }
-
-    /**
-     * on select the option id.
-     *
-     * quando aggiungi un campo select, è il numero della chiave
-     * che viene messo come valore su value="id"
-     */
-    public function optionId(object $row) {
-        return $row->getKey();
-    }
-
-    /**
-     * on select the option label.
-     */
-    public function optionLabel(object $row): string {
-        return $row->area_define_name;
-    }
-
-    /**
-     * index navigation.
-     */
-    public function indexNav(): ?\Illuminate\Contracts\Support\Renderable {
-        return null;
-    }
-
-    /**
-     * Build an "index" query for the given resource.
-     *
-     * @param RowsContract $query
-     *
-     * @return RowsContract
-     */
-    public static function indexQuery(array $data, $query) {
-        //return $query->where('user_id', $request->user()->id);
-        return $query;
-    }
-
-    /**
      * Get the fields displayed by the resource.
         'value'=>'..',
      */
     public function fields(): array {
         return [
-            0 => (object) [
+            (object) [
                 'type' => 'Id',
                 'name' => 'id',
                 'comment' => null,
             ],
-            1 => (object) [
+            (object) [
                 'type' => 'Integer',
                 'name' => 'user_id',
                 'comment' => null,
@@ -134,12 +78,20 @@ class ProfilePanel extends XotBasePanel {
         return [];
     }
 
+    /**
+     * Undocumented function.
+     */
     public function isSuperAdmin(): bool {
         //232 Access to an undefined property Illuminate\Database\Eloquent\Model::$user.
-        //$user = $this->row->user;
-        $user = $this->row->getRelationValue('user');
+
+        //$user = $this->row->getRelationValue('user');
+        // 89     Access to an undefined property object::$perm_type
+        //$user_id = $this->row->getAttributeValue('user_id');
+        //$user = User::where('id', $user_id)->first();
+        //coi metodi sopra fa contento phpstan ma fa troppe query
+        $user = $this->row->user;
         try {
-            if (is_object($user->perm) && $user->perm->perm_type >= 4) {  //superadmin
+            if (\is_object($user->perm) && $user->perm->perm_type >= 4) {  //superadmin
                 return true;
             }
         } catch (\Exception $e) {
@@ -150,18 +102,18 @@ class ProfilePanel extends XotBasePanel {
     }
 
     /**
-     * @param int $size
+     * Avatar function.
      */
-    public function avatar($size = 100): ?string {
-        if (null == $this->row) {
+    public function avatar(int $size = 100): ?string {
+        if (null === $this->row) {
             throw new \Exception('row is null');
         }
         if (! property_exists($this->row, 'user')) {
-            throw new \Exception('in ['.get_class($this->row).'] property [user] not exists');
+            throw new \Exception('in ['.\get_class($this->row).'] property [user] not exists');
         }
         $user = $this->row->user;
 
-        if (! is_object($user) && is_object($this->row)) {
+        if (! \is_object($user) && \is_object($this->row)) {
             if (isset($this->row->user_id) && method_exists($this->row, 'user')) {
                 $this->row->user()->create();
             }
@@ -169,8 +121,8 @@ class ProfilePanel extends XotBasePanel {
             return null;
         }
 
-        $email = \md5(\mb_strtolower(\trim((string) $user->email)));
-        $default = \urlencode('https://tracker.moodle.org/secure/attachment/30912/f3.png');
+        $email = md5(mb_strtolower(trim((string) $user->email)));
+        $default = urlencode('https://tracker.moodle.org/secure/attachment/30912/f3.png');
 
         return "https://www.gravatar.com/avatar/$email?d=$default&s=$size";
     }

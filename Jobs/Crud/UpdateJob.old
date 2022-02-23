@@ -60,7 +60,7 @@ class UpdateJob implements ShouldQueue {
         $row = $this->row;
         $data = $this->data;
         //--
-        $panel = Panel::get($row);
+        $panel = Panel::make()->get($row);
         $ris = $row->update($data);
         $this->manageRelationships(['model' => $row, 'data' => $data, 'act' => 'update']);
         \Session::flash('status', 'aggiornato! ['.$row->getKey().']!'); //.implode(',',$row->getChanges())
@@ -181,7 +181,7 @@ class UpdateJob implements ShouldQueue {
                         return $item;
                     }
                     $related = $model->$name()->getRelated();
-                    $related_panel = Panel::get($related);
+                    $related_panel = Panel::make()->get($related);
                     $res = $related_panel->setLabel($item);
 
                     return $res->getKey().'';

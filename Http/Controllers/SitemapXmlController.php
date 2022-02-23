@@ -23,7 +23,7 @@ class SitemapXmlController extends Controller {
     /**
      *  __invoke.
      */
-    public function __invoke() {
+    public function __invoke(): \Spatie\Sitemap\Sitemap {
         // ...
 
         $url = $_SERVER['REQUEST_SCHEME'].'://'.$_SERVER['SERVER_NAME'];

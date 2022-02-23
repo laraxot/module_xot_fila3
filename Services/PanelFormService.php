@@ -9,18 +9,20 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Str;
-use Modules\FormX\Services\FieldService;
-use Modules\FormX\Services\FormXService;
+use Modules\Theme\Services\FieldService;
+use Modules\Theme\Services\FormXService;
 use Modules\Theme\Services\ThemeService;
 use Modules\Xot\Contracts\PanelContract;
 
 /**
  * Class PanelFormService.
  */
-class PanelFormService {
+class PanelFormService
+{
     protected PanelContract $panel;
 
-    public function __construct(PanelContract &$panel) {
+    public function __construct(PanelContract &$panel)
+    {
         $this->panel = $panel;
     }
 
@@ -29,7 +31,8 @@ class PanelFormService {
      *
      * @return $this
      */
-    public function setPanel(PanelContract &$panel) {
+    public function setPanel(PanelContract &$panel)
+    {
         $this->panel = $panel;
 
         return $this;
@@ -38,7 +41,8 @@ class PanelFormService {
     /**
      * @return string
      */
-    public function formCreate(array $params = []) {
+    public function formCreate(array $params = [])
+    {
         $fields = $this->getFields(['act' => 'create']);
         $row = $this->panel->getRow();
         $res = '';
@@ -61,7 +65,8 @@ class PanelFormService {
     /**
      * @return string
      */
-    public function formEdit(array $params = []) {
+    public function formEdit(array $params = [])
+    {
         $submit_btn = '<p class="form-submit">
             <input name="submit" type="submit" id="submit" value="Post your answer" class="button small color">
         </p>';
@@ -80,7 +85,7 @@ class PanelFormService {
                 echo '</div><div class="row">';
                 $col_size = 0;
             }
-            $col_size += $field->col_bs_size ?? 12;
+            $col_size += $field->col_size ?? 12;
             $res .= ThemeService::inputHtml(['row' => $row, 'field' => $field]);
         }
         $res .= '</div>';
@@ -91,7 +96,8 @@ class PanelFormService {
         return $res;
     }
 
-    public function formLivewireEdit(array $params = []): string {
+    public function formLivewireEdit(array $params = []): string
+    {
         $fields = $this->editObjFields();
 
         $col_size = 0;
@@ -112,7 +118,8 @@ class PanelFormService {
         return $html;
     }
 
-    public function getFormData(array $params = []): array {
+    public function getFormData(array $params = []): array
+    {
         $form_data = [];
         $fields = $this->getFields($params);
         $row = isset($params['row']) ? $params['row'] : $this->panel->getRow();
@@ -120,11 +127,11 @@ class PanelFormService {
             $value = Arr::get($row, $field->name);
             if (is_object($value)) {
                 switch (get_class($value)) {
-                    case 'Illuminate\Support\Carbon':
-                        $value = $value->format('Y-m-d\TH:i');
-                        break;
-                    default:
-                        dddx(get_class($value));
+                case 'Illuminate\Support\Carbon':
+                    $value = $value->format('Y-m-d\TH:i');
+                    break;
+                default:
+                    dddx(get_class($value));
                     break;
                 }
             }
@@ -148,7 +155,7 @@ class PanelFormService {
             'title' => $title,
         ];
 
-        return view()->make('formx::includes.components.btn.'.$act)->with($parz);
+        return view()->make('theme::includes.components.btn.'.$act)->with($parz);
     }
 
     public function btnDetach(array $params = []) {
@@ -162,11 +169,12 @@ class PanelFormService {
             'act' => $act,
         ];
 
-        return view()->make('formx::includes.components.btn.'.$act)->with($parz);
+        return view()->make('theme::includes.components.btn.'.$act)->with($parz);
     }
     */
 
-    public function btnCrud(array $params = []): string {
+    public function btnCrud(array $params = []): string
+    {
         extract($params);
         $acts = ['edit', 'destroy', 'show'];
         if (is_object($this->panel->getRow()->getRelationValue('pivot'))) {
@@ -191,7 +199,8 @@ class PanelFormService {
         return $html;
     }
 
-    public function btnHtml(array $params): ?string {
+    public function btnHtml(array $params): ?string
+    {
         $params['url'] = $this->panel->url($params['act']);
         //dddx([$this->panel->route, $params['panel'], $params['url']]);
         $params['method'] = Str::camel($params['act']);
@@ -221,27 +230,27 @@ class PanelFormService {
 
         if (! isset($params['icon'])) {
             switch ($params['method']) {
-                case 'index':
-                    $params['icon'] = '<i class="fas fa-bars"></i>';
-                    break;
-                case 'create':
-                    $params['icon'] = '<i class="far fa-plus-square"></i>';
-                    break;
-                case 'edit':
-                    $params['icon'] = '<i class="far fa-edit"></i>';
-                    break;
-                case 'destroy':
-                    $params['icon'] = '<i class="far fa-trash-alt"></i>';
-                    break;
-                case 'show':
-                    $params['icon'] = '<i class="far fa-eye"></i>';
-                    break;
-                 case 'indexOrder':
-                    $params['icon'] = '<i class="fas fa-sort"></i>';
-                    break;
-                default:
-                    //$params['icon'] = $params['method']; //per vedere quale
-                    break;
+            case 'index':
+                $params['icon'] = '<i class="fas fa-bars"></i>';
+                break;
+            case 'create':
+                $params['icon'] = '<i class="far fa-plus-square"></i>';
+                break;
+            case 'edit':
+                $params['icon'] = '<i class="far fa-edit"></i>';
+                break;
+            case 'destroy':
+                $params['icon'] = '<i class="far fa-trash-alt"></i>';
+                break;
+            case 'show':
+                $params['icon'] = '<i class="far fa-eye"></i>';
+                break;
+            case 'indexOrder':
+                $params['icon'] = '<i class="fas fa-sort"></i>';
+                break;
+            default:
+                //$params['icon'] = $params['method']; //per vedere quale
+                break;
             }
         }
 
@@ -255,9 +264,11 @@ class PanelFormService {
                 $tmp[] = class_basename($row);
                 $tmp[] = 'act';
                 $tmp[] = $params['method'];
-                $tmp = collect($tmp)->map(function ($item) {
-                    return Str::snake($item);
-                })->implode('.');
+                $tmp = collect($tmp)->map(
+                    function ($item) {
+                        return Str::snake($item);
+                    }
+                )->implode('.');
                 $params['title'] = trans($module_name_low.'::'.$tmp);
             } else {
                 $params['title'] = trans($module_name_low.'::'.strtolower(class_basename($row)).'.act.'.$params['method']);
@@ -291,10 +302,10 @@ class PanelFormService {
             'act' => $act,
         ];
         if (isset($modal) && $modal) {
-            return view()->make('formx::includes.components.btn.modal')->with($parz);
+            return view()->make('theme::includes.components.btn.modal')->with($parz);
         }
 
-        return view()->make('formx::includes.components.btn.'.$act)->with($parz);
+        return view()->make('theme::includes.components.btn.'.$act)->with($parz);
     }
     */
     /* deprecated
@@ -306,7 +317,8 @@ class PanelFormService {
     /**
      * exceptFields.
      */
-    public function exceptFields(array $params = []): Collection {
+    public function exceptFields(array $params = []): Collection
+    {
         $act = 'show';
         extract($params);
         $panel = $this->panel;
@@ -349,7 +361,8 @@ class PanelFormService {
         return $fields;
     }
 
-    public function getFields(array $params = []): Collection {
+    public function getFields(array $params = []): Collection
+    {
         $act = isset($params['act']) ? $params['act'] : 'index';
 
         $fields = $this->exceptFields(['act' => $act]);
@@ -357,13 +370,17 @@ class PanelFormService {
         return $fields;
     }
 
-    public function editObjFields(): array {
-        $fields = collect($this->getFields(['act' => 'edit']))->map(function ($field) {
-            return FieldService::make($field->name)
-                ->type($field->type)
-                ->setColSize($field->col_bs_size ?? 12)
+    public function editObjFields(): array
+    {
+        $fields = collect($this->getFields(['act' => 'edit']))->map(
+            function ($field) {
+                return FieldService::make()
+                ->setVars(get_object_vars($field))
+                //->type($field->type)
+                //->setColSize($field->col_size ?? 12)
                 ;
-        })->all();
+            }
+        )->all();
 
         return $fields;
     }

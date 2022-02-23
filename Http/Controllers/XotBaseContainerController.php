@@ -10,12 +10,13 @@ use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Str;
 use Modules\Xot\Contracts\PanelContract;
 use Modules\Xot\Http\Requests\XotRequest;
-use Modules\Xot\Services\PanelService as Panel;
+use Modules\Xot\Services\PanelService;
 
 /**
  * Class XotBaseContainerController.
  */
-abstract class XotBaseContainerController extends Controller {
+abstract class XotBaseContainerController extends Controller
+{
     protected PanelContract $panel;
 
     /**
@@ -27,8 +28,9 @@ abstract class XotBaseContainerController extends Controller {
 
     //Declaration of Modules\Xot\Http\Controllers\XotBaseContainerController::__call($method, $args) should be compatible with Illuminate\Routing\Controller::__call($method, $parameters)
 
-    public function __call($method, $args) {
-        $panel = Panel::getRequestPanel();
+    public function __call($method, $args)
+    {
+        $panel = PanelService::make()->getRequestPanel();
         if (null == $panel) {
             throw new \Exception('uston gavemo un problemon');
         }
@@ -41,7 +43,8 @@ abstract class XotBaseContainerController extends Controller {
         return $this->__callRouteAct($method, $args);
     }
 
-    public function getController(): string {
+    public function getController(): string
+    {
         /*
         if (null == $this->panel) {
             return '\Modules\Xot\Http\Controllers\XotPanelController';
@@ -67,7 +70,8 @@ abstract class XotBaseContainerController extends Controller {
     /**
      * @return mixed
      */
-    public function __callRouteAct(string $method, array $args) {
+    public function __callRouteAct(string $method, array $args)
+    {
         $panel = $this->panel;
         $authorized = Gate::allows($method, $panel);
 
@@ -86,7 +90,8 @@ abstract class XotBaseContainerController extends Controller {
     /**
      * @return mixed
      */
-    public function __callPanelAct(string $method, array $args) {
+    public function __callPanelAct(string $method, array $args)
+    {
         $request = request();
         $act = $request->_act;
         $method_act = Str::camel($act);
@@ -104,7 +109,8 @@ abstract class XotBaseContainerController extends Controller {
     /**
      * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse|\Illuminate\Http\Response
      */
-    public function notAuthorized(string $method, PanelContract $panel) {
+    public function notAuthorized(string $method, PanelContract $panel)
+    {
         $lang = app()->getLocale();
         if (! \Auth::check()) {
             /*
@@ -128,7 +134,7 @@ abstract class XotBaseContainerController extends Controller {
             $referer = \Request::path();
 
             return redirect()->route('login', ['lang' => $lang, 'referer' => $referer])
-            ->withErrors(['active' => 'login before']);
+                ->withErrors(['active' => 'login before']);
         }
         $msg = 'Auth Id ['.\Auth::id().'] not can ['.$method.'] on ['.get_class($panel).']';
 

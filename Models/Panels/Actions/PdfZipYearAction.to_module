@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 //-------- models -----------
 //-------- services --------
-use Modules\Xot\Services\PanelService as Panel;
+use Modules\Xot\Services\PanelService;
 //-------- bases -----------
 use ZipArchive;
 
@@ -45,7 +45,7 @@ class PdfZipYearAction extends XotBasePanelAction {
         //$zip->open(
 
         foreach ($rows as $row) {
-            $panel = Panel::get($row);
+            $panel = PanelService::make()->get($row);
             $filename = 'Scheda_'.$row->id.'_'.$row->matr.'_'.$row->cognome.'_'.$row->nome.'_'.$row->anno.'_'.date('Ymd').'.pdf';
 
             $path = Storage::disk('cache')->path($filename);

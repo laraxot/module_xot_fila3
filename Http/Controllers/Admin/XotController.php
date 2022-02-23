@@ -7,5 +7,6 @@ namespace Modules\Xot\Http\Controllers\Admin;
 /**
  * Class XotController.
  */
-class XotController extends XotBaseController {
+class XotController extends XotBaseController
+{
 }

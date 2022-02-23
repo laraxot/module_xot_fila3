@@ -1,6 +1,6 @@
 <?php
 /**
- * da laravelio
+ * da laravelio.
  */
 
 declare(strict_types=1);
@@ -10,7 +10,7 @@ namespace Modules\Xot\Models\Traits;
 use Illuminate\Support\Str;
 
 /**
- * HasSlug
+ * HasSlug.
  */
 trait HasSlug {
     public function slug(): ?string {
@@ -30,7 +30,7 @@ trait HasSlug {
         $slug = $originalSlug = Str::slug($value) ?: Str::random(5);
         $counter = 0;
 
-        while ($this->slugExists($slug, $this->exists ? $this->id() : null)) {
+        while ($this->slugExists($slug, $this->exists ? $this->getKey() : null)) {
             ++$counter;
             $slug = $originalSlug.'-'.$counter;
         }

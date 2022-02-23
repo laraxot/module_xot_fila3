@@ -11,13 +11,15 @@ use Modules\Xot\Database\Migrations\XotBaseMigration;
 /**
  * Class CreateMetatagsTable.
  */
-class CreateMetatagsTable extends XotBaseMigration {
+class CreateMetatagsTable extends XotBaseMigration
+{
     /**
      * db up.
      *
      * @return void
      */
-    public function up() {
+    public function up()
+    {
         //-- CREATE --
         $this->tableCreate(
             function (Blueprint $table) {
@@ -32,20 +34,21 @@ class CreateMetatagsTable extends XotBaseMigration {
                 $table->string('logo_src')->nullable();
                 $table->string('logo_footer_src')->nullable();
                 $table->string('tennant_name')->nullable();
-           }
-            );
+            }
+        );
 
 
         //-- UPDATE --
         $this->tableUpdate(
             function (Blueprint $table) {
-            if (! $this->hasColumn('updated_at')) {
-                $table->timestamps();
+                if (! $this->hasColumn('updated_at')) {
+                    $table->timestamps();
+                }
+                if (! $this->hasColumn('updated_by')) {
+                    $table->string('updated_by')->nullable()->after('updated_at');
+                    $table->string('created_by')->nullable()->after('created_at');
+                }
             }
-            if (! $this->hasColumn('updated_by')) {
-                $table->string('updated_by')->nullable()->after('updated_at');
-                $table->string('created_by')->nullable()->after('created_at');
-            }
-        }); //end update
+        ); //end update
     }
 }

@@ -61,9 +61,11 @@ abstract class XotBaseServiceProvider extends ServiceProvider {
      * Register config.
      */
     protected function registerConfig(): void {
-        $this->publishes([
-            $this->module_dir.'/../Config/config.php' => config_path($this->module_name.'.php'),
-        ], 'config');
+        $this->publishes(
+            [
+                $this->module_dir.'/../Config/config.php' => config_path($this->module_name.'.php'),
+            ], 'config'
+        );
         $this->mergeConfigFrom(
             $this->module_dir.'/../Config/config.php',
             $this->module_name
@@ -106,7 +108,7 @@ abstract class XotBaseServiceProvider extends ServiceProvider {
             $this->loadTranslationsFrom($this->module_dir.'/../Resources/lang', $this->module_name);
         }
         */
-        $langPath = realpath($this->module_dir.'/../Resources/lang');
+        $langPath = ($this->module_dir.'/../Resources/lang');
         //echo '<hr>'.$langPath.'  :  '.$this->module_name.' <hr/>';
         $this->loadTranslationsFrom($langPath, $this->module_name);
     }
@@ -186,7 +188,7 @@ abstract class XotBaseServiceProvider extends ServiceProvider {
                     ];
                     if (class_exists($event) && class_exists($listener)) {
                         //\Event::listen($event, $listener);
-                        $tmp = new \StdClass();
+                        $tmp = new \stdClass();
                         $tmp->event = $event;
                         $tmp->listener = $listener;
                         $events[] = $tmp;
@@ -204,7 +206,7 @@ abstract class XotBaseServiceProvider extends ServiceProvider {
             }
         } else {
             $events = File::get($events_file);
-            $events = json_decode($events);
+            $events = (array) json_decode($events);
         }
         foreach ($events as $v) {
             Event::listen($v->event, $v->listener);

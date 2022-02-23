@@ -11,7 +11,8 @@ use Illuminate\Http\Request;
 /**
  * Class MetatagPanel.
  */
-class MetatagPanel extends XotBasePanel {
+class MetatagPanel extends XotBasePanel
+{
     /**
      * The model the resource corresponds to.
      */
@@ -25,7 +26,8 @@ class MetatagPanel extends XotBasePanel {
     /**
      * @return object[]
      */
-    public function fields(): array {
+    public function fields(): array
+    {
         return [
             (object) [
                 'type' => 'Id',
@@ -97,7 +99,8 @@ class MetatagPanel extends XotBasePanel {
     /**
      * Get the actions available for the resource.
      */
-    public function actions(Request $request = null): array {
+    public function actions(Request $request = null): array
+    {
         return [
             //new Actions\StoreFileMetatagAction(),
         ];

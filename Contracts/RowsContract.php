@@ -126,8 +126,9 @@ interface RowsContract {
 
     /**
      * Get the model instance being queried.
+     *  il return era con |static.
      *
-     * @return \Illuminate\Database\Eloquent\Model|static
+     * @return \Illuminate\Database\Eloquent\Model
      */
     public function getModel();
 

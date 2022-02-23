@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Modules\Xot\Http\Controllers;
 
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Str;
@@ -17,9 +18,15 @@ class TermsOfServiceController extends Controller {
      */
     public function show(Request $request) {
         $termsFile = TenantService::localizedMarkdownPath('terms.md');
+        $content = file_get_contents($termsFile);
+        if (false === $content) {
+            throw new Exception('['.__LINE__.']['.class_basename(__CLASS__).']');
+        }
 
-        return view('xot::gdpr.terms', [
-            'terms' => Str::markdown(file_get_contents($termsFile)),
-        ]);
+        return view(
+            'xot::gdpr.terms', [
+                'terms' => Str::markdown($content),
+            ]
+        );
     }
 }

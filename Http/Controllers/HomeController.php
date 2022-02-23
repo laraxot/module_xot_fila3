@@ -10,12 +10,11 @@ use Illuminate\Http\Request;
 
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Schema;
-use Modules\Tenant\Services\TenantService as Tenant;
+use Modules\Tenant\Services\TenantService;
 use Modules\Theme\Services\ThemeService;
 use Modules\Xot\Contracts\PanelContract;
 use Modules\Xot\Relations\CustomRelation;
 use Modules\Xot\Services\PanelService;
-use Modules\Xot\Services\PanelService as Panel;
 
 /**
  * Class HomeController.
@@ -24,12 +23,11 @@ class HomeController extends Controller {
     /**
      * @return mixed
      */
-    //public function index(?array $data, $panel = null) {
     public function index(Request $request, ?PanelContract $panel = null) {
         $request = request();
         $home = null;
         try {
-            $model = Tenant::modelEager('home');
+            $model = TenantService::modelEager('home');
             $home = $model->firstOrCreate(['id' => 1]);
         } catch (\Exception $e) {
             dddx('run migrations');
@@ -38,7 +36,7 @@ class HomeController extends Controller {
             throw new \Exception('home is null');
         }
 
-        $home_panel = Panel::get($home);
+        $home_panel = PanelService::make()->get($home);
 
         if ('' != $request->_act) {
             return $home_panel->callItemActionWithGate($request->_act);
@@ -50,15 +48,17 @@ class HomeController extends Controller {
     }
 
     public function createHomesTable(): void {
-        Schema::create('homes',
-        function (Blueprint $table): void {
-            $table->increments('id');
+        Schema::create(
+            'homes',
+            function (Blueprint $table): void {
+                $table->increments('id');
 
-            $table->string('created_by')->nullable();
-            $table->string('updated_by')->nullable();
-            $table->string('deleted_by')->nullable();
-            $table->timestamps();
-        });
+                $table->string('created_by')->nullable();
+                $table->string('updated_by')->nullable();
+                $table->string('deleted_by')->nullable();
+                $table->timestamps();
+            }
+        );
     }
 
     /**
@@ -67,7 +67,7 @@ class HomeController extends Controller {
     //public function show(?array $data, $panel=null) {
     public function show(Request $request, ?PanelContract $panel = null) {
         //backtrace(true);
-        $panel = PanelService::getRequestPanel();
+        $panel = PanelService::make()->getRequestPanel();
         if ('' != $request->_act) {
             return $panel->callItemActionWithGate($request->_act);
         }
@@ -75,19 +75,24 @@ class HomeController extends Controller {
         return $panel->out();
     }
 
+    /**
+     * Undocumented function.
+     *
+     * @return mixed
+     */
     public function showOld(Request $request, ?PanelContract $panel = null) {
         //$request=request();
         $home = null;
-        $home = Tenant::model('home');
-        $mod_name = Panel::get($home)->getModuleName();
+        $home = TenantService::model('home');
+        $mod_name = PanelService::make()->get($home)->getModuleName();
 
         $home_controller = '\Modules\\'.$mod_name.'\Http\Controllers\HomeController';
 
         //dddx($home_controller);
 
         if ('' != $request->_act) {
-            $home = Tenant::model('home');
-            $panel = Panel::get($home);
+            $home = TenantService::model('home');
+            $panel = PanelService::make()->get($home);
 
             return $panel->callItemActionWithGate($request->_act);
         }
@@ -97,12 +102,12 @@ class HomeController extends Controller {
         }
 
         try {
-            $home = Tenant::modelEager('home');
+            $home = TenantService::modelEager('home');
             $home = $home->firstOrCreate(['id' => 1]);
         } catch (\Exception $e) {
             dddx(['exception' => $e, 'model' => $home]);
         }
-        $panel = Panel::get($home);
+        $panel = PanelService::make()->get($home);
 
         $rows = new CustomRelation(
             $home->newQuery(),
@@ -125,6 +130,11 @@ class HomeController extends Controller {
         return redirect($request->url);
     }
 
+    /**
+     * Undocumented function.
+     *
+     * @return mixed
+     */
     public function store(Request $request) {
         return $this->index($request);
     }

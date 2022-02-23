@@ -4,11 +4,13 @@ declare(strict_types=1);
 
 namespace Modules\Xot\Services;
 
+use Exception;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
 use Modules\Tenant\Services\TenantService;
 use Modules\Xot\Contracts\PanelContract;
+use Modules\Xot\Contracts\UserContract;
 use Modules\Xot\Relations\CustomRelation;
 use Nwidart\Modules\Facades\Module;
 
@@ -16,13 +18,32 @@ use Nwidart\Modules\Facades\Module;
  * Class PanelService.
  */
 class PanelService {
-    private static ?PanelService $_instance = null;
+    //private static ?PanelService $_instance = null;
 
-    private static Model $model;
+    private Model $model;
 
     private ?PanelContract $panel = null;
 
-    private array $route_params;
+    private static ?self $instance = null;
+
+    public function __construct() {
+        //---
+    }
+
+    public static function getInstance(): self {
+        if (null === self::$instance) {
+            self::$instance = new self();
+        }
+
+        return self::$instance;
+    }
+
+    public static function make(): self {
+        return static::getInstance();
+    }
+
+    //26     Property Modules\Xot\Services\PanelService::make()->$route_params is never read, only written.
+    //private static array $route_params;
 
     /*
     public function __construct($model){
@@ -30,45 +51,43 @@ class PanelService {
     }
      */
 
-    public function __construct(array $route_params) {
-        $this->route_params = $route_params;
-        //static::$panel = $this->getByRouteParams($route_params);
-    }
+    //public function __construct(array $route_params) {
+    //$this->route_params = $route_params;
+    //static::$panel = $this->getByRouteParams($route_params);
+    //static::$route_params =  $route_params;
+    //}
 
-    public static function getInstance(): self {
-        if (null === self::$_instance) {
-            //$route_params = request()->route()->parameters();// 42     Cannot call method parameters() on mixed.
-            $route_params = getRouteParameters();
-            self::$_instance = new self($route_params);
-        }
+    //public static function getInstance(): self {
+    //    if (null === self::$_instance) {
+    //$route_params = request()->route()->parameters();// 42     Cannot call method parameters() on mixed.
+    //        $route_params = getRouteParameters();
+    //        self::$_instance = new self($route_params);
+    //    }
 
-        return self::$_instance;
-    }
+    //    return self::$_instance;
+    //}
 
     /*
     public function test() {
         return static::$panel;
     }
     */
-    public static function setRequestPanel(?PanelContract $panel): self {
-        $inst = self::getInstance();
-        $inst->panel = $panel;
+    public function setRequestPanel(?PanelContract $panel): self {
+        $this->panel = $panel;
 
-        return $inst;
+        return $this;
     }
 
-    public static function getRequestPanel(): ?PanelContract {
-        $inst = self::getInstance();
-
-        return $inst->panel;
+    public function getRequestPanel(): ?PanelContract {
+        return $this->panel;
     }
 
     /**
      * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
      * @throws \ReflectionException
      */
-    public static function get(Model $model): PanelContract {
-        $panel = self::setModel($model)->panel();
+    public function get(Model $model): PanelContract {
+        $panel = $this->setModel($model)->panel();
         $post_type = $panel->postType();
         $name = Str::plural($post_type); //standard
         //$name = $post_type;
@@ -77,10 +96,16 @@ class PanelService {
         return $panel;
     }
 
-    public static function setModel(Model $model): self {
-        self::$model = $model;
+    public function getByUser(UserContract $user): PanelContract {
+        $model = $user->newInstance();
 
-        return self::getInstance();
+        return $this->get($model);
+    }
+
+    public function setModel(Model $model): self {
+        $this->model = $model;
+
+        return $this->getInstance();
     }
 
     //ret \Illuminate\Contracts\Foundation\Application|mixed|null
@@ -89,40 +114,48 @@ class PanelService {
      * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
      * @throws \ReflectionException
      */
-    public static function panel(): PanelContract {
-        if (! is_object(self::$model)) {
+    public function panel(): PanelContract {
+        if (! is_object($this->model)) {
             throw new \Exception('model is not an object url:'.url()->current());
         }
         /*
-        $class_full = get_class(self::$model);
-        $class_name = class_basename(self::$model);
+        $class_full = get_class($this->model);
+        $class_name = class_basename($this->model);
         //$class = Str::before($class_full, $class_name);
         $class = substr($class_full, 0, -strlen($class_name));
         $panel_class = $class.'Panels\\'.$class_name.'Panel';
 
         if (! class_exists($panel_class)) {
-            $tmp = StubService::getByModel(self::$model, 'panel', $create = true);
+            $tmp = StubService::getByModel($this->model, 'panel', $create = true);
         }
 
-        return app($panel_class)->setRow(self::$model);
+        return app($panel_class)->setRow($this->model);
         */
-        $panel_class = StubService::setModelAndName(self::$model, 'panel')->get();
+        $panel_class = StubService::make()->setModelAndName($this->model, 'panel')->get();
 
-        return app($panel_class)->setRow(self::$model);
+        return app($panel_class)
+            ->setRow($this->model)
+            //->setRouteParams($this->route_params)
+            ;
     }
 
     public function imageHtml(?array $params): string {
-        return optional(self::$model)->image_src;
+        $res = $this->model->getAttributeValue('image_src');
+        if (! is_string($res)) {
+            throw new Exception('['.__LINE__.']['.class_basename(__CLASS__).']');
+        }
+
+        return $res;
     }
 
     public function tabs(): array {
-        return self::panel()->tabs();
+        return $this->panel()->tabs();
     }
 
     //esempio parametro stringa 'area-1-menu-1'
     //rilascia il pannello dell'ultimo container (nell'esempio menu),
     //con parent il pannello del precedente container (nell'esempio area)
-    public static function getById(string $id): PanelContract {
+    public function getById(string $id): PanelContract {
         $piece = explode('-', $id);
         $route_params = [];
         $j = 0;
@@ -138,11 +171,12 @@ class PanelService {
         //dddx([$route_params, $containers, $items]);
         $route_params['in_admin'] = true;
 
-        return self::getByParams($route_params);
+        return $this->getByParams($route_params);
     }
 
-    public static function getHomePanel(): PanelContract {
+    public function getHomePanel(): PanelContract {
         $home = TenantService::model('home');
+
         $params = getRouteParameters();
         try {
             $home = $home->firstOrCreate(['id' => 1]);
@@ -159,12 +193,12 @@ class PanelService {
             $panel->setRow($home);
             $panel->setName($params['module']);
         } else {
-            $panel = PanelService::get($home);
+            $panel = PanelService::make()->get($home);
             $panel->setName('home');
         }
 
         //->firstOrCreate(['id' => 1]);
-        //$panel = PanelService::get($home);
+        //$panel = PanelService::make()->get($home);
 
         $rows = new CustomRelation(
             $home->newQuery(),
@@ -183,7 +217,7 @@ class PanelService {
     /**
      * Function getByParams.
      */
-    public static function getByParams(?array $route_params): PanelContract {
+    public function getByParams(?array $route_params): PanelContract {
         [$containers, $items] = params2ContainerItem($route_params);
         $in_admin = null;
         if (isset($route_params['in_admin'])) {
@@ -194,7 +228,7 @@ class PanelService {
         }
 
         if (0 == count($containers)) {
-            $panel = self::getHomePanel();
+            $panel = $this->getHomePanel();
 
             return $panel;
         }
@@ -224,7 +258,7 @@ class PanelService {
             null
         );
 
-        $panel = PanelService::get($row);
+        $panel = PanelService::make()->get($row);
 
         $panel->setRows($rows);
 
@@ -258,7 +292,7 @@ class PanelService {
                 $row = $rows->getModel();
             }
 
-            $panel = PanelService::get($row);
+            $panel = PanelService::make()->get($row);
             //$rows = $rows->getQuery();
             $panel->setRows($rows);
             $panel->setName($types);
@@ -280,19 +314,19 @@ class PanelService {
      *
      * @return \Illuminate\Http\RedirectResponse|mixed
      */
-    public static function getByModel(Model $model) {
+    public function getByModel(Model $model) {
         $class_full = get_class($model);
         $class_name = class_basename($model);
         $class = Str::before($class_full, $class_name);
         $panel = $class.'Panels\\'.$class_name.'Panel';
         if (class_exists($panel)) {
             if (! method_exists($panel, 'tabs')) {
-                self::updatePanel(['panel' => $panel, 'func' => 'tabs']);
+                $this->updatePanel(['panel' => $panel, 'func' => 'tabs']);
             }
 
             return new $panel();
         }
-        self::createPanel($model);
+        $this->createPanel($model);
         \Session::flash('status', 'panel created');
 
         return redirect()->back();
@@ -302,7 +336,7 @@ class PanelService {
      * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
      * @throws \ReflectionException
      */
-    public static function createPanel(Model $model): void {
+    public function createPanel(Model $model): void {
         $class_full = get_class($model);
         $class_name = class_basename($model);
         $class = Str::before($class_full, $class_name);
@@ -361,7 +395,7 @@ class PanelService {
      * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
      * @throws \ReflectionException
      */
-    public static function updatePanel(array $params = []): void {
+    public function updatePanel(array $params = []): void {
         extract($params);
         if (! isset($func)) {
             dddx(['err' => 'func is missing']);

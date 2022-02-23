@@ -7,7 +7,7 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Str;
 //--- services ---
-use Modules\Xot\Services\PanelService as Panel;
+use Modules\Xot\Services\PanelService;
 use Modules\Xot\Services\StubService;
 use Modules\Tenant\Services\TenantService as Tenant;
 
@@ -127,7 +127,7 @@ abstract class XotBaseContainerController extends Controller {
             return $this->notAuthorized($method_act, $model);
         }
 
-        $panel = Panel::get($model);
+        $panel = PanelService::make()->get($model);
 
         return $panel->callAction($act);
         /*

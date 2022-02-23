@@ -6,6 +6,7 @@ namespace Modules\Xot\Services;
 
 use Doctrine\DBAL\Schema\Column;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
 
@@ -29,7 +30,7 @@ class StubService {
      *
      * this method will return instance of the class
      */
-    public static function getInstance() {
+    public static function getInstance(): self {
         if (! self::$_instance) {
             self::$_instance = new self();
         }
@@ -37,36 +38,36 @@ class StubService {
         return self::$_instance;
     }
 
-    public static function setName(string $name): self {
-        $instance = self::getInstance();
-        $instance->name = $name;
-
-        return $instance;
+    public static function make(): self {
+        return static::getInstance();
     }
 
-    public static function setModel(Model $model): self {
-        $instance = self::getInstance();
-        $instance->model_class = get_class($model);
+    public function setName(string $name): self {
+        $this->name = $name;
 
-        return $instance;
+        return $this;
     }
 
-    public static function setModelClass(string $model_class): self {
-        $instance = self::getInstance();
-        $instance->model_class = $model_class;
+    public function setModel(Model $model): self {
+        $this->model_class = get_class($model);
 
-        return $instance;
+        return $this;
     }
 
-    public static function setModelAndName(Model $model, string $name): self {
-        $instance = self::getInstance();
-        $instance->setModel($model);
-        $instance->setName($name);
+    public function setModelClass(string $model_class): self {
+        $this->model_class = $model_class;
 
-        return $instance;
+        return $this;
     }
 
-    public function get() {
+    public function setModelAndName(Model $model, string $name): self {
+        $this->setModel($model);
+        $this->setName($name);
+
+        return $this;
+    }
+
+    public function get(): string {
         $file = $this->getClassFile();
         $class = $this->getClass();
         if (File::exists($file)) {
@@ -145,9 +146,10 @@ class StubService {
                 }
             )->collapse()
             ->values()
-            ->implode(',
-            ')
-            ;
+            ->implode(
+                ',
+            '
+            );
     }
 
     /**
@@ -186,7 +188,7 @@ class StubService {
     /**
      * Checks if a given column should be included in the factory.
      */
-    protected function shouldBeIncluded(Column $column) {
+    protected function shouldBeIncluded(Column $column): bool {
         $shouldBeIncluded = ($column->getNotNull() /*|| $this->includeNullableColumns */)
             && ! $column->getAutoincrement();
 
@@ -207,6 +209,12 @@ class StubService {
             && ! in_array($column->getName(), $timestamps);
     }
 
+    /**
+     * Undocumented function.
+     *
+     * @param string $key
+     * @param string $value
+     */
     protected function mapToFactory($key, $value = null): array {
         return [
             $key => is_null($value) ? $value : "'{$key}' => $value",
@@ -226,10 +234,10 @@ class StubService {
         );
     }
 
-    public function getFillable(): \Illuminate\Support\Collection {
+    public function getFillable(): Collection {
         $model = $this->getModel();
         if (! method_exists($model, 'getFillable')) {
-            return [];
+            return collect([]);
         }
         $fillables = $model->getFillable();
         if (0 == count($fillables)) {
@@ -237,15 +245,20 @@ class StubService {
         }
 
         $fillables = collect($fillables)
-            ->except([
-                'created_at', 'updated_at', 'updated_by', 'created_by', 'deleted_at', 'deleted_by',
-                'deleted_ip', 'created_ip', 'updated_ip',
-            ]);
+            ->except(
+                [
+                    'created_at', 'updated_at', 'updated_by', 'created_by', 'deleted_at', 'deleted_by',
+                    'deleted_ip', 'created_ip', 'updated_ip',
+                ]
+            );
 
         return $fillables;
     }
 
-    public function getColumns() {
+    /**
+     * Undocumented function.
+     */
+    public function getColumns(): Collection {
         $model = $this->getModel();
         $conn = $model->getConnection();
         $platform = $conn->getDoctrineSchemaManager()->getDatabasePlatform();
@@ -283,7 +296,7 @@ class StubService {
     /**
      * sarebbe create ma in maniera fluent.
      */
-    public function generate() {
+    public function generate(): self {
         $stub_file = __DIR__.'/../Console/stubs/'.$this->name.'.stub';
         $stub = File::get($stub_file);
         $replace = $this->getReplaces();
@@ -308,6 +321,8 @@ class StubService {
         $msg = (' ['.$file.'] is under creating , refresh page');
 
         \Session::flash($msg);
+
+        return $this;
     }
 
     public function getClassName(): string {
@@ -339,28 +354,28 @@ class StubService {
         $dir = collect(explode('\\', $this->model_class))->slice(0, -1)->implode('\\');
 
         switch ($this->name) {
-            case 'factory':
-                return Str::replace('\Models\\', '\Database\Factories\\', $this->model_class).'Factory';
-            case 'migration_morph_pivot':
-                return '';
-            case 'morph_pivot':
-                return '';
-            case 'repository':
-                return Str::replace('\Models\\', '\Repositories\\', $this->model_class).'Repository';
-            case 'transformer_collection':
-                return Str::replace('\Models\\', '\Transformers\\', $this->model_class).'Collection';
-            case 'transformer_resource':
-                return Str::replace('\Models\\', '\Transformers\\', $this->model_class).'Resource';
-            case 'policy':
-                return $dir.'\\Policies\\'.class_basename($this->model_class).'Policy';
-            case 'panel':
-                return $dir.'\\Panels\\'.class_basename($this->model_class).'Panel';
-            case 'model':
-                return $this->model_class;
-            default:
-                $msg = '['.$this->name.'] Unkwon !['.__LINE__.']['.basename(__FILE__).']';
-                //dddx($msg);
-                throw new \Exception($msg);
+        case 'factory':
+            return Str::replace('\Models\\', '\Database\Factories\\', $this->model_class).'Factory';
+        case 'migration_morph_pivot':
+            return '';
+        case 'morph_pivot':
+            return '';
+        case 'repository':
+            return Str::replace('\Models\\', '\Repositories\\', $this->model_class).'Repository';
+        case 'transformer_collection':
+            return Str::replace('\Models\\', '\Transformers\\', $this->model_class).'Collection';
+        case 'transformer_resource':
+            return Str::replace('\Models\\', '\Transformers\\', $this->model_class).'Resource';
+        case 'policy':
+            return $dir.'\\Policies\\'.class_basename($this->model_class).'Policy';
+        case 'panel':
+            return $dir.'\\Panels\\'.class_basename($this->model_class).'Panel';
+        case 'model':
+            return $this->model_class;
+        default:
+            $msg = '['.$this->name.'] Unkwon !['.__LINE__.']['.basename(__FILE__).']';
+            //dddx($msg);
+            throw new \Exception($msg);
         }
     }
 
@@ -374,32 +389,32 @@ class StubService {
         ]);
         */
         switch ($this->name) {
-            case 'factory':
-                return $dir.'/../Database/Factories/'.$class_name.'Factory.php';
+        case 'factory':
+            return $dir.'/../Database/Factories/'.$class_name.'Factory.php';
 
-            case 'migration_morph_pivot':
-                return $dir.'/../Database/Migrations/'.date('Y_m_d_Hi00').'_create_'.Str::snake($class_name).'_table.php';
+        case 'migration_morph_pivot':
+            return $dir.'/../Database/Migrations/'.date('Y_m_d_Hi00').'_create_'.Str::snake($class_name).'_table.php';
 
-            case 'morph_pivot':
-                return $dir.'/'.$class_name.'Morph.php';
+        case 'morph_pivot':
+            return $dir.'/'.$class_name.'Morph.php';
 
-            case 'repository':
-                return $dir.'/../Repositories/'.$class_name.'Repository.php';
+        case 'repository':
+            return $dir.'/../Repositories/'.$class_name.'Repository.php';
 
-            case 'transformer_collection':
-                return $dir.'/../Transformers/'.$class_name.'Collection.php';
+        case 'transformer_collection':
+            return $dir.'/../Transformers/'.$class_name.'Collection.php';
 
-            case 'transformer_resource':
-                return $dir.'/../Transformers/'.$class_name.'Resource.php';
-            case 'policy':
-                return $dir.'/Policies/'.$class_name.'Policy.php';
-            case 'panel':
-                return $dir.'/Panels/'.$class_name.'Panel.php';
-            case 'model':
-                return $dir.'/'.$class_name.'.php';
-            default:
-                $msg = '['.$this->name.'] Unkwon !['.__LINE__.']['.basename(__FILE__).']';
-                throw new \Exception($msg);
+        case 'transformer_resource':
+            return $dir.'/../Transformers/'.$class_name.'Resource.php';
+        case 'policy':
+            return $dir.'/Policies/'.$class_name.'Policy.php';
+        case 'panel':
+            return $dir.'/Panels/'.$class_name.'Panel.php';
+        case 'model':
+            return $dir.'/'.$class_name.'.php';
+        default:
+            $msg = '['.$this->name.'] Unkwon !['.__LINE__.']['.basename(__FILE__).']';
+            throw new \Exception($msg);
         }
     }
 
@@ -417,10 +432,12 @@ class StubService {
 
         if (count($fillables) <= 1) {
             $fillables = $model->getConnection()->getSchemaBuilder()->getColumnListing($model->getTable());
-            $fillables = collect($fillables)->except([
-                'created_at', 'updated_at', 'updated_by', 'created_by', 'deleted_at', 'deleted_by',
-                'deleted_ip', 'created_ip', 'updated_ip',
-            ])->all();
+            $fillables = collect($fillables)->except(
+                [
+                    'created_at', 'updated_at', 'updated_by', 'created_by', 'deleted_at', 'deleted_by',
+                    'deleted_ip', 'created_ip', 'updated_ip',
+                ]
+            )->all();
             $autoloader_reflector = new \ReflectionClass($model);
             $class_filename = $autoloader_reflector->getFileName();
             if (false === $class_filename) {
@@ -492,11 +509,11 @@ class StubService {
              */
 
             /*
-        $tmp=new \stdClass();
-        $tmp->type=(string)$input_type;
-        $tmp->name=$input_name;
-        $fields[]=$tmp;
-         */
+            $tmp=new \stdClass();
+            $tmp->type=(string)$input_type;
+            $tmp->name=$input_name;
+            $fields[]=$tmp;
+            */
         }
 
         return $fields;

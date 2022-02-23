@@ -35,7 +35,7 @@ class FactoryService {
         $res = Artisan::call('module:make-factory', ['name' => $model_name, 'module' => $module_name]);
         //*/
 
-        $factory_class = StubService::setModelClass($called_class)
+        $factory_class = StubService::make()->setModelClass($called_class)
             ->setName('factory')
             ->get();
 

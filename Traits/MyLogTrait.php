@@ -14,44 +14,52 @@ namespace Modules\Xot\Traits;
 /**
  * Trait MyLogTrait.
  */
-trait MyLogTrait {
-    protected static function boot() {
+trait MyLogTrait
+{
+    protected static function boot()
+    {
         parent::boot();
         /*
          \Event::listen(['eloquent.*'], function ($a){
             var_dump($a);
         });
         */
-        static::creating(function ($model) {
-            //dddx(static::$logModel);
-            if (null != \Auth::user()) {
-                $model->created_by = optional(\Auth::user())->handle;
-                $model->updated_by = optional(\Auth::user())->handle.'';
+        static::creating(
+            function ($model) {
+                //dddx(static::$logModel);
+                if (null != \Auth::user()) {
+                    $model->created_by = optional(\Auth::user())->handle;
+                    $model->updated_by = optional(\Auth::user())->handle.'';
+                }
+                //$model->uuid = (string)Uuid::generate();
             }
-            //$model->uuid = (string)Uuid::generate();
-        });
+        );
 
-        static::updating(function ($model) {
-            //$tmp = ;
-            //dddx(debug_backtrace());
-            $parz = [];
-            $parz['tbl'] = $model->getTable(); //work
-            $parz['id_tbl'] = $model->getKey(); //work
-            if (\is_object($model)) {
-                $data = collect((array) $model)->filter(function ($value, $key) {
-                    $key = \preg_replace('/[\x00-\x1F\x7F-\xFF]/', '', $key);
+        static::updating(
+            function ($model) {
+                //$tmp = ;
+                //dddx(debug_backtrace());
+                $parz = [];
+                $parz['tbl'] = $model->getTable(); //work
+                $parz['id_tbl'] = $model->getKey(); //work
+                if (\is_object($model)) {
+                    $data = collect((array) $model)->filter(
+                        function ($value, $key) {
+                            $key = \preg_replace('/[\x00-\x1F\x7F-\xFF]/', '', $key);
 
-                    return '*attributes' == $key;
-                })->values()[0];
-                $parz['data'] = \json_encode($data);
+                            return '*attributes' == $key;
+                        }
+                    )->values()[0];
+                    $parz['data'] = \json_encode($data);
+                }
+
+                $log = static::$logModel;
+                $res = $log::create($parz);
+
+                if (\Auth::check()) {
+                    $model->updated_by = optional(\Auth::user())->handle.'';
+                }
             }
-
-            $log = static::$logModel;
-            $res = $log::create($parz);
-
-            if (\Auth::check()) {
-                $model->updated_by = optional(\Auth::user())->handle.'';
-            }
-        });
+        );
     }
 }

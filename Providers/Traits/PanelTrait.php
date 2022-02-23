@@ -10,8 +10,10 @@ use Illuminate\Support\Facades\URL;
 
 //use Modules\Xot\Engines\FullTextSearchEngine;
 
-trait PanelTrait {
-    private function registerPanel(): void {
+trait PanelTrait
+{
+    private function registerPanel(): void
+    {
         //dddx(get_class_methods($this->app['request']));
         //dddx(get_class_methods($this->app['route']));
         //dddx(request()->route()->paremeters());
@@ -21,7 +23,7 @@ trait PanelTrait {
         //dddx(request()->route()->parameters());
         /*
         $this->app->singleton(
-            Panel::class,
+            PanelService::class,
             function (Container $app) {
                 return new Panel(
                     $app['events'],

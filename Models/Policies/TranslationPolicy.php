@@ -7,5 +7,6 @@ namespace Modules\Xot\Models\Policies;
 /**
  * Class TranslationPolicy.
  */
-class TranslationPolicy extends XotBasePolicy {
+class TranslationPolicy extends XotBasePolicy
+{
 }

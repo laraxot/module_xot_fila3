@@ -1,7 +1,7 @@
 @extends('adm_theme::layouts.app')
 @section('page_heading', ' ')
 @section('content')
-    @include('formx::includes.flash')
+    @include('theme::includes.flash')
 
     @if (!empty(Auth::user()->areasUsed))
         @foreach (Auth::user()->areasUsed as $area)

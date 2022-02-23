@@ -1,7 +1,7 @@
 @extends('adm_theme::layouts.app')
 @section('page_heading','package Settings')
 @section('content')
-@include('formx::includes.flash')
+@include('theme::includes.flash')
 
 
 @php

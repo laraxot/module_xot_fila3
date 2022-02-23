@@ -4,13 +4,14 @@ declare(strict_types=1);
 
 namespace Modules\Xot\Providers;
 
+use Exception;
 use Illuminate\Routing\Router;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Str;
 use Modules\Tenant\Services\TenantService;
 use Modules\Xot\Http\Middleware\SetDefaultLocaleForUrlsMiddleware;
 
-//--- services ---
+// public function boot(\Illuminate\Routing\Router $router)
 
 //--- bases -----
 
@@ -31,7 +32,11 @@ class RouteServiceProvider extends XotBaseRouteServiceProvider {
     protected string $module_ns = __NAMESPACE__;
 
     public function bootCallback(): void {
-        $router = $this->app['router'];
+        //36     Cannot access offset 'router' on Illuminate\Contracts\Foundation\Application
+        //$router = $this->app['router'];
+        $router = app('router');
+        //dddx([$router, $router1]);
+
         $this->registerLang();
         $this->registerRoutePattern($router);
         $this->registerMyMiddleware($router);
@@ -43,7 +48,10 @@ class RouteServiceProvider extends XotBaseRouteServiceProvider {
         $router->prependMiddlewareToGroup('api', SetDefaultLocaleForUrlsMiddleware::class);
     }
 
-    public function registerLang() {
+    /**
+     * Undocumented function.
+     */
+    public function registerLang(): void {
         $langs = array_keys(config('laravellocalization.supportedLocales'));
 
         if (in_array(\Request::segment(1), $langs)) {
@@ -62,11 +70,16 @@ class RouteServiceProvider extends XotBaseRouteServiceProvider {
         $router->pattern('lang', $lang_pattern);
         //-------------------------------------------------------------
         $models = TenantService::config('morph_map');
+        if (! is_array($models)) {
+            throw new Exception('['.__LINE__.']['.class_basename(__CLASS__).']');
+        }
         $models_collect = collect(\array_keys($models));
         $pattern = $models_collect->implode('|');
-        $pattern_plural = $models_collect->map(function ($item) {
-            return Str::plural($item);
-        })->implode('|');
+        $pattern_plural = $models_collect->map(
+            function ($item) {
+                return Str::plural((string) $item);
+            }
+        )->implode('|');
 
         //$pattern = '/|'.$pattern.'|/i';
         $container0_pattern = '/|'.$pattern.'|'.$pattern_plural.'|/i';

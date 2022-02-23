@@ -40,6 +40,8 @@ class PanelMakeCommand extends GeneratorCommand {
      * @return string
      */
     public function getTemplateContents() {
+        //45     Cannot access offset 'modules' on Illuminate\Contracts\Foundation\Application.
+
         $module = $this->laravel['modules']->findOrFail($this->getModuleName());
 
         return 'testinaaaa';

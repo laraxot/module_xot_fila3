@@ -3,6 +3,7 @@
 namespace DummyNamespace;
 
 use Illuminate\Http\Request;
+use Modules\Xot\Contracts\RowsContract;
 //--- Services --
 
 use Modules\Xot\Models\Panels\XotBasePanel;
@@ -32,7 +33,6 @@ class DummyClass extends XotBasePanel {
     /**
      * The relationships that should be eager loaded on index queries.
      *
-     * @var array
      */
     public function with():array {
         return [];
@@ -46,18 +46,19 @@ class DummyClass extends XotBasePanel {
     /**
      * on select the option id
      *
-     * quando aggiungi un campo select, è il numero della chiave 
+     * quando aggiungi un campo select, è il numero della chiave
      * che viene messo come valore su value="id"
      *
+     * @return int|string|null
      */
-    public function optionId(object $row) {
+    public function optionId(Model $row) {
         return $row->getKey();
     }
 
     /**
      * on select the option label.
      */
-    public function optionLabel(object $row):string {
+    public function optionLabel($row):string {
         return $row->area_define_name;
     }
 
@@ -87,7 +88,7 @@ class DummyClass extends XotBasePanel {
      * Get the fields displayed by the resource.
      *
      * @return array
-        'col_bs_size' => 6,
+        'col_size' => 6,
         'sortable' => 1,
         'rules' => 'required',
         'rules_messages' => ['it'=>['required'=>'Nome Obbligatorio']],
