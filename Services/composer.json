@@ -7,6 +7,7 @@
         }
     ],
     "require": {
+        "amenadiel/jpgraph": "^4.1",
         "barryvdh/laravel-snappy": "^0.4.8",
         "daltcore/lara-pdf-merger": "^2.0",
         "fx3costa/laravelchartjs": "^2.8",
