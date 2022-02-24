@@ -8,6 +8,7 @@ declare(strict_types=1);
 
 namespace Modules\Xot\Services;
 
+use Exception;
 use Illuminate\Support\Collection;
 use Maatwebsite\Excel\Facades\Excel;
 
@@ -46,6 +47,9 @@ class XLSService {
      */
     public function fromInputFileName(string $name): self {
         $file = request()->file('file');
+        if (null === $file) {
+            throw new Exception('[.__LINE__.]['.class_basename(__CLASS__).']');
+        }
 
         return $this->fromRequestFile($file);
     }
@@ -53,11 +57,17 @@ class XLSService {
     /**
      * Undocumented function.
      *
+     * @param array<int,\Illuminate\Http\UploadedFile>|\Illuminate\Http\UploadedFile $file
+     *
      * @throws \Illuminate\Validation\ValidationException
      * @throws \PhpOffice\PhpSpreadsheet\Exception
      */
-    public function fromRequestFile(\Illuminate\Http\UploadedFile $file): self {
+    public function fromRequestFile($file): self {
         $path = $file->getRealPath();
+
+        if (false === $path) {
+            throw new Exception('[.__LINE__.]['.class_basename(__CLASS__).']');
+        }
 
         return $this->fromFilePath($path);
     }

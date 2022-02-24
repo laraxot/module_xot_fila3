@@ -14,11 +14,10 @@ use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
  * Class ArrayService.
  */
 class ArrayService {
-
     protected int $export_processor = 1;
 
     public array $array;
-    public ?string $filename=null;
+    public ?string $filename = null;
 
     private static ?self $instance = null;
 
@@ -39,24 +38,24 @@ class ArrayService {
         return static::getInstance();
     }
 
-    public function getArray():array {
-		return $this->array;
-	}
+    public function getArray(): array {
+        return $this->array;
+    }
 
-	public function setArray(array $array):self {
-		$this->array = $array;
+    public function setArray(array $array): self {
+        $this->array = $array;
+
         return $this;
-	}
+    }
 
-    public function getFilename():string{
-        $filename=$this->filename;
-        if($filename!==null){
+    public function getFilename(): string {
+        $filename = $this->filename;
+        if (null !== $filename) {
             return $filename;
         }
         //dddx(debug_backtrace());
         return 'test';
     }
-
 
     //ret array|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|string|\Symfony\Component\HttpFoundation\BinaryFileResponse
 
@@ -87,14 +86,14 @@ class ArrayService {
                 //case 2:return self::toXLS_Maatwebsite($params); //break;
                 //case 3:return self::toXLS_phpexcel($params); //break;
             default:
-                dddx(['unknown export_processor ['.self::$export_processor.']']);
+                dddx(['unknown export_processor ['.$this->$export_processor.']']);
                 break;
         }
     }
 
     public function toHtml(): string {
         $header = $this->getHeader();
-        $data = $this->array();
+        $data = $this->getArray();
         $html = '';
         $html .= '<table border="1">';
         $html .= '<thead>';
@@ -126,7 +125,7 @@ class ArrayService {
     }
 
     public function getHeader(): array {
-        $data=$this->array;
+        $data = $this->array;
         $firstrow = collect($data)->first();
         if (! is_array($firstrow)) {
             $firstrow = [];
@@ -151,7 +150,6 @@ class ArrayService {
      * @return mixed
      */
     public function toXLS_phpoffice() {
-
         $spreadsheet = new Spreadsheet();
         //----
         $ltr = 'A1';
@@ -159,10 +157,9 @@ class ArrayService {
         $sheet = $spreadsheet->getActiveSheet();
         $sheet->getStyle($ltr)->getAlignment()->setWrapText(true);
 
-
         $header = $this->getHeader();
-        $data=$this->array;
-        $filename=$this->getFilename();
+        $data = $this->array;
+        $filename = $this->getFilename();
 
         $sheet->fromArray($header, null, 'A1');
         $sheet->fromArray(
@@ -177,33 +174,33 @@ class ArrayService {
         $pathToFile = Storage::disk('local')->path($filename.'.xlsx');
         $writer->save($pathToFile); //$writer->save('php://output'); // per out diretto ?
 
-        $view_params=[
-            'file'=> $pathToFile,
-            'ext'=>'xls',
-            'text'=>'.',
+        $view_params = [
+            'file' => $pathToFile,
+            'ext' => 'xls',
+            'text' => '.',
             //'text'=>$text,
         ];
 
-        if (! isset($out)) {
-            $out='download';
-            //return response()->download($pathToFile);
-            //$out='link';
-            //exit(response()->download($pathToFile));
-        }
+        //if (! isset($out)) {
+        $out = 'download';
+        //return response()->download($pathToFile);
+        //$out='link';
+        //exit(response()->download($pathToFile));
+        //}
         if (! isset($text)) {
             $text = 'text';
         }
         switch ($out) {
         case 'link':
-            return view()->make('theme::download_icon',$view_params);
+            return view()->make('theme::download_icon', $view_params);
         case 'download':
             return response()->download($pathToFile);
         case 'file':
             return $pathToFile;
         case 'link_file':
-            return view()->make('theme::download_icon',$view_params);
+            return view()->make('theme::download_icon', $view_params);
 
-            return [$link, $pathToFile];
+            //return [$link, $pathToFile];
         }
     }
 

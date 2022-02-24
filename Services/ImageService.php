@@ -162,6 +162,9 @@ class ImageService {
      * Undocumented function.
      */
     public function src(): string {
+        if (null === $this->filename) {
+            throw new Exception('[.__LINE__.]['.class_basename(__CLASS__).']');
+        }
         $src = '/'.str_replace(public_path('/'), '', $this->filename);
         $src = str_replace('//', '/', $src);
 
