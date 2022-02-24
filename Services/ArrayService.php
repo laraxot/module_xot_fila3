@@ -185,8 +185,9 @@ class ArrayService {
         ];
 
         if (! isset($out)) {
+            $out='download';
             //return response()->download($pathToFile);
-            $out='link';
+            //$out='link';
             //exit(response()->download($pathToFile));
         }
         if (! isset($text)) {
@@ -194,10 +195,9 @@ class ArrayService {
         }
         switch ($out) {
         case 'link':
-
             return view()->make('theme::download_icon',$view_params);
-        case 'download': response()->download($pathToFile);
-            // no break
+        case 'download':
+            return response()->download($pathToFile);
         case 'file':
             return $pathToFile;
         case 'link_file':
