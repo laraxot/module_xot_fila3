@@ -10,8 +10,9 @@ declare(strict_types=1);
 namespace Modules\Xot\Console\Commands;
 
 use Carbon\Carbon;
-use Illuminate\Console\Command;
 use Illuminate\Support\Str;
+use Illuminate\Queue\Worker;
+use Illuminate\Console\Command;
 
 class WorkerStop extends Command {
     protected $signature = 'worker:stop';
