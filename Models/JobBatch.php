@@ -37,6 +37,7 @@ namespace Modules\Xot\Models;
  * @method static \Illuminate\Database\Eloquent\Builder|JobBatch wherePendingJobs($value)
  * @method static \Illuminate\Database\Eloquent\Builder|JobBatch whereTotalJobs($value)
  * @mixin \Eloquent
+ * @mixin IdeHelperJobBatch
  */
 class JobBatch extends BaseModel {
     protected $fillable = [

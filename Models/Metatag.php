@@ -46,6 +46,7 @@ namespace Modules\Xot\Models;
  * @method static \Illuminate\Database\Eloquent\Builder|Metatag whereUpdatedBy($value)
  * @mixin \Eloquent
  * @method static \Modules\Xot\Database\Factories\MetatagFactory factory(...$parameters)
+ * @mixin IdeHelperMetatag
  */
 class Metatag extends BaseModel
 {

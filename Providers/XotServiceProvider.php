@@ -30,10 +30,6 @@ class XotServiceProvider extends XotBaseServiceProvider {
     public string $module_name = 'xot';
 
     public function bootCallback(): void {
-        //Module::enable('Tenant');
-        //Module::enable('Rating');
-        //Module::enable('Tag');
-
         $this->registerCommands();
 
         $this->redirectSSL();
@@ -65,8 +61,8 @@ class XotServiceProvider extends XotBaseServiceProvider {
     private function redirectSSL(): void {
         if (config('xra.forcessl')) {
             // --- meglio ficcare un controllo anche sull'env
-            if (isset($_SERVER['SERVER_NAME']) && 'localhost' != $_SERVER['SERVER_NAME']
-                && isset($_SERVER['REQUEST_SCHEME']) && 'http' == $_SERVER['REQUEST_SCHEME']
+            if (isset($_SERVER['SERVER_NAME']) && 'localhost' !== $_SERVER['SERVER_NAME']
+                && isset($_SERVER['REQUEST_SCHEME']) && 'http' === $_SERVER['REQUEST_SCHEME']
             ) {
                 URL::forceScheme('https');
                 /*
@@ -89,6 +85,9 @@ class XotServiceProvider extends XotBaseServiceProvider {
                 //\Modules\Xot\Console\PanelMakeCommand::class,
                 //\Modules\Xot\Console\FixProvidersCommand::class,
                 \Modules\Xot\Console\Commands\DatabaseBackUpCommand::class,
+                \Modules\Xot\Console\Commands\WorkerCheck::class,
+                \Modules\Xot\Console\Commands\WorkerRetry::class,
+                \Modules\Xot\Console\Commands\WorkerStop::class,
             ]
         );
     }
@@ -117,7 +116,7 @@ class XotServiceProvider extends XotBaseServiceProvider {
     public function loadHelpersFrom(string $path): void {
         $files = File::files($path);
         foreach ($files as $file) {
-            if ('php' == $file->getExtension() && false !== $file->getRealPath()) {
+            if ('php' === $file->getExtension() && false !== $file->getRealPath()) {
                 include_once $file->getRealPath();
             }
         }

@@ -146,6 +146,7 @@ use Modules\Tenant\Services\TenantService;
  * @property string|null $bio
  * @method static \Illuminate\Database\Eloquent\Builder|Profile whereBio($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Profile wherePostType($value)
+ * @mixin IdeHelperProfile
  */
 class Profile extends BaseModelLang {
     /**

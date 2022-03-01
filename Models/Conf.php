@@ -21,6 +21,7 @@ use Sushi\Sushi;
  * @method static \Illuminate\Database\Eloquent\Builder|Conf whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Conf whereName($value)
  * @mixin \Eloquent
+ * @mixin IdeHelperConf
  */
 class Conf extends BaseModel
 {

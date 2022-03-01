@@ -31,6 +31,7 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|Translation whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Translation whereUpdatedBy($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Translation whereValue($value)
+ * @mixin IdeHelperTranslation
  */
 class Translation extends Model
 {
