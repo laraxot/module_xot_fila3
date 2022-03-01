@@ -30,6 +30,7 @@ namespace Modules\Xot\Models;
  * @property int|null                                                             $images_count
  * @method static \Modules\Xot\Database\Factories\FeedFactory factory(...$parameters)
  * @method static \Illuminate\Database\Eloquent\Builder|Feed whereId($value)
+ * @mixin IdeHelperFeed
  */
 class Feed extends BaseModel {
     /**

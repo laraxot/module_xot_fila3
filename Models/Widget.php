@@ -53,6 +53,7 @@ use Modules\Xot\Models\Traits\WidgetTrait;
  * @method static \Illuminate\Database\Eloquent\Builder|Widget whereUpdatedBy($value)
  * @mixin \Eloquent
  * @method static \Modules\Xot\Database\Factories\WidgetFactory factory(...$parameters)
+ * @mixin IdeHelperWidget
  */
 class Widget extends BaseModel {
     use WidgetTrait;

@@ -13,6 +13,7 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|Test newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Test query()
  * @mixin \Eloquent
+ * @mixin IdeHelperTest
  */
 class Test extends Model
 {

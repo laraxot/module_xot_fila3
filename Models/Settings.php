@@ -31,6 +31,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $author
  * @method static \Illuminate\Database\Eloquent\Builder|Settings whereAuthor($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Settings whereKeywords($value)
+ * @mixin IdeHelperSettings
  */
 class Settings extends Model
 {

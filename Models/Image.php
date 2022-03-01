@@ -49,6 +49,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property-read int|null $images_count
  * @method static \Modules\Xot\Database\Factories\ImageFactory factory(...$parameters)
  * @method static \Illuminate\Database\Eloquent\Builder|Image whereUserId($value)
+ * @mixin IdeHelperImage
  */
 class Image extends BaseModel
 {

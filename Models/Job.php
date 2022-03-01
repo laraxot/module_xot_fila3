@@ -31,6 +31,7 @@ namespace Modules\Xot\Models;
  * @method static \Illuminate\Database\Eloquent\Builder|Job whereQueue($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Job whereReservedAt($value)
  * @mixin \Eloquent
+ * @mixin IdeHelperJob
  */
 class Job extends BaseModel {
     protected $fillable = [

@@ -41,6 +41,7 @@ use Sushi\Sushi;
  * @property string|null $name
  * @method static \Modules\Xot\Database\Factories\HomeFactory factory(...$parameters)
  * @method static \Illuminate\Database\Eloquent\Builder|Home whereName($value)
+ * @mixin IdeHelperHome
  */
 class Home extends BaseModel {
     use WidgetTrait;
