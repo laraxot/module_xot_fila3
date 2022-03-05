@@ -48,6 +48,12 @@ class ArrayService {
         return $this;
     }
 
+    public function setFilename(string $filename): self {
+        $this->filename = $filename;
+
+        return $this;
+    }
+
     public function getFilename(): string {
         $filename = $this->filename;
         if (null !== $filename) {
