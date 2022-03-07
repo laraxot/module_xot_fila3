@@ -8,13 +8,13 @@ use Modules\Xot\Contracts\RowsContract;
 
 use Modules\Xot\Models\Panels\XotBasePanel;
 
-class DummyClass extends XotBasePanel {
+class DummyClassName extends XotBasePanel {
     /**
      * The model the resource corresponds to.
      *
      * @var string
      */
-    public static string $model = 'DummyFullModel';
+    public static string $model = 'DummyModelClass';
 
     /**
      * The single value that should be used to represent the resource when being displayed.
@@ -49,9 +49,11 @@ class DummyClass extends XotBasePanel {
      * quando aggiungi un campo select, è il numero della chiave
      * che viene messo come valore su value="id"
      *
+     * @param DummyModelClass $row
+     *
      * @return int|string|null
      */
-    public function optionId(Model $row) {
+    public function optionId($row) {
         return $row->getKey();
     }
 

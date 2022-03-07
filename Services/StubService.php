@@ -79,7 +79,8 @@ class StubService {
     }
 
     public function getNamespace(): string {
-        $ns = dirname($this->getClass());
+        $ns = $this->getClass();
+        $ns=implode('\\',array_slice(explode('\\',$ns),0,-1));
         if (Str::startsWith($ns, '\\')) {
             $ns = Str::after($ns, '\\');
         }
@@ -101,23 +102,14 @@ class StubService {
 
             $dummy_id = $model->getRouteKeyName();
         }
-        /*
-        dddx(
-            [
-                'fillable' => $this->getFillable(),
-                'columns' => $this->getColumns(),
-                'factories' => $this->getFactories(),
-            ]
-        );
-        */
-        //$columns = $this->getColumns();
-        //dddx($columns);
-        //$factories = $this->getFactories();
-        //dddx($factories);
+        
         $dummy_class = basename($this->getClass());
+        $ns=$this->getNamespace();
         $replaces = [
-            'DummyNamespace' => $this->getNamespace(),
+            'DummyNamespace' => $ns,
             'DummyClassLower' => strtolower($dummy_class),
+            
+            'DummyClassName' => Str::after($dummy_class,$ns.'\\'),
             'DummyClass' => $dummy_class,
             'DummyModelClass' => basename($this->model_class),
             'DummyFullModel' => $this->getClass(),
@@ -129,7 +121,7 @@ class StubService {
             'NamespacedDummyUserModel' => 'Modules\LU\Models\User',
             'NamespacedDummyModel' => $this->model_class,
         ];
-
+        //dddx($replaces);
         return $replaces;
     }
 
