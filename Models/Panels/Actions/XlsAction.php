@@ -27,6 +27,11 @@ class XlsAction extends XotBasePanelAction
     {
         $data = ($this->rows->get()->toArray());
 
-        return ArrayService::toXls(['data' => $data, 'filename' => 'test']);
+
+        $filename='test';
+         return ArrayService::make()
+            ->setArray($data)
+            ->setFilename($filename)
+            ->toXls();
     }
 }
