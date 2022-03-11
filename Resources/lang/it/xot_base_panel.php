@@ -63,4 +63,6 @@ Per questo Le chiediamo il permesso di trasmettere i Suoi dati e le Sue risposte
 
 Per questo Le chiediamo il permesso di trasmettere i Suoi dati e le Sue risposte a BIM GSP S.p.A. che provvederà a contattarLa.
 ',
+  'token' => 'token',
+  'PERSONALE TECNICO - La sua richiesta è stata soddisfatta e risolta? - Può descrivere le difficoltà che sono intercorse? ' => 'PERSONALE TECNICO - La sua richiesta è stata soddisfatta e risolta? - Può descrivere le difficoltà che sono intercorse? ',
 );
