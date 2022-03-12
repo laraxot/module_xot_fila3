@@ -1,12 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Modules\Xot\Models\Panels;
 
 use Illuminate\Http\Request;
-use Modules\Xot\Contracts\RowsContract;
-//--- Services --
 
-use Modules\Xot\Models\Panels\XotBasePanel;
+//--- Services --
 
 class FailedJobPanel extends XotBasePanel {
     /**
@@ -23,7 +23,6 @@ class FailedJobPanel extends XotBasePanel {
      */
     public static string $title = 'title';
 
-
     /**
      * Get the fields displayed by the resource.
      *
@@ -35,56 +34,55 @@ class FailedJobPanel extends XotBasePanel {
         'value'=>'..',
      */
     public function fields(): array {
-        return array (
-  
-  (object) array(
-     'type' => 'Id',
-     'name' => 'id',
-     'comment' => NULL,
-  ),
-  
-  (object) array(
-     'type' => 'String',
-     'name' => 'uuid',
-     'rules' => 'required',
-     'comment' => NULL,
-  ),
-  
-  (object) array(
-     'type' => 'Text',
-     'name' => 'connection',
-     'rules' => 'required',
-     'comment' => NULL,
-  ),
-  
-  (object) array(
-     'type' => 'Text',
-     'name' => 'queue',
-     'rules' => 'required',
-     'comment' => NULL,
-  ),
-  
-  (object) array(
-     'type' => 'Text',
-     'name' => 'payload',
-     'rules' => 'required',
-     'comment' => NULL,
-  ),
-  
-  (object) array(
-     'type' => 'Text',
-     'name' => 'exception',
-     'rules' => 'required',
-     'comment' => NULL,
-  ),
-  
-  (object) array(
-     'type' => 'Datetime',
-     'name' => 'failed_at',
-     'rules' => 'required',
-     'comment' => NULL,
-  ),
-);
+        return [
+            (object) [
+                'type' => 'Id',
+                'name' => 'id',
+                'comment' => null,
+            ],
+
+            (object) [
+                'type' => 'String',
+                'name' => 'uuid',
+                'rules' => 'required',
+                'comment' => null,
+            ],
+
+            (object) [
+                'type' => 'Text',
+                'name' => 'connection',
+                'rules' => 'required',
+                'comment' => null,
+            ],
+
+            (object) [
+                'type' => 'Text',
+                'name' => 'queue',
+                'rules' => 'required',
+                'comment' => null,
+            ],
+
+            (object) [
+                'type' => 'Text',
+                'name' => 'payload',
+                'rules' => 'required',
+                'comment' => null,
+            ],
+
+            (object) [
+                'type' => 'Text',
+                'name' => 'exception',
+                'rules' => 'required',
+                'comment' => null,
+            ],
+
+            (object) [
+                'type' => 'Datetime',
+                'name' => 'failed_at',
+                'rules' => 'required',
+                'comment' => null,
+            ],
+        ];
     }
 
     /**
@@ -92,7 +90,7 @@ class FailedJobPanel extends XotBasePanel {
      *
      * @return array
      */
-    public function tabs():array {
+    public function tabs(): array {
         $tabs_name = [];
 
         return $tabs_name;
@@ -103,7 +101,7 @@ class FailedJobPanel extends XotBasePanel {
      *
      * @return array
      */
-    public function cards(Request $request):array {
+    public function cards(Request $request): array {
         return [];
     }
 
@@ -114,7 +112,7 @@ class FailedJobPanel extends XotBasePanel {
      *
      * @return array
      */
-    public function filters(Request $request = null):array {
+    public function filters(Request $request = null): array {
         return [];
     }
 
@@ -123,7 +121,7 @@ class FailedJobPanel extends XotBasePanel {
      *
      * @return array
      */
-    public function lenses(Request $request):array {
+    public function lenses(Request $request): array {
         return [];
     }
 
@@ -132,7 +130,9 @@ class FailedJobPanel extends XotBasePanel {
      *
      * @return array
      */
-    public function actions():array {
-        return [];
+    public function actions(): array {
+        return [
+            new Actions\ArtisanContainerAction('queue:flush'),
+        ];
     }
 }
