@@ -38,7 +38,7 @@ class ArtisanContainerAction extends XotBasePanelAction {
     public function handle() {
         $out = ArtisanService::act($this->cmd);
 
-        return $out;
+        return $out.'<h3>+Done</h3>';
     }
 
     //end handle

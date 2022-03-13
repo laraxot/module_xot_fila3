@@ -47,6 +47,8 @@ class ArtisanService
             // no break
         case 'routelist': 
             return ArtisanService::exe('route:list');
+        case 'queue:flush': 
+            return ArtisanService::exe('queue:flush');
         case 'routelist1': 
             return ArtisanService::showRouteList();
         case 'optimize': 
