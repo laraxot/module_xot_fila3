@@ -8,4 +8,8 @@ class FailedJobPanelPolicy extends XotBasePanelPolicy {
     public function artisanContainer(?UserContract $user, PanelContract $panel): bool {
         return true;
     }
+
+    public function showFailedJob(?UserContract $user, PanelContract $panel): bool {
+        return true;
+    }
 }
