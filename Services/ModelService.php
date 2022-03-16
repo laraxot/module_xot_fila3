@@ -8,6 +8,7 @@ namespace Modules\Xot\Services;
 use ErrorException;
 use ReflectionClass;
 use ReflectionMethod;
+use Illuminate\Support\Str;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Eloquent\Model;
@@ -285,6 +286,22 @@ class ModelService {
             return ['name'=>$table_name,'fields'=>$fields];
         });
         return $data;
+    }
+
+
+    public function modelExistsByTableName(string $table_name):bool{
+        $model_ns=get_class($this->model);
+        $model_ns=collect(explode('\\',$model_ns))->slice(0,-1)->implode('\\');
+
+        $model_name=Str::singular($table_name);
+        $model_name=Str::studly($model_name);
+        if(Str::startsWith($table_name,'_')){
+            $model_name='_'.$model_name;
+        }
+
+        $model_class=$model_ns.'\\'.$model_name;
+        return class_exists($model_class);
+
     }
 
     /*

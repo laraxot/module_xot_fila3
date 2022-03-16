@@ -35,9 +35,12 @@ class DbAction extends XotBasePanelAction
         //k$database=config('database');
         $data=$this->getAllTablesAndFields();
         $view='xot::admin.home.acts.db';
+        $model=$this->getModel();
+        $model_service=ModelService::make()->setModel($model);
         $view_params=[
             'view'=>$view,
             'rows'=>$data,
+            'model_service'=>$model_service,
         ];
         return view()->make($view,$view_params);
 
