@@ -78,7 +78,18 @@ class DbAction extends XotBasePanelAction
         echo '<h3>+Done Searching ['.$search.']</h3>';
    }
 
+   /**
+    * Undocumented function
+    *
+    * @link https://stackoverflow.com/questions/26181170/laravel-how-to-use-query-builder-dbtable-with-dbconnection
+    *
+    * @param [type] $item
+    * @param [type] $search
+    * @return void
+    */
    public function makeSql($item,$search){
+        //$programs=DB::connection('mysql2')->table('node')->where('type', 'Programs')->get();
+
         $sql='select * from '.$item['name'].'
         where ';
         $where=[];
