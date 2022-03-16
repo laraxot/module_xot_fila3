@@ -115,8 +115,14 @@ class DbAction extends XotBasePanelAction
         $module_path=Module::getModulePath($module_name);
         $module_models_path=$module_path.'/Models';
         $models=File::files($module_models_path);
-        $first_model_file=$models[0];
-        $first_model_class='Modules\\'.$module_name.'\Models\\'.Str::before($first_model_file->getBasename(),'.php');
+        $i=0;
+        $is_abstract=true;
+        while($is_abstract){
+            $first_model_file=$models[$i++];
+            $first_model_class='Modules\\'.$module_name.'\Models\\'.Str::before($first_model_file->getBasename(),'.php');
+            $reflect = new \ReflectionClass($first_model_class);
+            $is_abstract=$reflect->isAbstract();
+        }
         $first_model=app($first_model_class);
         return $first_model;
    }
