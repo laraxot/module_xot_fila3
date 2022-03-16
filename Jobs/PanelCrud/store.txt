@@ -402,7 +402,7 @@ class StoreJob extends XotBaseJob {
         $related = $items->getRelated();
         //dddx($related);
         $container_obj = $model;
-        $container = ModelService::getPostType($container_obj);
+        $container = ModelService::make()->setModel($container_obj)->getPostType();
         //$items_key = $container_obj->getKeyName();
         $items_key = $related->getKeyName();
         //dddx($items_key);//auth_user_id

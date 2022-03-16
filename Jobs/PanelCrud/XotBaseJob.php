@@ -57,7 +57,7 @@ abstract class XotBaseJob /*implements ShouldQueue*/
      * manage the relationships.
      */
     public function manageRelationships(Model $model, array $data, string $act): void {
-        $relationships = ModelService::getRelationshipsAndData($model, $data);
+        $relationships = ModelService::make()->setModel($model)->getRelationshipsAndData( $data);
         /*
         dddx([
             '$model' => $model,
@@ -174,7 +174,7 @@ abstract class XotBaseJob /*implements ShouldQueue*/
      * Method Modules\Xot\Jobs\PanelCrud\XotBaseJob::ConvDateTime() should return Carbon\Carbon|false|null but returns 0|0.0|''|'0'|array()|false|null.
      */
     public function ConvDateTime(stdClass $field, string $value): ?Carbon {
-        
+
         if (null == $value) {
             return null;
         }
@@ -190,7 +190,7 @@ abstract class XotBaseJob /*implements ShouldQueue*/
     /**
      *  Method Modules\Xot\Jobs\PanelCrud\XotBaseJob::ConvDateTime2Fields() should return Carbon\Carbon|false|null but returns 0|0.0|''|'0'|array()|false|null.
      *
-     
+
      */
     public function ConvDateTime2Fields(stdClass $field, string $value):?Carbon {
         if (null == $value) {
