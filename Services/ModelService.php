@@ -240,11 +240,22 @@ class ModelService {
     /**
      * execute a query.
      */
-    public function query( string $sql): void {
+    public function query( string $sql) {
         $model=$this->model;
-        $model->getConnection()->statement($sql);
+        $res=$model->getConnection()->statement($sql);
+        //$res=$model->getConnection()->select($sql);
+        return $res;
     }
 
+    /**
+     * execute a query.
+     */
+    public function select( string $sql) {
+        $model=$this->model;
+        //$res=$model->getConnection()->statement($sql);
+        $res=$model->getConnection()->select($sql);
+        return $res;
+    }
 
     /**
      * Undocumented function
