@@ -102,9 +102,9 @@ class DbAction extends XotBasePanelAction
             switch($field['type']){
                 case 'string':
                     $where[]=$name.' like "%'.$search.'%"';
-                    break;
+                break;
                 default:
-                $where[]=$name.' = "'.$search.'"';
+                    $where[]=$name.' = "'.$search.'"';
                 break;
             }
         }
