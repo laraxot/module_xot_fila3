@@ -68,6 +68,7 @@ class DbAction extends XotBasePanelAction
                 echo '<hr>';
                 echo '<h3>'.$v['name'].'</h3>';
                 echo '<h3>N ['.count($res).'] Results</h3>';
+                echo '<pre>'.print_r($v['sql'],true).'</pre>';
                 echo ArrayService::make()->setArray($res)->toHtml();
                 //echo '<pre>'.print_r($res,true).'</pre>';
             }
