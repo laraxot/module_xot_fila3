@@ -55,7 +55,7 @@ class DbAction extends XotBasePanelAction
 
         foreach($data as $v){
             try{
-            $res=$model_service->select($v['sql']);
+                $res=$model_service->select($v['sql']);
             }catch(QueryException $e){
                 echo '<pre>'.$v['sql'].'</pre>';
                 echo '<pre>'.$e->getMessage().'</pre>';
