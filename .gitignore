@@ -14,4 +14,7 @@ node_modules/
 error_log
 .phpintel
 /.idea
+
+*.lock
+*.stackdump
 *.cache
