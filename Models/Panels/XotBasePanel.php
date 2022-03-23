@@ -1299,6 +1299,16 @@ abstract class XotBasePanel implements PanelContract {
         return $query;
     }
 
+
+
+    /**
+     *
+     */
+    public function getFillable():array{
+
+        return $this->row->getFillable();
+    }
+
     /**
      * @return mixed
      */
