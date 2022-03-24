@@ -245,7 +245,6 @@ abstract class XotBasePanel implements PanelContract {
 
     /**  se uso in rows() getQuery il dato ottenuto e' una collezione di items non di modelli.
      *
-     * @param object|Model $data
      */
     /* non usata ?
     public function getHydrate($data): PanelContract {
@@ -324,6 +323,7 @@ abstract class XotBasePanel implements PanelContract {
         return $parents_guid;
     }
     */
+
     /**
      * @return mixed
      */
@@ -499,7 +499,7 @@ abstract class XotBasePanel implements PanelContract {
     }
 
     public function title(): ?string {
-        return optional($this->row)->title;
+        return $this->optionLabel($this->row);
     }
 
     public function txt(): ?string {
@@ -1299,13 +1299,7 @@ abstract class XotBasePanel implements PanelContract {
         return $query;
     }
 
-
-
-    /**
-     *
-     */
-    public function getFillable():array{
-
+    public function getFillable(): array {
         return $this->row->getFillable();
     }
 
