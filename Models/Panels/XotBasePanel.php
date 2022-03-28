@@ -786,6 +786,29 @@ abstract class XotBasePanel implements PanelContract {
      */
     public function filters(Request $request = null): array {
         return [];
+        /* esempio di filters da mettere nel pannello interessato
+        return [
+            (object) [
+                'param_name' => 'stabi', //nome dell'input
+                'field_name' => 'stabi', //nome del campo collegato
+                'rules' => 'required',
+                //'op'=>'=',
+            ],
+            (object) [
+                'param_name' => 'repar',
+                'field_name' => 'repar',
+                'rules' => 'required',
+                //'op'=>'=',
+            ],
+            (object) [
+                'param_name' => 'year',
+                'field_name' => 'anno',
+                'rules' => 'required',
+                //'where_method' => 'ofYear',
+                //'op'=>'=',
+            ],
+        ];
+        */
     }
 
     public function getXotModelName(): ?string {
@@ -799,7 +822,7 @@ abstract class XotBasePanel implements PanelContract {
 
     /**
      * index Navigation view.
-     * view utilizzata nell'index dei modelli (model/index).
+     * view utilizzata nell'index dei modelli (model/index) e nell'admin.
      *
      * @return null
      */
