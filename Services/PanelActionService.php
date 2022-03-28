@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Modules\Xot\Services;
 
+use Exception;
 use Illuminate\Support\Collection;
 use Modules\Xot\Contracts\PanelContract;
 use Modules\Xot\Models\Panels\Actions\XotBasePanelAction;
@@ -96,6 +97,9 @@ class PanelActionService {
         }
         //$itemAction->setPanel($this); //incerto dovrebbe farlo getActions
         */
+        if (null == $itemAction) {
+            throw new Exception('['.$act.'] is not an ItemAction of ['.class_basename($this->panel).']');
+        }
 
         return $itemAction;
     }
