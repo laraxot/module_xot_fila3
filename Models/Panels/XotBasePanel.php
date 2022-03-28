@@ -798,7 +798,8 @@ abstract class XotBasePanel implements PanelContract {
     }
 
     /**
-     * index Navigation.
+     * index Navigation view.
+     * view utilizzata nell'index dei modelli (model/index).
      *
      * @return null
      */
