@@ -10,19 +10,17 @@ use Illuminate\Http\Request;
 //--- services
 use Illuminate\Support\Facades\Config;
 use Modules\Settings\Services\ConfService;
-use Modules\Theme\Services\ThemeService;
 use Modules\Tenant\Services\TenantService;
+use Modules\Theme\Services\ThemeService;
 
 /**
  * Class ConfController.
  */
-class ConfController extends Controller
-{
+class ConfController extends Controller {
     /**
      * @return mixed
      */
-    public function index(Request $request)
-    {
+    public function index(Request $request) {
         $route_params = optional(\Route::current())->parameters();
         //$confs = Config::all('localhost');
         $tenant_name = TenantService::getName();
@@ -32,8 +30,8 @@ class ConfController extends Controller
                 $route_params['item0'] = $key;
 
                 return (object) [
-                'title' => $key,
-                'url' => route('admin.containers.edit', $route_params, false),
+                    'title' => $key,
+                    'url' => route('admin.containers.edit', $route_params, false),
                 ];
             }
         )->all();
@@ -44,8 +42,7 @@ class ConfController extends Controller
                 ;
     }
 
-    public function edit(Request $request): Renderable
-    {
+    public function edit(Request $request): Renderable {
         $route_params = optional(\Route::current())->parameters();
         extract($route_params);
         if (! isset($item0)) {
@@ -61,8 +58,7 @@ class ConfController extends Controller
     /**
      * @return \Illuminate\Http\RedirectResponse|void
      */
-    public function update(Request $request)
-    {
+    public function update(Request $request) {
         $data = $request->all();
         $route_params = optional(\Route::current())->parameters();
         //dddx([$data, $route_params]);
@@ -74,6 +70,7 @@ class ConfController extends Controller
 
             return;
         }
+        throw new Exception('['.__LINE__.']['.class_basename(__CLASS__).']');
         TenantService::saveConfig(['name' => $item0, 'data' => $data]);
         /*
         $data['_token'] = '';
