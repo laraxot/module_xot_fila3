@@ -783,6 +783,7 @@ abstract class XotBasePanel implements PanelContract {
 
     /**
      * Get the filters available for the resource.
+     * Interagisce con la funzione applyFilter.
      */
     public function filters(Request $request = null): array {
         return [];
