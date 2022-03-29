@@ -24,7 +24,11 @@ abstract class XotBaseComposer {
      * --.
      */
     public function getMenuItemsByName(string $name): Collection {
-        $rows = Menu::firstWhere('name', $name)->items;
+        $menu = Menu::firstWhere('name', $name);
+        if (null == $menu) {
+            return collect([]);
+        }
+        $rows = $menu->items;
         //$sql = Str::replaceArray('?', $rows->getBindings(), $rows->toSql());
         //$test = MenuItem::where('menu', 2)->get();
         //dddx(
