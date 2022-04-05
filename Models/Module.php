@@ -7,6 +7,9 @@ namespace Modules\Xot\Models;
 use Nwidart\Modules\Facades\Module as NwModule;
 use Sushi\Sushi;
 
+/**
+ * @mixin IdeHelperModule
+ */
 class Module extends BaseModel {
     use Sushi;
 
