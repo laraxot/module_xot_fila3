@@ -13,6 +13,7 @@ use Illuminate\Support\Str;
 use Modules\Tenant\Services\TenantService;
 use Modules\Xot\Services\ArrayService;
 use Modules\Xot\Services\FileService;
+use Modules\Xot\Services\ModuleService;
 use Modules\Xot\Services\PanelService;
 use Modules\Xot\Services\RouteService;
 
@@ -460,40 +461,7 @@ if (! \function_exists('getModuleModels')) {
      * @return array
      */
     function getModuleModels($module) {
-        if (null == $module) {
-            return [];
-        }
-        $mod = \Module::find($module);
-        if (null == $mod) {
-            return [];
-        }
-        $mod_path = $mod->getPath().'/Models';
-        $mod_path = str_replace(['\\', '/'], [DIRECTORY_SEPARATOR, DIRECTORY_SEPARATOR], $mod_path);
-        $files = File::files($mod_path);
-        $data = [];
-        $ns = 'Modules\\'.$mod->getName().'\\Models';  // con la barra davanti non va il search ?
-        foreach ($files as $file) {
-            $filename = $file->getRelativePathname();
-            $ext = '.php';
-            if (Str::endsWith($filename, $ext)) {
-                $tmp = new \stdClass();
-                $name = substr(($filename), 0, -strlen($ext));
-                $tmp->class = $ns.'\\'.$name;
-                $name = Str::snake($name);
-                $tmp->name = $name;
-                // 434    Parameter #1 $argument of class ReflectionClass constructor expects class-string<T of object>|T of object, string given.
-                //Class Modules\LU\Models\multi-upload does not exist
-                try {
-                    $reflection_class = new ReflectionClass($tmp->class);
-                    if (! $reflection_class->isAbstract()) {
-                        $data[$tmp->name] = $tmp->class;
-                    }
-                } catch (\Exception $e) {
-                }
-            }
-        }
-
-        return $data;
+        return ModuleService::make()->setName($module)->getModels();
     }
 }
 
@@ -505,6 +473,11 @@ if (! \function_exists('getModuleModelsMenu')) {
                 //$obj = new $item();
                 $obj = app($item);
                 $panel = PanelService::make()->get($obj);
+                //*
+                if ('media' == $key) {// media e' singolare ma anche plurale di medium
+                    $panel->setName('medias');
+                }
+                //*/
                 $url = $panel->url('index');
 
                 return (object) [
