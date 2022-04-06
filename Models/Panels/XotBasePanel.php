@@ -34,6 +34,7 @@ use Modules\Xot\Services\PanelRouteService;
 use Modules\Xot\Services\PanelService;
 use Modules\Xot\Services\PanelTabService;
 use Modules\Xot\Services\PolicyService;
+use Modules\Xot\Services\RouteService;
 use Modules\Xot\Services\RowsService;
 use Modules\Xot\Services\StubService;
 use Spatie\QueryBuilder\Filters\Filter;
@@ -1655,7 +1656,13 @@ abstract class XotBasePanel implements PanelContract {
      */
     public function getViews(): array {
         $views = [];
-        $views[] = $this->getModuleNameLow().'::'.(inAdmin() ? 'admin.' : '').$this->getName();
+        $act = RouteService::getAct();
+        $view = $this->getModuleNameLow().'::'.(inAdmin() ? 'admin.' : '').$this->getName().'.'.$act;
+        $views[] = $view;
+        $view = (inAdmin() ? 'adm_theme' : 'pub_theme').'::layouts.default.'.$act;
+        $views[] = $view;
+        $view = 'theme::layouts.default'.(inAdmin() ? '.admin' : '').'.'.$act;
+        $views[] = $view;
 
         return $views;
     }

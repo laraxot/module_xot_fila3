@@ -55,7 +55,13 @@ class HtmlPanelPresenter implements PanelPresenterContract {
         $view = ThemeService::getView(); //vew che dovrebbe essere
         $view_work = ThemeService::getViewWork(); //view effettiva
         $views = ThemeService::getDefaultViewArray(); //views possibili
-
+        /*
+        $views_p = $this->panel->getViews(); //undercostruction..
+        dddx([
+            'service' => $views,
+            'panel' => $views_p,
+        ]);
+        */
         //$mod_trad = $this->panel->getModuleNameLow().'::'.last($containers);
         $mod_trad = $this->panel->getTradMod();
         //--- per passare la view all'interno dei componenti
