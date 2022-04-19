@@ -21,4 +21,11 @@ class _ModulePanelPolicy extends XotBasePanelPolicy {
     public function xlsImport(UserContract $user, PanelContract $panel): bool {
         return true;
     }
+
+     /**
+     * Undocumented function.
+     */
+    public function modelGenerator(UserContract $user, PanelContract $panel): bool {
+        return true;
+    }
 }
