@@ -61,7 +61,7 @@ class DummyClassName extends XotBasePanel {
      * on select the option label.
      */
     public function optionLabel($row):string {
-        return $row->area_define_name;
+        return (string)$row->title;
     }
 
     /**
