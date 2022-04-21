@@ -68,7 +68,7 @@ class DownloadDbModuleAction extends XotBasePanelAction {
         */
 
         $process = Process::fromShellCommandline(sprintf(
-            'mysqldump --user=%s --password=%s %s > %s',
+            'mysqldump --user=%s --password=%s %s | gzip > %s',
             $db['username'],
             $db['password'],
             $db['database'],
