@@ -896,7 +896,7 @@ abstract class XotBasePanel implements PanelContract {
 
     /**
      * Build an "index" query for the given resource.
-     *
+     * funzione richiamata prima di rilasciare rows nella blade
      * @param RowsContract $query
      *
      * @return RowsContract
