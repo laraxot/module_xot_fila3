@@ -1,13 +1,13 @@
 <?php
+/**
+ * ---
+ * 
+ * @link https://github.com/johnnyfreeman/laravel-custom-relation/blob/master/src/Relations/Custom.php
+ */
 
 declare(strict_types=1);
 
 namespace Modules\Xot\Relations;
-
-/*
- * https://github.com/johnnyfreeman/laravel-custom-relation/blob/master/src/Relations/Custom.php
-
- */
 
 use Closure;
 use Illuminate\Database\Eloquent\Builder;
