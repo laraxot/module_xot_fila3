@@ -1,4 +1,5 @@
-<?php return array (
+<?php
+return array (
   'id' => 'id',
   'tipo' => 'tipo',
   'codice' => 'codice',
@@ -9,5 +10,5 @@
   'updated_at' => 'updated_at',
   'updated_by' => 'updated_by',
   'deleted_at' => 'deleted_at',
-  'deleted_by' => 'deleted_by',
-);
+); 'deleted_by' => 'deleted_by',
+);
