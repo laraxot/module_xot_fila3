@@ -6,19 +6,18 @@ namespace Modules\Xot\Models\Panels\Actions;
 
 use Nwidart\Modules\Facades\Module;
 
-//-------- models -----------
+// -------- models -----------
 
-//-------- services --------
-//-------- bases -----------
+// -------- services --------
+// -------- bases -----------
 
 /**
  * Class ArtisanAction.
  */
-class UpdateLangModuleAction extends XotBasePanelAction
-{
-    public bool $onContainer = true; //onlyContainer
+class UpdateLangModuleAction extends XotBasePanelAction {
+    public bool $onContainer = true; // onlyContainer
 
-    public bool $onItem = true; //onlyContainer
+    public bool $onItem = true; // onlyContainer
 
     public string $icon = '<i class="fas fa-language"></i>';
 
@@ -32,10 +31,9 @@ class UpdateLangModuleAction extends XotBasePanelAction
     /**
      * @return mixed
      */
-    public function handle()
-    {
+    public function handle() {
         return 'preso';
     }
 
-    //end handle
+    // end handle
 }

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Modules\Xot\Contracts;
 
-//use Illuminate\Database\Query\Builder;
+// use Illuminate\Database\Query\Builder;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\Relation;
@@ -20,7 +20,7 @@ use Modules\Xot\Models\Panels\Actions\XotBasePanelAction;
 interface PanelContract {
     public function setRow(Model $row): self;
 
-    //public function setRows(Relation $rows): self;
+    // public function setRows(Relation $rows): self;
 
     /**
      * Undocumented function.
@@ -38,7 +38,7 @@ interface PanelContract {
 
     public function setItem(string $guid): self;
 
-    public function setParent(?PanelContract $panel): PanelContract;
+    public function setParent(?self $panel): self;
 
     /**
      * Undocumented function.
@@ -114,7 +114,7 @@ interface PanelContract {
 
     public function guid(?bool $is_admin = null): ?string;
 
-    public function getParent(): ?PanelContract;
+    public function getParent(): ?self;
 
     public function fields(): array;
 
@@ -168,9 +168,9 @@ interface PanelContract {
 
     public function isRevisionBy(UserContract $user): bool;
 
-    public function related(string $relationship): PanelContract;
+    public function related(string $relationship): self;
 
-    public function relatedName(string $name, ?int $id = null): PanelContract;
+    public function relatedName(string $name, ?int $id = null): self;
 
     /**
      * @return \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Query\Builder
@@ -191,7 +191,7 @@ interface PanelContract {
 
     public function optionLabel(Model $row): string;
 
-    //public function isInternalPage(): bool;
+    // public function isInternalPage(): bool;
 
     public function rules(array $params = []): array;
 
@@ -199,7 +199,7 @@ interface PanelContract {
 
     public function rulesMessages(): array;
 
-    //--------------------- ACTIONS -------------------
+    // --------------------- ACTIONS -------------------
 
     /**
      * @return mixed

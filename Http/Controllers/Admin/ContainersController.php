@@ -14,7 +14,7 @@ use Modules\Xot\Http\Requests\XotRequest;
 use Modules\Xot\Services\PanelService;
 use Modules\Xot\Services\PolicyService;
 
-//---- services ---
+// ---- services ---
 
 /**
  * Undocumented class.
@@ -22,8 +22,7 @@ use Modules\Xot\Services\PolicyService;
  * @method Renderable home(Request $request)
  * @method Renderable show(Request $request)
  */
-class ContainersController extends Controller
-{
+class ContainersController extends Controller {
     public PanelContract $panel;
 
     /**
@@ -31,17 +30,16 @@ class ContainersController extends Controller
      *
      * @return mixed
      */
-    public function index(Request $request)
-    {
+    public function index(Request $request) {
         $route_params = getRouteParameters(); // "module" => "lu"
         [$containers,$items] = params2ContainerItem();
-        //dddx(['contianers' => $containers, 'items' => $items]);
-        if (0 == count($containers)) {
+        // dddx(['contianers' => $containers, 'items' => $items]);
+        if (0 === \count($containers)) {
             $act = isset($route_params['module']) ? 'home' : 'dashboard';
 
             return $this->{$act}($request);
         }
-        if (count($containers) == count($items)) {
+        if (\count($containers) === \count($items)) {
             return $this->show($request);
         }
 
@@ -56,14 +54,13 @@ class ContainersController extends Controller
      *
      * @return mixed
      */
-    public function __call($method, $args)
-    {
+    public function __call($method, $args) {
         $action = \Route::current()->getAction();
         $action['controller'] = __CLASS__.'@'.$method;
         $action = \Route::current()->setAction($action);
 
         $this->panel = PanelService::make()->getRequestPanel();
-        if ('' != request()->input('_act', '')) {
+        if ('' !== request()->input('_act', '')) {
             return $this->__callPanelAct($method, $args);
         }
 
@@ -73,13 +70,12 @@ class ContainersController extends Controller
     /**
      * @return mixed
      */
-    public function __callRouteAct(string $method, array $args)
-    {
+    public function __callRouteAct(string $method, array $args) {
         $panel = $this->panel;
         $authorized = Gate::allows($method, $panel);
 
         if (! $authorized) {
-            //dddx($method, $panel);
+            // dddx($method, $panel);
 
             return $this->notAuthorized($method, $panel);
         }
@@ -95,8 +91,7 @@ class ContainersController extends Controller
     /**
      * @return mixed
      */
-    public function __callPanelAct(string $method, array $args)
-    {
+    public function __callPanelAct(string $method, array $args) {
         $request = request();
         $act = $request->_act;
         $method_act = Str::camel($act);
@@ -114,8 +109,7 @@ class ContainersController extends Controller
     /**
      * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse|\Illuminate\Http\Response
      */
-    public function notAuthorized(string $method, PanelContract $panel)
-    {
+    public function notAuthorized(string $method, PanelContract $panel) {
         $lang = app()->getLocale();
 
         if (! \Auth::check()) {
@@ -130,17 +124,16 @@ class ContainersController extends Controller
         return response()->view('pub_theme::errors.403', ['msg' => $msg], 403);
     }
 
-    public function getController(): string
-    {
+    public function getController(): string {
         list($containers, $items) = params2ContainerItem();
-        $mod_name = $this->panel->getModuleName(); //forse da mettere container0
+        $mod_name = $this->panel->getModuleName(); // forse da mettere container0
 
         $tmp = collect($containers)->map(
             function ($item) {
                 return Str::studly($item);
             }
         )->implode('\\');
-        if ('' == $tmp) {
+        if ('' === $tmp) {
             $tmp = 'Module';
         }
         $controller = '\Modules\\'.$mod_name.'\Http\Controllers\Admin\\'.$tmp.'Controller';
@@ -148,7 +141,7 @@ class ContainersController extends Controller
         if (class_exists($controller)) {
             return $controller;
         }
-        if ('Module' == $tmp) {
+        if ('Module' === $tmp) {
             return '\Modules\Xot\Http\Controllers\Admin\ModuleController';
         }
 

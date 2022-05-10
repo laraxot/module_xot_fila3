@@ -6,8 +6,8 @@ namespace Modules\Xot\Services;
 
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
-//----services ---
-//---- pear
+// ----services ---
+// ---- pear
 use ZipArchive;
 
 /**
@@ -58,17 +58,17 @@ class ZipService {
             'view' => $pdf_view,
             'out' => 'content_PDF',
         ];
-        //$filename_zip = '_'.$this->year.'.zip';
+        // $filename_zip = '_'.$this->year.'.zip';
 
         $zip = new ZipArchive();
         $filename_zip = Storage::disk('cache')->path($filename_zip);
-        $filename_zip = str_replace(['/', '\\'], [DIRECTORY_SEPARATOR, DIRECTORY_SEPARATOR], $filename_zip);
+        $filename_zip = str_replace(['/', '\\'], [\DIRECTORY_SEPARATOR, \DIRECTORY_SEPARATOR], $filename_zip);
 
         if (true !== $zip->open($filename_zip, ZipArchive::CREATE)) {
             throw new \Exception('cannot create zip ['.$filename_zip.']');
         }
 
-        //dddx(get_class_methods($zip));
+        // dddx(get_class_methods($zip));
         /*
         0 => "open"
         1 => "setPassword"
@@ -111,35 +111,35 @@ class ZipService {
         38 => "setEncryptionName"
         39 => "setEncryptionIndex"
         */
-        if (0 == $rows->count()) {
+        if (0 === $rows->count()) {
             return '<h3>Non ci sono file da aggiungere</h3>';
         }
         foreach ($rows as $row) {
             $panel = PanelService::make()->get($row);
-            if (null == $panel) {
+            if (null === $panel) {
                 return;
             }
-            //dddx($panel);
-            //$filename = 'Perf_ind_'.$row->id.'_'.$row->matr.'_'.$row->cognome.'_'.$row->nome.'_'.$row->anno.'_'.date('Ymd').'.pdf';
+            // dddx($panel);
+            // $filename = 'Perf_ind_'.$row->id.'_'.$row->matr.'_'.$row->cognome.'_'.$row->nome.'_'.$row->anno.'_'.date('Ymd').'.pdf';
             $filename = $panel->pdfFilename();
 
             $path = Storage::disk('cache')->path($filename);
-            $path = str_replace(['/', '\\'], [DIRECTORY_SEPARATOR, DIRECTORY_SEPARATOR], $path);
+            $path = str_replace(['/', '\\'], [\DIRECTORY_SEPARATOR, \DIRECTORY_SEPARATOR], $path);
 
             if (! File::exists($path)) {
                 $pdf_parz['filename'] = $filename;
                 $pdf_content = $panel->pdf($pdf_parz);
-                //134    Parameter #2 $contents of method Illuminate\Filesystem\FilesystemAdapter::put()
-                //expects
-                //Illuminate\Http\File|Illuminate\Http\UploadedFile|Psr\Http\Message\StreamInterface|resource|string,
-                //mixed   given.
+                // 134    Parameter #2 $contents of method Illuminate\Filesystem\FilesystemAdapter::put()
+                // expects
+                // Illuminate\Http\File|Illuminate\Http\UploadedFile|Psr\Http\Message\StreamInterface|resource|string,
+                // mixed   given.
                 $res = Storage::disk('cache')->put($filename, $pdf_content);
             }
             $zip->addFile($path, $filename);
         }
         $zip->close();
 
-        if ('download' == $out) {
+        if ('download' === $out) {
             return response()->download($filename_zip);
         }
 
@@ -162,7 +162,7 @@ class ZipService {
     public static function getFilenameZipPath(): string {
         $filename_zip = self::getFilenameZip();
         $filename_zip = Storage::disk('cache')->path($filename_zip);
-        $filename_zip = str_replace(['/', '\\'], [DIRECTORY_SEPARATOR, DIRECTORY_SEPARATOR], $filename_zip);
+        $filename_zip = str_replace(['/', '\\'], [\DIRECTORY_SEPARATOR, \DIRECTORY_SEPARATOR], $filename_zip);
         File::makeDirectory(\dirname($filename_zip), 0755, true, true);
 
         return $filename_zip;
@@ -187,7 +187,7 @@ class ZipService {
     public static function fromFiles(array $files, ?array $names): self {
         $zip = self::getZipArchive();
         foreach ($files as $index => $path) {
-            $path = str_replace(['/', '\\'], [DIRECTORY_SEPARATOR, DIRECTORY_SEPARATOR], $path);
+            $path = str_replace(['/', '\\'], [\DIRECTORY_SEPARATOR, \DIRECTORY_SEPARATOR], $path);
             if (isset($names)) {
                 $zip->addFile($path, $names[$index]);
             } else {
@@ -209,5 +209,5 @@ class ZipService {
         return response()->download($filename_zip);
     }
 
-    //-- potrebbe non fare download ma mostra un bottone.. o altro
+    // -- potrebbe non fare download ma mostra un bottone.. o altro
 }

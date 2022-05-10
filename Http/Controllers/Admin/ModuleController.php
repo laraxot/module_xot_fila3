@@ -16,34 +16,32 @@ use Nwidart\Modules\Facades\Module;
 * gestisce i module
 */
 
-///*
+// /*
 
 /**
  * Class ModuleController.
  */
-//class ModuleController extends XotBaseContainerController {
-//}
-//*/
-//*
-class ModuleController extends Controller
-{
+// class ModuleController extends XotBaseContainerController {
+// }
+// */
+// *
+class ModuleController extends Controller {
     /**
      * @return mixed
      */
-    public function index(Request $request)
-    {
+    public function index(Request $request) {
         $panel = PanelService::make()->getRequestPanel();
 
-        if ('' != $request->_act) {
-            //return $panel->callItemActionWithGate($request->_act);
-            //return $panel->callContainerAction($request->_act);
+        if ('' !== $request->_act) {
+            // return $panel->callItemActionWithGate($request->_act);
+            // return $panel->callContainerAction($request->_act);
             return $panel->callAction($request->_act);
         }
 
         return $panel->out();
-        //dddx(ThemeService::getView());//progressioni::admin.index
+        // dddx(ThemeService::getView());//progressioni::admin.index
 
-        //return $panel->getView();
+        // return $panel->getView();
         /*
         $params = optional(\Route::current())->parameters();
 
@@ -87,8 +85,7 @@ class ModuleController extends Controller
      *
      * @return mixed
      */
-    public function store(Request $request)
-    {
+    public function store(Request $request) {
         return $this->index($request);
         /*
         $params = optional(\Route::current())->parameters();
@@ -133,14 +130,13 @@ class ModuleController extends Controller
      *
      * @return mixed
      */
-    public function home(Request $request)
-    {
+    public function home(Request $request) {
         $panel = PanelService::make()->getRequestPanel();
 
-        if ('' != $request->_act) {
+        if ('' !== $request->_act) {
             return $panel->callItemActionWithGate($request->_act);
-            //return $panel->callContainerAction($request->_act);
-            //return $panel->callAction($request->_act);
+            // return $panel->callContainerAction($request->_act);
+            // return $panel->callAction($request->_act);
         }
 
         return $panel->out();
@@ -151,17 +147,16 @@ class ModuleController extends Controller
      *
      * @return mixed
      */
-    public function dashboard(Request $request)
-    {
+    public function dashboard(Request $request) {
         $panel = PanelService::make()->getRequestPanel();
 
-        if ('' != $request->_act) {
+        if ('' !== $request->_act) {
             return $panel->callItemActionWithGate($request->_act);
-            //return $panel->callContainerAction($request->_act);
-            //return $panel->callAction($request->_act);
+            // return $panel->callContainerAction($request->_act);
+            // return $panel->callAction($request->_act);
         }
 
         return $panel->out();
     }
 }
-//*/
+// */

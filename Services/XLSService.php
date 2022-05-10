@@ -20,7 +20,7 @@ class XLSService {
     private static ?self $instance = null;
 
     public function __construct() {
-        //---
+        // ---
         require_once __DIR__.'/vendor/autoload.php';
     }
 
@@ -76,13 +76,13 @@ class XLSService {
      * Undocumented function.
      */
     public function fromFilePath(string $path): self {
-        //$reader = \Maatwebsite\Excel\Facades\Excel::load($path);
+        // $reader = \Maatwebsite\Excel\Facades\Excel::load($path);
         /*
          * Excel::load() is removed and replaced by Excel::import($yourImport)
          * Excel::create() is removed and replaced by Excel::download/Excel::store($yourExport)
          * Excel::create()->string('xlsx') is removed an replaced by Excel::raw($yourExport, Excel::XLSX)
          */
-        //$reader = Excel::import($path);
+        // $reader = Excel::import($path);
 
         $spreadsheet = \PhpOffice\PhpSpreadsheet\IOFactory::load($path);
         $sheet = $spreadsheet->getActiveSheet();

@@ -1,4 +1,6 @@
 <?php
+
+declare(strict_types=1);
 /**
  * https://chasboon.ir/failed-jobs-in-laravel
  */
@@ -6,11 +8,9 @@
 namespace Modules\Xot\Console\Commands;
 
 use Illuminate\Console\Command;
-
 use Illuminate\Support\Arr;
 
-class WorkerRetry extends Command
-{
+class WorkerRetry extends Command {
     /**
      * The name and signature of the console command.
      *
@@ -30,10 +30,7 @@ class WorkerRetry extends Command
      *
      * @return void
      */
-
-
-    public function __construct()
-    {
+    public function __construct() {
         parent::__construct();
     }
 
@@ -42,19 +39,17 @@ class WorkerRetry extends Command
      *
      * @return mixed
      */
-    public function handle()
-    {
-            $ids = Arr::pluck($this->laravel['queue.failer']->all(), 'id');
+    public function handle() {
+        $ids = Arr::pluck($this->laravel['queue.failer']->all(), 'id');
         foreach ($ids as $id) {
             $this->retryJob($id);
         }
     }
 
-    protected function retryJob($id)
-    {
+    protected function retryJob($id) {
         $failed = $this->laravel['queue.failer']->find($id);
 
-        if (! is_null($failed)) {
+        if (null !== $failed) {
             $failed = (object) $failed;
 
             $failed->payload = $this->resetAttempts($failed->payload);
@@ -70,8 +65,7 @@ class WorkerRetry extends Command
         }
     }
 
-    protected function resetAttempts($payload)
-    {
+    protected function resetAttempts($payload) {
         $payload = json_decode($payload, true);
 
         if (isset($payload['attempts'])) {
@@ -80,5 +74,4 @@ class WorkerRetry extends Command
 
         return json_encode($payload);
     }
-
 }

@@ -18,11 +18,11 @@ use Nwidart\Modules\Facades\Module;
 use Symfony\Component\Process\Exception\ProcessFailedException;
 use Symfony\Component\Process\Process;
 
-//-------- models -----------
+// -------- models -----------
 
-//-------- services --------
+// -------- services --------
 
-//-------- bases -----------
+// -------- bases -----------
 
 /**
  * Class DownloadDbModuleAction.
@@ -36,12 +36,12 @@ class DownloadDbModuleAction extends XotBasePanelAction {
      * @return \Illuminate\Http\RedirectResponse
      */
     public function handle() {
-        //$res = '';
+        // $res = '';
         $row = $this->row;
         $name = $row->name;
         $name_low = Str::lower($name);
-        //$model = $this->getModel($name);
-        //$conn = $model->getConnection();
+        // $model = $this->getModel($name);
+        // $conn = $model->getConnection();
         $db = config('database.connections.'.$name_low);
         /*
         dddx(
@@ -52,12 +52,12 @@ class DownloadDbModuleAction extends XotBasePanelAction {
             ]
         );
         //*/
-        //$pdo = $conn->getPdo();
-        //dddx(get_class_methods($pdo));
-        //$res = $conn->statement('mysqldump geek_quaeris');
-        //dddx($res);
+        // $pdo = $conn->getPdo();
+        // dddx(get_class_methods($pdo));
+        // $res = $conn->statement('mysqldump geek_quaeris');
+        // dddx($res);
         $filename = 'backup-'.$name.'-'.Carbon::now()->format('Y-m-d').'.gz';
-        //$backup_path = storage_path('app/backup/'.$filename);
+        // $backup_path = storage_path('app/backup/'.$filename);
         $backup_path = Storage::disk('cache')->path('backup/'.$filename);
 
         $backup_path = FileService::fixPath($backup_path);
@@ -78,8 +78,8 @@ class DownloadDbModuleAction extends XotBasePanelAction {
         try {
             $process->mustRun();
         } catch (ProcessFailedException $exception) {
-            //logger()->debug($exception->getMessage());
-            //$this->error('The backup process has failed.');
+            // logger()->debug($exception->getMessage());
+            // $this->error('The backup process has failed.');
             dddx($exception);
         }
 
@@ -87,7 +87,7 @@ class DownloadDbModuleAction extends XotBasePanelAction {
     }
 
     public function getModel($module_name) {
-        //$module_name=$this->panel->getModuleName();
+        // $module_name=$this->panel->getModuleName();
         $cache_key = Str::slug($module_name.'_model');
         $first_model_class = Cache::rememberForever($cache_key, function () use ($module_name) {
             $module_path = Module::getModulePath($module_name);

@@ -24,7 +24,7 @@ class XlsImportAction extends XotBasePanelAction {
      * @return mixed
      */
     public function handle() {
-        $view = ThemeService::getView(); //xot::admin.home.acts.xls_import
+        $view = ThemeService::getView(); // xot::admin.home.acts.xls_import
         $view_params = [
             'view' => $view,
         ];
@@ -45,11 +45,11 @@ class XlsImportAction extends XotBasePanelAction {
     }
 
     public function step1() {
-        //Excel::import(new UsersImport,request()->file('file'));
+        // Excel::import(new UsersImport,request()->file('file'));
         $step = 1;
-        //$c = request()->file('file'); // Illuminate\Http\UploadedFile
+        // $c = request()->file('file'); // Illuminate\Http\UploadedFile
         $res = XLSService::make()->fromInputFileName('file');
-        //$res = XLSService::make()->fromRequestFile($c);
+        // $res = XLSService::make()->fromRequestFile($c);
         $data = $res->getData()->take(5)->toArray();
         $head = array_keys(collect($data)->first());
 
@@ -57,7 +57,7 @@ class XlsImportAction extends XotBasePanelAction {
 
         $fillable = app(User::class)->getFillable();
 
-        $view = ThemeService::getView(); //xot::admin.home.acts.xls_import
+        $view = ThemeService::getView(); // xot::admin.home.acts.xls_import
 
         $view .= '.step'.$step;
         $view_params = [
@@ -72,6 +72,6 @@ class XlsImportAction extends XotBasePanelAction {
     }
 
     public function step2() {
-        //Excel::import(new UsersImport,request()->file('file'));
+        // Excel::import(new UsersImport,request()->file('file'));
     }
 }

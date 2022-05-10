@@ -161,8 +161,8 @@ abstract class XotBaseServiceProvider extends ServiceProvider {
         $events_file = $path.'/_events.json';
         $force_recreate = request()->input('force_recreate', true);
         if (! File::exists($events_file) || $force_recreate) {
-            $filenames = \glob($path.'/*.php');
-            if (null == $filenames) {
+            $filenames = glob($path.'/*.php');
+            if (null === $filenames) {
                 $filenames = [];
             }
             foreach ($filenames as $filename) {
@@ -172,7 +172,7 @@ abstract class XotBaseServiceProvider extends ServiceProvider {
                 $event_name = $info['filename'];
                 $str = 'Event';
                 if (Str::endsWith($event_name, $str)) {
-                    $listener_name = substr($event_name, 0, -strlen($str)).'Listener';
+                    $listener_name = substr($event_name, 0, -\strlen($str)).'Listener';
 
                     $event = $this->module_base_ns.'\\Events\\'.$event_name;
                     $listener = $this->module_base_ns.'\\Listeners\\'.$listener_name;

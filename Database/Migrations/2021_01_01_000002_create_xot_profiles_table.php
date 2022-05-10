@@ -18,21 +18,21 @@ class CreateXotProfilesTable extends XotBaseMigration {
      * @return void
      */
     public function up() {
-        //-- CREATE --
+        // -- CREATE --
         $this->tableCreate(
             function (Blueprint $table) {
-                $table->increments('id'); //->primary();//->primary();
+                $table->increments('id'); // ->primary();//->primary();
                 $table->string('post_type', 191)->nullable()->index();
-                //$table->string('article_type',50)->nullable();
-                //$table->datetime('published_at')->nullable();
+                // $table->string('article_type',50)->nullable();
+                // $table->datetime('published_at')->nullable();
                 $table->text('bio')->nullable();
                 $table->timestamps();
             }
         );
-        //-- UPDATE --
+        // -- UPDATE --
         $this->tableUpdate(
             function (Blueprint $table) {
-                //------- add
+                // ------- add
                 if (! $this->hasColumn('created_by')) {
                     $table->string('created_by')->nullable();
                 }
@@ -83,9 +83,9 @@ class CreateXotProfilesTable extends XotBaseMigration {
                 */
 
                 if ($this->hasColumn('post_id')) {
-                    //$table->dropPrimary('post_id');
+                    // $table->dropPrimary('post_id');
                     $table->renameColumn('post_id', 'id');
-                    //$table->primary('id');
+                    // $table->primary('id');
                 }
             }
         );

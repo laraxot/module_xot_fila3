@@ -21,8 +21,7 @@ use Modules\Xot\Services\PolicyService;
  * @method Renderable home(Request $request)
  * @method Renderable show(Request $request)
  */
-class ContainersController extends Controller
-{
+class ContainersController extends Controller {
     protected PanelContract $panel;
 
     /*
@@ -42,38 +41,35 @@ class ContainersController extends Controller
      *
      * @return mixed
      */
-    public function index(Request $request)
-    {
+    public function index(Request $request) {
         $route_params = getRouteParameters(); // "module" => "lu"
         [$containers,$items] = params2ContainerItem();
-        //dddx(['contianers' => $containers, 'items' => $items]);
-        if (0 == count($containers)) {
+        // dddx(['contianers' => $containers, 'items' => $items]);
+        if (0 === \count($containers)) {
             return $this->home($request);
         }
-        if (count($containers) == count($items)) {
+        if (\count($containers) === \count($items)) {
             return $this->show($request);
         }
 
         return $this->__call('index', $route_params);
     }
 
-    public function __call($method, $args)
-    {
+    public function __call($method, $args) {
         $action = \Route::current()->getAction();
         $action['controller'] = __CLASS__.'@'.$method;
         $action = \Route::current()->setAction($action);
 
         $this->panel = PanelService::make()->getRequestPanel();
 
-        if ('' != request()->input('_act', '')) {
+        if ('' !== request()->input('_act', '')) {
             return $this->__callPanelAct($method, $args);
         }
 
         return $this->__callRouteAct($method, $args);
     }
 
-    public function getController(): string
-    {
+    public function getController(): string {
         /*
         if (null == $this->panel) {
             return '\Modules\Xot\Http\Controllers\XotPanelController';
@@ -89,7 +85,7 @@ class ContainersController extends Controller
             }
         )->implode('\\');
         $controller = '\Modules\\'.$mod_name.'\Http\Controllers\\'.$tmp.'Controller';
-        if (class_exists($controller) && '' != $tmp) {
+        if (class_exists($controller) && '' !== $tmp) {
             return $controller;
         }
 
@@ -99,13 +95,12 @@ class ContainersController extends Controller
     /**
      * @return mixed
      */
-    public function __callRouteAct(string $method, array $args)
-    {
+    public function __callRouteAct(string $method, array $args) {
         $panel = $this->panel;
         $authorized = Gate::allows($method, $panel);
 
         if (! $authorized) {
-            //dddx($method, $panel);
+            // dddx($method, $panel);
 
             return $this->notAuthorized($method, $panel);
         }
@@ -121,8 +116,7 @@ class ContainersController extends Controller
     /**
      * @return mixed
      */
-    public function __callPanelAct(string $method, array $args)
-    {
+    public function __callPanelAct(string $method, array $args) {
         $request = request();
         $act = $request->_act;
         $method_act = Str::camel($act);
@@ -140,8 +134,7 @@ class ContainersController extends Controller
     /**
      * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse|\Illuminate\Http\Response
      */
-    public function notAuthorized(string $method, PanelContract $panel)
-    {
+    public function notAuthorized(string $method, PanelContract $panel) {
         $lang = app()->getLocale();
         /*
         if (! \Auth::check()) {
@@ -154,7 +147,7 @@ class ContainersController extends Controller
         $policy_class = PolicyService::get($panel)->createIfNotExists()->getClass();
         $msg = 'Auth Id ['.\Auth::id().'] not can ['.$method.'] on ['.$policy_class.']';
 
-        //$msg = 'Auth Id ['.\Auth::id().'] not can ['.$method.'] on ['.get_class($panel).']';
+        // $msg = 'Auth Id ['.\Auth::id().'] not can ['.$method.'] on ['.get_class($panel).']';
         FileService::viewCopy('theme::errors.403', 'pub_theme::errors.403');
 
         return response()->view('pub_theme::errors.403', ['msg' => $msg], 403);

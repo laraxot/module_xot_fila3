@@ -5,8 +5,6 @@ declare(strict_types=1);
 namespace Modules\Xot\Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Illuminate\Support\Str;
-
 use Modules\Xot\Models\Image;
 
 class ImageFactory extends Factory {
@@ -23,13 +21,11 @@ class ImageFactory extends Factory {
      * @return array
      */
     public function definition() {
-       
-
         return [
             'src' => $this->faker->word,
             'width' => $this->faker->randomNumber,
             'height' => $this->faker->randomNumber,
-            'src_out' => $this->faker->text
+            'src_out' => $this->faker->text,
         ];
     }
 }

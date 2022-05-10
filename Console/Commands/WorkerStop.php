@@ -6,13 +6,10 @@
 
 declare(strict_types=1);
 
-
 namespace Modules\Xot\Console\Commands;
 
-use Carbon\Carbon;
-use Illuminate\Support\Str;
-use Illuminate\Queue\Worker;
 use Illuminate\Console\Command;
+use Illuminate\Queue\Worker;
 
 class WorkerStop extends Command {
     protected $signature = 'worker:stop';
@@ -24,10 +21,10 @@ class WorkerStop extends Command {
     public function fire() {
         // PHP 7.0 and before can handle asynchronous signals with ticks
         declare(ticks=1);
-        
+
         // PHP 7.1 and later can handle asynchronous signals natively
         pcntl_async_signals(true);
-        
+
         pcntl_signal(SIGINT, [$this, 'shutdown']); // Call $this->shutdown() on SIGINT
         pcntl_signal(SIGTERM, [$this, 'shutdown']); // Call $this->shutdown() on SIGTERM
 

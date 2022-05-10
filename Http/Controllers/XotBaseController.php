@@ -11,8 +11,7 @@ use Modules\Xot\Traits\CrudContainerItemJobTrait as CrudTrait;
 /**
  * Class XotBaseController.
  */
-abstract class XotBaseController extends Controller
-{
+abstract class XotBaseController extends Controller {
     use CrudTrait;
     /*
     public function __call($name, $arg)

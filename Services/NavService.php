@@ -15,13 +15,13 @@ class NavService {
     public static function yearNav(): Renderable {
         $request = \Request::capture();
         $routename = \Route::currentRouteName();
-        //$request->route('parameter_name')
-        //$request->route()->paremeters()
+        // $request->route('parameter_name')
+        // $request->route()->paremeters()
         // 20     Cannot call method parameters() on mixed
-        //$paz = request()->route()->parameters();
+        // $paz = request()->route()->parameters();
         $route_current = \Route::current();
         $params = [];
-        if (null != $route_current) {
+        if (null !== $route_current) {
             $params = $route_current->parameters();
         }
         $year = $request->input('year', date('Y'));
@@ -31,16 +31,16 @@ class NavService {
             $tmp = [];
             $params['year'] = $year;
             $tmp['title'] = $year;
-            if (date('Y') == $params['year']) {
+            if (date('Y') === $params['year']) {
                 $tmp['title'] = '['.$tmp['title'].']';
             }
-            if ($year == $params['year']) {
+            if ($year === $params['year']) {
                 $tmp['active'] = 1;
             } else {
                 $tmp['active'] = 0;
             }
 
-            if (null == $routename) {
+            if (null === $routename) {
                 throw new Exception('routename is null');
             }
             $tmp['url'] = route($routename, $params);
@@ -57,13 +57,13 @@ class NavService {
     }
 
     public static function monthYearNav(): Renderable {
-        //possiamo trasformarlo in una macro
+        // possiamo trasformarlo in una macro
         $request = \Request::capture();
         $routename = \Route::currentRouteName();
 
         $route_current = \Route::current();
         $params = [];
-        if (null != $route_current) {
+        if (null !== $route_current) {
             $params = $route_current->parameters();
         }
 
@@ -82,15 +82,15 @@ class NavService {
             $params['month'] = (int) $d->format('m');
             $params['year'] = (int) $d->format('Y');
             $tmp['title'] = $d->isoFormat('MMMM YYYY');
-            if (date('Y') == $params['year'] && date('m') == $params['month']) {
+            if (date('Y') === $params['year'] && date('m') === $params['month']) {
                 $tmp['title'] = '['.$tmp['title'].']';
             }
-            if ($year == $params['year'] && $month == $params['month']) {
+            if ($year === $params['year'] && $month === $params['month']) {
                 $tmp['active'] = 1;
             } else {
                 $tmp['active'] = 0;
             }
-            if (null == $routename) {
+            if (null === $routename) {
                 throw new Exception('routename is null');
             }
             $tmp['url'] = route($routename, $params);

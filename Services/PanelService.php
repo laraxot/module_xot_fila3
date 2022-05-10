@@ -18,7 +18,7 @@ use Nwidart\Modules\Facades\Module;
  * Class PanelService.
  */
 class PanelService {
-    //private static ?PanelService $_instance = null;
+    // private static ?PanelService $_instance = null;
 
     private Model $model;
 
@@ -27,7 +27,7 @@ class PanelService {
     private static ?self $instance = null;
 
     public function __construct() {
-        //---
+        // ---
     }
 
     public static function getInstance(): self {
@@ -42,8 +42,8 @@ class PanelService {
         return static::getInstance();
     }
 
-    //26     Property Modules\Xot\Services\PanelService::make()->$route_params is never read, only written.
-    //private static array $route_params;
+    // 26     Property Modules\Xot\Services\PanelService::make()->$route_params is never read, only written.
+    // private static array $route_params;
 
     /*
     public function __construct($model){
@@ -51,21 +51,21 @@ class PanelService {
     }
      */
 
-    //public function __construct(array $route_params) {
-    //$this->route_params = $route_params;
-    //static::$panel = $this->getByRouteParams($route_params);
-    //static::$route_params =  $route_params;
-    //}
+    // public function __construct(array $route_params) {
+    // $this->route_params = $route_params;
+    // static::$panel = $this->getByRouteParams($route_params);
+    // static::$route_params =  $route_params;
+    // }
 
-    //public static function getInstance(): self {
+    // public static function getInstance(): self {
     //    if (null === self::$_instance) {
-    //$route_params = request()->route()->parameters();// 42     Cannot call method parameters() on mixed.
+    // $route_params = request()->route()->parameters();// 42     Cannot call method parameters() on mixed.
     //        $route_params = getRouteParameters();
     //        self::$_instance = new self($route_params);
     //    }
 
     //    return self::$_instance;
-    //}
+    // }
 
     /*
     public function test() {
@@ -89,8 +89,8 @@ class PanelService {
     public function get(Model $model): PanelContract {
         $panel = $this->setModel($model)->panel();
         $post_type = $panel->postType();
-        $name = Str::plural($post_type); //standard
-        //$name = $post_type;
+        $name = Str::plural($post_type); // standard
+        // $name = $post_type;
         $panel->setName($name);
 
         return $panel;
@@ -108,14 +108,14 @@ class PanelService {
         return $this->getInstance();
     }
 
-    //ret \Illuminate\Contracts\Foundation\Application|mixed|null
+    // ret \Illuminate\Contracts\Foundation\Application|mixed|null
 
     /**
      * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
      * @throws \ReflectionException
      */
     public function panel(): PanelContract {
-        if (! is_object($this->model)) {
+        if (! \is_object($this->model)) {
             throw new \Exception('model is not an object url:'.url()->current());
         }
         /*
@@ -135,13 +135,13 @@ class PanelService {
 
         return app($panel_class)
             ->setRow($this->model)
-            //->setRouteParams($this->route_params)
+            // ->setRouteParams($this->route_params)
             ;
     }
 
     public function imageHtml(?array $params): string {
         $res = $this->model->getAttributeValue('image_src');
-        if (! is_string($res)) {
+        if (! \is_string($res)) {
             throw new Exception('['.__LINE__.']['.class_basename(__CLASS__).']');
         }
 
@@ -152,23 +152,23 @@ class PanelService {
         return $this->panel()->tabs();
     }
 
-    //esempio parametro stringa 'area-1-menu-1'
-    //rilascia il pannello dell'ultimo container (nell'esempio menu),
-    //con parent il pannello del precedente container (nell'esempio area)
+    // esempio parametro stringa 'area-1-menu-1'
+    // rilascia il pannello dell'ultimo container (nell'esempio menu),
+    // con parent il pannello del precedente container (nell'esempio area)
     public function getById(string $id): PanelContract {
         $piece = explode('-', $id);
         $route_params = [];
         $j = 0;
-        for ($i = 0; $i < count($piece); ++$i) {
-            if (0 == $i % 2) {
+        for ($i = 0; $i < \count($piece); ++$i) {
+            if (0 === $i % 2) {
                 $route_params['container'.$j] = $piece[$i];
             } else {
                 $route_params['item'.$j] = $piece[$i];
                 ++$j;
             }
         }
-        //[$containers, $items] = params2ContainerItem($route_params);
-        //dddx([$route_params, $containers, $items]);
+        // [$containers, $items] = params2ContainerItem($route_params);
+        // dddx([$route_params, $containers, $items]);
         $route_params['in_admin'] = true;
 
         return $this->getByParams($route_params);
@@ -185,7 +185,7 @@ class PanelService {
         }
         if (inAdmin() && isset($params['module'])) {
             $module = Module::find($params['module']);
-            if (null == $module) {
+            if (null === $module) {
                 throw new \Exception('module ['.$params['module'].'] not found');
             }
             $panel = '\Modules\\'.$module->getName().'\Models\Panels\_ModulePanel';
@@ -193,12 +193,12 @@ class PanelService {
             $panel->setRow($home);
             $panel->setName($params['module']);
         } else {
-            $panel = PanelService::make()->get($home);
+            $panel = self::make()->get($home);
             $panel->setName('home');
         }
 
-        //->firstOrCreate(['id' => 1]);
-        //$panel = PanelService::make()->get($home);
+        // ->firstOrCreate(['id' => 1]);
+        // $panel = PanelService::make()->get($home);
 
         $rows = new CustomRelation(
             $home->newQuery(),
@@ -223,23 +223,23 @@ class PanelService {
         if (isset($route_params['in_admin'])) {
             $in_admin = $route_params['in_admin'];
         }
-        if (null == $in_admin) {
+        if (null === $in_admin) {
             $in_admin = inAdmin();
         }
 
-        if (0 == count($containers)) {
+        if (0 === \count($containers)) {
             $panel = $this->getHomePanel();
 
             return $panel;
         }
 
         $row = null;
-        //$first_container = Str::singular($containers[0]);
+        // $first_container = Str::singular($containers[0]);
         $first_container = $containers[0];
         if (isset($route_params['module'])) {
             $model_class = collect(getModuleModels($route_params['module']))
                 ->get($first_container);
-            if (null != $model_class) {
+            if (null !== $model_class) {
                 $row = app($model_class);
             }
         }
@@ -250,7 +250,7 @@ class PanelService {
 
         $rows = new CustomRelation(
             $row->newQuery(),
-            //$home_row,
+            // $home_row,
             $row,
             function ($relation): void {
                 $relation->getQuery();
@@ -259,11 +259,11 @@ class PanelService {
             null
         );
 
-        $panel = PanelService::make()->get($row);
+        $panel = self::make()->get($row);
 
         $panel->setRows($rows);
 
-        $panel->setName(Str::plural($first_container)); /// !!! da controllare
+        $panel->setName(Str::plural($first_container)); // / !!! da controllare
         $i = 0;
 
         if (isset($items[0])) {
@@ -272,14 +272,14 @@ class PanelService {
 
         $panel_parent = $panel;
 
-        for ($i = 1; $i < count($containers); ++$i) {
+        for ($i = 1; $i < \count($containers); ++$i) {
             $row_prev = $panel_parent->getRow();
             $types = Str::camel($containers[$i]);
-            //dddx([$row_prev, $panel_parent, $types]);
-            $rows = $row_prev->{$types}(); //Relazione
+            // dddx([$row_prev, $panel_parent, $types]);
+            $rows = $row_prev->{$types}(); // Relazione
             try {
-                $row = $rows->getRelated(); //se relazione
-            } catch (\Exception $e) {  //se builder
+                $row = $rows->getRelated(); // se relazione
+            } catch (\Exception $e) {  // se builder
                 /*
                 dddx(
                     [
@@ -293,8 +293,8 @@ class PanelService {
                 $row = $rows->getModel();
             }
 
-            $panel = PanelService::make()->get($row);
-            //$rows = $rows->getQuery();
+            $panel = self::make()->get($row);
+            // $rows = $rows->getQuery();
             $panel->setRows($rows);
             $panel->setName($types);
             $panel->setParent($panel_parent);
@@ -316,7 +316,7 @@ class PanelService {
      * @return \Illuminate\Http\RedirectResponse|mixed
      */
     public function getByModel(Model $model) {
-        $class_full = get_class($model);
+        $class_full = \get_class($model);
         $class_name = class_basename($model);
         $class = Str::before($class_full, $class_name);
         $panel = $class.'Panels\\'.$class_name.'Panel';
@@ -338,18 +338,18 @@ class PanelService {
      * @throws \ReflectionException
      */
     public function createPanel(Model $model): void {
-        $class_full = get_class($model);
+        $class_full = \get_class($model);
         $class_name = class_basename($model);
         $class = Str::before($class_full, $class_name);
         $panel_namespace = $class.'Panels';
         $panel = $panel_namespace.'\\'.$class_name.'Panel';
-        //---- creazione panel
+        // ---- creazione panel
         $autoloader_reflector = new \ReflectionClass($model);
         $class_filename = $autoloader_reflector->getFileName();
         if (false === $class_filename) {
             throw new \Exception('autoloader_reflector err');
         }
-        $model_dir = dirname($class_filename); // /home/vagrant/code/htdocs/lara/multi/laravel/Modules/LU/Models
+        $model_dir = \dirname($class_filename); // /home/vagrant/code/htdocs/lara/multi/laravel/Modules/LU/Models
         $stub_file = __DIR__.'/../Console/stubs/panel.stub';
         $stub = File::get($stub_file);
         $search = [];
@@ -362,7 +362,7 @@ class PanelService {
                 $input_type = 'Text';
             }
             $tmp = new \stdClass();
-            //$tmp->type = (string) $input_type;// 311    Cannot cast 'Text'|Doctrine\DBAL\Types\Type to string.
+            // $tmp->type = (string) $input_type;// 311    Cannot cast 'Text'|Doctrine\DBAL\Types\Type to string.
             $tmp->type = $input_type;
 
             $tmp->name = $input_name;
@@ -417,7 +417,7 @@ class PanelService {
         }
 
         $panel_stub = File::get($panel_file);
-        $panel_stub = Str::replaceLast('}', $func_stub.chr(13).chr(10).'}', $panel_stub);
+        $panel_stub = Str::replaceLast('}', $func_stub.\chr(13).\chr(10).'}', $panel_stub);
         File::put($panel_file, $panel_stub);
     }
 }

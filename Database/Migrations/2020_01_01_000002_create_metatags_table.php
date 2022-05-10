@@ -3,24 +3,22 @@
 declare(strict_types=1);
 
 use Illuminate\Database\Schema\Blueprint;
-//----- bases ----
+// ----- bases ----
 use Modules\Xot\Database\Migrations\XotBaseMigration;
 
-//----- models -----
+// ----- models -----
 
 /**
  * Class CreateMetatagsTable.
  */
-class CreateMetatagsTable extends XotBaseMigration
-{
+class CreateMetatagsTable extends XotBaseMigration {
     /**
      * db up.
      *
      * @return void
      */
-    public function up()
-    {
-        //-- CREATE --
+    public function up() {
+        // -- CREATE --
         $this->tableCreate(
             function (Blueprint $table) {
                 $table->increments('id');
@@ -37,8 +35,7 @@ class CreateMetatagsTable extends XotBaseMigration
             }
         );
 
-
-        //-- UPDATE --
+        // -- UPDATE --
         $this->tableUpdate(
             function (Blueprint $table) {
                 if (! $this->hasColumn('updated_at')) {
@@ -49,6 +46,6 @@ class CreateMetatagsTable extends XotBaseMigration
                     $table->string('created_by')->nullable()->after('created_at');
                 }
             }
-        ); //end update
+        ); // end update
     }
 }

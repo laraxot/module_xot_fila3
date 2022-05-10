@@ -4,13 +4,12 @@ declare(strict_types=1);
 
 namespace Modules\Xot\Models\Panels;
 
-//--- Services --
+// --- Services --
 
 /**
  * Class ConfPanel.
  */
-class ConfPanel extends XotBasePanel
-{
+class ConfPanel extends XotBasePanel {
     /**
      * The model the resource corresponds to.
      */
@@ -24,8 +23,7 @@ class ConfPanel extends XotBasePanel
     /**
      * @return object[]
      */
-    public function fields(): array
-    {
+    public function fields(): array {
         return [
             (object) [
                 'type' => 'Id',
@@ -35,7 +33,7 @@ class ConfPanel extends XotBasePanel
             (object) [
                 'type' => 'String',
                 'name' => 'name',
-                //'rules' => 'required',
+                // 'rules' => 'required',
                 'comment' => null,
             ],
         ];

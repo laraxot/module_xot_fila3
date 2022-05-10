@@ -22,7 +22,7 @@ class ArrayService {
     private static ?self $instance = null;
 
     public function __construct() {
-        //---
+        // ---
         include_once __DIR__.'/vendor/autoload.php';
     }
 
@@ -59,11 +59,11 @@ class ArrayService {
         if (null !== $filename) {
             return $filename;
         }
-        //dddx(debug_backtrace());
+        // dddx(debug_backtrace());
         return 'test';
     }
 
-    //ret array|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|string|\Symfony\Component\HttpFoundation\BinaryFileResponse
+    // ret array|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|string|\Symfony\Component\HttpFoundation\BinaryFileResponse
 
     /**
      * @throws \PhpOffice\PhpSpreadsheet\Writer\Exception
@@ -71,15 +71,15 @@ class ArrayService {
      * @return mixed
      */
     public function toXLS() {
-        if (1 == request()->input('debug')) {
+        if (1 === request()->input('debug')) {
             return self::toHtml();
         }
-        //include_once __DIR__.'/vendor/autoload.php';
+        // include_once __DIR__.'/vendor/autoload.php';
         $data = $this->array;
         $res = [];
         foreach ($data as $k => $v) {
             foreach ($v as $k0 => $v0) {
-                if (! is_array($v0)) {
+                if (! \is_array($v0)) {
                     $res[$k][$k0] = $v0;
                 }
             }
@@ -88,9 +88,9 @@ class ArrayService {
 
         switch ($this->export_processor) {
             case 1:
-                return self::toXLS_phpoffice(); //break;
-                //case 2:return self::toXLS_Maatwebsite($params); //break;
-                //case 3:return self::toXLS_phpexcel($params); //break;
+                return self::toXLS_phpoffice(); // break;
+                // case 2:return self::toXLS_Maatwebsite($params); //break;
+                // case 3:return self::toXLS_phpexcel($params); //break;
             default:
                 dddx(['unknown export_processor ['.$this->$export_processor.']']);
                 break;
@@ -114,9 +114,9 @@ class ArrayService {
         foreach ($data as $k => $v) {
             $html .= '<tr>';
             foreach ($v as $v0) {
-                if (is_string($v0) || is_numeric($v0) || is_null($v0)) {
+                if (\is_string($v0) || is_numeric($v0) || null === $v0) {
                     $html .= '<td><pre>'.$v0.'</pre></td>';
-                } elseif (is_array($v0)) {
+                } elseif (\is_array($v0)) {
                     $html .= '<td><pre>'.print_r($v0, true).'</pre></td>';
                 } else {
                     $html .= '<td><pre>NOT STRING</pre></td>';
@@ -133,10 +133,10 @@ class ArrayService {
     public function getHeader(): array {
         $data = $this->array;
         $firstrow = collect($data)->first();
-        if (! is_array($firstrow)) {
+        if (! \is_array($firstrow)) {
             $firstrow = [];
         }
-        $header = \array_keys($firstrow);
+        $header = array_keys($firstrow);
 
         $debug = debug_backtrace();
         if (isset($debug[2]['file'])) {
@@ -148,7 +148,7 @@ class ArrayService {
         return $header;
     }
 
-    //ret array|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|string|\Symfony\Component\HttpFoundation\BinaryFileResponse
+    // ret array|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|string|\Symfony\Component\HttpFoundation\BinaryFileResponse
 
     /**
      * @throws \PhpOffice\PhpSpreadsheet\Writer\Exception
@@ -157,9 +157,9 @@ class ArrayService {
      */
     public function toXLS_phpoffice() {
         $spreadsheet = new Spreadsheet();
-        //----
+        // ----
         $ltr = 'A1';
-        //----
+        // ----
         $sheet = $spreadsheet->getActiveSheet();
         $sheet->getStyle($ltr)->getAlignment()->setWrapText(true);
 
@@ -174,25 +174,25 @@ class ArrayService {
             'A2'         // Top left coordinate of the worksheet range where
             //    we want to set these values (default is A1)
         );
-        //$sheet->setCellValue('A1', 'Hello World !');
+        // $sheet->setCellValue('A1', 'Hello World !');
         $writer = new Xlsx($spreadsheet);
 
         $pathToFile = Storage::disk('local')->path($filename.'.xlsx');
-        $writer->save($pathToFile); //$writer->save('php://output'); // per out diretto ?
+        $writer->save($pathToFile); // $writer->save('php://output'); // per out diretto ?
 
         $view_params = [
             'file' => $pathToFile,
             'ext' => 'xls',
             'text' => '.',
-            //'text'=>$text,
+            // 'text'=>$text,
         ];
 
-        //if (! isset($out)) {
+        // if (! isset($out)) {
         $out = 'download';
-        //return response()->download($pathToFile);
-        //$out='link';
-        //exit(response()->download($pathToFile));
-        //}
+        // return response()->download($pathToFile);
+        // $out='link';
+        // exit(response()->download($pathToFile));
+        // }
         if (! isset($text)) {
             $text = 'text';
         }
@@ -206,7 +206,7 @@ class ArrayService {
         case 'link_file':
             return view()->make('theme::download_icon', $view_params);
 
-            //return [$link, $pathToFile];
+            // return [$link, $pathToFile];
         }
     }
 
@@ -227,9 +227,9 @@ class ArrayService {
         // HHVM fails at __set_state, so just use object cast for now
         $content = str_replace('stdClass::__set_state', '(object)', $content);
 
-        $content = '<'.'?php '.chr(13).'return '.$content.';'.chr(13);
-        //$content = str_replace('stdClass::__set_state', '(object)', $content);
-        File::makeDirectory(dirname($filename), 0775, true, true);
+        $content = '<'.'?php '.\chr(13).'return '.$content.';'.\chr(13);
+        // $content = str_replace('stdClass::__set_state', '(object)', $content);
+        File::makeDirectory(\dirname($filename), 0775, true, true);
         File::put($filename, $content);
     }
 
@@ -245,16 +245,16 @@ class ArrayService {
         $arrData = [];
 
         // if input is object, convert into array
-        if (is_object($arrObjData)) {
+        if (\is_object($arrObjData)) {
             $arrObjData = get_object_vars($arrObjData);
         }
 
-        if (is_array($arrObjData)) {
+        if (\is_array($arrObjData)) {
             foreach ($arrObjData as $index => $value) {
-                if (is_object($value) || is_array($value)) {
-                    $value = ArrayService::fromObjects($value, $arrSkipIndices); // recursive call
+                if (\is_object($value) || \is_array($value)) {
+                    $value = self::fromObjects($value, $arrSkipIndices); // recursive call
                 }
-                if (in_array($index, $arrSkipIndices)) {
+                if (\in_array($index, $arrSkipIndices, true)) {
                     continue;
                 }
                 $arrData[$index] = $value;
@@ -303,7 +303,7 @@ class ArrayService {
         $ris = $coll_1->filter(
             function ($value, $key) use ($arr_2) {
                 try {
-                    return ! in_array($value, $arr_2);
+                    return ! \in_array($value, $arr_2, true);
                 } catch (\Exception $e) {
                     dddx(['err' => $e->getMessage(), 'value' => $value, 'key' => $key, 'arr_2' => $arr_2]);
                 }

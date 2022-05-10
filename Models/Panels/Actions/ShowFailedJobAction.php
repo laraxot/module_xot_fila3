@@ -4,18 +4,18 @@ declare(strict_types=1);
 
 namespace Modules\Xot\Models\Panels\Actions;
 
-//-------- models -----------
+// -------- models -----------
 
-//-------- services --------
-//-------- bases -----------
+// -------- services --------
+// -------- bases -----------
 
 /**
  * Class ShowFailedJobAction.
  */
 class ShowFailedJobAction extends XotBasePanelAction {
-    public bool $onContainer = false; //onlyContainer
+    public bool $onContainer = false; // onlyContainer
 
-    public bool $onItem = true; //onlyContainer
+    public bool $onItem = true; // onlyContainer
 
     public string $icon = '<i class="far fa-file-excel fa-1x"></i>';
 
@@ -36,5 +36,5 @@ class ShowFailedJobAction extends XotBasePanelAction {
         dddx($this->panel->row);
     }
 
-    //end handle
+    // end handle
 }

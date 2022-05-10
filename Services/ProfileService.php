@@ -26,7 +26,7 @@ class ProfileService {
     private static ?self $instance = null;
 
     public function __construct() {
-        //---
+        // ---
     }
 
     public static function getInstance(): self {
@@ -47,9 +47,9 @@ class ProfileService {
      * @throws \ReflectionException
      */
     public function get($user): self {
-        if (is_object($user)) {
+        if (\is_object($user)) {
             $profile_model = TenantService::model('profile');
-            if (null == $profile_model) {
+            if (null === $profile_model) {
                 dddx('Aggiungi profile a xra.php');
             }
             if (! $user instanceof UserContract) {
@@ -57,16 +57,16 @@ class ProfileService {
             }
 
             $this->user = $user;
-            //51     Dead catch - Exception is never thrown in the try block.
-            //try {
+            // 51     Dead catch - Exception is never thrown in the try block.
+            // try {
             $profile = $user->profile;
-            //} catch (\Exception $e) {
+            // } catch (\Exception $e) {
             //    echo '<h3>'.$e->getMessage().'</h3>';
 
             //    return $self;
-            //}
+            // }
 
-            if (null == $profile) {
+            if (null === $profile) {
                 /*
                 $rows = $user->profile();
                 $sql = Str::replaceArray('?', $rows->getBindings(), $rows->toSql());
@@ -96,12 +96,12 @@ class ProfileService {
     }
 
     public function fullName(): ?string {
-        if (null == $this->user) {
+        if (null === $this->user) {
             return null;
         }
         $user = $this->user;
 
-        //dddx([$user, $user->first_name, property_exists($user, 'first_name')]);
+        // dddx([$user, $user->first_name, property_exists($user, 'first_name')]);
 
         /*if (! property_exists($user, 'first_name')) {
             throw new \Exception('property first_name in $user not exist');
@@ -122,7 +122,7 @@ class ProfileService {
         // perchè lo prende come property quando è una relazione?
         // se metto property_exists non visualizzo il sito
 
-        //dddx($this->user->perm->perm_type);
+        // dddx($this->user->perm->perm_type);
         if (! method_exists($this->user, 'perm')) {
             throw new \Exception('method perm in $this->user not exist');
         }
@@ -131,14 +131,14 @@ class ProfileService {
             throw new \Exception('property perm in $this->user not exist');
         }
         */
-        if (null == $this->user->perm) {
+        if (null === $this->user->perm) {
             return 0;
         }
 
         return (int) $this->user->perm->perm_type;
-        //return (int) optional($this->user->perm)->perm_type;
+        // return (int) optional($this->user->perm)->perm_type;
 
-        //return intval($this->user->getRelationValue('perm')->perm_type);
+        // return intval($this->user->getRelationValue('perm')->perm_type);
     }
 
     public function name(): ?string {
@@ -155,12 +155,12 @@ class ProfileService {
      * @return string|null
      */
     public function avatar($size = 100) {
-        if (null == $this->user) {
+        if (null === $this->user) {
             return null;
         }
 
-        $email = \md5(\mb_strtolower(\trim((string) $this->user->email)));
-        $default = \urlencode('https://tracker.moodle.org/secure/attachment/30912/f3.png');
+        $email = md5(mb_strtolower(trim((string) $this->user->email)));
+        $default = urlencode('https://tracker.moodle.org/secure/attachment/30912/f3.png');
 
         return "https://www.gravatar.com/avatar/$email?d=$default&s=$size";
     }
@@ -187,7 +187,7 @@ class ProfileService {
         return $this->profile();
     }
     */
-    //*
+    // *
 
     /**
      * @param string $role_name
@@ -195,12 +195,12 @@ class ProfileService {
      * @return bool
      */
     public function hasRole($role_name) {
-        if (null == $this->profile) {
+        if (null === $this->profile) {
             return false;
         }
         $role = $this->role($role_name);
 
-        return is_object($role);
+        return \is_object($role);
     }
 
     /**
@@ -209,10 +209,10 @@ class ProfileService {
      * @return mixed|null
      */
     public function role($role_name) {
-        if (null == $this->profile) {
+        if (null === $this->profile) {
             return null;
         }
-        $role_method = Str::camel($role_name); //bell_boy => bellBoy
+        $role_method = Str::camel($role_name); // bell_boy => bellBoy
 
         return $this->profile->{$role_method};
     }
@@ -222,8 +222,8 @@ class ProfileService {
     }
 
     public function getPanel(): PanelContract {
-        if (null == $this->profile) {
-            //dddx(['message' => 'to fix', 'user' => $this->user, 'profile' => $this->profile]);
+        if (null === $this->profile) {
+            // dddx(['message' => 'to fix', 'user' => $this->user, 'profile' => $this->profile]);
             throw new Exception('['.__LINE__.']['.class_basename(__CLASS__).']');
         }
 
@@ -233,8 +233,8 @@ class ProfileService {
     }
 
     public function getProfilePanel(): PanelContract {
-        if (null == $this->profile) {
-            //dddx(['message' => 'to fix', 'user' => $this->user, 'profile' => $this->profile]);
+        if (null === $this->profile) {
+            // dddx(['message' => 'to fix', 'user' => $this->user, 'profile' => $this->profile]);
             throw new Exception('['.__LINE__.']['.class_basename(__CLASS__).']');
         }
 
@@ -251,13 +251,13 @@ class ProfileService {
     }
 
     public function isSuperAdmin(array $params = []): bool {
-        if (null == $this->profile) {
+        if (null === $this->profile) {
             return false;
         }
         $panel = $this->getPanel();
-        //dddx($panel);//Modules\Food\Models\Panels\ProfilePanel
+        // dddx($panel);//Modules\Food\Models\Panels\ProfilePanel
         if (! method_exists($panel, 'isSuperAdmin')) {
-            throw new \Exception('method isSuperAdmin in ['.get_class($panel).'] not exist');
+            throw new \Exception('method isSuperAdmin in ['.\get_class($panel).'] not exist');
         }
 
         return $panel->isSuperAdmin($params);
@@ -271,10 +271,10 @@ class ProfileService {
         $areas = $this->getUser()->areas;
 
         $modules = Module::all();
-        //dddx(['areas' => $areas, 'modules' => $modules]);
+        // dddx(['areas' => $areas, 'modules' => $modules]);
         $areas = $areas->filter(
             function ($item) use ($modules) {
-                return in_array($item->area_define_name, array_keys($modules));
+                return \in_array($item->area_define_name, array_keys($modules), true);
             }
         );
 
@@ -284,7 +284,7 @@ class ProfileService {
     public function hasArea(string $name): bool {
         $area = $this->areas()->firstWhere('area_define_name', $name);
 
-        return is_object($area);
+        return \is_object($area);
     }
 
     public function panelAreas(): Collection {

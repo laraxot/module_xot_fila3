@@ -3,24 +3,22 @@
 declare(strict_types=1);
 
 use Illuminate\Database\Schema\Blueprint;
-//----- bases ----
+// ----- bases ----
 use Modules\Xot\Database\Migrations\XotBaseMigration;
 
-//----- models -----
+// ----- models -----
 
 /**
  * Class CreateWidgetsTable.
  */
-class CreateWidgetsTable extends XotBaseMigration
-{
+class CreateWidgetsTable extends XotBaseMigration {
     /**
      * db up.
      *
      * @return void
      */
-    public function up()
-    {
-        //-- CREATE --
+    public function up() {
+        // -- CREATE --
         $this->tableCreate(
             function (Blueprint $table) {
                 $table->increments('id');
@@ -33,9 +31,9 @@ class CreateWidgetsTable extends XotBaseMigration
                 $table->string('order_by')->nullable();
                 $table->timestamps();
             }
-        ); //end create
+        ); // end create
 
-        //-- UPDATE --
+        // -- UPDATE --
         $this->tableUpdate(
             function (Blueprint $table) {
                 if (! $this->hasColumn('updated_at')) {
@@ -53,6 +51,6 @@ class CreateWidgetsTable extends XotBaseMigration
                     $table->string('layout_position')->nullable()->after('post_type');
                 }
             }
-        ); //end update
+        ); // end update
     }
 }

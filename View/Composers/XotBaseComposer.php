@@ -17,7 +17,7 @@ abstract class XotBaseComposer {
      * --.
      */
     public function getMenuByName(string $name): Menu {
-        return  Menu::firstWhere('name', $name);
+        return Menu::firstWhere('name', $name);
     }
 
     /**
@@ -25,19 +25,19 @@ abstract class XotBaseComposer {
      */
     public function getMenuItemsByName(string $name): Collection {
         $menu = Menu::firstWhere('name', $name);
-        if (null == $menu) {
+        if (null === $menu) {
             return collect([]);
         }
         $rows = $menu->items;
-        //$sql = Str::replaceArray('?', $rows->getBindings(), $rows->toSql());
-        //$test = MenuItem::where('menu', 2)->get();
-        //dddx(
+        // $sql = Str::replaceArray('?', $rows->getBindings(), $rows->toSql());
+        // $test = MenuItem::where('menu', 2)->get();
+        // dddx(
         //    [
-        //'sql' => $sql,
-        //'test' => $test,
-        //'rows' => $rows,
-        //]
-        //);
+        // 'sql' => $sql,
+        // 'test' => $test,
+        // 'rows' => $rows,
+        // ]
+        // );
         return $rows;
     }
 }

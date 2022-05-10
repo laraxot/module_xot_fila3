@@ -1,6 +1,6 @@
 <?php
 
-//senza la document delle property phpstan da errore per proprieta' mancante
+// senza la document delle property phpstan da errore per proprieta' mancante
 
 declare(strict_types=1);
 
@@ -22,8 +22,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
  * @property \Modules\LU\Models\PermUser|null                                   $perm
  * @mixin    \Eloquent
  */
-interface UserContract
-{
+interface UserContract {
     /*
     public function isSuperAdmin();
     public function name();

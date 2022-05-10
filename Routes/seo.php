@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-//custom route finche' siamo legati ai modelli
+// custom route finche' siamo legati ai modelli
 // lista e' index, mostrare un elemento e' show ..
 
 Route::get('{lang}/feed/{item}', 'RssFeedController@feed');

@@ -4,20 +4,19 @@ declare(strict_types=1);
 
 namespace Modules\Xot\Models\Panels\Actions;
 
-//-------- models -----------
+// -------- models -----------
 
-//-------- services --------
-//-------- bases -----------
+// -------- services --------
+// -------- bases -----------
 use Modules\Xot\Services\ArtisanService;
 
 /**
  * Class ArtisanAction.
  */
-class ArtisanAction extends XotBasePanelAction
-{
-    public bool $onContainer = false; //onlyContainer
+class ArtisanAction extends XotBasePanelAction {
+    public bool $onContainer = false; // onlyContainer
 
-    public bool $onItem = true; //onlyContainer
+    public bool $onItem = true; // onlyContainer
 
     public string $icon = '<i class="far fa-file-excel fa-1x"></i>';
 
@@ -28,8 +27,7 @@ class ArtisanAction extends XotBasePanelAction
     /**
      * ArtisanAction constructor.
      */
-    public function __construct(string $cmd, array $cmd_params = [])
-    {
+    public function __construct(string $cmd, array $cmd_params = []) {
         $this->cmd = $cmd;
         $this->cmd_params = $cmd_params;
     }
@@ -37,12 +35,11 @@ class ArtisanAction extends XotBasePanelAction
     /**
      * @return mixed
      */
-    public function handle()
-    {
+    public function handle() {
         $out = ArtisanService::act($this->cmd);
 
         return $out;
     }
 
-    //end handle
+    // end handle
 }

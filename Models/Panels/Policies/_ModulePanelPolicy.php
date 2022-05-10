@@ -22,7 +22,7 @@ class _ModulePanelPolicy extends XotBasePanelPolicy {
         return true;
     }
 
-     /**
+    /**
      * Undocumented function.
      */
     public function modelGenerator(UserContract $user, PanelContract $panel): bool {

@@ -18,7 +18,7 @@ use Modules\Xot\Services\PanelService;
 use Modules\Xot\Services\RouteService;
 
 // ------------------------------------------------
-if (! \function_exists('snake_case')) {
+if (! function_exists('snake_case')) {
     /**
      * @param string $str
      *
@@ -29,7 +29,7 @@ if (! \function_exists('snake_case')) {
     }
 }
 
-if (! \function_exists('str_slug')) {
+if (! function_exists('str_slug')) {
     /**
      * @param string $str
      *
@@ -89,18 +89,18 @@ if (! function_exists('str_contains')) {
 
 // -------------------------------------------
 
-if (! \function_exists('backtrace')) {
+if (! function_exists('backtrace')) {
     function filter_vendor(array $obj): bool {
-        $tmp = \str_replace('/', DIRECTORY_SEPARATOR, $obj['file']);
+        $tmp = str_replace('/', DIRECTORY_SEPARATOR, $obj['file']);
         if (is_array($tmp)) {
             $tmp = implode(' ', $tmp);
         }
 
-        return false === \strpos($tmp, 'vendor');
+        return false === strpos($tmp, 'vendor');
     }
 
     function backtrace(bool $exclude_vendor = false): void {
-        $dbg_backtrace = \debug_backtrace();
+        $dbg_backtrace = debug_backtrace();
 
         if (true === $exclude_vendor) {
             $dbg_backtrace = array_filter($dbg_backtrace, 'filter_vendor');
@@ -128,22 +128,22 @@ if (! \function_exists('superdump')) {
 }
 */
 
-if (! \function_exists('dddx')) {
+if (! function_exists('dddx')) {
     /**
      * @param array|string|mixed $params
      *
      * @return string
      */
     function dddx($params) {
-        $tmp = \debug_backtrace();
+        $tmp = debug_backtrace();
         $file = $tmp[0]['file'] ?? 'file-unknown';
-        $file = \str_replace('/', DIRECTORY_SEPARATOR, $file);
+        $file = str_replace('/', DIRECTORY_SEPARATOR, $file);
         $doc_root = $_SERVER['DOCUMENT_ROOT'];
-        $doc_root = \str_replace('/', DIRECTORY_SEPARATOR, $doc_root);
-        $dir_piece = \explode(DIRECTORY_SEPARATOR, __DIR__);
-        $dir_piece = \array_slice($dir_piece, 0, -6);
-        $dir_copy = \implode(DIRECTORY_SEPARATOR, $dir_piece);
-        $file = \str_replace($dir_copy, $doc_root, $file);
+        $doc_root = str_replace('/', DIRECTORY_SEPARATOR, $doc_root);
+        $dir_piece = explode(DIRECTORY_SEPARATOR, __DIR__);
+        $dir_piece = array_slice($dir_piece, 0, -6);
+        $dir_copy = implode(DIRECTORY_SEPARATOR, $dir_piece);
+        $file = str_replace($dir_copy, $doc_root, $file);
 
         $data = [
             '_' => $params,
@@ -192,26 +192,26 @@ if (! function_exists('debug_methods')) {
     }
 }
 
-if (! \function_exists('getFilename')) {
+if (! function_exists('getFilename')) {
     /**
      * @return string
      */
     function getFilename(array $params) {
-        $tmp = \debug_backtrace();
+        $tmp = debug_backtrace();
         $class = (string) class_basename($tmp[1]['class'] ?? 'class-unknown');
 
         $func = (string) $tmp[1]['function'];
         $params_list = collect($params)->except(['_token', '_method'])->implode('_');
         $filename = Str::slug(
-            (string) \str_replace('Controller', '', $class).
-                '_'.\str_replace('do_', '', $func).
+            (string) str_replace('Controller', '', $class).
+                '_'.str_replace('do_', '', $func).
                 '_'.$params_list
         );
 
         return $filename;
     }
 }
-if (! \function_exists('req_uri')) {
+if (! function_exists('req_uri')) {
     /**
      * @return mixed|string
      */
@@ -222,7 +222,7 @@ if (! \function_exists('req_uri')) {
     }
 }
 
-if (! \function_exists('in_admin')) {
+if (! function_exists('in_admin')) {
     /**
      * @return array|bool|mixed
      */
@@ -230,7 +230,7 @@ if (! \function_exists('in_admin')) {
         return inAdmin($params);
     }
 }
-if (! \function_exists('inAdmin')) {
+if (! function_exists('inAdmin')) {
     /**
      * @return array|bool|mixed
      */
@@ -244,12 +244,12 @@ if (! \function_exists('inAdmin')) {
      *
      * @return bool
      */
-if (! \function_exists('isHome')) {
+if (! function_exists('isHome')) {
     /**
      * @return bool
      */
     function isHome() {
-        if (URL::current() == url('')) {
+        if (URL::current() === url('')) {
             return true;
         }
 
@@ -261,12 +261,12 @@ if (! \function_exists('isHome')) {
      *
      * @return bool
      */
-if (! \function_exists('isAdminHome')) {
+if (! function_exists('isAdminHome')) {
     /**
      * @return bool
      */
     function isAdminHome() {
-        return URL::current() == route('admin.index');
+        return URL::current() === route('admin.index');
     }
 }
 
@@ -276,7 +276,7 @@ if (! \function_exists('isAdminHome')) {
      *
      * @return bool
      */
-if (! \function_exists('isAdmin')) {
+if (! function_exists('isAdmin')) {
     /**
      * @return bool
      */
@@ -291,7 +291,7 @@ if (! \function_exists('isAdmin')) {
      * @param string $term
      * @return string
      */
-if (! \function_exists('fullTextWildcards')) {
+if (! function_exists('fullTextWildcards')) {
     /* protected */
     /**
      * @param string $term
@@ -321,7 +321,7 @@ if (! \function_exists('fullTextWildcards')) {
     }
 }
 
-if (! \function_exists('isContainer')) {
+if (! function_exists('isContainer')) {
     /**
      * @return bool
      */
@@ -331,25 +331,25 @@ if (! \function_exists('isContainer')) {
         return count($containers) > count($items);
     }
 }
-if (! \function_exists('isItem')) {
+if (! function_exists('isItem')) {
     /**
      * @return bool
      */
     function isItem() {
         [$containers, $items] = params2ContainerItem();
 
-        return count($containers) == count($items);
+        return count($containers) === count($items);
     }
 }
 
-if (! \function_exists('params2ContainerItem')) {
+if (! function_exists('params2ContainerItem')) {
     /**
      * @param array $params
      *
      * @return array[]
      */
     function params2ContainerItem(?array $params = null) {
-        if (null == $params) {
+        if (null === $params) {
             $params = optional(\Route::current())->parameters();
         }
         $container = [];
@@ -368,7 +368,7 @@ if (! \function_exists('params2ContainerItem')) {
     }
 }
 
-if (! \function_exists('getModelFields')) {
+if (! function_exists('getModelFields')) {
     function getModelFields(Model $model): array {
         $fields = $model->getConnection()
             ->getSchemaBuilder()
@@ -378,7 +378,7 @@ if (! \function_exists('getModelFields')) {
     }
 }
 
-if (! \function_exists('getModuleFromModel')) {
+if (! function_exists('getModuleFromModel')) {
     /**
      * @param object $model
      *
@@ -393,7 +393,7 @@ if (! \function_exists('getModuleFromModel')) {
     }
 }
 
-if (! \function_exists('getModuleNameFromModel')) {
+if (! function_exists('getModuleNameFromModel')) {
     function getModuleNameFromModel(object $model): string {
         if (! is_object($model)) {
             dddx(['model' => $model]);
@@ -406,7 +406,7 @@ if (! \function_exists('getModuleNameFromModel')) {
     }
 }
 
-if (! \function_exists('getModuleNameFromModelName')) {
+if (! function_exists('getModuleNameFromModelName')) {
     function getModuleNameFromModelName(string $model_name): string {
         $model = TenantService::model($model_name);
 
@@ -414,7 +414,7 @@ if (! \function_exists('getModuleNameFromModelName')) {
     }
 }
 
-if (! \function_exists('getTransformerFromModel')) {
+if (! function_exists('getTransformerFromModel')) {
     /**
      * @param object $model
      * @param string $type
@@ -434,7 +434,7 @@ if (! \function_exists('getTransformerFromModel')) {
     }
 }
 
-if (! \function_exists('getAllModulesModels')) {
+if (! function_exists('getAllModulesModels')) {
     /**
      * @throws ReflectionException
      *
@@ -452,7 +452,7 @@ if (! \function_exists('getAllModulesModels')) {
     }
 }
 
-if (! \function_exists('getModuleModels')) {
+if (! function_exists('getModuleModels')) {
     /**
      * @param string $module
      *
@@ -465,7 +465,7 @@ if (! \function_exists('getModuleModels')) {
     }
 }
 
-if (! \function_exists('getModuleModelsMenu')) {
+if (! function_exists('getModuleModelsMenu')) {
     function getModuleModelsMenu(string $module): Collection {
         $models = getModuleModels($module);
         $menu = collect($models)->map(
@@ -474,7 +474,7 @@ if (! \function_exists('getModuleModelsMenu')) {
                 $obj = app($item);
                 $panel = PanelService::make()->get($obj);
                 // *
-                if ('media' == $key) {// media e' singolare ma anche plurale di medium
+                if ('media' === $key) {// media e' singolare ma anche plurale di medium
                     $panel->setName('medias');
                 }
                 // */
@@ -492,7 +492,7 @@ if (! \function_exists('getModuleModelsMenu')) {
     }
 }
 
-if (! \function_exists('xotModel')) {
+if (! function_exists('xotModel')) {
     /**
      * @param string $name
      *
@@ -503,7 +503,7 @@ if (! \function_exists('xotModel')) {
     }
 }
 
-if (! \function_exists('xotModelEager')) {
+if (! function_exists('xotModelEager')) {
     /**
      * @param string $name
      *
@@ -514,7 +514,7 @@ if (! \function_exists('xotModelEager')) {
     }
 }
 
-if (! \function_exists('transFields')) {
+if (! function_exists('transFields')) {
     /**
      * @return mixed|stdClass
      */
@@ -563,7 +563,7 @@ if (! \function_exists('transFields')) {
             $view = 'pub_theme::'.$view;
         }
         list($ns, $key) = explode('::', $view);
-        if (null == $module_name) {
+        if (null === $module_name) {
             $trans_root = $ns.'::'.implode('.', array_slice(explode('.', $key), $start, -1));
         }
         // *
@@ -574,14 +574,14 @@ if (! \function_exists('transFields')) {
             // if (! isset($ris->$tf)) {
             $ris->$tf = isset($$tf) ? $$tf : trans($trans);
 
-            if ($ris->$tf == $trans && ! config('xra.show_trans_key')) {
+            if ($ris->$tf === $trans && ! config('xra.show_trans_key')) {
                 $ris->$tf = $ris->name_dot;
                 // $ris->$tf = $trans;
             }
             // }
         }
         // */
-        if ($ris->help == $ris->name_dot) {
+        if ($ris->help === $ris->name_dot) {
             $ris->help = '';
         }
 
@@ -599,7 +599,7 @@ if (! \function_exists('transFields')) {
         $ris->attributes = collect($attributes)
             ->filter(
                 function ($item, $key) {
-                    return in_array($key, ['style', 'class', 'placeholder', 'readonly', 'id', 'value', 'name']) || Str::startsWith($key, 'data-');
+                    return in_array($key, ['style', 'class', 'placeholder', 'readonly', 'id', 'value', 'name'], true) || Str::startsWith($key, 'data-');
                 }
             )
             // ->only('class','placeholder','readonly')
@@ -617,7 +617,7 @@ if (! \function_exists('transFields')) {
     }
 }
 
-if (! \function_exists('deltaTime')) {
+if (! function_exists('deltaTime')) {
     /**
      * @return mixed
      */
@@ -626,7 +626,7 @@ if (! \function_exists('deltaTime')) {
     }
 }
 
-if (! \function_exists('debug_getter_obj')) {
+if (! function_exists('debug_getter_obj')) {
     /*
     function debug_getter_objOLD(array $params){
         extract($params);
@@ -724,7 +724,7 @@ if (! \function_exists('debug_getter_obj')) {
                     'forceDelete',
                     'forceCreate',
                 ];
-                if (! Str::startsWith($item, '__') && ! in_array($item, $exclude)) {
+                if (! Str::startsWith($item, '__') && ! in_array($item, $exclude, true)) {
                     return true;
                 }
 
@@ -735,7 +735,7 @@ if (! \function_exists('debug_getter_obj')) {
         foreach ($methods as $method) {
             $reflection = new \ReflectionMethod($obj, $method);
             $args = $reflection->getParameters();
-            if (0 == count($args) && $reflection->class == get_class($obj)) {
+            if (0 === count($args) && $reflection->class === get_class($obj)) {
                 try {
                     $return = $reflection->invoke($obj);
                     // $check = ($return instanceof \Illuminate\Database\Eloquent\Relations\Relation);
@@ -761,14 +761,14 @@ if (! \function_exists('debug_getter_obj')) {
     }
 } // end exists
 
-if (! \function_exists('bracketsToDotted')) {
+if (! function_exists('bracketsToDotted')) {
     // privacies[111][pivot][title] => privacies.111.pivot.title
 
     function bracketsToDotted(string $str, string $quotation_marks = ''): string {
         return str_replace(['[', ']'], ['.', ''], $str);
     }
 }
-if (! \function_exists('dottedToBrackets')) {
+if (! function_exists('dottedToBrackets')) {
     // privacies.111.pivot.title => privacies[111][pivot][title]
     /**
      * @param string $str
@@ -779,7 +779,7 @@ if (! \function_exists('dottedToBrackets')) {
     function dottedToBrackets($str, $quotation_marks = '') {
         $str = collect(explode('.', $str))->map(
             function ($v, $k) {
-                return 0 == $k ? $v : '['.$v.']';
+                return 0 === $k ? $v : '['.$v.']';
             }
         )->implode('');
 
@@ -787,7 +787,7 @@ if (! \function_exists('dottedToBrackets')) {
     }
 }
 
-if (! \function_exists('array_merge_recursive_distinct')) {
+if (! function_exists('array_merge_recursive_distinct')) {
     /**
      * @return array
      */
@@ -896,7 +896,7 @@ if (! function_exists('getRelationships')) {
         foreach ($methods as $method) {
             $reflection = new \ReflectionMethod($model, $method);
             $args = $reflection->getParameters();
-            if (0 == count($args) && $reflection->class == get_class($model)) {
+            if (0 === count($args) && $reflection->class === get_class($model)) {
                 try {
                     $return = $reflection->invoke($model);
                     $check = ($return instanceof \Illuminate\Database\Eloquent\Relations\Relation);
@@ -1048,7 +1048,7 @@ if (! function_exists('getExcerpt')) {
 if (! function_exists('getRouteParameters')) {
     function getRouteParameters(): array {
         $params = optional(request()->route())->parameters();
-        if (null == $params) {
+        if (null === $params) {
             $params = [];
         }
 
@@ -1126,13 +1126,13 @@ if (! function_exists('debugStack')) {
             throw new \RuntimeException('XDebug must be installed to use this function');
         }
 
-        \xdebug_set_filter(
+        xdebug_set_filter(
             XDEBUG_FILTER_TRACING,
             XDEBUG_PATH_EXCLUDE,
             [LARAVEL_DIR.'/vendor/']
         );
 
-        \xdebug_print_function_stack();
+        xdebug_print_function_stack();
     }
 }
 

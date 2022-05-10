@@ -6,16 +6,14 @@ namespace Modules\Xot\Jobs\PanelCrud;
 
 use Modules\Xot\Contracts\PanelContract;
 
-//----------- Requests ----------
-//------------ services ----------
+// ----------- Requests ----------
+// ------------ services ----------
 
 /**
  * Class IndexUpdateJob.
  */
-class IndexUpdateJob extends XotBaseJob
-{
-    public function handle(): PanelContract
-    {
+class IndexUpdateJob extends XotBaseJob {
+    public function handle(): PanelContract {
         dddx('WIP');
 
         return $this->panel;

@@ -3,35 +3,32 @@
 declare(strict_types=1);
 
 use Illuminate\Database\Schema\Blueprint;
-//--- models --
-///use Modules\Blog\Models\Post as MyModel;
+// --- models --
+// /use Modules\Blog\Models\Post as MyModel;
 use Modules\Xot\Database\Migrations\XotBaseMigration;
 
 /**
  * Class CreateHomesTable.
  */
-class CreateHomesTable extends XotBaseMigration
-{
+class CreateHomesTable extends XotBaseMigration {
     /**
      * db up.
      *
      * @return void
      */
-    public function up()
-    {
-        //-- CREATE --
+    public function up() {
+        // -- CREATE --
         $this->tableCreate(
             function (Blueprint $table) {
-                    $table->increments('id');
-                    $table->string('created_by')->nullable();
-                    $table->string('updated_by')->nullable();
+                $table->increments('id');
+                $table->string('created_by')->nullable();
+                $table->string('updated_by')->nullable();
 
-                    $table->timestamps();
+                $table->timestamps();
             }
         );
 
-
-        //-- UPDATE --
+        // -- UPDATE --
         $this->tableUpdate(
             function (Blueprint $table) {
                 if (! $this->hasColumn('created_by')) {
@@ -44,7 +41,7 @@ class CreateHomesTable extends XotBaseMigration
         );
     }
 
-    //end up
+    // end up
 
-    //end down
-}//end class
+    // end down
+}// end class

@@ -48,6 +48,5 @@ use Modules\Food\Models\RestaurantOwner;
  * @method BelongsTo user()
  * @mixin  \Eloquent
  */
-interface ModelContract
-{
+interface ModelContract {
 }

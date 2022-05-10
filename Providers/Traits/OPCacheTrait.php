@@ -3,14 +3,12 @@
 declare(strict_types=1);
 
 namespace Modules\Xot\Providers\Traits;
+
 use Illuminate\Cache\TagSet;
 use Illuminate\Support\Facades\Cache;
 
-trait OPCacheTrait
-{
-    public function registerCacheOPCache(): void
-    {
-        
+trait OPCacheTrait {
+    public function registerCacheOPCache(): void {
         Cache::extend(
             'opcache', function () {
                 $store = new \Modules\Xot\Engines\Opcache\Store();
@@ -19,11 +17,11 @@ trait OPCacheTrait
             }
         );
         //
-        //Session::extend('opcache', function () {
+        // Session::extend('opcache', function () {
         //    $store = new \Modules\Xot\Engines\Opcache\Store();
 
         //    return new \Modules\Xot\Engines\Opcache\Repository($store, new TagSet($store));
-        //});
+        // });
 
         // Extend Collection to implement __set_state magic method
         if (! Collection::hasMacro('__set_state')) {
@@ -33,6 +31,5 @@ trait OPCacheTrait
                 }
             );
         }
-        
     }
 }

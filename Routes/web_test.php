@@ -39,7 +39,7 @@ $acts = [
         'name' => 'index',
         'methods' => ['get', 'head'],
         'uri' => '',
-        //corretto che sia diverso da name,
+        // corretto che sia diverso da name,
         'uri_full' => '/{container0?}/{item0?}/{container1?}/{item1?}/{container2?}/{item2?}/{container3?}/{item3?}/{container4?}',
     ],
     /*(object) [
@@ -63,12 +63,12 @@ $acts = [
 ];
 
 $name = '/{container0?}/{item0?}/{container1?}/{item1?}/{container2?}/{item2?}/{container3?}/{item3?}/{container4?}/{item4?}';
-//$controller = 'ItemController';
+// $controller = 'ItemController';
 $controller = 'ContainersController';
 
 $front_acts = collect($acts)->filter(
     function ($item) {
-        return in_array($item->name, ['index', 'show']);
+        return in_array($item->name, ['index', 'show'], true);
     }
 )->all();
 
@@ -78,7 +78,7 @@ $middleware = [
 ];
 $namespace = '\Modules\Xot\Http\Controllers';
 $prefix = '/{lang?}';
-$as = ''; //null
+$as = ''; // null
 if (! config('xra.disable_frontend_dynamic_route', false)) {
     Route::middleware($middleware)
         ->namespace($namespace)
@@ -125,11 +125,11 @@ function myRoutes(
         ->group(
             function () use ($name, $controller, $acts) {
                 foreach ($acts as $act) {
-                    //$uri = ($act->uri_full ?? $name).$act->uri;
+                    // $uri = ($act->uri_full ?? $name).$act->uri;
                     $uri = $act->uri.($act->uri_full ?? $name);
                     Route::match($act->methods, $uri, $controller.'@'.$act->name)
                     ->name('containers.'.$act->name)
-                    //->where(['container1' => '[0-9]+']) //errato solo per test
+                    // ->where(['container1' => '[0-9]+']) //errato solo per test
                     ;
                 }
             }

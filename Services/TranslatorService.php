@@ -45,7 +45,9 @@ class TranslatorService extends BaseTranslator {
         if ($key == $translation && ! Str::endsWith($key, '.')) {
             dddx(['key' => $key, 'translation' => $translation, 'replace' => $replace, 'locale' => $locale, 'fallback' => $fallback]);
         }
+        indennitacondizionilavoro::servizio_esterno_reps.tab.create
         //*/
+
         // echo '<br>['.$key.']['.$translation.']';
         // $langs=ThemeService::__merge('langs', [$key=>$translation]);
         // $cache_key=Str::slug(req_uri().'_langs');

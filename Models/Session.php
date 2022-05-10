@@ -7,14 +7,15 @@ namespace Modules\Xot\Models;
 /**
  * Modules\Xot\Models\Session
  *
- * @property int $id
- * @property int|null $user_id
- * @property string|null $ip_address
- * @property string|null $user_agent
- * @property string $payload
- * @property int $last_activity
- * @property-read \Illuminate\Database\Eloquent\Collection|\Modules\Xot\Models\Image[] $images
- * @property-read int|null $images_count
+ * @property int                                                                  $id
+ * @property int|null                                                             $user_id
+ * @property string|null                                                          $ip_address
+ * @property string|null                                                          $user_agent
+ * @property string                                                               $payload
+ * @property int                                                                  $last_activity
+ * @property \Illuminate\Database\Eloquent\Collection|\Modules\Xot\Models\Image[] $images
+ * @property int|null                                                             $images_count
+ *
  * @method static \Modules\Xot\Database\Factories\SessionFactory factory(...$parameters)
  * @method static \Illuminate\Database\Eloquent\Builder|Session newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Session newQuery()
@@ -28,8 +29,6 @@ namespace Modules\Xot\Models;
  * @mixin \Eloquent
  * @mixin IdeHelperSession
  */
-class Session extends BaseModel
-{
-    protected $fillable=['id','user_id','ip_address','user_agent','payload','last_activity'];
-
+class Session extends BaseModel {
+    protected $fillable = ['id', 'user_id', 'ip_address', 'user_agent', 'payload', 'last_activity'];
 }

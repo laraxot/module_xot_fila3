@@ -4,19 +4,19 @@ declare(strict_types=1);
 
 namespace Modules\Xot\Models\Panels\Actions;
 
-//-------- models -----------
+// -------- models -----------
 
-//-------- services --------
-//-------- bases -----------
+// -------- services --------
+// -------- bases -----------
 use Modules\Xot\Services\ArtisanService;
 
 /**
  * Class ArtisanAction.
  */
 class ArtisanContainerAction extends XotBasePanelAction {
-    public bool $onContainer = true; //onlyContainer
+    public bool $onContainer = true; // onlyContainer
 
-    public bool $onItem = false; //onlyContainer
+    public bool $onItem = false; // onlyContainer
 
     public string $icon = '<i class="far fa-file-excel fa-1x"></i>';
 
@@ -41,5 +41,5 @@ class ArtisanContainerAction extends XotBasePanelAction {
         return $out.'<h3>+Done</h3>';
     }
 
-    //end handle
+    // end handle
 }

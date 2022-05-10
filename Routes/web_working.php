@@ -8,7 +8,7 @@ $namespace = '\Modules\Xot';
 $pack = class_basename($namespace);
 
 $namespace .= '\Http\Controllers';
-//$middleware = ['web', 'guest']; //guest ti riindirizza se non sei loggato
+// $middleware = ['web', 'guest']; //guest ti riindirizza se non sei loggato
 $middleware = ['web', \Modules\Xot\Http\Middleware\PanelMiddleware::class];
 
 $areas_prgs = RouteDynService::generate();
@@ -20,9 +20,9 @@ if (! config('xra.disable_frontend_dynamic_route')) {
             'middleware' => $middleware,
             'namespace' => $namespace,
             'where' => [
-                //'container0' => '!password',
-                //'container0' => '^(?!admin$).*$',
-                //'lang' => 'it|en',
+                // 'container0' => '!password',
+                // 'container0' => '^(?!admin$).*$',
+                // 'lang' => 'it|en',
             ],
         ],
         function () use ($areas_prgs, $namespace): void {
@@ -39,17 +39,17 @@ if (! config('xra.disable_frontend_dynamic_route')) {
             'namespace' => $namespace,
         ],
         function (): void {
-            //Route::get('/', 'HomeController@show')->name('home'); //show o index ? homecontrller@show o pagecontroller@home ?
-            //Route::post('/', 'HomeController@show')->name('home'); //togliere o tenere ?
-            Route::match(['get', 'post'], '/', 'HomeController@show')->name('home'); //togliere o tenere ?
-            Route::redirect('/home', '/'); //togliere o tenere ?
+            // Route::get('/', 'HomeController@show')->name('home'); //show o index ? homecontrller@show o pagecontroller@home ?
+            // Route::post('/', 'HomeController@show')->name('home'); //togliere o tenere ?
+            Route::match(['get', 'post'], '/', 'HomeController@show')->name('home'); // togliere o tenere ?
+            Route::redirect('/home', '/'); // togliere o tenere ?
 
             Route::get('/redirect', 'HomeController@redirect')->name('redirect');
         }
     );
 }
 
-$middleware = ['web', 'auth'/*,'verified'*/];
+$middleware = ['web', 'auth'/* ,'verified' */];
 $prefix = 'admin';
 
 Route::group(
@@ -67,12 +67,12 @@ $areas_adm = [
     [
         'name' => '{module}',
         'as' => 'admin.',
-        'param_name' => 'lang',  //ero titubante su questo
-        //'only' => ['index', 'store'],
+        'param_name' => 'lang',  // ero titubante su questo
+        // 'only' => ['index', 'store'],
         'only' => [],
         'subs' => $areas_prgs,
     ],
-    //$item0,
+    // $item0,
 ];
 $prefix = 'admin';
 $middleware = [
@@ -99,8 +99,8 @@ Route::group(
         'namespace' => $namespace,
     ],
     function (): void {
-        //Route::get('{module}', 'ModuleController@home')->name('admin.show');
-        //Route::put('{module}', 'ModuleController@home')->name('admin.show');
+        // Route::get('{module}', 'ModuleController@home')->name('admin.show');
+        // Route::put('{module}', 'ModuleController@home')->name('admin.show');
         Route::match(['get', 'put'], '{module}', 'ModuleController@home')->name('admin.show');
     }
 );

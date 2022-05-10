@@ -6,7 +6,7 @@ namespace Modules\Xot\Models\Panels;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
-//--- Services --
+// --- Services --
 
 use Modules\Xot\Contracts\RowsContract;
 
@@ -54,6 +54,8 @@ class JobPanel extends XotBasePanel {
 
     /**
      * on select the option label.
+     *
+     * @param mixed $row
      */
     public function optionLabel($row): string {
         return $row->area_define_name;
@@ -74,7 +76,7 @@ class JobPanel extends XotBasePanel {
      * @return RowsContract
      */
     public static function indexQuery(array $data, $query) {
-        //return $query->where('user_id', $request->user()->id);
+        // return $query->where('user_id', $request->user()->id);
         return $query;
     }
 

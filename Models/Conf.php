@@ -10,10 +10,11 @@ use Sushi\Sushi;
 /**
  * Modules\Xot\Models\Conf
  *
- * @property int $id
- * @property string|null $name
- * @property-read \Illuminate\Database\Eloquent\Collection|\Modules\Xot\Models\Image[] $images
- * @property-read int|null $images_count
+ * @property int                                                                  $id
+ * @property string|null                                                          $name
+ * @property \Illuminate\Database\Eloquent\Collection|\Modules\Xot\Models\Image[] $images
+ * @property int|null                                                             $images_count
+ *
  * @method static \Modules\Xot\Database\Factories\ConfFactory factory(...$parameters)
  * @method static \Illuminate\Database\Eloquent\Builder|Conf newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Conf newQuery()
@@ -23,8 +24,7 @@ use Sushi\Sushi;
  * @mixin \Eloquent
  * @mixin IdeHelperConf
  */
-class Conf extends BaseModel
-{
+class Conf extends BaseModel {
     use Sushi;
 
     /**
@@ -34,8 +34,7 @@ class Conf extends BaseModel
         'id', 'name',
     ];
 
-    public function getRows(): array
-    {
+    public function getRows(): array {
         return TenantService::getConfigNames(); //  local/ptvx
     }
 
@@ -50,8 +49,7 @@ class Conf extends BaseModel
      *
      * @return string
      */
-    public function getRouteKeyName()
-    {
+    public function getRouteKeyName() {
         return 'name';
     }
 }

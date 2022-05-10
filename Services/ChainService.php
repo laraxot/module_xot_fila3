@@ -40,7 +40,7 @@ function chain($primary_field, $parent_field, $sort_field, $rows, $root_id = 0, 
 class ChainService {
     public array $table;
 
-    //public \Illuminate\Database\Eloquent\Collection $rows;
+    // public \Illuminate\Database\Eloquent\Collection $rows;
     public Collection $rows;
 
     public array $chain_table;
@@ -78,11 +78,11 @@ class ChainService {
      */
     public function buildChain($rootcatid, $maxlevel): void {
         foreach ($this->rows as $row) {
-            //considerando che ChainService viene utilizzato da XotBasePanel->optionsTree()
-            //che a sua volta viene utilizzato in FormX\Resources\views\collective\fields\select\field_parent.blade.php
-            //che vuole parent_id (radice) uguale a 0
-            //controllo che la row radice non abbia parent_id uguale a null, in caso...
-            if (null == $row[$this->parent_field]) {
+            // considerando che ChainService viene utilizzato da XotBasePanel->optionsTree()
+            // che a sua volta viene utilizzato in FormX\Resources\views\collective\fields\select\field_parent.blade.php
+            // che vuole parent_id (radice) uguale a 0
+            // controllo che la row radice non abbia parent_id uguale a null, in caso...
+            if (null === $row[$this->parent_field]) {
                 $row[$this->parent_field] = 0;
                 $row->save();
             }
@@ -97,11 +97,11 @@ class ChainService {
      * @param int $maxlevel
      */
     public function makeBranch($parent_id, $level, $maxlevel): void {
-        if (! is_array($this->table)) {
+        if (! \is_array($this->table)) {
             $this->table = [];
         }
-        //dddx([$this->table, $parent_id]);
-        if (! array_key_exists($parent_id, $this->table)) {
+        // dddx([$this->table, $parent_id]);
+        if (! \array_key_exists($parent_id, $this->table)) {
             return;
         }
         $rows = $this->table[$parent_id];
@@ -112,7 +112,7 @@ class ChainService {
         foreach ($rows as $item) {
             $item['indent'] = $level;
             $this->chain_table[] = $item;
-            if ((isset($this->table[$item[$this->primary_field]])) && (($maxlevel > $level + 1) || (0 == $maxlevel))) {
+            if ((isset($this->table[$item[$this->primary_field]])) && (($maxlevel > $level + 1) || (0 === $maxlevel))) {
                 $this->makeBranch($item[$this->primary_field], $level + 1, $maxlevel);
             }
         }
@@ -125,7 +125,7 @@ class ChainService {
      * @return int
      */
     public function chainCMP($a, $b) {
-        if ($a[$a['key']] == $b[$b['key']]) {
+        if ($a[$a['key']] === $b[$b['key']]) {
             return 0;
         }
 

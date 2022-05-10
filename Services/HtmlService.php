@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Modules\Xot\Services;
 
-//use Maatwebsite\Excel\Facades\Excel;
-//use PHPExcel;
-//use PhpOffice\PhpSpreadsheet\Spreadsheet;
-//use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
+// use Maatwebsite\Excel\Facades\Excel;
+// use PHPExcel;
+// use PhpOffice\PhpSpreadsheet\Spreadsheet;
+// use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
 use Exception;
 use Mpdf\Mpdf;
@@ -25,17 +25,15 @@ use Spipu\Html2Pdf\Html2Pdf;
 /**
  * Class HtmlService.
  */
-class HtmlService
-{
+class HtmlService {
     /**
      * @return string
      */
-    public static function toPdf(array $params)
-    {
-        //dddx($params);
+    public static function toPdf(array $params) {
+        // dddx($params);
 
         include_once __DIR__.'/vendor/autoload.php';
-        $pdforientation = 'L'; //default;
+        $pdforientation = 'L'; // default;
         $out = 'show';
         $filename = 'test';
         extract($params);
@@ -46,7 +44,7 @@ class HtmlService
         if (request('debug', false)) {
             return $html;
         }
-        //try {
+        // try {
         $html2pdf = new Html2Pdf($pdforientation, 'A4', 'it');
         $html2pdf->setTestTdInOnePage(false);
         $html2pdf->WriteHTML($html);
@@ -60,12 +58,12 @@ class HtmlService
         }
 
         return $html2pdf->Output();
-        //} catch (HTML2PDF_exception $e) {
-        //} catch (Html2PdfException $e) {
+        // } catch (HTML2PDF_exception $e) {
+        // } catch (Html2PdfException $e) {
         //    echo '<pre>';
         //    \print_r($e);
         //    echo '</pre>';
-        //}
+        // }
     }
 
     /*

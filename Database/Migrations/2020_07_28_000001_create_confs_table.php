@@ -3,38 +3,36 @@
 declare(strict_types=1);
 
 use Illuminate\Database\Schema\Blueprint;
-//----- bases ----
+// ----- bases ----
 use Modules\Xot\Database\Migrations\XotBaseMigration;
 
-//----- models -----
+// ----- models -----
 
 /**
  * Class CreateConfsTable.
  */
-class CreateConfsTable extends XotBaseMigration
-{
+class CreateConfsTable extends XotBaseMigration {
     /**
      * db up.
      *
      * @return void
      */
-    public function up()
-    {
-        //-- CREATE --
+    public function up() {
+        // -- CREATE --
         $this->tableCreate(
             function (Blueprint $table) {
-                    $table->increments('id');
-                    $table->string('note')->nullable();
-                    $table->timestamps();
-                    $table->string('updated_by')->nullable();
-                    $table->string('created_by')->nullable();
+                $table->increments('id');
+                $table->string('note')->nullable();
+                $table->timestamps();
+                $table->string('updated_by')->nullable();
+                $table->string('created_by')->nullable();
             }
         );
 
-        //-- UPDATE --
+        // -- UPDATE --
         $this->tableUpdate(
             function (Blueprint $table) {
             }
-        ); //end update
+        ); // end update
     }
 }

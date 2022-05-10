@@ -13,7 +13,7 @@ use Modules\Xot\Http\Middleware\SetDefaultLocaleForUrlsMiddleware;
 
 // public function boot(\Illuminate\Routing\Router $router)
 
-//--- bases -----
+// --- bases -----
 
 class RouteServiceProvider extends XotBaseRouteServiceProvider {
     /**
@@ -32,10 +32,10 @@ class RouteServiceProvider extends XotBaseRouteServiceProvider {
     protected string $module_ns = __NAMESPACE__;
 
     public function bootCallback(): void {
-        //36     Cannot access offset 'router' on Illuminate\Contracts\Foundation\Application
-        //$router = $this->app['router'];
+        // 36     Cannot access offset 'router' on Illuminate\Contracts\Foundation\Application
+        // $router = $this->app['router'];
         $router = app('router');
-        //dddx([$router, $router1]);
+        // dddx([$router, $router1]);
 
         $this->registerLang();
         $this->registerRoutePattern($router);
@@ -43,7 +43,7 @@ class RouteServiceProvider extends XotBaseRouteServiceProvider {
     }
 
     public function registerMyMiddleware(Router $router): void {
-        //$router->pushMiddlewareToGroup('web', SetDefaultLocaleForUrlsMiddleware::class);
+        // $router->pushMiddlewareToGroup('web', SetDefaultLocaleForUrlsMiddleware::class);
         $router->prependMiddlewareToGroup('web', SetDefaultLocaleForUrlsMiddleware::class);
         $router->prependMiddlewareToGroup('api', SetDefaultLocaleForUrlsMiddleware::class);
     }
@@ -53,10 +53,10 @@ class RouteServiceProvider extends XotBaseRouteServiceProvider {
      */
     public function registerLang(): void {
         $langs = array_keys(config('laravellocalization.supportedLocales'));
-        if (! is_array($langs)) {
+        if (! \is_array($langs)) {
             throw new Exception('[.__LINE__.]['.class_basename(__CLASS__).']');
         }
-        if (in_array(\Request::segment(1), $langs)) {
+        if (\in_array(\Request::segment(1), $langs, true)) {
             $lang = \Request::segment(1);
             if (null !== $lang) {
                 App::setLocale($lang);
@@ -65,21 +65,21 @@ class RouteServiceProvider extends XotBaseRouteServiceProvider {
     }
 
     public function registerRoutePattern(Router $router): void {
-        //---------- Lang Route Pattern
+        // ---------- Lang Route Pattern
         $langs = config('laravellocalization.supportedLocales');
-        if (! is_array($langs)) {
+        if (! \is_array($langs)) {
             throw new Exception('[.__LINE__.]['.class_basename(__CLASS__).']');
         }
-        $lang_pattern = collect(\array_keys($langs))->implode('|');
+        $lang_pattern = collect(array_keys($langs))->implode('|');
         $lang_pattern = '/|'.$lang_pattern.'|/i';
         $router->pattern('lang', $lang_pattern);
-        //-------------------------------------------------------------
-        //$models = TenantService::config('morph_map');
+        // -------------------------------------------------------------
+        // $models = TenantService::config('morph_map');
         $models = config('morph_map');
-        if (! is_array($models)) {
+        if (! \is_array($models)) {
             throw new Exception('['.__LINE__.']['.class_basename(__CLASS__).']');
         }
-        $models_collect = collect(\array_keys($models));
+        $models_collect = collect(array_keys($models));
         $pattern = $models_collect->implode('|');
         $pattern_plural = $models_collect->map(
             function ($item) {
@@ -87,7 +87,7 @@ class RouteServiceProvider extends XotBaseRouteServiceProvider {
             }
         )->implode('|');
 
-        //$pattern = '/|'.$pattern.'|/i';
+        // $pattern = '/|'.$pattern.'|/i';
         $container0_pattern = '/|'.$pattern.'|'.$pattern_plural.'|/i';
         /*--pattern vuoto
         dddx([
@@ -96,8 +96,8 @@ class RouteServiceProvider extends XotBaseRouteServiceProvider {
             'config_path' => TenantService::getConfigPath('morph_map'),
         ]);
         */
-        //$router->pattern('container0', $container0_pattern);
+        // $router->pattern('container0', $container0_pattern);
     }
 
-    //end registerRoutePattern
+    // end registerRoutePattern
 }

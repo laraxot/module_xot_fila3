@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Modules\Xot\Http\View\Composers;
 
-//use App\Repositories\UserRepository;
+// use App\Repositories\UserRepository;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Illuminate\View\View;
@@ -21,14 +21,14 @@ class XotComposer {
      */
     public function compose(View $view) {
         $user = Auth::user();
-        if (null == $user) {
+        if (null === $user) {
             return;
         }
         $profile = ProfileService::make()->get($user);
         $lang = app()->getLocale();
         $params = [];
         $route_current = Route::current();
-        if (null != $route_current) {
+        if (null !== $route_current) {
             $params = $route_current->parameters();
         }
 

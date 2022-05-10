@@ -5,8 +5,6 @@ declare(strict_types=1);
 namespace Modules\Xot\Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Illuminate\Support\Str;
-
 use Modules\Xot\Models\Metatag;
 
 class MetatagFactory extends Factory {
@@ -23,8 +21,6 @@ class MetatagFactory extends Factory {
      * @return array
      */
     public function definition() {
-       
-
         return [
             'id' => $this->faker->randomNumber,
             'title' => $this->faker->sentence,
@@ -40,7 +36,7 @@ class MetatagFactory extends Factory {
             'created_at' => $this->faker->dateTime,
             'created_by' => $this->faker->word,
             'updated_at' => $this->faker->dateTime,
-            'updated_by' => $this->faker->word
+            'updated_by' => $this->faker->word,
         ];
     }
 }

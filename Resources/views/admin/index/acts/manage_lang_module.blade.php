@@ -1,7 +1,7 @@
 @extends('adm_theme::layouts.app')
 @section('content')
 
-{{--  
+{{--
 <table class="table">
     @foreach($files as $file)
     <tr>

@@ -20,6 +20,5 @@ use Illuminate\Database\Eloquent\Collection;
  * @method mixed update($params)
  * @mixin  \Eloquent
  */
-interface PivotContract
-{
+interface PivotContract {
 }

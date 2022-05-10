@@ -35,18 +35,18 @@ class XlsPanelPresenter implements PanelPresenterContract {
         if (! isset($params['view_params'])) {
             $params['view_params'] = [];
         }
-        $view = ThemeService::getView(); //progressioni::admin.schede.show
+        $view = ThemeService::getView(); // progressioni::admin.schede.show
         $name = last(explode('.', $view));
-        //dddx($name);
-        //$view .= '.pdf';
-        //$view = str_replace('.store.', '.show.', $view);
+        // dddx($name);
+        // $view .= '.pdf';
+        // $view = str_replace('.store.', '.show.', $view);
         extract($params);
-        //$row = $this->panel->getRow();
+        // $row = $this->panel->getRow();
         $rows = $this->panel->getRows()->get()->toArray();
 
-        //if (null == $row->getKey()) { //utile per le cose a containers
+        // if (null == $row->getKey()) { //utile per le cose a containers
         //    $row = $this->panel->getRows()->first();
-        //}
+        // }
         /*
         $html = view($view)
             ->with('view', $view)
@@ -54,11 +54,11 @@ class XlsPanelPresenter implements PanelPresenterContract {
             ->with('rows', $rows)
             ->with($params['view_params']);
         */
-        //dddx($this->rows->get());
-        //if (request()->input('debug')) {
+        // dddx($this->rows->get());
+        // if (request()->input('debug')) {
         //    return $html;
-        //}
-        //$params['html'] = (string) $html;
+        // }
+        // $params['html'] = (string) $html;
 
         return ArrayService::make()
             ->setArray($rows)

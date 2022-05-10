@@ -6,15 +6,13 @@ namespace Modules\Xot\View\Components\Dashboard;
 
 use Illuminate\View\Component;
 
-//use Modules\Xot\View\Components\XotBaseComponent;
+// use Modules\Xot\View\Components\XotBaseComponent;
 
 /**
  * Class Field.
  */
-class Item extends Component
-{
-    public function render():\Illuminate\Contracts\Support\Renderable
-    {
+class Item extends Component {
+    public function render(): \Illuminate\Contracts\Support\Renderable {
         $view = 'xot::components.dashboard.item';
         $view_params = [
             'view' => $view,

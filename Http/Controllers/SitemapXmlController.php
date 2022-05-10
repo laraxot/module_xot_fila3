@@ -13,8 +13,8 @@ namespace Modules\Xot\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Spatie\Sitemap\SitemapGenerator;
 
-//use File;
-//---- services --
+// use File;
+// ---- services --
 
 /**
  * Class SitemapXmlController.

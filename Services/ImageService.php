@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Intervention\Image\Facades\Image;
 
-//---- services ----
+// ---- services ----
 
 /**
  * Class ImageService.
@@ -52,7 +52,7 @@ class ImageService {
     public function setVars(array $params): self {
         foreach ($params as $k => $v) {
             $func = 'set'.Str::studly((string) $k);
-            if (null == $v) {
+            if (null === $v) {
                 $v = '';
             }
             $this->{$func}($v);
@@ -66,7 +66,7 @@ class ImageService {
      */
     public function setImg(string $val): self {
         $nophoto_path = public_path('img/nophoto.jpg');
-        if ('' == $val) {
+        if ('' === $val) {
             $val = $nophoto_path;
         }
         if (Str::startsWith($val, '//')) {
@@ -88,15 +88,15 @@ class ImageService {
      * Undocumented function.
      */
     public function setSrc(string $val): self {
-        if ('' == $val) {
+        if ('' === $val) {
             $val = public_path('img/nophoto.jpg');
         }
-        if (Str::startsWith($val, url(''))) { //se e' una immagine locale
-            $val = public_path(\substr($val, strlen(url(''))));
+        if (Str::startsWith($val, url(''))) { // se e' una immagine locale
+            $val = public_path(substr($val, \strlen(url(''))));
         }
         $str = '/laravel-filemanager/';
         if (Str::startsWith($val, $str)) {
-            $val = public_path(\substr($val, strlen($str)));
+            $val = public_path(substr($val, \strlen($str)));
         }
         $this->src = $val;
 
@@ -133,10 +133,10 @@ class ImageService {
     public function save(): self {
         $filename = $this->getFilename();
         try {
-            //Storage::disk('photos')->put($this->filename, $this->out());
+            // Storage::disk('photos')->put($this->filename, $this->out());
             $this->img->save($filename);
-        } catch (Exception $e) {//ftp_mkdir(): Can't create directory: File exists
-             //$r = $this->img->save(self::$filename, 75);
+        } catch (Exception $e) {// ftp_mkdir(): Can't create directory: File exists
+             // $r = $this->img->save(self::$filename, 75);
         }
 
         return $this;

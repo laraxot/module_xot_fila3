@@ -5,11 +5,11 @@ declare(strict_types=1);
 namespace Modules\Xot\Models\Panels\Actions;
 
 use Illuminate\Database\Eloquent\Builder;
-//use Illuminate\Database\Eloquent\Model;
-//use Laravel\Scout\Searchable;
+// use Illuminate\Database\Eloquent\Model;
+// use Laravel\Scout\Searchable;
 
-//----------  SERVICES --------------------------
-//------------ jobs ----------------------------
+// ----------  SERVICES --------------------------
+// ------------ jobs ----------------------------
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
@@ -36,7 +36,7 @@ abstract class XotBasePanelAction {
      */
     public $rows;
 
-    //public Builder $rows;
+    // public Builder $rows;
 
     public PanelContract $panel;
 
@@ -48,7 +48,7 @@ abstract class XotBasePanelAction {
 
     protected array $data = [];
 
-    public ?string $related = null; //post_type per filtrare le azioni nei vari index_edit
+    public ?string $related = null; // post_type per filtrare le azioni nei vari index_edit
 
     /**
      * handle.
@@ -88,7 +88,7 @@ abstract class XotBasePanelAction {
         if (Str::contains((string) $this->name, '::')) {
             $this->name = null;
         }
-        if (null != $this->name) {
+        if (null !== $this->name) {
             return $this->name;
         }
         $this->name = Str::snake(class_basename($this));
@@ -109,7 +109,7 @@ abstract class XotBasePanelAction {
         $trans_path = $module_name_low.'::'.strtolower(class_basename($row)).'.act.'.$name;
         $trans = trans($trans_path);
 
-        if ($trans_path == $trans && ! config('xra.show_trans_key')) {
+        if ($trans_path === $trans && ! config('xra.show_trans_key')) {
             $title = str_replace('_', ' ', $name);
         } else {
             $title = $trans;
@@ -167,30 +167,30 @@ abstract class XotBasePanelAction {
         return $this->urlContainer();
     }
 
-    public function urlContainer(/*string $act = 'show'*/): string {
+    public function urlContainer(/* string $act = 'show' */): string {
         $panel = $this->panel;
-        //$request = \Request::capture();
+        // $request = \Request::capture();
         $name = $this->getName();
-        //$url = $request->fullUrlWithQuery(['_act' => $name]);
-        //if (isset($panel)) {
-        //dddx([request()->all(),$this->data]);
-        //dddx(request()->all());
-        //dddx(get_class_methods(request()));
+        // $url = $request->fullUrlWithQuery(['_act' => $name]);
+        // if (isset($panel)) {
+        // dddx([request()->all(),$this->data]);
+        // dddx(request()->all());
+        // dddx(get_class_methods(request()));
         $request_query = request()->query();
-        if (! is_array($request_query)) {
+        if (! \is_array($request_query)) {
             $request_query = [];
         }
 
         $this->data = array_merge($request_query, $this->data);
-        //$this->data = collect($this->data)->except(['fingerprint', 'serverMemo', 'updates'])->all();
+        // $this->data = collect($this->data)->except(['fingerprint', 'serverMemo', 'updates'])->all();
 
-        //$url = $panel->url('index');
+        // $url = $panel->url('index');
         $url = $panel->url('index');
         $url = url_queries(['_act' => $name], $url);
-        //$this->data['page'] = 1;
+        // $this->data['page'] = 1;
         $this->data['_act'] = $name;
         $url = url_queries($this->data, $url);
-        //}
+        // }
 
         return $url;
     }
@@ -200,7 +200,7 @@ abstract class XotBasePanelAction {
      * @param mixed        $value
      */
     public function with($key, $value = null): self {
-        if (is_array($key)) {
+        if (\is_array($key)) {
             $this->data = array_merge($this->data, $key);
         } else {
             $this->data[$key] = $value;
@@ -264,9 +264,9 @@ abstract class XotBasePanelAction {
             </a>';*/
     }
 
-    //end btnContainer
+    // end btnContainer
 
-    public function urlItem(/*string $act = 'show'*/): string {
+    public function urlItem(/* string $act = 'show' */): string {
         $url = '';
         $query_params = [];
 
@@ -304,7 +304,7 @@ abstract class XotBasePanelAction {
 						data-href="'.$url.'" data-toggle="modal" class="btn btn-secondary mb-2" data-target="#myModalIframe">
                         '.$this->icon.'
                         </button>';
-                    //break;
+                    // break;
                 case 'ajax':
                     break;
                 }
@@ -318,8 +318,8 @@ abstract class XotBasePanelAction {
         }
     }
 
-    //end btnItem
-    //* --
+    // end btnItem
+    // * --
     public function updateRow(array $params = []): PanelContract {
         $row = $this->row;
         extract($params);
@@ -335,7 +335,7 @@ abstract class XotBasePanelAction {
         */
     }
 
-    //*/
+    // */
 
     /**
      * Undocumented function.

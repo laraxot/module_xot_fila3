@@ -15,8 +15,8 @@ use Nwidart\Modules\Facades\Module;
  * Class XotServiceProvider.
  */
 class XotServiceProvider extends XotBaseServiceProvider {
-    use Traits\TranslatorTrait;
     use Traits\PresenterTrait;
+    use Traits\TranslatorTrait;
     /**
      * The module directory.
      */
@@ -36,17 +36,17 @@ class XotServiceProvider extends XotBaseServiceProvider {
 
         $this->registerTranslator();
 
-        //$this->registerCacheOPCache();
-        //$this->registerScout();
+        // $this->registerCacheOPCache();
+        // $this->registerScout();
 
-        //$this->registerLivewireComponents();
+        // $this->registerLivewireComponents();
         $this->registerViewComposers();
 
-        //$this->registerPanel();
-        //$this->registerDropbox();// PROBLEMA DI COMPOSER
+        // $this->registerPanel();
+        // $this->registerDropbox();// PROBLEMA DI COMPOSER
     }
 
-    //end bootCallback
+    // end bootCallback
 
     public function registerCallback(): void {
         $this->loadHelpersFrom(__DIR__.'/../Helpers');
@@ -54,8 +54,8 @@ class XotServiceProvider extends XotBaseServiceProvider {
         $loader->alias('Panel', 'Modules\Xot\Services\PanelService');
         $this->registerPresenter();
 
-        //$this->registerPanel();
-        //$this->registerBladeDirectives(); //non intercetta
+        // $this->registerPanel();
+        // $this->registerBladeDirectives(); //non intercetta
     }
 
     private function redirectSSL(): void {
@@ -81,9 +81,9 @@ class XotServiceProvider extends XotBaseServiceProvider {
     private function registerCommands(): void {
         $this->commands(
             [
-                //\Modules\Xot\Console\CreateAllRepositoriesCommand::class,
-                //\Modules\Xot\Console\PanelMakeCommand::class,
-                //\Modules\Xot\Console\FixProvidersCommand::class,
+                // \Modules\Xot\Console\CreateAllRepositoriesCommand::class,
+                // \Modules\Xot\Console\PanelMakeCommand::class,
+                // \Modules\Xot\Console\FixProvidersCommand::class,
                 \Modules\Xot\Console\Commands\DatabaseBackUpCommand::class,
                 \Modules\Xot\Console\Commands\WorkerCheck::class,
                 \Modules\Xot\Console\Commands\WorkerRetry::class,
@@ -93,10 +93,10 @@ class XotServiceProvider extends XotBaseServiceProvider {
     }
 
     private function registerViewComposers(): void {
-        //Factory $view
-        //$view->composer('bootstrap-italia::page', BootstrapItaliaComposer::class);
+        // Factory $view
+        // $view->composer('bootstrap-italia::page', BootstrapItaliaComposer::class);
         View::composer('*', XotComposer::class);
-        //dddx($res);
+        // dddx($res);
     }
 
     /*
@@ -121,4 +121,4 @@ class XotServiceProvider extends XotBaseServiceProvider {
             }
         }
     }
-} //end class
+} // end class

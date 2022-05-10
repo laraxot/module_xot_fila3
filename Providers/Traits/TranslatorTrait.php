@@ -4,14 +4,12 @@ declare(strict_types=1);
 
 namespace Modules\Xot\Providers\Traits;
 
-//--- services ---
+// --- services ---
 use Illuminate\Translation\Translator;
 use Modules\Xot\Services\TranslatorService;
 
-trait TranslatorTrait
-{
-    public function registerTranslator(): void
-    {
+trait TranslatorTrait {
+    public function registerTranslator(): void {
         // Override the JSON Translator
         $this->app->extend(
             'translator', function (Translator $translator) {

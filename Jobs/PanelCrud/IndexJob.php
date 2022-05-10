@@ -6,16 +6,14 @@ namespace Modules\Xot\Jobs\PanelCrud;
 
 use Modules\Xot\Contracts\PanelContract;
 
-//----------- Requests ----------
-//------------ services ----------
+// ----------- Requests ----------
+// ------------ services ----------
 
 /**
  * Class IndexJob.
  */
-class IndexJob extends XotBaseJob
-{
-    public function handle(): PanelContract
-    {
+class IndexJob extends XotBaseJob {
+    public function handle(): PanelContract {
         return $this->panel;
     }
 }

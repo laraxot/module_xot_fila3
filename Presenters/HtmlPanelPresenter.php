@@ -46,15 +46,15 @@ class HtmlPanelPresenter implements PanelPresenterContract {
         */
     }
 
-    //eturn \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response|string
+    // eturn \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response|string
 
     public function out(?array $params = null): Renderable {
-        //$route_params = optional(\Route::current())->parameters();
+        // $route_params = optional(\Route::current())->parameters();
 
         [$containers, $items] = params2ContainerItem();
-        $view = ThemeService::getView(); //vew che dovrebbe essere
-        $view_work = ThemeService::getViewWork(); //view effettiva
-        $views = ThemeService::getDefaultViewArray(); //views possibili
+        $view = ThemeService::getView(); // vew che dovrebbe essere
+        $view_work = ThemeService::getViewWork(); // view effettiva
+        $views = ThemeService::getDefaultViewArray(); // views possibili
         /*
         $views_p = $this->panel->getViews(); //undercostruction..
         dddx([
@@ -62,9 +62,9 @@ class HtmlPanelPresenter implements PanelPresenterContract {
             'panel' => $views_p,
         ]);
         */
-        //$mod_trad = $this->panel->getModuleNameLow().'::'.last($containers);
+        // $mod_trad = $this->panel->getModuleNameLow().'::'.last($containers);
         $mod_trad = $this->panel->getTradMod();
-        //--- per passare la view all'interno dei componenti
+        // --- per passare la view all'interno dei componenti
         View::composer(
             '*',
             function ($view_params) use ($view): void {
@@ -73,7 +73,7 @@ class HtmlPanelPresenter implements PanelPresenterContract {
                 View::share('trad', $trad);
                 View::share('lang', \App::getLocale());
                 View::share('_panel', $this->panel);
-                //\View::share('mod_trad', $mod_trad);
+                // \View::share('mod_trad', $mod_trad);
             }
         );
 
@@ -105,7 +105,7 @@ class HtmlPanelPresenter implements PanelPresenterContract {
             'rows' => $rows,
             'rows_err' => $rows_err,
             'mod_trad' => $mod_trad,
-            'trad_mod' => $mod_trad, /// da sostiutire ed uccidere
+            'trad_mod' => $mod_trad, // / da sostiutire ed uccidere
             'params' => $route_params,
             'routename' => $route_name,
             'modal' => $modal,
@@ -129,6 +129,6 @@ class HtmlPanelPresenter implements PanelPresenterContract {
             FileService::viewCopy('theme::'.$piece, 'pub_theme::'.$piece);
         }
 
-        return view()->make($view_work, $view_params); //->render(); //se metto render , non mi prende piu' i parametri passati con with
+        return view()->make($view_work, $view_params); // ->render(); //se metto render , non mi prende piu' i parametri passati con with
     }
 }

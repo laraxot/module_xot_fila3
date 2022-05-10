@@ -7,10 +7,7 @@ declare(strict_types=1);
 
 namespace Modules\Xot\Models\Panels\Actions;
 
-use Modules\LU\Models\User;
 use Modules\Theme\Services\ThemeService;
-use Modules\Xot\Services\ArrayService;
-use Modules\Xot\Services\XLSService;
 
 /**
  * Class ModelGeneratorAction.
@@ -24,7 +21,7 @@ class ModelGeneratorAction extends XotBasePanelAction {
      * @return mixed
      */
     public function handle() {
-        $view = ThemeService::getView(); //xot::admin.home.acts.xls_import
+        $view = ThemeService::getView(); // xot::admin.home.acts.xls_import
         $view_params = [
             'view' => $view,
         ];
@@ -38,7 +35,5 @@ class ModelGeneratorAction extends XotBasePanelAction {
      * @return mixed
      */
     public function postHandle() {
-        
     }
-
 }

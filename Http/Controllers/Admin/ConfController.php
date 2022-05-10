@@ -7,7 +7,7 @@ namespace Modules\Xot\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
-//--- services
+// --- services
 use Illuminate\Support\Facades\Config;
 use Modules\Settings\Services\ConfService;
 use Modules\Tenant\Services\TenantService;
@@ -22,7 +22,7 @@ class ConfController extends Controller {
      */
     public function index(Request $request) {
         $route_params = optional(\Route::current())->parameters();
-        //$confs = Config::all('localhost');
+        // $confs = Config::all('localhost');
         $tenant_name = TenantService::getName();
         $confs = Config::get($tenant_name);
         $rows = collect($confs)->map(
@@ -38,7 +38,7 @@ class ConfController extends Controller {
 
         return ThemeService::view()
                 ->with('rows', $rows)
-                //->with('row',$row)
+                // ->with('row',$row)
                 ;
     }
 
@@ -48,7 +48,7 @@ class ConfController extends Controller {
         if (! isset($item0)) {
             dddx(['err' => 'item0 is missing']);
             throw new \Exception('item0 is missing');
-            //return;
+            // return;
         }
         $row = config($item0);
 
@@ -61,7 +61,7 @@ class ConfController extends Controller {
     public function update(Request $request) {
         $data = $request->all();
         $route_params = optional(\Route::current())->parameters();
-        //dddx([$data, $route_params]);
+        // dddx([$data, $route_params]);
         $data = collect($data)->except(['_token', '_method'])->all();
 
         extract($route_params);

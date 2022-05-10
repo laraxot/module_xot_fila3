@@ -6,7 +6,7 @@ namespace Modules\Xot\Http\Controllers;
 
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Http\Request;
-//---- services ---
+// ---- services ---
 
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Schema;
@@ -32,13 +32,13 @@ class HomeController extends Controller {
         } catch (\Exception $e) {
             dddx('run migrations');
         }
-        if (null == $home) {
+        if (null === $home) {
             throw new \Exception('home is null');
         }
 
         $home_panel = PanelService::make()->get($home);
 
-        if ('' != $request->_act) {
+        if ('' !== $request->_act) {
             return $home_panel->callItemActionWithGate($request->_act);
         }
 
@@ -64,11 +64,11 @@ class HomeController extends Controller {
     /**
      * @return mixed
      */
-    //public function show(?array $data, $panel=null) {
+    // public function show(?array $data, $panel=null) {
     public function show(Request $request, ?PanelContract $panel = null) {
-        //backtrace(true);
+        // backtrace(true);
         $panel = PanelService::make()->getRequestPanel();
-        if ('' != $request->_act) {
+        if ('' !== $request->_act) {
             return $panel->callItemActionWithGate($request->_act);
         }
 
@@ -81,23 +81,23 @@ class HomeController extends Controller {
      * @return mixed
      */
     public function showOld(Request $request, ?PanelContract $panel = null) {
-        //$request=request();
+        // $request=request();
         $home = null;
         $home = TenantService::model('home');
         $mod_name = PanelService::make()->get($home)->getModuleName();
 
         $home_controller = '\Modules\\'.$mod_name.'\Http\Controllers\HomeController';
 
-        //dddx($home_controller);
+        // dddx($home_controller);
 
-        if ('' != $request->_act) {
+        if ('' !== $request->_act) {
             $home = TenantService::model('home');
             $panel = PanelService::make()->get($home);
 
             return $panel->callItemActionWithGate($request->_act);
         }
 
-        if (class_exists($home_controller) && 'Xot' != $mod_name) {
+        if (class_exists($home_controller) && 'Xot' !== $mod_name) {
             return app($home_controller)->show($request);
         }
 

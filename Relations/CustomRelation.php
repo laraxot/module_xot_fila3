@@ -1,8 +1,8 @@
 <?php
 /**
  * ---
- * 
- * @link https://github.com/johnnyfreeman/laravel-custom-relation/blob/master/src/Relations/Custom.php
+ *
+ * @see https://github.com/johnnyfreeman/laravel-custom-relation/blob/master/src/Relations/Custom.php
  */
 
 declare(strict_types=1);
@@ -55,7 +55,7 @@ class CustomRelation extends Relation {
      * @return void
      */
     public function addConstraints() {
-        call_user_func($this->baseConstraints, $this);
+        \call_user_func($this->baseConstraints, $this);
     }
 
     /**
@@ -64,11 +64,11 @@ class CustomRelation extends Relation {
      * @return void
      */
     public function addEagerConstraints(array $models) {
-        //Parameter #1 $function of function call_user_func expects callable(): mixed, Closure|null given.
-        if (! is_callable($this->eagerConstraints)) {
+        // Parameter #1 $function of function call_user_func expects callable(): mixed, Closure|null given.
+        if (! \is_callable($this->eagerConstraints)) {
             throw new \Exception('eagerConstraints is not callable');
         }
-        call_user_func($this->eagerConstraints, $this, $models);
+        \call_user_func($this->eagerConstraints, $this, $models);
     }
 
     /**
@@ -94,8 +94,8 @@ class CustomRelation extends Relation {
      * @return array
      */
     public function match(array $models, Collection $results, $relation) {
-        //Trying to invoke Closure|null but it might not be a callable.
-        if (! is_callable($this->eagerMatcher)) {
+        // Trying to invoke Closure|null but it might not be a callable.
+        if (! \is_callable($this->eagerMatcher)) {
             throw new \Exception('eagerMatcher is not callable');
         }
 
@@ -124,7 +124,7 @@ class CustomRelation extends Relation {
         // models with the result of those columns as a separate model relation.
         $columns = $this->query->getQuery()->columns ? [] : $columns;
 
-        if ($columns == ['*']) {
+        if ($columns === ['*']) {
             $columns = [$this->related->getTable().'.*'];
         }
 
@@ -135,7 +135,7 @@ class CustomRelation extends Relation {
         // If we actually found models we will also eager load any relationships that
         // have been specified as needing to be eager loaded. This will solve the
         // n + 1 query problem for the developer and also increase performance.
-        if (count($models) > 0) {
+        if (\count($models) > 0) {
             $models = $builder->eagerLoadRelations($models);
         }
 
@@ -152,7 +152,7 @@ class CustomRelation extends Relation {
      *
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    //public function where($column, $operator = null, $value = null, $boolean = 'and') {
+    // public function where($column, $operator = null, $value = null, $boolean = 'and') {
     //    return $this->query->where($column, $operator, $value, $boolean);
-    //}
+    // }
 }

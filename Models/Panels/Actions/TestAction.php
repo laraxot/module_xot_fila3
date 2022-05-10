@@ -6,17 +6,16 @@ namespace Modules\Xot\Models\Panels\Actions;
 
 use Illuminate\Support\Facades\Storage;
 
-//-------- models -----------
+// -------- models -----------
 
-//-------- services --------
+// -------- services --------
 
-//-------- bases -----------
+// -------- bases -----------
 
 /**
  * Class TestAction.
  */
-class TestAction extends XotBasePanelAction
-{
+class TestAction extends XotBasePanelAction {
     public bool $onItem = true;
 
     public bool $onContainer = true;
@@ -24,10 +23,9 @@ class TestAction extends XotBasePanelAction
     /**
      * @return mixed
      */
-    public function handle()
-    {
-        //Storage::disk('dropbox')->put('file.txt', 'Contents');
-        //return 'preso';
-        //return $this->panel->view();
+    public function handle() {
+        // Storage::disk('dropbox')->put('file.txt', 'Contents');
+        // return 'preso';
+        // return $this->panel->view();
     }
 }

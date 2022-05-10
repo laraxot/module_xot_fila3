@@ -12,95 +12,93 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Str;
 use Modules\Theme\Services\ThemeService;
 
-if (! defined('STDIN')) {
-    define('STDIN', fopen('php://stdin', 'r'));
+if (! \defined('STDIN')) {
+    \define('STDIN', fopen('php://stdin', 'r'));
 }
 
-//----- TODO
-//--  1) capire come far fare da chiamato non da consolle "scout:import"
+// ----- TODO
+// --  1) capire come far fare da chiamato non da consolle "scout:import"
 
 /**
  * Class ArtisanService.
  */
-class ArtisanService
-{
+class ArtisanService {
     /**
      * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
      *
      * @return string|Renderable
      */
-    public static function act(string $act)
-    {
-        //da fare anche in noconsole, e magari mettere un policy
+    public static function act(string $act) {
+        // da fare anche in noconsole, e magari mettere un policy
         $module_name = \Request::input('module');
         switch ($act) {
         case 'migrate':
             \DB::purge('mysql');
             \DB::reconnect('mysql');
-            if ('' != $module_name) {
+            if ('' !== $module_name) {
                 echo '<h3>Module '.$module_name.'</h3>';
 
-                return ArtisanService::exe('module:migrate '.$module_name.' --force');
+                return self::exe('module:migrate '.$module_name.' --force');
             } else {
-                return ArtisanService::exe('migrate --force');
+                return self::exe('migrate --force');
             }
             // no break
-        case 'routelist': 
-            return ArtisanService::exe('route:list');
-        case 'queue:flush': 
-            return ArtisanService::exe('queue:flush');
-        case 'routelist1': 
-            return ArtisanService::showRouteList();
-        case 'optimize': 
-            return ArtisanService::exe('optimize');
+        case 'routelist':
+            return self::exe('route:list');
+        case 'queue:flush':
+            return self::exe('queue:flush');
+        case 'routelist1':
+            return self::showRouteList();
+        case 'optimize':
+            return self::exe('optimize');
         case 'clear':
-            echo ArtisanService::exe('cache:clear').PHP_EOL;
-            echo ArtisanService::exe('config:clear').PHP_EOL;
-            echo ArtisanService::exe('event:clear').PHP_EOL;
-            echo ArtisanService::exe('route:clear').PHP_EOL;
-            echo ArtisanService::exe('view:clear').PHP_EOL;
-            echo ArtisanService::exe('debugbar:clear').PHP_EOL;
-            echo ArtisanService::exe('opcache:clear').PHP_EOL;
-            echo ArtisanService::exe('optimize:clear').PHP_EOL;
-            echo ArtisanService::exe('key:generate').PHP_EOL;
+            echo self::exe('cache:clear').PHP_EOL;
+            echo self::exe('config:clear').PHP_EOL;
+            echo self::exe('event:clear').PHP_EOL;
+            echo self::exe('route:clear').PHP_EOL;
+            echo self::exe('view:clear').PHP_EOL;
+            echo self::exe('debugbar:clear').PHP_EOL;
+            echo self::exe('opcache:clear').PHP_EOL;
+            echo self::exe('optimize:clear').PHP_EOL;
+            echo self::exe('key:generate').PHP_EOL;
 
-            //-- non artisan
+            // -- non artisan
             echo self::sessionClear().PHP_EOL;
             echo self::errorClear().PHP_EOL;
             echo self::debugbarClear().PHP_EOL;
             echo PHP_EOL.'DONE'.PHP_EOL;
             break;
-        case 'clearcache': 
-            return ArtisanService::exe('cache:clear');
-        case 'routecache': 
-            return ArtisanService::exe('route:cache');
-        case 'routeclear': 
-            return ArtisanService::exe('route:clear');
-        case 'viewclear': 
-            return ArtisanService::exe('view:clear');
-        case 'configcache': 
-            return ArtisanService::exe('config:cache');
-            //-------------------------------------------------------------------
+        case 'clearcache':
+            return self::exe('cache:clear');
+        case 'routecache':
+            return self::exe('route:cache');
+        case 'routeclear':
+            return self::exe('route:clear');
+        case 'viewclear':
+            return self::exe('view:clear');
+        case 'configcache':
+            return self::exe('config:cache');
+            // -------------------------------------------------------------------
         case 'debugbar:clear':
             self::debugbarClear();
             break;
 
-            //------------------------------------------------------------------
+            // ------------------------------------------------------------------
 
-        case 'module-list': 
-            return ArtisanService::exe('module:list');
-        case 'module-disable': 
-            return ArtisanService::exe('module:disable '.$module_name);
-        case 'module-enable': 
-            return ArtisanService::exe('module:enable '.$module_name);
-            //----------------------------------------------------------------------
+        case 'module-list':
+            return self::exe('module:list');
+        case 'module-disable':
+            return self::exe('module:disable '.$module_name);
+        case 'module-enable':
+            return self::exe('module:enable '.$module_name);
+            // ----------------------------------------------------------------------
         case 'error':
         case 'error-show':
-            return ArtisanService::errorShow();
+            return self::errorShow();
         case 'error-clear':
             return self::errorClear();
 
-            //-------------------------------------------------------------------------
+            // -------------------------------------------------------------------------
         case 'spatiecache-clear':
             /* da vedere se e' necessaria
             try {
@@ -109,22 +107,21 @@ class ArtisanService
                 dddx($e);
             }
             */
-            //case 'spatiecache-clear1': return ArtisanService::exe('responsecache:clear'); //The command "responsecache:clear" does not exist.
+            // case 'spatiecache-clear1': return ArtisanService::exe('responsecache:clear'); //The command "responsecache:clear" does not exist.
 
-        default: 
+        default:
             return '';
         }
 
         return '';
     }
 
-    public static function errorShow(): Renderable
-    {
+    public static function errorShow(): Renderable {
         $view = 'xot::acts.artisan.error-show';
         $files = File::files(storage_path('logs'));
         $log = request('log', '');
         $content = '';
-        if ('' != $log) {
+        if ('' !== $log) {
             if (File::exists(storage_path('logs/'.$log))) {
                 $content = File::get(storage_path('logs/'.$log));
             }
@@ -148,8 +145,7 @@ class ArtisanService
         return view()->make($view, $view_params);
     }
 
-    public static function showRouteList(): Renderable
-    {
+    public static function showRouteList(): Renderable {
         $routeCollection = Route::getRoutes();
         /*
         $view = ThemeService::getViewModule();
@@ -183,66 +179,62 @@ class ArtisanService
     /**
      * @return string
      */
-    public static function errorClear()
-    {
+    public static function errorClear() {
         $files = File::files(storage_path('logs'));
 
         foreach ($files as $file) {
-            if ('log' == $file->getExtension() && false !== $file->getRealPath()) {
-                //Parameter #1 $paths of static method Illuminate\Filesystem\Filesystem::delete() expects array|string, Symfony\Component\Finder\SplFileInfo given.
+            if ('log' === $file->getExtension() && false !== $file->getRealPath()) {
+                // Parameter #1 $paths of static method Illuminate\Filesystem\Filesystem::delete() expects array|string, Symfony\Component\Finder\SplFileInfo given.
                 echo '<br/>'.$file->getRealPath();
 
                 File::delete($file->getRealPath());
             }
         }
 
-        return '<pre>laravel.log cleared !</pre> ('.count($files).' Files )';
+        return '<pre>laravel.log cleared !</pre> ('.\count($files).' Files )';
     }
 
     /**
      * @return string
      */
-    public static function sessionClear()
-    {
+    public static function sessionClear() {
         $files = File::files(storage_path('framework/sessions'));
 
         foreach ($files as $file) {
-            if ('' == $file->getExtension() && false !== $file->getRealPath()) {
-                //echo '<br/>'.$file->getRealPath();
+            if ('' === $file->getExtension() && false !== $file->getRealPath()) {
+                // echo '<br/>'.$file->getRealPath();
 
                 File::delete($file->getRealPath());
 
-                //$file->delete();
+                // $file->delete();
             }
         }
 
-        return 'Session cleared! ('.count($files).' Files )';
+        return 'Session cleared! ('.\count($files).' Files )';
     }
 
     /**
      * @return string
      */
-    public static function debugbarClear()
-    {
+    public static function debugbarClear() {
         $files = File::files(storage_path('debugbar'));
         foreach ($files as $file) {
-            if ('json' == $file->getExtension() && false !== $file->getRealPath()) {
-                //echo '<br/>'.$file->getRealPath();
+            if ('json' === $file->getExtension() && false !== $file->getRealPath()) {
+                // echo '<br/>'.$file->getRealPath();
 
                 File::delete($file->getRealPath());
 
-                //$file->delete();
+                // $file->delete();
             }
         }
 
-        return 'Debugbar Storage cleared! ('.count($files).' Files )';
+        return 'Debugbar Storage cleared! ('.\count($files).' Files )';
     }
 
     /**
      * @param string $command
      */
-    public static function exe($command, array $arguments = []): string
-    {
+    public static function exe($command, array $arguments = []): string {
         try {
             $output = '';
 
@@ -251,9 +243,9 @@ class ArtisanService
 
             return $output;  // dato che mi carico solo le route minime menufull.delete non esiste.. impostare delle route comuni.
         } catch (Exception $e) {
-            //throw new Exception('['.__LINE__.']['.class_basename(__CLASS__).']');
+            // throw new Exception('['.__LINE__.']['.class_basename(__CLASS__).']');
             return '[<pre>'.$e->getMessage().'</pre>]';
-            //dddx(get_class_methods($e));
+            // dddx(get_class_methods($e));
             /*
             $vendor_dir = (realpath(LARAVEL_DIR.'/vendor'));
             if (false === $vendor_dir) {

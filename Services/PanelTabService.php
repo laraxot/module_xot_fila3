@@ -81,7 +81,7 @@ class PanelTabService {
         [$containers, $items] = params2ContainerItem();
         $tabs = $bread->tabs();
         $row = [];
-        if ('' != $bread->guid()) {
+        if ('' !== $bread->guid()) {
             foreach ($tabs as $tab) {
                 $tab_panel = $bread->relatedName($tab);
                 if (Gate::allows('index', $tab_panel)) {
@@ -101,7 +101,7 @@ class PanelTabService {
                         'title' => trans($trans_key.'.label'),
                         'icon' => trans($trans_key.'.icon'),
                         'url' => $tab_panel->url('index'),
-                        'active' => in_array($tab, $containers),
+                        'active' => \in_array($tab, $containers, true),
                     ];
                     $row[] = $tmp;
                 }
@@ -129,18 +129,18 @@ class PanelTabService {
         // $routename = \Route::current()->getName();
         $route_current = \Route::current();
         $route_params = [];
-        if (null != $route_current) {
+        if (null !== $route_current) {
             $route_params = $route_current->parameters();
         }
         [$containers, $items] = params2ContainerItem($route_params);
         $data = [];
         // $items[]=$this->row;
-        if (! is_array($items)) {
+        if (! \is_array($items)) {
             return [];
         }
         // array_unique($items);
         $parents = $this->panel->getParents();
-        if ('' != $this->panel->guid()) {
+        if ('' !== $this->panel->guid()) {
             $parents->push($this->panel);
         }
         // dddx($parents);
@@ -148,13 +148,13 @@ class PanelTabService {
         foreach ($parents as $k => $panel) {
             // $item = $panel->getRow();
             $tabs = [];
-            if (! is_object($panel)) {
+            if (! \is_object($panel)) {
                 return $tabs;
             }
             $tabs = $panel->tabs();
             $row = [];
             // *
-            if (0 == $k) {
+            if (0 === $k) {
                 if (Gate::allows('index', $panel)) {
                     $tmp = new \stdClass();
                     // $tmp->title = '<< Back '; //.'['.get_class($item).']';
@@ -165,7 +165,7 @@ class PanelTabService {
                 }
                 // -----------------------
                 $tmp = new \stdClass();
-                if (in_array($act, ['index_edit', 'edit', 'update'])) {
+                if (\in_array($act, ['index_edit', 'edit', 'update'], true)) {
                     $url = $panel->url('edit');
                 } else {
                     $url = $panel->url('show');
@@ -179,8 +179,8 @@ class PanelTabService {
                     $tmp->active = request()->routeIs('admin.containers.'.$act);
                 }
                 */
-                $tmp->active = request()->url() == $url;
-                if (null != $panel->guid()) {
+                $tmp->active = request()->url() === $url;
+                if (null !== $panel->guid()) {
                     $row[] = $tmp;
                 }
                 // ----------------------
@@ -191,18 +191,18 @@ class PanelTabService {
                 // dddx($tabs);
                 $tmp = new \stdClass();
 
-                if (! is_array($tab)) {
+                if (! \is_array($tab)) {
                     // $tmp = new \stdClass();
                     $tmp->title = $tab;
                     $tmp->panel = $panel;
 
-                    if (in_array($act, ['index_edit', 'edit', 'update'])) {
+                    if (\in_array($act, ['index_edit', 'edit', 'update'], true)) {
                         $tab_act = 'index_edit';
                     } else {
                         $tab_act = 'index';
                     }
                     $tmp->url = $panel->relatedUrl($tab, $tab_act);
-                    $tmp->active = in_array($tab, $containers);
+                    $tmp->active = \in_array($tab, $containers, true);
                 } else {
                     //  dddx($tmp);
                     // $tmp = new \stdClass();

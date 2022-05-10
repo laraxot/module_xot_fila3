@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Modules\Xot\Http\Controllers;
 
 use Illuminate\Routing\Controller;
-//--- services ---
+// --- services ---
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Str;
 use Modules\Xot\Contracts\PanelContract;
@@ -15,8 +15,7 @@ use Modules\Xot\Services\PanelService;
 /**
  * Class XotBaseContainerController.
  */
-abstract class XotBaseContainerController extends Controller
-{
+abstract class XotBaseContainerController extends Controller {
     protected PanelContract $panel;
 
     /**
@@ -26,25 +25,23 @@ abstract class XotBaseContainerController extends Controller
      * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse|\Illuminate\Http\Response|mixed
      */
 
-    //Declaration of Modules\Xot\Http\Controllers\XotBaseContainerController::__call($method, $args) should be compatible with Illuminate\Routing\Controller::__call($method, $parameters)
+    // Declaration of Modules\Xot\Http\Controllers\XotBaseContainerController::__call($method, $args) should be compatible with Illuminate\Routing\Controller::__call($method, $parameters)
 
-    public function __call($method, $args)
-    {
+    public function __call($method, $args) {
         $panel = PanelService::make()->getRequestPanel();
-        if (null == $panel) {
+        if (null === $panel) {
             throw new \Exception('uston gavemo un problemon');
         }
         $this->panel = $panel;
 
-        if ('' != request()->input('_act', '')) {
+        if ('' !== request()->input('_act', '')) {
             return $this->__callPanelAct($method, $args);
         }
 
         return $this->__callRouteAct($method, $args);
     }
 
-    public function getController(): string
-    {
+    public function getController(): string {
         /*
         if (null == $this->panel) {
             return '\Modules\Xot\Http\Controllers\XotPanelController';
@@ -70,8 +67,7 @@ abstract class XotBaseContainerController extends Controller
     /**
      * @return mixed
      */
-    public function __callRouteAct(string $method, array $args)
-    {
+    public function __callRouteAct(string $method, array $args) {
         $panel = $this->panel;
         $authorized = Gate::allows($method, $panel);
 
@@ -90,8 +86,7 @@ abstract class XotBaseContainerController extends Controller
     /**
      * @return mixed
      */
-    public function __callPanelAct(string $method, array $args)
-    {
+    public function __callPanelAct(string $method, array $args) {
         $request = request();
         $act = $request->_act;
         $method_act = Str::camel($act);
@@ -109,8 +104,7 @@ abstract class XotBaseContainerController extends Controller
     /**
      * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse|\Illuminate\Http\Response
      */
-    public function notAuthorized(string $method, PanelContract $panel)
-    {
+    public function notAuthorized(string $method, PanelContract $panel) {
         $lang = app()->getLocale();
         if (! \Auth::check()) {
             /*
@@ -136,7 +130,7 @@ abstract class XotBaseContainerController extends Controller
             return redirect()->route('login', ['lang' => $lang, 'referer' => $referer])
                 ->withErrors(['active' => 'login before']);
         }
-        $msg = 'Auth Id ['.\Auth::id().'] not can ['.$method.'] on ['.get_class($panel).']';
+        $msg = 'Auth Id ['.\Auth::id().'] not can ['.$method.'] on ['.\get_class($panel).']';
 
         return response()->view('pub_theme::errors.403', ['msg' => $msg], 403);
     }

@@ -6,8 +6,8 @@ namespace Modules\Xot\Jobs\PanelCrud;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Arr;
-//----------- Requests ----------
-//------------ services ----------
+// ----------- Requests ----------
+// ------------ services ----------
 use Illuminate\Support\Str;
 use Modules\Xot\Contracts\PanelContract;
 use Modules\Xot\Services\ModelService;
@@ -16,24 +16,22 @@ use Modules\Xot\Services\PanelService;
 /**
  * Class StoreJob.
  */
-class StoreJob extends XotBaseJob
-{
+class StoreJob extends XotBaseJob {
     /**
      * Execute the job.
      */
-    public function handle(): PanelContract
-    {
+    public function handle(): PanelContract {
         $row = $this->panel->getRow();
         $this->data = $this->prepareAndValidate($this->data, $this->panel);
         $data = $this->data;
 
-        //---------------------------
-        if (! isset($data['lang']) && in_array('lang', $row->getFillable())) {
+        // ---------------------------
+        if (! isset($data['lang']) && \in_array('lang', $row->getFillable(), true)) {
             $data['lang'] = app()->getLocale();
         }
         if (! isset($data['user_id'])
-            && in_array('user_id', $row->getFillable())
-            && 'user_id' != $row->getKeyName()
+            && \in_array('user_id', $row->getFillable(), true)
+            && 'user_id' !== $row->getKeyName()
         ) {
             $data['user_id'] = \Auth::id();
         }
@@ -42,7 +40,7 @@ class StoreJob extends XotBaseJob
 
         $row->save();
         $parent = $this->panel->getParent();
-        if (is_object($parent)) {
+        if (\is_object($parent)) {
             $parent_row = $parent->getRow();
             $pivot_data = [];
             if (isset($data['pivot'])) {
@@ -52,11 +50,11 @@ class StoreJob extends XotBaseJob
                 $pivot_data['user_id'] = \Auth::id();
             }
             try {
-                //*
+                // *
                 $types = $this->panel->getName();
                 $tmp_rows = $parent_row->$types();
                 $tmp = $tmp_rows->save($row, $pivot_data);
-                //*/
+                // */
 
                 /*
                 dddx([
@@ -65,21 +63,21 @@ class StoreJob extends XotBaseJob
                 ]);
                 */
 
-                //55  Call to an undefined method Illuminate\Database\Eloquent\Builder::save().
-                //$tmp = $this->panel->getRows()->save($row, $pivot_data); //??
+                // 55  Call to an undefined method Illuminate\Database\Eloquent\Builder::save().
+                // $tmp = $this->panel->getRows()->save($row, $pivot_data); //??
 
-                //$tmp = $this->panel->getRows()->create($pivot_data); //??
+                // $tmp = $this->panel->getRows()->create($pivot_data); //??
                 /*
                 Model
                 BelongsToMany
                 HasOneOrMany
                 */
             } catch (\Exception $e) {
-                //message: "Call to undefined method Illuminate\Database\Eloquent\Builder::save()"
+                // message: "Call to undefined method Illuminate\Database\Eloquent\Builder::save()"
                 dddx(
                     ['e' => $e,
-                    'panel' => $this->panel,
-                    'methods' => get_class_methods($this->panel->getRows()),
+                        'panel' => $this->panel,
+                        'methods' => get_class_methods($this->panel->getRows()),
                     ]
                 );
                 /*
@@ -89,8 +87,8 @@ class StoreJob extends XotBaseJob
                 */
             }
 
-            //$tmp=$item->$types()->attach($row->getKey(),$pivot_data);
-            //$tmp = $item->$types()->save($row, $pivot_data);
+            // $tmp=$item->$types()->attach($row->getKey(),$pivot_data);
+            // $tmp = $item->$types()->save($row, $pivot_data);
         }
 
         $this->manageRelationships($row, $data, 'store');
@@ -102,8 +100,7 @@ class StoreJob extends XotBaseJob
         return $this->panel;
     }
 
-    public function saveParentHasManyDeep(): void
-    {
+    public function saveParentHasManyDeep(): void {
     }
 
     /*
@@ -182,8 +179,7 @@ class StoreJob extends XotBaseJob
     //end handle
     */
 
-    public function storeRelationshipsPivot(Model $model, string $name, array $data): void
-    {
+    public function storeRelationshipsPivot(Model $model, string $name, array $data): void {
         /*
         extract($params);
         $types=Str::plural($container);
@@ -195,33 +191,32 @@ class StoreJob extends XotBaseJob
         */
     }
 
-    public function storeRelationshipsHasOne(Model $model, string $name, array $data): void
-    {
+    public function storeRelationshipsHasOne(Model $model, string $name, array $data): void {
         $rows = $model->$name();
         $related = $rows->getRelated();
 
-        //la chiave da aggiornare
+        // la chiave da aggiornare
         $pk = $rows->getRelated()->getKeyName();
         /* if ('user_id' == $pk) {
              dddx([$model]);
          }*/
 
-        //debug_getter_obj(['obj'=>$rows]);
+        // debug_getter_obj(['obj'=>$rows]);
         try {
-            //backtrace(true);
-            //dddx([$model, $name, $data]);
+            // backtrace(true);
+            // dddx([$model, $name, $data]);
             $related = $rows->create($data);
         } catch (\Exception $e) {
-            //"SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry '1' for key 'PRIMARY' (SQL: insert into `liveuser_users` (`first_name`, `last_name`, `email`, `user_id`, `created_by`, `updated_by`, `updated_at`, `created_at`) values (gfdsfs, fdsfds, fds
-            //dddx(['e' => $e->getMessage(), 'data' => $data]);
+            // "SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry '1' for key 'PRIMARY' (SQL: insert into `liveuser_users` (`first_name`, `last_name`, `email`, `user_id`, `created_by`, `updated_by`, `updated_at`, `created_at`) values (gfdsfs, fdsfds, fds
+            // dddx(['e' => $e->getMessage(), 'data' => $data]);
             $data = collect($data)->only($related->getFillable())->all();
-            //dddx($data);
+            // dddx($data);
 
             $related = $rows->update($data);
-            //$rows->fill($data);
-            //$related = $rows->save();
+            // $rows->fill($data);
+            // $related = $rows->save();
         }
-        if (! $model->$name()->exists()) {//collegamento non riuscito
+        if (! $model->$name()->exists()) {// collegamento non riuscito
             $pk_local = $rows->getLocalKeyName();
             $pk_fore = $rows->getForeignKeyName();
             $data1 = [(string) $pk_local => $related->$pk_fore];
@@ -232,9 +227,8 @@ class StoreJob extends XotBaseJob
     /**
      * Undocumented function.
      */
-    public function storeRelationshipsHasMany(Model $model, string $name, array $data): void
-    {
-        //$rows = $model->$name();
+    public function storeRelationshipsHasMany(Model $model, string $name, array $data): void {
+        // $rows = $model->$name();
     }
 
     /**
@@ -242,39 +236,38 @@ class StoreJob extends XotBaseJob
      *
      * @param array|string|int $data
      */
-    public function storeRelationshipsBelongsTo(Model $model, string $name, $data): void
-    {
-        if (is_string($data) || is_integer($data)) {
+    public function storeRelationshipsBelongsTo(Model $model, string $name, $data): void {
+        if (\is_string($data) || \is_int($data)) {
             $model->$name()->associate($data);
-            //$model->save(); //non dovrebbe essere necessario
+            // $model->save(); //non dovrebbe essere necessario
 
             return;
         }
-        //$model può essere il modello Profile di ClubReport
-        //$name ad esempio può essere la stringa con il nome della relazione region
-        //che contiene la lista delle regioni, e parte dal modello Profile
-        //quindi $rows->$name() andrà ad aprire la relazione Region del modello Profile
-        //la suddetta relazione verrà chiamata $rows
+        // $model può essere il modello Profile di ClubReport
+        // $name ad esempio può essere la stringa con il nome della relazione region
+        // che contiene la lista delle regioni, e parte dal modello Profile
+        // quindi $rows->$name() andrà ad aprire la relazione Region del modello Profile
+        // la suddetta relazione verrà chiamata $rows
 
         $rows = $model->$name();
-        //debug_getter_obj(['obj'=>$rows]);
+        // debug_getter_obj(['obj'=>$rows]);
 
-        //dddx([$rows]);
+        // dddx([$rows]);
 
-        //sicchè $rows sarà nel caso di esempio, la relazione BelongsTo region appartenente a Profile
-        //in questa relazione salverò dei dati
+        // sicchè $rows sarà nel caso di esempio, la relazione BelongsTo region appartenente a Profile
+        // in questa relazione salverò dei dati
 
-        //var_dump([$rows->getForeignKeyName() => $data]);
+        // var_dump([$rows->getForeignKeyName() => $data]);
 
-        //dddx([$model, $data, $rows, $rows->getRelated()->find($data)]);
+        // dddx([$model, $data, $rows, $rows->getRelated()->find($data)]);
         // !!! SE E? UN ARRAY DARA? ERROR
         $associated = $rows->getRelated()->find($data);
 
-        //serve ad associare un modello padre ad un modello figlio, tramite chiave esterna del figlio
-        //esempio region_id
+        // serve ad associare un modello padre ad un modello figlio, tramite chiave esterna del figlio
+        // esempio region_id
         $model->$name()->associate($associated);
 
-        //dopo aver associato bisogna salvà er modello
+        // dopo aver associato bisogna salvà er modello
         $model->save();
 
         /*$related = $rows->create($data);
@@ -291,8 +284,7 @@ class StoreJob extends XotBaseJob
     /**
      * Undocumented function.
      */
-    public function storeRelationshipsMorphOne(Model $model, string $name, array $data): void
-    {
+    public function storeRelationshipsMorphOne(Model $model, string $name, array $data): void {
         if (! isset($data['lang']) /* && in_array('lang', $row->getFillable()) */) {
             $data['lang'] = app()->getLocale();
         }
@@ -303,10 +295,9 @@ class StoreJob extends XotBaseJob
         }
     }
 
-    public function storeRelationshipsMorphToMany(Model $model, string $name, array $data): void
-    {
-        //dddx(\Request::all());
-        //return ;
+    public function storeRelationshipsMorphToMany(Model $model, string $name, array $data): void {
+        // dddx(\Request::all());
+        // return ;
 
         if (! Arr::isAssoc($data)) {
             $data = collect($data)->map(
@@ -321,12 +312,12 @@ class StoreJob extends XotBaseJob
                     return $res->getKey().'';
                 }
             )->all();
-            //dddx($data);
+            // dddx($data);
             $model->$name()->sync($data);
         }
 
         foreach ($data as $k => $v) {
-            if (is_array($v)) {
+            if (\is_array($v)) {
                 if (! isset($v['pivot'])) {
                     $v['pivot'] = [];
                 }
@@ -349,18 +340,17 @@ class StoreJob extends XotBaseJob
                 dddx($related);
                 //dddx($params);
                 */
-                //$model->$name()->attach()
-                //dddx('semplice assegnazione');
+                // $model->$name()->attach()
+                // dddx('semplice assegnazione');
             }
         }
     }
 
-    public function storeRelationshipsHasManyThrough(Model $model, string $name, array $data): void
-    {
+    public function storeRelationshipsHasManyThrough(Model $model, string $name, array $data): void {
         $rows = $model->$name();
         $throughKey = $model->$name()->getRelated()->getKeyName();
 
-        //in realtà sarebbe sufficiente create però proviamo
+        // in realtà sarebbe sufficiente create però proviamo
         if (! empty($data['to'])) {
             $rows->getParent()->updateOrCreate([$rows->getForeignKeyName() => $this->panel->row->{$rows->getFirstKeyName()}, $rows->getFirstKeyName() => $this->panel->row->{$rows->getFirstKeyName()}]);
 
@@ -375,8 +365,7 @@ class StoreJob extends XotBaseJob
     /**
      * Undocumented function.
      */
-    public function storeRelationshipsBelongsToMany(Model $model, string $name, array $data): void
-    {
+    public function storeRelationshipsBelongsToMany(Model $model, string $name, array $data): void {
         if (isset($data['from']) || isset($data['to'])) {
             $this->saveMultiselectTwoSides($model, $name, $data);
 
@@ -388,18 +377,17 @@ class StoreJob extends XotBaseJob
     /**
      * Undocumented function.
      */
-    public function saveMultiselectTwoSides(Model $model, string $name, array $data): void
-    {
-        //passo request o direttamente data ?
+    public function saveMultiselectTwoSides(Model $model, string $name, array $data): void {
+        // passo request o direttamente data ?
 
         $items = $model->$name();
         $related = $items->getRelated();
-        //dddx($related);
+        // dddx($related);
         $container_obj = $model;
         $container = ModelService::make()->setModel($container_obj)->getPostType();
-        //$items_key = $container_obj->getKeyName();
+        // $items_key = $container_obj->getKeyName();
         $items_key = $related->getKeyName();
-        //dddx($items_key);//user_id
+        // dddx($items_key);//user_id
         $items_0 = $items->get()->pluck($items_key);
 
         if (! isset($data['to'])) {
@@ -415,7 +403,7 @@ class StoreJob extends XotBaseJob
         } catch (\Exception $e) {
             $items->attach($items_add->all());
         }
-        $status = 'collegati ['.\implode(', ', $items_add->all()).'] scollegati ['.\implode(', ', $items_sub->all()).']';
+        $status = 'collegati ['.implode(', ', $items_add->all()).'] scollegati ['.implode(', ', $items_sub->all()).']';
         \Session::flash('status', $status);
     }
-}//end storeJob
+}// end storeJob

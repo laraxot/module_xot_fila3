@@ -9,14 +9,12 @@ use League\Flysystem\Filesystem;
 use Spatie\Dropbox\Client as DropboxClient;
 use Spatie\FlysystemDropbox\DropboxAdapter;
 
-trait DropboxTrait
-{
+trait DropboxTrait {
     // lo riabilitiamo in futuro
-    private function registerDropbox(): void
-    {
+    private function registerDropbox(): void {
         Storage::extend(
             'dropbox', function ($app, $config) {
-                //dddx($config);
+                // dddx($config);
 
                 $client = new DropboxClient($config['authorizationToken']);
                 $adapter = new DropboxAdapter($client);

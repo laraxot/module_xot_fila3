@@ -4,13 +4,12 @@ declare(strict_types=1);
 
 namespace Modules\Xot\Models\Panels;
 
-//--- Services --
+// --- Services --
 
 /**
  * Class TranslationPanel.
  */
-class TranslationPanel extends XotBasePanel
-{
+class TranslationPanel extends XotBasePanel {
     /**
      * The model the resource corresponds to.
      */
@@ -19,8 +18,7 @@ class TranslationPanel extends XotBasePanel
     /**
      * Undocumented function.
      */
-    public function actions(): array
-    {
+    public function actions(): array {
         return [
             new Actions\ClearDuplicatesTransAction(),
         ];

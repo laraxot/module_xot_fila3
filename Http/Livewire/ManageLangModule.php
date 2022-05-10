@@ -15,8 +15,7 @@ use Nwidart\Modules\Facades\Module;
 /**
  * Class ManageLangModule.
  */
-class ManageLangModule extends Component
-{
+class ManageLangModule extends Component {
     public string $module_name;
     public string $lang_name;
     public string $path;
@@ -28,8 +27,7 @@ class ManageLangModule extends Component
      */
     protected $listeners = ['updateArray'];
 
-    public function mount(string $module_name): void
-    {
+    public function mount(string $module_name): void {
         $this->module_name = $module_name;
         $lang = app()->getLocale();
         $path = Module::getModulePath($this->module_name);
@@ -41,14 +39,13 @@ class ManageLangModule extends Component
     /**
      * Undocumented function.
      */
-    public function render(): Renderable
-    {
-        //$model->translations  ???
+    public function render(): Renderable {
+        // $model->translations  ???
 
         $files = File::files($this->path);
         $files = collect($files)->filter(
             function ($file) {
-                return 'php' == $file->getExtension();
+                return 'php' === $file->getExtension();
             }
         );
 
@@ -65,13 +62,12 @@ class ManageLangModule extends Component
     /**
      * Undocumented function.
      */
-    public function edit(string $lang_name): void
-    {
+    public function edit(string $lang_name): void {
         $this->lang_name = $lang_name;
         $mod_trad = $this->module_name.'::'.$this->lang_name;
-        $form_data = Lang::get($mod_trad, []); //progressioni::prova
+        $form_data = Lang::get($mod_trad, []); // progressioni::prova
 
-        //$form_data = File::getRequire($this->path.'/'.$lang_name.'.php');
+        // $form_data = File::getRequire($this->path.'/'.$lang_name.'.php');
 
         $this->emit('editModalArray', $form_data);
     }
@@ -79,8 +75,7 @@ class ManageLangModule extends Component
     /**
      * Undocumented function.
      */
-    public function updateArray(array $form_data): void
-    {
+    public function updateArray(array $form_data): void {
         $filename = $this->path.'/'.$this->lang_name.'.php';
         ArrayService::save(['filename' => $filename, 'data' => $form_data]);
     }

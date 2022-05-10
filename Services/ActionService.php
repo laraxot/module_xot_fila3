@@ -21,11 +21,11 @@ class ActionService {
      */
     public static function __callStatic($name, $arguments) {
         $xot = TenantService::config('xra');
-        if (! is_array($xot)) {
+        if (! \is_array($xot)) {
             throw new Exception('['.__LINE__.']['.class_basename(__CLASS__).']');
         }
         $theme = inAdmin() ? $xot['adm_theme'] : $xot['pub_theme'];
-        //$theme = 'AdminLTE';
+        // $theme = 'AdminLTE';
         $action_class = '\Themes\\'.$theme.'\Actions\RootAction';
 
         return app($action_class)->{$name}(...$arguments);

@@ -11,16 +11,14 @@ namespace Modules\Xot\Tests\Feature;
 use Illuminate\Support\Facades\App;
 use Tests\TestCase;
 
-class RouteTest extends TestCase
-{
+class RouteTest extends TestCase {
     /**
      * A basic test example.
      *
      * @return void
      */
-    public function testRoutes()
-    {
-        //dddx('/'.App::getlocale().'/home');
+    public function testRoutes() {
+        // dddx('/'.App::getlocale().'/home');
 
         $appURL = env('APP_URL');
 
@@ -28,7 +26,7 @@ class RouteTest extends TestCase
             '/',
             // '/'.App::getlocale().'/',
             // '/home',
-            //'/'.App::getlocale().'/home', //questo url mi da errore
+            // '/'.App::getlocale().'/home', //questo url mi da errore
         ];
 
         echo PHP_EOL;
@@ -37,10 +35,10 @@ class RouteTest extends TestCase
             $response = $this->get($url);
             if (200 !== (int) $response->status()) {
                 echo $appURL.$url.' (FAILED) did not return a 200.';
-                $this->assertTrue(false);
+                static::assertTrue(false);
             } else {
                 echo $appURL.$url.' (success ?)';
-                $this->assertTrue(true);
+                static::assertTrue(true);
             }
             echo PHP_EOL;
         }

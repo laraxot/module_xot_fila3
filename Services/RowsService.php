@@ -12,10 +12,10 @@ use Illuminate\Support\Str;
 use Modules\Theme\Services\FieldFilter;
 use Modules\Xot\Contracts\RowsContract;
 
-//----------- Requests ----------
+// ----------- Requests ----------
 
 // per dizionario morph
-//------------ services ----------
+// ------------ services ----------
 
 /**
  * Class ModelService.
@@ -29,8 +29,8 @@ class RowsService {
      * @return RowsContract
      */
     public static function search($query, ?string $q, array $search_fields = []) {
-        //backtrace(true);
-        //dddx([$query, $q, $search_fields]);
+        // backtrace(true);
+        // dddx([$query, $q, $search_fields]);
 
         if (! isset($q)) {
             return $query;
@@ -50,17 +50,17 @@ class RowsService {
                 Filter::search('q', ['first_name', 'last_name', 'address.city', 'address.country']),
             ]);
         */
-        //dddx($test);
+        // dddx($test);
 
-        $tipo = 0; //0 a mano , 1 repository, 2 = scout
+        $tipo = 0; // 0 a mano , 1 repository, 2 = scout
         switch ($tipo) {
         case 0:
-            //$search_fields = $this->search(); //campi di ricerca
-            if (0 === \count($search_fields)) { //se non gli passo nulla, cerco in tutti i fillable
-                //61     Call to an undefined method Illuminate\Database\Eloquent\Model|Modules\Xot\Contracts\RowsContract::getFillable().
+            // $search_fields = $this->search(); //campi di ricerca
+            if (0 === \count($search_fields)) { // se non gli passo nulla, cerco in tutti i fillable
+                // 61     Call to an undefined method Illuminate\Database\Eloquent\Model|Modules\Xot\Contracts\RowsContract::getFillable().
                 $search_fields = $model->getFillable();
             }
-            //$table = $model->getTable();
+            // $table = $model->getTable();
             if (\strlen($q) > 1) {
                 $query = $query->where(
                     function ($subquery) use ($search_fields, $q): void {
@@ -68,18 +68,18 @@ class RowsService {
                             if (Str::contains($v, '.')) {
                                 [$rel, $rel_field] = explode('.', $v);
 
-                                //dddx([$rel, $rel_field]);
+                                // dddx([$rel, $rel_field]);
                                 $subquery = $subquery->orWhereHas(
                                     $rel,
                                     function (Builder $subquery1) use ($rel_field, $q): void {
-                                        //dddx($subquery1->getConnection()->getDatabaseName());
+                                        // dddx($subquery1->getConnection()->getDatabaseName());
 
                                         $subquery1->where($rel_field, 'like', '%'.$q.'%');
-                                        //dddx($subquery1);
+                                        // dddx($subquery1);
                                     }
                                 );
 
-                            //dddx($subquery);
+                            // dddx($subquery);
                             } else {
                                 $subquery = $subquery->orWhere($v, 'like', '%'.$q.'%');
                             }
@@ -87,23 +87,23 @@ class RowsService {
                     }
                 );
             }
-            //dddx(['q' => $q, 'sql' => $query->toSql()]);
+            // dddx(['q' => $q, 'sql' => $query->toSql()]);
 
             return $query;
                 // break;
         case 1:
-            //$repo = with(new \Modules\Food\Repositories\RestaurantRepository())->search('grom');
-            //dddx($repo->paginate());
-            //return $repo;
+            // $repo = with(new \Modules\Food\Repositories\RestaurantRepository())->search('grom');
+            // dddx($repo->paginate());
+            // return $repo;
             break;
         case 2:
             break;
-        } //end switch
+        } // end switch
 
         return $query;
     }
 
-    //end applySearch
+    // end applySearch
 
     /**
      * Undocumented function.
@@ -113,11 +113,11 @@ class RowsService {
      * @return RowsContract
      */
     public static function filter($query, array $filters, array $filters_fields) {
-        //https://github.com/spatie/laravel-query-builder
+        // https://github.com/spatie/laravel-query-builder
 
-        //$filters_fields = $this->filters();
+        // $filters_fields = $this->filters();
         if (null === $query) {
-            //return null;
+            // return null;
             throw new Exception('['.__LINE__.']['.class_basename(__CLASS__).']');
         }
         /*
@@ -130,13 +130,13 @@ class RowsService {
             ->map(
                 function ($item) {
                     $vars = get_object_vars($item);
-                    //dddx($vars);
+                    // dddx($vars);
 
                     return FieldFilter::make()->setVars($vars);
                 }
             );
 
-        //124    Access to an undefined property object::$param_name.
+        // 124    Access to an undefined property object::$param_name.
         $filters_rules = $filters_fields
             ->filter(
                 function ($item) {
@@ -154,7 +154,7 @@ class RowsService {
             Session::flash('error', 'error');
             $id = $query->getModel()->getKeyName();
 
-            return $query->whereNull($id); //restituisco query vuota
+            return $query->whereNull($id); // restituisco query vuota
         }
 
         $filters_fields = collect($filters_fields)

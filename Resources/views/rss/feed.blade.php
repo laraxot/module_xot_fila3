@@ -8,7 +8,7 @@
         <description><![CDATA[ {{ config('metatag.description') }} ]]></description>
         <language>{{ $lang }}</language>
         <pubDate>{{ now() }}</pubDate>
-        
+
         @foreach($items as $item)
             <item>
                 <title><![CDATA[{{ $item->title }}]]></title>

@@ -4,31 +4,31 @@ declare(strict_types=1);
 
 namespace Modules\Xot\Jobs\PanelCrud;
 
-use stdClass;
-use Exception;
 use Carbon\Carbon;
-use Illuminate\Support\Str;
-use Illuminate\Http\Request;
+use Exception;
 use Illuminate\Bus\Queueable;
-use Illuminate\Queue\SerializesModels;
-use Modules\Xot\Services\ModelService;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Queue\InteractsWithQueue;
-use Modules\Xot\Contracts\PanelContract;
-use Illuminate\Support\Facades\Validator;
 use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Bus\Dispatchable;
+use Illuminate\Http\Request;
+use Illuminate\Queue\InteractsWithQueue;
+use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Str;
+use Modules\Xot\Contracts\PanelContract;
+use Modules\Xot\Services\ModelService;
+use stdClass;
 
-//----------- Requests ----------
-//------------ services ----------
+// ----------- Requests ----------
+// ------------ services ----------
 
 /**
  * Class XotBaseJob.
  * NON DEVE ESSERE ShouldQueue, se no non lo esegue subito con dispatchSync, dispatchNow sara' deprecato.
  */
-abstract class XotBaseJob /*implements ShouldQueue*/
+abstract class XotBaseJob /* implements ShouldQueue */
 {
-    //use Traits\CommonTrait;
+    // use Traits\CommonTrait;
     use Dispatchable;
     use InteractsWithQueue;
     use Queueable;
@@ -57,7 +57,7 @@ abstract class XotBaseJob /*implements ShouldQueue*/
      * manage the relationships.
      */
     public function manageRelationships(Model $model, array $data, string $act): void {
-        $relationships = ModelService::make()->setModel($model)->getRelationshipsAndData( $data);
+        $relationships = ModelService::make()->setModel($model)->getRelationshipsAndData($data);
         /*
         dddx([
             '$model' => $model,
@@ -104,10 +104,10 @@ abstract class XotBaseJob /*implements ShouldQueue*/
             /*
             *  Se e' un oggetto e' già convertito
             **/
-            if (! is_object($value)) {
+            if (! \is_object($value)) {
                 $func = 'Conv'.$field->type;
                 $value_new = $this->$func($field, $value);
-                //$this->request->add([$field->name => $value_new]);
+                // $this->request->add([$field->name => $value_new]);
                 $data[$field->name] = $value_new;
             }
         }
@@ -131,16 +131,16 @@ abstract class XotBaseJob /*implements ShouldQueue*/
         $fillable = $panel->row->getFillable();
         $fillable_from_data = collect($fillable)->intersect(array_keys($data));
         foreach ($fillable_from_data as $fill) {
-            if (! in_array($fill, array_keys($rules))) {
+            if (! \in_array($fill, array_keys($rules), true)) {
                 $rules[$fill] = '';
             }
         }
 
-        //dddx(['data' => $data, 'rules' => $rules, 'panel_class' => get_class($panel), 'act' => $act]);
+        // dddx(['data' => $data, 'rules' => $rules, 'panel_class' => get_class($panel), 'act' => $act]);
 
         $validator = Validator::make($data, $rules);
 
-        return $validator->validate(); //fa tutto da solo
+        return $validator->validate(); // fa tutto da solo
     }
 
     /**
@@ -159,7 +159,7 @@ abstract class XotBaseJob /*implements ShouldQueue*/
      *  Method Modules\Xot\Jobs\PanelCrud\XotBaseJob::ConvDate() should return Carbon\Carbon|false|null but returns 0|0.0|''|'0'|array()|false|null.
      */
     public function ConvDate(string $field, string $value): ?Carbon {
-        if (null == $value) {
+        if (null === $value) {
             return null;
         }
         $value_new = Carbon::createFromFormat('d/m/Y', $value);
@@ -174,8 +174,7 @@ abstract class XotBaseJob /*implements ShouldQueue*/
      * Method Modules\Xot\Jobs\PanelCrud\XotBaseJob::ConvDateTime() should return Carbon\Carbon|false|null but returns 0|0.0|''|'0'|array()|false|null.
      */
     public function ConvDateTime(stdClass $field, string $value): ?Carbon {
-
-        if (null == $value) {
+        if (null === $value) {
             return null;
         }
 
@@ -189,11 +188,9 @@ abstract class XotBaseJob /*implements ShouldQueue*/
 
     /**
      *  Method Modules\Xot\Jobs\PanelCrud\XotBaseJob::ConvDateTime2Fields() should return Carbon\Carbon|false|null but returns 0|0.0|''|'0'|array()|false|null.
-     *
-
      */
-    public function ConvDateTime2Fields(stdClass $field, string $value):?Carbon {
-        if (null == $value) {
+    public function ConvDateTime2Fields(stdClass $field, string $value): ?Carbon {
+        if (null === $value) {
             return $value;
         }
         $value_new = Carbon::createFromFormat('d/m/Y H:i', $value);

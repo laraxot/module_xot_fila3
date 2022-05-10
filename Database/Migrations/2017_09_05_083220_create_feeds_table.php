@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 use Illuminate\Database\Schema\Blueprint;
-//----- models -----
+// ----- models -----
 use Modules\Xot\Database\Migrations\XotBaseMigration;
 
 /*
@@ -13,27 +13,24 @@ doesn't exist (SQL: select count(*) as aggregate from `feeds` where (`feeds`.`id
 url":"https://www.foodfriendfinder.com/it/feed/restaurant"
 */
 
-class CreateFeedsTable extends XotBaseMigration
-{
+class CreateFeedsTable extends XotBaseMigration {
     /**
      * Run the migrations.
      *
      * @return void
      */
-    public function up()
-    {
-        //-- CREATE --
+    public function up() {
+        // -- CREATE --
         $this->tableCreate(
             function (Blueprint $table) {
-                    $table->increments('id');
-                    $table->string('created_by')->nullable();
-                    $table->string('updated_by')->nullable();
-                    $table->timestamps();
+                $table->increments('id');
+                $table->string('created_by')->nullable();
+                $table->string('updated_by')->nullable();
+                $table->timestamps();
             }
         );
 
-
-        //-- UPDATE --
+        // -- UPDATE --
         $this->tableUpdate(
             function (Blueprint $table) {
             }

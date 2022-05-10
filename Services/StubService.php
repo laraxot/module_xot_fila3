@@ -60,7 +60,7 @@ class StubService {
     }
 
     public function setModel(Model $model): self {
-        $this->model_class = get_class($model);
+        $this->model_class = \get_class($model);
 
         return $this;
     }
@@ -111,7 +111,7 @@ class StubService {
 
     public function getNamespace(): string {
         $ns = $this->getClass();
-        $ns = implode('\\', array_slice(explode('\\', $ns), 0, -1));
+        $ns = implode('\\', \array_slice(explode('\\', $ns), 0, -1));
 
         if (Str::startsWith($ns, '\\')) {
             $ns = Str::after($ns, '\\');
@@ -122,7 +122,7 @@ class StubService {
 
     public function getModelNamespace(): string {
         $ns = $this->model_class;
-        $ns = implode('\\', array_slice(explode('\\', $ns), 0, -1));
+        $ns = implode('\\', \array_slice(explode('\\', $ns), 0, -1));
 
         if (Str::startsWith($ns, '\\')) {
             $ns = Str::after($ns, '\\');
@@ -246,7 +246,7 @@ class StubService {
         }
 
         return $shouldBeIncluded
-            && ! in_array($column->getName(), $timestamps);
+            && ! \in_array($column->getName(), $timestamps, true);
     }
 
     /**
@@ -257,7 +257,7 @@ class StubService {
      */
     protected function mapToFactory($key, $value = null): array {
         return [
-            $key => is_null($value) ? $value : "'{$key}' => $value",
+            $key => null === $value ? $value : "'{$key}' => $value",
         ];
     }
 
@@ -280,7 +280,7 @@ class StubService {
             return collect([]);
         }
         $fillables = $model->getFillable();
-        if (0 == count($fillables)) {
+        if (0 === \count($fillables)) {
             $fillables = $model->getConnection()->getSchemaBuilder()->getColumnListing($model->getTable());
         }
 
@@ -381,7 +381,7 @@ class StubService {
                 throw new \Exception('autoloader_reflector false');
             }
 
-            return dirname($class_file_name);
+            return \dirname($class_file_name);
         }
         $class = $this->model_class;
 
@@ -476,7 +476,7 @@ class StubService {
         $fillables = $model->getFillable();
         // dddx($fillables);
 
-        if (count($fillables) <= 1) {
+        if (\count($fillables) <= 1) {
             $fillables = $model->getConnection()->getSchemaBuilder()->getColumnListing($model->getTable());
             $fillables = collect($fillables)->except(
                 [
@@ -489,7 +489,7 @@ class StubService {
             if (false === $class_filename) {
                 throw new \Exception('autoloader_reflector err');
             }
-            $fillables_str = chr(13).chr(10).'    protected $fillable=[\''.implode("','", $fillables)."'];".chr(13).chr(10);
+            $fillables_str = \chr(13).\chr(10).'    protected $fillable=[\''.implode("','", $fillables)."'];".\chr(13).\chr(10);
             $class_content = File::get($class_filename);
             $class_content_before = Str::before($class_content, '{');
             $class_content_after = Str::after($class_content, '{');
@@ -579,7 +579,7 @@ class StubService {
         shuffle($models);
         $brother_file = collect($models)
             ->filter(function ($file) {
-                return 'php' == $file->getExtension();
+                return 'php' === $file->getExtension();
             })
             ->first();
         // dddx(get_class_methods($brother_file));

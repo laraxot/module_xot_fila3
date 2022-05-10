@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Modules\Xot\Models;
 
-//------ ext models---
+// ------ ext models---
 use Modules\Xot\Models\Traits\WidgetTrait;
 
 /**
@@ -32,6 +32,7 @@ use Modules\Xot\Models\Traits\WidgetTrait;
  * @property \Illuminate\Database\Eloquent\Model|\Eloquent                        $linked
  * @property \Illuminate\Database\Eloquent\Collection|Widget[]                    $widgets
  * @property int|null                                                             $widgets_count
+ *
  * @method static \Illuminate\Database\Eloquent\Builder|Widget newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Widget newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Widget ofLayoutPosition($layout_position)
@@ -52,6 +53,7 @@ use Modules\Xot\Models\Traits\WidgetTrait;
  * @method static \Illuminate\Database\Eloquent\Builder|Widget whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Widget whereUpdatedBy($value)
  * @mixin \Eloquent
+ *
  * @method static \Modules\Xot\Database\Factories\WidgetFactory factory(...$parameters)
  * @mixin IdeHelperWidget
  */
@@ -63,9 +65,9 @@ class Widget extends BaseModel {
      */
     protected $fillable = [
         'id',
-        'post_type', 'post_id', //nullablemorph
+        'post_type', 'post_id', // nullablemorph
         'title',
-        //'subtitle',
+        // 'subtitle',
         'blade', 'pos', 'model', 'limit',
         'order_by', 'image_src', 'layout_position',
     ];
@@ -96,7 +98,7 @@ class Widget extends BaseModel {
      */
     public function toHtml(array $params = null) {
         $view = 'pub_theme::layouts.widgets';
-        if (null != $this->layout_position) {
+        if (null !== $this->layout_position) {
             $view .= '.'.$this->layout_position;
         }
         $view .= '.'.$this->blade;
@@ -106,7 +108,7 @@ class Widget extends BaseModel {
             'row' => $this->linked,
             'widget' => $this,
         ];
-        if (null != $params) {
+        if (null !== $params) {
             $view_params['params'] = $params;
         }
         if (! view()->exists($view)) {

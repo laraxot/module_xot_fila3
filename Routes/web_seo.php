@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Route;
 $namespace = '\Modules\Xot\Http\Controllers';
 $middleware = [
     'web',
-    //\Modules\Xot\Http\Middleware\PanelMiddleware::class,
+    // \Modules\Xot\Http\Middleware\PanelMiddleware::class,
 ];
 
 Route::middleware($middleware)

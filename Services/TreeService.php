@@ -7,16 +7,14 @@ namespace Modules\Xot\Services;
 use Illuminate\Support\Collection;
 use Modules\Xot\Contracts\PanelContract;
 
-class TreeService
-{
-    public static function mapItems(Collection $coll, ?PanelContract $parent = null, /*bool $in_admin,*/ array $route_params): Collection
-    {
+class TreeService {
+    public static function mapItems(Collection $coll, ?PanelContract $parent, /* bool $in_admin, */ array $route_params): Collection {
         return $coll->map(
             function ($item) use ($parent, $route_params) {
                 $panel = PanelService::make()->get($item)->setParent($parent);
                 $panel->setInAdmin(true);
                 $panel->setRouteParams($route_params);
-                //dddx($panel->getXotModelName());
+                // dddx($panel->getXotModelName());
 
                 if (method_exists($panel, 'getActs')) {
                     $acts = $panel->getActs();
@@ -32,19 +30,19 @@ class TreeService
                         ],
                     ];
                 }
-                //*
+                // *
                 foreach ($panel->itemActions() as $action) {
-                    //$action->btnHtml(['title' => true, 'class' => 'dropdown-item','in_admin'=>$in_admin])
+                    // $action->btnHtml(['title' => true, 'class' => 'dropdown-item','in_admin'=>$in_admin])
                     $act = [
                         'title' => $action->getTitle(),
                         'url' => $action->getUrl(),
                     ];
                     $acts[] = $act;
                 }
-                //*/
-                //dddx($panel);
+                // */
+                // dddx($panel);
                 if (! method_exists($panel, 'subsIconMenuAdmin')) {
-                    throw new \Exception('in ['.get_class($panel).'] not exist [subsIconMenuAdmin] method');
+                    throw new \Exception('in ['.\get_class($panel).'] not exist [subsIconMenuAdmin] method');
                 }
 
                 return [
@@ -52,7 +50,7 @@ class TreeService
                     'title' => $panel->title(),
                     'acts' => $acts,
                     'open' => false,
-                    'subsIconMenuAdmin' => $panel->subsIconMenuAdmin(), //mi dice se ha figli oppure no, per visualizzare (o no) l'icona freccetta delle sottovoci
+                    'subsIconMenuAdmin' => $panel->subsIconMenuAdmin(), // mi dice se ha figli oppure no, per visualizzare (o no) l'icona freccetta delle sottovoci
                 ];
             }
         );

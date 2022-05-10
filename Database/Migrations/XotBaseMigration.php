@@ -12,7 +12,7 @@ use Illuminate\Support\Str;
 use Modules\Xot\Services\StubService;
 use Nwidart\Modules\Facades\Module;
 
-//----- models -----
+// ----- models -----
 
 /**
  * Class XotBaseMigration.
@@ -22,31 +22,31 @@ abstract class XotBaseMigration extends Migration {
 
     protected ?string $model_class = null;
 
-    //*
+    // *
     public function __construct() {
-        if (null == $this->model) {
+        if (null === $this->model) {
             $model = $this->getModel();
-            if ('\Modules\LU\Models\Groupright' == $model) {
+            if ('\Modules\LU\Models\Groupright' === $model) {
                 dddx(debug_backtrace());
             }
             /*if ($model=="\Modules\Food\Models\FoodProfile") {
                 dddx( $this);
             }*/
             // 37     Dead catch - Exception is never thrown in the try block.
-            //try {
+            // try {
             $this->model = app($model);
-            //} catch (\Exception $ex) {
+            // } catch (\Exception $ex) {
             //    $res = StubService::make()->setModelClass($model)->setName('model')->get();
             //    throw new \Exception('<br><br>Table '.get_class($this).' does not have model '.$model.'<br><br>');
-            //}
+            // }
         }
-        //$this->model = new $this->model();
+        // $this->model = new $this->model();
     }
 
-    //*/
+    // */
 
     public function getModel(): string {
-        if (null != $this->model_class) {
+        if (null !== $this->model_class) {
             return $this->model_class;
         }
         $name = class_basename($this);
@@ -57,17 +57,17 @@ abstract class XotBaseMigration extends Migration {
         $mod_path = Module::getPath();
 
         $mod_name = Str::after($filename, $mod_path);
-        $mod_name = explode(DIRECTORY_SEPARATOR, $mod_name)[1];
+        $mod_name = explode(\DIRECTORY_SEPARATOR, $mod_name)[1];
 
         $model_ns = '\Modules\\'.$mod_name.'\Models\\'.$name;
         $model_dir = $mod_path.'/'.$mod_name.'/'.'Models'.'/'.$name.'.php';
-        $model_dir = Str::replace('/', DIRECTORY_SEPARATOR, $model_dir);
+        $model_dir = Str::replace('/', \DIRECTORY_SEPARATOR, $model_dir);
 
         return $model_ns;
     }
 
     public function getTable(): string {
-        if (null == $this->model) {
+        if (null === $this->model) {
             return '';
         }
         $table = $this->model->getTable();
@@ -83,12 +83,12 @@ abstract class XotBaseMigration extends Migration {
      * @return \Illuminate\Database\Schema\Builder
      */
     public function getConn() {
-        //$conn_name=with(new MyModel())->getConnectionName();
-        //\DB::reconnect('mysql');
-        //dddx(config('database'));
-        //\DB::purge('mysql');
-        //\DB::reconnect('mysql');
-        if (null == $this->model) {
+        // $conn_name=with(new MyModel())->getConnectionName();
+        // \DB::reconnect('mysql');
+        // dddx(config('database'));
+        // \DB::purge('mysql');
+        // \DB::reconnect('mysql');
+        if (null === $this->model) {
             throw new \Exception('model is null');
         }
         $conn_name = $this->model->getConnectionName();
@@ -136,7 +136,7 @@ abstract class XotBaseMigration extends Migration {
      * @return bool
      */
     public function tableExists(string $table = null) {
-        if (null == $table) {
+        if (null === $table) {
             $table = $this->getTable();
         }
 
@@ -162,7 +162,7 @@ abstract class XotBaseMigration extends Migration {
             return false;
         }
 
-        return $this->getColumnType($column) == $type;
+        return $this->getColumnType($column) === $type;
     }
 
     /**
@@ -206,7 +206,7 @@ abstract class XotBaseMigration extends Migration {
         $this->getConn()->rename($from, $to);
     }
 
-    //da rivedere
+    // da rivedere
     public function renameColumn(string $from, string $to): void {
         $this->getConn()->renameColumn($from, $to);
     }
@@ -236,4 +236,4 @@ abstract class XotBaseMigration extends Migration {
             $next
         );
     }
-}//end XotBaseMigration
+}// end XotBaseMigration

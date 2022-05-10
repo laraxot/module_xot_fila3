@@ -14,16 +14,14 @@ use Modules\Xot\Services\PanelService;
 /**
  * Class ConfController.
  */
-class ConfsController extends Controller
-{
+class ConfsController extends Controller {
     /**
      * Undocumented function.
      *
      * @return mixed
      */
-    public function index(Request $request)
-    {
-        //$rows = TenantService::getConfigNames();
+    public function index(Request $request) {
+        // $rows = TenantService::getConfigNames();
         $panel = PanelService::make()->getRequestPanel();
 
         return $panel->out();
@@ -34,12 +32,11 @@ class ConfsController extends Controller
      *
      * @return Renderable|string
      */
-    public function edit(Request $request)
-    {
+    public function edit(Request $request) {
         $data = $request->all();
         $route_params = getRouteParameters();
         [$containers,$items] = params2ContainerItem($route_params);
-        $config_name = last($items); //google
+        $config_name = last($items); // google
         $name = TenantService::getName();
         $config_key = Str::replace('/', '.', $name.'/'.$config_name);
         $filename = TenantService::filePath($config_name.'.php');

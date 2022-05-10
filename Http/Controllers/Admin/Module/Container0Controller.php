@@ -9,6 +9,5 @@ use Modules\Xot\Http\Controllers\Admin\XotBaseContainerController;
 /**
  * Class Container0Controller.
  */
-class Container0Controller extends XotBaseContainerController
-{
+class Container0Controller extends XotBaseContainerController {
 }

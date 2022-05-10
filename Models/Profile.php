@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Modules\Xot\Models;
 
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-//use Illuminate\Database\Eloquent\Relations\HasOne;
+// use Illuminate\Database\Eloquent\Relations\HasOne;
 use Modules\Tenant\Services\TenantService;
 
 /**
@@ -81,6 +81,7 @@ use Modules\Tenant\Services\TenantService;
  * @property int|null                                                             $posts_count
  * @property mixed                                                                $url
  * @property \Modules\LU\Models\User|null                                         $user
+ *
  * @method static \Modules\Xot\Database\Factories\ProfileFactory factory(...$parameters)
  * @method static \Illuminate\Database\Eloquent\Builder|Profile newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Profile newQuery()
@@ -143,7 +144,9 @@ use Modules\Tenant\Services\TenantService;
  * @method static \Illuminate\Database\Eloquent\Builder|Profile whereWebsite($value)
  * @method static \Illuminate\Database\Eloquent\Builder|BaseModelLang withPost(string $guid)
  * @mixin \Eloquent
+ *
  * @property string|null $bio
+ *
  * @method static \Illuminate\Database\Eloquent\Builder|Profile whereBio($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Profile wherePostType($value)
  * @mixin IdeHelperProfile
@@ -159,7 +162,7 @@ class Profile extends BaseModelLang {
      */
     public function user(): BelongsTo {
         $user = TenantService::model('user');
-        $user_class = get_class($user);
+        $user_class = \get_class($user);
 
         return $this->belongsTo($user_class);
     }

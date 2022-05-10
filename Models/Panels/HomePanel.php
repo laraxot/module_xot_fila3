@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Modules\Xot\Models\Panels;
 
-//--- Services --
+// --- Services --
 
 /**
  * Class HomePanel.

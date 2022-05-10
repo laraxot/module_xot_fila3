@@ -4,14 +4,13 @@ declare(strict_types=1);
 
 namespace Modules\Xot\Http\Livewire;
 
-//use Illuminate\Support\Carbon;
+// use Illuminate\Support\Carbon;
 use Livewire\Component;
 
 /**
  * Class Test.
  */
-class Test extends Component
-{
+class Test extends Component {
     public string $animal = '';
 
     public array $options;
@@ -26,13 +25,9 @@ class Test extends Component
 
     public array $qty1 = [];
 
-    /**
-     * @return void
-     */
-    public function mount():void
-    {
+    public function mount(): void {
         $this->options = ['one' => true, 'two' => false, 'three' => false];
-        //$this->qty = [0 => -1, 1 => 1, 2 => 0, 3 => 0, 4 => -1];
+        // $this->qty = [0 => -1, 1 => 1, 2 => 0, 3 => 0, 4 => -1];
         $this->products = [
             (object) ['id' => 1, 'title' => 'Margherita'],
             (object) ['id' => 2, 'title' => 'Capricciosa'],
@@ -49,8 +44,7 @@ class Test extends Component
         ];
     }
 
-    public function fix(array $arr): array
-    {
+    public function fix(array $arr): array {
         return collect($arr)->map(
             function ($item) {
                 return (object) $item;
@@ -63,11 +57,8 @@ class Test extends Component
      */
     /**
      * Render the component.
-     *
-     * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function render():\Illuminate\Contracts\Support\Renderable
-    {
+    public function render(): \Illuminate\Contracts\Support\Renderable {
         $view_params = [];
         $this->products = $this->fix($this->products);
         $this->change_cats = $this->fix($this->change_cats);

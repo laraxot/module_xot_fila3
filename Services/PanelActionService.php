@@ -40,7 +40,7 @@ class PanelActionService {
                     if (! isset($item->$k)) {
                         $item->$k = false;
                     }
-                    if ($item->$k != $v) {
+                    if ($item->$k !== $v) {
                         return false;
                     }
                 }
@@ -97,7 +97,7 @@ class PanelActionService {
         }
         //$itemAction->setPanel($this); //incerto dovrebbe farlo getActions
         */
-        if (null == $itemAction) {
+        if (null === $itemAction) {
             throw new Exception('['.$act.'] is not an ItemAction of ['.class_basename($this->panel).']');
         }
 
@@ -107,7 +107,7 @@ class PanelActionService {
     public function containerAction(string $act): ?XotBasePanelAction {
         $actions = $this->containerActions();
         $action = $actions->firstWhere('name', $act);
-        if (! is_object($action)) {
+        if (! \is_object($action)) {
             dddx(
                 [
                     'error' => 'nessuna azione con questo nome',
@@ -119,17 +119,17 @@ class PanelActionService {
                 ]
             );
         }
-        //$action->setPanel($this);
+        // $action->setPanel($this);
 
         return $action;
     }
 
     public function urlContainerAction(string $act, array $params = []): string {
-        //$containerActions = $this->containerActions();
-        //$containerAction = $containerActions->firstWhere('name', $act);
+        // $containerActions = $this->containerActions();
+        // $containerAction = $containerActions->firstWhere('name', $act);
         $containerAction = $this->containerAction($act);
-        //123    Call to an undefined method object::urlContainer().
-        if (is_object($containerAction) /* && $containerAction instanceof XotBasePanelAction */) {
+        // 123    Call to an undefined method object::urlContainer().
+        if (\is_object($containerAction) /* && $containerAction instanceof XotBasePanelAction */) {
             return $containerAction->urlContainer();
         }
 
@@ -138,7 +138,7 @@ class PanelActionService {
 
     public function urlItemAction(string $act, array $params = []): string {
         $itemAction = $this->itemAction($act);
-        if (is_object($itemAction)) {
+        if (\is_object($itemAction)) {
             return $itemAction->urlItem();
         }
 
@@ -150,8 +150,8 @@ class PanelActionService {
      */
     public function btnItemAction(string $act, array $params = []) {
         $itemAction = $this->itemAction($act);
-        if (is_object($itemAction)) {
-            //return $itemAction->btn(['row' => $this->panel->getRow(), 'panel' => $this->panel]);
+        if (\is_object($itemAction)) {
+            // return $itemAction->btn(['row' => $this->panel->getRow(), 'panel' => $this->panel]);
             return $itemAction->btn($params);
         }
     }
