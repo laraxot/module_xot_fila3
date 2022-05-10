@@ -132,9 +132,9 @@ class ModuleController extends Controller {
      */
     public function home(Request $request) {
         $panel = PanelService::make()->getRequestPanel();
-
-        if ('' !== $request->_act) {
-            return $panel->callItemActionWithGate($request->_act);
+        $act = $request->input('_act', '');
+        if ('' !== $act) {
+            return $panel->callItemActionWithGate($act);
             // return $panel->callContainerAction($request->_act);
             // return $panel->callAction($request->_act);
         }
@@ -149,9 +149,9 @@ class ModuleController extends Controller {
      */
     public function dashboard(Request $request) {
         $panel = PanelService::make()->getRequestPanel();
-
-        if ('' !== $request->_act) {
-            return $panel->callItemActionWithGate($request->_act);
+        $act = $request->input('_act', '');
+        if ('' !== $act) {
+            return $panel->callItemActionWithGate($act);
             // return $panel->callContainerAction($request->_act);
             // return $panel->callAction($request->_act);
         }
