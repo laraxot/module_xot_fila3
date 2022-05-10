@@ -56,6 +56,7 @@ class ContainersController extends Controller {
     }
 
     public function __call($method, $args) {
+        // dddx(['method' => $method, 'args' => $args]);
         $action = \Route::current()->getAction();
         $action['controller'] = __CLASS__.'@'.$method;
         $action = \Route::current()->setAction($action);
@@ -107,6 +108,9 @@ class ContainersController extends Controller {
         $request = XotRequest::capture();
 
         $controller = $this->getController();
+        // dddx([$controller, $method]);
+        // Modules\Xot\Http\Controllers\XotPanelController
+        // home
 
         $panel = app($controller)->$method($request, $panel);
 

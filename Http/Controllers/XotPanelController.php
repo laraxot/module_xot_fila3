@@ -30,7 +30,9 @@ class XotPanelController extends Controller {
         if ($arg[0] instanceof Request) {
             $data = $data->all();
         }
+
         $panel = $func::dispatchNow($data, $arg[1]);
+        // dddx($panel);//Modules\Xot\Models\Panels\HomePanel
 
         return $panel->out();
     }

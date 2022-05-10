@@ -895,7 +895,7 @@ abstract class XotBasePanel implements PanelContract {
 
     /**
      * Build an "index" query for the given resource.
-     * funzione richiamata prima di rilasciare rows nella blade
+     * funzione richiamata prima di rilasciare rows nella blade.
      *
      * @param RowsContract $query
      *
@@ -1466,6 +1466,7 @@ abstract class XotBasePanel implements PanelContract {
      * @return mixed
      */
     public function out(array $params = []) {
+        // dddx($this->presenter);//Modules\Xot\Presenters\HtmlPanelPresenter
         try {
             return $this->presenter->out();
         } catch (\Exception $e) {

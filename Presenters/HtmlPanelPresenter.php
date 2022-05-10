@@ -56,6 +56,13 @@ class HtmlPanelPresenter implements PanelPresenterContract {
         $view_work = ThemeService::getViewWork(); // view effettiva
         $views = ThemeService::getDefaultViewArray(); // views possibili
         /*
+        dddx([
+            'view' => $view,
+            'view_work' => $view_work,
+            'views' => $views,
+        ]);
+        */
+        /*
         $views_p = $this->panel->getViews(); //undercostruction..
         dddx([
             'service' => $views,
