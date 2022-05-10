@@ -7,7 +7,7 @@
                 </div>
             @endif
             @foreach ($goals as $goal)
-                @livewire('rating::rate.single',['model'=>$model,'goal'=>$goal ])
+                @livewire('rate.single',['model'=>$model,'goal'=>$goal ])
             @endforeach
 
 

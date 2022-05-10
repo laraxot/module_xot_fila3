@@ -2,6 +2,6 @@
 @section('content')
 
 
-    @livewire('xot::manage_lang_module',['module_name'=>$module_name])
+    @livewire('manage_lang_module',['module_name'=>$module_name])
 
 @endsection

@@ -12,6 +12,6 @@
     @endforeach
 </table>
 --}}
-@livewire('xot::manage_lang_module',['module_name'=>'progressioni'])
+@livewire('manage_lang_module',['module_name'=>'progressioni'])
 
 @endsection

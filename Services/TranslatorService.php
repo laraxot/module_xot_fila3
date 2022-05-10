@@ -41,7 +41,11 @@ class TranslatorService extends BaseTranslator {
         }
         // */
         $translation = parent::get($key, $replace, $locale, $fallback);
-        // dddx(['key'=>$key,'translation'=>$translation,'replace'=>$replace,'locale'=>$locale,'fallback'=>$fallback]);
+        /*
+        if ($key == $translation && ! Str::endsWith($key, '.')) {
+            dddx(['key' => $key, 'translation' => $translation, 'replace' => $replace, 'locale' => $locale, 'fallback' => $fallback]);
+        }
+        //*/
         // echo '<br>['.$key.']['.$translation.']';
         // $langs=ThemeService::__merge('langs', [$key=>$translation]);
         // $cache_key=Str::slug(req_uri().'_langs');

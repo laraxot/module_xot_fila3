@@ -1,7 +1,7 @@
 <div>
     @component('theme::components.modal.simple', ['guid' => $modal_guid, 'title' => $modal_title])
         @slot('content')
-            @livewire('rating::rate_single')
+            @livewire('rate_single')
 
 
 
