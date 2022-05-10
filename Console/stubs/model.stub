@@ -7,10 +7,6 @@ namespace DummyNamespace;
 *
 */
 class DummyClass extends BaseModel {
-<<<<<<< HEAD
-    //protected $table = 'DummyClassLower';
-}
-=======
 
     /**
      * The database table used by the model.
@@ -75,4 +71,3 @@ class DummyClass extends BaseModel {
     // Relations ...
 }
 
->>>>>>> 04f6c8ba (first)

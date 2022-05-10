@@ -9,13 +9,13 @@ use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Lang;
 use Illuminate\Support\Facades\Log;
-//---- services ---
+// ---- services ---
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
 use Illuminate\Translation\Translator as BaseTranslator;
 use Modules\Theme\Services\ThemeService;
 
-//dddx('leggo');
+// dddx('leggo');
 
 /**
  * Class TranslatorService.
@@ -31,26 +31,22 @@ class TranslatorService extends BaseTranslator {
      * @return array|string
      */
     public function get($key, array $replace = [], $locale = null, $fallback = true) {
-        //backtrace(true);
-        //trans parte da xotbasepanel riga 1109 (per ora)
-        //superdump([$key, $replace , $locale , $fallback ]);
-<<<<<<< HEAD
+        // backtrace(true);
+        // trans parte da xotbasepanel riga 1109 (per ora)
+        // superdump([$key, $replace , $locale , $fallback ]);
 
-        $translation = parent::get($key, $replace, $locale, $fallback);
-=======
-        //*
-        if($locale==null){
-            $locale=app()->getLocale();
+        // *
+        if (null == $locale) {
+            $locale = app()->getLocale();
         }
-        //*/
+        // */
         $translation = parent::get($key, $replace, $locale, $fallback);
-        //dddx(['key'=>$key,'translation'=>$translation,'replace'=>$replace,'locale'=>$locale,'fallback'=>$fallback]);
->>>>>>> 04f6c8ba (first)
-        //echo '<br>['.$key.']['.$translation.']';
-        //$langs=ThemeService::__merge('langs', [$key=>$translation]);
-        //$cache_key=Str::slug(req_uri().'_langs');
-        //Cache::put($cache_key,$langs);
-        //echo '<pre>';print_r($langs);echo '</pre>';
+        // dddx(['key'=>$key,'translation'=>$translation,'replace'=>$replace,'locale'=>$locale,'fallback'=>$fallback]);
+        // echo '<br>['.$key.']['.$translation.']';
+        // $langs=ThemeService::__merge('langs', [$key=>$translation]);
+        // $cache_key=Str::slug(req_uri().'_langs');
+        // Cache::put($cache_key,$langs);
+        // echo '<pre>';print_r($langs);echo '</pre>';
         /*
         if ($translation === $key) {
             Log::warning('Language item could not be found.', [
@@ -77,10 +73,7 @@ class TranslatorService extends BaseTranslator {
     }
 
     public static function parse(array $params): array {
-<<<<<<< HEAD
-=======
         dddx('a');
->>>>>>> 04f6c8ba (first)
         $lang = app()->getLocale();
         extract($params);
         if (! isset($key)) {
@@ -108,7 +101,7 @@ class TranslatorService extends BaseTranslator {
             'filename' => $filename,
             'file_exists' => File::exists($filename),
             'lang_dir' => $lang_dir,
-            'dir_exists' => File::exists($lang_dir), //dir without lang
+            'dir_exists' => File::exists($lang_dir), // dir without lang
         ];
     }
 
@@ -124,20 +117,20 @@ class TranslatorService extends BaseTranslator {
                 return $item;
             }
         )
-        //->dd()
+        // ->dd()
             ->filter(
                 function ($v, $k) {
                     return $v['dir_exists'] && strlen($v['lang_dir']) > 3;
                 }
             )
-        ->groupBy(['ns_group'])  //risparmio salvataggi
+        ->groupBy(['ns_group'])  // risparmio salvataggi
         ->all();
-        //dddx($data);
+        // dddx($data);
         foreach ($data as $ns_group => $data0) {
             $rows = trans($ns_group);
 
             if (! is_array($rows)) {
-                //dddx($rows);  //---- dovrei leggere il file o controllarlo intanto lo blokko non voglio sovrascrivere
+                // dddx($rows);  //---- dovrei leggere il file o controllarlo intanto lo blokko non voglio sovrascrivere
                 $rows = [];
             }
 
@@ -153,7 +146,7 @@ class TranslatorService extends BaseTranslator {
                 return;
             }
             $filename = $v['filename'];
-            //echo '<h3>['.$filename.']</h3>';
+            // echo '<h3>['.$filename.']</h3>';
             ArrayService::save(['filename' => $filename, 'data' => $data]);
         }
     }
@@ -168,7 +161,7 @@ class TranslatorService extends BaseTranslator {
         $lang = app()->getLocale();
         if (trans($key) == $value) {
             return;
-        } //non serve salvare
+        } // non serve salvare
 
         $translator = app('translator');
         $tmp = ($translator->parseKey($key));
@@ -186,7 +179,7 @@ class TranslatorService extends BaseTranslator {
         $item_keys = '["'.$item_keys.'"]';
         $str = '$rows'.$item_keys.'="'.$value.'";';
         try {
-            eval($str); //fa schifo ma funziona
+            eval($str); // fa schifo ma funziona
         } catch (\Exception $e) {
         }
         ArrayService::save(['data' => $rows, 'filename' => $filename]);
@@ -227,7 +220,7 @@ class TranslatorService extends BaseTranslator {
         $original = [];
         if (File::exists($file_path)) {
             $original = File::getRequire($file_path);
-            //$original = Lang::get($key, []);
+            // $original = Lang::get($key, []);
         }
 
         if (! is_array($original)) {
@@ -236,7 +229,7 @@ class TranslatorService extends BaseTranslator {
                     'message' => 'original is not an array',
                     'file_path' => $file_path,
                     'original' => $original,
-                    //'ori1' => File::getRequire($file_path),
+                    // 'ori1' => File::getRequire($file_path),
                     'key' => $key,
                     'data' => $data,
                 ]

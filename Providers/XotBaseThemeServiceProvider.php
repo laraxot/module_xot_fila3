@@ -14,10 +14,8 @@ use Modules\Xot\Services\LivewireService;
  * @property string $dir
  * @property string $name
  */
-abstract class XotBaseThemeServiceProvider
-{
-    public function bootCallback(): void
-    {
+abstract class XotBaseThemeServiceProvider {
+    public function bootCallback(): void {
         /*
         $blade_component_path = '\Themes\LaravelIo\View\Components';
         foreach ($this->blade_components as $name => $class) {
@@ -32,8 +30,7 @@ abstract class XotBaseThemeServiceProvider
     /**
      * Undocumented function.
      */
-    public function registerBladeDirective(): void
-    {
+    public function registerBladeDirective(): void {
         Blade::directive(
             'md', function ($expression) {
                 return '<'."?php echo md_to_html($expression); ?".'>';
@@ -71,21 +68,11 @@ abstract class XotBaseThemeServiceProvider
         );
     }
 
-<<<<<<< HEAD
-    public function registerBladeComponents(): void
-    {
-        BladeService::registerComponents($this->dir.'/../View/Components', 'Themes\\'.$this->name);
-    }
-
-    public function registerLivewireComponents(): void
-    {
-=======
     public function registerBladeComponents(): void {
         BladeService::registerComponents($this->dir.'/../View/Components', 'Themes\\'.$this->name);
     }
 
     public function registerLivewireComponents(): void {
->>>>>>> 04f6c8ba (first)
         LivewireService::registerComponents($this->dir.'/../Http/Livewire', 'Themes\\'.$this->name);
     }
 }

@@ -5,10 +5,7 @@ declare(strict_types=1);
 namespace Modules\Xot\Services;
 
 use Illuminate\Support\Facades\Gate;
-<<<<<<< HEAD
-=======
 use Illuminate\Support\Facades\Lang;
->>>>>>> 04f6c8ba (first)
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Str;
 use Modules\Xot\Contracts\PanelContract;
@@ -89,8 +86,6 @@ class PanelTabService {
                 $tab_panel = $bread->relatedName($tab);
                 if (Gate::allows('index', $tab_panel)) {
                     $trans_key = $bread->getTradMod().'.tab.'.Str::snake($tab);
-<<<<<<< HEAD
-=======
                     /*
                     dddx([
                         $trans_key.'.label',
@@ -102,7 +97,6 @@ class PanelTabService {
                         app()->getLocale(),
                     ]);
                     */
->>>>>>> 04f6c8ba (first)
                     $tmp = (object) [
                         'title' => trans($trans_key.'.label'),
                         'icon' => trans($trans_key.'.icon'),
@@ -132,7 +126,7 @@ class PanelTabService {
         $request = \Request::capture();
         $routename = (string) \Route::currentRouteName();
         $act = last(explode('.', $routename));
-        //$routename = \Route::current()->getName();
+        // $routename = \Route::current()->getName();
         $route_current = \Route::current();
         $route_params = [];
         if (null != $route_current) {
@@ -140,36 +134,36 @@ class PanelTabService {
         }
         [$containers, $items] = params2ContainerItem($route_params);
         $data = [];
-        //$items[]=$this->row;
+        // $items[]=$this->row;
         if (! is_array($items)) {
             return [];
         }
-        //array_unique($items);
+        // array_unique($items);
         $parents = $this->panel->getParents();
         if ('' != $this->panel->guid()) {
             $parents->push($this->panel);
         }
-        //dddx($parents);
+        // dddx($parents);
 
         foreach ($parents as $k => $panel) {
-            //$item = $panel->getRow();
+            // $item = $panel->getRow();
             $tabs = [];
             if (! is_object($panel)) {
                 return $tabs;
             }
             $tabs = $panel->tabs();
             $row = [];
-            //*
+            // *
             if (0 == $k) {
                 if (Gate::allows('index', $panel)) {
                     $tmp = new \stdClass();
-                    //$tmp->title = '<< Back '; //.'['.get_class($item).']';
-                    $tmp->title = 'Back'; //.'['.get_class($item).']';
+                    // $tmp->title = '<< Back '; //.'['.get_class($item).']';
+                    $tmp->title = 'Back'; // .'['.get_class($item).']';
                     $tmp->url = $panel->url('index');
                     $tmp->active = false;
                     $row[] = $tmp;
                 }
-                //-----------------------
+                // -----------------------
                 $tmp = new \stdClass();
                 if (in_array($act, ['index_edit', 'edit', 'update'])) {
                     $url = $panel->url('edit');
@@ -177,7 +171,7 @@ class PanelTabService {
                     $url = $panel->url('show');
                 }
                 $tmp->url = $url;
-                $tmp->title = 'Content'; //.'['.request()->url().']['.$url.']';
+                $tmp->title = 'Content'; // .'['.request()->url().']['.$url.']';
                 /*
                 if ($url_test = 1) {
                     $tmp->active = request()->url() == $url;
@@ -189,16 +183,16 @@ class PanelTabService {
                 if (null != $panel->guid()) {
                     $row[] = $tmp;
                 }
-                //----------------------
+                // ----------------------
             }
-            //*/
+            // */
 
             foreach ($tabs as $tab) {
-                //dddx($tabs);
+                // dddx($tabs);
                 $tmp = new \stdClass();
 
                 if (! is_array($tab)) {
-                    //$tmp = new \stdClass();
+                    // $tmp = new \stdClass();
                     $tmp->title = $tab;
                     $tmp->panel = $panel;
 
@@ -211,7 +205,7 @@ class PanelTabService {
                     $tmp->active = in_array($tab, $containers);
                 } else {
                     //  dddx($tmp);
-                    //$tmp = new \stdClass();
+                    // $tmp = new \stdClass();
                     $tmp->title = $tab['title'];
                     $panel1 = $panel;
                     if (isset($tab['related'])) {
@@ -220,7 +214,7 @@ class PanelTabService {
                     if (isset($tab['container_action'])) {
                         $tmp->url = $panel1->urlContainerAction($tab['container_action']);
                     }
-                    //$tmp->url = $tab['page'];
+                    // $tmp->url = $tab['page'];
                     $tmp->active = false;
                 }
                 $row[] = $tmp;
@@ -228,7 +222,7 @@ class PanelTabService {
 
             $data[] = $row;
         }
-        //dddx([$data, $tabs]);
+        // dddx([$data, $tabs]);
 
         return $data;
     }

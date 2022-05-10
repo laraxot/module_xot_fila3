@@ -25,7 +25,7 @@ class FileService {
             viewNamespaceToDir      => c:\var\wwww\test\images\prova.png
             viewNamespaceToAsset    => http://example.com/images/prova.png
         */
-        //dddx(\Module::asset('blog:img/logo.img')); //localhost/modules/blog/img/logo.img
+        // dddx(\Module::asset('blog:img/logo.img')); //localhost/modules/blog/img/logo.img
 
         if (Str::startsWith($path, 'https://')) {
             return $path;
@@ -62,7 +62,7 @@ class FileService {
         if (in_array($ns, ['pub_theme', 'adm_theme'])) {
             $theme = config('xra.'.$ns);
             $filename_from = self::fixPath(base_path('Themes/'.$theme.'/Resources/'.$ns_after));
-            //$filename_from = Str::replace('/Resources//', '/Resources/', $filename_from);
+            // $filename_from = Str::replace('/Resources//', '/Resources/', $filename_from);
             $asset = 'themes/'.$theme.'/'.$ns_after;
             $filename_to = self::fixPath(public_path($asset));
             $asset = Str::replace(url(''), '', asset($asset));
@@ -72,7 +72,7 @@ class FileService {
                     File::makeDirectory(\dirname($filename_to), 0755, true, true);
                 }
                 try {
-                    //dddx([$filename_from, $filename_to]);
+                    // dddx([$filename_from, $filename_to]);
                     File::copy($filename_from, $filename_to);
                 } catch (\Exception $e) {
                     throw new Exception('message:['.$e->getMessage().']
@@ -97,20 +97,20 @@ class FileService {
             throw new Exception('file ['.$filename_from.'] not Exists , path ['.$path.']');
         }
 
-        //dddx(app()->environment());// local
+        // dddx(app()->environment());// local
         if (! File::exists($filename_to) || 'production' != app()->environment()) {
             if (! File::exists(\dirname($filename_to))) {
                 File::makeDirectory(\dirname($filename_to), 0755, true, true);
             }
             // 105    If condition is always true.
-            //if (File::exists($filename_from)) {
+            // if (File::exists($filename_from)) {
             File::copy($filename_from, $filename_to);
-            //}
+            // }
         }
 
         return $asset;
 
-        //return asset(self::viewNamespaceToAsset($path));
+        // return asset(self::viewNamespaceToAsset($path));
     }
 
     /**
@@ -129,7 +129,7 @@ class FileService {
      */
     public static function viewNamespaceToDir(string $view) {
         $ns = Str::before($view, '::');
-        //dddx(Str::after($view, '::'));
+        // dddx(Str::after($view, '::'));
         $relative_path = \str_replace('.', '/', Str::after($view, '::'));
         $pack_dir = self::getViewNameSpacePath($ns);
         $view_dir = $pack_dir.'/'.$relative_path;
@@ -195,7 +195,7 @@ class FileService {
         }
         if (File::exists($filename)) {
             try {
-                //echo '<hr>'.$filename.' >>>>  '.$filename_pub; //4 debug
+                // echo '<hr>'.$filename.' >>>>  '.$filename_pub; //4 debug
                 File::copy($filename, $filename_pub);
             } catch (Exception $e) {
                 dd('Caught exception: ', $e->getMessage(), '\n['.__LINE__.']['.__FILE__.']');
@@ -207,11 +207,11 @@ class FileService {
                 'filename' => $filename,
                 'msg' => 'Filename not Exists',
             ];
-            dddx($msg); //4 debug
+            dddx($msg); // 4 debug
         }
 
-        //$url=str_replace(url('/'),'',$url);
-        //dddx(url($url));
+        // $url=str_replace(url('/'),'',$url);
+        // dddx(url($url));
         return $url;
     }
 
@@ -241,7 +241,7 @@ class FileService {
         }
         if (\File::exists($filename)) {
             try {
-                //echo '<hr>'.$filename.' >>>>  '.$filename_pub; //4 debug
+                // echo '<hr>'.$filename.' >>>>  '.$filename_pub; //4 debug
                 \File::copy($filename, $filename_pub);
             } catch (Exception $e) {
                 dd('Caught exception: ', $e->getMessage(), '\n['.__LINE__.']['.__FILE__.']');
@@ -251,8 +251,8 @@ class FileService {
             $full = $ns.':'.$path1;
             $msg = [
                 'ns' => $ns,
-                'Module::getModulePath' => \Module::getModulePath($ns.':'.$path1), ///home/vagrant/code/htdocs/lara/foodm/Modules/LU/
-                'Module::assetPath' => \Module::assetPath($ns), //"/home/vagrant/code/htdocs/lara/foodm/public/modules/lu
+                'Module::getModulePath' => \Module::getModulePath($ns.':'.$path1), // /home/vagrant/code/htdocs/lara/foodm/Modules/LU/
+                'Module::assetPath' => \Module::assetPath($ns), // "/home/vagrant/code/htdocs/lara/foodm/public/modules/lu
                 'view_dir' => config('modules.paths.generator.views.path'),
                 'full' => $full,
                 'test1' => \Module::asset($full),
@@ -262,7 +262,7 @@ class FileService {
                 'msg' => 'Filename not Exists',
             ];
             dddx($msg);
-            //dddx('non esiste '.); //4 debug
+            // dddx('non esiste '.); //4 debug
         }
 
         return asset($path_pub);
@@ -289,13 +289,13 @@ class FileService {
         }
         if (\File::exists($filename)) {
             try {
-                //echo '<hr>'.$filename.' >>>>  '.$filename_pub; //4 debug
+                // echo '<hr>'.$filename.' >>>>  '.$filename_pub; //4 debug
                 \File::copy($filename, $filename_pub);
             } catch (Exception $e) {
                 dd('Caught exception: ', $e->getMessage(), '\n['.__LINE__.']['.__FILE__.']');
             }
         } else {
-            //dddx('non esiste '.$filename); //4 debug
+            // dddx('non esiste '.$filename); //4 debug
         }
 
         return asset($path_pub);
@@ -303,19 +303,19 @@ class FileService {
 
     public static function viewThemeNamespaceToAsset(string $key): string {
         $ns_name = Str::before($key, '::');
-        //$ns_dir = View::getFinder()->getHints()[$ns_name][0];
+        // $ns_dir = View::getFinder()->getHints()[$ns_name][0];
         $ns_dir = self::getViewNameSpacePath($ns_name);
         $ns_name = config('xra.'.$ns_name);
         $tmp = Str::after($key, '::');
         $tmp0 = Str::before($tmp, '/');
         $tmp1 = Str::after($tmp, '/');
-        //--------------------------------------------------
+        // --------------------------------------------------
         $filename = str_replace('.', '/', $tmp0).'/'.$tmp1;
         $filename_from = $ns_dir.'/'.$filename;
         $asset = '/themes/'.$ns_name.'/'.$filename;
         $filename_to = public_path($asset);
         $filename_from = str_replace(['/', '\\'], [DIRECTORY_SEPARATOR, DIRECTORY_SEPARATOR], $filename_from);
-        //--------------------------------------------------
+        // --------------------------------------------------
         $msg = [
             'filename' => $filename,
             'from' => $filename_from,
@@ -334,8 +334,8 @@ class FileService {
         }
 
         if (! File::exists($filename_from)) {
-            //dddx('['.$filename_from.'] not exists');
-            //dddx($msg);
+            // dddx('['.$filename_from.'] not exists');
+            // dddx($msg);
             return '['.$filename_from.']['.__LINE__.']['.basename(__FILE__).'] not exists';
         }
         if (! File::exists($filename_to)) {
@@ -352,7 +352,7 @@ class FileService {
     public static function viewNamespaceToAsset(string $key): string {
         $ns_name = Str::before($key, '::');
 
-        //$ns_dir = View::getFinder()->getHints()[$ns_name][0];
+        // $ns_dir = View::getFinder()->getHints()[$ns_name][0];
         /*
         $ns_dir = collect(View::getFinder()->getHints())->filter(function ($item, $key) use ($ns_name) {
             return $key == $ns_name;
@@ -362,7 +362,7 @@ class FileService {
         if (null == $ns_dir) {
             return '#['.$key.']['.__LINE__.']['.__FILE__.']';
         }
-        //dddx([$key, $ns_name, $ns_dir, $ns_dir1]);
+        // dddx([$key, $ns_name, $ns_dir, $ns_dir1]);
         $tmp = Str::after($key, '::');
         $tmp0 = Str::before($tmp, '/');
         $tmp1 = Str::after($tmp, '/');
@@ -372,7 +372,7 @@ class FileService {
         $filename_from = str_replace(['/', '\\'], [DIRECTORY_SEPARATOR, DIRECTORY_SEPARATOR], $filename_from);
         $public_path = public_path();
 
-        if (Str::startsWith($filename_from, $public_path)) {  //se e' in un percoro navigabile
+        if (Str::startsWith($filename_from, $public_path)) {  // se e' in un percoro navigabile
             $path = Str::after($filename_from, $public_path);
             $path = str_replace(['\\'], ['/'], $path);
 
@@ -408,12 +408,12 @@ class FileService {
                 dd('Caught exception: ', $e->getMessage(), '\n['.__LINE__.']['.__FILE__.']');
             }
         }
-        //*
+        // *
         if (File::exists($filename_to)) {
             File::delete($filename_to); //
-            //return $asset;
+            // return $asset;
         }
-        //*/
+        // */
         if (File::exists($filename_from) && ! File::exists($filename_to)) {
             try {
                 File::copy($filename_from, $filename_to);
@@ -427,9 +427,9 @@ class FileService {
                 );
             }
         } else {
-            //if (! File::exists($filename_from)) {
+            // if (! File::exists($filename_from)) {
             //    dddx('['.$filename_from.'] not exists');
-            //}
+            // }
         }
 
         return $asset;
@@ -466,7 +466,7 @@ class FileService {
        return ''.$path;
     }
     */
-    //*
+    // *
 
     public static function getFileUrl(string $path): string {
         if (Str::startsWith($path, '//')) {
@@ -497,15 +497,15 @@ class FileService {
         return ''.$path;
     }
 
-    //*/
-    //*
+    // */
+    // *
 
     /**
      * @param string[] $files
      */
     public static function viewNamespaceToUrl($files): array {
         foreach ($files as $k => $filePath) {
-            //TODO testare con ARTISAN vendor:publish
+            // TODO testare con ARTISAN vendor:publish
             $pos = \mb_strpos($filePath, '::');
             if ($pos) {
                 $hints = \mb_substr($filePath, 0, $pos);
@@ -530,8 +530,8 @@ class FileService {
                     $filename0 = \str_replace('.', '/', $filename0);
                     $filename1 = \mb_substr($filename, $pos);
                     $filename = $filename0.''.$filename1;
-                    //echo '<h3>'.$filename0.''.$filename1.'</h3>';
-                    //dd($tmp.'/'.$filename);
+                    // echo '<h3>'.$filename0.''.$filename1.'</h3>';
+                    // dd($tmp.'/'.$filename);
                     $new_url = $tmp.'/'.$filename;
                 } else {
                     $old_path = $viewNamespace.\DIRECTORY_SEPARATOR.$filename;
@@ -563,7 +563,7 @@ class FileService {
         return $files;
     }
 
-    //*/
+    // */
 
     public static function getRealFile(string $path): string {
         $filename = '';
@@ -574,25 +574,25 @@ class FileService {
             $path = \mb_substr($path, 1);
         }
         $str = 'theme/bc/';
-        //if (\mb_substr($path, 0, \mb_strlen($str)) == $str) {
+        // if (\mb_substr($path, 0, \mb_strlen($str)) == $str) {
         if (Str::startsWith($path, $str)) {
             $filename = public_path('bc/'.\mb_substr($path, \mb_strlen($str)));
-            //$filename=str_replace('\\/','/',$filename);
-            //$filename=realpath($filename);
+            // $filename=str_replace('\\/','/',$filename);
+            // $filename=realpath($filename);
             return $filename;
         }
         $str = 'theme/pub/';
         $theme = config('xra.pub_theme');
-        //if (\mb_substr($path, 0, \mb_strlen($str)) == $str) {
+        // if (\mb_substr($path, 0, \mb_strlen($str)) == $str) {
         if (Str::startsWith($path, $str)) {
             $filename = public_path('themes/'.$theme.'/'.\mb_substr($path, \mb_strlen($str)));
-            //$filename=str_replace('\\/','/',$filename);
-            //$filename=realpath($filename);
+            // $filename=str_replace('\\/','/',$filename);
+            // $filename=realpath($filename);
             return $filename;
         }
         $str = 'theme/';
         $theme = config('xra.adm_theme');
-        //if (\mb_substr($path, 0, \mb_strlen($str)) == $str) {
+        // if (\mb_substr($path, 0, \mb_strlen($str)) == $str) {
         if (Str::startsWith($path, $str)) {
             $filename = public_path('themes/'.$theme.'/'.\mb_substr($path, \mb_strlen($str)));
 
@@ -696,7 +696,7 @@ class FileService {
                 dd('Caught exception: ', $e->getMessage(), '\n['.__LINE__.']['.__FILE__.']');
             }
         }
-        if (! File::exists($to)) {//not rewite
+        if (! File::exists($to)) {// not rewite
             File::copy($from, $to);
         }
     }
@@ -713,44 +713,27 @@ class FileService {
         FileService::copy($from_path, $to_path);
     }
 
-<<<<<<< HEAD
-    public static function getComponents(string $path, string $namespace, string $prefix, bool $force_recreate = false): array {
-        $namespace=Str::replace('/','\\',$namespace);
-        $components_json = $path.'/_components.json';
-        $path = FileService::fixPath($path);
-=======
     /**
-     * Undocumented function
-     *
-     * @param string $path
-     * @param string $namespace
-     * @param string $prefix
-     * @param boolean $force_recreate
-     * @return array
+     * Undocumented function.
      */
     public static function getComponents(string $path, string $namespace, string $prefix, bool $force_recreate = false): array {
-        $namespace=Str::replace('/', '\\', $namespace);
+        $namespace = Str::replace('/', '\\', $namespace);
         $components_json = $path.'/_components.json';
         $path = FileService::fixPath($path);
         /*
         throw new Exception ??
->>>>>>> 04f6c8ba (first)
         if (! File::exists($path)) {
             if (Str::endsWith($path, 'Http'.DIRECTORY_SEPARATOR.'Livewire')) {
                 File::makeDirectory($path, 0755, true, true);
             }
         }
-<<<<<<< HEAD
-
-=======
         */
->>>>>>> 04f6c8ba (first)
         $exists = File::exists($components_json);
         if ($exists && ! $force_recreate) {
             $content = File::get($components_json);
             $comps = (array) json_decode($content);
             if (null == $comps) {
-                //File::delete($components_json);
+                // File::delete($components_json);
                 $comps = [];
             }
 
@@ -770,12 +753,8 @@ class FileService {
                 $tmp->comp_name = $prefix.$tmp->comp_name;
 
                 $tmp->comp_ns = $namespace.'\\'.$class_name;
-                $relative_path=$v->getRelativePath();
-<<<<<<< HEAD
-                $relative_path=Str::replace('/','\\',$relative_path);
-=======
-                $relative_path=Str::replace('/', '\\', $relative_path);
->>>>>>> 04f6c8ba (first)
+                $relative_path = $v->getRelativePath();
+                $relative_path = Str::replace('/', '\\', $relative_path);
 
                 if ('' != $relative_path) {
                     $tmp->comp_name = '';

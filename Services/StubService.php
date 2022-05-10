@@ -4,45 +4,32 @@ declare(strict_types=1);
 
 namespace Modules\Xot\Services;
 
-<<<<<<< HEAD
 use Doctrine\DBAL\Schema\Column;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
-=======
-use Illuminate\Support\Str;
-use Doctrine\DBAL\Schema\Column;
-use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\File;
-use Modules\Xot\Services\FileService;
-use Illuminate\Database\Eloquent\Model;
->>>>>>> 04f6c8ba (first)
 
 /**
  * Class StubService.
  */
 class StubService {
-    //-- model (object) or class (string)
-    //-- stub_name name of stub
-    //-- create yes or not
+    // -- model (object) or class (string)
+    // -- stub_name name of stub
+    // -- create yes or not
     private static ?self $_instance = null;
 
-    //public ?Model $model;
+    // public ?Model $model;
 
     public string $model_class;
 
     public string $name;
 
-<<<<<<< HEAD
-=======
     public array $replaces = [];
     public array $custom_replaces = [];
 
-
     public bool $debug = false;
 
->>>>>>> 04f6c8ba (first)
     /**
      * getInstance.
      *
@@ -60,15 +47,12 @@ class StubService {
         return static::getInstance();
     }
 
-<<<<<<< HEAD
-=======
     public function setDebug(bool $debug): self {
         $this->debug = $debug;
 
         return $this;
     }
 
->>>>>>> 04f6c8ba (first)
     public function setName(string $name): self {
         $this->name = $name;
 
@@ -87,15 +71,12 @@ class StubService {
         return $this;
     }
 
-<<<<<<< HEAD
-=======
     public function setCustomReplaces(array $custom_replaces): self {
         $this->custom_replaces = $custom_replaces;
 
         return $this;
     }
 
->>>>>>> 04f6c8ba (first)
     public function setModelAndName(Model $model, string $name): self {
         $this->setModel($model);
         $this->setName($name);
@@ -105,15 +86,10 @@ class StubService {
 
     public function get(): string {
         $file = $this->getClassFile();
-<<<<<<< HEAD
-        $class = $this->getClass();
-        if (File::exists($file)) {
-=======
 
         $class = $this->getClass();
         if (File::exists($file)) {
-            //echo '<br/>['.$file.']['.$class.']';
->>>>>>> 04f6c8ba (first)
+            // echo '<br/>['.$file.']['.$class.']';
             return $class;
         }
         $this->generate();
@@ -121,11 +97,6 @@ class StubService {
         return $class;
     }
 
-<<<<<<< HEAD
-    public function getNamespace(): string {
-        $ns = $this->getClass();
-        $ns=implode('\\',array_slice(explode('\\',$ns),0,-1));
-=======
     public function getTable(): string {
         if (isset($this->custom_replaces['DummyTable'])) {
             return $this->custom_replaces['DummyTable'];
@@ -153,7 +124,6 @@ class StubService {
         $ns = $this->model_class;
         $ns = implode('\\', array_slice(explode('\\', $ns), 0, -1));
 
->>>>>>> 04f6c8ba (first)
         if (Str::startsWith($ns, '\\')) {
             $ns = Str::after($ns, '\\');
         }
@@ -171,20 +141,6 @@ class StubService {
         $fields = [];
         if (class_exists($this->model_class)) {
             $model = $this->getModel();
-<<<<<<< HEAD
-            $fields = self::fields($model);
-
-            $dummy_id = $model->getRouteKeyName();
-        }
-        
-        $dummy_class = basename($this->getClass());
-        $ns=$this->getNamespace();
-        $replaces = [
-            'DummyNamespace' => $ns,
-            'DummyClassLower' => strtolower($dummy_class),
-            
-            'DummyClassName' => Str::after($dummy_class,$ns.'\\'),
-=======
             $fields = $this->getFields();
             $dummy_id = $model->getRouteKeyName();
         } else {
@@ -192,15 +148,14 @@ class StubService {
             $fields = $this->getFieldsFromTable();
         }
 
-        //$dummy_class = basename($this->getClass());
-        $dummy_class = collect(explode('\\',$this->getClass()))->slice(-1)->implode('\\');
+        // $dummy_class = basename($this->getClass());
+        $dummy_class = collect(explode('\\', $this->getClass()))->slice(-1)->implode('\\');
         $ns = $this->getNamespace();
         $replaces = [
             'DummyNamespace' => $ns,
             'DummyClassLower' => strtolower($dummy_class),
 
             'DummyClassName' => Str::after($dummy_class, $ns.'\\'),
->>>>>>> 04f6c8ba (first)
             'DummyClass' => $dummy_class,
             'DummyModelClass' => basename($this->model_class),
             'DummyFullModel' => $this->getClass(),
@@ -212,12 +167,9 @@ class StubService {
             'NamespacedDummyUserModel' => 'Modules\LU\Models\User',
             'NamespacedDummyModel' => $this->model_class,
         ];
-        //dddx($replaces);
-<<<<<<< HEAD
-=======
+        // dddx($replaces);
         $replaces = array_merge($replaces, $this->custom_replaces);
 
->>>>>>> 04f6c8ba (first)
         return $replaces;
     }
 
@@ -230,7 +182,7 @@ class StubService {
             ->map(
                 function (Column $column) {
                     return $this->mapTableProperties($column);
-                    //return $this->getPropertiesFromMethods();
+                    // return $this->getPropertiesFromMethods();
                 }
             )->collapse()
             ->values()
@@ -277,7 +229,7 @@ class StubService {
      * Checks if a given column should be included in the factory.
      */
     protected function shouldBeIncluded(Column $column): bool {
-        $shouldBeIncluded = ($column->getNotNull() /*|| $this->includeNullableColumns */)
+        $shouldBeIncluded = ($column->getNotNull() /* || $this->includeNullableColumns */)
             && ! $column->getAutoincrement();
 
         if (! $this->getModel()->usesTimestamps()) {
@@ -375,7 +327,7 @@ class StubService {
                         'msg' => $msg,
                     ]);
                     */
-                    //return null;
+                    // return null;
                 }
             }
         );
@@ -404,12 +356,9 @@ class StubService {
         );
 
         $file = $this->getClassFile();
-<<<<<<< HEAD
-=======
         if ($this->debug) {
             $file .= '.test';
         }
->>>>>>> 04f6c8ba (first)
 
         File::put($file, $stub);
         $msg = (' ['.$file.'] is under creating , refresh page');
@@ -426,7 +375,7 @@ class StubService {
     public function getDirModel(): string {
         if (class_exists($this->model_class)) {
             $autoloader_reflector = new \ReflectionClass($this->model_class);
-            //dddx($autoloader_reflector);
+            // dddx($autoloader_reflector);
             $class_file_name = $autoloader_reflector->getFileName();
             if (false === $class_file_name) {
                 throw new \Exception('autoloader_reflector false');
@@ -439,18 +388,13 @@ class StubService {
         if (Str::startsWith($class, '\\')) {
             $class = Str::after($class, '\\');
         }
-<<<<<<< HEAD
-        $path = base_path($class);
-
-        return dirname($path);
-=======
-        $tmp=collect(explode('\\',$class))->slice(0,-1)->implode('\\');
-        //$path = base_path($class);
+        $tmp = collect(explode('\\', $class))->slice(0, -1)->implode('\\');
+        // $path = base_path($class);
         $path = base_path($tmp);
-        //dddx([$class,$path,$tmp]);
-        $path=FileService::fixPath($path);
+        // dddx([$class,$path,$tmp]);
+        $path = FileService::fixPath($path);
+
         return $path;
->>>>>>> 04f6c8ba (first)
     }
 
     public function getClass(): string {
@@ -477,7 +421,7 @@ class StubService {
             return $this->model_class;
         default:
             $msg = '['.$this->name.'] Unkwon !['.__LINE__.']['.basename(__FILE__).']';
-            //dddx($msg);
+            // dddx($msg);
             throw new \Exception($msg);
         }
     }
@@ -522,23 +466,15 @@ class StubService {
     }
 
     /**
-<<<<<<< HEAD
-     * @param Model $model
-     *
-     * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
-     */
-    public static function fields($model): array {
-=======
      * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
      */
     public function getFields(): array {
         $model = $this->getModel();
->>>>>>> 04f6c8ba (first)
         if (! method_exists($model, 'getFillable')) {
             return [];
         }
         $fillables = $model->getFillable();
-        //dddx($fillables);
+        // dddx($fillables);
 
         if (count($fillables) <= 1) {
             $fillables = $model->getConnection()->getSchemaBuilder()->getColumnListing($model->getTable());
@@ -564,8 +500,8 @@ class StubService {
         foreach ($fillables as $input_name) {
             $tmp = new \stdClass();
             try {
-                $col = $model->getConnection()->getDoctrineColumn($model->getTable(), $input_name); //->getType();//->getName();
-                //dddx(get_class_methods($col->getType()));
+                $col = $model->getConnection()->getDoctrineColumn($model->getTable(), $input_name); // ->getType();//->getName();
+                // dddx(get_class_methods($col->getType()));
                 $type = $col->getType();
                 /*
                 dddx([
@@ -590,15 +526,15 @@ class StubService {
                 }
                 $tmp->comment = $col->getComment();
             } catch (\Exception $e) {
-                //$input_type='Text';
-                //$tmp=new \stdClass();
+                // $input_type='Text';
+                // $tmp=new \stdClass();
                 $tmp->type = 'Text';
                 $tmp->name = $input_name;
                 $tmp->comment = 'not in Doctrine';
             }
 
             $fields[] = $tmp;
-            //debug_getter_obj(['obj'=>$col]);
+            // debug_getter_obj(['obj'=>$col]);
             /*
             #_type: IntegerType {#983}
             #_length: null
@@ -628,17 +564,16 @@ class StubService {
 
         return $fields;
     }
-<<<<<<< HEAD
-=======
-    public function getModelPath():string{
-        $path=base_path($this->getModelNamespace());
-        $path=FileService::fixPath($path);
+
+    public function getModelPath(): string {
+        $path = base_path($this->getModelNamespace());
+        $path = FileService::fixPath($path);
+
         return $path;
     }
 
-
     public function getFieldsFromTable(): array {
-        //dddx([$this->getModelClass(), $this->getModelPath()]);
+        // dddx([$this->getModelClass(), $this->getModelPath()]);
 
         $models = File::files($this->getModelPath());
         shuffle($models);
@@ -647,11 +582,11 @@ class StubService {
                 return 'php' == $file->getExtension();
             })
             ->first();
-        //dddx(get_class_methods($brother_file));
-        //dddx($brother_file->getFilenameWithoutExtension());
+        // dddx(get_class_methods($brother_file));
+        // dddx($brother_file->getFilenameWithoutExtension());
         $brother_class = $this->getModelNamespace().'\\'.$brother_file->getFilenameWithoutExtension();
-        //getRandomBrotherModel
-        //dddx($brother_class);
+        // getRandomBrotherModel
+        // dddx($brother_class);
         $brother = app($brother_class);
         $fillables = $brother->getConnection()->getSchemaBuilder()->getColumnListing($this->getTable());
         $fillables = collect($fillables)->except(
@@ -662,7 +597,5 @@ class StubService {
         )->all();
 
         return $fillables;
-
     }
->>>>>>> 04f6c8ba (first)
 }

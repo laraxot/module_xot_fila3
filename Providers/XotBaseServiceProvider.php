@@ -13,7 +13,7 @@ use Illuminate\Support\Str;
 use Modules\Xot\Services\LivewireService;
 use Nwidart\Modules\Facades\Module;
 
-//use Modules;
+// use Modules;
 
 /**
  * Class XotBaseServiceProvider.
@@ -34,14 +34,14 @@ abstract class XotBaseServiceProvider extends ServiceProvider {
         $this->registerTranslations();
         $this->registerConfig();
         $this->registerViews();
-        //$this->registerFactories();
+        // $this->registerFactories();
         $this->loadMigrationsFrom($this->module_dir.'/../Database/Migrations');
         if (method_exists($this, 'bootCallback')) {
             $this->bootCallback();
         }
-        //Illuminate\Contracts\Container\BindingResolutionException: Target class [livewire] does not exist.
+        // Illuminate\Contracts\Container\BindingResolutionException: Target class [livewire] does not exist.
         $this->registerLivewireComponents();
-        //Illuminate\Contracts\Container\BindingResolutionException: Target class [modules] does not exist.
+        // Illuminate\Contracts\Container\BindingResolutionException: Target class [modules] does not exist.
         $this->registerBladeComponents();
     }
 
@@ -54,7 +54,7 @@ abstract class XotBaseServiceProvider extends ServiceProvider {
         if (method_exists($this, 'registerCallback')) {
             $this->registerCallback();
         }
-        //echo '<h3>Time :'.class_basename($this).' '.(microtime(true) - LARAVEL_START).'</h3>';
+        // echo '<h3>Time :'.class_basename($this).' '.(microtime(true) - LARAVEL_START).'</h3>';
     }
 
     /**
@@ -99,25 +99,9 @@ abstract class XotBaseServiceProvider extends ServiceProvider {
      * Register translations.
      */
     public function registerTranslations(): void {
-<<<<<<< HEAD
-        /*
-        $langPath = resource_path('lang/modules/'.$this->module_name);
-
-        if (is_dir($langPath)) {
-            $this->loadTranslationsFrom($langPath, $this->module_name);
-        } else {
-            $this->loadTranslationsFrom($this->module_dir.'/../Resources/lang', $this->module_name);
-        }
-        */
-        $langPath = ($this->module_dir.'/../Resources/lang');
-        //echo '<hr>'.$langPath.'  :  '.$this->module_name.' <hr/>';
-        $this->loadTranslationsFrom($langPath, $this->module_name);
-=======
         $langPath = realpath($this->module_dir.'/../Resources/lang');
-        //echo '<hr>'.$langPath.'  :  '.$this->module_name.' <hr/>';
+        // echo '<hr>'.$langPath.'  :  '.$this->module_name.' <hr/>';
         $this->loadTranslationsFrom($langPath, $this->module_name);
-
->>>>>>> 04f6c8ba (first)
     }
 
     /**
@@ -125,7 +109,7 @@ abstract class XotBaseServiceProvider extends ServiceProvider {
      */
     public function registerFactories(): void {
         if (! app()->environment('production')) {
-            //app(Factory::class)->load($this->module_dir.'/../Database/factories');
+            // app(Factory::class)->load($this->module_dir.'/../Database/factories');
         }
     }
 
@@ -144,26 +128,16 @@ abstract class XotBaseServiceProvider extends ServiceProvider {
         Blade::componentNamespace($namespace, $this->module_name);
     }
 
-<<<<<<< HEAD
-    public function registerLivewireComponents(): void {
-        LivewireService::registerComponents(
-            $this->module_dir.'/../Http/Livewire',
-            Str::before($this->module_ns, '\Providers'),
-            $this->module_name.'::'
-=======
     /**
-     * Undocumented function
-     *
-     * @return void
+     * Undocumented function.
      */
     public function registerLivewireComponents(): void {
-        //$prefix=$this->module_name.'::';
-        $prefix='';
+        // $prefix=$this->module_name.'::';
+        $prefix = '';
         LivewireService::registerComponents(
             $this->module_dir.'/../Http/Livewire',
             Str::before($this->module_ns, '\Providers'),
             $prefix,
->>>>>>> 04f6c8ba (first)
         );
     }
 
@@ -194,7 +168,7 @@ abstract class XotBaseServiceProvider extends ServiceProvider {
             foreach ($filenames as $filename) {
                 $info = pathinfo($filename);
 
-                //$tmp->namespace='\\'.$vendor.'\\'.$pack.'\\Events\\'.$info['filename'];
+                // $tmp->namespace='\\'.$vendor.'\\'.$pack.'\\Events\\'.$info['filename'];
                 $event_name = $info['filename'];
                 $str = 'Event';
                 if (Str::endsWith($event_name, $str)) {
@@ -209,7 +183,7 @@ abstract class XotBaseServiceProvider extends ServiceProvider {
                         'listener_exists' => class_exists($listener),
                     ];
                     if (class_exists($event) && class_exists($listener)) {
-                        //\Event::listen($event, $listener);
+                        // \Event::listen($event, $listener);
                         $tmp = new \stdClass();
                         $tmp->event = $event;
                         $tmp->listener = $listener;
@@ -235,5 +209,5 @@ abstract class XotBaseServiceProvider extends ServiceProvider {
         }
     }
 
-    //end function
+    // end function
 }
