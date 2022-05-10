@@ -2,7 +2,11 @@
 
 declare(strict_types=1);
 
+<<<<<<< HEAD
 //use Illuminate\Support\Facades\Storage;
+=======
+// use Illuminate\Support\Facades\Storage;
+>>>>>>> 04f6c8ba (first)
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
@@ -17,7 +21,11 @@ use Modules\Xot\Services\ModuleService;
 use Modules\Xot\Services\PanelService;
 use Modules\Xot\Services\RouteService;
 
+<<<<<<< HEAD
 //------------------------------------------------
+=======
+// ------------------------------------------------
+>>>>>>> 04f6c8ba (first)
 if (! \function_exists('snake_case')) {
     /**
      * @param string $str
@@ -87,7 +95,11 @@ if (! function_exists('str_contains')) {
     }
 }
 
+<<<<<<< HEAD
 //-------------------------------------------
+=======
+// -------------------------------------------
+>>>>>>> 04f6c8ba (first)
 
 if (! \function_exists('backtrace')) {
     function filter_vendor(array $obj): bool {
@@ -114,7 +126,11 @@ if (! \function_exists('backtrace')) {
     }
 }
 
+<<<<<<< HEAD
 //--------------------------------------------
+=======
+// --------------------------------------------
+>>>>>>> 04f6c8ba (first)
 /*
 if (! \function_exists('superdump')) {
     function superdump($params) {
@@ -149,10 +165,17 @@ if (! \function_exists('dddx')) {
             '_' => $params,
             'line' => $tmp[0]['line'] ?? 'line-unknows',
             'file' => FileService::fixPath($tmp[0]['file'] ?? 'file-unknown'),
+<<<<<<< HEAD
             //'file_1' => $file, //da sistemare
         ];
         if (File::exists($data['file']) && Str::startsWith($data['file'], FileService::fixPath(storage_path('framework/views')))) {
             //$data['extra'] = 'preso';
+=======
+            // 'file_1' => $file, //da sistemare
+        ];
+        if (File::exists($data['file']) && Str::startsWith($data['file'], FileService::fixPath(storage_path('framework/views')))) {
+            // $data['extra'] = 'preso';
+>>>>>>> 04f6c8ba (first)
             $content = File::get($data['file']);
             $data['view_file'] = FileService::fixPath(Str::between($content, '/**PATH ', ' ENDPATH**/'));
         }
@@ -165,7 +188,11 @@ if (! \function_exists('dddx')) {
 if (! function_exists('debug_methods')) {
     function debug_methods(object $rows): string {
         $methods = get_class_methods($rows);
+<<<<<<< HEAD
         //*
+=======
+        // *
+>>>>>>> 04f6c8ba (first)
         $methods_get = collect($methods)->filter(
             function ($item) {
                 return Str::startsWith($item, 'get');
@@ -292,7 +319,11 @@ if (! \function_exists('isAdmin')) {
      * @return string
      */
 if (! \function_exists('fullTextWildcards')) {
+<<<<<<< HEAD
     /*protected */
+=======
+    /* protected */
+>>>>>>> 04f6c8ba (first)
     /**
      * @param string $term
      *
@@ -425,7 +456,11 @@ if (! \function_exists('getTransformerFromModel')) {
         $class = get_class($model);
         $module_name = getModuleNameFromModel($model);
         $transformer = '\\Modules\\'.$module_name.'\Transformers\\'.class_basename($model).''.$type;
+<<<<<<< HEAD
         //dddx($transformer.' '.class_exists($transformer));
+=======
+        // dddx($transformer.' '.class_exists($transformer));
+>>>>>>> 04f6c8ba (first)
         if (! class_exists($transformer)) {
             dddx('preso');
         }
@@ -470,6 +505,7 @@ if (! \function_exists('getModuleModelsMenu')) {
         $models = getModuleModels($module);
         $menu = collect($models)->map(
             function ($item, $key) {
+<<<<<<< HEAD
                 //$obj = new $item();
                 $obj = app($item);
                 $panel = PanelService::make()->get($obj);
@@ -478,6 +514,16 @@ if (! \function_exists('getModuleModelsMenu')) {
                     $panel->setName('medias');
                 }
                 //*/
+=======
+                // $obj = new $item();
+                $obj = app($item);
+                $panel = PanelService::make()->get($obj);
+                // *
+                if ('media' == $key) {// media e' singolare ma anche plurale di medium
+                    $panel->setName('medias');
+                }
+                // */
+>>>>>>> 04f6c8ba (first)
                 $url = $panel->url('index');
 
                 return (object) [
@@ -532,11 +578,19 @@ if (! \function_exists('transFields')) {
 
         $ns = Str::lower($module_name);
         $trans_root = $ns.'::'.Str::snake(class_basename($model));
+<<<<<<< HEAD
         //debug_getter_obj(['obj'=>$module]);
         //dddx($module_name->getNamespace());
         $view = 'unknown';
         extract($params);
         //dddx($params);
+=======
+        // debug_getter_obj(['obj'=>$module]);
+        // dddx($module_name->getNamespace());
+        $view = 'unknown';
+        extract($params);
+        // dddx($params);
+>>>>>>> 04f6c8ba (first)
         if (isset($attributes)) {
             extract($attributes);
         }
@@ -555,7 +609,11 @@ if (! \function_exists('transFields')) {
             $ris->name = $name;
         }
 
+<<<<<<< HEAD
         $ris->name_dot = bracketsToDotted($name);
+=======
+        $ris->name_dot = bracketsToDotted((string) $name);
+>>>>>>> 04f6c8ba (first)
 
         $pattern = '/\.[0-9]+\./m';
         $ris->name_dot = preg_replace($pattern, '.', $ris->name_dot);
@@ -566,21 +624,37 @@ if (! \function_exists('transFields')) {
         if (null == $module_name) {
             $trans_root = $ns.'::'.implode('.', array_slice(explode('.', $key), $start, -1));
         }
+<<<<<<< HEAD
         //*
+=======
+        // *
+>>>>>>> 04f6c8ba (first)
 
         $trans_fields = ['label', 'placeholder', 'help'];
         foreach ($trans_fields as $tf) {
             $trans = $trans_root.'.field.'.Str::snake((string) $ris->name_dot).'.'.$tf;
+<<<<<<< HEAD
             //if (! isset($ris->$tf)) {
+=======
+            // if (! isset($ris->$tf)) {
+>>>>>>> 04f6c8ba (first)
             $ris->$tf = isset($$tf) ? $$tf : trans($trans);
 
             if ($ris->$tf == $trans && ! config('xra.show_trans_key')) {
                 $ris->$tf = $ris->name_dot;
+<<<<<<< HEAD
                 //$ris->$tf = $trans;
             }
             //}
         }
         //*/
+=======
+                // $ris->$tf = $trans;
+            }
+            // }
+        }
+        // */
+>>>>>>> 04f6c8ba (first)
         if ($ris->help == $ris->name_dot) {
             $ris->help = '';
         }
@@ -602,7 +676,11 @@ if (! \function_exists('transFields')) {
                     return in_array($key, ['style', 'class', 'placeholder', 'readonly', 'id', 'value', 'name']) || Str::startsWith($key, 'data-');
                 }
             )
+<<<<<<< HEAD
             //->only('class','placeholder','readonly')
+=======
+            // ->only('class','placeholder','readonly')
+>>>>>>> 04f6c8ba (first)
             ->all();
         $ris->params = $params;
 
@@ -731,26 +809,45 @@ if (! \function_exists('debug_getter_obj')) {
                 return false;
             }
         )->all();
+<<<<<<< HEAD
         //dddx($methods);
+=======
+        // dddx($methods);
+>>>>>>> 04f6c8ba (first)
         foreach ($methods as $method) {
             $reflection = new \ReflectionMethod($obj, $method);
             $args = $reflection->getParameters();
             if (0 == count($args) && $reflection->class == get_class($obj)) {
                 try {
                     $return = $reflection->invoke($obj);
+<<<<<<< HEAD
                     //$check = ($return instanceof \Illuminate\Database\Eloquent\Relations\Relation);
                     //if ($check) {
                     //$related_model = (new \ReflectionClass($return->getRelated()))->getName();
+=======
+                    // $check = ($return instanceof \Illuminate\Database\Eloquent\Relations\Relation);
+                    // if ($check) {
+                    // $related_model = (new \ReflectionClass($return->getRelated()))->getName();
+>>>>>>> 04f6c8ba (first)
                     $msg = [
                         'name' => $reflection->name,
                         'type' => class_basename($return),
                         'ris' => $return,
+<<<<<<< HEAD
                         //'check'=>$check,
                         //$msg['type']=(new \ReflectionClass($return))->getShortName();
                         //'model' => $related_model,
                     ];
                     $data[] = $msg;
                     //}
+=======
+                        // 'check'=>$check,
+                        // $msg['type']=(new \ReflectionClass($return))->getShortName();
+                        // 'model' => $related_model,
+                    ];
+                    $data[] = $msg;
+                    // }
+>>>>>>> 04f6c8ba (first)
                 } catch (ErrorException $e) {
                 }
             }
@@ -759,6 +856,7 @@ if (! \function_exists('debug_getter_obj')) {
 
         return $data;
     }
+<<<<<<< HEAD
 } //end exists
 
 if (! \function_exists('bracketsToDotted')) {
@@ -770,6 +868,14 @@ if (! \function_exists('bracketsToDotted')) {
      * @return string
      */
     function bracketsToDotted($str, $quotation_marks = '') {
+=======
+} // end exists
+
+if (! \function_exists('bracketsToDotted')) {
+    // privacies[111][pivot][title] => privacies.111.pivot.title
+
+    function bracketsToDotted(string $str, string $quotation_marks = ''): string {
+>>>>>>> 04f6c8ba (first)
         return str_replace(['[', ']'], ['.', ''], $str);
     }
 }
@@ -846,9 +952,15 @@ if (! function_exists('url_queries')) {
         }
         // Turn the query string into an array
         $url_params = [];
+<<<<<<< HEAD
         //Cannot access offset 'query' on array(?'scheme' => string, ?'host' => string, ?'port' => int, ?'user' => string, ?'pass' => string, ?'path' => string, ?'query' => string, ?'fragment' => string)|false.
         if (isset($url_parsed['query'])) {
             //if (in_array('query', array_keys($url_parsed))) {
+=======
+        // Cannot access offset 'query' on array(?'scheme' => string, ?'host' => string, ?'port' => int, ?'user' => string, ?'pass' => string, ?'path' => string, ?'query' => string, ?'fragment' => string)|false.
+        if (isset($url_parsed['query'])) {
+            // if (in_array('query', array_keys($url_parsed))) {
+>>>>>>> 04f6c8ba (first)
             parse_str($url_parsed['query'], $url_params);
         }
         // Merge the existing URL's query parameters with our new ones
@@ -892,7 +1004,11 @@ if (! function_exists('getRelationships')) {
      * @return array
      */
     function getRelationships(Model $model) {
+<<<<<<< HEAD
         //working
+=======
+        // working
+>>>>>>> 04f6c8ba (first)
         $methods = get_class_methods($model);
         $data = [];
         if (! is_array($methods)) {
@@ -910,8 +1026,13 @@ if (! function_exists('getRelationships')) {
                         $msg = [
                             'name' => $reflection->name,
                             'type' => class_basename($return),
+<<<<<<< HEAD
                             //'check'=>$check,
                             //$msg['type']=(new \ReflectionClass($return))->getShortName();
+=======
+                            // 'check'=>$check,
+                            // $msg['type']=(new \ReflectionClass($return))->getShortName();
+>>>>>>> 04f6c8ba (first)
                             'model' => $related_model,
                         ];
                         $data[] = $msg;
@@ -977,7 +1098,11 @@ if (! function_exists('removeQueryParams')) {
         foreach ($params as $param) {
             unset($query[$param]); // loop through the array of parameters we wish to remove and unset the parameter from the query array
         }
+<<<<<<< HEAD
         //924    Parameter #1 $querydata of function http_build_query expects array|object, array|string given.
+=======
+        // 924    Parameter #1 $querydata of function http_build_query expects array|object, array|string given.
+>>>>>>> 04f6c8ba (first)
         return $query ? $url.'?'.http_build_query($query) : $url; // rebuild the URL with the remaining parameters, don't append the "?" if there aren't any query parameters left
     }
 }
@@ -1102,7 +1227,11 @@ if (! function_exists('md_to_html')) {
      */
     function md_to_html(?string $markdown): ?string {
         return $markdown;
+<<<<<<< HEAD
         //return app(App\Markdown\Converter::class)->toHtml($markdown);
+=======
+        // return app(App\Markdown\Converter::class)->toHtml($markdown);
+>>>>>>> 04f6c8ba (first)
     }
 }
 
@@ -1155,4 +1284,8 @@ if (! function_exists('secondsToHms')) {
 
         return $str;
     }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> 04f6c8ba (first)

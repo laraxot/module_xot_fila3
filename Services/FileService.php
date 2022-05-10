@@ -713,16 +713,38 @@ class FileService {
         FileService::copy($from_path, $to_path);
     }
 
+<<<<<<< HEAD
     public static function getComponents(string $path, string $namespace, string $prefix, bool $force_recreate = false): array {
         $namespace=Str::replace('/','\\',$namespace);
         $components_json = $path.'/_components.json';
         $path = FileService::fixPath($path);
+=======
+    /**
+     * Undocumented function
+     *
+     * @param string $path
+     * @param string $namespace
+     * @param string $prefix
+     * @param boolean $force_recreate
+     * @return array
+     */
+    public static function getComponents(string $path, string $namespace, string $prefix, bool $force_recreate = false): array {
+        $namespace=Str::replace('/', '\\', $namespace);
+        $components_json = $path.'/_components.json';
+        $path = FileService::fixPath($path);
+        /*
+        throw new Exception ??
+>>>>>>> 04f6c8ba (first)
         if (! File::exists($path)) {
             if (Str::endsWith($path, 'Http'.DIRECTORY_SEPARATOR.'Livewire')) {
                 File::makeDirectory($path, 0755, true, true);
             }
         }
+<<<<<<< HEAD
 
+=======
+        */
+>>>>>>> 04f6c8ba (first)
         $exists = File::exists($components_json);
         if ($exists && ! $force_recreate) {
             $content = File::get($components_json);
@@ -749,7 +771,11 @@ class FileService {
 
                 $tmp->comp_ns = $namespace.'\\'.$class_name;
                 $relative_path=$v->getRelativePath();
+<<<<<<< HEAD
                 $relative_path=Str::replace('/','\\',$relative_path);
+=======
+                $relative_path=Str::replace('/', '\\', $relative_path);
+>>>>>>> 04f6c8ba (first)
 
                 if ('' != $relative_path) {
                     $tmp->comp_name = '';

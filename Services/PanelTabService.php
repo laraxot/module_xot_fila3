@@ -5,6 +5,10 @@ declare(strict_types=1);
 namespace Modules\Xot\Services;
 
 use Illuminate\Support\Facades\Gate;
+<<<<<<< HEAD
+=======
+use Illuminate\Support\Facades\Lang;
+>>>>>>> 04f6c8ba (first)
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Str;
 use Modules\Xot\Contracts\PanelContract;
@@ -85,6 +89,20 @@ class PanelTabService {
                 $tab_panel = $bread->relatedName($tab);
                 if (Gate::allows('index', $tab_panel)) {
                     $trans_key = $bread->getTradMod().'.tab.'.Str::snake($tab);
+<<<<<<< HEAD
+=======
+                    /*
+                    dddx([
+                        $trans_key.'.label',
+                        trans($trans_key.'.label'),
+                        trans('quaeris::show_answer_action.submitdate'),
+                        __('quaeris::show_answer_action.submitdate'),
+                        __('pub_theme::txt.day_names.sun'),
+                        Lang::get('quaeris::show_answer_action.submitdate'),
+                        app()->getLocale(),
+                    ]);
+                    */
+>>>>>>> 04f6c8ba (first)
                     $tmp = (object) [
                         'title' => trans($trans_key.'.label'),
                         'icon' => trans($trans_key.'.icon'),

@@ -99,6 +99,7 @@ abstract class XotBaseServiceProvider extends ServiceProvider {
      * Register translations.
      */
     public function registerTranslations(): void {
+<<<<<<< HEAD
         /*
         $langPath = resource_path('lang/modules/'.$this->module_name);
 
@@ -111,6 +112,12 @@ abstract class XotBaseServiceProvider extends ServiceProvider {
         $langPath = ($this->module_dir.'/../Resources/lang');
         //echo '<hr>'.$langPath.'  :  '.$this->module_name.' <hr/>';
         $this->loadTranslationsFrom($langPath, $this->module_name);
+=======
+        $langPath = realpath($this->module_dir.'/../Resources/lang');
+        //echo '<hr>'.$langPath.'  :  '.$this->module_name.' <hr/>';
+        $this->loadTranslationsFrom($langPath, $this->module_name);
+
+>>>>>>> 04f6c8ba (first)
     }
 
     /**
@@ -137,11 +144,26 @@ abstract class XotBaseServiceProvider extends ServiceProvider {
         Blade::componentNamespace($namespace, $this->module_name);
     }
 
+<<<<<<< HEAD
     public function registerLivewireComponents(): void {
         LivewireService::registerComponents(
             $this->module_dir.'/../Http/Livewire',
             Str::before($this->module_ns, '\Providers'),
             $this->module_name.'::'
+=======
+    /**
+     * Undocumented function
+     *
+     * @return void
+     */
+    public function registerLivewireComponents(): void {
+        //$prefix=$this->module_name.'::';
+        $prefix='';
+        LivewireService::registerComponents(
+            $this->module_dir.'/../Http/Livewire',
+            Str::before($this->module_ns, '\Providers'),
+            $prefix,
+>>>>>>> 04f6c8ba (first)
         );
     }
 

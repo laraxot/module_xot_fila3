@@ -34,8 +34,18 @@ class TranslatorService extends BaseTranslator {
         //backtrace(true);
         //trans parte da xotbasepanel riga 1109 (per ora)
         //superdump([$key, $replace , $locale , $fallback ]);
+<<<<<<< HEAD
 
         $translation = parent::get($key, $replace, $locale, $fallback);
+=======
+        //*
+        if($locale==null){
+            $locale=app()->getLocale();
+        }
+        //*/
+        $translation = parent::get($key, $replace, $locale, $fallback);
+        //dddx(['key'=>$key,'translation'=>$translation,'replace'=>$replace,'locale'=>$locale,'fallback'=>$fallback]);
+>>>>>>> 04f6c8ba (first)
         //echo '<br>['.$key.']['.$translation.']';
         //$langs=ThemeService::__merge('langs', [$key=>$translation]);
         //$cache_key=Str::slug(req_uri().'_langs');
@@ -67,6 +77,10 @@ class TranslatorService extends BaseTranslator {
     }
 
     public static function parse(array $params): array {
+<<<<<<< HEAD
+=======
+        dddx('a');
+>>>>>>> 04f6c8ba (first)
         $lang = app()->getLocale();
         extract($params);
         if (! isset($key)) {

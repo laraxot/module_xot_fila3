@@ -71,6 +71,7 @@ abstract class XotBaseThemeServiceProvider
         );
     }
 
+<<<<<<< HEAD
     public function registerBladeComponents(): void
     {
         BladeService::registerComponents($this->dir.'/../View/Components', 'Themes\\'.$this->name);
@@ -78,6 +79,13 @@ abstract class XotBaseThemeServiceProvider
 
     public function registerLivewireComponents(): void
     {
+=======
+    public function registerBladeComponents(): void {
+        BladeService::registerComponents($this->dir.'/../View/Components', 'Themes\\'.$this->name);
+    }
+
+    public function registerLivewireComponents(): void {
+>>>>>>> 04f6c8ba (first)
         LivewireService::registerComponents($this->dir.'/../Http/Livewire', 'Themes\\'.$this->name);
     }
 }
