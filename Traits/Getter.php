@@ -35,10 +35,13 @@ trait Getter {
         $ris = self::$func($params);
         // dd(get_called_class());//XRA\Extend\Services\ThemeService
         // dd(class_basename(get_called_class()));//ThemeService
-        if ('' === $ris && isset(static::class::$config_name)) {
-            $config_name = static::class::$config_name;
+        $class=static::class;
+        //*
+        if ('' === $ris && isset($class::$config_name)) {
+            $config_name = $class::$config_name;
             $ris = config($config_name.'.'.$index);
         }
+        //*/
         self::__setStatic($index, $ris);
 
         return $ris;
