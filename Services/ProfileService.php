@@ -267,6 +267,10 @@ class ProfileService {
         return $this->user;
     }
 
+    public function getProfile(): Model {
+        return $this->profile;
+    }
+
     public function areas(): Collection {
         $areas = $this->getUser()->areas;
 
