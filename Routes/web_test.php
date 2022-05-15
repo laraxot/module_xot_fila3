@@ -21,6 +21,11 @@ $acts = [
         'uri' => '/index_edit',
     ],
     (object) [
+        'name' => 'attach',
+        'methods' => ['get', 'head','post','put'],
+        'uri' => '/attach',
+    ],
+    (object) [
         'name' => 'detach',
         'methods' => ['get', 'head'],
         'uri' => '/detach',
