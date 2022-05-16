@@ -201,6 +201,7 @@ abstract class XotBasePanel implements PanelContract {
             return $this->row->query();
         }
         */
+
         return $this->rows;
     }
 
@@ -1289,8 +1290,6 @@ abstract class XotBasePanel implements PanelContract {
             $data = request()->all();
         }
 
-        // dddx($data);
-
         $filters = $data;
         $q = isset($data['q']) ? $data['q'] : null;
         $sort = isset($data['sort']) ? $data['sort'] : null;
@@ -1324,6 +1323,7 @@ abstract class XotBasePanel implements PanelContract {
         $page = isset($data['page']) ? $data['page'] : 1;
         Cach1e::forever('page', $page);
         */
+
         return $query;
     }
 

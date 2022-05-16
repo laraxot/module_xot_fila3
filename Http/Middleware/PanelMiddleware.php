@@ -22,9 +22,11 @@ class PanelMiddleware {
     public function handle(Request $request, Closure $next) {
         $route_params = getRouteParameters();
         try {
-            $panel = PanelService::make()->getByParams($route_params);
+            $panel = PanelService::make()
+                ->getByParams($route_params);
         } catch (\Exception $e) {
-            return response()->view('theme::errors.404', ['message' => $e->getMessage(), 'lang' => 'it'], 404);
+            return response()
+                ->view('theme::errors.404', ['message' => $e->getMessage(), 'lang' => 'it'], 404);
         }
 
         PanelService::make()->setRequestPanel($panel);

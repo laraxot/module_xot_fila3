@@ -237,8 +237,13 @@ class PanelService {
         // $first_container = Str::singular($containers[0]);
         $first_container = $containers[0];
         if (isset($route_params['module'])) {
-            $model_class = collect(getModuleModels($route_params['module']))
+            $module_models = getModuleModels($route_params['module']);
+            $model_class = collect($module_models)
                 ->get($first_container);
+            if (null == $model_class) {
+                $model_class = collect($module_models)
+                    ->get(Str::singular($first_container));
+            }
             if (null !== $model_class) {
                 $row = app($model_class);
             }
