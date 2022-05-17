@@ -39,7 +39,7 @@ class ModelService {
     }
 
     /**
-     * Undocumented function
+     * Undocumented function.
      */
     public static function make(): self {
         return static::getInstance();
@@ -259,7 +259,7 @@ class ModelService {
     }
 
     /**
-     * Undocumented function
+     * Undocumented function.
      *
      * get all tables and fields of the same collection
      */

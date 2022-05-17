@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 /**
- * https://chasboon.ir/failed-jobs-in-laravel
+ * https://chasboon.ir/failed-jobs-in-laravel.
  */
 
 namespace Modules\Xot\Console\Commands;

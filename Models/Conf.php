@@ -8,7 +8,7 @@ use Modules\Tenant\Services\TenantService;
 use Sushi\Sushi;
 
 /**
- * Modules\Xot\Models\Conf
+ * Modules\Xot\Models\Conf.
  *
  * @property int                                                                  $id
  * @property string|null                                                          $name

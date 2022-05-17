@@ -262,11 +262,12 @@ class UpdateJob extends XotBaseJob {
             'isAssoc'=>Arr::isAssoc($data),
         ]);
         */
-        //-- se non e' associativo e' una lista di id da mettere
+        // -- se non e' associativo e' una lista di id da mettere
         // dddx([\Request::all(), $params]);
         // $res=$model->$name()->syncWithoutDetaching($data);
         // dddx([$name, Arr::isAssoc($data)]);
         if (! Arr::isAssoc($data)) {
+            /*
             $data = collect($data)->map(
                 function ($item) use ($model, $name) {
                     if (is_numeric($item)) {
@@ -279,6 +280,7 @@ class UpdateJob extends XotBaseJob {
                     return $res->getKey().'';
                 }
             )->all();
+            */
             // dddx($data);
             $model->$name()->sync($data);
         }

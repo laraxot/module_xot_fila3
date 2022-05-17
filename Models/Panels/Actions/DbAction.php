@@ -91,7 +91,7 @@ class DbAction extends XotBasePanelAction {
     }
 
     /**
-     * Undocumented function
+     * Undocumented function.
      *
      * @see https://stackoverflow.com/questions/26181170/laravel-how-to-use-query-builder-dbtable-with-dbconnection
      *

@@ -22,7 +22,7 @@ $acts = [
     ],
     (object) [
         'name' => 'attach',
-        'methods' => ['get', 'head','post','put'],
+        'methods' => ['get', 'head', 'post', 'put'],
         'uri' => '/attach',
     ],
     (object) [

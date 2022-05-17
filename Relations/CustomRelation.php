@@ -1,6 +1,6 @@
 <?php
 /**
- * ---
+ * ---.
  *
  * @see https://github.com/johnnyfreeman/laravel-custom-relation/blob/master/src/Relations/Custom.php
  */

@@ -1,16 +1,16 @@
 <?php
 
-
+declare(strict_types=1);
 
 namespace Modules\Xot\Services;
 
-use Exception;
-use ErrorException;
-use Illuminate\Support\Str;
 use Doctrine\DBAL\Schema\Column;
+use ErrorException;
+use Exception;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\File;
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 
 /**
  * Class StubService.
@@ -361,10 +361,10 @@ class StubService {
         if ($this->debug) {
             $file .= '.test';
         }
-        try{
+        try {
             File::put($file, $stub);
-        }catch(ErrorException $e){
-            $msg='['.$file.'] '.$e->getMessage().'
+        } catch (ErrorException $e) {
+            $msg = '['.$file.'] '.$e->getMessage().'
                 ['.__LINE__.']
                 ['.class_basename(__CLASS__).']
                 ';

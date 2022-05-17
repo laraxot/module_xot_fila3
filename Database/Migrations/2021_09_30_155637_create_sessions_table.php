@@ -6,7 +6,7 @@ use Illuminate\Database\Schema\Blueprint;
 use Modules\Xot\Database\Migrations\XotBaseMigration;
 
 /**
- * Undocumented class
+ * Undocumented class.
  */
 class CreateSessionsTable extends XotBaseMigration {
     /**

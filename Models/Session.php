@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Modules\Xot\Models;
 
 /**
- * Modules\Xot\Models\Session
+ * Modules\Xot\Models\Session.
  *
  * @property int                                                                  $id
  * @property int|null                                                             $user_id
