@@ -1,14 +1,16 @@
 <?php
 
-declare(strict_types=1);
+
 
 namespace Modules\Xot\Services;
 
+use Exception;
+use ErrorException;
+use Illuminate\Support\Str;
 use Doctrine\DBAL\Schema\Column;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\File;
-use Illuminate\Support\Str;
+use Illuminate\Database\Eloquent\Model;
 
 /**
  * Class StubService.
@@ -359,8 +361,15 @@ class StubService {
         if ($this->debug) {
             $file .= '.test';
         }
-
-        File::put($file, $stub);
+        try{
+            File::put($file, $stub);
+        }catch(ErrorException $e){
+            $msg='['.$file.'] '.$e->getMessage().'
+                ['.__LINE__.']
+                ['.class_basename(__CLASS__).']
+                ';
+            throw new Exception($msg);
+        }
         $msg = (' ['.$file.'] is under creating , refresh page');
 
         \Session::flash($msg);
