@@ -75,7 +75,7 @@ class ProfileService {
                     'sql' => $sql,
                 ]);
                 */
-                $profile = $user->profile()->create();
+                $profile = $user->profile()->FirstOrCreate();
                 $data = ['user_id' => $user->id];
                 if (method_exists($profile, 'post')) {
                     $profile->post()->firstOrCreate(['guid' => 'profile-'.$user->id, 'lang' => app()->getLocale()]);
