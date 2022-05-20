@@ -1613,6 +1613,13 @@ abstract class XotBasePanel implements PanelContract {
             $content = $row->getAttributeValue('txt');
         }
 
+        //[2022-05-20 00:22:19] local.ERROR: preg_replace():
+        //Argument #3 ($subject) must be of type array|string, null given (View: /home/cvfcmxwn/laraxot/multi/laravel/Themes/DirectoryBs4/Resources/views/layouts/widgets/blog_items.blade.php) {"view":{"view":"/home/cvfcmxwn/laraxot/multi/laravel/Modules/Xot/Models/Panels/XotBasePanel.php","data":[]},"
+        //url":"http://prosecco-valdobbiadene.it/?page=9","
+        if (is_null($content)) {
+            $content = '';
+        }
+
         // 1737   Parameter #1 $str of function strip_tags expects string, array|string|null given.
         $tmp = preg_replace(['/<pre>[\w\W]*?<\/pre>/', '/<h\d>[\w\W]*?<\/h\d>/'], '', $content);
         if (\is_array($tmp)) {
