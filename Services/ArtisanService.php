@@ -5,12 +5,13 @@ declare(strict_types=1);
 namespace Modules\Xot\Services;
 
 use Exception;
-use Illuminate\Contracts\Support\Renderable;
-use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Str;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Artisan;
 use Modules\Theme\Services\ThemeService;
+use Modules\Tenant\Services\TenantService;
+use Illuminate\Contracts\Support\Renderable;
 
 if (! \defined('STDIN')) {
     \define('STDIN', fopen('php://stdin', 'r'));
@@ -29,8 +30,10 @@ class ArtisanService {
      * @return string|Renderable
      */
     public static function act(string $act) {
+        //echo '<h3>['.TenantService::getName().']</h3>';
+        //echo '<pre>'.print_r(TenantService::config('database'),true).'</pre>';
         // da fare anche in noconsole, e magari mettere un policy
-        $module_name = \Request::input('module');
+        $module_name = \Request::input('module','');
         switch ($act) {
         case 'migrate':
             \DB::purge('mysql');
