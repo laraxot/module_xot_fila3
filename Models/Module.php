@@ -10,7 +10,6 @@ use Sushi\Sushi;
 /**
  * Modules\Xot\Models\Module
  *
- * @mixin IdeHelperModule
  * @property int $id
  * @property string|null $name
  * @property-read \Illuminate\Database\Eloquent\Collection|\Modules\Xot\Models\Image[] $images
@@ -21,6 +20,7 @@ use Sushi\Sushi;
  * @method static \Illuminate\Database\Eloquent\Builder|Module query()
  * @method static \Illuminate\Database\Eloquent\Builder|Module whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Module whereName($value)
+ * @mixin IdeHelperModule
  */
 class Module extends BaseModel {
     use Sushi;
