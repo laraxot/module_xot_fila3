@@ -291,15 +291,32 @@ class ArrayService {
         return false;
     }
 
+    public static function fixType(array $data): array {
+        $res = collect($data)
+            ->map(
+                function($item){
+                    $item=collect($item)->map(function($item0){
+                        if(is_numeric($item0)){
+                            $item0=$item0*1;
+                        }
+                        return $item0;
+                    })->all();
+                    return $item;
+                }
+            );
+        return $res->all();
+    }
+
     /**
      * Undocumented function.
      *
      * @param array $arr_1
      * @param array $arr_2
      */
-    public static function diff_assoc_recursive($arr_1, $arr_2): array {
-        $coll_1 = collect($arr_1);
-        $coll_2 = collect($arr_2);
+    public static function diff_assoc_recursive(array $arr_1, array $arr_2): array {
+        $coll_1 = collect(self::fixType($arr_1));
+        $arr_2 = self::fixType($arr_2);
+
         $ris = $coll_1->filter(
             function ($value, $key) use ($arr_2) {
                 try {
