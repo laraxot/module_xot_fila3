@@ -26,10 +26,8 @@ if (! \defined('STDIN')) {
 class ArtisanService {
     /**
      * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
-     *
-     * @return string|Renderable
      */
-    public static function act(string $act) {
+    public static function act(string $act): string {
         // echo '<h3>['.TenantService::getName().']</h3>';
         // echo '<pre>'.print_r(TenantService::config('database'), true).'</pre>';
         // da fare anche in noconsole, e magari mettere un policy
@@ -97,7 +95,7 @@ class ArtisanService {
             // ----------------------------------------------------------------------
         case 'error':
         case 'error-show':
-            return self::errorShow();
+            return self::errorShow()->render();
         case 'error-clear':
             return self::errorClear();
 

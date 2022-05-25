@@ -32,7 +32,6 @@ use Modules\Xot\Models\Traits\WidgetTrait;
  * @property \Illuminate\Database\Eloquent\Model|\Eloquent                        $linked
  * @property \Illuminate\Database\Eloquent\Collection|Widget[]                    $widgets
  * @property int|null                                                             $widgets_count
- *
  * @method static \Illuminate\Database\Eloquent\Builder|Widget newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Widget newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Widget ofLayoutPosition($layout_position)
@@ -53,7 +52,6 @@ use Modules\Xot\Models\Traits\WidgetTrait;
  * @method static \Illuminate\Database\Eloquent\Builder|Widget whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Widget whereUpdatedBy($value)
  * @mixin \Eloquent
- *
  * @method static \Modules\Xot\Database\Factories\WidgetFactory factory(...$parameters)
  * @mixin IdeHelperWidget
  */

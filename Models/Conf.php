@@ -14,7 +14,6 @@ use Sushi\Sushi;
  * @property string|null                                                          $name
  * @property \Illuminate\Database\Eloquent\Collection|\Modules\Xot\Models\Image[] $images
  * @property int|null                                                             $images_count
- *
  * @method static \Modules\Xot\Database\Factories\ConfFactory factory(...$parameters)
  * @method static \Illuminate\Database\Eloquent\Builder|Conf newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Conf newQuery()
