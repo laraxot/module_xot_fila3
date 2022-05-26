@@ -33,7 +33,7 @@ class Module extends BaseModel {
     ];
 
     public function getRows(): array {
-        $modules = NwModule::all();
+        $modules = NwModule::getByStatus(1);
         $rows = [];
         $i = 1;
         foreach ($modules as $k => $module) {
