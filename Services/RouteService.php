@@ -440,4 +440,33 @@ class RouteService {
 
         return $path;
     }
+
+
+    public static function myRoutes(
+        string $name,
+        array $middleware,
+        string $namespace,
+        string $prefix,
+        string $as,
+        string $controller,
+        array $acts
+    ) {
+        Route::middleware($middleware)
+            ->namespace($namespace)
+            ->prefix($prefix)
+            ->as($as)
+            ->group(
+                function () use ($name, $controller, $acts) {
+                    foreach ($acts as $act) {
+                        // $uri = ($act->uri_full ?? $name).$act->uri;
+                        $uri = $act->uri.($act->uri_full ?? $name);
+                        Route::match($act->methods, $uri, $controller.'@'.$act->name)
+                        ->name('containers.'.$act->name)
+                        // ->where(['container1' => '[0-9]+']) //errato solo per test
+                        ;
+                    }
+                }
+            );
+    }
+
 }

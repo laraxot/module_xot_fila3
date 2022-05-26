@@ -274,7 +274,7 @@ class ProfileService {
     public function areas(): Collection {
         $areas = $this->getUser()->areas;
 
-        $modules = Module::all();
+        $modules = Module::getByStatus(1);
         // dddx(['areas' => $areas, 'modules' => $modules]);
         $areas = $areas->filter(
             function ($item) use ($modules) {

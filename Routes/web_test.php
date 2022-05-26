@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use Illuminate\Support\Facades\Route;
+use Modules\Xot\Services\RouteService;
 
 $acts = [
     (object) [
@@ -94,7 +95,7 @@ if (! config('xra.disable_frontend_dynamic_route', false)) {
             }
         );
 
-    myRoutes($name, $middleware, $namespace, $prefix, $as, $controller, $front_acts);
+        RouteService::myRoutes($name, $middleware, $namespace, $prefix, $as, $controller, $front_acts);
 }
 
 $middleware = [
@@ -107,36 +108,12 @@ $namespace = '\Modules\Xot\Http\Controllers\Admin';
 $prefix = '/admin/{module?}/{lang?}';
 $as = 'admin.';
 
-myRoutes($name, $middleware, $namespace, $prefix, $as, $controller, $acts);
+RouteService::myRoutes($name, $middleware, $namespace, $prefix, $as, $controller, $acts);
 
 /**
  * Undocumented function.
  *
  * @return void
  */
-function myRoutes(
-    string $name,
-    array $middleware,
-    string $namespace,
-    string $prefix,
-    string $as,
-    string $controller,
-    array $acts
-) {
-    Route::middleware($middleware)
-        ->namespace($namespace)
-        ->prefix($prefix)
-        ->as($as)
-        ->group(
-            function () use ($name, $controller, $acts) {
-                foreach ($acts as $act) {
-                    // $uri = ($act->uri_full ?? $name).$act->uri;
-                    $uri = $act->uri.($act->uri_full ?? $name);
-                    Route::match($act->methods, $uri, $controller.'@'.$act->name)
-                    ->name('containers.'.$act->name)
-                    // ->where(['container1' => '[0-9]+']) //errato solo per test
-                    ;
-                }
-            }
-        );
-}
+
+
