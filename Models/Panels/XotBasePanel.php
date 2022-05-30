@@ -217,8 +217,8 @@ abstract class XotBasePanel implements PanelContract {
     // Parameter #1 $panel of method Modules\Xot\Contracts\PanelContract::setParent()
     // expects Modules\Xot\Contracts\PanelContract,
     //        Modules\Xot\Contracts\PanelContract|null given.
-    public function setParent(?PanelContract $parent): self {
-        $this->parent = $parent;
+    public function setParent(?PanelContract $panel): self {
+        $this->parent = $panel;
 
         return $this;
     }

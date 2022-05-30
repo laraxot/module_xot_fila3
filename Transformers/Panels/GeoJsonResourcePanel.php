@@ -22,85 +22,29 @@ class GeoJsonResourcePanel extends XotBasePanel {
      */
     public static string $title = 'title';
 
-    /**
-     * The columns that should be searched.
-     *
-     * @var array
-     */
-    public static $search = array (
-);
-
-    /**
-     * The relationships that should be eager loaded on index queries.
-     *
-     * @var array
-     */
-    public function with():array {
-        return [];
-    }
-
-    public function search() :array {
-
-        return [];
-    }
-
-    /**
-     * on select the option id.
-     */
-    public function optionId(object $row) {
-        return $row->area_id;
-    }
-
-    /**
-     * on select the option label.
-     */
-    public function optionLabel(object $row):string {
-        return $row->area_define_name;
-    }
-
-    /**
-     * index navigation.
-     */
-    public function indexNav() {
-        return [];
-    }
-
-    /**
-     * Build an "index" query for the given resource.
-     *
-     * @param Request                               $request
-     * @param \Illuminate\Database\Eloquent\Builder $query
-     *
-     * @return \Illuminate\Database\Eloquent\Builder
-     */
-    public static function indexQuery($data, $query) {
-        //return $query->where('auth_user_id', $request->user()->auth_user_id);
-        return $query;
-    }
 
     
 
     /**
      * Get the fields displayed by the resource.
+     *  'col_bs_size' => 6,
+     *   'sortable' => 1,
+     *   'rules' => 'required',
+     *   'rules_messages' => ['it'=>['required'=>'Nome Obbligatorio']],
+     *   'value'=>'..',
      *
      * @return array
-        'col_bs_size' => 6,
-        'sortable' => 1,
-        'rules' => 'required',
-        'rules_messages' => ['it'=>['required'=>'Nome Obbligatorio']],
-        'value'=>'..',
      */
     public function fields(): array {
-        return array (
-);
+        return [];
     }
 
     /**
      * Get the tabs available.
      *
-     * @return array
+     * @return array<array-key, mixed>
      */
-    public function tabs() {
+    public function tabs():array {
         $tabs_name = [];
 
         return $tabs_name;
@@ -120,9 +64,9 @@ class GeoJsonResourcePanel extends XotBasePanel {
      *
      * @param \Illuminate\Http\Request $request
      *
-     * @return array
+     * @return array<array-key, mixed>
      */
-    public function filters(Request $request = null) {
+    public function filters(Request $request = null):array {
         return [];
     }
 
@@ -138,9 +82,9 @@ class GeoJsonResourcePanel extends XotBasePanel {
     /**
      * Get the actions available for the resource.
      *
-     * @return array
+     * @return array<array-key, mixed>
      */
-    public function actions() {
+    public function actions():array {
         return [];
     }
 }
