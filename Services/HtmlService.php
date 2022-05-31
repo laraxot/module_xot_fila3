@@ -10,8 +10,11 @@ namespace Modules\Xot\Services;
 // use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
 use Exception;
-use Mpdf\Mpdf;
+// use Mpdf\Mpdf;
+use Spipu\Html2Pdf\Exception\ExceptionFormatter;
 use Spipu\Html2Pdf\Exception\Html2PdfException;
+use Spipu\Html2Pdf\Html2Pdf;
+
 /*
 ExceptionFormatter
 HtmlParsingException
@@ -20,7 +23,6 @@ LocaleException
 LongSentenceException
 TableException
 */
-use Spipu\Html2Pdf\Html2Pdf;
 
 /**
  * Class HtmlService.
@@ -44,12 +46,12 @@ class HtmlService {
         if (request('debug', false)) {
             return $html;
         }
-        // try {
-        $html2pdf = new Html2Pdf($pdforientation, 'A4', 'it');
-        $html2pdf->setTestTdInOnePage(false);
-        $html2pdf->WriteHTML($html);
+        try {
+            $html2pdf = new Html2Pdf($pdforientation, 'A4', 'it');
+            $html2pdf->setTestTdInOnePage(false);
+            $html2pdf->WriteHTML($html);
 
-        switch ($out) {
+            switch ($out) {
         case 'content_PDF':
             return $html2pdf->Output($filename.'.pdf', 'S');
         case 'file': $html2pdf->Output($filename.'.pdf', 'F');
@@ -57,7 +59,13 @@ class HtmlService {
             return $filename;
         }
 
-        return $html2pdf->Output();
+            return $html2pdf->Output();
+        } catch (Html2PdfException $e) {
+            $html2pdf->clean();
+
+            $formatter = new ExceptionFormatter($e);
+            echo $formatter->getHtmlMessage();
+        }
         // } catch (HTML2PDF_exception $e) {
         // } catch (Html2PdfException $e) {
         //    echo '<pre>';
