@@ -20,7 +20,7 @@ use Sushi\Sushi;
  * @method static \Illuminate\Database\Eloquent\Builder|Module query()
  * @method static \Illuminate\Database\Eloquent\Builder|Module whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Module whereName($value)
- * @mixin IdeHelperModule
+ * @mixin \Eloquent
  */
 class Module extends BaseModel {
     use Sushi;

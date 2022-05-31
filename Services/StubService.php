@@ -318,7 +318,8 @@ class StubService {
                         line:['.$e->getLine().']
                         caller:['.__LINE__.']['.basename(__FILE__).']
                         ';
-                    throw new \Exception($msg);
+                   //throw new \Exception($msg);
+                    return null;
                     /*
                     dddx([
                         'message' => $e->getMessage(),
@@ -332,7 +333,9 @@ class StubService {
                     // return null;
                 }
             }
-        );
+        )->filter(function($item){
+            return $item!==null;
+        });
     }
 
     /**

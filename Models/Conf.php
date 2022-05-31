@@ -8,12 +8,12 @@ use Modules\Tenant\Services\TenantService;
 use Sushi\Sushi;
 
 /**
- * Modules\Xot\Models\Conf.
+ * Modules\Xot\Models\Conf
  *
- * @property int                                                                  $id
- * @property string|null                                                          $name
- * @property \Illuminate\Database\Eloquent\Collection|\Modules\Xot\Models\Image[] $images
- * @property int|null                                                             $images_count
+ * @property int $id
+ * @property string|null $name
+ * @property-read \Illuminate\Database\Eloquent\Collection|\Modules\Xot\Models\Image[] $images
+ * @property-read int|null $images_count
  * @method static \Modules\Xot\Database\Factories\ConfFactory factory(...$parameters)
  * @method static \Illuminate\Database\Eloquent\Builder|Conf newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Conf newQuery()
@@ -21,7 +21,6 @@ use Sushi\Sushi;
  * @method static \Illuminate\Database\Eloquent\Builder|Conf whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Conf whereName($value)
  * @mixin \Eloquent
- * @mixin IdeHelperConf
  */
 class Conf extends BaseModel {
     use Sushi;
