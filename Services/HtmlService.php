@@ -72,6 +72,7 @@ class HtmlService {
         //    \print_r($e);
         //    echo '</pre>';
         // }
+        return $filename;
     }
 
     /*

@@ -16,7 +16,7 @@ abstract class XotBaseComposer {
     /**
      * --.
      */
-    public function getMenuByName(string $name): Menu {
+    public function getMenuByName(string $name): ?Menu {
         return Menu::firstWhere('name', $name);
     }
 

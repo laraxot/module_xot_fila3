@@ -146,7 +146,7 @@ class ArtisanService {
         return view()->make($view, $view_params);
     }
 
-    public static function showRouteList(): Renderable {
+    public static function showRouteList(): string {
         $routeCollection = Route::getRoutes();
         /*
         $view = ThemeService::getViewModule();
@@ -174,7 +174,8 @@ class ArtisanService {
             'lang' => app()->getLocale(),
         ];
 
-        return view()->make($view, $view_params);
+        $out= view()->make($view, $view_params);
+        return $out->render();
     }
 
     /**

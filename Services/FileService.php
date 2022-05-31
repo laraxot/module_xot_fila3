@@ -142,9 +142,10 @@ class FileService {
      * @return string
      */
     public static function getViewNameSpacePath(string $ns): ?string {
-        if (null === $ns) {
-            return null;
-        }
+        //Strict comparison using === between null and string will always evaluate to false.
+        //if (null === $ns) {
+        //    return null;
+        //}
         $finder = view()->getFinder();
         $viewHints = [];
         if (method_exists($finder, 'getHints')) {
@@ -732,10 +733,11 @@ class FileService {
         if ($exists && ! $force_recreate) {
             $content = File::get($components_json);
             $comps = (array) json_decode($content);
-            if (null === $comps) {
-                // File::delete($components_json);
-                $comps = [];
-            }
+            //Strict comparison using === between null and array will always evaluate to false. 
+            //if (null === $comps) {
+                //// File::delete($components_json);
+            //    $comps = [];
+            //}
 
             return $comps;
         }

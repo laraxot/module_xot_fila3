@@ -6,12 +6,21 @@ parameters:
     paths:
         - .
 
+    ignoreErrors:
+    #    - '#Unsafe usage of new static#'
+
+    excludePaths:
+        - ./*/*/FileToBeExcluded.php
+        - ./*/vendor/*
+        - ./Modules/*/Tests/*/*
+
     #checkModelProperties: true
     checkMissingIterableValueType: false
     checkGenericClassInNonGenericObjectType: false
 
     bootstrapFiles:
     #    - ./Modules/Xot/Services/vendor/autoload.php
+        - ./../../vendor/autoload.php
 
     scanFiles:
     #    - ./Modules/Xot/Helpers/Helper.php

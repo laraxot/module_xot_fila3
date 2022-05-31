@@ -353,7 +353,9 @@ class RouteDynService {
         if ('.' === mb_substr($prefix, -1)) {
             $prefix = mb_substr($prefix, 0, -1);
         }
-        if ('' === $prefix || null === $prefix) {
+        //Strict comparison using === between null and non-empty-string will always evaluate to false.  
+        //if ('' === $prefix || null === $prefix) {
+        if ('' === $prefix ) {
             return ['index' => $prefix.'index', 'create' => $prefix.'create', 'store' => $prefix.'store', 'show' => $prefix.'show', 'edit' => $prefix.'edit', 'update' => $prefix.'update', 'destroy' => $prefix.'destroy'];
         }
         $prefix = mb_strtolower($prefix);

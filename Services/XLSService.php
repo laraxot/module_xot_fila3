@@ -63,6 +63,13 @@ class XLSService {
      * @throws \PhpOffice\PhpSpreadsheet\Exception
      */
     public function fromRequestFile($file): self {
+        if(!is_object($file)){
+            throw new Exception('[.__LINE__.]['.class_basename(__CLASS__).']');
+        }
+
+        if(!method_exists($file,'getRealPath')){
+            throw new Exception('[.__LINE__.]['.class_basename(__CLASS__).']');
+        }
         $path = $file->getRealPath();
 
         if (false === $path) {

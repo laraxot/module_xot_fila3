@@ -4,16 +4,17 @@ declare(strict_types=1);
 
 namespace Modules\Xot\Services;
 
+use Exception;
 use Illuminate\Support\Arr;
-use Illuminate\Support\Facades\Cache;
-use Illuminate\Support\Facades\File;
-use Illuminate\Support\Facades\Lang;
-use Illuminate\Support\Facades\Log;
-// ---- services ---
-use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
-use Illuminate\Translation\Translator as BaseTranslator;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\File;
+// ---- services ---
+use Illuminate\Support\Facades\Lang;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Session;
 use Modules\Theme\Services\ThemeService;
+use Illuminate\Translation\Translator as BaseTranslator;
 
 // dddx('leggo');
 
@@ -240,8 +241,11 @@ class TranslatorService extends BaseTranslator {
                     'data' => $data,
                 ]
             );
+            throw new Exception('['.__LINE__.']['.__FILE__.']');
         }
-        $merged = collect($original)->merge($data)->all();
+        $merged = collect($original)
+            ->merge($data)
+            ->all();
 
         if ($original != $merged) {
             ArrayService::save(['data' => $merged, 'filename' => $file_path]);

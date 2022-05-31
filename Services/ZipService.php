@@ -36,7 +36,7 @@ class ZipService {
         ini_set('max_execution_time', '3600');
         ini_set('memory_limit', '-1');
         $pdforientation = 'P';
-        $out = '';
+        $out = isset($params['out'])?$params['out']:'';
         extract($params);
         if (! isset($pdf_view)) {
             dddx(['err' => 'pdf_view is missing']);
@@ -116,9 +116,10 @@ class ZipService {
         }
         foreach ($rows as $row) {
             $panel = PanelService::make()->get($row);
-            if (null === $panel) {
-                return;
-            }
+            //Strict comparison using === between null and Modules\Xot\Contracts\PanelContract will always evaluate to false.
+            //if (null === $panel) {
+            //    return;
+            //}
             // dddx($panel);
             // $filename = 'Perf_ind_'.$row->id.'_'.$row->matr.'_'.$row->cognome.'_'.$row->nome.'_'.$row->anno.'_'.date('Ymd').'.pdf';
             $filename = $panel->pdfFilename();

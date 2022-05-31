@@ -92,7 +92,7 @@ class ArrayService {
                 // case 2:return self::toXLS_Maatwebsite($params); //break;
                 // case 3:return self::toXLS_phpexcel($params); //break;
             default:
-                dddx(['unknown export_processor ['.$this->$export_processor.']']);
+                dddx(['unknown export_processor ['.$this->export_processor.']']);
                 break;
         }
     }

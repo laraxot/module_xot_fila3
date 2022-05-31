@@ -116,10 +116,11 @@ class RowsService {
         // https://github.com/spatie/laravel-query-builder
 
         // $filters_fields = $this->filters();
-        if (null === $query) {
+        //Strict comparison using === between null and Modules\Xot\Contracts\RowsContract will always evaluate to false.
+        //if (null === $query) {
             // return null;
-            throw new Exception('['.__LINE__.']['.class_basename(__CLASS__).']');
-        }
+        //    throw new Exception('['.__LINE__.']['.class_basename(__CLASS__).']');
+        //}
         /*
         dddx([
             'filters' => $filters,

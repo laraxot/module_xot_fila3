@@ -49,9 +49,10 @@ class ProfileService {
     public function get($user): self {
         if (\is_object($user)) {
             $profile_model = TenantService::model('profile');
-            if (null === $profile_model) {
-                dddx('Aggiungi profile a xra.php');
-            }
+            //Strict comparison using === between null and Illuminate\Database\Eloquent\Model will always evaluate to false.  
+            //if (null === $profile_model) {
+            //    dddx('Aggiungi profile a xra.php');
+            //}
             if (! $user instanceof UserContract) {
                 throw new Exception('['.__LINE__.']['.class_basename(__CLASS__).']');
             }
@@ -96,9 +97,10 @@ class ProfileService {
     }
 
     public function fullName(): ?string {
-        if (null === $this->user) {
-            return null;
-        }
+        //Strict comparison using === between null and Modules\Xot\Contracts\UserContract will always evaluate to false.
+        //if (null === $this->user) {
+        //    return null;
+        //}
         $user = $this->user;
 
         // dddx([$user, $user->first_name, property_exists($user, 'first_name')]);
@@ -155,9 +157,10 @@ class ProfileService {
      * @return string|null
      */
     public function avatar($size = 100) {
-        if (null === $this->user) {
-            return null;
-        }
+        //Strict comparison using === between null and Modules\Xot\Contracts\UserContract will always evaluate to false.
+        //if (null === $this->user) {
+        //    return null;
+        //}
 
         $email = md5(mb_strtolower(trim((string) $this->user->email)));
         $default = urlencode('https://tracker.moodle.org/secure/attachment/30912/f3.png');
@@ -267,7 +270,7 @@ class ProfileService {
         return $this->user;
     }
 
-    public function getProfile(): Model {
+    public function getProfile(): ?Model {
         return $this->profile;
     }
 

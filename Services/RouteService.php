@@ -450,7 +450,7 @@ class RouteService {
         string $as,
         string $controller,
         array $acts
-    ) {
+    ):void {
         Route::middleware($middleware)
             ->namespace($namespace)
             ->prefix($prefix)

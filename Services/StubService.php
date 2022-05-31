@@ -596,6 +596,9 @@ class StubService {
             ->first();
         // dddx(get_class_methods($brother_file));
         // dddx($brother_file->getFilenameWithoutExtension());
+        if($brother_file===null){
+            throw new Exception('['.__LINE__.']['.__FILE__.']');
+        }
         $brother_class = $this->getModelNamespace().'\\'.$brother_file->getFilenameWithoutExtension();
         // getRandomBrotherModel
         // dddx($brother_class);

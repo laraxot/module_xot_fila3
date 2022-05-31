@@ -49,7 +49,7 @@ class Memoization {
      *
      * @param string $key
      * @param Closure $callback
-     * @return void
+     * @return mixed
      */
     public function memoize(string $key,Closure $callback) {
         if (!isset($this->memoized[$key])) {
