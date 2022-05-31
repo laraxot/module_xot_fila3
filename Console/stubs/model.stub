@@ -33,7 +33,7 @@ class DummyClass extends BaseModel {
     /**
      * The attributes excluded from the model's JSON form.
      *
-     * @var array
+     * @var array<int, string>
      */
     protected $hidden = [
 
@@ -42,7 +42,7 @@ class DummyClass extends BaseModel {
     /**
      * The attributes that should be casted to native types.
      * da fare
-     * @var array
+     * @var array<string, string>
      */
     protected $casts = [];
 

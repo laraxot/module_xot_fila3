@@ -6,7 +6,12 @@ parameters:
     paths:
         - .
 
-    
-
-    checkModelProperties: true
+    #checkModelProperties: true
     checkMissingIterableValueType: false
+    checkGenericClassInNonGenericObjectType: false
+
+    bootstrapFiles:
+    #    - ./Modules/Xot/Services/vendor/autoload.php
+
+    scanFiles:
+    #    - ./Modules/Xot/Helpers/Helper.php

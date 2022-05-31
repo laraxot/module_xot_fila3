@@ -493,12 +493,7 @@ if (! function_exists('getModuleModelsMenu')) {
 }
 
 if (! function_exists('xotModel')) {
-    /**
-     * @param string $name
-     *
-     * @return array|false|mixed
-     */
-    function xotModel($name) {
+    function xotModel(string $name): Model {
         return TenantService::model($name);
     }
 }
