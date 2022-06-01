@@ -71,7 +71,7 @@ class ArrayService {
      * @return mixed
      */
     public function toXLS() {
-        if (1 === request()->input('debug')) {
+        if (1 === request('debug', 0) * 1) {
             return self::toHtml();
         }
         // include_once __DIR__.'/vendor/autoload.php';
@@ -294,24 +294,24 @@ class ArrayService {
     public static function fixType(array $data): array {
         $res = collect($data)
             ->map(
-                function($item){
-                    $item=collect($item)->map(function($item0){
-                        if(is_numeric($item0)){
-                            $item0=$item0*1;
+                function ($item) {
+                    $item = collect($item)->map(function ($item0) {
+                        if (is_numeric($item0)) {
+                            $item0 = $item0 * 1;
                         }
+
                         return $item0;
                     })->all();
+
                     return $item;
                 }
             );
+
         return $res->all();
     }
 
     /**
      * Undocumented function.
-     *
-     * @param array $arr_1
-     * @param array $arr_2
      */
     public static function diff_assoc_recursive(array $arr_1, array $arr_2): array {
         $coll_1 = collect(self::fixType($arr_1));

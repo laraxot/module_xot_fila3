@@ -1146,3 +1146,17 @@ if (! function_exists('secondsToHms')) {
         return $str;
     }
 }
+
+if (! function_exists('rowsToSql')) {
+    /**
+     * Undocumented function.
+     *
+     * @param \Illuminate\Database\Eloquent\Relations\HasOne $rows
+     */
+    function rowsToSql($rows): string {
+        //$sql = str_replace('?', $rows->getBindings(), $rows->toSql());
+        $sql = Str::replaceArray('?', $rows->getBindings(), $rows->toSql());
+
+        return $sql;
+    }
+}
