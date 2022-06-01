@@ -149,6 +149,7 @@ class ModuleController extends Controller {
      */
     public function dashboard(Request $request) {
         $panel = PanelService::make()->getRequestPanel();
+
         $act = $request->input('_act', '');
         if ('' !== $act) {
             return $panel->callItemActionWithGate($act);
