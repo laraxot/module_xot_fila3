@@ -16,6 +16,7 @@ use Modules\Xot\Services\FileService;
 use Modules\Xot\Services\ModuleService;
 use Modules\Xot\Services\PanelService;
 use Modules\Xot\Services\RouteService;
+use Nwidart\Modules\Facades\Module;
 
 // ------------------------------------------------
 if (! function_exists('snake_case')) {
@@ -188,7 +189,9 @@ if (! function_exists('debug_methods')) {
             }
         )->all();
 
-        return ArrayService::toHtml(['data' => $methods_get]);
+        return ArrayService::make()
+            ->setArray($methods_get)
+            ->toHtml();
     }
 }
 
@@ -350,7 +353,15 @@ if (! function_exists('params2ContainerItem')) {
      */
     function params2ContainerItem(?array $params = null) {
         if (null === $params) {
-            $params = optional(\Route::current())->parameters();
+            // Call to static method current() on an unknown class Route.
+            // $params = optional(\Route::current())->parameters();
+            // Cannot call method parameters() on mixed.
+            // $params = optional(Route::current())->parameters();
+            $params = [];
+            $route_current = Route::current();
+            if (null !== $route_current) {
+                $params = $route_current->parameters();
+            }
         }
         $container = [];
         $item = [];
@@ -387,7 +398,9 @@ if (! function_exists('getModuleFromModel')) {
     function getModuleFromModel($model) {
         $class = get_class($model);
         $module_name = Str::before(Str::after($class, 'Modules\\'), '\\Models\\');
-        $mod = \Module::find($module_name);
+        // call to an undefined static method  Nwidart\Modules\Facades\Module::find().
+        // $mod = Module::find($module_name);
+        $mod = Module::get($module_name);
 
         return $mod;
     }
@@ -519,7 +532,8 @@ if (! function_exists('transFields')) {
             $params_orig['attributes'] = [];
         }
         $name = 'not-set';
-        $model = Form::getModel();
+        // $model = Form::getModel();
+        $model = \Collective\Html\FormFacade::getModel();
         $module_name = '';
         if (is_object($model)) {
             $module_name = getModuleNameFromModel($model);
@@ -1154,7 +1168,7 @@ if (! function_exists('rowsToSql')) {
      * @param \Illuminate\Database\Eloquent\Relations\HasOne $rows
      */
     function rowsToSql($rows): string {
-        //$sql = str_replace('?', $rows->getBindings(), $rows->toSql());
+        // $sql = str_replace('?', $rows->getBindings(), $rows->toSql());
         $sql = Str::replaceArray('?', $rows->getBindings(), $rows->toSql());
 
         return $sql;
