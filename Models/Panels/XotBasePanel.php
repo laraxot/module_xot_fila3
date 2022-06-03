@@ -845,6 +845,12 @@ abstract class XotBasePanel implements PanelContract {
         return (new PanelActionService($this))->{__FUNCTION__}($params);
     }
 
+    /**
+     * Undocumented function
+     *
+     * @param array $params
+     * @return Collection<XotBasePanelAction>
+     */
     public function itemActions(array $params = []): Collection {
         return (new PanelActionService($this))->{__FUNCTION__}($params);
     }

@@ -93,6 +93,12 @@ interface PanelContract {
 
     public function url(string $act = 'show'): string;
 
+    /**
+     * Undocumented function
+     *
+     * @param array $params
+     * @return Collection<XotBasePanelAction>
+     */
     public function itemActions(array $params = []): Collection;
 
     public function id(?bool $is_admin = null): string;

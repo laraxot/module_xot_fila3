@@ -276,6 +276,11 @@ class StubService {
         );
     }
 
+    /**
+     * Undocumented function
+     *
+     * @return Collection<string>
+     */
     public function getFillable(): Collection {
         $model = $this->getModel();
         if (! method_exists($model, 'getFillable')) {

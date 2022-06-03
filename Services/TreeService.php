@@ -5,9 +5,21 @@ declare(strict_types=1);
 namespace Modules\Xot\Services;
 
 use Illuminate\Support\Collection;
+use Illuminate\Database\Eloquent\Model;
 use Modules\Xot\Contracts\PanelContract;
+use Modules\Xot\Models\Panels\Actions\XotBasePanelAction;
 
+
+/**
+ * Undocumented class
+ *
+
+ */
 class TreeService {
+
+    /**
+     * @param \Illuminate\Database\Eloquent\Collection|Model[] $coll
+     */
     public static function mapItems(Collection $coll, ?PanelContract $parent, /* bool $in_admin, */ array $route_params): Collection {
         return $coll->map(
             function ($item) use ($parent, $route_params) {
@@ -31,7 +43,11 @@ class TreeService {
                     ];
                 }
                 // *
-                foreach ($panel->itemActions() as $action) {
+                /**
+                 * @var  Collection<XotBasePanelAction>
+                 */
+                $itemActions=$panel->itemActions();
+                foreach ($itemActions as $action) {
                     // $action->btnHtml(['title' => true, 'class' => 'dropdown-item','in_admin'=>$in_admin])
                     $act = [
                         'title' => $action->getTitle(),
