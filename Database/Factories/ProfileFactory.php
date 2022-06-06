@@ -22,8 +22,8 @@ class ProfileFactory extends Factory {
      */
     public function definition() {
         return [
-            'id' => $this->faker->randomNumber,
-            'user_id' => $this->faker->integer,
+            //'id' => $this->faker->randomNumber(5, false),
+            //'user_id' => $this->faker->randomNumber(5, false),
         ];
     }
 }

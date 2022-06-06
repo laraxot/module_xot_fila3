@@ -27,14 +27,14 @@ class JobBatchFactory extends Factory {
         return [
             'id' => $this->faker->word,
             'name' => $this->faker->name,
-            'total_jobs' => $this->faker->randomNumber,
-            'pending_jobs' => $this->faker->randomNumber,
-            'failed_jobs' => $this->faker->randomNumber,
+            'total_jobs' => $this->faker->randomNumber(5, false),
+            'pending_jobs' => $this->faker->randomNumber(5, false),
+            'failed_jobs' => $this->faker->randomNumber(5, false),
             'failed_job_ids' => $this->faker->text,
             'options' => $this->faker->text,
-            'cancelled_at' => $this->faker->randomNumber,
-            'created_at' => $this->faker->randomNumber,
-            'finished_at' => $this->faker->randomNumber,
+            'cancelled_at' => $this->faker->randomNumber(5, false),
+            'created_at' => $this->faker->randomNumber(5, false),
+            'finished_at' => $this->faker->randomNumber(5, false),
         ];
     }
 }

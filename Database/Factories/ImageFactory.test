@@ -23,8 +23,8 @@ class ImageFactory extends Factory {
     public function definition() {
         return [
             'src' => $this->faker->word,
-            'width' => $this->faker->randomNumber,
-            'height' => $this->faker->randomNumber,
+            //'width' => $this->faker->randomNumber(5, false),
+            //'height' => $this->faker->randomNumber(5, false),
             'src_out' => $this->faker->text,
         ];
     }

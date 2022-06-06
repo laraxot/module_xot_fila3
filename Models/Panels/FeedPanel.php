@@ -25,7 +25,7 @@ class FeedPanel extends XotBasePanel {
      */
     public function fields(): array {
         return [
-            0 => (object) [
+            (object) [
                 'type' => 'Text',
                 'name' => 'id',
                 'comment' => 'not in Doctrine',

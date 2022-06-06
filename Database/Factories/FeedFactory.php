@@ -25,7 +25,7 @@ class FeedFactory extends Factory {
      */
     public function definition() {
         return [
-            'id' => $this->faker->randomNumber,
+            'id' => $this->faker->randomNumber(5, false),
             'created_at' => $this->faker->dateTime,
             'updated_at' => $this->faker->dateTime,
         ];

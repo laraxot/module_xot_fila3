@@ -25,13 +25,13 @@ class JobFactory extends Factory {
      */
     public function definition() {
         return [
-            'id' => $this->faker->randomNumber,
+            'id' => $this->faker->randomNumber(5, false),
             'queue' => $this->faker->word,
             'payload' => $this->faker->text,
             'attempts' => $this->faker->boolean,
-            'reserved_at' => $this->faker->randomNumber,
-            'available_at' => $this->faker->randomNumber,
-            'created_at' => $this->faker->randomNumber,
+            'reserved_at' => $this->faker->randomNumber(5, false),
+            'available_at' => $this->faker->randomNumber(5, false),
+            'created_at' => $this->faker->randomNumber(5, false),
         ];
     }
 }

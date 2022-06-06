@@ -22,7 +22,7 @@ class MetatagFactory extends Factory {
      */
     public function definition() {
         return [
-            'id' => $this->faker->randomNumber,
+            'id' => $this->faker->randomNumber(5, false),
             'title' => $this->faker->sentence,
             'subtitle' => $this->faker->word,
             'charset' => $this->faker->word,

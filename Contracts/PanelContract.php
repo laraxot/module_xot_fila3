@@ -173,6 +173,10 @@ interface PanelContract {
     public function getFields(array $params = []): Collection;
 
     public function isRevisionBy(UserContract $user): bool;
+    public function isAuthoredBy(UserContract $user): bool;
+    public function isModeratedBy(UserContract $user): bool;
+    public function isAdminedBy(UserContract $user): bool;
+
 
     public function related(string $relationship): self;
 

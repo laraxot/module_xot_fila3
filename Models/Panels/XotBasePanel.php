@@ -1733,4 +1733,40 @@ abstract class XotBasePanel implements PanelContract {
 
         return false;
     }
+
+    public function isAuthoredBy(UserContract $user): bool {
+        $row = $this->getRow();
+        if($row->author==null){
+            return false;
+        }
+        return $row->author->is($user);
+    }
+
+    /**
+     * ----------------------- WIP -----------------------
+     *
+     * @param UserContract $user
+     * @return boolean
+     */
+    public function isModeratedBy(UserContract $user): bool {
+        $row = $this->getRow();
+        if($row->author==null){
+            return false;
+        }
+        return $row->author->is($user);
+    }
+
+    /**
+     * ----------------------- WIP -----------------------
+     *
+     * @param UserContract $user
+     * @return boolean
+     */
+    public function isAdminedBy(UserContract $user): bool {
+        $row = $this->getRow();
+        if($row->author==null){
+            return false;
+        }
+        return $row->author->is($user);
+    }
 }

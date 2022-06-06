@@ -4,12 +4,15 @@ declare(strict_types=1);
 
 namespace Modules\Xot\Models\Panels;
 
-use Illuminate\Http\Request;
 use Modules\LU\Models\User;
+use Illuminate\Http\Request;
+use Modules\Blog\Models\Profile;
 
 // --- Services --
 
 class ProfilePanel extends XotBasePanel {
+
+    //public Profile $row;
     /**
      * The model the resource corresponds to.
      */

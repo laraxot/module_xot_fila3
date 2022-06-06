@@ -25,14 +25,14 @@ class WidgetFactory extends Factory {
      */
     public function definition() {
         return [
-            'id' => $this->faker->randomNumber,
+            'id' => $this->faker->randomNumber(5, false),
             'post_type' => $this->faker->word,
-            'post_id' => $this->faker->integer,
+            'post_id' => $this->faker->randomNumber(5, false),
             'title' => $this->faker->sentence,
             'blade' => $this->faker->word,
-            'pos' => $this->faker->randomNumber,
+            'pos' => $this->faker->randomNumber(5, false),
             'model' => $this->faker->word,
-            'limit' => $this->faker->randomNumber,
+            'limit' => $this->faker->randomNumber(5, false),
             'order_by' => $this->faker->word,
             'image_src' => $this->faker->word,
             'layout_position' => $this->faker->word,
