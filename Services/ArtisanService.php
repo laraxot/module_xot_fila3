@@ -118,6 +118,9 @@ class ArtisanService {
     }
 
     public static function errorShow(): Renderable {
+        /** 
+        * @phpstan-var view-string
+        */
         $view = 'xot::acts.artisan.error-show';
         $files = File::files(storage_path('logs'));
         $log = request('log', '');
@@ -166,6 +169,9 @@ class ArtisanService {
             'file' => $file,
             'views' => ThemeService::getDefaultViewArray(),
         ]);
+        */
+        /** 
+        * @phpstan-var view-string
         */
         $view = 'xot::acts.artisan.show_route_list';
         $view_params = [

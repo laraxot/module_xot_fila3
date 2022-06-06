@@ -37,6 +37,9 @@ class BackendController extends Controller {
         */
         // return view('adm_theme::admin.dashboard');
         // return ThemeService::view('adm_theme::admin.dashboard');
+        /** 
+        * @phpstan-var view-string
+        */
         $view = 'adm_theme::admin.dashboard';
         if (! view()->exists($view)) {
             /*

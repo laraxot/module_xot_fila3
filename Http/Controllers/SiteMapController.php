@@ -87,6 +87,9 @@ class SiteMapController {
 
                 return is_object($linkable);
             });
+        /** 
+        * @phpstan-var view-string
+        */
         $view = 'xot::sitemap.index';
         $view_params = [
             'view' => $view,

@@ -94,6 +94,9 @@ class Widget extends BaseModel {
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
     public function toHtml(array $params = null) {
+        /** 
+        * @phpstan-var view-string
+        */
         $view = 'pub_theme::layouts.widgets';
         if (null !== $this->layout_position) {
             $view .= '.'.$this->layout_position;

@@ -50,6 +50,9 @@ class NavService {
             ++$year;
         }
 
+        /** 
+        * @phpstan-var view-string
+        */
         $view = 'adm_theme::layouts.partials.nav';
         $view_params = [
             'nav' => $nav,
@@ -100,6 +103,9 @@ class NavService {
             $d->addMonth();
         }
 
+        /** 
+        * @phpstan-var view-string
+        */
         $view = 'adm_theme::layouts.partials.nav';
         $view_params = [
             'nav' => $nav,

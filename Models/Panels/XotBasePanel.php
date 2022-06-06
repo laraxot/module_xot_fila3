@@ -1476,7 +1476,10 @@ abstract class XotBasePanel implements PanelContract {
         try {
             return $this->presenter->out();
         } catch (\Exception $e) {
-            $view = 'pub_theme::errors.500';
+            /** 
+        * @phpstan-var view-string
+        */
+        $view = 'pub_theme::errors.500';
             if (! view()->exists($view)) {
                 FileService::viewCopy('theme::errors.500', 'pub_theme::errors.500');
             }
@@ -1677,6 +1680,9 @@ abstract class XotBasePanel implements PanelContract {
         $views[] = $view;
         $view = (inAdmin() ? 'adm_theme' : 'pub_theme').'::layouts.default.'.$act;
         $views[] = $view;
+        /** 
+        * @phpstan-var view-string
+        */
         $view = 'theme::layouts.default'.(inAdmin() ? '.admin' : '').'.'.$act;
         $views[] = $view;
 

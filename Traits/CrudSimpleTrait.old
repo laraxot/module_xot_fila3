@@ -672,7 +672,10 @@ trait CrudSimpleTrait {
             $view .= '_ajax';
         }
         if ('pub_theme::container.home' == $view) {
-            $view = 'pub_theme::index';
+            /** 
+        * @phpstan-var view-string
+        */
+        $view = 'pub_theme::index';
         }
 
         if (\View::exists($view)) {

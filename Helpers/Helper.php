@@ -543,6 +543,9 @@ if (! function_exists('transFields')) {
         $trans_root = $ns.'::'.Str::snake(class_basename($model));
         // debug_getter_obj(['obj'=>$module]);
         // dddx($module_name->getNamespace());
+        /** 
+        * @phpstan-var view-string
+        */
         $view = 'unknown';
         extract($params);
         // dddx($params);
@@ -569,7 +572,10 @@ if (! function_exists('transFields')) {
         $pattern = '/\.[0-9]+\./m';
         $ris->name_dot = preg_replace($pattern, '.', $ris->name_dot);
         if (! Str::contains($view, '::')) {
-            $view = 'pub_theme::'.$view;
+            /** 
+        * @phpstan-var view-string
+        */
+        $view = 'pub_theme::'.$view;
         }
         list($ns, $key) = explode('::', $view);
         if (null === $module_name) {

@@ -51,6 +51,9 @@ class ConfsController extends Controller {
 
         return 'preso';
         */
+        /** 
+        * @phpstan-var view-string
+        */
         $view = 'theme::admin.standalone.manage.php-array';
         $view_params = [
             'view' => $view,
