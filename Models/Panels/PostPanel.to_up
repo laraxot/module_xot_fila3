@@ -42,7 +42,7 @@ class PostPanel extends XotBasePanel {
      *
      * @return mixed
      */
-    public function optionId(object $row) {
+    public function optionId($row) {
         return $row->area_id;
     }
 

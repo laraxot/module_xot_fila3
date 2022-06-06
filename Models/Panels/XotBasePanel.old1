@@ -225,7 +225,7 @@ abstract class XotBasePanel implements PanelContract {
     /**
      * @return mixed
      */
-    public function optionId(object $row) {
+    public function optionId($row) {
         return $row->getKey();
     }
 

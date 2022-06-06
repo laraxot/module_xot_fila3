@@ -13,7 +13,7 @@ class ModulePanelPolicy extends XotBasePanelPolicy {
     /**
      * ---.
      */
-    public function downloadDbModule(UserContract $user, PanelContract $panel) {
+    public function downloadDbModule(UserContract $user, PanelContract $panel):bool {
         return true;
     }
 }

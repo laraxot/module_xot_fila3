@@ -98,7 +98,7 @@ abstract class XotBasePanel {
         )->first();
     }
 
-    public function optionId(object $row) {
+    public function optionId($row) {
         return $row->getKey();
     }
 
