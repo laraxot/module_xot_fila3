@@ -51,7 +51,7 @@ class ImageController extends Controller {
 
         $tmp = explode(',', $data['data']);
         $imgdata = base64_decode($tmp[1], true);
-        if (null === $imgdata) {
+        if (false == $imgdata) {
             throw new \Exception('cannot decode imgdata base64');
         }
 

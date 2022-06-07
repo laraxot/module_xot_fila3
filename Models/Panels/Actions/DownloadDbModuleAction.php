@@ -33,10 +33,14 @@ class DownloadDbModuleAction extends XotBasePanelAction {
     public string $icon = '<i class="fas fa-database"></i><i class="fas fa-download"></i>';
 
     /**
-     * @return \Illuminate\Http\RedirectResponse
+     * return \Illuminate\Http\RedirectResponse
+     * @return \Symfony\Component\HttpFoundation\BinaryFileResponse
      */
     public function handle() {
         // $res = '';
+        /**
+         * @var \Modules\Xot\Models\Module
+         */
         $row = $this->row;
         $name = $row->name;
         $name_low = Str::lower($name);

@@ -162,7 +162,7 @@ abstract class XotBaseServiceProvider extends ServiceProvider {
         $force_recreate = request()->input('force_recreate', true);
         if (! File::exists($events_file) || $force_recreate) {
             $filenames = glob($path.'/*.php');
-            if (null === $filenames) {
+            if (false == $filenames) {
                 $filenames = [];
             }
             foreach ($filenames as $filename) {

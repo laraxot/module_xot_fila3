@@ -85,9 +85,9 @@ class XotServiceProvider extends XotBaseServiceProvider {
                 // \Modules\Xot\Console\PanelMakeCommand::class,
                 // \Modules\Xot\Console\FixProvidersCommand::class,
                 \Modules\Xot\Console\Commands\DatabaseBackUpCommand::class,
-                \Modules\Xot\Console\Commands\WorkerCheck::class,
-                \Modules\Xot\Console\Commands\WorkerRetry::class,
-                \Modules\Xot\Console\Commands\WorkerStop::class,
+                // \Modules\Xot\Console\Commands\WorkerCheck::class,
+                // \Modules\Xot\Console\Commands\WorkerRetry::class,
+                // \Modules\Xot\Console\Commands\WorkerStop::class,
             ]
         );
     }

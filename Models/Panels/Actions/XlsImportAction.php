@@ -53,7 +53,7 @@ class XlsImportAction extends XotBasePanelAction {
         $data = $res->getData()->take(5)->toArray();
         $head = array_keys(collect($data)->first());
 
-        $html = ArrayService::toHtml(['data' => $data]);
+        $html = ArrayService::make()->setArray($data)->toHtml();
 
         $fillable = app(User::class)->getFillable();
 

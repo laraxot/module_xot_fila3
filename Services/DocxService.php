@@ -208,7 +208,7 @@ class DocxService {
             }
         )->collapse()
         ->all();
-
+        // 212    Offset non-empty-string on array<int, mixed> in isset() does not exist.
         if (isset($data[$prefix.'.postal_code'])) {
             $data[$prefix.'.zip_code'] = $data[$prefix.'.postal_code'];
         }

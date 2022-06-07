@@ -4,14 +4,16 @@ declare(strict_types=1);
 
 namespace Modules\Xot\Models\Panels\Actions;
 
-use Illuminate\Database\QueryException;
-use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\Cache;
-use Illuminate\Support\Facades\File;
+use Exception;
 use Illuminate\Support\Str;
+use Illuminate\Support\Collection;
+use Nwidart\Modules\Facades\Module;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Cache;
 use Modules\Xot\Services\ArrayService;
 use Modules\Xot\Services\ModelService;
-use Nwidart\Modules\Facades\Module;
+use Illuminate\Database\QueryException;
+use Illuminate\Contracts\Support\Renderable;
 
 // -------- models -----------
 
@@ -28,9 +30,10 @@ class DbAction extends XotBasePanelAction {
     public string $icon = '<i class="fas fa-database"></i>';
 
     /**
-     * @return \Illuminate\Http\RedirectResponse
+     * return \Illuminate\Http\RedirectResponse
+     
      */
-    public function handle() {
+    public function handle():Renderable {
         // k$database=config('database');
         $data = $this->getAllTablesAndFields();
         /** 
@@ -74,11 +77,13 @@ class DbAction extends XotBasePanelAction {
                     $res = $rows->get();
                 }
             } catch (QueryException $e) {
-                echo '<pre>'.$v['sql'].'</pre>';
-                echo '<pre>'.$e->getMessage().'</pre>';
-                dddx('a');
+                $msg= '<pre>'.$v['sql'].'</pre>'.'<pre>'.$e->getMessage().'</pre>';
+                throw new Exception($msg.'['.__LINE__.']['.__FILE__.']');
+            }catch (Exception $e) {
+                $msg= '<pre>'.$v['sql'].'</pre>'.'<pre>'.$e->getMessage().'</pre>';
+                throw new Exception($msg.'['.__LINE__.']['.__FILE__.']');
             }
-            if ($res->count() > 0 && $valid) {
+            if ($res->count() > 0 && $valid  && isset($rows)) {
                 echo '<hr>';
                 echo '<h3>Table: '.$v['name'].'</h3>';
                 echo '<h3>Search: '.$search.'</h3>';
@@ -98,10 +103,10 @@ class DbAction extends XotBasePanelAction {
      *
      * @see https://stackoverflow.com/questions/26181170/laravel-how-to-use-query-builder-dbtable-with-dbconnection
      *
-     * @param [type] $item
-     * @param [type] $search
+     * @param array $item
+     * @param string $search
      *
-     * @return void
+     * @return string
      */
     public function makeSql($item, $search) {
         // $programs=DB::connection('mysql2')->table('node')->where('type', 'Programs')->get();

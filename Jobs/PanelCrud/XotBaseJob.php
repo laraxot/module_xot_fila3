@@ -159,9 +159,10 @@ abstract class XotBaseJob /* implements ShouldQueue */
      *  Method Modules\Xot\Jobs\PanelCrud\XotBaseJob::ConvDate() should return Carbon\Carbon|false|null but returns 0|0.0|''|'0'|array()|false|null.
      */
     public function ConvDate(string $field, string $value): ?Carbon {
-        if (null === $value) {
-            return null;
-        }
+        // Strict comparison using === between null and string will always evaluate to false.
+        //if (null === $value) {
+        //    return null;
+        //}
         $value_new = Carbon::createFromFormat('d/m/Y', $value);
         if (false === $value_new) {
             throw new Exception('['.__LINE__.']['.class_basename(__CLASS__).']');
@@ -174,9 +175,10 @@ abstract class XotBaseJob /* implements ShouldQueue */
      * Method Modules\Xot\Jobs\PanelCrud\XotBaseJob::ConvDateTime() should return Carbon\Carbon|false|null but returns 0|0.0|''|'0'|array()|false|null.
      */
     public function ConvDateTime(stdClass $field, string $value): ?Carbon {
-        if (null === $value) {
-            return null;
-        }
+        //Strict comparison using === between null and string will always evaluate to false.
+        //if (null === $value) {
+        //    return null;
+        //}
 
         $value_new = Carbon::createFromFormat('d/m/Y H:i', $value);
         if (false === $value_new) {
@@ -190,9 +192,10 @@ abstract class XotBaseJob /* implements ShouldQueue */
      *  Method Modules\Xot\Jobs\PanelCrud\XotBaseJob::ConvDateTime2Fields() should return Carbon\Carbon|false|null but returns 0|0.0|''|'0'|array()|false|null.
      */
     public function ConvDateTime2Fields(stdClass $field, string $value): ?Carbon {
-        if (null === $value) {
-            return $value;
-        }
+        //Strict comparison using === between null and string will always evaluate to false.
+        //if (null === $value) {
+        //    return $value;
+        //}
         $value_new = Carbon::createFromFormat('d/m/Y H:i', $value);
 
         return $value_new;

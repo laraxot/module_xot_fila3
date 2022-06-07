@@ -199,7 +199,7 @@ class ModelService {
         $model = $this->model;
         if (\is_array($index)) {
             foreach ($index as $i) {
-                self::indexIfNotExists($model, $i);
+                $this->indexIfNotExists($i);
             }
         } else {
             $tbl = $model->getTable();

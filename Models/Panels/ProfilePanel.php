@@ -12,7 +12,7 @@ use Modules\Blog\Models\Profile;
 
 class ProfilePanel extends XotBasePanel {
 
-    //public Profile $row;
+    public Profile $row;
     /**
      * The model the resource corresponds to.
      */
@@ -92,6 +92,7 @@ class ProfilePanel extends XotBasePanel {
         // $user_id = $this->row->getAttributeValue('user_id');
         // $user = User::where('id', $user_id)->first();
         // coi metodi sopra fa contento phpstan ma fa troppe query
+        
         $user = $this->row->user;
         try {
             if (\is_object($user->perm) && $user->perm->perm_type >= 4) {  // superadmin
@@ -108,12 +109,13 @@ class ProfilePanel extends XotBasePanel {
      * Avatar function.
      */
     public function avatar(int $size = 100): ?string {
-        if (null === $this->row) {
-            throw new \Exception('row is null');
-        }
-        if (! property_exists($this->row, 'user')) {
-            throw new \Exception('in ['.\get_class($this->row).'] property [user] not exists');
-        }
+        //Strict comparison using === between null and Modules\Blog\Models\Profile will always evaluate to false
+        //if (null === $this->row) {
+        //    throw new \Exception('row is null');
+        //}
+        //if (! property_exists($this->row, 'user')) {
+        //    throw new \Exception('in ['.\get_class($this->row).'] property [user] not exists');
+        //}
         $user = $this->row->user;
 
         if (! \is_object($user) && \is_object($this->row)) {

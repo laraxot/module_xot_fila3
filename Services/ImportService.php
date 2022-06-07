@@ -195,7 +195,7 @@ class ImportService {
     // ret \Exception|GuzzleException|string|Crawler
 
     public function gRequest(string $method, string $url, array $attrs = [], string $out = 'res'): ?string {
-        if (null === $this->client) {
+        if (null == $this->client) {
             $this->importInit();
         }
         if (! isset($this->client_options['base_uri'])) {

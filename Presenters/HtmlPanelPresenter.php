@@ -136,9 +136,9 @@ class HtmlPanelPresenter implements PanelPresenterContract {
         foreach ($pieces as $piece) {
             FileService::viewCopy('theme::'.$piece, 'pub_theme::'.$piece);
         }
-        if (null === $view_work) {
-            throw new Exception(' ['.implode(' , '.chr(13).chr(10), $views).'] one of these must exists pub_theme: ['.config('xra.pub_theme').']');
-        }
+        //if (null === $view_work) {
+        //    throw new Exception(' ['.implode(' , '.chr(13).chr(10), $views).'] one of these must exists pub_theme: ['.config('xra.pub_theme').']');
+        //}
 
         return view()->make($view_work, $view_params); // ->render(); //se metto render , non mi prende piu' i parametri passati con with
     }

@@ -5,39 +5,41 @@ declare(strict_types=1);
 namespace Modules\Xot\Models\Panels;
 
 use Exception;
-use Illuminate\Contracts\Support\Renderable;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\Relation;
-// ----------  SERVICES --------------------------
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Pipeline\Pipeline;
 use Illuminate\Support\Collection;
+// ----------  SERVICES --------------------------
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Str;
-use Modules\Theme\Services\FieldService;
-use Modules\Xot\Contracts\PanelContract;
-use Modules\Xot\Contracts\PanelPresenterContract;
-use Modules\Xot\Contracts\RowsContract;
-use Modules\Xot\Contracts\UserContract;
-use Modules\Xot\Models\Panels\Actions\XotBasePanelAction;
-use Modules\Xot\Presenters\PdfPanelPresenter;
-use Modules\Xot\Presenters\XlsPanelPresenter;
-use Modules\Xot\Services\ChainService;
 use Modules\Xot\Services\FileService;
-use Modules\Xot\Services\ImageService;
-use Modules\Xot\Services\PanelActionService;
-use Modules\Xot\Services\PanelFormService;
-use Modules\Xot\Services\PanelRouteService;
-use Modules\Xot\Services\PanelService;
-use Modules\Xot\Services\PanelTabService;
-use Modules\Xot\Services\PolicyService;
-use Modules\Xot\Services\RouteService;
 use Modules\Xot\Services\RowsService;
 use Modules\Xot\Services\StubService;
+use Modules\Xot\Services\ChainService;
+use Modules\Xot\Services\ImageService;
+use Modules\Xot\Services\PanelService;
+use Modules\Xot\Services\RouteService;
+use Illuminate\Database\Eloquent\Model;
+use Modules\Xot\Contracts\RowsContract;
+use Modules\Xot\Contracts\UserContract;
+use Modules\Xot\Services\PolicyService;
 use Spatie\QueryBuilder\Filters\Filter;
+use Modules\Theme\Services\FieldService;
+use Modules\Xot\Contracts\PanelContract;
+use Illuminate\Database\Eloquent\Builder;
+use Modules\Xot\Services\PanelTabService;
+use Modules\Xot\Services\PanelFormService;
+use Modules\Xot\Services\PanelRouteService;
+use Illuminate\Contracts\Support\Renderable;
+use Modules\Xot\Services\PanelActionService;
+use Modules\Xot\Presenters\PdfPanelPresenter;
+use Modules\Xot\Presenters\XlsPanelPresenter;
+use Modules\Xot\Contracts\ModelWithUserContract;
+use Modules\Xot\Contracts\PanelPresenterContract;
+use Modules\Xot\Contracts\ModelWithAuthorContract;
+use Illuminate\Database\Eloquent\Relations\Relation;
+use Modules\Xot\Models\Panels\Actions\XotBasePanelAction;
 
 /**
  * Class XotBasePanel.
@@ -67,7 +69,7 @@ abstract class XotBasePanel implements PanelContract {
 
     public ?Builder $builder = null;
 
-    public string $name;
+    public ?string $name=null;
 
     public ?PanelContract $parent = null;
 
@@ -582,9 +584,11 @@ abstract class XotBasePanel implements PanelContract {
     }
 
     public function optionsTree(array $data = []): array {
-        if (null === $data /* || empty($data) */) {
+        /*
+        if (null === $data  || empty($data) ) {
             $data = request()->all();
         }
+        */
 
         $rows = $this->getBuilder()->get();
 
@@ -1412,9 +1416,10 @@ abstract class XotBasePanel implements PanelContract {
      * @return mixed
      */
     public function callItemAction(string $act) {
-        if (null === $act) {
-            return null;
-        }
+        //Strict comparison using === between null and string will always evaluate to false
+        //if (null === $act) {
+        //    return null;
+        //}
         // $action = $this->itemActions()
         //    ->firstWhere('name', $act);
         $action = $this->itemAction($act);
@@ -1443,9 +1448,10 @@ abstract class XotBasePanel implements PanelContract {
      * @return mixed
      */
     public function callContainerAction(string $act) {
-        if (null === $act) {
-            return null;
-        }
+        //Strict comparison using === between null and string will always evaluate to false
+        //if (null === $act) {
+        //    return null;
+        //}
         // $action = $this->containerActions()
         //    ->firstWhere('name', $act);
         $action = $this->containerAction($act);
@@ -1741,6 +1747,9 @@ abstract class XotBasePanel implements PanelContract {
     }
 
     public function isAuthoredBy(UserContract $user): bool {
+        /**
+         * @var ModelWithAuthorContract
+         */
         $row = $this->getRow();
         if($row->author==null){
             return false;
@@ -1755,6 +1764,9 @@ abstract class XotBasePanel implements PanelContract {
      * @return boolean
      */
     public function isModeratedBy(UserContract $user): bool {
+        /**
+         * @var ModelWithAuthorContract
+         */
         $row = $this->getRow();
         if($row->author==null){
             return false;
@@ -1769,6 +1781,9 @@ abstract class XotBasePanel implements PanelContract {
      * @return boolean
      */
     public function isAdminedBy(UserContract $user): bool {
+        /**
+         * @var ModelWithAuthorContract
+         */
         $row = $this->getRow();
         if($row->author==null){
             return false;

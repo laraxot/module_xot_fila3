@@ -193,9 +193,10 @@ class ArrayService {
         // $out='link';
         // exit(response()->download($pathToFile));
         // }
-        if (! isset($text)) {
-            $text = 'text';
-        }
+        //Variable $text in isset() is never defined
+        //if (! isset($text)) {
+        //    $text = 'text';
+        //}
         switch ($out) {
         case 'link':
             return view()->make('theme::download_icon', $view_params);
