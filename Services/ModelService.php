@@ -182,7 +182,7 @@ class ModelService {
 
     public function getNameRelationships(): array {
         $model = $this->model;
-        $relations = self::getRelationships($model);
+        $relations = self::getRelationships();
         $names = collect($relations)->map(
             function ($item) {
                 return $item['name'];
