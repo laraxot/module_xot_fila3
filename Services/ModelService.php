@@ -239,6 +239,7 @@ class ModelService {
 
     /**
      * execute a query.
+     * @return bool
      */
     public function query(string $sql) {
         $model = $this->model;
