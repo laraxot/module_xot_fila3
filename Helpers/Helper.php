@@ -393,14 +393,18 @@ if (! function_exists('getModuleFromModel')) {
     /**
      * @param object $model
      *
-     * @return mixed|\Nwidart\Modules\Module|void|null
+     * @return \Nwidart\Modules\Module|null
      */
     function getModuleFromModel($model) {
         $class = get_class($model);
         $module_name = Str::before(Str::after($class, 'Modules\\'), '\\Models\\');
         // call to an undefined static method  Nwidart\Modules\Facades\Module::find().
         // $mod = Module::find($module_name);
-        $mod = Module::get($module_name);
+        //Call to an undefined static method Nwidart\Modules\Facades\Module::get().
+        //$mod = Module::get($module_name);
+        // Static call to instance method Nwidart\Modules\Module::get()
+        //$mod = \Nwidart\Modules\Module::get($module_name);
+        $mod = app('module')->get($module_name);
 
         return $mod;
     }
@@ -578,7 +582,7 @@ if (! function_exists('transFields')) {
         $view = 'pub_theme::'.$view;
         }
         list($ns, $key) = explode('::', $view);
-        if (null === $module_name) {
+        if (null == $module_name) {
             $trans_root = $ns.'::'.implode('.', array_slice(explode('.', $key), $start, -1));
         }
         // *

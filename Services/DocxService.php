@@ -209,10 +209,11 @@ class DocxService {
         )->collapse()
         ->all();
         // 212    Offset non-empty-string on array<int, mixed> in isset() does not exist.
-        if (isset($data[$prefix.'.postal_code'])) {
-            $data[$prefix.'.zip_code'] = $data[$prefix.'.postal_code'];
-        }
-
+        //if (isset($data[$prefix.'.postal_code'])) {
+        //$data[$prefix.'.zip_code'] = $data[$prefix.'.postal_code'] ?? '';
+        //}
+        
+        /* -- per fare buono phpstan
         if (isset($data[$prefix.'.route'])
             && isset($data[$prefix.'.locality'])
             && isset($data[$prefix.'.zip_code'])
@@ -220,6 +221,7 @@ class DocxService {
         ) {
             $data[$prefix.'.full_address'] = $data[$prefix.'.route'].', '.$data[$prefix.'.street_number'].' - '.$data[$prefix.'.zip_code'].' '.$data[$prefix.'.locality'].' ('.$data[$prefix.'.administrative_area_level_2_short'].')';
         }
+        */
 
         return $data;
     }

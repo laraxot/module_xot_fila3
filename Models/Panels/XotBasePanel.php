@@ -155,7 +155,13 @@ abstract class XotBasePanel implements PanelContract {
         }
     }
 
-    public function setRow(Model $row): self {
+    /**
+     * Undocumented function
+     *
+     * @param Model $row
+     * @return self
+     */
+    public function setRow($row): self {
         $this->row = $row;
 
         /*--- in teoria con la "&"

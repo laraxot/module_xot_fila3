@@ -7,12 +7,13 @@ namespace Modules\Xot\Models\Panels;
 use Modules\LU\Models\User;
 use Illuminate\Http\Request;
 use Modules\Blog\Models\Profile;
+use Modules\Xot\Contracts\ModelWithUserContract;
 
 // --- Services --
 
 class ProfilePanel extends XotBasePanel {
 
-    public Profile $row;
+    public ModelWithUserContract $row;
     /**
      * The model the resource corresponds to.
      */

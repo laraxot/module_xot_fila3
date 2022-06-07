@@ -5,8 +5,9 @@ declare(strict_types=1);
 namespace Modules\Xot\Models;
 
 // use Illuminate\Database\Eloquent\Relations\HasOne;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Modules\Tenant\Services\TenantService;
+use Modules\Xot\Contracts\ModelWithUserContract;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
  * Modules\Xot\Models\Profile
@@ -117,7 +118,7 @@ use Modules\Tenant\Services\TenantService;
  * @method static \Illuminate\Database\Eloquent\Builder|BaseModelLang withPost(string $guid)
  * @mixin \Eloquent
  */
-class Profile extends BaseModelLang {
+class Profile extends BaseModelLang implements ModelWithUserContract{
     /**
      * @var string[]
      */

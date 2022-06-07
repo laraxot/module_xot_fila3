@@ -209,7 +209,11 @@ abstract class XotBaseMigration extends Migration {
     // da rivedere
     public function renameColumn(string $from, string $to): void {
         //Call to an undefined method Illuminate\Database\Schema\Builder::renameColumn().
-        $this->getConn()->renameColumn($from, $to);
+        /**
+         * @var \Illuminate\Database\Schema\Blueprint
+         */
+        $conn=$this->getConn();
+        $conn->renameColumn($from, $to);
     }
 
     /**
