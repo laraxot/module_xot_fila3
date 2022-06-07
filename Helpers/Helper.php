@@ -1148,7 +1148,8 @@ if (! function_exists('debugStack')) {
         xdebug_set_filter(
             XDEBUG_FILTER_TRACING,
             XDEBUG_PATH_EXCLUDE,
-            [LARAVEL_DIR.'/vendor/']
+            //[LARAVEL_DIR.'/vendor/']
+            [__DIR__.'/../../vendor/']
         );
 
         xdebug_print_function_stack();
