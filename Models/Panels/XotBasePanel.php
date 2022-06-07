@@ -5,41 +5,40 @@ declare(strict_types=1);
 namespace Modules\Xot\Models\Panels;
 
 use Exception;
-use Illuminate\Support\Str;
+use Illuminate\Contracts\Support\Renderable;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\Relation;
+// ----------  SERVICES --------------------------
 use Illuminate\Http\Request;
 use Illuminate\Pipeline\Pipeline;
 use Illuminate\Support\Collection;
-// ----------  SERVICES --------------------------
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Route;
-use Modules\Xot\Services\FileService;
-use Modules\Xot\Services\RowsService;
-use Modules\Xot\Services\StubService;
-use Modules\Xot\Services\ChainService;
-use Modules\Xot\Services\ImageService;
-use Modules\Xot\Services\PanelService;
-use Modules\Xot\Services\RouteService;
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
+use Modules\Theme\Services\FieldService;
+use Modules\Xot\Contracts\ModelWithAuthorContract;
+use Modules\Xot\Contracts\PanelContract;
+use Modules\Xot\Contracts\PanelPresenterContract;
 use Modules\Xot\Contracts\RowsContract;
 use Modules\Xot\Contracts\UserContract;
-use Modules\Xot\Services\PolicyService;
-use Spatie\QueryBuilder\Filters\Filter;
-use Modules\Theme\Services\FieldService;
-use Modules\Xot\Contracts\PanelContract;
-use Illuminate\Database\Eloquent\Builder;
-use Modules\Xot\Services\PanelTabService;
-use Modules\Xot\Services\PanelFormService;
-use Modules\Xot\Services\PanelRouteService;
-use Illuminate\Contracts\Support\Renderable;
-use Modules\Xot\Services\PanelActionService;
+use Modules\Xot\Models\Panels\Actions\XotBasePanelAction;
 use Modules\Xot\Presenters\PdfPanelPresenter;
 use Modules\Xot\Presenters\XlsPanelPresenter;
-use Modules\Xot\Contracts\ModelWithUserContract;
-use Modules\Xot\Contracts\PanelPresenterContract;
-use Modules\Xot\Contracts\ModelWithAuthorContract;
-use Illuminate\Database\Eloquent\Relations\Relation;
-use Modules\Xot\Models\Panels\Actions\XotBasePanelAction;
+use Modules\Xot\Services\ChainService;
+use Modules\Xot\Services\FileService;
+use Modules\Xot\Services\ImageService;
+use Modules\Xot\Services\PanelActionService;
+use Modules\Xot\Services\PanelFormService;
+use Modules\Xot\Services\PanelRouteService;
+use Modules\Xot\Services\PanelService;
+use Modules\Xot\Services\PanelTabService;
+use Modules\Xot\Services\PolicyService;
+use Modules\Xot\Services\RouteService;
+use Modules\Xot\Services\RowsService;
+use Modules\Xot\Services\StubService;
+use Spatie\QueryBuilder\Filters\Filter;
 
 /**
  * Class XotBasePanel.
@@ -69,7 +68,7 @@ abstract class XotBasePanel implements PanelContract {
 
     public ?Builder $builder = null;
 
-    public ?string $name=null;
+    public ?string $name = null;
 
     public ?PanelContract $parent = null;
 
@@ -156,10 +155,9 @@ abstract class XotBasePanel implements PanelContract {
     }
 
     /**
-     * Undocumented function
+     * Undocumented function.
      *
      * @param Model $row
-     * @return self
      */
     public function setRow($row): self {
         $this->row = $row;
@@ -856,9 +854,8 @@ abstract class XotBasePanel implements PanelContract {
     }
 
     /**
-     * Undocumented function
+     * Undocumented function.
      *
-     * @param array $params
      * @return Collection<XotBasePanelAction>
      */
     public function itemActions(array $params = []): Collection {
@@ -1422,10 +1419,10 @@ abstract class XotBasePanel implements PanelContract {
      * @return mixed
      */
     public function callItemAction(string $act) {
-        //Strict comparison using === between null and string will always evaluate to false
-        //if (null === $act) {
+        // Strict comparison using === between null and string will always evaluate to false
+        // if (null === $act) {
         //    return null;
-        //}
+        // }
         // $action = $this->itemActions()
         //    ->firstWhere('name', $act);
         $action = $this->itemAction($act);
@@ -1454,10 +1451,10 @@ abstract class XotBasePanel implements PanelContract {
      * @return mixed
      */
     public function callContainerAction(string $act) {
-        //Strict comparison using === between null and string will always evaluate to false
-        //if (null === $act) {
+        // Strict comparison using === between null and string will always evaluate to false
+        // if (null === $act) {
         //    return null;
-        //}
+        // }
         // $action = $this->containerActions()
         //    ->firstWhere('name', $act);
         $action = $this->containerAction($act);
@@ -1488,10 +1485,10 @@ abstract class XotBasePanel implements PanelContract {
         try {
             return $this->presenter->out();
         } catch (\Exception $e) {
-            /** 
-        * @phpstan-var view-string
-        */
-        $view = 'pub_theme::errors.500';
+            /**
+             * @phpstan-var view-string
+             */
+            $view = 'pub_theme::errors.500';
             if (! view()->exists($view)) {
                 FileService::viewCopy('theme::errors.500', 'pub_theme::errors.500');
             }
@@ -1634,9 +1631,9 @@ abstract class XotBasePanel implements PanelContract {
             $content = $row->getAttributeValue('txt');
         }
 
-        //[2022-05-20 00:22:19] local.ERROR: preg_replace():
-        //Argument #3 ($subject) must be of type array|string, null given (View: /home/cvfcmxwn/laraxot/multi/laravel/Themes/DirectoryBs4/Resources/views/layouts/widgets/blog_items.blade.php) {"view":{"view":"/home/cvfcmxwn/laraxot/multi/laravel/Modules/Xot/Models/Panels/XotBasePanel.php","data":[]},"
-        //url":"http://prosecco-valdobbiadene.it/?page=9","
+        // [2022-05-20 00:22:19] local.ERROR: preg_replace():
+        // Argument #3 ($subject) must be of type array|string, null given (View: /home/cvfcmxwn/laraxot/multi/laravel/Themes/DirectoryBs4/Resources/views/layouts/widgets/blog_items.blade.php) {"view":{"view":"/home/cvfcmxwn/laraxot/multi/laravel/Modules/Xot/Models/Panels/XotBasePanel.php","data":[]},"
+        // url":"http://prosecco-valdobbiadene.it/?page=9","
         if (is_null($content)) {
             $content = '';
         }
@@ -1692,9 +1689,9 @@ abstract class XotBasePanel implements PanelContract {
         $views[] = $view;
         $view = (inAdmin() ? 'adm_theme' : 'pub_theme').'::layouts.default.'.$act;
         $views[] = $view;
-        /** 
-        * @phpstan-var view-string
-        */
+        /**
+         * @phpstan-var view-string
+         */
         $view = 'theme::layouts.default'.(inAdmin() ? '.admin' : '').'.'.$act;
         $views[] = $view;
 
@@ -1757,43 +1754,42 @@ abstract class XotBasePanel implements PanelContract {
          * @var ModelWithAuthorContract
          */
         $row = $this->getRow();
-        if($row->author==null){
+        if (null == $row->author) {
             return false;
         }
-        return $row->author->is($user);
+        // return $row->author->is($user);
+        return $row->author_id == $user->id;
     }
 
     /**
-     * ----------------------- WIP -----------------------
-     *
-     * @param UserContract $user
-     * @return boolean
+     * ----------------------- WIP -----------------------.
      */
     public function isModeratedBy(UserContract $user): bool {
         /**
          * @var ModelWithAuthorContract
          */
         $row = $this->getRow();
-        if($row->author==null){
+        if (null == $row->author) {
             return false;
         }
-        return $row->author->is($user);
+
+        // return $row->author->is($user);
+        return $row->author_id == $user->id;
     }
 
     /**
-     * ----------------------- WIP -----------------------
-     *
-     * @param UserContract $user
-     * @return boolean
+     * ----------------------- WIP -----------------------.
      */
     public function isAdminedBy(UserContract $user): bool {
         /**
          * @var ModelWithAuthorContract
          */
         $row = $this->getRow();
-        if($row->author==null){
+        if (null == $row->author) {
             return false;
         }
-        return $row->author->is($user);
+
+        // return $row->author->is($user);
+        return $row->author_id == $user->id;
     }
 }

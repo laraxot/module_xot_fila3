@@ -277,7 +277,7 @@ class StubService {
     }
 
     /**
-     * Undocumented function
+     * Undocumented function.
      *
      * @return Collection<string>
      */
@@ -323,7 +323,7 @@ class StubService {
                         line:['.$e->getLine().']
                         caller:['.__LINE__.']['.basename(__FILE__).']
                         ';
-                   //throw new \Exception($msg);
+                    // throw new \Exception($msg);
                     return null;
                     /*
                     dddx([
@@ -338,8 +338,8 @@ class StubService {
                     // return null;
                 }
             }
-        )->filter(function($item){
-            return $item!==null;
+        )->filter(function ($item) {
+            return null !== $item;
         });
     }
 
@@ -601,20 +601,25 @@ class StubService {
             ->first();
         // dddx(get_class_methods($brother_file));
         // dddx($brother_file->getFilenameWithoutExtension());
-        if($brother_file===null){
+        if (null === $brother_file) {
             throw new Exception('['.__LINE__.']['.__FILE__.']');
         }
         $brother_class = $this->getModelNamespace().'\\'.$brother_file->getFilenameWithoutExtension();
         // getRandomBrotherModel
         // dddx($brother_class);
         $brother = app($brother_class);
+        /**
+         * @var array<int, string>
+         */
         $fillables = $brother->getConnection()->getSchemaBuilder()->getColumnListing($this->getTable());
-        $fillables = collect($fillables)->except(
-            [
-                'created_at', 'updated_at', 'updated_by', 'created_by', 'deleted_at', 'deleted_by',
-                'deleted_ip', 'created_ip', 'updated_ip',
-            ]
-        )->all();
+        /**
+         * @var array<int, string>
+         */
+        $except = [
+            'created_at', 'updated_at', 'updated_by', 'created_by', 'deleted_at', 'deleted_by',
+            'deleted_ip', 'created_ip', 'updated_ip',
+        ];
+        $fillables = collect($fillables)->except($except)->all();
 
         return $fillables;
     }

@@ -8,6 +8,7 @@ use Exception;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
+use Modules\LU\Models\Area;
 use Modules\Tenant\Services\TenantService;
 use Modules\Xot\Contracts\PanelContract;
 use Modules\Xot\Contracts\UserContract;
@@ -49,10 +50,10 @@ class ProfileService {
     public function get($user): self {
         if (\is_object($user)) {
             $profile_model = TenantService::model('profile');
-            //Strict comparison using === between null and Illuminate\Database\Eloquent\Model will always evaluate to false.  
-            //if (null === $profile_model) {
+            // Strict comparison using === between null and Illuminate\Database\Eloquent\Model will always evaluate to false.
+            // if (null === $profile_model) {
             //    dddx('Aggiungi profile a xra.php');
-            //}
+            // }
             if (! $user instanceof UserContract) {
                 throw new Exception('['.__LINE__.']['.class_basename(__CLASS__).']');
             }
@@ -97,10 +98,10 @@ class ProfileService {
     }
 
     public function fullName(): ?string {
-        //Strict comparison using === between null and Modules\Xot\Contracts\UserContract will always evaluate to false.
-        //if (null === $this->user) {
+        // Strict comparison using === between null and Modules\Xot\Contracts\UserContract will always evaluate to false.
+        // if (null === $this->user) {
         //    return null;
-        //}
+        // }
         $user = $this->user;
 
         // dddx([$user, $user->first_name, property_exists($user, 'first_name')]);
@@ -157,10 +158,10 @@ class ProfileService {
      * @return string|null
      */
     public function avatar($size = 100) {
-        //Strict comparison using === between null and Modules\Xot\Contracts\UserContract will always evaluate to false.
-        //if (null === $this->user) {
+        // Strict comparison using === between null and Modules\Xot\Contracts\UserContract will always evaluate to false.
+        // if (null === $this->user) {
         //    return null;
-        //}
+        // }
 
         $email = md5(mb_strtolower(trim((string) $this->user->email)));
         $default = urlencode('https://tracker.moodle.org/secure/attachment/30912/f3.png');
@@ -274,6 +275,11 @@ class ProfileService {
         return $this->profile;
     }
 
+    /**
+     * Undocumented function.
+     *
+     * @return Collection<Area>
+     */
     public function areas(): Collection {
         $areas = $this->getUser()->areas;
 
