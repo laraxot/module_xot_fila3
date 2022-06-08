@@ -8,6 +8,7 @@ declare(strict_types=1);
 
 namespace Modules\Xot\Models\Panels\Actions;
 
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\File;
@@ -33,7 +34,8 @@ class DownloadDbModuleAction extends XotBasePanelAction {
     public string $icon = '<i class="fas fa-database"></i><i class="fas fa-download"></i>';
 
     /**
-     * return \Illuminate\Http\RedirectResponse
+     * return \Illuminate\Http\RedirectResponse.
+     *
      * @return \Symfony\Component\HttpFoundation\BinaryFileResponse
      */
     public function handle() {
@@ -43,7 +45,7 @@ class DownloadDbModuleAction extends XotBasePanelAction {
          */
         $row = $this->row;
         $name = $row->name;
-        $name_low = Str::lower($name);
+        $name_low = Str::lower((string) $name);
         // $model = $this->getModel($name);
         // $conn = $model->getConnection();
         $db = config('database.connections.'.$name_low);
@@ -90,7 +92,10 @@ class DownloadDbModuleAction extends XotBasePanelAction {
         return response()->download($backup_path);
     }
 
-    public function getModel($module_name) {
+    /**
+     * Undocumented function.
+     */
+    public function getModel(string $module_name): Model {
         // $module_name=$this->panel->getModuleName();
         $cache_key = Str::slug($module_name.'_model');
         $first_model_class = Cache::rememberForever($cache_key, function () use ($module_name) {
@@ -101,6 +106,9 @@ class DownloadDbModuleAction extends XotBasePanelAction {
             $is_abstract = true;
             while ($is_abstract) {
                 $first_model_file = $models[$i++];
+                /**
+                 * @var class-string
+                 */
                 $first_model_class = 'Modules\\'.$module_name.'\Models\\'.Str::before($first_model_file->getBasename(), '.php');
                 $reflect = new \ReflectionClass($first_model_class);
                 $is_abstract = $reflect->isAbstract();

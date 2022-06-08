@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Modules\Xot\Http\Controllers\Admin;
 
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Modules\Tenant\Services\TenantService;
@@ -31,8 +32,11 @@ class ModuleController extends Controller {
      */
     public function index(Request $request) {
         $panel = PanelService::make()->getRequestPanel();
+        if (null == $panel) {
+            throw new Exception('['.__LINE__.']['.__FILE__.']');
+        }
 
-        if ('' !== $request->_act) {
+        if ('' !== $request->_act && null != $panel) {
             // return $panel->callItemActionWithGate($request->_act);
             // return $panel->callContainerAction($request->_act);
             return $panel->callAction($request->_act);
@@ -132,6 +136,9 @@ class ModuleController extends Controller {
      */
     public function home(Request $request) {
         $panel = PanelService::make()->getRequestPanel();
+        if (null == $panel) {
+            throw new Exception('['.__LINE__.']['.__FILE__.']');
+        }
         $act = $request->input('_act', '');
         if ('' !== $act) {
             return $panel->callItemActionWithGate($act);
@@ -149,7 +156,9 @@ class ModuleController extends Controller {
      */
     public function dashboard(Request $request) {
         $panel = PanelService::make()->getRequestPanel();
-
+        if (null == $panel) {
+            throw new Exception('['.__LINE__.']['.__FILE__.']');
+        }
         $act = $request->input('_act', '');
         if ('' !== $act) {
             return $panel->callItemActionWithGate($act);

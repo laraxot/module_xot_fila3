@@ -9,6 +9,7 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Str;
+use Modules\Theme\Contracts\FieldContract;
 use Modules\Theme\Services\FieldService;
 use Modules\Theme\Services\FormXService;
 use Modules\Theme\Services\ThemeService;
@@ -66,6 +67,9 @@ class PanelFormService {
             <input name="submit" type="submit" id="submit" value="Post your answer" class="button small color">
         </p>';
         extract($params);
+        /**
+         * @var array<object>
+         */
         $fields = $this->getFields(['act' => 'edit']);
         $row = $this->panel->getRow();
         $res = '';
@@ -114,6 +118,7 @@ class PanelFormService {
 
     public function getFormData(array $params = []): array {
         $form_data = [];
+
         $fields = $this->getFields($params);
         $row = isset($params['row']) ? $params['row'] : $this->panel->getRow();
         foreach ($fields as $field) {
@@ -351,6 +356,11 @@ class PanelFormService {
         return $fields;
     }
 
+    /**
+     * Undocumented function.
+     *
+     * @return Collection<FieldContract>
+     */
     public function getFields(array $params = []): Collection {
         $act = isset($params['act']) ? $params['act'] : 'index';
 

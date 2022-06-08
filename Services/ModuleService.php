@@ -76,7 +76,12 @@ class ModuleService {
                 $name = substr(($filename), 0, -\strlen($ext));
 
                 // dddx(['name' => $name, 'name1' => $file->getFilenameWithoutExtension()]);
-                $tmp->class = $ns.'\\'.$name;
+                /**
+                 * @var class-string
+                 */
+                $class = $ns.'\\'.$name;
+                $tmp->class = $class;
+
                 $name = Str::snake($name);
                 $tmp->name = $name;
                 // 434    Parameter #1 $argument of class ReflectionClass constructor expects class-string<T of object>|T of object, string given.

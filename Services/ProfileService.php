@@ -303,6 +303,10 @@ class ProfileService {
     public function panelAreas(): Collection {
         return $this->areas()->map(
             function ($area) {
+                if (! $area instanceof Model) {
+                    throw new Exception('['.__LINE__.']['.__FILE__.']');
+                }
+
                 return PanelService::make()->get($area);
             }
         );

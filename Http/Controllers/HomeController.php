@@ -4,10 +4,11 @@ declare(strict_types=1);
 
 namespace Modules\Xot\Http\Controllers;
 
+use Exception;
 use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Http\Request;
 // ---- services ---
 
+use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Schema;
 use Modules\Tenant\Services\TenantService;
@@ -68,6 +69,9 @@ class HomeController extends Controller {
     public function show(Request $request, ?PanelContract $panel = null) {
         // backtrace(true);
         $panel = PanelService::make()->getRequestPanel();
+        if (null == $panel) {
+            throw new Exception('['.__LINE__.']['.__FILE__.']');
+        }
         if ('' !== $request->_act) {
             return $panel->callItemActionWithGate($request->_act);
         }

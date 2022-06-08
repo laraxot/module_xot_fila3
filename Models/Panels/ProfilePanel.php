@@ -4,15 +4,13 @@ declare(strict_types=1);
 
 namespace Modules\Xot\Models\Panels;
 
-use Modules\LU\Models\User;
 use Illuminate\Http\Request;
-use Modules\Blog\Models\Profile;
+use Modules\LU\Models\User;
 use Modules\Xot\Contracts\ModelWithUserContract;
 
 // --- Services --
 
 class ProfilePanel extends XotBasePanel {
-
     public ModelWithUserContract $row;
     /**
      * The model the resource corresponds to.
@@ -93,14 +91,18 @@ class ProfilePanel extends XotBasePanel {
         // $user_id = $this->row->getAttributeValue('user_id');
         // $user = User::where('id', $user_id)->first();
         // coi metodi sopra fa contento phpstan ma fa troppe query
-        
+
         $user = $this->row->user;
-        try {
-            if (\is_object($user->perm) && $user->perm->perm_type >= 4) {  // superadmin
-                return true;
-            }
-        } catch (\Exception $e) {
+        if (null == $user) {
             return false;
+        }
+        $perm = $user->perm;
+        if (null == $perm) {
+            return false;
+        }
+
+        if ($perm->perm_type >= 4) {  // superadmin
+            return true;
         }
 
         return false;
@@ -110,15 +112,18 @@ class ProfilePanel extends XotBasePanel {
      * Avatar function.
      */
     public function avatar(int $size = 100): ?string {
-        //Strict comparison using === between null and Modules\Blog\Models\Profile will always evaluate to false
-        //if (null === $this->row) {
+        // Strict comparison using === between null and Modules\Blog\Models\Profile will always evaluate to false
+        // if (null === $this->row) {
         //    throw new \Exception('row is null');
-        //}
-        //if (! property_exists($this->row, 'user')) {
+        // }
+        // if (! property_exists($this->row, 'user')) {
         //    throw new \Exception('in ['.\get_class($this->row).'] property [user] not exists');
-        //}
+        // }
         $user = $this->row->user;
-
+        if (null == $user) {
+            return null;
+        }
+        /*
         if (! \is_object($user) && \is_object($this->row)) {
             if (isset($this->row->user_id) && method_exists($this->row, 'user')) {
                 $this->row->user()->create();
@@ -126,7 +131,7 @@ class ProfilePanel extends XotBasePanel {
             // dddx($this->row);
             return null;
         }
-
+        */
         $email = md5(mb_strtolower(trim((string) $user->email)));
         $default = urlencode('https://tracker.moodle.org/secure/attachment/30912/f3.png');
 

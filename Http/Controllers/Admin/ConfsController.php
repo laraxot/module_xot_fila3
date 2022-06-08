@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Modules\Xot\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use Exception;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
@@ -23,6 +24,9 @@ class ConfsController extends Controller {
     public function index(Request $request) {
         // $rows = TenantService::getConfigNames();
         $panel = PanelService::make()->getRequestPanel();
+        if (null == $panel) {
+            throw new Exception('['.__LINE__.']['.__FILE__.']');
+        }
 
         return $panel->out();
     }
@@ -51,9 +55,9 @@ class ConfsController extends Controller {
 
         return 'preso';
         */
-        /** 
-        * @phpstan-var view-string
-        */
+        /**
+         * @phpstan-var view-string
+         */
         $view = 'theme::admin.standalone.manage.php-array';
         $view_params = [
             'view' => $view,

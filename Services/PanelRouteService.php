@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Modules\Xot\Services;
 
 use Exception;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Session;
@@ -142,10 +143,12 @@ class PanelRouteService {
             );
         }
         $panel = $this->panel;
-
+        /**
+         * @var Collection<PanelContract>
+         */
         $breads = $panel->getBreads();
         $route_params = [];
-        if (inAdmin() && null !== $breads->first()) {
+        if (inAdmin() && null !== $breads->first() && $breads->first() instanceof PanelContract) {
             $route_params['module'] = $breads->first()->getModuleNameLow();
         }
         if (inAdmin() && null === $breads->first()) {

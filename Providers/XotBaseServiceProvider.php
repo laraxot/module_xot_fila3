@@ -100,6 +100,9 @@ abstract class XotBaseServiceProvider extends ServiceProvider {
      */
     public function registerTranslations(): void {
         $langPath = realpath($this->module_dir.'/../Resources/lang');
+        if (false == $langPath) {
+            throw new Exception('['.__LINE__.']['.__FILE__.']');
+        }
         // echo '<hr>'.$langPath.'  :  '.$this->module_name.' <hr/>';
         $this->loadTranslationsFrom($langPath, $this->module_name);
     }

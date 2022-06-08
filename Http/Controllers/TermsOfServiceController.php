@@ -18,6 +18,7 @@ class TermsOfServiceController extends Controller {
      */
     public function show(Request $request) {
         $termsFile = TenantService::localizedMarkdownPath('terms.md');
+
         $content = file_get_contents($termsFile);
         if (false === $content) {
             throw new Exception('['.__LINE__.']['.class_basename(__CLASS__).']');

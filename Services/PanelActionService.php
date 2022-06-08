@@ -79,6 +79,9 @@ class PanelActionService {
     public function getAction(string $name): XotBasePanelAction {
         $action = $this->getActions()
             ->firstWhere('name', $name);
+        if (! $action instanceof XotBasePanelAction) {
+            throw new Exception('['.__LINE__.']['.__FILE__.']');
+        }
 
         return $action;
     }
@@ -100,6 +103,9 @@ class PanelActionService {
         if (null === $itemAction) {
             throw new Exception('['.$act.'] is not an ItemAction of ['.class_basename($this->panel).']');
         }
+        if (! $itemAction instanceof XotBasePanelAction) {
+            throw new Exception('['.__LINE__.']['.__FILE__.']');
+        }
 
         return $itemAction;
     }
@@ -120,6 +126,9 @@ class PanelActionService {
             );
         }
         // $action->setPanel($this);
+        if (! $action instanceof XotBasePanelAction) {
+            throw new Exception('['.__LINE__.']['.__FILE__.']');
+        }
 
         return $action;
     }

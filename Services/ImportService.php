@@ -504,6 +504,9 @@ class ImportService {
         $pixabay_url .= '&q='.$q;
         $pixabay_url = str_replace(' ', '%20', $pixabay_url);
         $json = $this->cacheRequest('GET', $pixabay_url);
+        /**
+         * @var object
+         */
         $json = json_decode($json);
         if (! isset($json->hits)) {
             return null;

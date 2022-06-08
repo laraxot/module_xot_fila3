@@ -27,14 +27,19 @@ abstract class XotBasePanelPolicy {
     // *
     public function before($user, $ability) {
         // * -- togliere per fare debug
-        if (\is_object($user)){
-            $route_params=getRouteParameters();
+        if (\is_object($user)) {
+            $route_params = getRouteParameters();
 
-            $profile=ProfileService::make()->get($user);
+            $profile = ProfileService::make()->get($user);
             if (isset($route_params['module'])) {
                 $module = Module::find($route_params['module']);
-                $has_area=$profile->hasArea($module->getName());
-                return  $has_area && $profile->isSuperAdmin();
+                $module_name = '';
+                if (null != $module) {
+                    $module_name = $module->getName();
+                }
+                $has_area = $profile->hasArea($module_name);
+
+                return $has_area && $profile->isSuperAdmin();
             }
             if ($profile->isSuperAdmin()) {
                 return true;
@@ -56,17 +61,22 @@ abstract class XotBasePanelPolicy {
         if (inAdmin() && null === $user) {
             return false;
         }
-        dddx('a');
+
         $route_params = $panel->getRouteParams();
-        if (isset($route_params['module'])) {
+        if (isset($route_params['module']) && null != $user) {
             $module = Module::find($route_params['module']);
+            $module_name = '';
+            if (null != $module) {
+                $module_name = $module->getName();
+            }
+
             // $panel = PanelService::make()->get($user);
             // $areas = $panel->areas()->firstWhere('area_define_name', $module->getName());
             // return is_object($areas);
 
             $profile = ProfileService::make()->get($user);
 
-            return $profile->hasArea($module->getName());
+            return $profile->hasArea($module_name);
         }
 
         return true;

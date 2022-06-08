@@ -239,6 +239,7 @@ class ModelService {
 
     /**
      * execute a query.
+     *
      * @return bool
      */
     public function query(string $sql) {
@@ -250,6 +251,8 @@ class ModelService {
 
     /**
      * execute a query.
+     *
+     * @return array
      */
     public function select(string $sql) {
         $model = $this->model;

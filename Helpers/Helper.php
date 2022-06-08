@@ -400,10 +400,10 @@ if (! function_exists('getModuleFromModel')) {
         $module_name = Str::before(Str::after($class, 'Modules\\'), '\\Models\\');
         // call to an undefined static method  Nwidart\Modules\Facades\Module::find().
         // $mod = Module::find($module_name);
-        //Call to an undefined static method Nwidart\Modules\Facades\Module::get().
-        //$mod = Module::get($module_name);
+        // Call to an undefined static method Nwidart\Modules\Facades\Module::get().
+        // $mod = Module::get($module_name);
         // Static call to instance method Nwidart\Modules\Module::get()
-        //$mod = \Nwidart\Modules\Module::get($module_name);
+        // $mod = \Nwidart\Modules\Module::get($module_name);
         $mod = app('module')->get($module_name);
 
         return $mod;
@@ -547,9 +547,9 @@ if (! function_exists('transFields')) {
         $trans_root = $ns.'::'.Str::snake(class_basename($model));
         // debug_getter_obj(['obj'=>$module]);
         // dddx($module_name->getNamespace());
-        /** 
-        * @phpstan-var view-string
-        */
+        /**
+         * @phpstan-var view-string
+         */
         $view = 'unknown';
         extract($params);
         // dddx($params);
@@ -576,10 +576,10 @@ if (! function_exists('transFields')) {
         $pattern = '/\.[0-9]+\./m';
         $ris->name_dot = preg_replace($pattern, '.', $ris->name_dot);
         if (! Str::contains($view, '::')) {
-            /** 
-        * @phpstan-var view-string
-        */
-        $view = 'pub_theme::'.$view;
+            /**
+             * @phpstan-var view-string
+             */
+            $view = 'pub_theme::'.$view;
         }
         list($ns, $key) = explode('::', $view);
         if (null == $module_name) {
@@ -1075,6 +1075,14 @@ if (! function_exists('getRouteParameters')) {
     }
 }
 
+/*
+if (! function_exists('getRouteAction')) {
+    function getRouteAction(): string {
+
+    }
+}
+*/
+
 if (! function_exists('getModTradFilepath')) {
     function getModTradFilepath(string $file_path): string {
         $file_path = Str::replace('\\', '/', $file_path);
@@ -1148,7 +1156,7 @@ if (! function_exists('debugStack')) {
         xdebug_set_filter(
             XDEBUG_FILTER_TRACING,
             XDEBUG_PATH_EXCLUDE,
-            //[LARAVEL_DIR.'/vendor/']
+            // [LARAVEL_DIR.'/vendor/']
             [__DIR__.'/../../vendor/']
         );
 

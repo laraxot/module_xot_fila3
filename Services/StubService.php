@@ -182,10 +182,15 @@ class StubService {
 
         return $this->getColumns()
             ->map(
-                function (Column $column) {
-                    return $this->mapTableProperties($column);
-                    // return $this->getPropertiesFromMethods();
-                }
+                // function (Column $column) {
+                     function ($column) {
+                         if (! $column instanceof Column) {
+                             throw new Exception('['.__LINE__.']['.__FILE__.']');
+                         }
+
+                         return $this->mapTableProperties($column);
+                         // return $this->getPropertiesFromMethods();
+                     }
             )->collapse()
             ->values()
             ->implode(
@@ -315,6 +320,9 @@ class StubService {
             function ($input_name) use ($conn, $model) {
                 try {
                     $table_name = $conn->getTablePrefix().$model->getTable();
+                    if (! is_string($input_name)) {
+                        throw new Exception('['.__LINE__.']['.__FILE__.']');
+                    }
 
                     return $conn->getDoctrineColumn($table_name, $input_name);
                 } catch (\Exception $e) {

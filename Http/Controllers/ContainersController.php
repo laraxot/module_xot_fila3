@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Modules\Xot\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use Exception;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Request;
@@ -57,11 +58,17 @@ class ContainersController extends Controller {
 
     public function __call($method, $args) {
         // dddx(['method' => $method, 'args' => $args]);
-        $action = \Route::current()->getAction();
-        $action['controller'] = __CLASS__.'@'.$method;
-        $action = \Route::current()->setAction($action);
-
-        $this->panel = PanelService::make()->getRequestPanel();
+        $route_current = \Route::current();
+        if (null != $route_current) {
+            $action = $route_current->getAction();
+            $action['controller'] = __CLASS__.'@'.$method;
+            $action = $route_current->setAction($action);
+        }
+        $panel = PanelService::make()->getRequestPanel();
+        if (null == $panel) {
+            throw new Exception('['.__LINE__.']['.__FILE__.']');
+        }
+        $this->panel = $panel;
 
         if ('' !== request()->input('_act', '')) {
             return $this->__callPanelAct($method, $args);

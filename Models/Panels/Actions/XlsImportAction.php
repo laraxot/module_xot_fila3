@@ -7,6 +7,7 @@ declare(strict_types=1);
 
 namespace Modules\Xot\Models\Panels\Actions;
 
+use Illuminate\Contracts\Support\Renderable;
 use Modules\LU\Models\User;
 use Modules\Theme\Services\ThemeService;
 use Modules\Xot\Services\ArrayService;
@@ -44,7 +45,7 @@ class XlsImportAction extends XotBasePanelAction {
         return $this->{$func}();
     }
 
-    public function step1() {
+    public function step1(): Renderable {
         // Excel::import(new UsersImport,request()->file('file'));
         $step = 1;
         // $c = request()->file('file'); // Illuminate\Http\UploadedFile
@@ -71,6 +72,11 @@ class XlsImportAction extends XotBasePanelAction {
         return view()->make($view, $view_params);
     }
 
+    /**
+     * WIP WIP WIP.
+     *
+     * @return mixed
+     */
     public function step2() {
         // Excel::import(new UsersImport,request()->file('file'));
     }

@@ -5,15 +5,16 @@ declare(strict_types=1);
 namespace Modules\Xot\Models\Panels\Actions;
 
 use Exception;
-use Illuminate\Support\Str;
+use Illuminate\Contracts\Support\Renderable;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\QueryException;
 use Illuminate\Support\Collection;
-use Nwidart\Modules\Facades\Module;
-use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Str;
 use Modules\Xot\Services\ArrayService;
 use Modules\Xot\Services\ModelService;
-use Illuminate\Database\QueryException;
-use Illuminate\Contracts\Support\Renderable;
+use Nwidart\Modules\Facades\Module;
 
 // -------- models -----------
 
@@ -30,15 +31,14 @@ class DbAction extends XotBasePanelAction {
     public string $icon = '<i class="fas fa-database"></i>';
 
     /**
-     * return \Illuminate\Http\RedirectResponse
-     
+     * return \Illuminate\Http\RedirectResponse.
      */
-    public function handle():Renderable {
+    public function handle(): Renderable {
         // k$database=config('database');
         $data = $this->getAllTablesAndFields();
-        /** 
-        * @phpstan-var view-string
-        */
+        /**
+         * @phpstan-var view-string
+         */
         $view = 'xot::admin.home.acts.db';
         $model = $this->getModel();
         $model_service = ModelService::make()->setModel($model);
@@ -77,13 +77,13 @@ class DbAction extends XotBasePanelAction {
                     $res = $rows->get();
                 }
             } catch (QueryException $e) {
-                $msg= '<pre>'.$v['sql'].'</pre>'.'<pre>'.$e->getMessage().'</pre>';
+                $msg = '<pre>'.$v['sql'].'</pre>'.'<pre>'.$e->getMessage().'</pre>';
                 throw new Exception($msg.'['.__LINE__.']['.__FILE__.']');
-            }catch (Exception $e) {
-                $msg= '<pre>'.$v['sql'].'</pre>'.'<pre>'.$e->getMessage().'</pre>';
+            } catch (Exception $e) {
+                $msg = '<pre>'.$v['sql'].'</pre>'.'<pre>'.$e->getMessage().'</pre>';
                 throw new Exception($msg.'['.__LINE__.']['.__FILE__.']');
             }
-            if ($res->count() > 0 && $valid  && isset($rows)) {
+            if ($res->count() > 0 && $valid && isset($rows)) {
                 echo '<hr>';
                 echo '<h3>Table: '.$v['name'].'</h3>';
                 echo '<h3>Search: '.$search.'</h3>';
@@ -103,7 +103,7 @@ class DbAction extends XotBasePanelAction {
      *
      * @see https://stackoverflow.com/questions/26181170/laravel-how-to-use-query-builder-dbtable-with-dbconnection
      *
-     * @param array $item
+     * @param array  $item
      * @param string $search
      *
      * @return string
@@ -131,7 +131,7 @@ class DbAction extends XotBasePanelAction {
         return $sql.'('.implode(\chr(13).\chr(10).' OR ', $where).') limit 10';
     }
 
-    public function getModel() {
+    public function getModel(): Model {
         $module_name = $this->panel->getModuleName();
         $cache_key = Str::slug($module_name.'_model');
         $first_model_class = Cache::rememberForever($cache_key, function () use ($module_name) {
@@ -142,6 +142,9 @@ class DbAction extends XotBasePanelAction {
             $is_abstract = true;
             while ($is_abstract) {
                 $first_model_file = $models[$i++];
+                /**
+                 * @var class-string
+                 */
                 $first_model_class = 'Modules\\'.$module_name.'\Models\\'.Str::before($first_model_file->getBasename(), '.php');
                 $reflect = new \ReflectionClass($first_model_class);
                 $is_abstract = $reflect->isAbstract();
