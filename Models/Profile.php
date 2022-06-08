@@ -8,6 +8,7 @@ namespace Modules\Xot\Models;
 use Modules\Tenant\Services\TenantService;
 use Modules\Xot\Contracts\ModelWithUserContract;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Spatie\Tags\HasTags;
 
 /**
  * Modules\Xot\Models\Profile
@@ -63,6 +64,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @mixin \Eloquent
  */
 class Profile extends BaseModelLang implements ModelWithUserContract{
+    use HasTags; //spatie
     /**
      * @var string[]
      */
