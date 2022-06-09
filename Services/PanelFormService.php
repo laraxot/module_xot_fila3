@@ -373,13 +373,17 @@ class PanelFormService {
         /**
          * @var Collection<FieldContract>
          */
-        $fields=$this->getFields(['act' => 'edit']);
+        $fields = $this->getFields(['act' => 'edit']);
         $fields = $fields->map(
+            /**
+             * @phpstan-param object $field
+             */
             function ($field) {
                 /**
                  * @var array
                  */
-                $vars=get_object_vars($field);
+                $vars = get_object_vars($field);
+
                 return FieldService::make()
                     ->setVars($vars)
                 // ->type($field->type)

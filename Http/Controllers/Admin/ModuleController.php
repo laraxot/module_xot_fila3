@@ -36,9 +36,9 @@ class ModuleController extends Controller {
             throw new Exception('['.__LINE__.']['.__FILE__.']');
         }
         /**
-         * @var string 
+         * @var string
          */
-        $act=$request->_act;
+        $act = $request->_act;
         if ('' !== $act && null != $panel) {
             // return $panel->callItemActionWithGate($request->_act);
             // return $panel->callContainerAction($request->_act);
@@ -144,6 +144,10 @@ class ModuleController extends Controller {
         }
         $act = $request->input('_act', '');
         if ('' !== $act) {
+            if (! is_string($act)) {
+                throw new Exception('['.__LINE__.']['.class_basename(__CLASS__).']');
+            }
+
             return $panel->callItemActionWithGate($act);
             // return $panel->callContainerAction($request->_act);
             // return $panel->callAction($request->_act);
@@ -164,6 +168,10 @@ class ModuleController extends Controller {
         }
         $act = $request->input('_act', '');
         if ('' !== $act) {
+            if (! is_string($act)) {
+                throw new Exception('['.__LINE__.']['.class_basename(__CLASS__).']');
+            }
+
             return $panel->callItemActionWithGate($act);
             // return $panel->callContainerAction($request->_act);
             // return $panel->callAction($request->_act);

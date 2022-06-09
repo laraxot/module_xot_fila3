@@ -41,7 +41,7 @@ class HomeController extends Controller {
         /**
          * @var string
          */
-        $act=$request->_act;
+        $act = $request->_act;
 
         if ('' !== $act) {
             return $home_panel->callItemActionWithGate($act);
@@ -79,7 +79,7 @@ class HomeController extends Controller {
         /**
          * @var string
          */
-        $act=$request->_act;
+        $act = $request->_act;
         if ('' !== $act) {
             return $panel->callItemActionWithGate($act);
         }
@@ -101,10 +101,10 @@ class HomeController extends Controller {
         $home_controller = '\Modules\\'.$mod_name.'\Http\Controllers\HomeController';
 
         // dddx($home_controller);
-         /**
+        /**
          * @var string
          */
-        $act=$request->_act;
+        $act = $request->_act;
         if ('' !== $act) {
             $home = TenantService::model('home');
             $panel = PanelService::make()->get($home);

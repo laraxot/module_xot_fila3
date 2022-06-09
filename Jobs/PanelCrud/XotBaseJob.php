@@ -87,13 +87,7 @@ abstract class XotBaseJob /* implements ShouldQueue */
         }
     }
 
-    /**
-     * @param array         $data
-     * @param PanelContract $panel
-     *
-     * @return array
-     */
-    public function prepareForValidation(array $data,PanelContract $panel):array {
+    public function prepareForValidation(array $data, PanelContract $panel): array {
         $date_fields = collect($panel->fields())->filter(
             function ($item) use ($data) {
                 return Str::startsWith($item->type, 'Date') && isset($data[$item->name]);
@@ -130,9 +124,9 @@ abstract class XotBaseJob /* implements ShouldQueue */
          */
         $data = $this->prepareForValidation($data, $panel);
         /**
-         * @var \Illuminate\Contracts\Support\Arrayable<(int|string), string>|iterable<(int|string), string>
+         * @var \Illuminate\Contracts\Support\Arrayable
          */
-        $data_keys=array_keys($data);
+        $data_keys = array_keys($data);
         $act = '';
         $rules = $panel->rules(['act' => $act]);
         $fillable = $panel->row->getFillable();

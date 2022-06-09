@@ -124,7 +124,7 @@ class ImportService {
         }
 
         /**
-         * @var \Illuminate\Contracts\Support\Arrayable<string, int|string>|iterable<string, int|string>|null
+         * @var \Illuminate\Contracts\Support\Arrayable
          */
         $url_info = parse_url($this->client_options['base_uri']);
 
@@ -329,7 +329,7 @@ class ImportService {
             /**
              * @var array
              */
-            $parse_url=parse_url($url);
+            $parse_url = parse_url($url);
             $url_info = collect($parse_url);
             if (null !== $url_info->get('scheme') && null !== $url_info->get('host')) {
                 $this->client_options['base_uri'] = $url_info->get('scheme').'://'.$url_info->get('host');
@@ -350,7 +350,7 @@ class ImportService {
             $content = \Storage::disk('cache')->get($file_path);
             $this->client_options['headers']['referer'] = $url;
 
-            return (string)$content;
+            return (string) $content;
         }
         $body = $this->gRequest($method, (string) $url, $attrs);
         /*
@@ -524,7 +524,7 @@ class ImportService {
         /**
          * @var array
          */
-        $hits=$json->hits;
+        $hits = $json->hits;
         $ris = collect($hits)
             ->shuffle()
             ->first();
@@ -657,7 +657,7 @@ class ImportService {
             /**
              * @var array
              */
-            $v_fields=$v['fields'];
+            $v_fields = $v['fields'];
             $forms[$k]['fields'] = collect($v_fields)->collapse()->all();
         }
 

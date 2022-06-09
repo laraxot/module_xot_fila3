@@ -92,8 +92,8 @@ class DocxService {
     }
 
     /**
-     * @param \Illuminate\Contracts\Support\Arrayable<(int|string), mixed>|iterable<(int|string), mixed> $row
-     * @param string $prefix
+     * @param \Illuminate\Contracts\Support\Arrayable $row
+     * @param string                                  $prefix
      *
      * @return array
      */
@@ -209,9 +209,9 @@ class DocxService {
         )->collapse()
         ->all();
         // 212    Offset non-empty-string on array<int, mixed> in isset() does not exist.
-        //if (isset($data[$prefix.'.postal_code'])) {
-        //$data[$prefix.'.zip_code'] = $data[$prefix.'.postal_code'] ?? '';
-        //}
+        // if (isset($data[$prefix.'.postal_code'])) {
+        // $data[$prefix.'.zip_code'] = $data[$prefix.'.postal_code'] ?? '';
+        // }
 
         /* -- per fare buono phpstan
         if (isset($data[$prefix.'.route'])
