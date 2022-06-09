@@ -105,7 +105,12 @@ class ModelService {
         // da trovare la funzione che fa l'inverso
         // static string|null getMorphedModel(string $alias) Get the model associated with a custom polymorphic type.
         // static array morphMap(array $map = null, bool $merge = true) Set or get the morph map for polymorphic relations.
-        $post_type = collect(config('morph_map'))->search(\get_class($model));
+        /**
+         * @var array
+         */
+        $models=config('morph_map');
+        $post_type = collect($models)
+            ->search(\get_class($model));
         if (false === $post_type) {
             $post_type = snake_case(class_basename($model));
             Relation::morphMap([$post_type => \get_class($model)]);

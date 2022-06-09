@@ -621,13 +621,15 @@ class StubService {
          */
         $fillables = $brother->getConnection()->getSchemaBuilder()->getColumnListing($this->getTable());
         /**
-         * @var array<int, string>
+         * @var array<int>|\Illuminate\Support\Enumerable<(int|string), int>
          */
         $except = [
             'created_at', 'updated_at', 'updated_by', 'created_by', 'deleted_at', 'deleted_by',
             'deleted_ip', 'created_ip', 'updated_ip',
         ];
-        $fillables = collect($fillables)->except($except)->all();
+        $fillables = collect($fillables)
+            ->except($except)
+            ->all();
 
         return $fillables;
     }

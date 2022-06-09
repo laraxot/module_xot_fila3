@@ -296,13 +296,16 @@ class ArrayService {
         $res = collect($data)
             ->map(
                 function ($item) {
-                    $item = collect($item)->map(function ($item0) {
-                        if (is_numeric($item0)) {
-                            $item0 = $item0 * 1;
-                        }
+                    $item = collect($item)
+                        ->map(
+                            function ($item0) {
+                                if (is_numeric($item0)) {
+                                    $item0 = $item0 * 1;
+                                }
 
-                        return $item0;
-                    })->all();
+                                return $item0;
+                            }
+                        )->all();
 
                     return $item;
                 }

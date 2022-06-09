@@ -123,6 +123,9 @@ class ImportService {
             $this->cookieJar = $this->initCookieJar();
         }
 
+        /**
+         * @var \Illuminate\Contracts\Support\Arrayable<string, int|string>|iterable<string, int|string>|null
+         */
         $url_info = parse_url($this->client_options['base_uri']);
 
         // $domain = $url_info['host'];

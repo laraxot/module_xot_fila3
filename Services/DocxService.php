@@ -92,7 +92,7 @@ class DocxService {
     }
 
     /**
-     * @param object $row
+     * @param \Illuminate\Contracts\Support\Arrayable<(int|string), mixed>|iterable<(int|string), mixed> $row
      * @param string $prefix
      *
      * @return array
@@ -212,7 +212,7 @@ class DocxService {
         //if (isset($data[$prefix.'.postal_code'])) {
         //$data[$prefix.'.zip_code'] = $data[$prefix.'.postal_code'] ?? '';
         //}
-        
+
         /* -- per fare buono phpstan
         if (isset($data[$prefix.'.route'])
             && isset($data[$prefix.'.locality'])

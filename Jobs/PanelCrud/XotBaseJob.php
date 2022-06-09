@@ -126,10 +126,12 @@ abstract class XotBaseJob /* implements ShouldQueue */
     public function prepareAndValidate($data, $panel) {
         $data0 = $data;
         $data = $this->prepareForValidation($data, $panel);
+        $data_keys=array_keys($data);
         $act = '';
         $rules = $panel->rules(['act' => $act]);
         $fillable = $panel->row->getFillable();
-        $fillable_from_data = collect($fillable)->intersect(array_keys($data));
+        $fillable_from_data = collect($fillable)
+            ->intersect($data_keys);
         foreach ($fillable_from_data as $fill) {
             if (! \in_array($fill, array_keys($rules), true)) {
                 $rules[$fill] = '';
