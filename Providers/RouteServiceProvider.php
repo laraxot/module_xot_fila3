@@ -55,7 +55,8 @@ class RouteServiceProvider extends XotBaseRouteServiceProvider {
         /**
          * @var array
          */
-        $langs = array_keys(config('laravellocalization.supportedLocales'));
+        $locales=config('laravellocalization.supportedLocales');
+        $langs = array_keys($locales);
 
         if (! \is_array($langs)) {
             throw new Exception('[.__LINE__.]['.class_basename(__CLASS__).']');

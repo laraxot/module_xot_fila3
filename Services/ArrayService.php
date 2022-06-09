@@ -4,9 +4,10 @@ declare(strict_types=1);
 
 namespace Modules\Xot\Services;
 
+use Exception;
+use Illuminate\Support\Str;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Str;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
@@ -92,8 +93,9 @@ class ArrayService {
                 // case 2:return self::toXLS_Maatwebsite($params); //break;
                 // case 3:return self::toXLS_phpexcel($params); //break;
             default:
-                dddx(['unknown export_processor ['.$this->export_processor.']']);
-                break;
+                $msg='unknown export_processor ['.$this->export_processor.']';
+                throw new Exception($msg.'['.__LINE__.']['.__FILE__.']');
+                
         }
     }
 

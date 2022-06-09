@@ -67,6 +67,10 @@ class HomeController extends Controller {
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
     public function redirect(Request $request) {
-        return redirect($request->url);
+        /**
+         * @var string
+         */
+        $url=$request->url;
+        return redirect($url);
     }
 }
