@@ -36,6 +36,9 @@ class XlsPanelPresenter implements PanelPresenterContract {
             $params['view_params'] = [];
         }
         $view = ThemeService::getView(); // progressioni::admin.schede.show
+        /**
+         * @var string
+         */
         $name = last(explode('.', $view));
         // dddx($name);
         // $view .= '.pdf';

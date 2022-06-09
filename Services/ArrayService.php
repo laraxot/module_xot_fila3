@@ -68,7 +68,7 @@ class ArrayService {
     /**
      * @throws \PhpOffice\PhpSpreadsheet\Writer\Exception
      *
-     * @return mixed
+     * @return array|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|string|\Symfony\Component\HttpFoundation\BinaryFileResponse
      */
     public function toXLS() {
         if (1 === request('debug', 0) * 1) {
@@ -306,7 +306,7 @@ class ArrayService {
                     //Unable to resolve the template type TValue in call to function collect
                     /**
                     * @template T
-                    * @param T $item
+                    * @param T[] $item
                     */       
                     $item = collect($item)
                         ->map(

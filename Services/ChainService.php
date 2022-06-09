@@ -54,14 +54,9 @@ class ChainService {
     /**
      * ChainService constructor.
      *
-     * @param string     $primary_field
-     * @param string     $parent_field
-     * @param string     $sort_field
-     * @param Collection $rows
-     * @param int        $root_id
-     * @param int        $maxlevel
+     * @return void
      */
-    public function __construct($primary_field, $parent_field, $sort_field, $rows, $root_id = 0, $maxlevel = 25) {
+    public function __construct(string $primary_field, string $parent_field, string $sort_field, Collection $rows, int $root_id = 0, int $maxlevel = 25) {
         $this->rows = $rows;
         $this->primary_field = $primary_field;
         $this->parent_field = $parent_field;

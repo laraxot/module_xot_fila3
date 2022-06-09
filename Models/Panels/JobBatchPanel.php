@@ -4,8 +4,9 @@ declare(strict_types=1);
 
 namespace Modules\Xot\Models\Panels;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
+use Modules\Job\Models\JobBatch;
+use Illuminate\Database\Eloquent\Model;
 use Modules\Xot\Contracts\RowsContract;
 
 // --- Services --
@@ -14,7 +15,8 @@ class JobBatchPanel extends XotBasePanel {
     /**
      * The model the resource corresponds to.
      */
-    public static string $model = 'Modules\Xot\Models\Panels\JobBatchPanel';
+    public static string $model = JobBatch::class;
+    public JobBatch $row;
 
     /**
      * The single value that should be used to represent the resource when being displayed.
@@ -22,123 +24,64 @@ class JobBatchPanel extends XotBasePanel {
     public static string $title = 'title';
 
     /**
-     * The columns that should be searched.
-     *
-     * @var array
-     */
-    public static $search = [
-    ];
-
-    /**
-     * The relationships that should be eager loaded on index queries.
-     */
-    public function with(): array {
-        return [];
-    }
-
-    public function search(): array {
-        return [];
-    }
-
-    /**
-     * on select the option id.
-     *
-     * quando aggiungi un campo select, è il numero della chiave
-     * che viene messo come valore su value="id"
-     *
-     * @return int|string|null
-     */
-    public function optionId(Model $row) {
-        return $row->getKey();
-    }
-
-    /**
-     * on select the option label.
-     *
-     * @param mixed $row
-     */
-    public function optionLabel($row): string {
-        return $row->area_define_name;
-    }
-
-    /**
-     * index navigation.
-     */
-    public function indexNav(): ?\Illuminate\Contracts\Support\Renderable {
-        return null;
-    }
-
-    /**
-     * Build an "index" query for the given resource.
-     *
-     * @param RowsContract $query
-     *
-     * @return RowsContract
-     */
-    public static function indexQuery(array $data, $query) {
-        // return $query->where('user_id', $request->user()->id);
-        return $query;
-    }
-
-    /**
      * Get the fields displayed by the resource.
         'value'=>'..',
      */
     public function fields(): array {
         return [
-            0 => (object) [
+            (object) [
                 'type' => 'String',
                 'name' => 'id',
                 'rules' => 'required',
                 'comment' => null,
             ],
-            1 => (object) [
+            (object) [
                 'type' => 'String',
                 'name' => 'name',
                 'rules' => 'required',
                 'comment' => null,
             ],
-            2 => (object) [
+            (object) [
                 'type' => 'Integer',
                 'name' => 'total_jobs',
                 'rules' => 'required',
                 'comment' => null,
             ],
-            3 => (object) [
+            (object) [
                 'type' => 'Integer',
                 'name' => 'pending_jobs',
                 'rules' => 'required',
                 'comment' => null,
             ],
-            4 => (object) [
+            (object) [
                 'type' => 'Integer',
                 'name' => 'failed_jobs',
                 'rules' => 'required',
                 'comment' => null,
             ],
-            5 => (object) [
+            (object) [
                 'type' => 'Text',
                 'name' => 'failed_job_ids',
                 'rules' => 'required',
                 'comment' => null,
             ],
-            6 => (object) [
+            (object) [
                 'type' => 'Text',
                 'name' => 'options',
                 'comment' => null,
             ],
-            7 => (object) [
+             (object) [
                 'type' => 'Integer',
                 'name' => 'cancelled_at',
                 'comment' => null,
             ],
-            8 => (object) [
+             (object) [
                 'type' => 'Integer',
                 'name' => 'created_at',
                 'rules' => 'required',
                 'comment' => null,
             ],
-            9 => (object) [
+             (object) [
                 'type' => 'Integer',
                 'name' => 'finished_at',
                 'comment' => null,

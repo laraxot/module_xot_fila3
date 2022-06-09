@@ -370,6 +370,9 @@ class PanelFormService {
     }
 
     public function editObjFields(): array {
+        /**
+         * @var Collection<FieldContract>
+         */
         $fields=$this->getFields(['act' => 'edit']);
         $fields = $fields->map(
             function ($field) {

@@ -175,7 +175,7 @@ abstract class XotBasePanel implements PanelContract {
     /**
      * Undocumented function.
      *
-     * @param mixed $rows
+     * @param \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Eloquent\Relations\Relation $rows
      */
     public function setRows($rows): self {
         $this->rows = $rows;
@@ -359,7 +359,11 @@ abstract class XotBasePanel implements PanelContract {
      * @return int|string|null
      */
     public function optionId(Model $row) {
-        return $row->getKey();
+        $id=$row->getKey();
+        if(is_int($id) || is_string($id)){
+            return $id;
+        }
+        return null;
     }
 
     public function optionIdName(): string {

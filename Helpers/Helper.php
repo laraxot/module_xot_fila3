@@ -1075,6 +1075,14 @@ if (! function_exists('getRouteParameters')) {
     }
 }
 
+if (! function_exists('getRouteName')) {
+    function getRouteName(): ?string {
+        //optional(Request::route())->getName();
+        $name=optional(request()->route())->getName();
+        return $name;
+    }
+}
+
 /*
 if (! function_exists('getRouteAction')) {
     function getRouteAction(): string {

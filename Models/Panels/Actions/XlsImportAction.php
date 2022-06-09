@@ -52,7 +52,12 @@ class XlsImportAction extends XotBasePanelAction {
         $res = XLSService::make()->fromInputFileName('file');
         // $res = XLSService::make()->fromRequestFile($c);
         $data = $res->getData()->take(5)->toArray();
-        $head = array_keys(collect($data)->first());
+        /**
+         * @var array
+         */
+        $first_row=collect($data)->first();
+
+        $head = array_keys($first_row);
 
         $html = ArrayService::make()->setArray($data)->toHtml();
 

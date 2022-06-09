@@ -4,17 +4,19 @@ declare(strict_types=1);
 
 namespace Modules\Xot\Models\Panels;
 
-use Illuminate\Database\Eloquent\Model;
+use Modules\Job\Models\Job;
 use Illuminate\Http\Request;
 // --- Services --
 
+use Illuminate\Database\Eloquent\Model;
 use Modules\Xot\Contracts\RowsContract;
 
 class JobPanel extends XotBasePanel {
     /**
      * The model the resource corresponds to.
      */
-    public static string $model = 'Modules\Xot\Models\Panels\JobPanel';
+    public static string $model = Job::class;
+    public Job $row;
 
     /**
      * The single value that should be used to represent the resource when being displayed.
@@ -22,105 +24,46 @@ class JobPanel extends XotBasePanel {
     public static string $title = 'title';
 
     /**
-     * The columns that should be searched.
-     *
-     * @var array
-     */
-    public static $search = [
-    ];
-
-    /**
-     * The relationships that should be eager loaded on index queries.
-     */
-    public function with(): array {
-        return [];
-    }
-
-    public function search(): array {
-        return [];
-    }
-
-    /**
-     * on select the option id.
-     *
-     * quando aggiungi un campo select, è il numero della chiave
-     * che viene messo come valore su value="id"
-     *
-     * @return int|string|null
-     */
-    public function optionId(Model $row) {
-        return $row->getKey();
-    }
-
-    /**
-     * on select the option label.
-     *
-     * @param mixed $row
-     */
-    public function optionLabel($row): string {
-        return $row->area_define_name;
-    }
-
-    /**
-     * index navigation.
-     */
-    public function indexNav(): ?\Illuminate\Contracts\Support\Renderable {
-        return null;
-    }
-
-    /**
-     * Build an "index" query for the given resource.
-     *
-     * @param RowsContract $query
-     *
-     * @return RowsContract
-     */
-    public static function indexQuery(array $data, $query) {
-        // return $query->where('user_id', $request->user()->id);
-        return $query;
-    }
-
-    /**
      * Get the fields displayed by the resource.
         'value'=>'..',
      */
     public function fields(): array {
         return [
-            0 => (object) [
+             (object) [
                 'type' => 'Id',
                 'name' => 'id',
                 'comment' => null,
             ],
-            1 => (object) [
+             (object) [
                 'type' => 'String',
                 'name' => 'queue',
                 'rules' => 'required',
                 'comment' => null,
             ],
-            2 => (object) [
+             (object) [
                 'type' => 'Text',
                 'name' => 'payload',
                 'rules' => 'required',
                 'comment' => null,
             ],
-            3 => (object) [
+             (object) [
                 'type' => 'Boolean',
                 'name' => 'attempts',
                 'rules' => 'required',
                 'comment' => null,
             ],
-            4 => (object) [
+             (object) [
                 'type' => 'Integer',
                 'name' => 'reserved_at',
                 'comment' => null,
             ],
-            5 => (object) [
+             (object) [
                 'type' => 'Integer',
                 'name' => 'available_at',
                 'rules' => 'required',
                 'comment' => null,
             ],
-            6 => (object) [
+             (object) [
                 'type' => 'Integer',
                 'name' => 'created_at',
                 'rules' => 'required',

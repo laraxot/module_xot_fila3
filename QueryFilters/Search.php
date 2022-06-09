@@ -27,6 +27,9 @@ class Search {
     public function handle($query, Closure $next, ...$args) {
         $search_fields = [];
         $model = $query->getModel();
+        /**
+         * @var string
+         */
         $q = request('q', '');
 
         if (0 === \count($search_fields)) { // se non gli passo nulla, cerco in tutti i fillable
