@@ -841,7 +841,7 @@ abstract class XotBasePanel implements PanelContract {
          */
         $models=config('morph_map');
         $res = collect($models)->search(static::$model);
-        if (false === $res || \is_int($res)) {
+        if (!is_string($res)) {
             return null;
         }
 
@@ -1148,7 +1148,11 @@ abstract class XotBasePanel implements PanelContract {
     }
 
     public function postType(): string {
-        $post_type = collect(config('morph_map'))->search(\get_class($this->row));
+        /**
+         * @var array
+         */
+        $models=config('morph_map');
+        $post_type = collect($models)->search(\get_class($this->row));
         if (false === $post_type) {
             $post_type = snake_case(class_basename($this->row));
         }
