@@ -725,6 +725,9 @@ abstract class XotBasePanel implements PanelContract {
                     $pivot_panel_name = StubService::make()->setModelAndName($pivot, 'panel')->get();
                     $pivot_panel = app($pivot_panel_name);
                     $pivot_panel->setRows(with(new $this::$model())->$rel_name());
+                    /**
+                     * @var array
+                     */
                     $pivot_panel_rules=$pivot_panel->rules();
                     $pivot_rules = collect($pivot_panel_rules)
                         ->map(
@@ -833,7 +836,11 @@ abstract class XotBasePanel implements PanelContract {
     }
 
     public function getXotModelName(): ?string {
-        $res = collect(config('morph_map'))->search(static::$model);
+        /**
+         * @var array
+         */
+        $models=config('morph_map');
+        $res = collect($models)->search(static::$model);
         if (false === $res || \is_int($res)) {
             return null;
         }
