@@ -126,6 +126,9 @@ abstract class XotBaseJob /* implements ShouldQueue */
     public function prepareAndValidate($data, $panel) {
         $data0 = $data;
         $data = $this->prepareForValidation($data, $panel);
+        /**
+         * @var \Illuminate\Contracts\Support\Arrayable<(int|string), string>|iterable<(int|string), string>
+         */
         $data_keys=array_keys($data);
         $act = '';
         $rules = $panel->rules(['act' => $act]);

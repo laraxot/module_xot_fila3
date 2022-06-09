@@ -202,6 +202,9 @@ class ImportService {
             $this->importInit();
         }
         if (! isset($this->client_options['base_uri'])) {
+            /**
+             * @var array
+             */
             $url_info = parse_url($url);
             $this->client_options['base_uri'] = collect($url_info)->get('scheme').'://'.collect($url_info)->get('host');
 
@@ -323,7 +326,11 @@ class ImportService {
     public function cacheRequestFile(string $method, string $url, array $attrs = []): string {
         // --- uguale ma al posto di usare il sistema cache usa i file
         if (! isset($this->client_options['base_uri'])) {
-            $url_info = collect(parse_url($url));
+            /**
+             * @var array
+             */
+            $parse_url=parse_url($url);
+            $url_info = collect($parse_url);
             if (null !== $url_info->get('scheme') && null !== $url_info->get('host')) {
                 $this->client_options['base_uri'] = $url_info->get('scheme').'://'.$url_info->get('host');
             } else {
@@ -343,7 +350,7 @@ class ImportService {
             $content = \Storage::disk('cache')->get($file_path);
             $this->client_options['headers']['referer'] = $url;
 
-            return $content;
+            return (string)$content;
         }
         $body = $this->gRequest($method, (string) $url, $attrs);
         /*
@@ -514,7 +521,13 @@ class ImportService {
         if (! isset($json->hits)) {
             return null;
         }
-        $ris = collect($json->hits)->shuffle()->first();
+        /**
+         * @var array
+         */
+        $hits=$json->hits;
+        $ris = collect($hits)
+            ->shuffle()
+            ->first();
 
         return $ris;
     }
@@ -641,7 +654,11 @@ class ImportService {
             }
         );
         foreach ($forms as $k => $v) {
-            $forms[$k]['fields'] = collect($v['fields'])->collapse()->all();
+            /**
+             * @var array
+             */
+            $v_fields=$v['fields'];
+            $forms[$k]['fields'] = collect($v_fields)->collapse()->all();
         }
 
         return $forms;

@@ -39,7 +39,9 @@ use Spatie\Tags\HasTags;
  * @property-read \Modules\Lang\Models\Post|null $post
  * @property-read \Illuminate\Database\Eloquent\Collection|\Modules\Lang\Models\Post[] $posts
  * @property-read int|null $posts_count
+ * @property \Illuminate\Database\Eloquent\Collection|\Modules\Tag\Models\Tag[] $tags
  * @property-write mixed $url
+ * @property-read int|null $tags_count
  * @property-read \Modules\LU\Models\User|null $user
  * @method static \Modules\Xot\Database\Factories\ProfileFactory factory(...$parameters)
  * @method static \Illuminate\Database\Eloquent\Builder|Profile newModelQuery()
@@ -60,6 +62,10 @@ use Spatie\Tags\HasTags;
  * @method static \Illuminate\Database\Eloquent\Builder|Profile whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Profile whereUpdatedBy($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Profile whereUserId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Profile withAllTags(\ArrayAccess|\Spatie\Tags\Tag|array $tags, ?string $type = null)
+ * @method static \Illuminate\Database\Eloquent\Builder|Profile withAllTagsOfAnyType($tags)
+ * @method static \Illuminate\Database\Eloquent\Builder|Profile withAnyTags(\ArrayAccess|\Spatie\Tags\Tag|array $tags, ?string $type = null)
+ * @method static \Illuminate\Database\Eloquent\Builder|Profile withAnyTagsOfAnyType($tags)
  * @method static \Illuminate\Database\Eloquent\Builder|BaseModelLang withPost(string $guid)
  * @mixin \Eloquent
  */

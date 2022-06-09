@@ -292,10 +292,22 @@ class ArrayService {
         return false;
     }
 
+    /**
+     * Undocumented function
+     *
+     * @param array<int, mixed> $data
+     * @return array
+     */
     public static function fixType(array $data): array {
         $res = collect($data)
             ->map(
                 function ($item) {
+                    //Unable to resolve the template type TKey in call to function collect
+                    //Unable to resolve the template type TValue in call to function collect
+                    /**
+                    * @template T
+                    * @param T $item
+                    */       
                     $item = collect($item)
                         ->map(
                             function ($item0) {

@@ -370,7 +370,8 @@ class PanelFormService {
     }
 
     public function editObjFields(): array {
-        $fields = collect($this->getFields(['act' => 'edit']))->map(
+        $fields=$this->getFields(['act' => 'edit']);
+        $fields = $fields->map(
             function ($field) {
                 return FieldService::make()
                 ->setVars(get_object_vars($field))

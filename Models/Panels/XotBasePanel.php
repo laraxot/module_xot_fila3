@@ -297,7 +297,7 @@ abstract class XotBasePanel implements PanelContract {
     /**
      * @return Collection&iterable<PanelContract>
      */
-    public function getBreads() {
+    public function getBreads():Collection {
         if (\in_array(class_basename($this), ['_ModulePanel'/* 'HomePanel' */], true)) {
             return collect();
         }
