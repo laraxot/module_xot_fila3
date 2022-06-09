@@ -297,17 +297,17 @@ abstract class XotBasePanel implements PanelContract {
     /**
      * @return Collection&iterable<PanelContract>
      */
-    public function getBreads():Collection {
+    public function getBreads(): Collection {
         /**
          * @var string
          */
-        $class=class_basename($this);
+        $class = class_basename($this);
         /**
          * @var array
          */
-        $check=['_ModulePanel'/* 'HomePanel' */];
+        $check = ['_ModulePanel'/* 'HomePanel' */];
 
-        $empty=[];
+        $empty = [];
         if (in_array($class, $check, true)) {
             return collect($empty);
         }
@@ -359,10 +359,11 @@ abstract class XotBasePanel implements PanelContract {
      * @return int|string|null
      */
     public function optionId(Model $row) {
-        $id=$row->getKey();
-        if(is_int($id) || is_string($id)){
+        $id = $row->getKey();
+        if (is_int($id) || is_string($id)) {
             return $id;
         }
+
         return null;
     }
 
@@ -527,12 +528,13 @@ abstract class XotBasePanel implements PanelContract {
     }
 
     public function txt(): ?string {
-        //Access to protected property Illuminate\Database\Eloquent\Model
-        //return $this->row->attributes['txt'];
-        $txt= $this->row->getAttributeValue('txt');
-        if(!is_string($txt)){
+        // Access to protected property Illuminate\Database\Eloquent\Model
+        // return $this->row->attributes['txt'];
+        $txt = $this->row->getAttributeValue('txt');
+        if (! is_string($txt)) {
             return null;
         }
+
         return $txt;
     }
 
@@ -741,7 +743,7 @@ abstract class XotBasePanel implements PanelContract {
                     /**
                      * @var array
                      */
-                    $pivot_panel_rules=$pivot_panel->rules();
+                    $pivot_panel_rules = $pivot_panel->rules();
                     $pivot_rules = collect($pivot_panel_rules)
                         ->map(
                             function ($pivot_rule_val, $pivot_rule_key) use ($item) {
@@ -852,9 +854,9 @@ abstract class XotBasePanel implements PanelContract {
         /**
          * @var array
          */
-        $models=config('morph_map');
+        $models = config('morph_map');
         $res = collect($models)->search(static::$model);
-        if (!is_string($res)) {
+        if (! is_string($res)) {
             return null;
         }
 
@@ -1112,8 +1114,8 @@ abstract class XotBasePanel implements PanelContract {
 
     public function imgSrc(array $params): string {
         $params['dirname'] = '/photos/'.$this->postType().'/'.$this->guid();
-        //Access to protected property Illuminate\Database\Eloquent\Model::$attribute
-        //$params['src'] = $this->row->attributes['image_src'];
+        // Access to protected property Illuminate\Database\Eloquent\Model::$attribute
+        // $params['src'] = $this->row->attributes['image_src'];
         $params['src'] = $this->row->getAttributeValue('image_src');
         $img = ImageService::make()->setVars($params);
 
@@ -1166,7 +1168,7 @@ abstract class XotBasePanel implements PanelContract {
         /**
          * @var array
          */
-        $models=config('morph_map');
+        $models = config('morph_map');
         $post_type = collect($models)->search(\get_class($this->row));
         if (false === $post_type) {
             $post_type = snake_case(class_basename($this->row));
@@ -1180,22 +1182,24 @@ abstract class XotBasePanel implements PanelContract {
      */
     public function guid(?bool $is_admin = null): ?string {
         if (isset($is_admin) && $is_admin) {
-            $id=$this->row->getKey();
-            if(!is_int($id) && !is_string($id)){
+            $id = $this->row->getKey();
+            if (! is_int($id) && ! is_string($id)) {
                 throw new Exception('['.__LINE__.']['.__FILE__.']');
             }
-            return (string)$id;
+
+            return (string) $id;
         }/*
         if (null !== $this->getInAdmin() && $this->getInAdmin()) {
             return (string) $this->row->getKey();
         }
         */
         if (inAdmin()) {
-            $id=$this->row->getKey();
-            if(!is_int($id) && !is_string($id)){
-                throw new Exception('['.__LINE__.']['.__FILE__.']');
+            $id = $this->row->getKey();
+            if (! is_int($id) && ! is_string($id) && ! is_null($id)) {
+                throw new Exception('['.__LINE__.']['.__FILE__.'] - '.$id);
             }
-            return (string)$id;
+
+            return (string) $id;
         }
         $row = $this->row;
         $key = $row->getRouteKeyName();
@@ -1683,16 +1687,16 @@ abstract class XotBasePanel implements PanelContract {
             $content = '';
         }
 
-        if(!is_string($content)){
+        if (! is_string($content)) {
             throw new Exception('['.__LINE__.']['.__FILE__.']');
         }
 
         // 1737   Parameter #1 $str of function strip_tags expects string, array|string|null given.
         $tmp = preg_replace(['/<pre>[\w\W]*?<\/pre>/', '/<h\d>[\w\W]*?<\/h\d>/'], '', $content);
         // Call to function is_array() with string|null will always evaluate to false
-        //if (\is_array($tmp)) {
+        // if (\is_array($tmp)) {
         //    $tmp = implode(' ', $tmp);
-        //}
+        // }
         if (null === $tmp) {
             $tmp = '';
         }

@@ -1067,7 +1067,7 @@ if (! function_exists('getExcerpt')) {
 
 if (! function_exists('getRouteParameters')) {
     function getRouteParameters(): array {
-        $params = getRouteParameters();
+        $params = optional(request()->route())->parameters();
         if (null === $params) {
             $params = [];
         }
@@ -1078,8 +1078,9 @@ if (! function_exists('getRouteParameters')) {
 
 if (! function_exists('getRouteName')) {
     function getRouteName(): ?string {
-        //optional(Request::route())->getName();
-        $name=optional(request()->route())->getName();
+        // optional(Request::route())->getName();
+        $name = optional(request()->route())->getName();
+
         return $name;
     }
 }
