@@ -89,9 +89,10 @@ class DbAction extends XotBasePanelAction {
                 echo '<h3>Search: '.$search.'</h3>';
                 echo '<h3>N ['.\count($res).'] Results</h3>';
                 // echo '<pre>'.print_r($v['sql'],true).'</pre>';
-                $sql = Str::replaceArray('?', $rows->getBindings(), $rows->toSql());
+                //$sql = Str::replaceArray('?', $rows->getBindings(), $rows->toSql());
+                $sql = rowsToSql($rows);
                 echo '<pre>'.print_r($sql, true).'</pre>';
-                echo ArrayService::make()->setArray($res->toArray())->toHtml();
+                echo ArrayService::make()->setArray($res->toArray())->toHtml()->render();
                 // dddx($res);
             }
         }
@@ -134,6 +135,9 @@ class DbAction extends XotBasePanelAction {
     public function getModel(): Model {
         $module_name = $this->panel->getModuleName();
         $cache_key = Str::slug($module_name.'_model');
+        /**
+         * @var string
+         */
         $first_model_class = Cache::rememberForever($cache_key, function () use ($module_name) {
             $module_path = Module::getModulePath($module_name);
             $module_models_path = $module_path.'/Models';
@@ -161,6 +165,9 @@ class DbAction extends XotBasePanelAction {
         $first_model = $this->getModel();
         $cache_key = Str::slug(\get_class($first_model).'_'.__FUNCTION__);
 
+        /**
+         * @var Collection
+         */
         $data = Cache::rememberForever($cache_key, function () use ($first_model) {
             return ModelService::make()->setModel($first_model)->getAllTablesAndFields();
         });

@@ -473,11 +473,14 @@ abstract class XotBasePanel implements PanelContract {
         if (null === $row) {
             // $query = str_replace(array('?'), array('\'%s\''), $builder->toSql());
             // $query = vsprintf($query, $builder->getBindings());
+            /*
             $sql = Str::replaceArray('?', $rows->getBindings(), $rows->toSql());
             throw new \Exception('Not Found ['.$value.'] on ['.$this->getName().']
                 ['.$sql.']
                 ['.__LINE__.']['.basename(__FILE__).']
                 ');
+            */
+            throw new Exception('['.__LINE__.']['.__FILE__.']');
         }
         $this->row = $row;
 
@@ -524,7 +527,13 @@ abstract class XotBasePanel implements PanelContract {
     }
 
     public function txt(): ?string {
-        return optional($this->row)->txt;
+        //Access to protected property Illuminate\Database\Eloquent\Model
+        //return $this->row->attributes['txt'];
+        $txt= $this->row->getAttributeValue('txt');
+        if(!is_string($txt)){
+            return null;
+        }
+        return $txt;
     }
 
     public function optionsModelClass(string $model_class, array $where = []): array {
@@ -1103,7 +1112,9 @@ abstract class XotBasePanel implements PanelContract {
 
     public function imgSrc(array $params): string {
         $params['dirname'] = '/photos/'.$this->postType().'/'.$this->guid();
-        $params['src'] = optional($this->row)->image_src;
+        //Access to protected property Illuminate\Database\Eloquent\Model::$attribute
+        //$params['src'] = $this->row->attributes['image_src'];
+        $params['src'] = $this->row->getAttributeValue('image_src');
         $img = ImageService::make()->setVars($params);
 
         return $img->url();
@@ -1169,14 +1180,22 @@ abstract class XotBasePanel implements PanelContract {
      */
     public function guid(?bool $is_admin = null): ?string {
         if (isset($is_admin) && $is_admin) {
-            return (string) $this->row->getKey();
+            $id=$this->row->getKey();
+            if(!is_int($id) && !is_string($id)){
+                throw new Exception('['.__LINE__.']['.__FILE__.']');
+            }
+            return (string)$id;
         }/*
         if (null !== $this->getInAdmin() && $this->getInAdmin()) {
             return (string) $this->row->getKey();
         }
         */
         if (inAdmin()) {
-            return (string) $this->row->getKey();
+            $id=$this->row->getKey();
+            if(!is_int($id) && !is_string($id)){
+                throw new Exception('['.__LINE__.']['.__FILE__.']');
+            }
+            return (string)$id;
         }
         $row = $this->row;
         $key = $row->getRouteKeyName();
@@ -1664,11 +1683,16 @@ abstract class XotBasePanel implements PanelContract {
             $content = '';
         }
 
+        if(!is_string($content)){
+            throw new Exception('['.__LINE__.']['.__FILE__.']');
+        }
+
         // 1737   Parameter #1 $str of function strip_tags expects string, array|string|null given.
         $tmp = preg_replace(['/<pre>[\w\W]*?<\/pre>/', '/<h\d>[\w\W]*?<\/h\d>/'], '', $content);
-        if (\is_array($tmp)) {
-            $tmp = implode(' ', $tmp);
-        }
+        // Call to function is_array() with string|null will always evaluate to false
+        //if (\is_array($tmp)) {
+        //    $tmp = implode(' ', $tmp);
+        //}
         if (null === $tmp) {
             $tmp = '';
         }

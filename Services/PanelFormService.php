@@ -376,8 +376,12 @@ class PanelFormService {
         $fields=$this->getFields(['act' => 'edit']);
         $fields = $fields->map(
             function ($field) {
+                /**
+                 * @var array
+                 */
+                $vars=get_object_vars($field);
                 return FieldService::make()
-                ->setVars(get_object_vars($field))
+                    ->setVars($vars)
                 // ->type($field->type)
                 // ->setColSize($field->col_size ?? 12)
                 ;

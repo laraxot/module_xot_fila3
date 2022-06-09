@@ -35,11 +35,14 @@ class ModuleController extends Controller {
         if (null == $panel) {
             throw new Exception('['.__LINE__.']['.__FILE__.']');
         }
-
-        if ('' !== $request->_act && null != $panel) {
+        /**
+         * @var string 
+         */
+        $act=$request->_act;
+        if ('' !== $act && null != $panel) {
             // return $panel->callItemActionWithGate($request->_act);
             // return $panel->callContainerAction($request->_act);
-            return $panel->callAction($request->_act);
+            return $panel->callAction($act);
         }
 
         return $panel->out();

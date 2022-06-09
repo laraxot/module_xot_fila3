@@ -60,6 +60,9 @@ class ContainersController extends Controller {
         // dddx(['method' => $method, 'args' => $args]);
         $route_current = \Route::current();
         if (null != $route_current) {
+            /**
+             * @var array
+             */
             $action = $route_current->getAction();
             $action['controller'] = __CLASS__.'@'.$method;
             $action = $route_current->setAction($action);
@@ -129,6 +132,9 @@ class ContainersController extends Controller {
      */
     public function __callPanelAct(string $method, array $args) {
         $request = request();
+        /**
+         * @var string
+         */
         $act = $request->_act;
         $method_act = Str::camel($act);
 

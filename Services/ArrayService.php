@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
+use Illuminate\Contracts\Support\Renderable;
 
 /**
  * Class ArrayService.
@@ -69,7 +70,8 @@ class ArrayService {
     /**
      * @throws \PhpOffice\PhpSpreadsheet\Writer\Exception
      *
-     * @return array|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|string|\Symfony\Component\HttpFoundation\BinaryFileResponse
+     * return array|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|string|\Symfony\Component\HttpFoundation\BinaryFileResponse
+     * @return \Symfony\Component\HttpFoundation\BinaryFileResponse|Renderable
      */
     public function toXLS() {
         if (1 === request('debug', 0) * 1) {
@@ -99,7 +101,8 @@ class ArrayService {
         }
     }
 
-    public function toHtml(): string {
+    public function toHtml(): Renderable {
+        /*
         $header = $this->getHeader();
         $data = $this->getArray();
         $html = '';
@@ -130,6 +133,15 @@ class ArrayService {
         $html .= '</table>';
 
         return $html;
+        */
+
+        /**
+         * @phpstan-var view-string
+         */
+        $view='xot::services.table';
+        $view_params=[];
+        return view($view,$view_params);
+
     }
 
     public function getHeader(): array {
@@ -155,7 +167,8 @@ class ArrayService {
     /**
      * @throws \PhpOffice\PhpSpreadsheet\Writer\Exception
      *
-     * @return mixed
+     * return array|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|Illuminate\Contracts\View\View|string|\Symfony\Component\HttpFoundation\BinaryFileResponse
+     * @return \Symfony\Component\HttpFoundation\BinaryFileResponse|Renderable
      */
     public function toXLS_phpoffice() {
         $spreadsheet = new Spreadsheet();
@@ -204,13 +217,14 @@ class ArrayService {
             return view()->make('theme::download_icon', $view_params);
         case 'download':
             return response()->download($pathToFile);
-        case 'file':
-            return $pathToFile;
+        //case 'file':
+        //    return $pathToFile;
         case 'link_file':
             return view()->make('theme::download_icon', $view_params);
 
             // return [$link, $pathToFile];
         }
+        throw new Exception('['.__LINE__.']['.__FILE__.']');
     }
 
     public static function save(array $params): void {
@@ -307,8 +321,8 @@ class ArrayService {
                     //Unable to resolve the template type TKey in call to function collect
                     //Unable to resolve the template type TValue in call to function collect
                     /**
-                    * @template T
-                    * @param T[] $item
+                    * @phpstan-param \Illuminate\Contracts\Support\Arrayable<(int|string), mixed>|iterable<(int|string), mixed>|null $item
+                    * @param \Illuminate\Contracts\Support\Arrayable<(int|string), mixed>|iterable<(int|string), mixed>|null $item
                     */       
                     $item = collect($item)
                         ->map(

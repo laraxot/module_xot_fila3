@@ -20,7 +20,8 @@ class XlsAction extends XotBasePanelAction {
     public string $icon = '<i class="far fa-file-excel fa-1x"></i>';
 
     /**
-     * @return array|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|string|\Symfony\Component\HttpFoundation\BinaryFileResponse
+     * return array|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|string|\Symfony\Component\HttpFoundation\BinaryFileResponse
+     * @return \Illuminate\Contracts\Support\Renderable|\Symfony\Component\HttpFoundation\BinaryFileResponse. 
      */
     public function handle() {
         $data = ($this->rows->get()->toArray());

@@ -153,10 +153,14 @@ abstract class XotBaseServiceProvider extends ServiceProvider {
         return [];
     }
 
+
     /**
+     * Undocumented function
      * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
+     * @param string $path
+     * @return array
      */
-    public function loadEventsFrom(string $path): void {
+    public function getEventsFrom(string $path): array {
         $events = [];
         if (! File::isDirectory($path)) {
             File::makeDirectory($path, 0777, true, true);
@@ -207,10 +211,20 @@ abstract class XotBaseServiceProvider extends ServiceProvider {
             $events = File::get($events_file);
             $events = (array) json_decode($events);
         }
+
+        return $events;
+    }
+
+    /** 
+     * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
+     */
+    public function loadEventsFrom(string $path): void {
+        $events=$this->getEventsFrom($path);
         foreach ($events as $v) {
             Event::listen($v->event, $v->listener);
         }
     }
 
     // end function
+    
 }

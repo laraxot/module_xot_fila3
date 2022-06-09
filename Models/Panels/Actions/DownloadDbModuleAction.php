@@ -48,6 +48,9 @@ class DownloadDbModuleAction extends XotBasePanelAction {
         $name_low = Str::lower((string) $name);
         // $model = $this->getModel($name);
         // $conn = $model->getConnection();
+        /**
+         * @var array
+         */
         $db = config('database.connections.'.$name_low);
         /*
         dddx(
@@ -98,6 +101,9 @@ class DownloadDbModuleAction extends XotBasePanelAction {
     public function getModel(string $module_name): Model {
         // $module_name=$this->panel->getModuleName();
         $cache_key = Str::slug($module_name.'_model');
+        /**
+         * @var string
+         */
         $first_model_class = Cache::rememberForever($cache_key, function () use ($module_name) {
             $module_path = Module::getModulePath($module_name);
             $module_models_path = $module_path.'/Models';

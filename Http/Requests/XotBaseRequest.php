@@ -4,10 +4,11 @@ declare(strict_types=1);
 
 namespace Modules\Xot\Http\Requests;
 
+use Exception;
 use Carbon\Carbon;
-use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Str;
 use Modules\Xot\Contracts\PanelContract;
+use Illuminate\Foundation\Http\FormRequest;
 
 // use Modules\Food\Models\Profile;
 // --- Rules ---
@@ -127,7 +128,9 @@ abstract class XotBaseRequest extends FormRequest {
             return $value;
         }
         $value_new = Carbon::createFromFormat('d/m/Y', $value);
-
+        if($value_new==false){
+            throw new Exception('['.__LINE__.']['.__FILE__.']');
+        }
         return $value_new;
     }
 
@@ -142,22 +145,26 @@ abstract class XotBaseRequest extends FormRequest {
             return $value;
         }
         $value_new = Carbon::createFromFormat('d/m/Y H:i', $value);
-
+        if($value_new==false){
+            throw new Exception('['.__LINE__.']['.__FILE__.']');
+        }
         return $value_new;
     }
 
     /**
      * @param string $field
-     * @param mixed  $value
+     * @param string  $value
      *
-     * @return mixed
+     * @return Carbon
      */
     public function ConvDateTime2Fields($field, $value) {
         if (null === $value) {
             return $value;
         }
         $value_new = Carbon::createFromFormat('d/m/Y H:i', $value);
-
+        if($value_new==false){
+            throw new Exception('['.__LINE__.']['.__FILE__.']');
+        }
         return $value_new;
     }
 }

@@ -38,9 +38,13 @@ class HomeController extends Controller {
         }
 
         $home_panel = PanelService::make()->get($home);
+        /**
+         * @var string
+         */
+        $act=$request->_act;
 
-        if ('' !== $request->_act) {
-            return $home_panel->callItemActionWithGate($request->_act);
+        if ('' !== $act) {
+            return $home_panel->callItemActionWithGate($act);
         }
 
         return ThemeService::view('pub_theme::home.index')
@@ -72,8 +76,12 @@ class HomeController extends Controller {
         if (null == $panel) {
             throw new Exception('['.__LINE__.']['.__FILE__.']');
         }
-        if ('' !== $request->_act) {
-            return $panel->callItemActionWithGate($request->_act);
+        /**
+         * @var string
+         */
+        $act=$request->_act;
+        if ('' !== $act) {
+            return $panel->callItemActionWithGate($act);
         }
 
         return $panel->out();
@@ -93,12 +101,15 @@ class HomeController extends Controller {
         $home_controller = '\Modules\\'.$mod_name.'\Http\Controllers\HomeController';
 
         // dddx($home_controller);
-
-        if ('' !== $request->_act) {
+         /**
+         * @var string
+         */
+        $act=$request->_act;
+        if ('' !== $act) {
             $home = TenantService::model('home');
             $panel = PanelService::make()->get($home);
 
-            return $panel->callItemActionWithGate($request->_act);
+            return $panel->callItemActionWithGate($act);
         }
 
         if (class_exists($home_controller) && 'Xot' !== $mod_name) {

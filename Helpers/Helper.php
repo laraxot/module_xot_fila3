@@ -191,7 +191,8 @@ if (! function_exists('debug_methods')) {
 
         return ArrayService::make()
             ->setArray($methods_get)
-            ->toHtml();
+            ->toHtml()
+            ->render();
     }
 }
 
@@ -1066,7 +1067,7 @@ if (! function_exists('getExcerpt')) {
 
 if (! function_exists('getRouteParameters')) {
     function getRouteParameters(): array {
-        $params = optional(request()->route())->parameters();
+        $params = getRouteParameters();
         if (null === $params) {
             $params = [];
         }
@@ -1192,7 +1193,7 @@ if (! function_exists('rowsToSql')) {
     /**
      * Undocumented function.
      *
-     * @param \Illuminate\Database\Eloquent\Relations\HasOne $rows
+     * @param \Illuminate\Database\Eloquent\Relations\HasOne|\Illuminate\Database\Query\Builder $rows
      */
     function rowsToSql($rows): string {
         // $sql = str_replace('?', $rows->getBindings(), $rows->toSql());
