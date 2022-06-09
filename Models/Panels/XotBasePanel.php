@@ -298,11 +298,21 @@ abstract class XotBasePanel implements PanelContract {
      * @return Collection&iterable<PanelContract>
      */
     public function getBreads():Collection {
-        if (\in_array(class_basename($this), ['_ModulePanel'/* 'HomePanel' */], true)) {
-            return collect();
+        /**
+         * @var string
+         */
+        $class=class_basename($this);
+        /**
+         * @var array
+         */
+        $check=['_ModulePanel'/* 'HomePanel' */];
+
+        $empty=[];
+        if (in_array($class, $check, true)) {
+            return collect($empty);
         }
-        if ($this->getParents()->count() > 0 && \in_array(class_basename($this), ['HomePanel'], true)) {
-            return collect();
+        if ($this->getParents()->count() > 0 && \in_array($class, ['HomePanel'], true)) {
+            return collect($empty);
         }
         $breads = $this->getParents();
         $breads->add($this);
@@ -715,7 +725,8 @@ abstract class XotBasePanel implements PanelContract {
                     $pivot_panel_name = StubService::make()->setModelAndName($pivot, 'panel')->get();
                     $pivot_panel = app($pivot_panel_name);
                     $pivot_panel->setRows(with(new $this::$model())->$rel_name());
-                    $pivot_rules = collect($pivot_panel->rules())
+                    $pivot_panel_rules=$pivot_panel->rules();
+                    $pivot_rules = collect($pivot_panel_rules)
                         ->map(
                             function ($pivot_rule_val, $pivot_rule_key) use ($item) {
                                 $k = $item->name.'.*.pivot.'.$pivot_rule_key;
