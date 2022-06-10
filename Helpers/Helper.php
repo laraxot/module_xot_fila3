@@ -228,17 +228,17 @@ if (! function_exists('req_uri')) {
 
 if (! function_exists('in_admin')) {
     /**
-     * @return array|bool|mixed
+     * ---
      */
-    function in_admin(array $params = []) {
+    function in_admin(array $params = []):bool {
         return inAdmin($params);
     }
 }
 if (! function_exists('inAdmin')) {
     /**
-     * @return array|bool|mixed
+     * ---
      */
-    function inAdmin(array $params = []) {
+    function inAdmin(array $params = []):bool {
         return RouteService::inAdmin($params);
     }
 }
@@ -538,6 +538,9 @@ if (! function_exists('transFields')) {
         }
         $name = 'not-set';
         // $model = Form::getModel();
+        /**
+         * @var Model
+         */
         $model = \Collective\Html\FormFacade::getModel();
         $module_name = '';
         if (is_object($model)) {
@@ -545,7 +548,11 @@ if (! function_exists('transFields')) {
         }
 
         $ns = Str::lower($module_name);
-        $trans_root = $ns.'::'.Str::snake(class_basename($model));
+        /**
+         * @var string
+         */
+        $model_basename=class_basename($model);
+        $trans_root = $ns.'::'.Str::snake($model_basename);
         // debug_getter_obj(['obj'=>$module]);
         // dddx($module_name->getNamespace());
         /**
@@ -629,6 +636,9 @@ if (! function_exists('transFields')) {
         if (! isset($ris->col_size)) {
             $ris->col_size = 12;
         }
+        /**
+         * @var  array|ArrayAccess
+         */
         $row = \Form::getModel();
 
         $ris->value = (Arr::get($row, $name));
@@ -757,6 +767,9 @@ if (! function_exists('debug_getter_obj')) {
             $args = $reflection->getParameters();
             if (0 === count($args) && $reflection->class === get_class($obj)) {
                 try {
+                    /**
+                     * @var object|string
+                     */
                     $return = $reflection->invoke($obj);
                     // $check = ($return instanceof \Illuminate\Database\Eloquent\Relations\Relation);
                     // if ($check) {
@@ -1067,10 +1080,17 @@ if (! function_exists('getExcerpt')) {
 
 if (! function_exists('getRouteParameters')) {
     function getRouteParameters(): array {
-        $params = optional(request()->route())->parameters();
-        if (null === $params) {
-            $params = [];
+        /**
+         * @var \Illuminate\Routing\Route|null
+         */
+        $route=request()->route();
+        if($route==null){
+            return [];
         }
+        $params = $route->parameters();
+        //if (null === $params) {
+        //    return [];
+        //}
 
         return $params;
     }
@@ -1078,8 +1098,15 @@ if (! function_exists('getRouteParameters')) {
 
 if (! function_exists('getRouteName')) {
     function getRouteName(): ?string {
-        // optional(Request::route())->getName();
-        $name = optional(request()->route())->getName();
+        //getRouteName();
+        /**
+         * @var \Illuminate\Routing\Route|null
+         */
+        $route=request()->route();
+        if($route==null){
+            return null;
+        }
+        $name = $route->getName();
 
         return $name;
     }
@@ -1198,7 +1225,12 @@ if (! function_exists('rowsToSql')) {
      */
     function rowsToSql($rows): string {
         // $sql = str_replace('?', $rows->getBindings(), $rows->toSql());
-        $sql = Str::replaceArray('?', $rows->getBindings(), $rows->toSql());
+        /**
+         * @var array<int|string, string>
+         */
+        $bindings=$rows->getBindings();
+        $sql=$rows->toSql();
+        $sql = Str::replaceArray('?', $bindings, $sql);
 
         return $sql;
     }

@@ -17,11 +17,11 @@ use Illuminate\Support\Str;
  */
 class RouteService {
     /**
-     * @return array|bool|mixed
+     * --
      */
-    public static function inAdmin(array $params = []) {
+    public static function inAdmin(array $params = []):bool {
         if (isset($params['in_admin'])) {
-            return $params['in_admin'];
+            return (bool)$params['in_admin'];
         }
         // dddx(ThemeService::__getStatic('in_admin'));
         /* Cannot call method get() on mixed
