@@ -1063,9 +1063,9 @@ abstract class XotBasePanel implements PanelContract {
     }
 
     /**
-     * @return mixed
+     * ---
      */
-    public function formLivewireEdit(array $params = []) {
+    public function formLivewireEdit(array $params = []):string {
         return $this->form->{__FUNCTION__}($params);
     }
 
