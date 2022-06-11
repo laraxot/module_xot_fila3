@@ -378,7 +378,11 @@ class PanelFormService {
             /**
              * @phpstan-param object $field
              */
-            function ($field) {
+            function ($item) {
+                /**
+                 * @var object
+                 */
+                $field = $item;
                 /**
                  * @var array
                  */
