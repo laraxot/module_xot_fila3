@@ -7,6 +7,7 @@ declare(strict_types=1);
 namespace Modules\Xot\Contracts;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
 /**
@@ -22,7 +23,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
  * @property \Modules\LU\Models\PermUser|null                                   $perm
  * @mixin    \Eloquent
  */
-interface UserContract {
+interface UserContract extends MustVerifyEmail{
     /*
     public function isSuperAdmin();
     public function name();
