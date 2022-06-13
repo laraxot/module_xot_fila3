@@ -5,11 +5,12 @@ declare(strict_types=1);
 namespace Modules\Xot\Contracts;
 
 // use Illuminate\Database\Query\Builder;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\Relation;
-use Illuminate\Support\Collection;
 use Illuminate\View\View;
+use Illuminate\Support\Collection;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Builder;
+use Modules\Xot\Contracts\PanelActionContract;
+use Illuminate\Database\Eloquent\Relations\Relation;
 use Modules\Xot\Models\Panels\Actions\XotBasePanelAction;
 
 /**
@@ -62,7 +63,7 @@ interface PanelContract {
     /**
      * Undocumented function.
      *
-     * @return mixed
+     * @return PanelActionContract
      */
     public function itemAction(string $act);
 
