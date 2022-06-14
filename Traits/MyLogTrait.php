@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Modules\Xot\Traits;
 
+use Illuminate\Support\Facades\Auth;
+
 // /laravel/app/Updater.php
 // Str::camel() 'foo_bar' fooBar
 // kebab_case() 'fooBar'  foo-bar
@@ -23,17 +25,24 @@ trait MyLogTrait {
         });
         */
         static::creating(
+            /**
+             * @param Model $model
+             */
             function ($model) {
                 // dddx(static::$logModel);
-                if (null !== \Auth::user()) {
-                    $model->created_by = optional(\Auth::user())->handle;
-                    $model->updated_by = optional(\Auth::user())->handle.'';
+                $user = Auth::user();
+                if (null !== $user) {
+                    $model->created_by = $user->handle;
+                    $model->updated_by = $user->handle.'';
                 }
                 // $model->uuid = (string)Uuid::generate();
             }
         );
 
         static::updating(
+            /**
+             * @param Model $model
+             */
             function ($model) {
                 // $tmp = ;
                 // dddx(debug_backtrace());

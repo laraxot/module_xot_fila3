@@ -5,12 +5,11 @@ declare(strict_types=1);
 namespace Modules\Xot\Contracts;
 
 // use Illuminate\Database\Query\Builder;
-use Illuminate\View\View;
-use Illuminate\Support\Collection;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
-use Modules\Xot\Contracts\PanelActionContract;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\Relation;
+use Illuminate\Support\Collection;
+use Illuminate\View\View;
 use Modules\Xot\Models\Panels\Actions\XotBasePanelAction;
 
 /**
@@ -49,9 +48,9 @@ interface PanelContract {
     public function rows(?array $data = null);
 
     /**
-     * @return mixed
+     * ---.
      */
-    public function update(array $data);
+    public function update(array $data): self;
 
     /**
      * Ritorna la view.
@@ -95,9 +94,8 @@ interface PanelContract {
     public function url(string $act = 'show'): string;
 
     /**
-     * Undocumented function
+     * Undocumented function.
      *
-     * @param array $params
      * @return Collection<XotBasePanelAction>
      */
     public function itemActions(array $params = []): Collection;
@@ -167,17 +165,19 @@ interface PanelContract {
     public function getParents();
 
     /**
-     * ---
+     * ---.
      */
-    public function formLivewireEdit(array $params = []):string;
+    public function formLivewireEdit(array $params = []): string;
 
     public function getFields(array $params = []): Collection;
 
     public function isRevisionBy(UserContract $user): bool;
-    public function isAuthoredBy(UserContract $user): bool;
-    public function isModeratedBy(UserContract $user): bool;
-    public function isAdminedBy(UserContract $user): bool;
 
+    public function isAuthoredBy(UserContract $user): bool;
+
+    public function isModeratedBy(UserContract $user): bool;
+
+    public function isAdminedBy(UserContract $user): bool;
 
     public function related(string $relationship): self;
 
