@@ -228,17 +228,17 @@ if (! function_exists('req_uri')) {
 
 if (! function_exists('in_admin')) {
     /**
-     * ---
+     * ---.
      */
-    function in_admin(array $params = []):bool {
+    function in_admin(array $params = []): bool {
         return inAdmin($params);
     }
 }
 if (! function_exists('inAdmin')) {
     /**
-     * ---
+     * ---.
      */
-    function inAdmin(array $params = []):bool {
+    function inAdmin(array $params = []): bool {
         return RouteService::inAdmin($params);
     }
 }
@@ -551,7 +551,7 @@ if (! function_exists('transFields')) {
         /**
          * @var string
          */
-        $model_basename=class_basename($model);
+        $model_basename = class_basename($model);
         $trans_root = $ns.'::'.Str::snake($model_basename);
         // debug_getter_obj(['obj'=>$module]);
         // dddx($module_name->getNamespace());
@@ -637,7 +637,7 @@ if (! function_exists('transFields')) {
             $ris->col_size = 12;
         }
         /**
-         * @var  array|ArrayAccess
+         * @var array|ArrayAccess
          */
         $row = \Form::getModel();
 
@@ -1083,14 +1083,14 @@ if (! function_exists('getRouteParameters')) {
         /**
          * @var \Illuminate\Routing\Route|null
          */
-        $route=request()->route();
-        if($route==null){
+        $route = request()->route();
+        if (null == $route) {
             return [];
         }
         $params = $route->parameters();
-        //if (null === $params) {
+        // if (null === $params) {
         //    return [];
-        //}
+        // }
 
         return $params;
     }
@@ -1098,12 +1098,12 @@ if (! function_exists('getRouteParameters')) {
 
 if (! function_exists('getRouteName')) {
     function getRouteName(): ?string {
-        //getRouteName();
+        // getRouteName();
         /**
          * @var \Illuminate\Routing\Route|null
          */
-        $route=request()->route();
-        if($route==null){
+        $route = request()->route();
+        if (null == $route) {
             return null;
         }
         $name = $route->getName();
@@ -1228,10 +1228,30 @@ if (! function_exists('rowsToSql')) {
         /**
          * @var array<int|string, string>
          */
-        $bindings=$rows->getBindings();
-        $sql=$rows->toSql();
+        $bindings = $rows->getBindings();
+        $sql = $rows->toSql();
         $sql = Str::replaceArray('?', $bindings, $sql);
 
         return $sql;
+    }
+}
+
+if (! function_exists('getServerName')) {
+    function getServerName(): string {
+        $default = env('APP_URL');
+        if (! \is_string($default)) {
+            // throw new Exception('['.$default.']['.__LINE__.']['.class_basename(__CLASS__).']');
+            $default = 'localhost';
+        }
+        $default = Str::after($default, '//');
+
+        $server_name = $default;
+        if (isset($_SERVER['SERVER_NAME']) && '127.0.0.1' !== $_SERVER['SERVER_NAME']) {
+            $server_name = $_SERVER['HTTP_HOST'] ?? $_SERVER['SERVER_NAME'];
+        }
+
+        $server_name = Str::replace('www.', '', $server_name);
+
+        return $server_name;
     }
 }
