@@ -63,8 +63,11 @@ trait MyLogTrait {
                 $log = static::$logModel;
                 $res = $log::create($parz);
 
-                if (\Auth::check()) {
-                    $model->updated_by = optional(\Auth::user())->handle.'';
+                if (Auth::check()) {
+                    $user=Auth::user();
+                    if (null != $user) {
+                        $model->updated_by = $user->handle.'';
+                    }
                 }
             }
         );
