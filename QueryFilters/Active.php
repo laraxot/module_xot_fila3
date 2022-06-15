@@ -11,12 +11,13 @@ declare(strict_types=1);
 namespace Modules\Xot\QueryFilters;
 
 use Closure;
+use Illuminate\Support\Facades\Request;
 
 class Active {
     /**
      * Undocumented function.
      *
-     * @param mixed $request
+     * @param Request $request
      *
      * @return Closure
      */
