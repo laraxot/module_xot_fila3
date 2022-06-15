@@ -13,7 +13,7 @@ use Reflection;
 use ReflectionClass;
 use ReflectionMethod;
 
-abstract class ViewModel implements Arrayable {
+abstract class XotBaseViewModel implements Arrayable {
     /**
      * Undocumented function.
      */
