@@ -281,7 +281,8 @@ class ProfileService {
      * @return Collection<Area>
      */
     public function areas(): Collection {
-        $areas = $this->getUser()->areas;
+        $areas = $this->getUser()->areas
+            ->sortBy('order_column');
 
         $modules = Module::getByStatus(1);
         // dddx(['areas' => $areas, 'modules' => $modules]);
