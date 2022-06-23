@@ -1,6 +1,5 @@
-@include('adm_theme::admin.dashboard')
-{{--  
-@extends('adm_theme::layouts.app')
+@include('adm_theme::admin.dashboard.' . config('xra.adm_home', '01'))
+{{-- @extends('adm_theme::layouts.app')
 @section('page_heading', ' ')
 @section('content')
     @include('theme::includes.flash')
@@ -11,5 +10,4 @@
         @endforeach
     @endif
 
-@endsection
---}}
+@endsection --}}
