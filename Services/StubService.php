@@ -88,13 +88,23 @@ class StubService {
 
     public function get(): string {
         $file = $this->getClassFile();
-
         $class = $this->getClass();
         if (File::exists($file)) {
             // echo '<br/>['.$file.']['.$class.']';
             return $class;
         }
-        $this->generate();
+        try {
+            $this->generate();
+        } catch (Exception $e) {
+            dddx(
+                [
+                    'e' => $e,
+                    'class' => $class,
+                    'model_class' => $this->getModelClass(),
+                    'back' => debug_backtrace(),
+                ]
+            );
+        }
 
         return $class;
     }
