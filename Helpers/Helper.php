@@ -1255,3 +1255,16 @@ if (! function_exists('getServerName')) {
         return $server_name;
     }
 }
+/*
+if (! function_exists('getLang')) {
+    function getLang(): string {
+        return '/en/'; //per xstream
+    }
+}
+*/
+
+if (! function_exists('str_limit')) {
+    function str_limit(string $str,int $limit): string {
+        return Str::limit($str,$limit); //per xstream
+    }
+}
