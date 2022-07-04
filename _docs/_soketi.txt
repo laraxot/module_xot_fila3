@@ -1,0 +1,2 @@
+https://kbouzidi.com/real-time-events-with-laravel-and-soketi
+
