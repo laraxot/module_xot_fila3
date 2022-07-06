@@ -5,13 +5,14 @@ declare(strict_types=1);
 namespace Modules\Xot\Presenters;
 
 use Exception;
-use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\View;
+use Modules\Xot\Services\FileService;
+use Modules\Mediamonitor\Models\Press;
 use Modules\Theme\Services\ThemeService;
 use Modules\Xot\Contracts\PanelContract;
+use Illuminate\Contracts\Support\Renderable;
 use Modules\Xot\Contracts\PanelPresenterContract;
-use Modules\Xot\Services\FileService;
 
 /**
  * Class HtmlPanelPresenter.
@@ -94,6 +95,7 @@ class HtmlPanelPresenter implements PanelPresenterContract {
 
         $rows_err = '';
         $rows = $this->panel->rows()->paginate(20);
+        //dddx(['rows'=>$rows,'scout'=>Press::search('war')->get()]);
 
         $route_params = [];
         $route_name = '';
