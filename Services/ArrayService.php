@@ -139,7 +139,10 @@ class ArrayService {
          * @phpstan-var view-string
          */
         $view='xot::services.table';
-        $view_params=[];
+        $view_params=[
+            //'header'=>$this->getHeader(),
+            'rows'=> $this->getArray(),
+        ];
         return view($view,$view_params);
 
     }
