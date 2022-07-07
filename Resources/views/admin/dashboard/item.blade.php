@@ -13,7 +13,7 @@
                     </div>
                 </div>
                 <div class="col-xl-4 col-xxl-12 text-center"><img class="img-fluid"
-                        src="{{ Theme::asset('adm_theme::assets/img/illustrations/at-work.svg') }}"
+                        src="{{ Theme::asset('xot::assets/img/illustrations/at-work.svg') }}"
                         style="max-width: 26rem" /></div>
             </div>
         </div>
