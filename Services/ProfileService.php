@@ -297,7 +297,6 @@ class ProfileService {
 
     public function hasArea(string $name): bool {
         $area = $this->areas()->firstWhere('area_define_name', $name);
-
         return \is_object($area);
     }
 

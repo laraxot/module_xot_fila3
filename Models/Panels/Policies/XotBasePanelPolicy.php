@@ -29,7 +29,6 @@ abstract class XotBasePanelPolicy {
         // * -- togliere per fare debug
         if (\is_object($user)) {
             $route_params = getRouteParameters();
-
             $profile = ProfileService::make()->get($user);
             if (isset($route_params['module'])) {
                 $module = Module::find($route_params['module']);
@@ -58,6 +57,7 @@ abstract class XotBasePanelPolicy {
     */
 
     public function home(?UserContract $user, PanelContract $panel): bool {
+        
         if (inAdmin() && null === $user) {
             return false;
         }
@@ -69,10 +69,6 @@ abstract class XotBasePanelPolicy {
             if (null != $module) {
                 $module_name = $module->getName();
             }
-
-            // $panel = PanelService::make()->get($user);
-            // $areas = $panel->areas()->firstWhere('area_define_name', $module->getName());
-            // return is_object($areas);
 
             $profile = ProfileService::make()->get($user);
 

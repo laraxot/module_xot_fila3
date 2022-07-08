@@ -5,9 +5,10 @@ declare(strict_types=1);
 namespace Modules\Xot\View\Composers;
 
 use Exception;
-use Illuminate\Support\Collection;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use Modules\Theme\Models\Menu;
+use Illuminate\Support\Collection;
 use Modules\Theme\Models\MenuItem;
 use Nwidart\Modules\Facades\Module;
 
@@ -19,6 +20,48 @@ abstract class XotBaseComposer {
      * Undocumented variable.
      */
     public string $module_name = '';
+
+    /**
+     * Undocumented function
+     *
+     * @param string $name
+     * @param array $arguments
+     * @return mixed
+     */
+    public function __call($name, $arguments)
+    {
+        // Note: value of $name is case sensitive.
+        //echo "Calling object method '$name' "
+        //     . implode(', ', $arguments). "\n";
+        /*
+        $modules = Module::getByStatus(1);
+        $allEnabled = Module::allEnabled();
+        dddx(
+            [
+                'name'=>$name,
+                'arguments'=>$arguments,
+                'modules'=>$modules,
+                'allEnabled'=>$allEnabled,
+                'cool'=>Module::collections(),
+                'order'=>Module::getOrdered(),
+            ]
+        );
+        */
+        $modules=Module::getOrdered();
+        $module = Arr::first(
+            $modules,
+            function ($module) use($name){
+                $class='\Modules\\'.$module->getName().'\View\Composers\ThemeComposer';
+                return method_exists($class,$name);
+            }
+        );
+        if(!is_object($module)){
+            throw new Exception('create a View\Composers\ThemeComposer.php iside a module with ['.$name.'] method');
+        }
+        $class='\Modules\\'.$module->getName().'\View\Composers\ThemeComposer';
+
+        return app($class)->{$name}($arguments) ;
+    }
 
     /**
      * Undocumented function.
