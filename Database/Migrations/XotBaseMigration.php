@@ -175,7 +175,24 @@ abstract class XotBaseMigration extends Migration {
     /**
      * @return bool
      */
-    public function hasPrimaryKey() {
+    public function hasIndex(string $index):bool {
+        $tbl = $this->getTable();
+        $conn = $this->getConn()->getConnection();
+        $dbSchemaManager = $conn->getDoctrineSchemaManager();
+        $doctrineTable = $dbSchemaManager->listTableDetails($tbl);
+
+        //$indexes=$this->getTableIndexes();
+        $has_index=$doctrineTable->hasIndex($tbl.'_'.$index.'_index');
+        //dddx(['indexes'=>$indexes,'has_index'=>$has_index]);
+        return $has_index;
+    }
+    
+
+
+    /**
+     * ---
+     */
+    public function hasPrimaryKey():bool {
         $table_details = $this->getTableDetails();
 
         return $table_details->hasPrimaryKey();
