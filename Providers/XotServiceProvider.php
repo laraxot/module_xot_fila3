@@ -10,6 +10,9 @@ use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\View;
 use Modules\Xot\Http\View\Composers\XotComposer;
 use Nwidart\Modules\Facades\Module;
+use Illuminate\Support\Facades\Artisan;
+use Illuminate\Database\Events\MigrationsEnded;
+use Illuminate\Support\Facades\Event;
 
 /**
  * Class XotServiceProvider.
@@ -44,6 +47,7 @@ class XotServiceProvider extends XotBaseServiceProvider {
 
         // $this->registerPanel();
         // $this->registerDropbox();// PROBLEMA DI COMPOSER
+        $this->registerEvents();
     }
 
     // end bootCallback
@@ -73,6 +77,21 @@ class XotServiceProvider extends XotBaseServiceProvider {
                 }
             }
         }
+    }
+
+    /**
+     * Undocumented function
+     *
+     * @link https://medium.com/@dobron/running-laravel-ide-helper-generator-automatically-b909e75849d0
+     * @return void
+     */
+    private function registerEvents(){
+        Event::listen(
+            MigrationsEnded::class,
+            function () {
+                Artisan::call('ide-helper:models -r -W');
+            }
+        );
     }
 
     /**
