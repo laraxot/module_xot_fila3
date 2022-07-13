@@ -1,0 +1,6 @@
+$ df -i /
+Filesystem      Inodes  IUsed   IFree    IUse% Mounted on
+/dev/xvda1      7692288 652294 7039994    9%      /
+
+
+
