@@ -1,6 +1,6 @@
-<div class="col-xxl-4 col-xl-12 mb-4">
-    <div class="card h-100">
-        <div class="card-body h-100 p-5">
+<div class="mb-4">
+    <div class="card">
+        <div class="card-body  p-5">
             <div class="row align-items-center">
                 <div class="col-xl-8 col-xxl-12">
                     <div class="text-center text-xl-start text-xxl-center mb-4 mb-xl-0 mb-xxl-4">
