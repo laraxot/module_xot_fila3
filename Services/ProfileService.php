@@ -26,8 +26,12 @@ class ProfileService {
 
     private static ?self $instance = null;
 
+    private array $xot;
+
     public function __construct() {
         // ---
+        $xot=config('xra');
+        $this->xot=$xot;
     }
 
     public static function getInstance(): self {
@@ -43,13 +47,41 @@ class ProfileService {
     }
 
     /**
+     * Undocumented function
+     *
+     * @param string $name
+     * @param array $arguments
+     * @return mixed
+     */
+    public function __call($name, $arguments){
+        /*
+        dddx(
+            [
+                'name'=>$name,
+                'arguments'=>$arguments,
+                'profile'=>$this->getProfile(),
+                'profile_class'=>get_class($this->getProfile()),
+                't1'=>method_exists($this->getProfile(),$name),
+            ]
+        );
+        */
+        $profile=$this->getProfile();
+        if(method_exists($profile,$name)){
+            return $profile->{$name}($arguments);
+        }
+        throw new Exception('['.__LINE__.']['.class_basename(__CLASS__).']');
+    }
+
+    /**
      * @param object|Model|\Modules\Xot\Contracts\UserContract $user
      *
      * @throws \ReflectionException
      */
     public function get($user): self {
         if (\is_object($user)) {
-            $profile_model = TenantService::model('profile');
+            //$this->xot['main_module'];
+            //$profile_model = TenantService::model('profile');
+            //$profile_model = app('Modules\\'.$this->xot['main_module'].'\Models\Profile');
             // Strict comparison using === between null and Illuminate\Database\Eloquent\Model will always evaluate to false.
             // if (null === $profile_model) {
             //    dddx('Aggiungi profile a xra.php');
