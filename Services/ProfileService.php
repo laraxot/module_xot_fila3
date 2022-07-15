@@ -48,7 +48,7 @@ class ProfileService {
 
     /**
      * Undocumented function
-     *
+     * @link https://www.php.net/manual/en/language.oop5.overloading.php
      * @param string $name
      * @param array $arguments
      * @return mixed
@@ -67,7 +67,10 @@ class ProfileService {
         */
         $profile=$this->getProfile();
         if(method_exists($profile,$name)){
-            return $profile->{$name}($arguments);
+            //return $profile->{$name}($arguments);
+            //dddx(['func_get_args'=>func_get_args(),]);
+            return call_user_func_array([$profile,$name],$arguments);
+
         }
         throw new Exception('['.__LINE__.']['.class_basename(__CLASS__).']');
     }
