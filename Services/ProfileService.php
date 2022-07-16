@@ -30,8 +30,8 @@ class ProfileService {
 
     public function __construct() {
         // ---
-        $xot=config('xra');
-        $this->xot=$xot;
+        $xot = config('xra');
+        $this->xot = $xot;
     }
 
     public static function getInstance(): self {
@@ -47,13 +47,16 @@ class ProfileService {
     }
 
     /**
-     * Undocumented function
-     * @link https://www.php.net/manual/en/language.oop5.overloading.php
+     * Undocumented function.
+     *
+     * @see https://www.php.net/manual/en/language.oop5.overloading.php
+     *
      * @param string $name
-     * @param array $arguments
+     * @param array  $arguments
+     *
      * @return mixed
      */
-    public function __call($name, $arguments){
+    public function __call($name, $arguments) {
         /*
         dddx(
             [
@@ -65,12 +68,17 @@ class ProfileService {
             ]
         );
         */
-        $profile=$this->getProfile();
-        if(method_exists($profile,$name)){
-            //return $profile->{$name}($arguments);
-            //dddx(['func_get_args'=>func_get_args(),]);
-            return call_user_func_array([$profile,$name],$arguments);
 
+        $profile_panel = $this->getProfilePanel();
+        if (method_exists($profile_panel, $name)) {
+            return call_user_func_array([$profile_panel, $name], $arguments);
+        }
+
+        $profile = $this->getProfile();
+        if (method_exists($profile, $name)) {
+            // return $profile->{$name}($arguments);
+            // dddx(['func_get_args'=>func_get_args(),]);
+            return call_user_func_array([$profile, $name], $arguments);
         }
         throw new Exception('['.__LINE__.']['.class_basename(__CLASS__).']');
     }
@@ -82,9 +90,9 @@ class ProfileService {
      */
     public function get($user): self {
         if (\is_object($user)) {
-            //$this->xot['main_module'];
-            //$profile_model = TenantService::model('profile');
-            //$profile_model = app('Modules\\'.$this->xot['main_module'].'\Models\Profile');
+            // $this->xot['main_module'];
+            // $profile_model = TenantService::model('profile');
+            // $profile_model = app('Modules\\'.$this->xot['main_module'].'\Models\Profile');
             // Strict comparison using === between null and Illuminate\Database\Eloquent\Model will always evaluate to false.
             // if (null === $profile_model) {
             //    dddx('Aggiungi profile a xra.php');
@@ -332,6 +340,7 @@ class ProfileService {
 
     public function hasArea(string $name): bool {
         $area = $this->areas()->firstWhere('area_define_name', $name);
+
         return \is_object($area);
     }
 
