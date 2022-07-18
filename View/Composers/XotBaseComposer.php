@@ -56,11 +56,10 @@ abstract class XotBaseComposer {
             }
         );
         if(!is_object($module)){
-            throw new Exception('create a View\Composers\ThemeComposer.php iside a module with ['.$name.'] method');
+            throw new Exception('create a View\Composers\ThemeComposer.php inside a module with ['.$name.'] method');
         }
         $class='\Modules\\'.$module->getName().'\View\Composers\ThemeComposer';
-
-        return app($class)->{$name}($arguments) ;
+        return call_user_func_array([app($class), $name], $arguments);
     }
 
     /**

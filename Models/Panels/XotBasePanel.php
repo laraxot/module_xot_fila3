@@ -465,22 +465,20 @@ abstract class XotBasePanel implements PanelContract {
             }
             */
         }
-        DB::enableQueryLog();
+        //DB::enableQueryLog();
         $row = $rows
             // ->select($tbl.'.*')
             // ->select('cuisine_cat_morph.note as "pivot.note"')
             ->first();
 
         if (null === $row) {
-            // $query = str_replace(array('?'), array('\'%s\''), $builder->toSql());
-            // $query = vsprintf($query, $builder->getBindings());
-            /*
-            $sql = Str::replaceArray('?', $rows->getBindings(), $rows->toSql());
-            throw new \Exception('Not Found ['.$value.'] on ['.$this->getName().']
+            //*
+            $sql = rowsToSql($rows);
+            throw new Exception('Not Found ['.$value.'] on ['.$this->getName().']
                 ['.$sql.']
                 ['.__LINE__.']['.basename(__FILE__).']
                 ');
-            */
+            //*/
             throw new Exception('['.__LINE__.']['.__FILE__.']');
         }
         $this->row = $row;
