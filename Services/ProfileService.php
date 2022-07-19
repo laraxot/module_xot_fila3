@@ -140,10 +140,6 @@ class ProfileService {
         return $this;
     }
 
-    public function get_user(): UserContract {
-        return $this->user;
-    }
-
     public function fullName(): ?string {
         // Strict comparison using === between null and Modules\Xot\Contracts\UserContract will always evaluate to false.
         // if (null === $this->user) {
