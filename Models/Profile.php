@@ -28,6 +28,15 @@ use Spatie\Tags\HasTags;
  * @property string|null $address
  * @property int|null $user_id
  * @property string|null $guid
+ * @property int|null $video_credits
+ * @property int|null $clip_credits
+ * @property int|null $clip_max_time
+ * @property string|null $review_cost
+ * @property int|null $review_unit_time
+ * @property int|null $max_search_days
+ * @property int|null $max_alerts
+ * @property int|null $moderator_id
+ * @property int $parent_id
  * @property string|null $image_src
  * @property-read string|null $lang
  * @property string|null $subtitle
@@ -50,6 +59,8 @@ use Spatie\Tags\HasTags;
  * @method static \Illuminate\Database\Eloquent\Builder|Profile query()
  * @method static \Illuminate\Database\Eloquent\Builder|Profile whereAddress($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Profile whereBio($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Profile whereClipCredits($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Profile whereClipMaxTime($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Profile whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Profile whereCreatedBy($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Profile whereDeletedBy($value)
@@ -57,12 +68,19 @@ use Spatie\Tags\HasTags;
  * @method static \Illuminate\Database\Eloquent\Builder|Profile whereFirstname($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Profile whereGuid($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Profile whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Profile whereMaxAlerts($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Profile whereMaxSearchDays($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Profile whereModeratorId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Profile whereParentId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Profile wherePhone($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Profile wherePostType($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Profile whereReviewCost($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Profile whereReviewUnitTime($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Profile whereSurname($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Profile whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Profile whereUpdatedBy($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Profile whereUserId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Profile whereVideoCredits($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Profile withAllTags(\ArrayAccess|\Spatie\Tags\Tag|array $tags, ?string $type = null)
  * @method static \Illuminate\Database\Eloquent\Builder|Profile withAllTagsOfAnyType($tags)
  * @method static \Illuminate\Database\Eloquent\Builder|Profile withAnyTags(\ArrayAccess|\Spatie\Tags\Tag|array $tags, ?string $type = null)
