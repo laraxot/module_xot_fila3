@@ -119,7 +119,7 @@ class PanelRouteService {
         // a che serve $node?
         // è qui che panel->url() crea quegli url tipo /it/threads?#Thread- (con ?#NomeModello-)
         $node = class_basename($row).'-'.$row->getKey();
-        $queries['page'] = Cache::get('page');
+        //$queries['page'] = Cache::get('page'); // TROPPE QUERY 
 
         $request_query = request()->query();
         if (! \is_array($request_query)) {
