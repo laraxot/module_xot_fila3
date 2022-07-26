@@ -123,6 +123,7 @@ use Spatie\Tags\HasTags;
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
  * @method static \Illuminate\Database\Eloquent\Builder|Profile withAllTags($tags, ?string $type = null)
 =======
 =======
@@ -140,6 +141,9 @@ use Spatie\Tags\HasTags;
  * @method static \Illuminate\Database\Eloquent\Builder|Profile whereVideoCredits($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Profile withAllTags(\ArrayAccess|\Spatie\Tags\Tag|array $tags, ?string $type = null)
 >>>>>>> 8ff221d (up)
+=======
+ * @method static \Illuminate\Database\Eloquent\Builder|Profile withAllTags(\ArrayAccess|\Spatie\Tags\Tag|array $tags, ?string $type = null)
+>>>>>>> master
  * @method static \Illuminate\Database\Eloquent\Builder|Profile withAllTagsOfAnyType($tags)
  * @method static \Illuminate\Database\Eloquent\Builder|Profile withAnyTags(\ArrayAccess|\Spatie\Tags\Tag|array $tags, ?string $type = null)
  * @method static \Illuminate\Database\Eloquent\Builder|Profile withAnyTagsOfAnyType($tags)
