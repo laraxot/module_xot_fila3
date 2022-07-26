@@ -27,16 +27,35 @@ use Spatie\Tags\HasTags;
  * @property string|null $phone
  * @property string|null $address
  * @property int|null $user_id
+ * @property string|null $premise
+ * @property string|null $premise_short
+ * @property string|null $locality
+ * @property string|null $locality_short
+ * @property string|null $postal_town
+ * @property string|null $postal_town_short
+ * @property string|null $administrative_area_level_3
+ * @property string|null $administrative_area_level_3_short
+ * @property string|null $administrative_area_level_2
+ * @property string|null $administrative_area_level_2_short
+ * @property string|null $administrative_area_level_1
+ * @property string|null $administrative_area_level_1_short
+ * @property string|null $country
+ * @property string|null $country_short
+ * @property string|null $street_number
+ * @property string|null $street_number_short
+ * @property string|null $route
+ * @property string|null $route_short
+ * @property string|null $postal_code
+ * @property string|null $postal_code_short
+ * @property string|null $googleplace_url
+ * @property string|null $googleplace_url_short
+ * @property string|null $point_of_interest
+ * @property string|null $point_of_interest_short
+ * @property string|null $political
+ * @property string|null $political_short
+ * @property string|null $campground
+ * @property string|null $campground_short
  * @property string|null $guid
- * @property int|null $video_credits
- * @property int|null $clip_credits
- * @property int|null $clip_max_time
- * @property string|null $review_cost
- * @property int|null $review_unit_time
- * @property int|null $max_search_days
- * @property int|null $max_alerts
- * @property int|null $moderator_id
- * @property int $parent_id
  * @property string|null $image_src
  * @property-read string|null $lang
  * @property string|null $subtitle
@@ -58,28 +77,48 @@ use Spatie\Tags\HasTags;
  * @method static \Illuminate\Database\Eloquent\Builder|BaseModelLang ofItem(string $guid)
  * @method static \Illuminate\Database\Eloquent\Builder|Profile query()
  * @method static \Illuminate\Database\Eloquent\Builder|Profile whereAddress($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Profile whereAdministrativeAreaLevel1($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Profile whereAdministrativeAreaLevel1Short($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Profile whereAdministrativeAreaLevel2($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Profile whereAdministrativeAreaLevel2Short($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Profile whereAdministrativeAreaLevel3($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Profile whereAdministrativeAreaLevel3Short($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Profile whereBio($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Profile whereClipCredits($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Profile whereClipMaxTime($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Profile whereCampground($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Profile whereCampgroundShort($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Profile whereCountry($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Profile whereCountryShort($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Profile whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Profile whereCreatedBy($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Profile whereDeletedBy($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Profile whereEmail($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Profile whereFirstname($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Profile whereGuid($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Profile whereGoogleplaceUrl($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Profile whereGoogleplaceUrlShort($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Profile whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Profile whereMaxAlerts($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Profile whereMaxSearchDays($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Profile whereModeratorId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Profile whereParentId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Profile whereLocality($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Profile whereLocalityShort($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Profile wherePhone($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Profile wherePointOfInterest($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Profile wherePointOfInterestShort($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Profile wherePolitical($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Profile wherePoliticalShort($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Profile wherePostType($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Profile whereReviewCost($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Profile whereReviewUnitTime($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Profile wherePostalCode($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Profile wherePostalCodeShort($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Profile wherePostalTown($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Profile wherePostalTownShort($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Profile wherePremise($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Profile wherePremiseShort($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Profile whereRoute($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Profile whereRouteShort($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Profile whereStreetNumber($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Profile whereStreetNumberShort($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Profile whereSurname($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Profile whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Profile whereUpdatedBy($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Profile whereUserId($value)
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -89,6 +128,8 @@ use Spatie\Tags\HasTags;
 =======
 >>>>>>> 35a481d (up)
  * @method static \Illuminate\Database\Eloquent\Builder|Profile whereVideoCredits($value)
+=======
+>>>>>>> fc09850 (up)
  * @method static \Illuminate\Database\Eloquent\Builder|Profile withAllTags(\ArrayAccess|\Spatie\Tags\Tag|array $tags, ?string $type = null)
 >>>>>>> 35a481d (up)
 =======
