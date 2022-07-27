@@ -82,14 +82,19 @@ use Spatie\Tags\HasTags;
  * @method static \Illuminate\Database\Eloquent\Builder|Profile whereUserId($value)
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
  * @method static \Illuminate\Database\Eloquent\Builder|Profile whereVideoCredits($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Profile withAllTags(\ArrayAccess|\Spatie\Tags\Tag|array $tags, ?string $type = null)
 =======
 =======
 >>>>>>> 57d9e85 (.)
+=======
+>>>>>>> 4463e87 (.)
 <<<<<<< HEAD
  * @method static \Illuminate\Database\Eloquent\Builder|Profile withAllTags($tags, ?string $type = null)
 =======
+=======
+>>>>>>> 35a481d (up)
  * @method static \Illuminate\Database\Eloquent\Builder|Profile whereVideoCredits($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Profile withAllTags(\ArrayAccess|\Spatie\Tags\Tag|array $tags, ?string $type = null)
 >>>>>>> 35a481d (up)
