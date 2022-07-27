@@ -5,17 +5,17 @@ declare(strict_types=1);
 namespace Modules\Xot\Http\Controllers\Admin;
 
 use Exception;
-use Illuminate\Support\Str;
+use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
-use Modules\Xot\Services\FileService;
-use Modules\Xot\Services\PanelService;
 use Illuminate\Support\Facades\Request;
-use Modules\Xot\Services\PolicyService;
+use Illuminate\Support\Str;
 use Modules\Xot\Contracts\PanelContract;
 use Modules\Xot\Http\Requests\XotRequest;
-use Illuminate\Contracts\Support\Renderable;
+use Modules\Xot\Services\FileService;
+use Modules\Xot\Services\PanelService;
+use Modules\Xot\Services\PolicyService;
 
 // ---- services ---
 
@@ -40,13 +40,30 @@ class ContainersController extends Controller {
         if (0 === \count($containers)) {
             $act = isset($route_params['module']) ? 'home' : 'dashboard';
 
-            return $this->{$act}($request);
+            $res = $this->{$act}($request);
+
+            return $res;
         }
         if (\count($containers) === \count($items)) {
-            return $this->show($request);
+            $res = $this->show($request);
+            /*
+            if ('Illuminate\View\View' == get_class($res)) {
+               $res = $res->render();
+            }
+
+            xdebug_set_filter(
+               XDEBUG_FILTER_TRACING,
+               XDEBUG_PATH_EXCLUDE,
+               [LARAVEL_DIR.'/vendor/']
+            );
+            xdebug_print_function_stack();
+            */
+            return $res;
         }
 
-        return $this->__call('index', $route_params);
+        $res = $this->__call('index', $route_params);
+
+        return $res;
     }
 
     /**
@@ -136,13 +153,12 @@ class ContainersController extends Controller {
         $policy_class = PolicyService::get($panel)->createIfNotExists()->getClass();
         $msg = 'Auth Id ['.Auth::id().'] not can ['.$method.'] on ['.$policy_class.']';
         FileService::viewCopy('theme::errors.403', 'pub_theme::errors.403');
+
         return response()->view('pub_theme::errors.403', ['msg' => $msg], 403);
     }
 
     /**
-     * Undocumented function
-     *
-     * @return string
+     * Undocumented function.
      */
     public function getController(): string {
         list($containers, $items) = params2ContainerItem();
