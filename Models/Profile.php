@@ -123,7 +123,10 @@ use Spatie\Tags\HasTags;
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
  * @method static \Illuminate\Database\Eloquent\Builder|Profile whereVideoCredits($value)
+=======
+>>>>>>> fc09850 (up)
  * @method static \Illuminate\Database\Eloquent\Builder|Profile withAllTags(\ArrayAccess|\Spatie\Tags\Tag|array $tags, ?string $type = null)
 =======
 =======
