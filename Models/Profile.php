@@ -83,6 +83,7 @@ use Spatie\Tags\HasTags;
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
  * @method static \Illuminate\Database\Eloquent\Builder|Profile whereVideoCredits($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Profile withAllTags(\ArrayAccess|\Spatie\Tags\Tag|array $tags, ?string $type = null)
 =======
@@ -90,6 +91,8 @@ use Spatie\Tags\HasTags;
 >>>>>>> 57d9e85 (.)
 =======
 >>>>>>> 4463e87 (.)
+=======
+>>>>>>> ea52768 (.)
 <<<<<<< HEAD
  * @method static \Illuminate\Database\Eloquent\Builder|Profile withAllTags($tags, ?string $type = null)
 =======
@@ -105,7 +108,14 @@ use Spatie\Tags\HasTags;
  * @method static \Illuminate\Database\Eloquent\Builder|Profile whereVideoCredits($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Profile withAllTags(\ArrayAccess|\Spatie\Tags\Tag|array $tags, ?string $type = null)
 >>>>>>> 8ff221d (up)
+<<<<<<< HEAD
 >>>>>>> 57d9e85 (.)
+=======
+=======
+ * @method static \Illuminate\Database\Eloquent\Builder|Profile whereVideoCredits($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Profile withAllTags(\ArrayAccess|\Spatie\Tags\Tag|array $tags, ?string $type = null)
+>>>>>>> 8ff221d (up)
+>>>>>>> ea52768 (.)
  * @method static \Illuminate\Database\Eloquent\Builder|Profile withAllTagsOfAnyType($tags)
  * @method static \Illuminate\Database\Eloquent\Builder|Profile withAnyTags(\ArrayAccess|\Spatie\Tags\Tag|array $tags, ?string $type = null)
  * @method static \Illuminate\Database\Eloquent\Builder|Profile withAnyTagsOfAnyType($tags)
