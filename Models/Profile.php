@@ -80,8 +80,17 @@ use Spatie\Tags\HasTags;
  * @method static \Illuminate\Database\Eloquent\Builder|Profile whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Profile whereUpdatedBy($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Profile whereUserId($value)
+<<<<<<< HEAD
  * @method static \Illuminate\Database\Eloquent\Builder|Profile whereVideoCredits($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Profile withAllTags(\ArrayAccess|\Spatie\Tags\Tag|array $tags, ?string $type = null)
+=======
+<<<<<<< HEAD
+ * @method static \Illuminate\Database\Eloquent\Builder|Profile withAllTags($tags, ?string $type = null)
+=======
+ * @method static \Illuminate\Database\Eloquent\Builder|Profile whereVideoCredits($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Profile withAllTags(\ArrayAccess|\Spatie\Tags\Tag|array $tags, ?string $type = null)
+>>>>>>> 35a481d (up)
+>>>>>>> 2991146 (.)
  * @method static \Illuminate\Database\Eloquent\Builder|Profile withAllTagsOfAnyType($tags)
  * @method static \Illuminate\Database\Eloquent\Builder|Profile withAnyTags(\ArrayAccess|\Spatie\Tags\Tag|array $tags, ?string $type = null)
  * @method static \Illuminate\Database\Eloquent\Builder|Profile withAnyTagsOfAnyType($tags)
