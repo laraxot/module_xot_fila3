@@ -318,6 +318,12 @@ class ProfileService {
         return $this->profile;
     }
 
+    public function getProfileClass():string {
+        $main_module=$this->xot['main_module'];
+        $class='Modules\\'.$main_module.'\Models\Profile';
+        return $class;
+    }
+
     /**
      * Undocumented function.
      *
