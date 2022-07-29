@@ -1387,6 +1387,15 @@ abstract class XotBasePanel implements PanelContract {
         return $query;
     }
 
+    /**
+     * elastic restituisce gia' i dati paginati
+     *
+     * 
+     */
+    public function rowsPaginated() {
+        return $this->rows()->paginate(20);
+    }
+
     public function getFillable(): array {
         return $this->row->getFillable();
     }

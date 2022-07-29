@@ -11,7 +11,7 @@ use Modules\Xot\Contracts\ModelWithUserContract;
 use Spatie\Tags\HasTags;
 
 /**
- * Modules\Xot\Models\Profile.
+ * Modules\Xot\Models\Profile
  *
  * @property int $id
  * @property string|null $post_type

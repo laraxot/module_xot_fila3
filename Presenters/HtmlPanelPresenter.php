@@ -94,7 +94,8 @@ class HtmlPanelPresenter implements PanelPresenterContract {
         }
 
         $rows_err = '';
-        $rows = $this->panel->rows()->paginate(20);
+        //$rows = $this->panel->rows()->paginate(20);
+        $rows   = $this->panel->rowsPaginated();
         //dddx(['rows'=>$rows,'scout'=>Press::search('war')->get()]);
 
         $route_params = [];

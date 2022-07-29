@@ -150,6 +150,7 @@ if (! function_exists('dddx')) {
             '_' => $params,
             'line' => $tmp[0]['line'] ?? 'line-unknows',
             'file' => FileService::fixPath($tmp[0]['file'] ?? 'file-unknown'),
+            'time' => microtime(true)- LARAVEL_START,
             // 'file_1' => $file, //da sistemare
         ];
         if (File::exists($data['file']) && Str::startsWith($data['file'], FileService::fixPath(storage_path('framework/views')))) {
