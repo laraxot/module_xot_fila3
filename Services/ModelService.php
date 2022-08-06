@@ -51,6 +51,12 @@ class ModelService {
         return $this;
     }
 
+    public function setModelClass(string $class): self {
+        $this->model = app($class);
+
+        return $this;
+    }
+
     /**
      * Undocumented function.
      */
