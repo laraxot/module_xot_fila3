@@ -75,10 +75,11 @@ class FileService {
                     // dddx([$filename_from, $filename_to]);
                     File::copy($filename_from, $filename_to);
                 } catch (\Exception $e) {
-                    throw new Exception('message:['.$e->getMessage().']
+                    echo '<pre>'.var_export($e,true).'</pre>';
+                    /*throw new Exception('message:['.$e->getMessage().']
                         path :['.$path.']
                         file from ['.$filename_from.']
-                        file to ['.$filename_to.']');
+                        file to ['.$filename_to.']');*/
                 }
             }
 
