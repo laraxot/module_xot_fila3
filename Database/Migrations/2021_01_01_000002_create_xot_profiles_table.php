@@ -25,7 +25,7 @@ class CreateXotProfilesTable extends XotBaseMigration {
                 $table->string('post_type', 191)->nullable()->index();
                 // $table->string('article_type',50)->nullable();
                 // $table->datetime('published_at')->nullable();
-                $table->text('bio')->nullable();
+                // $table->text('bio')->nullable();
                 $table->timestamps();
             }
         );
@@ -68,6 +68,10 @@ class CreateXotProfilesTable extends XotBaseMigration {
                 if ($this->hasColumn('auth_user_id')) {
                     $table->dropColumn('user_id');
                     $table->renameColumn('auth_user_id', 'user_id');
+                }
+
+                if (! $this->hasColumn('bio')) {
+                    $table->text('bio')->nullable();
                 }
 
                 /*
