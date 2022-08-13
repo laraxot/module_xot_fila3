@@ -80,7 +80,7 @@ class ProfileService {
             // dddx(['func_get_args'=>func_get_args(),]);
             return call_user_func_array([$profile, $name], $arguments);
         }
-        throw new Exception('['.__LINE__.']['.class_basename(__CLASS__).']');
+        throw new Exception('['.get_class($profile).']method:['.$name.']['.__LINE__.']['.class_basename(__CLASS__).']');
     }
 
     /**
