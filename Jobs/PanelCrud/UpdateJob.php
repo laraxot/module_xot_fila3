@@ -254,34 +254,15 @@ class UpdateJob extends XotBaseJob {
      * morphToMany.
      */
     public function updateRelationshipsMorphToMany(Model $model, string $name, array $data): void {
-        /*
-        dddx([
-            'model'=>$model,
-            'name'=>$name,
-            'data'=>$data,
-            'isAssoc'=>Arr::isAssoc($data),
-        ]);
-        */
-        // -- se non e' associativo e' una lista di id da mettere
-        // dddx([\Request::all(), $params]);
-        // $res=$model->$name()->syncWithoutDetaching($data);
-        // dddx([$name, Arr::isAssoc($data)]);
-        if (! Arr::isAssoc($data)) {
-            /*
-            $data = collect($data)->map(
-                function ($item) use ($model, $name) {
-                    if (is_numeric($item)) {
-                        return $item;
-                    }
-                    $related = $model->$name()->getRelated();
-                    $related_panel = PanelService::make()->get($related);
-                    $res = $related_panel->setLabel($item);
 
-                    return $res->getKey().'';
-                }
-            )->all();
-            */
-            // dddx($data);
+        if (\in_array('to', array_keys($data), true) || \in_array('from', array_keys($data), true)) {
+            if(!isset($data['to'])){
+                $data['to']=[];
+            }
+            $data=$data['to'];
+        }
+
+        if (! Arr::isAssoc($data)) {
             $model->$name()->sync($data);
         }
         // dddx($data);
