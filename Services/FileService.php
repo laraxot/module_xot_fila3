@@ -72,14 +72,12 @@ class FileService {
                     File::makeDirectory(\dirname($filename_to), 0755, true, true);
                 }
                 try {
-                    // dddx([$filename_from, $filename_to]);
                     File::copy($filename_from, $filename_to);
-                } catch (\Exception $e) {
-                    echo '<pre>'.var_export($e,true).'</pre>';
-                    /*throw new Exception('message:['.$e->getMessage().']
+                } catch (Exception $e) {
+                    throw new Exception('message:['.$e->getMessage().']
                         path :['.$path.']
                         file from ['.$filename_from.']
-                        file to ['.$filename_to.']');*/
+                        file to ['.$filename_to.']');
                 }
             }
 
@@ -143,10 +141,10 @@ class FileService {
      * @return string
      */
     public static function getViewNameSpacePath(string $ns): ?string {
-        //Strict comparison using === between null and string will always evaluate to false.
-        //if (null === $ns) {
+        // Strict comparison using === between null and string will always evaluate to false.
+        // if (null === $ns) {
         //    return null;
-        //}
+        // }
         $finder = view()->getFinder();
         $viewHints = [];
         if (method_exists($finder, 'getHints')) {
@@ -604,15 +602,15 @@ class FileService {
         if (Str::startsWith($path, $str)) {
             $info = pathinfo($path);
             switch (collect($info)->get('extension')) {
-            case 'css': $filename = public_path('/css/'.$info['basename']);
-                break;
-            case 'js':  $filename = public_path('/js/'.$info['basename']);
-                break;
-            default:
-                echo '<h3>Unknown Extension</h3>';
-                echo '<h3>['.$path.']</h3>';
-                dddx($info);
-                break;
+                case 'css': $filename = public_path('/css/'.$info['basename']);
+                    break;
+                case 'js':  $filename = public_path('/js/'.$info['basename']);
+                    break;
+                default:
+                    echo '<h3>Unknown Extension</h3>';
+                    echo '<h3>['.$path.']</h3>';
+                    dddx($info);
+                    break;
             }
             ImportService::make()->download(['url' => $path, 'filename' => $filename]);
 
@@ -734,11 +732,11 @@ class FileService {
         if ($exists && ! $force_recreate) {
             $content = File::get($components_json);
             $comps = (array) json_decode($content);
-            //Strict comparison using === between null and array will always evaluate to false. 
-            //if (null === $comps) {
-                //// File::delete($components_json);
+            // Strict comparison using === between null and array will always evaluate to false.
+            // if (null === $comps) {
+            // // File::delete($components_json);
             //    $comps = [];
-            //}
+            // }
 
             return $comps;
         }
