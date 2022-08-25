@@ -617,6 +617,10 @@ abstract class XotBasePanel implements PanelContract {
         }
         */
 
+       
+        //$test=\Modules\Blog\Models\Page::get()->toTree();
+        //dddx($test);
+
         $rows = $this->getBuilder()->get();
 
         $primary_field = $this->row->getKeyName();
