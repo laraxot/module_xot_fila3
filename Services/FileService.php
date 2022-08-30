@@ -61,6 +61,7 @@ class FileService {
         }
         if (\in_array($ns, ['pub_theme', 'adm_theme'], true)) {
             $theme = config('xra.'.$ns);
+
             $filename_from = self::fixPath(base_path('Themes/'.$theme.'/Resources/'.$ns_after));
             // $filename_from = Str::replace('/Resources//', '/Resources/', $filename_from);
             $asset = 'themes/'.$theme.'/'.$ns_after;
