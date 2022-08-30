@@ -8,7 +8,6 @@ use Exception;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\View;
 use Modules\Xot\Services\FileService;
-use Modules\Mediamonitor\Models\Press;
 use Modules\Theme\Services\ThemeService;
 use Modules\Xot\Contracts\PanelContract;
 use Illuminate\Contracts\Support\Renderable;
@@ -17,10 +16,12 @@ use Modules\Xot\Contracts\PanelPresenterContract;
 /**
  * Class HtmlPanelPresenter.
  */
-class HtmlPanelPresenter implements PanelPresenterContract {
+class HtmlPanelPresenter implements PanelPresenterContract
+{
     protected PanelContract $panel;
 
-    public function setPanel(PanelContract &$panel): self {
+    public function setPanel(PanelContract &$panel): self
+    {
         $this->panel = $panel;
 
         return $this;
@@ -29,7 +30,8 @@ class HtmlPanelPresenter implements PanelPresenterContract {
     /**
      * @return mixed|void
      */
-    public function index(?Collection $items) {
+    public function index(?Collection $items)
+    {
         /*
         $count = $items->count();
         $last_update = $items
@@ -50,7 +52,8 @@ class HtmlPanelPresenter implements PanelPresenterContract {
 
     // eturn \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response|string
 
-    public function out(?array $params = null): Renderable {
+    public function out(?array $params = null): Renderable
+    {
         // $route_params = optional(\Route::current())->parameters();
 
         [$containers, $items] = params2ContainerItem();
@@ -137,7 +140,7 @@ class HtmlPanelPresenter implements PanelPresenterContract {
             'layouts.partials.modal',
         ];
         foreach ($pieces as $piece) {
-            FileService::viewCopy('theme::'.$piece, 'pub_theme::'.$piece);
+            FileService::viewCopy('theme::' . $piece, 'pub_theme::' . $piece);
         }
         //if (null === $view_work) {
         //    throw new Exception(' ['.implode(' , '.chr(13).chr(10), $views).'] one of these must exists pub_theme: ['.config('xra.pub_theme').']');
