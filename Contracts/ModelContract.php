@@ -6,8 +6,6 @@ namespace Modules\Xot\Contracts;
 
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Modules\Food\Contracts\BellBoyContract;
-use Modules\Food\Models\RestaurantOwner;
 
 /**
  * Modules\Xot\Contracts\ModelContract.
@@ -20,8 +18,6 @@ use Modules\Food\Models\RestaurantOwner;
  * @property string|null                     $created_by
  * @property string|null                     $updated_by
  * @property string|null                     $title
- * @property Collection|BellBoyContract[]    $bellBoys
- * @property Collection|RestaurantOwner[]    $restaurantOwners
  * @property bool                            $is_reclamed
  * @property bool                            $table_enable
  * @property PivotContract|null              $pivot

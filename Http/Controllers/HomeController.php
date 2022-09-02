@@ -12,7 +12,7 @@ use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Schema;
 use Modules\Tenant\Services\TenantService;
-use Modules\Theme\Services\ThemeService;
+
 use Modules\Xot\Contracts\PanelContract;
 use Modules\Xot\Relations\CustomRelation;
 use Modules\Xot\Services\PanelService;
@@ -46,10 +46,18 @@ class HomeController extends Controller {
         if ('' !== $act) {
             return $home_panel->callItemActionWithGate($act);
         }
+        $view='pub_theme::home.index';
 
+        $view_params=[
+            'home'=>$home,
+            '_panel'=> $home_panel,
+        ];
+        /*
         return ThemeService::view('pub_theme::home.index')
             ->with('home', $home)
             ->with('_panel', $home_panel);
+        */
+        return view()->make($view,$view_params);
     }
 
     public function createHomesTable(): void {

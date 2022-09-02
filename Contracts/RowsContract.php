@@ -6,9 +6,6 @@ namespace Modules\Xot\Contracts;
 
 use Closure;
 
-// Modules\Xot\Contracts\RowsContract cannot implement Illuminate\Database\Eloquent\Relations\Relation - it is not an interface
-// Modules\Xot\Contracts\RowsContract cannot implement Illuminate\Database\Eloquent\Builder - it is not an interface
-
 /**
  * Modules\Xot\Contracts\RowsContract.
  */

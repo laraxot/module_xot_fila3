@@ -7,9 +7,7 @@ namespace Modules\Xot\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 // ---- services ---
-use Modules\Tenant\Services\TenantService;
 use Modules\Theme\Services\ThemeService;
-use Modules\Xot\Services\PanelService;
 use Nwidart\Modules\Facades\Module;
 
 // use Modules\Xot\Services\ArtisanService;
@@ -27,19 +25,13 @@ class HomeController extends Controller {
         //    return $out;
         // }
         //
-        /*
-        $home = TenantService::model('home');
-        $panel = PanelService::make()->get($home);
-
-        return $panel->view(); //mi restituisce la index delle "homes"
-        */
         $route_current = \Route::current();
         $params = [];
         if (null !== $route_current) {
             $params = $route_current->parameters();
         }
 
-        // dddx(PanelService::make()->getRequestPanel());//null
+
         $module_name = collect($params)->get('module');
         $module = Module::find($module_name);
         if (! \is_object($module)) {

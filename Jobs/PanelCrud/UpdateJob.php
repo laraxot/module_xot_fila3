@@ -149,29 +149,7 @@ class UpdateJob extends XotBaseJob {
 
         // from è la tendina di sinistra, to quella di destra
         if (! empty($data['to'])) {
-            // dddx(get_class_methods($rows));
-            // exit(debug_methods($rows));
-            /*
-            dddx([
-                'getQuery' => $rows->getQuery(),
-                'getBaseQuery' => $rows->getBaseQuery(),
-            ]);
-            */
-            /*
-            getQualifiedParentKeyName               perm_users.id
-            getQualifiedFarKeyName                  area_perm_user.perm_user_id
-            getFirstKeyName                         user_id
-            getQualifiedFirstKeyName                perm_users.user_id
-            getForeignKeyName                       perm_user_id
-            getQualifiedForeignKeyName              area_perm_user.perm_user_id
-            getLocalKeyName                         id
-            getQualifiedLocalKeyName                users.id
-            getSecondLocalKeyName                   id
-            getParent                               > Modules\LU\Models\PermUser {#2167
-            getRelated                              > Modules\LU\Models\AreaPermUser {#2193
-            $this->panel->row                       > Modules\LU\Models\User {#2080
-            $rows->getRelated()->getKeyName         id
-            */
+
             $row = $this->panel->row;
             $parent_relation_name = Str::camel(class_basename($rows->getParent()));
             $related_relation_name = Str::camel(class_basename($rows->getRelated()));
@@ -437,42 +415,6 @@ class UpdateJob extends XotBaseJob {
                 ];
             }
         )->all();
-        // exit(ArrayService::toHtml(['data' => $methods_get]));
-        /*/
-        dddx(
-            [
-                'parent' => $rows->getParent(), //PermUser
-                'related' => $rows->getRelated(), //Area
-                'methods' => $methods,
-            ]
-        );
-        //$rows->updateOrCreate(['areas.id' => 666]);
-        /*
-        getThroughParents =>[
-            array=>[
-                 [0] => Modules\LU\Models\PermUser Object
-                 [1] => Modules\LU\Models\AreaPermUser Object
-            ]
-        ]
-        getForeignKeys => [
-            [0] => user_id
-            [1] => perm_user_id
-            [2] => id
-        ]
-        getLocalKeys => [
-            [0] => id
-            [1] => id
-            [2] => area_id
-        ]
-        getQualifiedParentKeyName   =>  perm_users.id
-        getQualifiedFarKeyName      =>  areas.perm_user_id
-        getFirstKeyName             =>  user_id
-        getQualifiedFirstKeyName    =>  perm_users.user_id
-        getForeignKeyName           =>  perm_user_id
-        getQualifiedForeignKeyName  =>  areas.perm_user_id
-        getLocalKeyName             =>  id
-        getQualifiedLocalKeyName    =>  users.id
-        getSecondLocalKeyName       =>  id
-        */
+
     }
 }

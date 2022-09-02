@@ -26,12 +26,6 @@ abstract class XotBaseMigration extends Migration {
     public function __construct() {
         if (null === $this->model) {
             $model = $this->getModel();
-            if ('\Modules\LU\Models\Groupright' === $model) {
-                dddx(debug_backtrace());
-            }
-            /*if ($model=="\Modules\Food\Models\FoodProfile") {
-                dddx( $this);
-            }*/
             // 37     Dead catch - Exception is never thrown in the try block.
             // try {
             $this->model = app($model);
@@ -186,7 +180,7 @@ abstract class XotBaseMigration extends Migration {
         //dddx(['indexes'=>$indexes,'has_index'=>$has_index]);
         return $has_index;
     }
-    
+
 
 
     /**

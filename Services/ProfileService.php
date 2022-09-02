@@ -9,7 +9,6 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 use Modules\LU\Models\Area;
-use Modules\Tenant\Services\TenantService;
 use Modules\Xot\Contracts\PanelContract;
 use Modules\Xot\Contracts\UserContract;
 use Nwidart\Modules\Facades\Module;
@@ -91,7 +90,7 @@ class ProfileService {
     public function get($user): self {
         if (\is_object($user)) {
             // $this->xot['main_module'];
-            // $profile_model = TenantService::model('profile');
+
             // $profile_model = app('Modules\\'.$this->xot['main_module'].'\Models\Profile');
             // Strict comparison using === between null and Illuminate\Database\Eloquent\Model will always evaluate to false.
             // if (null === $profile_model) {
@@ -212,29 +211,8 @@ class ProfileService {
         return "https://www.gravatar.com/avatar/$email?d=$default&s=$size";
     }
 
-    /*
-    public function profile() {
-        $profile = TenantService::model('profile');
 
-        $res = $this->hasOne($profile, 'user_id', 'user_id');
-        if ($res->exists()) {
-            return $res;
-        }
-        $res = $profile->firstOrCreate(['user_id' => $this->user_id]);
-        $res->post()->firstOrCreate(
-            [
-                //    'user_id' => $this->user_id,
-                'guid' => $this->guid,
-                'lang' => app()->getLocale(),
-            ], [
-                'title' => $this->guid,
-            ]
-        );
 
-        return $this->profile();
-    }
-    */
-    // *
 
     /**
      * @param string $role_name
