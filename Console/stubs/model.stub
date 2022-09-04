@@ -21,7 +21,7 @@ class DummyClass extends BaseModel {
      *
      * @var string
      */
-    protected $primaryKey = 'id';
+    protected $primaryKey = 'dummy_id';
 
     /**
      * Attributes that should be mass-assignable.
@@ -62,7 +62,7 @@ class DummyClass extends BaseModel {
      *
      * @var boolean
      */
-    public $timestamps = true;
+    public $timestamps = dummy_timestamps;
 
     // Scopes...
 

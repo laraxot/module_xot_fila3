@@ -163,10 +163,15 @@ class StubService {
         // $dummy_class = basename($this->getClass());
         $dummy_class = collect(explode('\\', $this->getClass()))->slice(-1)->implode('\\');
         $ns = $this->getNamespace();
+
+        $dummy_timestamps='false';
+        if(isset($fields['updated_at'])){
+            $dummy_timestamps='true';
+        }
+        
         $replaces = [
             'DummyNamespace' => $ns,
             'DummyClassLower' => strtolower($dummy_class),
-
             'DummyClassName' => Str::after($dummy_class, $ns.'\\'),
             'DummyClass' => $dummy_class,
             'DummyModelClass' => basename($this->model_class),
@@ -178,6 +183,7 @@ class StubService {
             'dummy_factories' => $this->getFactories(),
             'NamespacedDummyUserModel' => 'Modules\LU\Models\User',
             'NamespacedDummyModel' => $this->model_class,
+            'dummy_timestamps' => $dummy_timestamps,
         ];
         // dddx($replaces);
         $replaces = array_merge($replaces, $this->custom_replaces);
