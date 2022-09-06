@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Modules\Xot\Services;
 
+use Exception;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
@@ -108,20 +109,71 @@ class RowsService {
     /**
      * Undocumented function.
      *
-     * @see https://github.com/spatie/laravel-query-builder
-     *
      * @param RowsContract $query
      *
      * @return RowsContract
      */
     public static function filter($query, array $filters, array $filters_fields) {
+        // https://github.com/spatie/laravel-query-builder
+
+        // $filters_fields = $this->filters();
+        // Strict comparison using === between null and Modules\Xot\Contracts\RowsContract will always evaluate to false.
+        // if (null === $query) {
+        // return null;
+        //    throw new Exception('['.__LINE__.']['.class_basename(__CLASS__).']');
+        // }
+        /*
+        dddx([
+            'filters' => $filters,
+            'filters_fields' => $filters_fields,
+        ]);
+        */
+        /*
+        $filters_fields = collect($filters_fields)
+            ->map(
+                function ($item) {
+                    $vars = get_object_vars($item);
+                    return FieldFilter::make()->setVars($vars);
+                }
+            );
+        */
+
         $filters_fields = FieldFilterDTO::collection($filters_fields);
+        /*
+        $t1 = $filters_fields->map(function ($item) {
+            if (isset($item->rules)) {
+                return [$item->param_name => $item->rules];
+            }
+        });
+        */
         $filters_rules = [];
         foreach ($filters_fields as $fitem) {
             if (null !== $fitem->rules) {
                 $filters_rules[$fitem->param_name] = $fitem->rules;
             }
         }
+
+        /*
+        dddx([
+            'filters_fields' => $filters_fields,
+            'methods' => get_class_methods($filters_fields),
+            // 't1' => $filters_fields->items(),
+            't2' => $t2,
+        ]);
+        // 124    Access to an undefined property object::$param_name.
+        $filters_rules = $filters_fields->toCollection()
+            ->filter(
+                function ($item) {
+                    return isset($item->rules);
+                }
+            )->map(
+                function ($item) {
+                    return [$item->param_name => $item->rules];
+                }
+            )
+            ->collapse()
+            ->all();
+        */
         $validator = Validator::make($filters, $filters_rules);
         if ($validator->fails()) {
             Session::flash('error', 'error');
