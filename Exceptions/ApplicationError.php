@@ -26,7 +26,7 @@ class ApplicationError implements Arrayable, Jsonable, JsonSerializable {
         return $this->toArray();
     }
 
-    public function toJson($options = 0.0) {
+    public function toJson($options = 0) {
         $jsonEncoded = json_encode($this->jsonSerialize(), $options);
         throw_unless($jsonEncoded, JsonEncodeException::class);
 

@@ -30,6 +30,9 @@ class ProfileService {
     public function __construct() {
         // ---
         $xot = config('xra');
+        if (! is_array($xot)) {
+            $xot = [];
+        }
         $this->xot = $xot;
     }
 
@@ -211,9 +214,6 @@ class ProfileService {
         return "https://www.gravatar.com/avatar/$email?d=$default&s=$size";
     }
 
-
-
-
     /**
      * @param string $role_name
      *
@@ -296,9 +296,10 @@ class ProfileService {
         return $this->profile;
     }
 
-    public function getProfileClass():string {
-        $main_module=$this->xot['main_module'];
-        $class='Modules\\'.$main_module.'\Models\Profile';
+    public function getProfileClass(): string {
+        $main_module = $this->xot['main_module'];
+        $class = 'Modules\\'.$main_module.'\Models\Profile';
+
         return $class;
     }
 

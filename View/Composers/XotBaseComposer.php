@@ -6,10 +6,8 @@ namespace Modules\Xot\View\Composers;
 
 use Exception;
 use Illuminate\Support\Arr;
-use Illuminate\Support\Str;
-use Modules\Theme\Models\Menu;
 use Illuminate\Support\Collection;
-use Modules\Theme\Models\MenuItem;
+use Modules\Theme\Models\Menu;
 use Nwidart\Modules\Facades\Module;
 
 /**
@@ -22,16 +20,16 @@ abstract class XotBaseComposer {
     public string $module_name = '';
 
     /**
-     * Undocumented function
+     * Undocumented function.
      *
      * @param string $name
-     * @param array $arguments
+     * @param array  $arguments
+     *
      * @return mixed
      */
-    public function __call($name, $arguments)
-    {
+    public function __call($name, $arguments) {
         // Note: value of $name is case sensitive.
-        //echo "Calling object method '$name' "
+        // echo "Calling object method '$name' "
         //     . implode(', ', $arguments). "\n";
         /*
         $modules = Module::getByStatus(1);
@@ -47,19 +45,27 @@ abstract class XotBaseComposer {
             ]
         );
         */
-        $modules=Module::getOrdered();
+        $modules = Module::getOrdered();
+        /**
+         * @var \Nwidart\Modules\Module|null
+         */
         $module = Arr::first(
             $modules,
-            function ($module) use($name){
-                $class='\Modules\\'.$module->getName().'\View\Composers\ThemeComposer';
-                return method_exists($class,$name);
+            function ($module) use ($name) {
+                $class = '\Modules\\'.$module->getName().'\View\Composers\ThemeComposer';
+
+                return method_exists($class, $name);
             }
         );
-        if(!is_object($module)){
+        if (! is_object($module)) {
             throw new Exception('create a View\Composers\ThemeComposer.php inside a module with ['.$name.'] method');
         }
-        $class='\Modules\\'.$module->getName().'\View\Composers\ThemeComposer';
-        return call_user_func_array([app($class), $name], $arguments);
+        $class = '\Modules\\'.$module->getName().'\View\Composers\ThemeComposer';
+        // Parameter #1 $callback of function call_user_func_array expects callable(): mixed, array{*NEVER*, string} given.
+        $app = app($class);
+        $callback = [$app, $name];
+
+        return call_user_func_array($callback, $arguments);
     }
 
     /**
@@ -80,6 +86,9 @@ abstract class XotBaseComposer {
      */
     public function call(string $func, ...$args) {
         $module = Module::find($this->module_name);
+        if (! is_object($module)) {
+            throw new Exception('not find ['.$this->module_name.'] on Modules ['.__LINE__.']['.__FILE__.']');
+        }
 
         $view_composer_class = 'Modules\\'.$module->getName().'\\View\Composers\\'.$module->getName().'Composer';
         if (! class_exists($view_composer_class)) {
@@ -91,31 +100,22 @@ abstract class XotBaseComposer {
         // dddx([$view_composer, class_exists($view_composer)]);
     }
 
-    /**
+    /*
+    togliere ogni riferimento a Theme
      * --.
-     */
     public function getMenuByName(string $name): ?Menu {
         return Menu::firstWhere('name', $name);
     }
 
-    /**
+    /*
      * --.
-     */
     public function getMenuItemsByName(string $name): Collection {
         $menu = Menu::firstWhere('name', $name);
         if (null === $menu) {
             return collect([]);
         }
         $rows = $menu->items;
-        // $sql = Str::replaceArray('?', $rows->getBindings(), $rows->toSql());
-        // $test = MenuItem::where('menu', 2)->get();
-        // dddx(
-        //    [
-        // 'sql' => $sql,
-        // 'test' => $test,
-        // 'rows' => $rows,
-        // ]
-        // );
         return $rows;
     }
+    */
 }

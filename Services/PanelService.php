@@ -136,7 +136,7 @@ class PanelService {
         return app($panel_class)
             ->setRow($this->model)
             // ->setRouteParams($this->route_params)
-            ;
+        ;
     }
 
     public function imageHtml(?array $params): string {
@@ -175,7 +175,13 @@ class PanelService {
     }
 
     public function getHomePanel(): PanelContract {
-        $home = TenantService::model('home');
+        // $home = TenantService::model('home');
+        $name = 'home';
+        $model_class = config('morph_map.'.$name);
+        if (null == $model_class || ! class_exists($model_class)) {
+            throw new Exception('['.__LINE__.']['.class_basename(__CLASS__).']');
+        }
+        $home = app($model_class);
 
         $params = getRouteParameters();
         try {
