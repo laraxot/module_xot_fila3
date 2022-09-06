@@ -54,7 +54,7 @@ class XotServiceProvider extends XotBaseServiceProvider {
     // end bootCallback
 
     public function registerCallback(): void {
-        $this->loadHelpersFrom(__DIR__.'/../Helpers');
+        // $this->loadHelpersFrom(__DIR__.'/../Helpers'); //non serve piu
         $loader = AliasLoader::getInstance();
         $loader->alias('Panel', 'Modules\Xot\Services\PanelService');
         // $loader->alias(\Modules\Xot\Facades\Profile::class,
@@ -67,9 +67,7 @@ class XotServiceProvider extends XotBaseServiceProvider {
         // });
         // $this->app->bind('profile', \Modules\Xot\Services\ProfileTest::class);
 
-        $loader->alias('Profile', 'Modules\Xot\Facades\Profile');
-
-        $this->app->bind(\Modules\Xot\Facades\Profile::class, function () {
+        $this->app->bind('profile', function () {
             return new \Modules\Xot\Services\ProfileTest();
         });
     }

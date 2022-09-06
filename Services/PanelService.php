@@ -175,13 +175,16 @@ class PanelService {
     }
 
     public function getHomePanel(): PanelContract {
+        /*
         $name = 'home';
+
         $model_class = config('morph_map.'.$name);
         if (null == $model_class || ! is_string($model_class) || ! class_exists($model_class)) {
-            throw new Exception('['.__LINE__.']['.class_basename(__CLASS__).']');
+            throw new Exception('['.$name.']['.__LINE__.']['.class_basename(__CLASS__).']');
         }
         $home = app($model_class);
-
+        */
+        $home = getModelByName('home');
         $params = getRouteParameters();
         try {
             $home = $home->firstOrCreate(['id' => 1]);

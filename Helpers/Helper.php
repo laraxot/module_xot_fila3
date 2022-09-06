@@ -397,7 +397,26 @@ if (! function_exists('getModelByName')) {
         if (is_string($registered) && class_exists($registered)) {
             return app($registered);
         }
-        throw new Exception('['.$name.'] not in morph_map ['.__LINE__.']['.__FILE__.']');
+
+        // getFirst..
+        $files = base_path('Modules').'/*/Models/*.php';
+        $path = collect(glob($files))->first(
+            function ($file) use ($name) {
+                $info = pathinfo($file);
+
+                return Str::snake($info['filename'] ?? '') == $name;
+            }
+        );
+        if (null == $path) {
+            throw new Exception('['.$name.'] not in morph_map ['.__LINE__.']['.__FILE__.']');
+        }
+        $path = FileService::fixPath($path);
+        $info = pathinfo($path);
+        $module_name = Str::between($path, 'Modules'.DIRECTORY_SEPARATOR, DIRECTORY_SEPARATOR.'Models');
+
+        $class = 'Modules\\'.$module_name.'\Models\\'.$info['filename'];
+
+        return app($class);
     }
 }
 if (! function_exists('getUserClass')) {

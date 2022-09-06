@@ -27,6 +27,7 @@ abstract class XotBasePanelPolicy {
      */
     // *
     public function before($user, $ability) {
+        
         // *
         if (\is_object($user)) {
             $route_params = getRouteParameters();
