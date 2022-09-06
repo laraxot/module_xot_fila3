@@ -17,6 +17,8 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Str;
+use Modules\Cms\Presenters\HtmlPanelPresenter;
+use Modules\Cms\Services\PanelFormService;
 use Modules\Theme\Services\FieldService;
 use Modules\Xot\Contracts\ModelWithAuthorContract;
 use Modules\Xot\Contracts\PanelContract;
@@ -24,13 +26,12 @@ use Modules\Xot\Contracts\PanelPresenterContract;
 use Modules\Xot\Contracts\RowsContract;
 use Modules\Xot\Contracts\UserContract;
 use Modules\Xot\Models\Panels\Actions\XotBasePanelAction;
-// use Modules\Xot\Presenters\PdfPanelPresenter;
-// use Modules\Xot\Presenters\XlsPanelPresenter;
+use Modules\Xot\Presenters\PdfPanelPresenter;
+use Modules\Xot\Presenters\XlsPanelPresenter;
 use Modules\Xot\Services\ChainService;
 use Modules\Xot\Services\FileService;
 use Modules\Xot\Services\ImageService;
 use Modules\Xot\Services\PanelActionService;
-use Modules\Xot\Services\PanelFormService;
 use Modules\Xot\Services\PanelRouteService;
 use Modules\Xot\Services\PanelService;
 use Modules\Xot\Services\PanelTabService;
@@ -82,8 +83,9 @@ abstract class XotBasePanel implements PanelContract {
 
     public PanelRouteService $route;
 
-    public function __construct(PanelPresenterContract $presenter, PanelRouteService $route) {
-        $this->presenter = $presenter->setPanel($this);
+    public function __construct(/* PanelPresenterContract $presenter, */ PanelRouteService $route) {
+        // $this->presenter = $presenter->setPanel($this);
+        $this->presenter = (new HtmlPanelPresenter())->setPanel($this);
 
         // $this->row = app($this::$model);
         // $this->form = app(PanelFormService::class)->setPanel($this);
@@ -472,11 +474,14 @@ abstract class XotBasePanel implements PanelContract {
             ->first();
 
         if (null === $row) {
+            // *
             $sql = rowsToSql($rows);
             throw new Exception('Not Found ['.$value.'] on ['.$this->getName().']
                 ['.$sql.']
                 ['.__LINE__.']['.basename(__FILE__).']
                 ');
+            // */
+            throw new Exception('['.__LINE__.']['.__FILE__.']');
         }
         $this->row = $row;
 
@@ -730,18 +735,14 @@ abstract class XotBasePanel implements PanelContract {
                 */
                 if ('pivot_rules' === $item->rules) {
                     $rel_name = $item->name;
-                    // Calling the helper function 'with()' with only one argument simply returns the value itself. If you want to chain methods on a
-                    // construct, use '(new ClassName())->foo()' instead
-                    // $pivot_class = with(new $this::$model())
-                    $pivot_class = app($this::$model)
+                    $pivot_class = with(new $this::$model())
                         ->$rel_name()
                         ->getPivotClass();
                     // $pivot = new $pivot_class();
                     $pivot = app($pivot_class());
                     $pivot_panel_name = StubService::make()->setModelAndName($pivot, 'panel')->get();
                     $pivot_panel = app($pivot_panel_name);
-                    // $pivot_panel->setRows(with(new $this::$model())->$rel_name());
-                    $pivot_panel->setRows(app($this::$model)->$rel_name());
+                    $pivot_panel->setRows(with(new $this::$model())->$rel_name());
                     /**
                      * @var array
                      */
