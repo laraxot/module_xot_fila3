@@ -139,9 +139,9 @@ class RowsService {
         */
 
         $filters_fields = FieldFilterDTO::collection($filters_fields);
-
+        // dddx(get_class_methods($filters_fields));
         // 124    Access to an undefined property object::$param_name.
-        $filters_rules = $filters_fields
+        $filters_rules = $filters_fields->toCollection()
             ->filter(
                 function ($item) {
                     return isset($item->rules);
@@ -150,7 +150,8 @@ class RowsService {
                 function ($item) {
                     return [$item->param_name => $item->rules];
                 }
-            )->collapse()
+            )
+            ->collapse()
             ->all();
 
         $validator = Validator::make($filters, $filters_rules);
