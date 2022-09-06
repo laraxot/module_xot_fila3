@@ -21,12 +21,15 @@ class ModelGeneratorAction extends XotBasePanelAction {
      * @return mixed
      */
     public function handle() {
+        /*
         $view = ThemeService::getView(); // xot::admin.home.acts.xls_import
         $view_params = [
             'view' => $view,
         ];
 
         return view()->make($view, $view_params);
+        */
+        return $this->panel->out();
     }
 
     /**

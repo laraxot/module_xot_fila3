@@ -5,12 +5,12 @@ declare(strict_types=1);
 namespace Modules\Xot\Services;
 
 use Exception;
-use Illuminate\Support\Str;
+use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
-use Illuminate\Contracts\Support\Renderable;
 
 /**
  * Class ArrayService.
@@ -71,6 +71,7 @@ class ArrayService {
      * @throws \PhpOffice\PhpSpreadsheet\Writer\Exception
      *
      * return array|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|string|\Symfony\Component\HttpFoundation\BinaryFileResponse
+     *
      * @return \Symfony\Component\HttpFoundation\BinaryFileResponse|Renderable
      */
     public function toXLS() {
@@ -95,9 +96,8 @@ class ArrayService {
                 // case 2:return self::toXLS_Maatwebsite($params); //break;
                 // case 3:return self::toXLS_phpexcel($params); //break;
             default:
-                $msg='unknown export_processor ['.$this->export_processor.']';
+                $msg = 'unknown export_processor ['.$this->export_processor.']';
                 throw new Exception($msg.'['.__LINE__.']['.__FILE__.']');
-                
         }
     }
 
@@ -138,13 +138,13 @@ class ArrayService {
         /**
          * @phpstan-var view-string
          */
-        $view='xot::services.table';
-        $view_params=[
-            //'header'=>$this->getHeader(),
-            'rows'=> $this->getArray(),
+        $view = 'xot::services.table';
+        $view_params = [
+            // 'header'=>$this->getHeader(),
+            'rows' => $this->getArray(),
         ];
-        return view($view,$view_params);
 
+        return view($view, $view_params);
     }
 
     public function getHeader(): array {
@@ -171,6 +171,7 @@ class ArrayService {
      * @throws \PhpOffice\PhpSpreadsheet\Writer\Exception
      *
      * return array|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|Illuminate\Contracts\View\View|string|\Symfony\Component\HttpFoundation\BinaryFileResponse
+     *
      * @return \Symfony\Component\HttpFoundation\BinaryFileResponse|Renderable
      */
     public function toXLS_phpoffice() {
@@ -211,23 +212,24 @@ class ArrayService {
         // $out='link';
         // exit(response()->download($pathToFile));
         // }
-        //Variable $text in isset() is never defined
-        //if (! isset($text)) {
+        // Variable $text in isset() is never defined
+        // if (! isset($text)) {
         //    $text = 'text';
-        //}
+        // }
         switch ($out) {
-        case 'link':
-            return view()->make('theme::download_icon', $view_params);
-        case 'download':
-            return response()->download($pathToFile);
-        //case 'file':
+            case 'link':
+                return view()->make('theme::download_icon', $view_params);
+            case 'download':
+                return response()->download($pathToFile);
+                // case 'file':
         //    return $pathToFile;
-        case 'link_file':
-            return view()->make('theme::download_icon', $view_params);
+            case 'link_file':
+                return view()->make('theme::download_icon', $view_params);
 
-            // return [$link, $pathToFile];
+                // return [$link, $pathToFile];
         }
-        throw new Exception('['.__LINE__.']['.__FILE__.']');
+        // 231    Unreachable statement - code above always terminates.
+        // throw new Exception('['.__LINE__.']['.__FILE__.']');
     }
 
     public static function save(array $params): void {
@@ -312,21 +314,21 @@ class ArrayService {
     }
 
     /**
-     * Undocumented function
+     * Undocumented function.
      *
      * @param array<int, mixed> $data
-     * @return array
      */
     public static function fixType(array $data): array {
         $res = collect($data)
             ->map(
                 function ($item) {
-                    //Unable to resolve the template type TKey in call to function collect
-                    //Unable to resolve the template type TValue in call to function collect
+                    // Unable to resolve the template type TKey in call to function collect
+                    // Unable to resolve the template type TValue in call to function collect
                     /**
-                    * @phpstan-param \Illuminate\Contracts\Support\Arrayable<(int|string), mixed>|iterable<(int|string), mixed>|null $item
-                    * @param \Illuminate\Contracts\Support\Arrayable<(int|string), mixed>|iterable<(int|string), mixed>|null $item
-                    */       
+                     * @phpstan-param \Illuminate\Contracts\Support\Arrayable<(int|string), mixed>|iterable<(int|string), mixed>|null $item
+                     *
+                     * @param \Illuminate\Contracts\Support\Arrayable<(int|string), mixed>|iterable<(int|string), mixed>|null $item
+                     */
                     $item = collect($item)
                         ->map(
                             function ($item0) {

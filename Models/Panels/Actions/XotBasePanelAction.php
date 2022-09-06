@@ -115,6 +115,10 @@ abstract class XotBasePanelAction {
             $title = $trans;
         }
 
+        if (! is_string($title)) {
+            return '---';
+        }
+
         return $title;
     }
 
@@ -298,15 +302,15 @@ abstract class XotBasePanelAction {
         if (Gate::allows($method, $this->panel)) {
             if (isset($modal)) {
                 switch ($modal) {
-                case 'iframe':
-                    return
-                        '<button type="button" data-title="'.$title.'"
+                    case 'iframe':
+                        return
+                            '<button type="button" data-title="'.$title.'"
 						data-href="'.$url.'" data-toggle="modal" class="btn btn-secondary mb-2" data-target="#myModalIframe">
                         '.$this->icon.'
                         </button>';
-                    // break;
-                case 'ajax':
-                    break;
+                        // break;
+                    case 'ajax':
+                        break;
                 }
             }
 

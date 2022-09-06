@@ -7,6 +7,7 @@ declare(strict_types=1);
 
 namespace Modules\Xot\Exceptions;
 
+use Exception;
 use Illuminate\Http\Response;
 
 class JsonEncodeException extends ApplicationException {
@@ -15,10 +16,20 @@ class JsonEncodeException extends ApplicationException {
     }
 
     public function help(): string {
-        return trans('exception.json_not_encoded.help');
+        $res = trans('exception.json_not_encoded.help');
+        if (! is_string($res)) {
+            throw new Exception('['.__LINE__.']['.__FILE__.']');
+        }
+
+        return $res;
     }
 
     public function error(): string {
-        return trans('exception.json_not_encoded.error');
+        $res = trans('exception.json_not_encoded.error');
+        if (! is_string($res)) {
+            throw new Exception('['.__LINE__.']['.__FILE__.']');
+        }
+
+        return $res;
     }
 }

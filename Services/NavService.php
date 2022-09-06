@@ -31,9 +31,9 @@ class NavService {
             $tmp = [];
             $params['year'] = $year;
             $tmp['title'] = $year;
-            //Strict comparison using === between numeric-string and (float|int) will always evaluate to false
-            //if (date('Y') === $params['year']) {
-            if (date('Y')*1 === $params['year']*1) {
+            // Strict comparison using === between numeric-string and (float|int) will always evaluate to false
+            // if (date('Y') === $params['year']) {
+            if ($params['year'] * 1 === date('Y') * 1) {
                 $tmp['title'] = '['.$tmp['title'].']';
             }
             if ($year === $params['year']) {
@@ -50,9 +50,9 @@ class NavService {
             ++$year;
         }
 
-        /** 
-        * @phpstan-var view-string
-        */
+        /**
+         * @phpstan-var view-string
+         */
         $view = 'adm_theme::layouts.partials.nav';
         $view_params = [
             'nav' => $nav,
@@ -87,7 +87,7 @@ class NavService {
             $params['month'] = (int) $d->format('m');
             $params['year'] = (int) $d->format('Y');
             $tmp['title'] = $d->isoFormat('MMMM YYYY');
-            if (date('Y') === $params['year'] && date('m') === $params['month']) {
+            if (date('Y') == $params['year'] && date('m') == $params['month']) {
                 $tmp['title'] = '['.$tmp['title'].']';
             }
             if ($year === $params['year'] && $month === $params['month']) {
@@ -103,9 +103,9 @@ class NavService {
             $d->addMonth();
         }
 
-        /** 
-        * @phpstan-var view-string
-        */
+        /**
+         * @phpstan-var view-string
+         */
         $view = 'adm_theme::layouts.partials.nav';
         $view_params = [
             'nav' => $nav,

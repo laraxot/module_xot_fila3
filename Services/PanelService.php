@@ -175,10 +175,9 @@ class PanelService {
     }
 
     public function getHomePanel(): PanelContract {
-        // $home = TenantService::model('home');
         $name = 'home';
         $model_class = config('morph_map.'.$name);
-        if (null == $model_class || ! class_exists($model_class)) {
+        if (null == $model_class || ! is_string($model_class) || ! class_exists($model_class)) {
             throw new Exception('['.__LINE__.']['.class_basename(__CLASS__).']');
         }
         $home = app($model_class);
@@ -256,7 +255,8 @@ class PanelService {
         }
 
         if (null === $row) {
-            $row = TenantService::model($first_container);
+            // $row = TenantService::model($first_container);
+            $row = getModelByName($first_container);
         }
 
         $rows = new CustomRelation(

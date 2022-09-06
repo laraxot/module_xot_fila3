@@ -12,9 +12,7 @@ use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Schema;
 use Modules\Tenant\Services\TenantService;
-
 use Modules\Xot\Contracts\PanelContract;
-use Modules\Xot\Relations\CustomRelation;
 use Modules\Xot\Services\PanelService;
 
 /**
@@ -28,7 +26,8 @@ class HomeController extends Controller {
         $request = request();
         $home = null;
         try {
-            $model = TenantService::modelEager('home');
+            // $model = TenantService::modelEager('home');
+            $model = getModelByName('home');
             $home = $model->firstOrCreate(['id' => 1]);
         } catch (\Exception $e) {
             dddx('run migrations');
@@ -46,18 +45,18 @@ class HomeController extends Controller {
         if ('' !== $act) {
             return $home_panel->callItemActionWithGate($act);
         }
-        $view='pub_theme::home.index';
+        $view = 'pub_theme::home.index';
 
-        $view_params=[
-            'home'=>$home,
-            '_panel'=> $home_panel,
+        $view_params = [
+            'home' => $home,
+            '_panel' => $home_panel,
         ];
         /*
         return ThemeService::view('pub_theme::home.index')
             ->with('home', $home)
             ->with('_panel', $home_panel);
         */
-        return view()->make($view,$view_params);
+        return view()->make($view, $view_params);
     }
 
     public function createHomesTable(): void {
@@ -96,64 +95,14 @@ class HomeController extends Controller {
     }
 
     /**
-     * Undocumented function.
-     *
-     * @return mixed
-     */
-    public function showOld(Request $request, ?PanelContract $panel = null) {
-        // $request=request();
-        $home = null;
-        $home = TenantService::model('home');
-        $mod_name = PanelService::make()->get($home)->getModuleName();
-
-        $home_controller = '\Modules\\'.$mod_name.'\Http\Controllers\HomeController';
-
-        // dddx($home_controller);
-        /**
-         * @var string
-         */
-        $act = $request->_act;
-        if ('' !== $act) {
-            $home = TenantService::model('home');
-            $panel = PanelService::make()->get($home);
-
-            return $panel->callItemActionWithGate($act);
-        }
-
-        if (class_exists($home_controller) && 'Xot' !== $mod_name) {
-            return app($home_controller)->show($request);
-        }
-
-        try {
-            $home = TenantService::modelEager('home');
-            $home = $home->firstOrCreate(['id' => 1]);
-        } catch (\Exception $e) {
-            dddx(['exception' => $e, 'model' => $home]);
-        }
-        $panel = PanelService::make()->get($home);
-
-        $rows = new CustomRelation(
-            $home->newQuery(),
-            $home,
-            function ($relation): void {
-                $relation->getQuery();
-            },
-            null,
-            null
-        );
-        $panel->setRows($rows);
-
-        return $panel->out();
-    }
-
-    /**
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
     public function redirect(Request $request) {
-        $url=$request->url;
-        if(is_string($url)){
+        $url = $request->url;
+        if (is_string($url)) {
             return redirect($url);
         }
+
         return redirect('/');
     }
 

@@ -4,21 +4,22 @@ declare(strict_types=1);
 
 namespace Modules\Xot\Providers;
 
+use App\Application;
+use Illuminate\Database\Events\MigrationsEnded;
 use Illuminate\Foundation\AliasLoader;
+use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\View;
 use Modules\Xot\Http\View\Composers\XotComposer;
 use Nwidart\Modules\Facades\Module;
-use Illuminate\Support\Facades\Artisan;
-use Illuminate\Database\Events\MigrationsEnded;
-use Illuminate\Support\Facades\Event;
 
 /**
  * Class XotServiceProvider.
  */
 class XotServiceProvider extends XotBaseServiceProvider {
-    use Traits\PresenterTrait;
+    // use Traits\PresenterTrait;
     use Traits\TranslatorTrait;
     /**
      * The module directory.
@@ -56,10 +57,21 @@ class XotServiceProvider extends XotBaseServiceProvider {
         $this->loadHelpersFrom(__DIR__.'/../Helpers');
         $loader = AliasLoader::getInstance();
         $loader->alias('Panel', 'Modules\Xot\Services\PanelService');
-        $this->registerPresenter();
+        // $loader->alias(\Modules\Xot\Facades\Profile::class,
+        // $this->registerPresenter();
 
         // $this->registerPanel();
         // $this->registerBladeDirectives(); //non intercetta
+        // $this->app->singleton('profile', function (Application $app) {
+        //    return new \Modul
+        // });
+        // $this->app->bind('profile', \Modules\Xot\Services\ProfileTest::class);
+
+        $loader->alias('Profile', 'Modules\Xot\Facades\Profile');
+
+        $this->app->bind(\Modules\Xot\Facades\Profile::class, function () {
+            return new \Modules\Xot\Services\ProfileTest();
+        });
     }
 
     private function redirectSSL(): void {
@@ -80,12 +92,13 @@ class XotServiceProvider extends XotBaseServiceProvider {
     }
 
     /**
-     * Undocumented function
+     * Undocumented function.
      *
-     * @link https://medium.com/@dobron/running-laravel-ide-helper-generator-automatically-b909e75849d0
+     * @see https://medium.com/@dobron/running-laravel-ide-helper-generator-automatically-b909e75849d0
+     *
      * @return void
      */
-    private function registerEvents(){
+    private function registerEvents() {
         Event::listen(
             MigrationsEnded::class,
             function () {

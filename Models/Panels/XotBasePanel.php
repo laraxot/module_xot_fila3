@@ -24,8 +24,8 @@ use Modules\Xot\Contracts\PanelPresenterContract;
 use Modules\Xot\Contracts\RowsContract;
 use Modules\Xot\Contracts\UserContract;
 use Modules\Xot\Models\Panels\Actions\XotBasePanelAction;
-use Modules\Xot\Presenters\PdfPanelPresenter;
-use Modules\Xot\Presenters\XlsPanelPresenter;
+// use Modules\Xot\Presenters\PdfPanelPresenter;
+// use Modules\Xot\Presenters\XlsPanelPresenter;
 use Modules\Xot\Services\ChainService;
 use Modules\Xot\Services\FileService;
 use Modules\Xot\Services\ImageService;
@@ -465,21 +465,18 @@ abstract class XotBasePanel implements PanelContract {
             }
             */
         }
-        //DB::enableQueryLog();
+        // DB::enableQueryLog();
         $row = $rows
             // ->select($tbl.'.*')
             // ->select('cuisine_cat_morph.note as "pivot.note"')
             ->first();
 
         if (null === $row) {
-            //*
             $sql = rowsToSql($rows);
             throw new Exception('Not Found ['.$value.'] on ['.$this->getName().']
                 ['.$sql.']
                 ['.__LINE__.']['.basename(__FILE__).']
                 ');
-            //*/
-            throw new Exception('['.__LINE__.']['.__FILE__.']');
         }
         $this->row = $row;
 
@@ -617,9 +614,8 @@ abstract class XotBasePanel implements PanelContract {
         }
         */
 
-       
-        //$test=\Modules\Blog\Models\Page::get()->toTree();
-        //dddx($test);
+        // $test=\Modules\Blog\Models\Page::get()->toTree();
+        // dddx($test);
 
         $rows = $this->getBuilder()->get();
 
@@ -685,15 +681,15 @@ abstract class XotBasePanel implements PanelContract {
             $act = Str::after($route_action, '@');
         }
         switch ($act) {
-        case 'store':
-            $fields = $this->getFields(['act' => 'create']);
-            break;
-        case 'update':
-            $fields = $this->getFields(['act' => 'edit']);
-            break;
-        default:
-            $fields = $this->fields();
-            break;
+            case 'store':
+                $fields = $this->getFields(['act' => 'create']);
+                break;
+            case 'update':
+                $fields = $this->getFields(['act' => 'edit']);
+                break;
+            default:
+                $fields = $this->fields();
+                break;
         }
         $act = request()->input('_act');
         if ('' !== $act) {
@@ -734,14 +730,18 @@ abstract class XotBasePanel implements PanelContract {
                 */
                 if ('pivot_rules' === $item->rules) {
                     $rel_name = $item->name;
-                    $pivot_class = with(new $this::$model())
+                    // Calling the helper function 'with()' with only one argument simply returns the value itself. If you want to chain methods on a
+                    // construct, use '(new ClassName())->foo()' instead
+                    // $pivot_class = with(new $this::$model())
+                    $pivot_class = app($this::$model)
                         ->$rel_name()
                         ->getPivotClass();
                     // $pivot = new $pivot_class();
                     $pivot = app($pivot_class());
                     $pivot_panel_name = StubService::make()->setModelAndName($pivot, 'panel')->get();
                     $pivot_panel = app($pivot_panel_name);
-                    $pivot_panel->setRows(with(new $this::$model())->$rel_name());
+                    // $pivot_panel->setRows(with(new $this::$model())->$rel_name());
+                    $pivot_panel->setRows(app($this::$model)->$rel_name());
                     /**
                      * @var array
                      */
@@ -1065,9 +1065,9 @@ abstract class XotBasePanel implements PanelContract {
     }
 
     /**
-     * ---
+     * ---.
      */
-    public function formLivewireEdit(array $params = []):string {
+    public function formLivewireEdit(array $params = []): string {
         return $this->form->{__FUNCTION__}($params);
     }
 
@@ -1392,9 +1392,7 @@ abstract class XotBasePanel implements PanelContract {
     }
 
     /**
-     * elastic restituisce gia' i dati paginati
-     *
-     * 
+     * elastic restituisce gia' i dati paginati.
      */
     public function rowsPaginated() {
         return $this->rows()->paginate(20);
@@ -1791,9 +1789,9 @@ abstract class XotBasePanel implements PanelContract {
     }
 
     /**
-     * ---
+     * ---.
      */
-    public function update(array $data):self {
+    public function update(array $data): self {
         // $func = '\Modules\Xot\Jobs\Crud\\'.Str::studly(__FUNCTION__).'Job';
         $func = '\Modules\Xot\Jobs\PanelCrud\\'.Str::studly(__FUNCTION__).'Job';
 

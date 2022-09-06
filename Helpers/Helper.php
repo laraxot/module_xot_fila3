@@ -150,7 +150,7 @@ if (! function_exists('dddx')) {
             '_' => $params,
             'line' => $tmp[0]['line'] ?? 'line-unknows',
             'file' => FileService::fixPath($tmp[0]['file'] ?? 'file-unknown'),
-            'time' => microtime(true)- LARAVEL_START,
+            'time' => microtime(true) - LARAVEL_START,
             // 'file_1' => $file, //da sistemare
         ];
         if (File::exists($data['file']) && Str::startsWith($data['file'], FileService::fixPath(storage_path('framework/views')))) {
@@ -388,6 +388,26 @@ if (! function_exists('getModelFields')) {
             ->getColumnListing($model->getTable());
 
         return $fields;
+    }
+}
+
+if (! function_exists('getModelByName')) {
+    function getModelByName(string $name): Model {
+        $registered = config('morph_map.'.$name);
+        if (is_string($registered) && class_exists($registered)) {
+            return app($registered);
+        }
+        throw new Exception('['.$name.'] not in morph_map ['.__LINE__.']['.__FILE__.']');
+    }
+}
+if (! function_exists('getUserClass')) {
+    function getUserClass(): string {
+        $class = config('auth.providers.users.model');
+        if (! is_string($class)) {
+            throw new Exception('['.__LINE__.']['.__FILE__.']');
+        }
+
+        return $class;
     }
 }
 
@@ -642,7 +662,7 @@ if (! function_exists('transFields')) {
          */
         $row = \Form::getModel();
 
-        $ris->value = (Arr::get($row, $name));
+        $ris->value = Arr::get($row, $name);
 
         return $ris;
     }
@@ -933,7 +953,7 @@ if (! function_exists('getRelationships')) {
             if (0 === count($args) && $reflection->class === get_class($model)) {
                 try {
                     $return = $reflection->invoke($model);
-                    $check = ($return instanceof \Illuminate\Database\Eloquent\Relations\Relation);
+                    $check = $return instanceof \Illuminate\Database\Eloquent\Relations\Relation;
                     if ($check) {
                         $related_model = (new \ReflectionClass($return->getRelated()))->getName();
                         $msg = [
@@ -1206,7 +1226,7 @@ if (! function_exists('secondsToHms')) {
     function secondsToHms(float $seconds): string {
         $hours = floor($seconds / 3600);
         $seconds -= $hours * 3600;
-        $minutes = floor(($seconds / 60));
+        $minutes = floor($seconds / 60);
         $seconds -= $minutes * 60;
         $str = '';
         if ($hours > 0) {
@@ -1222,7 +1242,7 @@ if (! function_exists('rowsToSql')) {
     /**
      * Undocumented function.
      *
-     * @param \Illuminate\Database\Eloquent\Relations\HasOne|\Illuminate\Database\Query\Builder $rows
+     * @param \Illuminate\Database\Eloquent\Relations\HasOne|\Illuminate\Database\Query\Builder|\Illuminate\Database\Eloquent\Builder $rows
      */
     function rowsToSql($rows): string {
         // $sql = str_replace('?', $rows->getBindings(), $rows->toSql());
@@ -1265,7 +1285,7 @@ if (! function_exists('getLang')) {
 */
 
 if (! function_exists('str_limit')) {
-    function str_limit(string $str,int $limit): string {
-        return Str::limit($str,$limit); //per xstream
+    function str_limit(string $str, int $limit): string {
+        return Str::limit($str, $limit); // per xstream
     }
 }

@@ -7,7 +7,6 @@ namespace Modules\Xot\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 // ---- services ---
-use Modules\Theme\Services\ThemeService;
 use Nwidart\Modules\Facades\Module;
 
 // use Modules\Xot\Services\ArtisanService;
@@ -31,7 +30,6 @@ class HomeController extends Controller {
             $params = $route_current->parameters();
         }
 
-
         $module_name = collect($params)->get('module');
         $module = Module::find($module_name);
         if (! \is_object($module)) {
@@ -46,13 +44,19 @@ class HomeController extends Controller {
         if (class_exists($home_panel_class)) {
             $_panel = app($home_panel_class);
         }
-
+        /**
+         * @phpstan-var view-string
+         */
         $home_view = $module_name.'::admin.index';
         if (\View::exists($home_view)) {
-            return ThemeService::view($home_view)->with('_panel', $_panel);
+            return view($home_view)->with('_panel', $_panel);
         }
+        /**
+         * @phpstan-var view-string
+         */
+        $view = 'xot::admin.home';
 
-        return ThemeService::view('xot::admin.home');
+        return view($view);
     }
 
     /**
@@ -62,7 +66,8 @@ class HomeController extends Controller {
         /**
          * @var string
          */
-        $url=$request->url;
+        $url = $request->url;
+
         return redirect($url);
     }
 }

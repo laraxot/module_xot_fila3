@@ -73,14 +73,25 @@ class ProfileService {
 
         $profile_panel = $this->getProfilePanel();
         if (method_exists($profile_panel, $name)) {
-            return call_user_func_array([$profile_panel, $name], $arguments);
+            /**
+             * @var callable
+             */
+            $callback = [$profile_panel, $name];
+
+            return call_user_func_array($callback, $arguments);
         }
 
         $profile = $this->getProfile();
+        if (null == $profile) {
+            return 'profile is null ['.__LINE__.']['.class_basename(__CLASS__).']';
+        }
         if (method_exists($profile, $name)) {
-            // return $profile->{$name}($arguments);
-            // dddx(['func_get_args'=>func_get_args(),]);
-            return call_user_func_array([$profile, $name], $arguments);
+            /**
+             * @var callable
+             */
+            $callback = [$profile, $name];
+
+            return call_user_func_array($callback, $arguments);
         }
         throw new Exception('['.get_class($profile).']method:['.$name.']['.__LINE__.']['.class_basename(__CLASS__).']');
     }

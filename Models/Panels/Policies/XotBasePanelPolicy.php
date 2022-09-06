@@ -6,10 +6,11 @@ namespace Modules\Xot\Models\Panels\Policies;
 
 use Illuminate\Auth\Access\HandlesAuthorization;
 // use Illuminate\Contracts\Auth\UserProvider as User;
+use Modules\LU\Services\ProfileService;  // da usare Facades per separazione dei moduli
 use Modules\Xot\Contracts\PanelContract;
+// use Modules\Xot\Services\ProfileService;
 use Modules\Xot\Contracts\UserContract;
-use Modules\Xot\Services\PanelService;
-use Modules\Xot\Services\ProfileService;
+use Modules\Xot\Facades\Profile as ProfileFacade;
 use Nwidart\Modules\Facades\Module;
 
 /**
@@ -26,7 +27,7 @@ abstract class XotBasePanelPolicy {
      */
     // *
     public function before($user, $ability) {
-        // * -- togliere per fare debug
+        // *
         if (\is_object($user)) {
             $route_params = getRouteParameters();
             $profile = ProfileService::make()->get($user);
@@ -45,6 +46,23 @@ abstract class XotBasePanelPolicy {
             }
         }
         // */
+        /*
+        if (\is_object($user)) {
+            $route_params = getRouteParameters();
+            if (isset($route_params['module'])) {
+                $module = Module::find($route_params['module']);
+                $module_name = '';
+                if (null != $module) {
+                    $module_name = $module->getName();
+                }
+                $has_area = ProfileFacade::hasArea($module_name);
+
+                return $has_area && ProfileFacade::isSuperAdmin();
+            }
+            if (ProfileFacade::isSuperAdmin()) {
+                return true;
+            }
+        }*/
 
         return null;
     }
@@ -57,7 +75,6 @@ abstract class XotBasePanelPolicy {
     */
 
     public function home(?UserContract $user, PanelContract $panel): bool {
-        
         if (inAdmin() && null === $user) {
             return false;
         }

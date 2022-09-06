@@ -63,6 +63,9 @@ abstract class XotBaseComposer {
         $class = '\Modules\\'.$module->getName().'\View\Composers\ThemeComposer';
         // Parameter #1 $callback of function call_user_func_array expects callable(): mixed, array{*NEVER*, string} given.
         $app = app($class);
+        /**
+         * @var callable
+         */
         $callback = [$app, $name];
 
         return call_user_func_array($callback, $arguments);

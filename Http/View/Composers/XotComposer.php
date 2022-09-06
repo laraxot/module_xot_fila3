@@ -8,7 +8,8 @@ namespace Modules\Xot\Http\View\Composers;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Illuminate\View\View;
-use Modules\Xot\Services\ProfileService;
+
+// use Modules\Xot\Services\ProfileService;  //moved into LU
 
 /**
  * Class XotComposer.
@@ -24,7 +25,7 @@ class XotComposer {
         if (null === $user) {
             return;
         }
-        $profile = ProfileService::make()->get($user);
+        // $profile = ProfileService::make()->get($user);
         $lang = app()->getLocale();
         $params = [];
         $route_current = Route::current();
@@ -34,6 +35,6 @@ class XotComposer {
 
         $view->with('params', $params);
         $view->with('lang', $lang);
-        $view->with('profile', $profile);
+        // $view->with('profile', $profile);
     }
 }

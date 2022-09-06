@@ -8,7 +8,6 @@ declare(strict_types=1);
 namespace Modules\Xot\Models\Panels\Actions;
 
 use Illuminate\Contracts\Support\Renderable;
-use Modules\LU\Models\User;
 use Modules\Theme\Services\ThemeService;
 use Modules\Xot\Services\ArrayService;
 use Modules\Xot\Services\XLSService;
@@ -25,7 +24,8 @@ class XlsImportAction extends XotBasePanelAction {
      * @return mixed
      */
     public function handle() {
-        $view = ThemeService::getView(); // xot::admin.home.acts.xls_import
+        // $view = ThemeService::getView(); // xot::admin.home.acts.xls_import
+        $view = 'xot::admin.home.acts.xls_import';
         $view_params = [
             'view' => $view,
         ];
@@ -55,15 +55,16 @@ class XlsImportAction extends XotBasePanelAction {
         /**
          * @var array
          */
-        $first_row=collect($data)->first();
+        $first_row = collect($data)->first();
 
         $head = array_keys($first_row);
 
         $html = ArrayService::make()->setArray($data)->toHtml();
 
-        $fillable = app(User::class)->getFillable();
+        $fillable = app(getUserClass())->getFillable();
 
-        $view = ThemeService::getView(); // xot::admin.home.acts.xls_import
+        // $view = ThemeService::getView(); // xot::admin.home.acts.xls_import
+        $view = 'xot::admin.home.acts.xls_import';
 
         $view .= '.step'.$step;
         $view_params = [
