@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Modules\Xot\Http\View\Composers;
+namespace Modules\Xot\View\Composers;
 
 // use App\Repositories\UserRepository;
 use Illuminate\Support\Facades\Auth;

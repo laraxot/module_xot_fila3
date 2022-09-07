@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\View;
-use Modules\Xot\Http\View\Composers\XotComposer;
+use Modules\Xot\View\Composers\XotComposer;
 use Nwidart\Modules\Facades\Module;
 
 /**
