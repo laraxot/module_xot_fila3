@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 use Illuminate\Support\Facades\Route;
-use Modules\Xot\Services\RouteService;
+use Modules\Cms\Services\RouteService;
 
 $acts = [
     (object) [
@@ -95,7 +95,7 @@ if (! config('xra.disable_frontend_dynamic_route', false)) {
             }
         );
 
-        RouteService::myRoutes($name, $middleware, $namespace, $prefix, $as, $controller, $front_acts);
+    RouteService::myRoutes($name, $middleware, $namespace, $prefix, $as, $controller, $front_acts);
 }
 
 $middleware = [
@@ -110,10 +110,8 @@ $as = 'admin.';
 
 RouteService::myRoutes($name, $middleware, $namespace, $prefix, $as, $controller, $acts);
 
-/**
+/*
  * Undocumented function.
  *
  * @return void
  */
-
-
