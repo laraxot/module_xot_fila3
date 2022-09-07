@@ -407,6 +407,9 @@ if (! function_exists('getModelByName')) {
                 return Str::snake($info['filename'] ?? '') == $name;
             }
         );
+
+        // dddx($registered);
+
         if (null == $path) {
             throw new Exception('['.$name.'] not in morph_map ['.__LINE__.']['.__FILE__.']');
         }

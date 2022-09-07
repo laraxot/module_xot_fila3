@@ -8,7 +8,6 @@ use Illuminate\Auth\Access\HandlesAuthorization;
 // use Illuminate\Contracts\Auth\UserProvider as User;
 use Modules\LU\Services\ProfileService;  // da usare Facades per separazione dei moduli
 use Modules\Xot\Contracts\PanelContract;
-// use Modules\Xot\Services\ProfileService;
 use Modules\Xot\Contracts\UserContract;
 use Modules\Xot\Facades\Profile as ProfileFacade;
 use Nwidart\Modules\Facades\Module;
@@ -27,7 +26,6 @@ abstract class XotBasePanelPolicy {
      */
     // *
     public function before($user, $ability) {
-        
         // *
         if (\is_object($user)) {
             $route_params = getRouteParameters();

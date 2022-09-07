@@ -334,12 +334,14 @@ class ProfileService {
         return $areas;
     }
 
+    // moved
     public function hasArea(string $name): bool {
         $area = $this->areas()->firstWhere('area_define_name', $name);
 
         return \is_object($area);
     }
 
+    // moved
     public function panelAreas(): Collection {
         return $this->areas()->map(
             function ($area) {

@@ -8,7 +8,6 @@ use Exception;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
-use Modules\Tenant\Services\TenantService;
 use Modules\Xot\Contracts\PanelContract;
 use Modules\Xot\Contracts\UserContract;
 use Modules\Xot\Relations\CustomRelation;
@@ -258,8 +257,7 @@ class PanelService {
         }
 
         if (null === $row) {
-            // $row = TenantService::model($first_container);
-            $row = getModelByName($first_container);
+            $row = getModelByName(Str::singular($first_container));
         }
 
         $rows = new CustomRelation(

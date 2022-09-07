@@ -117,6 +117,7 @@ class RowsService {
     public static function filter($query, array $filters, array $filters_fields) {
         $filters_fields = FieldFilterDTO::collection($filters_fields);
         $filters_rules = [];
+
         foreach ($filters_fields as $fitem) {
             if (null !== $fitem->rules) {
                 $filters_rules[$fitem->param_name] = $fitem->rules;
