@@ -22,3 +22,5 @@ php -d memory_limit=-1 composer.phar require -W spipu/html2pdf
 #php -d memory_limit=-1 composer.phar require -W symfony/dom-crawler
 #php -d memory_limit=-1 composer.phar require -W twig/twig
 #php -d memory_limit=-1 composer.phar require -W wrklst/docxmustache
+
+php -d memory_limit=-1 composer.phar require -W psr/simple-cache
