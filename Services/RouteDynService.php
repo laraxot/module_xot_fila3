@@ -236,7 +236,8 @@ class RouteDynService {
             $v['group_opts'] = $group_opts;
             self::createRouteResource($v, $namespace);
             Route::group(
-                $group_opts, function () use ($v, $namespace, $curr) {
+                $group_opts,
+                function () use ($v, $namespace, $curr) {
                     self::createRouteActs($v, $namespace, $curr);
                     self::createRouteSubs($v, $namespace, $curr);
                 }
@@ -300,7 +301,7 @@ class RouteDynService {
         $controller = self::getController($v, $namespace);
         foreach ($v['acts'] as $k1 => $v1) {
             // try {
-                $v1['controller'] = $controller; // le acts hanno il controller del padre
+            $v1['controller'] = $controller; // le acts hanno il controller del padre
             // } catch (\Exception $e) {
             //    dddx([
             //        'message' => $e->getMessage(),
@@ -353,9 +354,9 @@ class RouteDynService {
         if ('.' === mb_substr($prefix, -1)) {
             $prefix = mb_substr($prefix, 0, -1);
         }
-        //Strict comparison using === between null and non-empty-string will always evaluate to false.
-        //if ('' === $prefix || null === $prefix) {
-        if ('' === $prefix ) {
+        // Strict comparison using === between null and non-empty-string will always evaluate to false.
+        // if ('' === $prefix || null === $prefix) {
+        if ('' === $prefix) {
             return ['index' => $prefix.'index', 'create' => $prefix.'create', 'store' => $prefix.'store', 'show' => $prefix.'show', 'edit' => $prefix.'edit', 'update' => $prefix.'update', 'destroy' => $prefix.'destroy'];
         }
         $prefix = mb_strtolower($prefix);

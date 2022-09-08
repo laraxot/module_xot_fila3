@@ -26,8 +26,7 @@ use stdClass;
  * Class XotBaseJob.
  * NON DEVE ESSERE ShouldQueue, se no non lo esegue subito con dispatchSync, dispatchNow sara' deprecato.
  */
-abstract class XotBaseJob /* implements ShouldQueue */
-{
+abstract class XotBaseJob { /* implements ShouldQueue */
     // use Traits\CommonTrait;
     use Dispatchable;
     use InteractsWithQueue;

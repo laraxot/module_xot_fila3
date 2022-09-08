@@ -6,15 +6,15 @@ namespace Modules\Xot\Services;
 
 use Exception;
 use Illuminate\Support\Arr;
-use Illuminate\Support\Str;
-use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\File;
-// ---- services ---
-use Illuminate\Support\Facades\Lang;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Lang;
+// ---- services ---
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Session;
-use Modules\Theme\Services\ThemeService;
+use Illuminate\Support\Str;
 use Illuminate\Translation\Translator as BaseTranslator;
+use Modules\Theme\Services\ThemeService;
 
 // dddx('leggo');
 
@@ -89,7 +89,7 @@ class TranslatorService extends BaseTranslator {
             return [];
         }
         $translator = app('translator');
-        $tmp = ($translator->parseKey($key));
+        $tmp = $translator->parseKey($key);
         $namespace = $tmp[0];
         $group = $tmp[1];
         $item = $tmp[2];
@@ -171,7 +171,7 @@ class TranslatorService extends BaseTranslator {
         } // non serve salvare
 
         $translator = app('translator');
-        $tmp = ($translator->parseKey($key));
+        $tmp = $translator->parseKey($key);
         $namespace = $tmp[0];
         $group = $tmp[1];
         $item = $tmp[2];
@@ -180,7 +180,7 @@ class TranslatorService extends BaseTranslator {
         $filename = $path.DIRECTORY_SEPARATOR.$lang.DIRECTORY_SEPARATOR.$group.'.php';
 
         $trad = $namespace.'::'.$group;
-        $rows = (trans($trad));
+        $rows = trans($trad);
         $item_keys = explode('.', $item);
         $item_keys = implode('"]["', $item_keys);
         $item_keys = '["'.$item_keys.'"]';
@@ -208,7 +208,7 @@ class TranslatorService extends BaseTranslator {
     public static function getFilePath(string $key): string {
         $lang = app()->getLocale();
         $translator = app('translator');
-        [$namespace,$group,$item] = ($translator->parseKey($key));
+        [$namespace,$group,$item] = $translator->parseKey($key);
         $trans = trans();
         $path = collect($trans->getLoader()->namespaces())->flip()->search($namespace);
         $file_path = $path.DIRECTORY_SEPARATOR.$lang.DIRECTORY_SEPARATOR.$group.'.php';

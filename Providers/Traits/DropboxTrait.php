@@ -13,7 +13,8 @@ trait DropboxTrait {
     // lo riabilitiamo in futuro
     private function registerDropbox(): void {
         Storage::extend(
-            'dropbox', function ($app, $config) {
+            'dropbox',
+            function ($app, $config) {
                 // dddx($config);
 
                 $client = new DropboxClient($config['authorizationToken']);

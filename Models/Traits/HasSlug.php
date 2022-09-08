@@ -19,12 +19,9 @@ trait HasSlug {
     }
 
     /**
-     * Undocumented function
-     *
-     * @param string $slug
-     * @return void
+     * Undocumented function.
      */
-    public function setSlugAttribute(string $slug):void {
+    public function setSlugAttribute(string $slug): void {
         $this->attributes['slug'] = $this->generateUniqueSlug($slug);
     }
 

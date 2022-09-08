@@ -16,7 +16,7 @@ use Modules\Xot\Contracts\PanelContract;
 class IndexAttachJob extends XotBaseJob {
     public function handle(): PanelContract {
         if ('POST' === \Request::getMethod()) {
-            //$this->panel = IndexStoreAttachJob::dispatchNow($this->data, $this->panel);
+            // $this->panel = IndexStoreAttachJob::dispatchNow($this->data, $this->panel);
             throw new Exception('['.__LINE__.']['.__FILE__.']');
         }
 

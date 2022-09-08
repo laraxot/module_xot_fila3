@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Modules\Xot\Tests\Feature;
 
 use Tests\TestCase;

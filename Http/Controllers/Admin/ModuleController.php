@@ -7,9 +7,6 @@ namespace Modules\Xot\Http\Controllers\Admin;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
-use Modules\Tenant\Services\TenantService;
-use Modules\Theme\Services\ThemeService;
-use Modules\Xot\Relations\CustomRelation;
 use Modules\Xot\Services\PanelService;
 use Nwidart\Modules\Facades\Module;
 
@@ -55,7 +52,6 @@ class ModuleController extends Controller {
      */
     public function store(Request $request) {
         return $this->index($request);
-
     }
 
     /**

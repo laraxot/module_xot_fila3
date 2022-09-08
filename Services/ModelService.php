@@ -114,7 +114,7 @@ class ModelService {
         /**
          * @var array
          */
-        $models=config('morph_map');
+        $models = config('morph_map');
         $post_type = collect($models)
             ->search(\get_class($model));
         if (false === $post_type) {

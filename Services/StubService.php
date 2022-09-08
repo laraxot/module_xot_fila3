@@ -164,9 +164,9 @@ class StubService {
         $dummy_class = collect(explode('\\', $this->getClass()))->slice(-1)->implode('\\');
         $ns = $this->getNamespace();
 
-        $dummy_timestamps='false';
-        if(isset($fields['updated_at'])){
-            $dummy_timestamps='true';
+        $dummy_timestamps = 'false';
+        if (isset($fields['updated_at'])) {
+            $dummy_timestamps = 'true';
         }
 
         $replaces = [
@@ -199,14 +199,14 @@ class StubService {
         return $this->getColumns()
             ->map(
                 // function (Column $column) {
-                     function ($column) {
-                         if (! $column instanceof Column) {
-                             throw new Exception('['.__LINE__.']['.__FILE__.']');
-                         }
+                function ($column) {
+                    if (! $column instanceof Column) {
+                        throw new Exception('['.__LINE__.']['.__FILE__.']');
+                    }
 
-                         return $this->mapTableProperties($column);
-                         // return $this->getPropertiesFromMethods();
-                     }
+                    return $this->mapTableProperties($column);
+                    // return $this->getPropertiesFromMethods();
+                }
             )->collapse()
             ->values()
             ->implode(
@@ -252,7 +252,7 @@ class StubService {
      * Checks if a given column should be included in the factory.
      */
     protected function shouldBeIncluded(Column $column): bool {
-        $shouldBeIncluded = ($column->getNotNull() /* || $this->includeNullableColumns */)
+        $shouldBeIncluded = $column->getNotNull() /* || $this->includeNullableColumns */
             && ! $column->getAutoincrement();
 
         if (! $this->getModel()->usesTimestamps()) {
@@ -442,28 +442,28 @@ class StubService {
         $dir = collect(explode('\\', $this->model_class))->slice(0, -1)->implode('\\');
 
         switch ($this->name) {
-        case 'factory':
-            return Str::replace('\Models\\', '\Database\Factories\\', $this->model_class).'Factory';
-        case 'migration_morph_pivot':
-            return '';
-        case 'morph_pivot':
-            return '';
-        case 'repository':
-            return Str::replace('\Models\\', '\Repositories\\', $this->model_class).'Repository';
-        case 'transformer_collection':
-            return Str::replace('\Models\\', '\Transformers\\', $this->model_class).'Collection';
-        case 'transformer_resource':
-            return Str::replace('\Models\\', '\Transformers\\', $this->model_class).'Resource';
-        case 'policy':
-            return $dir.'\\Policies\\'.class_basename($this->model_class).'Policy';
-        case 'panel':
-            return $dir.'\\Panels\\'.class_basename($this->model_class).'Panel';
-        case 'model':
-            return $this->model_class;
-        default:
-            $msg = '['.$this->name.'] Unkwon !['.__LINE__.']['.basename(__FILE__).']';
-            // dddx($msg);
-            throw new \Exception($msg);
+            case 'factory':
+                return Str::replace('\Models\\', '\Database\Factories\\', $this->model_class).'Factory';
+            case 'migration_morph_pivot':
+                return '';
+            case 'morph_pivot':
+                return '';
+            case 'repository':
+                return Str::replace('\Models\\', '\Repositories\\', $this->model_class).'Repository';
+            case 'transformer_collection':
+                return Str::replace('\Models\\', '\Transformers\\', $this->model_class).'Collection';
+            case 'transformer_resource':
+                return Str::replace('\Models\\', '\Transformers\\', $this->model_class).'Resource';
+            case 'policy':
+                return $dir.'\\Policies\\'.class_basename($this->model_class).'Policy';
+            case 'panel':
+                return $dir.'\\Panels\\'.class_basename($this->model_class).'Panel';
+            case 'model':
+                return $this->model_class;
+            default:
+                $msg = '['.$this->name.'] Unkwon !['.__LINE__.']['.basename(__FILE__).']';
+                // dddx($msg);
+                throw new \Exception($msg);
         }
     }
 
@@ -477,32 +477,32 @@ class StubService {
         ]);
         */
         switch ($this->name) {
-        case 'factory':
-            return $dir.'/../Database/Factories/'.$class_name.'Factory.php';
+            case 'factory':
+                return $dir.'/../Database/Factories/'.$class_name.'Factory.php';
 
-        case 'migration_morph_pivot':
-            return $dir.'/../Database/Migrations/'.date('Y_m_d_Hi00').'_create_'.Str::snake($class_name).'_table.php';
+            case 'migration_morph_pivot':
+                return $dir.'/../Database/Migrations/'.date('Y_m_d_Hi00').'_create_'.Str::snake($class_name).'_table.php';
 
-        case 'morph_pivot':
-            return $dir.'/'.$class_name.'Morph.php';
+            case 'morph_pivot':
+                return $dir.'/'.$class_name.'Morph.php';
 
-        case 'repository':
-            return $dir.'/../Repositories/'.$class_name.'Repository.php';
+            case 'repository':
+                return $dir.'/../Repositories/'.$class_name.'Repository.php';
 
-        case 'transformer_collection':
-            return $dir.'/../Transformers/'.$class_name.'Collection.php';
+            case 'transformer_collection':
+                return $dir.'/../Transformers/'.$class_name.'Collection.php';
 
-        case 'transformer_resource':
-            return $dir.'/../Transformers/'.$class_name.'Resource.php';
-        case 'policy':
-            return $dir.'/Policies/'.$class_name.'Policy.php';
-        case 'panel':
-            return $dir.'/Panels/'.$class_name.'Panel.php';
-        case 'model':
-            return $dir.'/'.$class_name.'.php';
-        default:
-            $msg = '['.$this->name.'] Unkwon !['.__LINE__.']['.basename(__FILE__).']';
-            throw new \Exception($msg);
+            case 'transformer_resource':
+                return $dir.'/../Transformers/'.$class_name.'Resource.php';
+            case 'policy':
+                return $dir.'/Policies/'.$class_name.'Policy.php';
+            case 'panel':
+                return $dir.'/Panels/'.$class_name.'Panel.php';
+            case 'model':
+                return $dir.'/'.$class_name.'.php';
+            default:
+                $msg = '['.$this->name.'] Unkwon !['.__LINE__.']['.basename(__FILE__).']';
+                throw new \Exception($msg);
         }
     }
 

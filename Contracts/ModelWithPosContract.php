@@ -44,6 +44,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @method mixed     bellBoys()
  * @method array     toArray()
  * @method BelongsTo user()
+ *
  * @mixin  \Eloquent
  */
 interface ModelWithPosContract {

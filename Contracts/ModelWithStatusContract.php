@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Modules\Xot\Contracts;
 
-use Spatie\ModelStatus\Status;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
+use Spatie\ModelStatus\Status;
 
 /**
  * Modules\Xot\Contracts\ModelWithStatusContract.
@@ -45,6 +45,7 @@ use Illuminate\Database\Eloquent\Relations\MorphMany;
  * @method mixed     bellBoys()
  * @method array     toArray()
  * @method BelongsTo user()
+ *
  * @mixin  \Eloquent
  */
 interface ModelWithStatusContract {

@@ -36,7 +36,7 @@ class HomePanel extends XotBasePanel {
         /**
          * @var string
          */
-        $cmd = request('cmd','');
+        $cmd = request('cmd', '');
 
         return [
             new Actions\ArtisanAction($cmd),

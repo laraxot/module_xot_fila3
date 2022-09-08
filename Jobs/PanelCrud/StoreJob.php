@@ -396,7 +396,7 @@ class StoreJob extends XotBaseJob {
         /**
          * @var array
          */
-        $data_to=$data['to'];
+        $data_to = $data['to'];
         $items_1 = collect($data_to);
         $items_add = $items_1->diff($items_0);
         $items_sub = $items_0->diff($items_1);

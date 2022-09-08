@@ -1,6 +1,6 @@
 <?php
 /**
- * @link https://medium.com/@parvej.code/how-to-create-simple-memoization-helper-in-php-1eb3cdbfde7c
+ * @see https://medium.com/@parvej.code/how-to-create-simple-memoization-helper-in-php-1eb3cdbfde7c
  */
 
 declare(strict_types=1);
@@ -10,19 +10,15 @@ namespace Modules\Xot\Services;
 use Closure;
 
 class Memoization {
-
     private static ?self $_instance = null;
 
     protected array $memoized = [];
 
     /**
-     * Undocumented function
-     *
+     * Undocumented function.
      */
     public function __construct() {
-
     }
-
 
     /**
      * getInstance.
@@ -45,16 +41,15 @@ class Memoization {
     }
 
     /**
-     * Undocumented function
+     * Undocumented function.
      *
-     * @param string $key
-     * @param Closure $callback
      * @return mixed
      */
-    public function memoize(string $key,Closure $callback) {
-        if (!isset($this->memoized[$key])) {
+    public function memoize(string $key, Closure $callback) {
+        if (! isset($this->memoized[$key])) {
             return $this->memoized[$key] = $callback();
         }
+
         return $this->memoized[$key];
     }
 }

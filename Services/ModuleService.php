@@ -73,7 +73,7 @@ class ModuleService {
             if (Str::endsWith($filename, $ext)) {
                 $tmp = new \stdClass();
 
-                $name = substr(($filename), 0, -\strlen($ext));
+                $name = substr($filename, 0, -\strlen($ext));
 
                 // dddx(['name' => $name, 'name1' => $file->getFilenameWithoutExtension()]);
                 /**

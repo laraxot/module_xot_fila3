@@ -166,27 +166,22 @@ abstract class XotBaseMigration extends Migration {
         $this->getConn()->getConnection()->statement($sql);
     }
 
-    /**
-     * @return bool
-     */
-    public function hasIndex(string $index):bool {
+    public function hasIndex(string $index): bool {
         $tbl = $this->getTable();
         $conn = $this->getConn()->getConnection();
         $dbSchemaManager = $conn->getDoctrineSchemaManager();
         $doctrineTable = $dbSchemaManager->listTableDetails($tbl);
 
-        //$indexes=$this->getTableIndexes();
-        $has_index=$doctrineTable->hasIndex($tbl.'_'.$index.'_index');
-        //dddx(['indexes'=>$indexes,'has_index'=>$has_index]);
+        // $indexes=$this->getTableIndexes();
+        $has_index = $doctrineTable->hasIndex($tbl.'_'.$index.'_index');
+        // dddx(['indexes'=>$indexes,'has_index'=>$has_index]);
         return $has_index;
     }
 
-
-
     /**
-     * ---
+     * ---.
      */
-    public function hasPrimaryKey():bool {
+    public function hasPrimaryKey(): bool {
         $table_details = $this->getTableDetails();
 
         return $table_details->hasPrimaryKey();
@@ -219,11 +214,11 @@ abstract class XotBaseMigration extends Migration {
 
     // da rivedere
     public function renameColumn(string $from, string $to): void {
-        //Call to an undefined method Illuminate\Database\Schema\Builder::renameColumn().
+        // Call to an undefined method Illuminate\Database\Schema\Builder::renameColumn().
         /**
          * @var \Illuminate\Database\Schema\Blueprint
          */
-        $conn=$this->getConn();
+        $conn = $this->getConn();
         $conn->renameColumn($from, $to);
     }
 

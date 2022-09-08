@@ -4,19 +4,15 @@ declare(strict_types=1);
 
 namespace Modules\Xot\Services;
 
-use Illuminate\Support\Collection;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Collection;
 use Modules\Xot\Contracts\PanelContract;
 use Modules\Xot\Models\Panels\Actions\XotBasePanelAction;
 
-
 /**
- * Undocumented class
- *
-
+ * Undocumented class.
  */
 class TreeService {
-
     /**
      * @param \Illuminate\Database\Eloquent\Collection|Model[] $coll
      */
@@ -44,9 +40,9 @@ class TreeService {
                 }
                 // *
                 /**
-                 * @var  Collection<XotBasePanelAction>
+                 * @var Collection<XotBasePanelAction>
                  */
-                $itemActions=$panel->itemActions();
+                $itemActions = $panel->itemActions();
                 foreach ($itemActions as $action) {
                     // $action->btnHtml(['title' => true, 'class' => 'dropdown-item','in_admin'=>$in_admin])
                     $act = [

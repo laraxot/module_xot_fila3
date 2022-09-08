@@ -88,6 +88,7 @@ abstract class XotBaseContainerController extends Controller {
      * @param array  $args
      *
      * return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse|\Illuminate\Http\Response
+     *
      * @return mixed
      */
     public function __callPanelAct($method, $args) {

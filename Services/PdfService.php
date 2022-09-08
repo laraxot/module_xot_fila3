@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Modules\Xot\Services;
 
 use Exception;
-use Illuminate\Support\Str;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Str;
 
 /**
  * Class PdfService.
@@ -38,8 +38,8 @@ class PdfService {
     public function mergePdf(string $path): self {
         include __DIR__.'/vendor/autoload.php';
         // $path = $this->get('path');
-        if(!class_exists(\Jurosh\PDFMerge\PDFMerger::class)){
-            throw new Exception ('['.__LINE__.']['.__FILE__.']');
+        if (! class_exists(\Jurosh\PDFMerge\PDFMerger::class)) {
+            throw new Exception('['.__LINE__.']['.__FILE__.']');
         }
         $pdf = new \Jurosh\PDFMerge\PDFMerger();
         $pdf_files = collect(File::files($path))->filter(

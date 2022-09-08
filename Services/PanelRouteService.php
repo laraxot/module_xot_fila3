@@ -44,7 +44,7 @@ class PanelRouteService {
         if ('admin' === \Request::segment(1)) {
             return true;
         }
-        $segments = (\Request::segments());
+        $segments = \Request::segments();
         if (\count($segments) > 0 && 'livewire' === $segments[0]) {
             if (true === session('in_admin')) {
                 return true;
@@ -100,18 +100,18 @@ class PanelRouteService {
 
             $filters[$k]->field_value = $field_value;
             switch ($where) {
-            case 'Year':
-                $value = $field_value->year;
-                break;
-            case 'ofYear':
-                $value = \Request::input('year', date('Y'));
-                break;
-            case 'Month':
-                $value = $field_value->month;
-                break;
-            default:
-                $value = $field_value;
-                break;
+                case 'Year':
+                    $value = $field_value->year;
+                    break;
+                case 'ofYear':
+                    $value = \Request::input('year', date('Y'));
+                    break;
+                case 'Month':
+                    $value = $field_value->month;
+                    break;
+                default:
+                    $value = $field_value;
+                    break;
             }
             $filters[$k]->value = $value;
         }
@@ -119,7 +119,7 @@ class PanelRouteService {
         // a che serve $node?
         // è qui che panel->url() crea quegli url tipo /it/threads?#Thread- (con ?#NomeModello-)
         $node = class_basename($row).'-'.$row->getKey();
-        //$queries['page'] = Cache::get('page'); // TROPPE QUERY
+        // $queries['page'] = Cache::get('page'); // TROPPE QUERY
 
         $request_query = request()->query();
         if (! \is_array($request_query)) {
@@ -127,7 +127,7 @@ class PanelRouteService {
         }
         $queries = array_merge($request_query, $queries);
         $queries = collect($queries)->except(['_act'])->all();
-        $url = (url_queries($queries, $url)).'#'.$node;
+        $url = url_queries($queries, $url).'#'.$node;
         // dddx([$url, $filters, $queries, $node, url_queries($queries, $url).'#'.$node, url_queries($queries, $url), $url]);
 
         return $url;

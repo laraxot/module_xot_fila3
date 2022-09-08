@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Modules\Xot\Services;
 
-use Illuminate\Support\Collection;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Collection;
 
 /**
  * https://github.com/Tinyportal/TinyPortal/blob/master/Sources/TPSubs.php.
@@ -42,7 +42,7 @@ class ChainService {
     public array $table;
 
     /**
-     * Undocumented variable
+     * Undocumented variable.
      *
      * @var Collection<Model>
      */
