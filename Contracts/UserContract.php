@@ -1,13 +1,20 @@
 <?php
 
+<<<<<<< HEAD
 // senza la document delle property phpstan da errore per proprieta' mancante
+=======
+//senza la document delle property phpstan da errore per proprieta' mancante
+>>>>>>> 9472ad4 (first)
 
 declare(strict_types=1);
 
 namespace Modules\Xot\Contracts;
 
 use Illuminate\Database\Eloquent\Model;
+<<<<<<< HEAD
 use Illuminate\Contracts\Auth\MustVerifyEmail;
+=======
+>>>>>>> 9472ad4 (first)
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
 /**
@@ -23,7 +30,12 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
  * @property \Modules\LU\Models\PermUser|null                                   $perm
  * @mixin    \Eloquent
  */
+<<<<<<< HEAD
 interface UserContract extends MustVerifyEmail{
+=======
+interface UserContract
+{
+>>>>>>> 9472ad4 (first)
     /*
     public function isSuperAdmin();
     public function name();
@@ -54,4 +66,8 @@ interface UserContract extends MustVerifyEmail{
      * @return Model
      */
     public function newInstance();
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> 9472ad4 (first)

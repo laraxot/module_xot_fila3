@@ -32,7 +32,11 @@ abstract class XotBaseRouteServiceProvider extends RouteServiceProvider {
      * @return void
      */
     public function boot() {
+<<<<<<< HEAD
         \Config::set('extra_conn', \Request::segment(2)); // Se configurato va a prendere db diverso
+=======
+        \Config::set('extra_conn', \Request::segment(2)); //Se configurato va a prendere db diverso
+>>>>>>> 9472ad4 (first)
         if (method_exists($this, 'bootCallback')) {
             $this->bootCallback();
         }
@@ -71,4 +75,8 @@ abstract class XotBaseRouteServiceProvider extends RouteServiceProvider {
             ->namespace($this->moduleNamespace)
             ->group($this->module_dir.'/../Routes/api.php');
     }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> 9472ad4 (first)

@@ -6,6 +6,12 @@ namespace Modules\Xot\Contracts;
 
 use Closure;
 
+<<<<<<< HEAD
+=======
+//Modules\Xot\Contracts\RowsContract cannot implement Illuminate\Database\Eloquent\Relations\Relation - it is not an interface
+//Modules\Xot\Contracts\RowsContract cannot implement Illuminate\Database\Eloquent\Builder - it is not an interface
+
+>>>>>>> 9472ad4 (first)
 /**
  * Modules\Xot\Contracts\RowsContract.
  */
@@ -141,7 +147,11 @@ interface RowsContract {
      *
      * @return int
      */
+<<<<<<< HEAD
     // [\ReturnTypeWillChange]
+=======
+    //[\ReturnTypeWillChange]
+>>>>>>> 9472ad4 (first)
     public function count();
 
     /**
@@ -180,4 +190,8 @@ interface RowsContract {
      * @return $this
      */
     public function whereIn($column, $values, $boolean = 'and', $not = false);
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> 9472ad4 (first)

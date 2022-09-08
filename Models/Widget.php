@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Modules\Xot\Models;
 
+<<<<<<< HEAD
 // ------ ext models---
 use Modules\Xot\Models\Traits\WidgetTrait;
 
@@ -33,6 +34,36 @@ use Modules\Xot\Models\Traits\WidgetTrait;
  * @property-read \Illuminate\Database\Eloquent\Collection|Widget[] $widgets
  * @property-read int|null $widgets_count
  * @method static \Modules\Xot\Database\Factories\WidgetFactory factory(...$parameters)
+=======
+//------ ext models---
+use Modules\Xot\Models\Traits\WidgetTrait;
+
+/**
+ * Modules\Xot\Models\Widget.
+ *
+ * @property int                                                                  $id
+ * @property string|null                                                          $post_type
+ * @property string|null                                                          $layout_position
+ * @property string|null                                                          $title
+ * @property int|null                                                             $post_id
+ * @property string|null                                                          $blade
+ * @property string|null                                                          $image_src
+ * @property int|null                                                             $pos
+ * @property string|null                                                          $model
+ * @property int|null                                                             $limit
+ * @property string|null                                                          $order_by
+ * @property \Illuminate\Support\Carbon|null                                      $created_at
+ * @property string|null                                                          $created_by
+ * @property \Illuminate\Support\Carbon|null                                      $updated_at
+ * @property string|null                                                          $updated_by
+ * @property \Illuminate\Database\Eloquent\Collection|Widget[]                    $containerWidgets
+ * @property int|null                                                             $container_widgets_count
+ * @property \Illuminate\Database\Eloquent\Collection|\Modules\Xot\Models\Image[] $images
+ * @property int|null                                                             $images_count
+ * @property \Illuminate\Database\Eloquent\Model|\Eloquent                        $linked
+ * @property \Illuminate\Database\Eloquent\Collection|Widget[]                    $widgets
+ * @property int|null                                                             $widgets_count
+>>>>>>> 9472ad4 (first)
  * @method static \Illuminate\Database\Eloquent\Builder|Widget newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Widget newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Widget ofLayoutPosition($layout_position)
@@ -53,6 +84,11 @@ use Modules\Xot\Models\Traits\WidgetTrait;
  * @method static \Illuminate\Database\Eloquent\Builder|Widget whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Widget whereUpdatedBy($value)
  * @mixin \Eloquent
+<<<<<<< HEAD
+=======
+ * @method static \Modules\Xot\Database\Factories\WidgetFactory factory(...$parameters)
+ * @mixin IdeHelperWidget
+>>>>>>> 9472ad4 (first)
  */
 class Widget extends BaseModel {
     use WidgetTrait;
@@ -62,9 +98,15 @@ class Widget extends BaseModel {
      */
     protected $fillable = [
         'id',
+<<<<<<< HEAD
         'post_type', 'post_id', // nullablemorph
         'title',
         // 'subtitle',
+=======
+        'post_type', 'post_id', //nullablemorph
+        'title',
+        //'subtitle',
+>>>>>>> 9472ad4 (first)
         'blade', 'pos', 'model', 'limit',
         'order_by', 'image_src', 'layout_position',
     ];
@@ -94,11 +136,16 @@ class Widget extends BaseModel {
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
     public function toHtml(array $params = null) {
+<<<<<<< HEAD
         /** 
         * @phpstan-var view-string
         */
         $view = 'pub_theme::layouts.widgets';
         if (null !== $this->layout_position) {
+=======
+        $view = 'pub_theme::layouts.widgets';
+        if (null != $this->layout_position) {
+>>>>>>> 9472ad4 (first)
             $view .= '.'.$this->layout_position;
         }
         $view .= '.'.$this->blade;
@@ -108,7 +155,11 @@ class Widget extends BaseModel {
             'row' => $this->linked,
             'widget' => $this,
         ];
+<<<<<<< HEAD
         if (null !== $params) {
+=======
+        if (null != $params) {
+>>>>>>> 9472ad4 (first)
             $view_params['params'] = $params;
         }
         if (! view()->exists($view)) {
@@ -122,4 +173,8 @@ class Widget extends BaseModel {
 
         return view()->make($view)->with($view_params);
     }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> 9472ad4 (first)

@@ -20,7 +20,11 @@ class XLSService {
     private static ?self $instance = null;
 
     public function __construct() {
+<<<<<<< HEAD
         // ---
+=======
+        //---
+>>>>>>> 9472ad4 (first)
         require_once __DIR__.'/vendor/autoload.php';
     }
 
@@ -63,6 +67,7 @@ class XLSService {
      * @throws \PhpOffice\PhpSpreadsheet\Exception
      */
     public function fromRequestFile($file): self {
+<<<<<<< HEAD
         if(!is_object($file)){
             throw new Exception('[.__LINE__.]['.class_basename(__CLASS__).']');
         }
@@ -70,6 +75,8 @@ class XLSService {
         if(!method_exists($file,'getRealPath')){
             throw new Exception('[.__LINE__.]['.class_basename(__CLASS__).']');
         }
+=======
+>>>>>>> 9472ad4 (first)
         $path = $file->getRealPath();
 
         if (false === $path) {
@@ -83,13 +90,21 @@ class XLSService {
      * Undocumented function.
      */
     public function fromFilePath(string $path): self {
+<<<<<<< HEAD
         // $reader = \Maatwebsite\Excel\Facades\Excel::load($path);
+=======
+        //$reader = \Maatwebsite\Excel\Facades\Excel::load($path);
+>>>>>>> 9472ad4 (first)
         /*
          * Excel::load() is removed and replaced by Excel::import($yourImport)
          * Excel::create() is removed and replaced by Excel::download/Excel::store($yourExport)
          * Excel::create()->string('xlsx') is removed an replaced by Excel::raw($yourExport, Excel::XLSX)
          */
+<<<<<<< HEAD
         // $reader = Excel::import($path);
+=======
+        //$reader = Excel::import($path);
+>>>>>>> 9472ad4 (first)
 
         $spreadsheet = \PhpOffice\PhpSpreadsheet\IOFactory::load($path);
         $sheet = $spreadsheet->getActiveSheet();
@@ -127,4 +142,8 @@ class XLSService {
         dddx($results);
     }
     */
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> 9472ad4 (first)

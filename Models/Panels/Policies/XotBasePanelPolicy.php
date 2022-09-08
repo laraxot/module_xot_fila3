@@ -5,17 +5,30 @@ declare(strict_types=1);
 namespace Modules\Xot\Models\Panels\Policies;
 
 use Illuminate\Auth\Access\HandlesAuthorization;
+<<<<<<< HEAD
 // use Illuminate\Contracts\Auth\UserProvider as User;
 use Modules\LU\Services\ProfileService;  // da usare Facades per separazione dei moduli
 use Modules\Xot\Contracts\PanelContract;
 use Modules\Xot\Contracts\UserContract;
 use Modules\Xot\Facades\Profile as ProfileFacade;
+=======
+//use Illuminate\Contracts\Auth\UserProvider as User;
+use Modules\Xot\Contracts\PanelContract;
+use Modules\Xot\Contracts\UserContract;
+use Modules\Xot\Services\PanelService;
+use Modules\Xot\Services\ProfileService;
+>>>>>>> 9472ad4 (first)
 use Nwidart\Modules\Facades\Module;
 
 /**
  * Class XotBasePanelPolicy.
  */
+<<<<<<< HEAD
 abstract class XotBasePanelPolicy {
+=======
+abstract class XotBasePanelPolicy
+{
+>>>>>>> 9472ad4 (first)
     use HandlesAuthorization;
 
     /**
@@ -24,6 +37,7 @@ abstract class XotBasePanelPolicy {
      *
      * @return bool|null
      */
+<<<<<<< HEAD
     // *
     public function before($user, $ability) {
         // *
@@ -62,17 +76,32 @@ abstract class XotBasePanelPolicy {
                 return true;
             }
         }*/
+=======
+    //*
+    public function before($user, $ability)
+    {
+        //* -- togliere per fare debug
+        if (is_object($user) && ProfileService::make()->get($user)->isSuperAdmin()) {
+            return true;
+        }
+        //*/
+>>>>>>> 9472ad4 (first)
 
         return null;
     }
 
+<<<<<<< HEAD
     // */
+=======
+    //*/
+>>>>>>> 9472ad4 (first)
     /*
     public function artisan(?UserContract $user, PanelContract $panel): bool {
         return false;
     }
     */
 
+<<<<<<< HEAD
     public function home(?UserContract $user, PanelContract $panel): bool {
         if (inAdmin() && null === $user) {
             return false;
@@ -89,11 +118,29 @@ abstract class XotBasePanelPolicy {
             $profile = ProfileService::make()->get($user);
 
             return $profile->hasArea($module_name);
+=======
+    public function home(?UserContract $user, PanelContract $panel): bool
+    {
+        if (inAdmin() && null == $user) {
+            return false;
+        }
+        $route_params = $panel->getRouteParams();
+        if (isset($route_params['module'])) {
+            $module = Module::find($route_params['module']);
+            //$panel = PanelService::make()->get($user);
+            //$areas = $panel->areas()->firstWhere('area_define_name', $module->getName());
+            //return is_object($areas);
+
+            $profile = ProfileService::make()->get($user);
+
+            return $profile->hasArea($module->getName());
+>>>>>>> 9472ad4 (first)
         }
 
         return true;
     }
 
+<<<<<<< HEAD
     public function index(?UserContract $user, PanelContract $panel): bool {
         return true;
     }
@@ -115,6 +162,35 @@ abstract class XotBasePanelPolicy {
     }
 
     public function store(UserContract $user, PanelContract $panel): bool {
+=======
+    public function index(?UserContract $user, PanelContract $panel): bool
+    {
+        return true;
+    }
+
+    public function show(?UserContract $user, PanelContract $panel): bool
+    {
+        return true;
+    }
+
+    public function create(UserContract $user, PanelContract $panel): bool
+    {
+        return true;
+    }
+
+    public function edit(UserContract $user, PanelContract $panel): bool
+    {
+        return $panel->isRevisionBy($user);
+    }
+
+    public function update(UserContract $user, PanelContract $panel): bool
+    {
+        return $panel->isRevisionBy($user);
+    }
+
+    public function store(UserContract $user, PanelContract $panel): bool
+    {
+>>>>>>> 9472ad4 (first)
         /*
         return $panel->isRevisionBy($user);
         non e' stato creato.. percio' sempre false
@@ -122,6 +198,7 @@ abstract class XotBasePanelPolicy {
         return true;
     }
 
+<<<<<<< HEAD
     public function indexAttach(UserContract $user, PanelContract $panel): bool {
         return true;
     }
@@ -132,12 +209,28 @@ abstract class XotBasePanelPolicy {
 
     // test delle tabs
     public function index_edit(UserContract $user, PanelContract $panel): bool {
+=======
+    public function indexAttach(UserContract $user, PanelContract $panel): bool
+    {
+        return true;
+    }
+
+    public function indexEdit(UserContract $user, PanelContract $panel): bool
+    {
+        return true;
+    }
+
+    //test delle tabs
+    public function index_edit(UserContract $user, PanelContract $panel): bool
+    {
+>>>>>>> 9472ad4 (first)
         return true;
     }
 
     /**
      * @return false
      */
+<<<<<<< HEAD
     public function updateTranslate(UserContract $user, PanelContract $panel): bool {
         return false; // update-translate di @can()
     }
@@ -163,17 +256,61 @@ abstract class XotBasePanelPolicy {
     }
 
     public function clone(UserContract $user, PanelContract $panel): bool {
+=======
+    public function updateTranslate(UserContract $user, PanelContract $panel): bool
+    {
+        return false; //update-translate di @can()
+    }
+
+    public function destroy(UserContract $user, PanelContract $panel): bool
+    {
+        return $panel->isRevisionBy($user);
+    }
+
+    public function delete(UserContract $user, PanelContract $panel): bool
+    {
+        return $panel->isRevisionBy($user);
+    }
+
+    public function restore(UserContract $user, PanelContract $panel): bool
+    {
+        return $panel->isRevisionBy($user);
+    }
+
+    public function forceDelete(UserContract $user, PanelContract $panel): bool
+    {
+        return false;
+    }
+
+    public function detach(UserContract $user, PanelContract $panel): bool
+    {
+        return $panel->isRevisionBy($user);
+    }
+
+    public function clone(UserContract $user, PanelContract $panel): bool
+    {
+>>>>>>> 9472ad4 (first)
         return true;
     }
 
     /**
      * Determine whether the user can view any DocDummyPluralModel.
      */
+<<<<<<< HEAD
     public function viewAny(UserContract $user): bool {
         return true;
     }
 
     public function view(UserContract $user, PanelContract $panel): bool {
+=======
+    public function viewAny(UserContract $user): bool
+    {
+        return true;
+    }
+
+    public function view(UserContract $user, PanelContract $panel): bool
+    {
+>>>>>>> 9472ad4 (first)
         return true;
     }
 }

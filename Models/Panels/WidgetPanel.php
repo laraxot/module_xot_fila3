@@ -4,12 +4,21 @@ declare(strict_types=1);
 
 namespace Modules\Xot\Models\Panels;
 
+<<<<<<< HEAD
 // --- Services --
+=======
+//--- Services --
+>>>>>>> 9472ad4 (first)
 
 /**
  * Class WidgetPanel.
  */
+<<<<<<< HEAD
 class WidgetPanel extends XotBasePanel {
+=======
+class WidgetPanel extends XotBasePanel
+{
+>>>>>>> 9472ad4 (first)
     /**
      * The model the resource corresponds to.
      */
@@ -23,7 +32,12 @@ class WidgetPanel extends XotBasePanel {
     /**
      * @return object[]
      */
+<<<<<<< HEAD
     public function fields(): array {
+=======
+    public function fields(): array
+    {
+>>>>>>> 9472ad4 (first)
         return [
             (object) [
                 'type' => 'Id',

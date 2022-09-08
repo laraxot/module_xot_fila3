@@ -22,10 +22,18 @@ class _ModulePanelPolicy extends XotBasePanelPolicy {
         return true;
     }
 
+<<<<<<< HEAD
     /**
+=======
+     /**
+>>>>>>> 9472ad4 (first)
      * Undocumented function.
      */
     public function modelGenerator(UserContract $user, PanelContract $panel): bool {
         return true;
     }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> 9472ad4 (first)

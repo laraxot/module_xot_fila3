@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Str;
+<<<<<<< HEAD
 use Modules\Tenant\Services\TenantService;
 use Modules\Theme\Services\ThemeService;
 
@@ -19,10 +20,21 @@ if (! \defined('STDIN')) {
 
 // ----- TODO
 // --  1) capire come far fare da chiamato non da consolle "scout:import"
+=======
+use Modules\Theme\Services\ThemeService;
+
+if (! defined('STDIN')) {
+    define('STDIN', fopen('php://stdin', 'r'));
+}
+
+//----- TODO
+//--  1) capire come far fare da chiamato non da consolle "scout:import"
+>>>>>>> 9472ad4 (first)
 
 /**
  * Class ArtisanService.
  */
+<<<<<<< HEAD
 class ArtisanService {
     /**
      * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
@@ -32,10 +44,24 @@ class ArtisanService {
         // echo '<pre>'.print_r(TenantService::config('database'), true).'</pre>';
         // da fare anche in noconsole, e magari mettere un policy
         $module_name = \Request::input('module', '');
+=======
+class ArtisanService
+{
+    /**
+     * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
+     *
+     * @return string|Renderable
+     */
+    public static function act(string $act)
+    {
+        //da fare anche in noconsole, e magari mettere un policy
+        $module_name = \Request::input('module');
+>>>>>>> 9472ad4 (first)
         switch ($act) {
         case 'migrate':
             \DB::purge('mysql');
             \DB::reconnect('mysql');
+<<<<<<< HEAD
             if ('' !== $module_name) {
                 echo '<h3>Module '.$module_name.'</h3>';
 
@@ -64,11 +90,42 @@ class ArtisanService {
             echo self::exe('key:generate').PHP_EOL;
 
             // -- non artisan
+=======
+            if ('' != $module_name) {
+                echo '<h3>Module '.$module_name.'</h3>';
+
+                return ArtisanService::exe('module:migrate '.$module_name.' --force');
+            } else {
+                return ArtisanService::exe('migrate --force');
+            }
+            // no break
+        case 'routelist': 
+            return ArtisanService::exe('route:list');
+        case 'queue:flush': 
+            return ArtisanService::exe('queue:flush');
+        case 'routelist1': 
+            return ArtisanService::showRouteList();
+        case 'optimize': 
+            return ArtisanService::exe('optimize');
+        case 'clear':
+            echo ArtisanService::exe('cache:clear').PHP_EOL;
+            echo ArtisanService::exe('config:clear').PHP_EOL;
+            echo ArtisanService::exe('event:clear').PHP_EOL;
+            echo ArtisanService::exe('route:clear').PHP_EOL;
+            echo ArtisanService::exe('view:clear').PHP_EOL;
+            echo ArtisanService::exe('debugbar:clear').PHP_EOL;
+            echo ArtisanService::exe('opcache:clear').PHP_EOL;
+            echo ArtisanService::exe('optimize:clear').PHP_EOL;
+            echo ArtisanService::exe('key:generate').PHP_EOL;
+
+            //-- non artisan
+>>>>>>> 9472ad4 (first)
             echo self::sessionClear().PHP_EOL;
             echo self::errorClear().PHP_EOL;
             echo self::debugbarClear().PHP_EOL;
             echo PHP_EOL.'DONE'.PHP_EOL;
             break;
+<<<<<<< HEAD
         case 'clearcache':
             return self::exe('cache:clear');
         case 'routecache':
@@ -80,10 +137,24 @@ class ArtisanService {
         case 'configcache':
             return self::exe('config:cache');
             // -------------------------------------------------------------------
+=======
+        case 'clearcache': 
+            return ArtisanService::exe('cache:clear');
+        case 'routecache': 
+            return ArtisanService::exe('route:cache');
+        case 'routeclear': 
+            return ArtisanService::exe('route:clear');
+        case 'viewclear': 
+            return ArtisanService::exe('view:clear');
+        case 'configcache': 
+            return ArtisanService::exe('config:cache');
+            //-------------------------------------------------------------------
+>>>>>>> 9472ad4 (first)
         case 'debugbar:clear':
             self::debugbarClear();
             break;
 
+<<<<<<< HEAD
             // ------------------------------------------------------------------
 
         case 'module-list':
@@ -100,6 +171,24 @@ class ArtisanService {
             return self::errorClear();
 
             // -------------------------------------------------------------------------
+=======
+            //------------------------------------------------------------------
+
+        case 'module-list': 
+            return ArtisanService::exe('module:list');
+        case 'module-disable': 
+            return ArtisanService::exe('module:disable '.$module_name);
+        case 'module-enable': 
+            return ArtisanService::exe('module:enable '.$module_name);
+            //----------------------------------------------------------------------
+        case 'error':
+        case 'error-show':
+            return ArtisanService::errorShow();
+        case 'error-clear':
+            return self::errorClear();
+
+            //-------------------------------------------------------------------------
+>>>>>>> 9472ad4 (first)
         case 'spatiecache-clear':
             /* da vedere se e' necessaria
             try {
@@ -108,24 +197,39 @@ class ArtisanService {
                 dddx($e);
             }
             */
+<<<<<<< HEAD
             // case 'spatiecache-clear1': return ArtisanService::exe('responsecache:clear'); //The command "responsecache:clear" does not exist.
 
         default:
+=======
+            //case 'spatiecache-clear1': return ArtisanService::exe('responsecache:clear'); //The command "responsecache:clear" does not exist.
+
+        default: 
+>>>>>>> 9472ad4 (first)
             return '';
         }
 
         return '';
     }
 
+<<<<<<< HEAD
     public static function errorShow(): Renderable {
         /** 
         * @phpstan-var view-string
         */
+=======
+    public static function errorShow(): Renderable
+    {
+>>>>>>> 9472ad4 (first)
         $view = 'xot::acts.artisan.error-show';
         $files = File::files(storage_path('logs'));
         $log = request('log', '');
         $content = '';
+<<<<<<< HEAD
         if ('' !== $log) {
+=======
+        if ('' != $log) {
+>>>>>>> 9472ad4 (first)
             if (File::exists(storage_path('logs/'.$log))) {
                 $content = File::get(storage_path('logs/'.$log));
             }
@@ -149,7 +253,12 @@ class ArtisanService {
         return view()->make($view, $view_params);
     }
 
+<<<<<<< HEAD
     public static function showRouteList(): string {
+=======
+    public static function showRouteList(): Renderable
+    {
+>>>>>>> 9472ad4 (first)
         $routeCollection = Route::getRoutes();
         /*
         $view = ThemeService::getViewModule();
@@ -170,9 +279,12 @@ class ArtisanService {
             'views' => ThemeService::getDefaultViewArray(),
         ]);
         */
+<<<<<<< HEAD
         /** 
         * @phpstan-var view-string
         */
+=======
+>>>>>>> 9472ad4 (first)
         $view = 'xot::acts.artisan.show_route_list';
         $view_params = [
             'view' => $view,
@@ -180,31 +292,50 @@ class ArtisanService {
             'lang' => app()->getLocale(),
         ];
 
+<<<<<<< HEAD
         $out= view()->make($view, $view_params);
         return $out->render();
+=======
+        return view()->make($view, $view_params);
+>>>>>>> 9472ad4 (first)
     }
 
     /**
      * @return string
      */
+<<<<<<< HEAD
     public static function errorClear() {
         $files = File::files(storage_path('logs'));
 
         foreach ($files as $file) {
             if ('log' === $file->getExtension() && false !== $file->getRealPath()) {
                 // Parameter #1 $paths of static method Illuminate\Filesystem\Filesystem::delete() expects array|string, Symfony\Component\Finder\SplFileInfo given.
+=======
+    public static function errorClear()
+    {
+        $files = File::files(storage_path('logs'));
+
+        foreach ($files as $file) {
+            if ('log' == $file->getExtension() && false !== $file->getRealPath()) {
+                //Parameter #1 $paths of static method Illuminate\Filesystem\Filesystem::delete() expects array|string, Symfony\Component\Finder\SplFileInfo given.
+>>>>>>> 9472ad4 (first)
                 echo '<br/>'.$file->getRealPath();
 
                 File::delete($file->getRealPath());
             }
         }
 
+<<<<<<< HEAD
         return '<pre>laravel.log cleared !</pre> ('.\count($files).' Files )';
+=======
+        return '<pre>laravel.log cleared !</pre> ('.count($files).' Files )';
+>>>>>>> 9472ad4 (first)
     }
 
     /**
      * @return string
      */
+<<<<<<< HEAD
     public static function sessionClear() {
         $files = File::files(storage_path('framework/sessions'));
 
@@ -219,11 +350,29 @@ class ArtisanService {
         }
 
         return 'Session cleared! ('.\count($files).' Files )';
+=======
+    public static function sessionClear()
+    {
+        $files = File::files(storage_path('framework/sessions'));
+
+        foreach ($files as $file) {
+            if ('' == $file->getExtension() && false !== $file->getRealPath()) {
+                //echo '<br/>'.$file->getRealPath();
+
+                File::delete($file->getRealPath());
+
+                //$file->delete();
+            }
+        }
+
+        return 'Session cleared! ('.count($files).' Files )';
+>>>>>>> 9472ad4 (first)
     }
 
     /**
      * @return string
      */
+<<<<<<< HEAD
     public static function debugbarClear() {
         $files = File::files(storage_path('debugbar'));
         foreach ($files as $file) {
@@ -237,12 +386,33 @@ class ArtisanService {
         }
 
         return 'Debugbar Storage cleared! ('.\count($files).' Files )';
+=======
+    public static function debugbarClear()
+    {
+        $files = File::files(storage_path('debugbar'));
+        foreach ($files as $file) {
+            if ('json' == $file->getExtension() && false !== $file->getRealPath()) {
+                //echo '<br/>'.$file->getRealPath();
+
+                File::delete($file->getRealPath());
+
+                //$file->delete();
+            }
+        }
+
+        return 'Debugbar Storage cleared! ('.count($files).' Files )';
+>>>>>>> 9472ad4 (first)
     }
 
     /**
      * @param string $command
      */
+<<<<<<< HEAD
     public static function exe($command, array $arguments = []): string {
+=======
+    public static function exe($command, array $arguments = []): string
+    {
+>>>>>>> 9472ad4 (first)
         try {
             $output = '';
 
@@ -251,9 +421,15 @@ class ArtisanService {
 
             return $output;  // dato che mi carico solo le route minime menufull.delete non esiste.. impostare delle route comuni.
         } catch (Exception $e) {
+<<<<<<< HEAD
             // throw new Exception('['.__LINE__.']['.class_basename(__CLASS__).']');
             return '[<pre>'.$e->getMessage().'</pre>]';
             // dddx(get_class_methods($e));
+=======
+            //throw new Exception('['.__LINE__.']['.class_basename(__CLASS__).']');
+            return '[<pre>'.$e->getMessage().'</pre>]';
+            //dddx(get_class_methods($e));
+>>>>>>> 9472ad4 (first)
             /*
             $vendor_dir = (realpath(LARAVEL_DIR.'/vendor'));
             if (false === $vendor_dir) {
@@ -284,4 +460,8 @@ class ArtisanService {
             return '<br/>'.$command.' non effettuato';
         }*/
     }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> 9472ad4 (first)

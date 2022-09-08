@@ -7,7 +7,11 @@
                 </div>
             @endif
             @foreach ($goals as $goal)
+<<<<<<< HEAD
                 @livewire('rate.single',['model'=>$model,'goal'=>$goal ])
+=======
+                @livewire('rating::rate.single',['model'=>$model,'goal'=>$goal ])
+>>>>>>> 9472ad4 (first)
             @endforeach
 
 

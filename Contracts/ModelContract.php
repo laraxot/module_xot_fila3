@@ -6,6 +6,11 @@ namespace Modules\Xot\Contracts;
 
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+<<<<<<< HEAD
+=======
+use Modules\Food\Contracts\BellBoyContract;
+use Modules\Food\Models\RestaurantOwner;
+>>>>>>> 9472ad4 (first)
 
 /**
  * Modules\Xot\Contracts\ModelContract.
@@ -18,6 +23,11 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property string|null                     $created_by
  * @property string|null                     $updated_by
  * @property string|null                     $title
+<<<<<<< HEAD
+=======
+ * @property Collection|BellBoyContract[]    $bellBoys
+ * @property Collection|RestaurantOwner[]    $restaurantOwners
+>>>>>>> 9472ad4 (first)
  * @property bool                            $is_reclamed
  * @property bool                            $table_enable
  * @property PivotContract|null              $pivot
@@ -44,5 +54,11 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @method BelongsTo user()
  * @mixin  \Eloquent
  */
+<<<<<<< HEAD
 interface ModelContract {
 }
+=======
+interface ModelContract
+{
+}
+>>>>>>> 9472ad4 (first)

@@ -5,7 +5,10 @@ declare(strict_types=1);
 namespace Modules\Xot\Services;
 
 use Exception;
+<<<<<<< HEAD
 use Illuminate\Support\Collection;
+=======
+>>>>>>> 9472ad4 (first)
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Session;
@@ -37,6 +40,7 @@ class PanelRouteService {
         if (isset($params['in_admin'])) {
             return $params['in_admin'];
         }
+<<<<<<< HEAD
         // dddx(ThemeService::__getStatic('in_admin'));
         if (null !== config('in_admin')) {
             return config('in_admin');
@@ -47,25 +51,46 @@ class PanelRouteService {
         $segments = (\Request::segments());
         if (\count($segments) > 0 && 'livewire' === $segments[0]) {
             if (true === session('in_admin')) {
+=======
+        //dddx(ThemeService::__getStatic('in_admin'));
+        if (null !== config('in_admin')) {
+            return config('in_admin');
+        }
+        if ('admin' == \Request::segment(1)) {
+            return true;
+        }
+        $segments = (\Request::segments());
+        if (count($segments) > 0 && 'livewire' == $segments[0]) {
+            if (true == session('in_admin')) {
+>>>>>>> 9472ad4 (first)
                 return true;
             }
         }
 
         return false;
+<<<<<<< HEAD
         // dddx(session('in_admin'));
+=======
+        //dddx(session('in_admin'));
+>>>>>>> 9472ad4 (first)
         /*
         $segments = request()->segments();
         dddx($_SERVER);
 
         return 'admin' == 'aa';
         */
+<<<<<<< HEAD
         // return inAdmin();
+=======
+        //return inAdmin();
+>>>>>>> 9472ad4 (first)
     }
 
     public function addCacheQueryString(string $route): string {
         $path = '/'.request()->path();
         $cache_key = Str::slug($path.'_query');
         Session::put($cache_key, request()->query());
+<<<<<<< HEAD
         // session()->put($cache_key, request()->query(), 60 * 60);
         // echo '[cache_key['.$cache_key.']['.$route.']]';
 
@@ -75,6 +100,17 @@ class PanelRouteService {
 
         $queries = Session::get($cache_key);
         if (! \is_array($queries)) {
+=======
+        //session()->put($cache_key, request()->query(), 60 * 60);
+        //echo '[cache_key['.$cache_key.']['.$route.']]';
+
+        //--- aggiungo le query string all'url corrente
+        //$queries = collect(request()->query())->except(['_act', 'item0', 'item1'])->all();
+        $cache_key = Str::slug(Str::before($route, '?').'_query');
+
+        $queries = Session::get($cache_key);
+        if (! is_array($queries)) {
+>>>>>>> 9472ad4 (first)
             $queries = [];
         }
 
@@ -116,6 +152,7 @@ class PanelRouteService {
             $filters[$k]->value = $value;
         }
         $queries = collect($filters)->pluck('value', 'param_name')->all();
+<<<<<<< HEAD
         // a che serve $node?
         // è qui che panel->url() crea quegli url tipo /it/threads?#Thread- (con ?#NomeModello-)
         $node = class_basename($row).'-'.$row->getKey();
@@ -123,18 +160,35 @@ class PanelRouteService {
 
         $request_query = request()->query();
         if (! \is_array($request_query)) {
+=======
+        //a che serve $node?
+        //è qui che panel->url() crea quegli url tipo /it/threads?#Thread- (con ?#NomeModello-)
+        $node = class_basename($row).'-'.$row->getKey();
+        $queries['page'] = Cache::get('page');
+
+        $request_query = request()->query();
+        if (! is_array($request_query)) {
+>>>>>>> 9472ad4 (first)
             throw new Exception('['.__LINE__.']['.class_basename(__CLASS__).']');
         }
         $queries = array_merge($request_query, $queries);
         $queries = collect($queries)->except(['_act'])->all();
         $url = (url_queries($queries, $url)).'#'.$node;
+<<<<<<< HEAD
         // dddx([$url, $filters, $queries, $node, url_queries($queries, $url).'#'.$node, url_queries($queries, $url), $url]);
+=======
+        //dddx([$url, $filters, $queries, $node, url_queries($queries, $url).'#'.$node, url_queries($queries, $url), $url]);
+>>>>>>> 9472ad4 (first)
 
         return $url;
     }
 
     public function url(string $act = 'show'): string {
+<<<<<<< HEAD
         if ('act' === $act) {
+=======
+        if ('act' == $act) {
+>>>>>>> 9472ad4 (first)
             dddx(
                 [
                     'act' => $act,
@@ -143,6 +197,7 @@ class PanelRouteService {
             );
         }
         $panel = $this->panel;
+<<<<<<< HEAD
         /**
          * @var Collection<PanelContract>
          */
@@ -152,6 +207,15 @@ class PanelRouteService {
             $route_params['module'] = $breads->first()->getModuleNameLow();
         }
         if (inAdmin() && null === $breads->first()) {
+=======
+
+        $breads = $panel->getBreads();
+        $route_params = [];
+        if (inAdmin() && null !== $breads->first()) {
+            $route_params['module'] = $breads->first()->getModuleNameLow();
+        }
+        if (inAdmin() && null == $breads->first()) {
+>>>>>>> 9472ad4 (first)
             $module_name = $panel->getModuleNameLow();
             $route_params['module'] = $module_name;
         }
@@ -169,9 +233,15 @@ class PanelRouteService {
 
         if ('index_edit' !== $act) {
             if (Str::startsWith($act, 'index') || Str::startsWith($act, 'create')) {
+<<<<<<< HEAD
                 [$containers,$items] = params2ContainerItem($route_params);
                 if (\count($containers) === \count($items) && \count($items) > 0) {
                     $k = 'item'.(\count($items) - 1);
+=======
+                [$containers,$items] = \params2ContainerItem($route_params);
+                if (count($containers) == count($items) && count($items) > 0) {
+                    $k = 'item'.(count($items) - 1);
+>>>>>>> 9472ad4 (first)
                     unset($route_params[$k]);
                 }
             }
@@ -192,7 +262,11 @@ class PanelRouteService {
                         'last route key name' => $panel->getRow()->getRouteKeyName(),
                         'in_admin' => config('in_admin'),
                         'in_admin_session' => Session::get('in_admin'),
+<<<<<<< HEAD
                         // 'routes' => \Route::getRoutes(),
+=======
+                        //'routes' => \Route::getRoutes(),
+>>>>>>> 9472ad4 (first)
                     ]
                 );
             }
@@ -200,7 +274,11 @@ class PanelRouteService {
             return '#['.__LINE__.']['.__FILE__.']['.$e->getMessage().']';
         }
 
+<<<<<<< HEAD
         if ('index' === $act) {
+=======
+        if ('index' == $act) {
+>>>>>>> 9472ad4 (first)
             return $this->addFilterQueryString($route);
         }
 
@@ -278,4 +356,8 @@ class PanelRouteService {
         }
         */
     }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> 9472ad4 (first)

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Modules\Xot\Http\Requests;
 
+<<<<<<< HEAD
 use Exception;
 use Carbon\Carbon;
 use Illuminate\Support\Str;
@@ -12,10 +13,20 @@ use Illuminate\Foundation\Http\FormRequest;
 
 // use Modules\Food\Models\Profile;
 // --- Rules ---
+=======
+use Carbon\Carbon;
+use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Str;
+use Modules\Xot\Contracts\PanelContract;
+
+//use Modules\Food\Models\Profile;
+//--- Rules ---
+>>>>>>> 9472ad4 (first)
 
 /**
  * Class XotBaseRequest.
  */
+<<<<<<< HEAD
 abstract class XotBaseRequest extends FormRequest {
     // use FormRequestTrait;
 
@@ -23,6 +34,16 @@ abstract class XotBaseRequest extends FormRequest {
     // $this->setContainer(factory(Profile::class));
     // $this->setContainer(app());
     // }
+=======
+abstract class XotBaseRequest extends FormRequest
+{
+    //use FormRequestTrait;
+
+    //public function __construct(){
+    //$this->setContainer(factory(Profile::class));
+    //$this->setContainer(app());
+    //}
+>>>>>>> 9472ad4 (first)
 
     public PanelContract $panel;
 
@@ -31,7 +52,12 @@ abstract class XotBaseRequest extends FormRequest {
      *
      * @return bool
      */
+<<<<<<< HEAD
     public function authorize() {
+=======
+    public function authorize()
+    {
+>>>>>>> 9472ad4 (first)
         return true;
     }
 
@@ -40,11 +66,21 @@ abstract class XotBaseRequest extends FormRequest {
      *
      * @return array
      */
+<<<<<<< HEAD
     public function rules() {
         return [];
     }
 
     public function setPanel(PanelContract $panel): self {
+=======
+    public function rules()
+    {
+        return [];
+    }
+
+    public function setPanel(PanelContract $panel): self
+    {
+>>>>>>> 9472ad4 (first)
         $this->panel = $panel;
 
         return $this;
@@ -54,14 +90,23 @@ abstract class XotBaseRequest extends FormRequest {
      * @param PanelContract $panel
      * @param string        $act
      */
+<<<<<<< HEAD
     public function validatePanel($panel, $act = ''): void {
+=======
+    public function validatePanel($panel, $act = ''): void
+    {
+>>>>>>> 9472ad4 (first)
         $this->setPanel($panel);
         $this->prepareForValidation();
         $rules = $panel->rules(['act' => $act]);
         $this->validate($rules, $panel->rulesMessages());
     }
 
+<<<<<<< HEAD
     /**
+=======
+    /*
+>>>>>>> 9472ad4 (first)
      * Get the validated data from the request.
      *
      * @return array
@@ -82,11 +127,21 @@ abstract class XotBaseRequest extends FormRequest {
     /**
      * Cerco di rilevare quando viene chiamato.
      */
+<<<<<<< HEAD
     public function modifyInput(array $data): void {
         dddx($data);
     }
 
     public function prepareForValidation() {
+=======
+    public function modifyInput(array $data): void
+    {
+        dddx($data);
+    }
+
+    public function prepareForValidation()
+    {
+>>>>>>> 9472ad4 (first)
         $data = $this->request->all();
         $date_fields = collect($this->panel->fields())->filter(
             function ($item) use ($data) {
@@ -98,7 +153,11 @@ abstract class XotBaseRequest extends FormRequest {
             /*
             *  Se e' un oggetto e' già convertito
             **/
+<<<<<<< HEAD
             if (! \is_object($value)) {
+=======
+            if (! is_object($value)) {
+>>>>>>> 9472ad4 (first)
                 $func = 'Conv'.$field->type;
                 $value_new = $this->$func($field, $value);
                 $this->request->add([$field->name => $value_new]);
@@ -111,7 +170,12 @@ abstract class XotBaseRequest extends FormRequest {
      *
      * @return array
      */
+<<<<<<< HEAD
     public function validationData() {
+=======
+    public function validationData()
+    {
+>>>>>>> 9472ad4 (first)
         dddx('aaa');
 
         return [];
@@ -119,6 +183,7 @@ abstract class XotBaseRequest extends FormRequest {
 
     /**
      * @param string $field
+<<<<<<< HEAD
      * @param string  $value
      *
      * @return Carbon
@@ -131,11 +196,25 @@ abstract class XotBaseRequest extends FormRequest {
         if($value_new==false){
             throw new Exception('['.__LINE__.']['.__FILE__.']');
         }
+=======
+     * @param mixed  $value
+     *
+     * @return mixed
+     */
+    public function ConvDate($field, $value)
+    {
+        if (null == $value) {
+            return $value;
+        }
+        $value_new = Carbon::createFromFormat('d/m/Y', $value);
+
+>>>>>>> 9472ad4 (first)
         return $value_new;
     }
 
     /**
      * @param string $field
+<<<<<<< HEAD
      * @param string  $value
      *
      * @return Carbon
@@ -148,11 +227,25 @@ abstract class XotBaseRequest extends FormRequest {
         if($value_new==false){
             throw new Exception('['.__LINE__.']['.__FILE__.']');
         }
+=======
+     * @param mixed  $value
+     *
+     * @return mixed
+     */
+    public function ConvDateTime($field, $value)
+    {
+        if (null == $value) {
+            return $value;
+        }
+        $value_new = Carbon::createFromFormat('d/m/Y H:i', $value);
+
+>>>>>>> 9472ad4 (first)
         return $value_new;
     }
 
     /**
      * @param string $field
+<<<<<<< HEAD
      * @param string  $value
      *
      * @return Carbon
@@ -168,3 +261,19 @@ abstract class XotBaseRequest extends FormRequest {
         return $value_new;
     }
 }
+=======
+     * @param mixed  $value
+     *
+     * @return mixed
+     */
+    public function ConvDateTime2Fields($field, $value)
+    {
+        if (null == $value) {
+            return $value;
+        }
+        $value_new = Carbon::createFromFormat('d/m/Y H:i', $value);
+
+        return $value_new;
+    }
+}
+>>>>>>> 9472ad4 (first)

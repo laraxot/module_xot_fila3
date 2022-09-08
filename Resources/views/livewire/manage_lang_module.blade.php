@@ -19,5 +19,9 @@
         <tbody>
     </table>
 
+<<<<<<< HEAD
     <livewire:modal.form_array data="test" bodyView="xot::livewire.manage_lang_module.edit" />
+=======
+    <livewire:theme::modal.form_array data="test" bodyView="xot::livewire.manage_lang_module.edit" />
+>>>>>>> 9472ad4 (first)
 </div>

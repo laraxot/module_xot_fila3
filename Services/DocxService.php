@@ -47,9 +47,15 @@ class DocxService {
         return static::getInstance();
     }
 
+<<<<<<< HEAD
     // Method Modules\Xot\Services\DocxService::setDocxInput()
     // should return Modules\Xot\Services\DocxService
     // but returns Modules\Xot\Services\DocxService|null.
+=======
+    //Method Modules\Xot\Services\DocxService::setDocxInput()
+    //should return Modules\Xot\Services\DocxService
+    //but returns Modules\Xot\Services\DocxService|null.
+>>>>>>> 9472ad4 (first)
 
     public function setDocxInput(string $filename): self {
         $this->docx_input = $filename;
@@ -71,6 +77,7 @@ class DocxService {
      */
     public function out(array $params = []) {
         extract($params);
+<<<<<<< HEAD
         include __DIR__.'/vendor/autoload.php'; // carico la mia libreria che uso solo qui..
 
         // return response()->download($this->docx_input);
@@ -79,12 +86,26 @@ class DocxService {
         $tpl->setValues($this->values);
         $info = pathinfo($this->docx_input);
         // dddx($info);
+=======
+        include __DIR__.'/vendor/autoload.php'; //carico la mia libreria che uso solo qui..
+
+        //return response()->download($this->docx_input);
+        $tpl = new TemplateProcessor($this->docx_input);
+        //$tpl->setValue('customer_title', 'test');
+        $tpl->setValues($this->values);
+        $info = pathinfo($this->docx_input);
+        //dddx($info);
+>>>>>>> 9472ad4 (first)
         $filename_out = $info['basename'];
         $filename_out_path = storage_path($filename_out);
         try {
             $tpl->saveAs($filename_out_path);
         } catch (\Exception $e) {
+<<<<<<< HEAD
             // handle exception
+=======
+            //handle exception
+>>>>>>> 9472ad4 (first)
             dddx([$e]);
         }
 
@@ -92,13 +113,22 @@ class DocxService {
     }
 
     /**
+<<<<<<< HEAD
      * @param \Illuminate\Contracts\Support\Arrayable $row
      * @param string                                  $prefix
+=======
+     * @param object $row
+     * @param string $prefix
+>>>>>>> 9472ad4 (first)
      *
      * @return array
      */
     public function rows2Data_test($row, $prefix) {
+<<<<<<< HEAD
         if (! \is_object($row)) {
+=======
+        if (! is_object($row)) {
+>>>>>>> 9472ad4 (first)
             return [];
         }
 
@@ -115,6 +145,7 @@ class DocxService {
                 }
 
                 if (isJson($row->$key)) {
+<<<<<<< HEAD
                     // dddx($row->$key);
                     $tmp = (array) json_decode($row->$key);
                     $data = [];
@@ -127,6 +158,20 @@ class DocxService {
                     return $data;
                 }
                 if (\is_string($item)) {
+=======
+                    //dddx($row->$key);
+                    $tmp = (array) json_decode($row->$key);
+                    $data = [];
+                    foreach ($tmp as $k => $v) {
+                        if (! is_array($v) && ! is_object($v)) {
+                            $data[$prefix.'.'.$key.'_'.$k] = $v;
+                        }
+                    }
+                    //dddx($data);
+                    return $data;
+                }
+                if (is_string($item)) {
+>>>>>>> 9472ad4 (first)
                     $item = str_replace('&', '&amp;', $item);
                 }
 
@@ -148,13 +193,18 @@ class DocxService {
      * @return array
      */
     public function rows2Data($row, $prefix) {
+<<<<<<< HEAD
         if (! \is_object($row)) {
+=======
+        if (! is_object($row)) {
+>>>>>>> 9472ad4 (first)
             return [];
         }
 
         $arr = [];
         $fields = $row->getFillable();
         foreach ($fields as $field) {
+<<<<<<< HEAD
             // 175    Dead catch - Exception is never thrown in the try block.
             // try {
             $arr[$field] = $row->$field;
@@ -169,6 +219,22 @@ class DocxService {
             function ($item, $key) use ($row, $prefix, $arr) {
                 // *
                 if ('' !== $arr[$key] && \is_object($row->$key)) {
+=======
+            //175    Dead catch - Exception is never thrown in the try block.
+            //try {
+            $arr[$field] = $row->$field;
+            //} catch (\Exception $e1) {
+            //    $arr[$field] = '';
+            //}
+        }
+
+        //$arr = $row->toArray();
+        //dddx($arr);
+        $data = collect($arr)->map(
+            function ($item, $key) use ($row, $prefix, $arr) {
+                //*
+                if ('' != $arr[$key] && is_object($row->$key)) {
+>>>>>>> 9472ad4 (first)
                     if ($row->$key instanceof Carbon) {
                         try {
                             $item = $row->$key->format('d/m/Y');
@@ -177,7 +243,11 @@ class DocxService {
                                 $prefix.'.'.$key => $item,
                             ];
                         }
+<<<<<<< HEAD
                         // Carbon::setLocale('it');
+=======
+                        //Carbon::setLocale('it');
+>>>>>>> 9472ad4 (first)
                         return [
                             $prefix.'.'.$key => $item,
                             $prefix.'.'.$key.'_locale' => ucfirst($row->$key->translatedFormat('d F Y')),
@@ -186,6 +256,7 @@ class DocxService {
                         ];
                     }
                 }
+<<<<<<< HEAD
                 // */
 
                 if (isJson($row->$key)) {
@@ -201,6 +272,23 @@ class DocxService {
                     return $data;
                 }
                 if (\is_string($item)) {
+=======
+                //*/
+
+                if (isJson($row->$key)) {
+                    //dddx($row->$key);
+                    $tmp = (array) json_decode($row->$key);
+                    $data = [];
+                    foreach ($tmp as $k => $v) {
+                        if (! is_array($v) && ! is_object($v)) {
+                            $data[$prefix.'.'.$key.'_'.$k] = $v;
+                        }
+                    }
+                    //dddx($data);
+                    return $data;
+                }
+                if (is_string($item)) {
+>>>>>>> 9472ad4 (first)
                     $item = str_replace('&', '&amp;', $item);
                 }
 
@@ -208,6 +296,7 @@ class DocxService {
             }
         )->collapse()
         ->all();
+<<<<<<< HEAD
         // 212    Offset non-empty-string on array<int, mixed> in isset() does not exist.
         // if (isset($data[$prefix.'.postal_code'])) {
         // $data[$prefix.'.zip_code'] = $data[$prefix.'.postal_code'] ?? '';
@@ -226,6 +315,24 @@ class DocxService {
         return $data;
     }
 }// end class
+=======
+
+        if (isset($data[$prefix.'.postal_code'])) {
+            $data[$prefix.'.zip_code'] = $data[$prefix.'.postal_code'];
+        }
+
+        if (isset($data[$prefix.'.route'])
+            && isset($data[$prefix.'.locality'])
+            && isset($data[$prefix.'.zip_code'])
+            //&& !isset($data[$prefix.'.full_address'])
+        ) {
+            $data[$prefix.'.full_address'] = $data[$prefix.'.route'].', '.$data[$prefix.'.street_number'].' - '.$data[$prefix.'.zip_code'].' '.$data[$prefix.'.locality'].' ('.$data[$prefix.'.administrative_area_level_2_short'].')';
+        }
+
+        return $data;
+    }
+}//end class
+>>>>>>> 9472ad4 (first)
 
 /*
 https://appdividend.com/2018/04/23/how-to-create-word-document-file-in-laravel/

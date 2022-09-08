@@ -14,7 +14,11 @@ class FeedFactory extends Factory {
     /**
      * The name of the factory's corresponding model.
      *
+<<<<<<< HEAD
      * @var class-string<\Illuminate\Database\Eloquent\Model>
+=======
+     * @var string
+>>>>>>> 9472ad4 (first)
      */
     protected $model = Feed::class;
 
@@ -25,7 +29,11 @@ class FeedFactory extends Factory {
      */
     public function definition() {
         return [
+<<<<<<< HEAD
             'id' => $this->faker->randomNumber(5, false),
+=======
+            'id' => $this->faker->randomNumber,
+>>>>>>> 9472ad4 (first)
             'created_at' => $this->faker->dateTime,
             'updated_at' => $this->faker->dateTime,
         ];

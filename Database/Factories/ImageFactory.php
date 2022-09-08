@@ -13,7 +13,11 @@ class ImageFactory extends Factory {
     /**
      * The name of the factory's corresponding model.
      *
+<<<<<<< HEAD
      * @var class-string<\Illuminate\Database\Eloquent\Model>
+=======
+     * @var string
+>>>>>>> 9472ad4 (first)
      */
     protected $model = Image::class;
 
@@ -26,7 +30,14 @@ class ImageFactory extends Factory {
        
 
         return [
+<<<<<<< HEAD
             'src' => $this->faker->word
+=======
+            'src' => $this->faker->word,
+            'width' => $this->faker->randomNumber,
+            'height' => $this->faker->randomNumber,
+            'src_out' => $this->faker->text
+>>>>>>> 9472ad4 (first)
         ];
     }
 }

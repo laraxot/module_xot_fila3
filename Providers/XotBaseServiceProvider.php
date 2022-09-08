@@ -13,7 +13,11 @@ use Illuminate\Support\Str;
 use Modules\Xot\Services\LivewireService;
 use Nwidart\Modules\Facades\Module;
 
+<<<<<<< HEAD
 // use Modules;
+=======
+//use Modules;
+>>>>>>> 9472ad4 (first)
 
 /**
  * Class XotBaseServiceProvider.
@@ -34,14 +38,24 @@ abstract class XotBaseServiceProvider extends ServiceProvider {
         $this->registerTranslations();
         $this->registerConfig();
         $this->registerViews();
+<<<<<<< HEAD
         // $this->registerFactories();
+=======
+        //$this->registerFactories();
+>>>>>>> 9472ad4 (first)
         $this->loadMigrationsFrom($this->module_dir.'/../Database/Migrations');
         if (method_exists($this, 'bootCallback')) {
             $this->bootCallback();
         }
+<<<<<<< HEAD
         // Illuminate\Contracts\Container\BindingResolutionException: Target class [livewire] does not exist.
         $this->registerLivewireComponents();
         // Illuminate\Contracts\Container\BindingResolutionException: Target class [modules] does not exist.
+=======
+        //Illuminate\Contracts\Container\BindingResolutionException: Target class [livewire] does not exist.
+        $this->registerLivewireComponents();
+        //Illuminate\Contracts\Container\BindingResolutionException: Target class [modules] does not exist.
+>>>>>>> 9472ad4 (first)
         $this->registerBladeComponents();
     }
 
@@ -54,7 +68,11 @@ abstract class XotBaseServiceProvider extends ServiceProvider {
         if (method_exists($this, 'registerCallback')) {
             $this->registerCallback();
         }
+<<<<<<< HEAD
         // echo '<h3>Time :'.class_basename($this).' '.(microtime(true) - LARAVEL_START).'</h3>';
+=======
+        //echo '<h3>Time :'.class_basename($this).' '.(microtime(true) - LARAVEL_START).'</h3>';
+>>>>>>> 9472ad4 (first)
     }
 
     /**
@@ -100,11 +118,17 @@ abstract class XotBaseServiceProvider extends ServiceProvider {
      */
     public function registerTranslations(): void {
         $langPath = realpath($this->module_dir.'/../Resources/lang');
+<<<<<<< HEAD
         if (false == $langPath) {
             throw new Exception('['.__LINE__.']['.__FILE__.']');
         }
         // echo '<hr>'.$langPath.'  :  '.$this->module_name.' <hr/>';
         $this->loadTranslationsFrom($langPath, $this->module_name);
+=======
+        //echo '<hr>'.$langPath.'  :  '.$this->module_name.' <hr/>';
+        $this->loadTranslationsFrom($langPath, $this->module_name);
+        
+>>>>>>> 9472ad4 (first)
     }
 
     /**
@@ -112,7 +136,11 @@ abstract class XotBaseServiceProvider extends ServiceProvider {
      */
     public function registerFactories(): void {
         if (! app()->environment('production')) {
+<<<<<<< HEAD
             // app(Factory::class)->load($this->module_dir.'/../Database/factories');
+=======
+            //app(Factory::class)->load($this->module_dir.'/../Database/factories');
+>>>>>>> 9472ad4 (first)
         }
     }
 
@@ -131,6 +159,7 @@ abstract class XotBaseServiceProvider extends ServiceProvider {
         Blade::componentNamespace($namespace, $this->module_name);
     }
 
+<<<<<<< HEAD
     /**
      * Undocumented function.
      */
@@ -141,6 +170,13 @@ abstract class XotBaseServiceProvider extends ServiceProvider {
             $this->module_dir.'/../Http/Livewire',
             Str::before($this->module_ns, '\Providers'),
             $prefix,
+=======
+    public function registerLivewireComponents(): void {
+        LivewireService::registerComponents(
+            $this->module_dir.'/../Http/Livewire',
+            Str::before($this->module_ns, '\Providers'),
+            $this->module_name.'::'
+>>>>>>> 9472ad4 (first)
         );
     }
 
@@ -153,6 +189,7 @@ abstract class XotBaseServiceProvider extends ServiceProvider {
         return [];
     }
 
+<<<<<<< HEAD
 
     /**
      * Undocumented function
@@ -161,6 +198,12 @@ abstract class XotBaseServiceProvider extends ServiceProvider {
      * @return array
      */
     public function getEventsFrom(string $path): array {
+=======
+    /**
+     * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
+     */
+    public function loadEventsFrom(string $path): void {
+>>>>>>> 9472ad4 (first)
         $events = [];
         if (! File::isDirectory($path)) {
             File::makeDirectory($path, 0777, true, true);
@@ -168,18 +211,31 @@ abstract class XotBaseServiceProvider extends ServiceProvider {
         $events_file = $path.'/_events.json';
         $force_recreate = request()->input('force_recreate', true);
         if (! File::exists($events_file) || $force_recreate) {
+<<<<<<< HEAD
             $filenames = glob($path.'/*.php');
             if (false == $filenames) {
+=======
+            $filenames = \glob($path.'/*.php');
+            if (null == $filenames) {
+>>>>>>> 9472ad4 (first)
                 $filenames = [];
             }
             foreach ($filenames as $filename) {
                 $info = pathinfo($filename);
 
+<<<<<<< HEAD
                 // $tmp->namespace='\\'.$vendor.'\\'.$pack.'\\Events\\'.$info['filename'];
                 $event_name = $info['filename'];
                 $str = 'Event';
                 if (Str::endsWith($event_name, $str)) {
                     $listener_name = substr($event_name, 0, -\strlen($str)).'Listener';
+=======
+                //$tmp->namespace='\\'.$vendor.'\\'.$pack.'\\Events\\'.$info['filename'];
+                $event_name = $info['filename'];
+                $str = 'Event';
+                if (Str::endsWith($event_name, $str)) {
+                    $listener_name = substr($event_name, 0, -strlen($str)).'Listener';
+>>>>>>> 9472ad4 (first)
 
                     $event = $this->module_base_ns.'\\Events\\'.$event_name;
                     $listener = $this->module_base_ns.'\\Listeners\\'.$listener_name;
@@ -190,7 +246,11 @@ abstract class XotBaseServiceProvider extends ServiceProvider {
                         'listener_exists' => class_exists($listener),
                     ];
                     if (class_exists($event) && class_exists($listener)) {
+<<<<<<< HEAD
                         // \Event::listen($event, $listener);
+=======
+                        //\Event::listen($event, $listener);
+>>>>>>> 9472ad4 (first)
                         $tmp = new \stdClass();
                         $tmp->event = $event;
                         $tmp->listener = $listener;
@@ -211,6 +271,7 @@ abstract class XotBaseServiceProvider extends ServiceProvider {
             $events = File::get($events_file);
             $events = (array) json_decode($events);
         }
+<<<<<<< HEAD
 
         return $events;
     }
@@ -220,11 +281,18 @@ abstract class XotBaseServiceProvider extends ServiceProvider {
      */
     public function loadEventsFrom(string $path): void {
         $events=$this->getEventsFrom($path);
+=======
+>>>>>>> 9472ad4 (first)
         foreach ($events as $v) {
             Event::listen($v->event, $v->listener);
         }
     }
 
+<<<<<<< HEAD
     // end function
     
 }
+=======
+    //end function
+}
+>>>>>>> 9472ad4 (first)

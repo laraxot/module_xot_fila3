@@ -6,8 +6,13 @@ namespace Modules\Xot\Services;
 
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
+<<<<<<< HEAD
 // ----services ---
 // ---- pear
+=======
+//----services ---
+//---- pear
+>>>>>>> 9472ad4 (first)
 use ZipArchive;
 
 /**
@@ -36,7 +41,11 @@ class ZipService {
         ini_set('max_execution_time', '3600');
         ini_set('memory_limit', '-1');
         $pdforientation = 'P';
+<<<<<<< HEAD
         $out = isset($params['out'])?$params['out']:'';
+=======
+        $out = '';
+>>>>>>> 9472ad4 (first)
         extract($params);
         if (! isset($pdf_view)) {
             dddx(['err' => 'pdf_view is missing']);
@@ -58,17 +67,29 @@ class ZipService {
             'view' => $pdf_view,
             'out' => 'content_PDF',
         ];
+<<<<<<< HEAD
         // $filename_zip = '_'.$this->year.'.zip';
 
         $zip = new ZipArchive();
         $filename_zip = Storage::disk('cache')->path($filename_zip);
         $filename_zip = str_replace(['/', '\\'], [\DIRECTORY_SEPARATOR, \DIRECTORY_SEPARATOR], $filename_zip);
+=======
+        //$filename_zip = '_'.$this->year.'.zip';
+
+        $zip = new ZipArchive();
+        $filename_zip = Storage::disk('cache')->path($filename_zip);
+        $filename_zip = str_replace(['/', '\\'], [DIRECTORY_SEPARATOR, DIRECTORY_SEPARATOR], $filename_zip);
+>>>>>>> 9472ad4 (first)
 
         if (true !== $zip->open($filename_zip, ZipArchive::CREATE)) {
             throw new \Exception('cannot create zip ['.$filename_zip.']');
         }
 
+<<<<<<< HEAD
         // dddx(get_class_methods($zip));
+=======
+        //dddx(get_class_methods($zip));
+>>>>>>> 9472ad4 (first)
         /*
         0 => "open"
         1 => "setPassword"
@@ -111,11 +132,16 @@ class ZipService {
         38 => "setEncryptionName"
         39 => "setEncryptionIndex"
         */
+<<<<<<< HEAD
         if (0 === $rows->count()) {
+=======
+        if (0 == $rows->count()) {
+>>>>>>> 9472ad4 (first)
             return '<h3>Non ci sono file da aggiungere</h3>';
         }
         foreach ($rows as $row) {
             $panel = PanelService::make()->get($row);
+<<<<<<< HEAD
             //Strict comparison using === between null and Modules\Xot\Contracts\PanelContract will always evaluate to false.
             //if (null === $panel) {
             //    return;
@@ -126,21 +152,43 @@ class ZipService {
 
             $path = Storage::disk('cache')->path($filename);
             $path = str_replace(['/', '\\'], [\DIRECTORY_SEPARATOR, \DIRECTORY_SEPARATOR], $path);
+=======
+            if (null == $panel) {
+                return;
+            }
+            //dddx($panel);
+            //$filename = 'Perf_ind_'.$row->id.'_'.$row->matr.'_'.$row->cognome.'_'.$row->nome.'_'.$row->anno.'_'.date('Ymd').'.pdf';
+            $filename = $panel->pdfFilename();
+
+            $path = Storage::disk('cache')->path($filename);
+            $path = str_replace(['/', '\\'], [DIRECTORY_SEPARATOR, DIRECTORY_SEPARATOR], $path);
+>>>>>>> 9472ad4 (first)
 
             if (! File::exists($path)) {
                 $pdf_parz['filename'] = $filename;
                 $pdf_content = $panel->pdf($pdf_parz);
+<<<<<<< HEAD
                 // 134    Parameter #2 $contents of method Illuminate\Filesystem\FilesystemAdapter::put()
                 // expects
                 // Illuminate\Http\File|Illuminate\Http\UploadedFile|Psr\Http\Message\StreamInterface|resource|string,
                 // mixed   given.
+=======
+                //134    Parameter #2 $contents of method Illuminate\Filesystem\FilesystemAdapter::put()
+                //expects
+                //Illuminate\Http\File|Illuminate\Http\UploadedFile|Psr\Http\Message\StreamInterface|resource|string,
+                //mixed   given.
+>>>>>>> 9472ad4 (first)
                 $res = Storage::disk('cache')->put($filename, $pdf_content);
             }
             $zip->addFile($path, $filename);
         }
         $zip->close();
 
+<<<<<<< HEAD
         if ('download' === $out) {
+=======
+        if ('download' == $out) {
+>>>>>>> 9472ad4 (first)
             return response()->download($filename_zip);
         }
 
@@ -163,7 +211,11 @@ class ZipService {
     public static function getFilenameZipPath(): string {
         $filename_zip = self::getFilenameZip();
         $filename_zip = Storage::disk('cache')->path($filename_zip);
+<<<<<<< HEAD
         $filename_zip = str_replace(['/', '\\'], [\DIRECTORY_SEPARATOR, \DIRECTORY_SEPARATOR], $filename_zip);
+=======
+        $filename_zip = str_replace(['/', '\\'], [DIRECTORY_SEPARATOR, DIRECTORY_SEPARATOR], $filename_zip);
+>>>>>>> 9472ad4 (first)
         File::makeDirectory(\dirname($filename_zip), 0755, true, true);
 
         return $filename_zip;
@@ -188,7 +240,11 @@ class ZipService {
     public static function fromFiles(array $files, ?array $names): self {
         $zip = self::getZipArchive();
         foreach ($files as $index => $path) {
+<<<<<<< HEAD
             $path = str_replace(['/', '\\'], [\DIRECTORY_SEPARATOR, \DIRECTORY_SEPARATOR], $path);
+=======
+            $path = str_replace(['/', '\\'], [DIRECTORY_SEPARATOR, DIRECTORY_SEPARATOR], $path);
+>>>>>>> 9472ad4 (first)
             if (isset($names)) {
                 $zip->addFile($path, $names[$index]);
             } else {
@@ -210,5 +266,10 @@ class ZipService {
         return response()->download($filename_zip);
     }
 
+<<<<<<< HEAD
     // -- potrebbe non fare download ma mostra un bottone.. o altro
 }
+=======
+    //-- potrebbe non fare download ma mostra un bottone.. o altro
+}
+>>>>>>> 9472ad4 (first)

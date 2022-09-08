@@ -4,13 +4,22 @@ declare(strict_types=1);
 
 namespace Modules\Xot\Transformers;
 
+<<<<<<< HEAD
 // use Illuminate\Http\Resources\Json\ResourceCollection;
+=======
+//use Illuminate\Http\Resources\Json\ResourceCollection;
+>>>>>>> 9472ad4 (first)
 use Illuminate\Http\Resources\Json\JsonResource;
 
 /**
  * Class MapResource.
  */
+<<<<<<< HEAD
 class MapResource extends JsonResource {
+=======
+class MapResource extends JsonResource
+{
+>>>>>>> 9472ad4 (first)
     protected float $longitude;
     protected float $latitude;
 
@@ -19,7 +28,12 @@ class MapResource extends JsonResource {
      *
      * @return array
      */
+<<<<<<< HEAD
     public function toArray($request) {
+=======
+    public function toArray($request)
+    {
+>>>>>>> 9472ad4 (first)
         return [
             'type' => 'Feature',
             'properties' => [

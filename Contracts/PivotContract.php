@@ -20,5 +20,10 @@ use Illuminate\Database\Eloquent\Collection;
  * @method mixed update($params)
  * @mixin  \Eloquent
  */
+<<<<<<< HEAD
 interface PivotContract {
+=======
+interface PivotContract
+{
+>>>>>>> 9472ad4 (first)
 }

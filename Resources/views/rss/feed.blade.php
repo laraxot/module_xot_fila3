@@ -8,7 +8,11 @@
         <description><![CDATA[ {{ config('metatag.description') }} ]]></description>
         <language>{{ $lang }}</language>
         <pubDate>{{ now() }}</pubDate>
+<<<<<<< HEAD
 
+=======
+        
+>>>>>>> 9472ad4 (first)
         @foreach($items as $item)
             <item>
                 <title><![CDATA[{{ $item->title }}]]></title>

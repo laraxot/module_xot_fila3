@@ -5,11 +5,19 @@ declare(strict_types=1);
 namespace Modules\Xot\Models\Panels\Actions;
 
 use Illuminate\Database\Eloquent\Builder;
+<<<<<<< HEAD
 // use Illuminate\Database\Eloquent\Model;
 // use Laravel\Scout\Searchable;
 
 // ----------  SERVICES --------------------------
 // ------------ jobs ----------------------------
+=======
+//use Illuminate\Database\Eloquent\Model;
+//use Laravel\Scout\Searchable;
+
+//----------  SERVICES --------------------------
+//------------ jobs ----------------------------
+>>>>>>> 9472ad4 (first)
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
@@ -36,7 +44,11 @@ abstract class XotBasePanelAction {
      */
     public $rows;
 
+<<<<<<< HEAD
     // public Builder $rows;
+=======
+    //public Builder $rows;
+>>>>>>> 9472ad4 (first)
 
     public PanelContract $panel;
 
@@ -48,7 +60,11 @@ abstract class XotBasePanelAction {
 
     protected array $data = [];
 
+<<<<<<< HEAD
     public ?string $related = null; // post_type per filtrare le azioni nei vari index_edit
+=======
+    public ?string $related = null; //post_type per filtrare le azioni nei vari index_edit
+>>>>>>> 9472ad4 (first)
 
     /**
      * handle.
@@ -88,7 +104,11 @@ abstract class XotBasePanelAction {
         if (Str::contains((string) $this->name, '::')) {
             $this->name = null;
         }
+<<<<<<< HEAD
         if (null !== $this->name) {
+=======
+        if (null != $this->name) {
+>>>>>>> 9472ad4 (first)
             return $this->name;
         }
         $this->name = Str::snake(class_basename($this));
@@ -109,16 +129,23 @@ abstract class XotBasePanelAction {
         $trans_path = $module_name_low.'::'.strtolower(class_basename($row)).'.act.'.$name;
         $trans = trans($trans_path);
 
+<<<<<<< HEAD
         if ($trans_path === $trans && ! config('xra.show_trans_key')) {
+=======
+        if ($trans_path == $trans && ! config('xra.show_trans_key')) {
+>>>>>>> 9472ad4 (first)
             $title = str_replace('_', ' ', $name);
         } else {
             $title = $trans;
         }
 
+<<<<<<< HEAD
         if (! is_string($title)) {
             return '---';
         }
 
+=======
+>>>>>>> 9472ad4 (first)
         return $title;
     }
 
@@ -171,6 +198,7 @@ abstract class XotBasePanelAction {
         return $this->urlContainer();
     }
 
+<<<<<<< HEAD
     public function urlContainer(/* string $act = 'show' */): string {
         $panel = $this->panel;
         // $request = \Request::capture();
@@ -182,10 +210,24 @@ abstract class XotBasePanelAction {
         // dddx(get_class_methods(request()));
         $request_query = request()->query();
         if (! \is_array($request_query)) {
+=======
+    public function urlContainer(/*string $act = 'show'*/): string {
+        $panel = $this->panel;
+        //$request = \Request::capture();
+        $name = $this->getName();
+        //$url = $request->fullUrlWithQuery(['_act' => $name]);
+        //if (isset($panel)) {
+        //dddx([request()->all(),$this->data]);
+        //dddx(request()->all());
+        //dddx(get_class_methods(request()));
+        $request_query = request()->query();
+        if (! is_array($request_query)) {
+>>>>>>> 9472ad4 (first)
             $request_query = [];
         }
 
         $this->data = array_merge($request_query, $this->data);
+<<<<<<< HEAD
         // $this->data = collect($this->data)->except(['fingerprint', 'serverMemo', 'updates'])->all();
 
         // $url = $panel->url('index');
@@ -195,6 +237,17 @@ abstract class XotBasePanelAction {
         $this->data['_act'] = $name;
         $url = url_queries($this->data, $url);
         // }
+=======
+        //$this->data = collect($this->data)->except(['fingerprint', 'serverMemo', 'updates'])->all();
+
+        //$url = $panel->url('index');
+        $url = $panel->url('index');
+        $url = url_queries(['_act' => $name], $url);
+        //$this->data['page'] = 1;
+        $this->data['_act'] = $name;
+        $url = url_queries($this->data, $url);
+        //}
+>>>>>>> 9472ad4 (first)
 
         return $url;
     }
@@ -204,7 +257,11 @@ abstract class XotBasePanelAction {
      * @param mixed        $value
      */
     public function with($key, $value = null): self {
+<<<<<<< HEAD
         if (\is_array($key)) {
+=======
+        if (is_array($key)) {
+>>>>>>> 9472ad4 (first)
             $this->data = array_merge($this->data, $key);
         } else {
             $this->data[$key] = $value;
@@ -268,9 +325,15 @@ abstract class XotBasePanelAction {
             </a>';*/
     }
 
+<<<<<<< HEAD
     // end btnContainer
 
     public function urlItem(/* string $act = 'show' */): string {
+=======
+    //end btnContainer
+
+    public function urlItem(/*string $act = 'show'*/): string {
+>>>>>>> 9472ad4 (first)
         $url = '';
         $query_params = [];
 
@@ -302,6 +365,7 @@ abstract class XotBasePanelAction {
         if (Gate::allows($method, $this->panel)) {
             if (isset($modal)) {
                 switch ($modal) {
+<<<<<<< HEAD
                     case 'iframe':
                         return
                             '<button type="button" data-title="'.$title.'"
@@ -311,6 +375,17 @@ abstract class XotBasePanelAction {
                         // break;
                     case 'ajax':
                         break;
+=======
+                case 'iframe':
+                    return
+                        '<button type="button" data-title="'.$title.'"
+						data-href="'.$url.'" data-toggle="modal" class="btn btn-secondary mb-2" data-target="#myModalIframe">
+                        '.$this->icon.'
+                        </button>';
+                    //break;
+                case 'ajax':
+                    break;
+>>>>>>> 9472ad4 (first)
                 }
             }
 
@@ -322,8 +397,13 @@ abstract class XotBasePanelAction {
         }
     }
 
+<<<<<<< HEAD
     // end btnItem
     // * --
+=======
+    //end btnItem
+    //* --
+>>>>>>> 9472ad4 (first)
     public function updateRow(array $params = []): PanelContract {
         $row = $this->row;
         extract($params);
@@ -339,7 +419,11 @@ abstract class XotBasePanelAction {
         */
     }
 
+<<<<<<< HEAD
     // */
+=======
+    //*/
+>>>>>>> 9472ad4 (first)
 
     /**
      * Undocumented function.

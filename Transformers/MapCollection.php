@@ -9,7 +9,12 @@ use Illuminate\Http\Resources\Json\ResourceCollection;
 /**
  * Class MapCollection.
  */
+<<<<<<< HEAD
 class MapCollection extends ResourceCollection {
+=======
+class MapCollection extends ResourceCollection
+{
+>>>>>>> 9472ad4 (first)
     /**
      * @var string
      */
@@ -20,7 +25,12 @@ class MapCollection extends ResourceCollection {
      *
      * @return array
      */
+<<<<<<< HEAD
     public function toArray($request) {
+=======
+    public function toArray($request)
+    {
+>>>>>>> 9472ad4 (first)
         return [
             'type' => 'FeatureCollection',
             'features' => $this->collection,

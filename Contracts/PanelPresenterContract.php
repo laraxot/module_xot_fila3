@@ -9,7 +9,12 @@ use Illuminate\Support\Collection;
 /**
  * Interface PanelPresenterContract.
  */
+<<<<<<< HEAD
 interface PanelPresenterContract {
+=======
+interface PanelPresenterContract
+{
+>>>>>>> 9472ad4 (first)
     /**
      * @return mixed
      */

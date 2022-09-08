@@ -5,7 +5,10 @@ declare(strict_types=1);
 namespace Modules\Xot\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+<<<<<<< HEAD
 use Exception;
+=======
+>>>>>>> 9472ad4 (first)
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Request;
@@ -22,7 +25,12 @@ use Modules\Xot\Services\PolicyService;
  * @method Renderable home(Request $request)
  * @method Renderable show(Request $request)
  */
+<<<<<<< HEAD
 class ContainersController extends Controller {
+=======
+class ContainersController extends Controller
+{
+>>>>>>> 9472ad4 (first)
     protected PanelContract $panel;
 
     /*
@@ -42,6 +50,7 @@ class ContainersController extends Controller {
      *
      * @return mixed
      */
+<<<<<<< HEAD
     public function index(Request $request) {
         $route_params = getRouteParameters(); // "module" => "lu"
         [$containers,$items] = params2ContainerItem();
@@ -50,12 +59,24 @@ class ContainersController extends Controller {
             return $this->home($request);
         }
         if (\count($containers) === \count($items)) {
+=======
+    public function index(Request $request)
+    {
+        $route_params = getRouteParameters(); // "module" => "lu"
+        [$containers,$items] = params2ContainerItem();
+        //dddx(['contianers' => $containers, 'items' => $items]);
+        if (0 == count($containers)) {
+            return $this->home($request);
+        }
+        if (count($containers) == count($items)) {
+>>>>>>> 9472ad4 (first)
             return $this->show($request);
         }
 
         return $this->__call('index', $route_params);
     }
 
+<<<<<<< HEAD
     public function __call($method, $args) {
         // dddx(['method' => $method, 'args' => $args]);
         $route_current = \Route::current();
@@ -74,13 +95,29 @@ class ContainersController extends Controller {
         $this->panel = $panel;
 
         if ('' !== request()->input('_act', '')) {
+=======
+    public function __call($method, $args)
+    {
+        $action = \Route::current()->getAction();
+        $action['controller'] = __CLASS__.'@'.$method;
+        $action = \Route::current()->setAction($action);
+
+        $this->panel = PanelService::make()->getRequestPanel();
+
+        if ('' != request()->input('_act', '')) {
+>>>>>>> 9472ad4 (first)
             return $this->__callPanelAct($method, $args);
         }
 
         return $this->__callRouteAct($method, $args);
     }
 
+<<<<<<< HEAD
     public function getController(): string {
+=======
+    public function getController(): string
+    {
+>>>>>>> 9472ad4 (first)
         /*
         if (null == $this->panel) {
             return '\Modules\Xot\Http\Controllers\XotPanelController';
@@ -96,7 +133,11 @@ class ContainersController extends Controller {
             }
         )->implode('\\');
         $controller = '\Modules\\'.$mod_name.'\Http\Controllers\\'.$tmp.'Controller';
+<<<<<<< HEAD
         if (class_exists($controller) && '' !== $tmp) {
+=======
+        if (class_exists($controller) && '' != $tmp) {
+>>>>>>> 9472ad4 (first)
             return $controller;
         }
 
@@ -106,21 +147,33 @@ class ContainersController extends Controller {
     /**
      * @return mixed
      */
+<<<<<<< HEAD
     public function __callRouteAct(string $method, array $args) {
+=======
+    public function __callRouteAct(string $method, array $args)
+    {
+>>>>>>> 9472ad4 (first)
         $panel = $this->panel;
         $authorized = Gate::allows($method, $panel);
 
         if (! $authorized) {
+<<<<<<< HEAD
             // dddx($method, $panel);
+=======
+            //dddx($method, $panel);
+>>>>>>> 9472ad4 (first)
 
             return $this->notAuthorized($method, $panel);
         }
         $request = XotRequest::capture();
 
         $controller = $this->getController();
+<<<<<<< HEAD
         // dddx([$controller, $method]);
         // Modules\Xot\Http\Controllers\XotPanelController
         // home
+=======
+>>>>>>> 9472ad4 (first)
 
         $panel = app($controller)->$method($request, $panel);
 
@@ -130,11 +183,17 @@ class ContainersController extends Controller {
     /**
      * @return mixed
      */
+<<<<<<< HEAD
     public function __callPanelAct(string $method, array $args) {
         $request = request();
         /**
          * @var string
          */
+=======
+    public function __callPanelAct(string $method, array $args)
+    {
+        $request = request();
+>>>>>>> 9472ad4 (first)
         $act = $request->_act;
         $method_act = Str::camel($act);
 
@@ -151,7 +210,12 @@ class ContainersController extends Controller {
     /**
      * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse|\Illuminate\Http\Response
      */
+<<<<<<< HEAD
     public function notAuthorized(string $method, PanelContract $panel) {
+=======
+    public function notAuthorized(string $method, PanelContract $panel)
+    {
+>>>>>>> 9472ad4 (first)
         $lang = app()->getLocale();
         /*
         if (! \Auth::check()) {
@@ -164,9 +228,17 @@ class ContainersController extends Controller {
         $policy_class = PolicyService::get($panel)->createIfNotExists()->getClass();
         $msg = 'Auth Id ['.\Auth::id().'] not can ['.$method.'] on ['.$policy_class.']';
 
+<<<<<<< HEAD
         // $msg = 'Auth Id ['.\Auth::id().'] not can ['.$method.'] on ['.get_class($panel).']';
+=======
+        //$msg = 'Auth Id ['.\Auth::id().'] not can ['.$method.'] on ['.get_class($panel).']';
+>>>>>>> 9472ad4 (first)
         FileService::viewCopy('theme::errors.403', 'pub_theme::errors.403');
 
         return response()->view('pub_theme::errors.403', ['msg' => $msg], 403);
     }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> 9472ad4 (first)

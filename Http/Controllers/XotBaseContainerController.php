@@ -5,7 +5,11 @@ declare(strict_types=1);
 namespace Modules\Xot\Http\Controllers;
 
 use Illuminate\Routing\Controller;
+<<<<<<< HEAD
 // --- services ---
+=======
+//--- services ---
+>>>>>>> 9472ad4 (first)
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Str;
 use Modules\Xot\Contracts\PanelContract;
@@ -15,7 +19,12 @@ use Modules\Xot\Services\PanelService;
 /**
  * Class XotBaseContainerController.
  */
+<<<<<<< HEAD
 abstract class XotBaseContainerController extends Controller {
+=======
+abstract class XotBaseContainerController extends Controller
+{
+>>>>>>> 9472ad4 (first)
     protected PanelContract $panel;
 
     /**
@@ -25,23 +34,41 @@ abstract class XotBaseContainerController extends Controller {
      * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse|\Illuminate\Http\Response|mixed
      */
 
+<<<<<<< HEAD
     // Declaration of Modules\Xot\Http\Controllers\XotBaseContainerController::__call($method, $args) should be compatible with Illuminate\Routing\Controller::__call($method, $parameters)
 
     public function __call($method, $args) {
         $panel = PanelService::make()->getRequestPanel();
         if (null === $panel) {
+=======
+    //Declaration of Modules\Xot\Http\Controllers\XotBaseContainerController::__call($method, $args) should be compatible with Illuminate\Routing\Controller::__call($method, $parameters)
+
+    public function __call($method, $args)
+    {
+        $panel = PanelService::make()->getRequestPanel();
+        if (null == $panel) {
+>>>>>>> 9472ad4 (first)
             throw new \Exception('uston gavemo un problemon');
         }
         $this->panel = $panel;
 
+<<<<<<< HEAD
         if ('' !== request()->input('_act', '')) {
+=======
+        if ('' != request()->input('_act', '')) {
+>>>>>>> 9472ad4 (first)
             return $this->__callPanelAct($method, $args);
         }
 
         return $this->__callRouteAct($method, $args);
     }
 
+<<<<<<< HEAD
     public function getController(): string {
+=======
+    public function getController(): string
+    {
+>>>>>>> 9472ad4 (first)
         /*
         if (null == $this->panel) {
             return '\Modules\Xot\Http\Controllers\XotPanelController';
@@ -67,7 +94,12 @@ abstract class XotBaseContainerController extends Controller {
     /**
      * @return mixed
      */
+<<<<<<< HEAD
     public function __callRouteAct(string $method, array $args) {
+=======
+    public function __callRouteAct(string $method, array $args)
+    {
+>>>>>>> 9472ad4 (first)
         $panel = $this->panel;
         $authorized = Gate::allows($method, $panel);
 
@@ -86,6 +118,7 @@ abstract class XotBaseContainerController extends Controller {
     /**
      * @return mixed
      */
+<<<<<<< HEAD
     public function __callPanelAct(string $method, array $args) {
         //$request = request();
         //$act = $request->_act;
@@ -93,6 +126,12 @@ abstract class XotBaseContainerController extends Controller {
          * @var string
          */
         $act=request('_act');
+=======
+    public function __callPanelAct(string $method, array $args)
+    {
+        $request = request();
+        $act = $request->_act;
+>>>>>>> 9472ad4 (first)
         $method_act = Str::camel($act);
 
         $panel = $this->panel;
@@ -108,7 +147,12 @@ abstract class XotBaseContainerController extends Controller {
     /**
      * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse|\Illuminate\Http\Response
      */
+<<<<<<< HEAD
     public function notAuthorized(string $method, PanelContract $panel) {
+=======
+    public function notAuthorized(string $method, PanelContract $panel)
+    {
+>>>>>>> 9472ad4 (first)
         $lang = app()->getLocale();
         if (! \Auth::check()) {
             /*
@@ -134,8 +178,16 @@ abstract class XotBaseContainerController extends Controller {
             return redirect()->route('login', ['lang' => $lang, 'referer' => $referer])
                 ->withErrors(['active' => 'login before']);
         }
+<<<<<<< HEAD
         $msg = 'Auth Id ['.\Auth::id().'] not can ['.$method.'] on ['.\get_class($panel).']';
 
         return response()->view('pub_theme::errors.403', ['msg' => $msg], 403);
     }
 }
+=======
+        $msg = 'Auth Id ['.\Auth::id().'] not can ['.$method.'] on ['.get_class($panel).']';
+
+        return response()->view('pub_theme::errors.403', ['msg' => $msg], 403);
+    }
+}
+>>>>>>> 9472ad4 (first)

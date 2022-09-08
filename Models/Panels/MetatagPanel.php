@@ -6,12 +6,21 @@ namespace Modules\Xot\Models\Panels;
 
 use Illuminate\Http\Request;
 
+<<<<<<< HEAD
 // --- Services --
+=======
+//--- Services --
+>>>>>>> 9472ad4 (first)
 
 /**
  * Class MetatagPanel.
  */
+<<<<<<< HEAD
 class MetatagPanel extends XotBasePanel {
+=======
+class MetatagPanel extends XotBasePanel
+{
+>>>>>>> 9472ad4 (first)
     /**
      * The model the resource corresponds to.
      */
@@ -25,7 +34,12 @@ class MetatagPanel extends XotBasePanel {
     /**
      * @return object[]
      */
+<<<<<<< HEAD
     public function fields(): array {
+=======
+    public function fields(): array
+    {
+>>>>>>> 9472ad4 (first)
         return [
             (object) [
                 'type' => 'Id',
@@ -97,9 +111,16 @@ class MetatagPanel extends XotBasePanel {
     /**
      * Get the actions available for the resource.
      */
+<<<<<<< HEAD
     public function actions(Request $request = null): array {
         return [
             // new Actions\StoreFileMetatagAction(),
+=======
+    public function actions(Request $request = null): array
+    {
+        return [
+            //new Actions\StoreFileMetatagAction(),
+>>>>>>> 9472ad4 (first)
         ];
     }
 }

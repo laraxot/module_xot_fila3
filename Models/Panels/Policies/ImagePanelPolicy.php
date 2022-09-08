@@ -7,8 +7,16 @@ namespace Modules\Xot\Models\Panels\Policies;
 /**
  * Class ImagePanelPolicy.
  */
+<<<<<<< HEAD
 class ImagePanelPolicy extends XotBasePanelPolicy {
     public function store(\Modules\Xot\Contracts\UserContract $user, \Modules\Xot\Contracts\PanelContract $panel): bool {
         return true; // da aggiungere pezzi
+=======
+class ImagePanelPolicy extends XotBasePanelPolicy
+{
+    public function store(\Modules\Xot\Contracts\UserContract $user, \Modules\Xot\Contracts\PanelContract $panel): bool
+    {
+        return true; //da aggiungere pezzi
+>>>>>>> 9472ad4 (first)
     }
 }

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Modules\Xot\Services;
 
+<<<<<<< HEAD
 use Exception;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
@@ -17,6 +18,20 @@ use Modules\Theme\Services\ThemeService;
 use Illuminate\Translation\Translator as BaseTranslator;
 
 // dddx('leggo');
+=======
+use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Lang;
+use Illuminate\Support\Facades\Log;
+//---- services ---
+use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Str;
+use Illuminate\Translation\Translator as BaseTranslator;
+use Modules\Theme\Services\ThemeService;
+
+//dddx('leggo');
+>>>>>>> 9472ad4 (first)
 
 /**
  * Class TranslatorService.
@@ -32,6 +47,7 @@ class TranslatorService extends BaseTranslator {
      * @return array|string
      */
     public function get($key, array $replace = [], $locale = null, $fallback = true) {
+<<<<<<< HEAD
         // backtrace(true);
         // trans parte da xotbasepanel riga 1109 (per ora)
         // superdump([$key, $replace , $locale , $fallback ]);
@@ -54,6 +70,23 @@ class TranslatorService extends BaseTranslator {
         // $cache_key=Str::slug(req_uri().'_langs');
         // Cache::put($cache_key,$langs);
         // echo '<pre>';print_r($langs);echo '</pre>';
+=======
+        //backtrace(true);
+        //trans parte da xotbasepanel riga 1109 (per ora)
+        //superdump([$key, $replace , $locale , $fallback ]);
+        //*
+        if($locale==null){
+            $locale=app()->getLocale();
+        }
+        //*/
+        $translation = parent::get($key, $replace, $locale, $fallback);
+        //dddx(['key'=>$key,'translation'=>$translation,'replace'=>$replace,'locale'=>$locale,'fallback'=>$fallback]);
+        //echo '<br>['.$key.']['.$translation.']';
+        //$langs=ThemeService::__merge('langs', [$key=>$translation]);
+        //$cache_key=Str::slug(req_uri().'_langs');
+        //Cache::put($cache_key,$langs);
+        //echo '<pre>';print_r($langs);echo '</pre>';
+>>>>>>> 9472ad4 (first)
         /*
         if ($translation === $key) {
             Log::warning('Language item could not be found.', [
@@ -108,7 +141,11 @@ class TranslatorService extends BaseTranslator {
             'filename' => $filename,
             'file_exists' => File::exists($filename),
             'lang_dir' => $lang_dir,
+<<<<<<< HEAD
             'dir_exists' => File::exists($lang_dir), // dir without lang
+=======
+            'dir_exists' => File::exists($lang_dir), //dir without lang
+>>>>>>> 9472ad4 (first)
         ];
     }
 
@@ -124,20 +161,34 @@ class TranslatorService extends BaseTranslator {
                 return $item;
             }
         )
+<<<<<<< HEAD
         // ->dd()
+=======
+        //->dd()
+>>>>>>> 9472ad4 (first)
             ->filter(
                 function ($v, $k) {
                     return $v['dir_exists'] && strlen($v['lang_dir']) > 3;
                 }
             )
+<<<<<<< HEAD
         ->groupBy(['ns_group'])  // risparmio salvataggi
         ->all();
         // dddx($data);
+=======
+        ->groupBy(['ns_group'])  //risparmio salvataggi
+        ->all();
+        //dddx($data);
+>>>>>>> 9472ad4 (first)
         foreach ($data as $ns_group => $data0) {
             $rows = trans($ns_group);
 
             if (! is_array($rows)) {
+<<<<<<< HEAD
                 // dddx($rows);  //---- dovrei leggere il file o controllarlo intanto lo blokko non voglio sovrascrivere
+=======
+                //dddx($rows);  //---- dovrei leggere il file o controllarlo intanto lo blokko non voglio sovrascrivere
+>>>>>>> 9472ad4 (first)
                 $rows = [];
             }
 
@@ -153,7 +204,11 @@ class TranslatorService extends BaseTranslator {
                 return;
             }
             $filename = $v['filename'];
+<<<<<<< HEAD
             // echo '<h3>['.$filename.']</h3>';
+=======
+            //echo '<h3>['.$filename.']</h3>';
+>>>>>>> 9472ad4 (first)
             ArrayService::save(['filename' => $filename, 'data' => $data]);
         }
     }
@@ -168,7 +223,11 @@ class TranslatorService extends BaseTranslator {
         $lang = app()->getLocale();
         if (trans($key) == $value) {
             return;
+<<<<<<< HEAD
         } // non serve salvare
+=======
+        } //non serve salvare
+>>>>>>> 9472ad4 (first)
 
         $translator = app('translator');
         $tmp = ($translator->parseKey($key));
@@ -186,7 +245,11 @@ class TranslatorService extends BaseTranslator {
         $item_keys = '["'.$item_keys.'"]';
         $str = '$rows'.$item_keys.'="'.$value.'";';
         try {
+<<<<<<< HEAD
             eval($str); // fa schifo ma funziona
+=======
+            eval($str); //fa schifo ma funziona
+>>>>>>> 9472ad4 (first)
         } catch (\Exception $e) {
         }
         ArrayService::save(['data' => $rows, 'filename' => $filename]);
@@ -227,7 +290,11 @@ class TranslatorService extends BaseTranslator {
         $original = [];
         if (File::exists($file_path)) {
             $original = File::getRequire($file_path);
+<<<<<<< HEAD
             // $original = Lang::get($key, []);
+=======
+            //$original = Lang::get($key, []);
+>>>>>>> 9472ad4 (first)
         }
 
         if (! is_array($original)) {
@@ -236,16 +303,25 @@ class TranslatorService extends BaseTranslator {
                     'message' => 'original is not an array',
                     'file_path' => $file_path,
                     'original' => $original,
+<<<<<<< HEAD
                     // 'ori1' => File::getRequire($file_path),
+=======
+                    //'ori1' => File::getRequire($file_path),
+>>>>>>> 9472ad4 (first)
                     'key' => $key,
                     'data' => $data,
                 ]
             );
+<<<<<<< HEAD
             throw new Exception('['.__LINE__.']['.__FILE__.']');
         }
         $merged = collect($original)
             ->merge($data)
             ->all();
+=======
+        }
+        $merged = collect($original)->merge($data)->all();
+>>>>>>> 9472ad4 (first)
 
         if ($original != $merged) {
             ArrayService::save(['data' => $merged, 'filename' => $file_path]);
@@ -286,4 +362,8 @@ class TranslatorService extends BaseTranslator {
 
         return $data;
     }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> 9472ad4 (first)

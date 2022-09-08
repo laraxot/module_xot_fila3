@@ -15,6 +15,7 @@ class NavService {
     public static function yearNav(): Renderable {
         $request = \Request::capture();
         $routename = \Route::currentRouteName();
+<<<<<<< HEAD
         // $request->route('parameter_name')
         // $request->route()->paremeters()
         // 20     Cannot call method parameters() on mixed
@@ -22,6 +23,15 @@ class NavService {
         $route_current = \Route::current();
         $params = [];
         if (null !== $route_current) {
+=======
+        //$request->route('parameter_name')
+        //$request->route()->paremeters()
+        // 20     Cannot call method parameters() on mixed
+        //$paz = request()->route()->parameters();
+        $route_current = \Route::current();
+        $params = [];
+        if (null != $route_current) {
+>>>>>>> 9472ad4 (first)
             $params = $route_current->parameters();
         }
         $year = $request->input('year', date('Y'));
@@ -31,18 +41,29 @@ class NavService {
             $tmp = [];
             $params['year'] = $year;
             $tmp['title'] = $year;
+<<<<<<< HEAD
             // Strict comparison using === between numeric-string and (float|int) will always evaluate to false
             // if (date('Y') === $params['year']) {
             if ($params['year'] * 1 === date('Y') * 1) {
                 $tmp['title'] = '['.$tmp['title'].']';
             }
             if ($year === $params['year']) {
+=======
+            if (date('Y') == $params['year']) {
+                $tmp['title'] = '['.$tmp['title'].']';
+            }
+            if ($year == $params['year']) {
+>>>>>>> 9472ad4 (first)
                 $tmp['active'] = 1;
             } else {
                 $tmp['active'] = 0;
             }
 
+<<<<<<< HEAD
             if (null === $routename) {
+=======
+            if (null == $routename) {
+>>>>>>> 9472ad4 (first)
                 throw new Exception('routename is null');
             }
             $tmp['url'] = route($routename, $params);
@@ -50,9 +71,12 @@ class NavService {
             ++$year;
         }
 
+<<<<<<< HEAD
         /**
          * @phpstan-var view-string
          */
+=======
+>>>>>>> 9472ad4 (first)
         $view = 'adm_theme::layouts.partials.nav';
         $view_params = [
             'nav' => $nav,
@@ -62,13 +86,21 @@ class NavService {
     }
 
     public static function monthYearNav(): Renderable {
+<<<<<<< HEAD
         // possiamo trasformarlo in una macro
+=======
+        //possiamo trasformarlo in una macro
+>>>>>>> 9472ad4 (first)
         $request = \Request::capture();
         $routename = \Route::currentRouteName();
 
         $route_current = \Route::current();
         $params = [];
+<<<<<<< HEAD
         if (null !== $route_current) {
+=======
+        if (null != $route_current) {
+>>>>>>> 9472ad4 (first)
             $params = $route_current->parameters();
         }
 
@@ -90,12 +122,20 @@ class NavService {
             if (date('Y') == $params['year'] && date('m') == $params['month']) {
                 $tmp['title'] = '['.$tmp['title'].']';
             }
+<<<<<<< HEAD
             if ($year === $params['year'] && $month === $params['month']) {
+=======
+            if ($year == $params['year'] && $month == $params['month']) {
+>>>>>>> 9472ad4 (first)
                 $tmp['active'] = 1;
             } else {
                 $tmp['active'] = 0;
             }
+<<<<<<< HEAD
             if (null === $routename) {
+=======
+            if (null == $routename) {
+>>>>>>> 9472ad4 (first)
                 throw new Exception('routename is null');
             }
             $tmp['url'] = route($routename, $params);
@@ -103,9 +143,12 @@ class NavService {
             $d->addMonth();
         }
 
+<<<<<<< HEAD
         /**
          * @phpstan-var view-string
          */
+=======
+>>>>>>> 9472ad4 (first)
         $view = 'adm_theme::layouts.partials.nav';
         $view_params = [
             'nav' => $nav,
@@ -155,4 +198,8 @@ class NavService {
         return $nav;
     }
     */
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> 9472ad4 (first)

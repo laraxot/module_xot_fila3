@@ -4,17 +4,25 @@ declare(strict_types=1);
 
 namespace Modules\Xot\View\Composers;
 
+<<<<<<< HEAD
 use Exception;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 use Modules\Theme\Models\Menu;
 use Nwidart\Modules\Facades\Module;
+=======
+use Illuminate\Support\Collection;
+use Illuminate\Support\Str;
+use Modules\Theme\Models\Menu;
+use Modules\Theme\Models\MenuItem;
+>>>>>>> 9472ad4 (first)
 
 /**
  * --.
  */
 abstract class XotBaseComposer {
     /**
+<<<<<<< HEAD
      * Undocumented variable.
      */
     public string $module_name = '';
@@ -122,3 +130,32 @@ abstract class XotBaseComposer {
     }
     */
 }
+=======
+     * --.
+     */
+    public function getMenuByName(string $name): Menu {
+        return  Menu::firstWhere('name', $name);
+    }
+
+    /**
+     * --.
+     */
+    public function getMenuItemsByName(string $name): Collection {
+        $menu = Menu::firstWhere('name', $name);
+        if (null == $menu) {
+            return collect([]);
+        }
+        $rows = $menu->items;
+        //$sql = Str::replaceArray('?', $rows->getBindings(), $rows->toSql());
+        //$test = MenuItem::where('menu', 2)->get();
+        //dddx(
+        //    [
+        //'sql' => $sql,
+        //'test' => $test,
+        //'rows' => $rows,
+        //]
+        //);
+        return $rows;
+    }
+}
+>>>>>>> 9472ad4 (first)

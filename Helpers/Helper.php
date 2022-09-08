@@ -10,16 +10,26 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Str;
+<<<<<<< HEAD
 use Modules\Cms\Services\RouteService;
+=======
+>>>>>>> 9472ad4 (first)
 use Modules\Tenant\Services\TenantService;
 use Modules\Xot\Services\ArrayService;
 use Modules\Xot\Services\FileService;
 use Modules\Xot\Services\ModuleService;
 use Modules\Xot\Services\PanelService;
+<<<<<<< HEAD
 use Nwidart\Modules\Facades\Module;
 
 // ------------------------------------------------
 if (! function_exists('snake_case')) {
+=======
+use Modules\Xot\Services\RouteService;
+
+// ------------------------------------------------
+if (! \function_exists('snake_case')) {
+>>>>>>> 9472ad4 (first)
     /**
      * @param string $str
      *
@@ -30,7 +40,11 @@ if (! function_exists('snake_case')) {
     }
 }
 
+<<<<<<< HEAD
 if (! function_exists('str_slug')) {
+=======
+if (! \function_exists('str_slug')) {
+>>>>>>> 9472ad4 (first)
     /**
      * @param string $str
      *
@@ -90,18 +104,32 @@ if (! function_exists('str_contains')) {
 
 // -------------------------------------------
 
+<<<<<<< HEAD
 if (! function_exists('backtrace')) {
     function filter_vendor(array $obj): bool {
         $tmp = str_replace('/', DIRECTORY_SEPARATOR, $obj['file']);
+=======
+if (! \function_exists('backtrace')) {
+    function filter_vendor(array $obj): bool {
+        $tmp = \str_replace('/', DIRECTORY_SEPARATOR, $obj['file']);
+>>>>>>> 9472ad4 (first)
         if (is_array($tmp)) {
             $tmp = implode(' ', $tmp);
         }
 
+<<<<<<< HEAD
         return false === strpos($tmp, 'vendor');
     }
 
     function backtrace(bool $exclude_vendor = false): void {
         $dbg_backtrace = debug_backtrace();
+=======
+        return false === \strpos($tmp, 'vendor');
+    }
+
+    function backtrace(bool $exclude_vendor = false): void {
+        $dbg_backtrace = \debug_backtrace();
+>>>>>>> 9472ad4 (first)
 
         if (true === $exclude_vendor) {
             $dbg_backtrace = array_filter($dbg_backtrace, 'filter_vendor');
@@ -129,13 +157,18 @@ if (! \function_exists('superdump')) {
 }
 */
 
+<<<<<<< HEAD
 if (! function_exists('dddx')) {
+=======
+if (! \function_exists('dddx')) {
+>>>>>>> 9472ad4 (first)
     /**
      * @param array|string|mixed $params
      *
      * @return string
      */
     function dddx($params) {
+<<<<<<< HEAD
         $tmp = debug_backtrace();
         $file = $tmp[0]['file'] ?? 'file-unknown';
         $file = str_replace('/', DIRECTORY_SEPARATOR, $file);
@@ -145,12 +178,26 @@ if (! function_exists('dddx')) {
         $dir_piece = array_slice($dir_piece, 0, -6);
         $dir_copy = implode(DIRECTORY_SEPARATOR, $dir_piece);
         $file = str_replace($dir_copy, $doc_root, $file);
+=======
+        $tmp = \debug_backtrace();
+        $file = $tmp[0]['file'] ?? 'file-unknown';
+        $file = \str_replace('/', DIRECTORY_SEPARATOR, $file);
+        $doc_root = $_SERVER['DOCUMENT_ROOT'];
+        $doc_root = \str_replace('/', DIRECTORY_SEPARATOR, $doc_root);
+        $dir_piece = \explode(DIRECTORY_SEPARATOR, __DIR__);
+        $dir_piece = \array_slice($dir_piece, 0, -6);
+        $dir_copy = \implode(DIRECTORY_SEPARATOR, $dir_piece);
+        $file = \str_replace($dir_copy, $doc_root, $file);
+>>>>>>> 9472ad4 (first)
 
         $data = [
             '_' => $params,
             'line' => $tmp[0]['line'] ?? 'line-unknows',
             'file' => FileService::fixPath($tmp[0]['file'] ?? 'file-unknown'),
+<<<<<<< HEAD
             'time' => microtime(true) - LARAVEL_START,
+=======
+>>>>>>> 9472ad4 (first)
             // 'file_1' => $file, //da sistemare
         ];
         if (File::exists($data['file']) && Str::startsWith($data['file'], FileService::fixPath(storage_path('framework/views')))) {
@@ -190,6 +237,7 @@ if (! function_exists('debug_methods')) {
             }
         )->all();
 
+<<<<<<< HEAD
         return ArrayService::make()
             ->setArray($methods_get)
             ->toHtml()
@@ -198,25 +246,45 @@ if (! function_exists('debug_methods')) {
 }
 
 if (! function_exists('getFilename')) {
+=======
+        return ArrayService::toHtml(['data' => $methods_get]);
+    }
+}
+
+if (! \function_exists('getFilename')) {
+>>>>>>> 9472ad4 (first)
     /**
      * @return string
      */
     function getFilename(array $params) {
+<<<<<<< HEAD
         $tmp = debug_backtrace();
+=======
+        $tmp = \debug_backtrace();
+>>>>>>> 9472ad4 (first)
         $class = (string) class_basename($tmp[1]['class'] ?? 'class-unknown');
 
         $func = (string) $tmp[1]['function'];
         $params_list = collect($params)->except(['_token', '_method'])->implode('_');
         $filename = Str::slug(
+<<<<<<< HEAD
             (string) str_replace('Controller', '', $class).
                 '_'.str_replace('do_', '', $func).
+=======
+            (string) \str_replace('Controller', '', $class).
+                '_'.\str_replace('do_', '', $func).
+>>>>>>> 9472ad4 (first)
                 '_'.$params_list
         );
 
         return $filename;
     }
 }
+<<<<<<< HEAD
 if (! function_exists('req_uri')) {
+=======
+if (! \function_exists('req_uri')) {
+>>>>>>> 9472ad4 (first)
     /**
      * @return mixed|string
      */
@@ -227,6 +295,7 @@ if (! function_exists('req_uri')) {
     }
 }
 
+<<<<<<< HEAD
 if (! function_exists('in_admin')) {
     /**
      * ---.
@@ -240,6 +309,21 @@ if (! function_exists('inAdmin')) {
      * ---.
      */
     function inAdmin(array $params = []): bool {
+=======
+if (! \function_exists('in_admin')) {
+    /**
+     * @return array|bool|mixed
+     */
+    function in_admin(array $params = []) {
+        return inAdmin($params);
+    }
+}
+if (! \function_exists('inAdmin')) {
+    /**
+     * @return array|bool|mixed
+     */
+    function inAdmin(array $params = []) {
+>>>>>>> 9472ad4 (first)
         return RouteService::inAdmin($params);
     }
 }
@@ -249,12 +333,20 @@ if (! function_exists('inAdmin')) {
      *
      * @return bool
      */
+<<<<<<< HEAD
 if (! function_exists('isHome')) {
+=======
+if (! \function_exists('isHome')) {
+>>>>>>> 9472ad4 (first)
     /**
      * @return bool
      */
     function isHome() {
+<<<<<<< HEAD
         if (URL::current() === url('')) {
+=======
+        if (URL::current() == url('')) {
+>>>>>>> 9472ad4 (first)
             return true;
         }
 
@@ -266,12 +358,20 @@ if (! function_exists('isHome')) {
      *
      * @return bool
      */
+<<<<<<< HEAD
 if (! function_exists('isAdminHome')) {
+=======
+if (! \function_exists('isAdminHome')) {
+>>>>>>> 9472ad4 (first)
     /**
      * @return bool
      */
     function isAdminHome() {
+<<<<<<< HEAD
         return URL::current() === route('admin.index');
+=======
+        return URL::current() == route('admin.index');
+>>>>>>> 9472ad4 (first)
     }
 }
 
@@ -281,7 +381,11 @@ if (! function_exists('isAdminHome')) {
      *
      * @return bool
      */
+<<<<<<< HEAD
 if (! function_exists('isAdmin')) {
+=======
+if (! \function_exists('isAdmin')) {
+>>>>>>> 9472ad4 (first)
     /**
      * @return bool
      */
@@ -296,7 +400,11 @@ if (! function_exists('isAdmin')) {
      * @param string $term
      * @return string
      */
+<<<<<<< HEAD
 if (! function_exists('fullTextWildcards')) {
+=======
+if (! \function_exists('fullTextWildcards')) {
+>>>>>>> 9472ad4 (first)
     /* protected */
     /**
      * @param string $term
@@ -326,7 +434,11 @@ if (! function_exists('fullTextWildcards')) {
     }
 }
 
+<<<<<<< HEAD
 if (! function_exists('isContainer')) {
+=======
+if (! \function_exists('isContainer')) {
+>>>>>>> 9472ad4 (first)
     /**
      * @return bool
      */
@@ -336,24 +448,37 @@ if (! function_exists('isContainer')) {
         return count($containers) > count($items);
     }
 }
+<<<<<<< HEAD
 if (! function_exists('isItem')) {
+=======
+if (! \function_exists('isItem')) {
+>>>>>>> 9472ad4 (first)
     /**
      * @return bool
      */
     function isItem() {
         [$containers, $items] = params2ContainerItem();
 
+<<<<<<< HEAD
         return count($containers) === count($items);
     }
 }
 
 if (! function_exists('params2ContainerItem')) {
+=======
+        return count($containers) == count($items);
+    }
+}
+
+if (! \function_exists('params2ContainerItem')) {
+>>>>>>> 9472ad4 (first)
     /**
      * @param array $params
      *
      * @return array[]
      */
     function params2ContainerItem(?array $params = null) {
+<<<<<<< HEAD
         if (null === $params) {
             // Call to static method current() on an unknown class Route.
             // $params = optional(\Route::current())->parameters();
@@ -364,6 +489,10 @@ if (! function_exists('params2ContainerItem')) {
             if (null !== $route_current) {
                 $params = $route_current->parameters();
             }
+=======
+        if (null == $params) {
+            $params = optional(\Route::current())->parameters();
+>>>>>>> 9472ad4 (first)
         }
         $container = [];
         $item = [];
@@ -381,7 +510,11 @@ if (! function_exists('params2ContainerItem')) {
     }
 }
 
+<<<<<<< HEAD
 if (! function_exists('getModelFields')) {
+=======
+if (! \function_exists('getModelFields')) {
+>>>>>>> 9472ad4 (first)
     function getModelFields(Model $model): array {
         $fields = $model->getConnection()
             ->getSchemaBuilder()
@@ -391,6 +524,7 @@ if (! function_exists('getModelFields')) {
     }
 }
 
+<<<<<<< HEAD
 if (! function_exists('getModelByName')) {
     function getModelByName(string $name): Model {
         $registered = config('morph_map.'.$name);
@@ -438,10 +572,18 @@ if (! function_exists('getModuleFromModel')) {
      * @param object $model
      *
      * @return \Nwidart\Modules\Module|null
+=======
+if (! \function_exists('getModuleFromModel')) {
+    /**
+     * @param object $model
+     *
+     * @return mixed|\Nwidart\Modules\Module|void|null
+>>>>>>> 9472ad4 (first)
      */
     function getModuleFromModel($model) {
         $class = get_class($model);
         $module_name = Str::before(Str::after($class, 'Modules\\'), '\\Models\\');
+<<<<<<< HEAD
         // call to an undefined static method  Nwidart\Modules\Facades\Module::find().
         // $mod = Module::find($module_name);
         // Call to an undefined static method Nwidart\Modules\Facades\Module::get().
@@ -449,12 +591,19 @@ if (! function_exists('getModuleFromModel')) {
         // Static call to instance method Nwidart\Modules\Module::get()
         // $mod = \Nwidart\Modules\Module::get($module_name);
         $mod = app('module')->get($module_name);
+=======
+        $mod = \Module::find($module_name);
+>>>>>>> 9472ad4 (first)
 
         return $mod;
     }
 }
 
+<<<<<<< HEAD
 if (! function_exists('getModuleNameFromModel')) {
+=======
+if (! \function_exists('getModuleNameFromModel')) {
+>>>>>>> 9472ad4 (first)
     function getModuleNameFromModel(object $model): string {
         if (! is_object($model)) {
             dddx(['model' => $model]);
@@ -467,7 +616,11 @@ if (! function_exists('getModuleNameFromModel')) {
     }
 }
 
+<<<<<<< HEAD
 if (! function_exists('getModuleNameFromModelName')) {
+=======
+if (! \function_exists('getModuleNameFromModelName')) {
+>>>>>>> 9472ad4 (first)
     function getModuleNameFromModelName(string $model_name): string {
         $model = TenantService::model($model_name);
 
@@ -475,7 +628,11 @@ if (! function_exists('getModuleNameFromModelName')) {
     }
 }
 
+<<<<<<< HEAD
 if (! function_exists('getTransformerFromModel')) {
+=======
+if (! \function_exists('getTransformerFromModel')) {
+>>>>>>> 9472ad4 (first)
     /**
      * @param object $model
      * @param string $type
@@ -495,7 +652,11 @@ if (! function_exists('getTransformerFromModel')) {
     }
 }
 
+<<<<<<< HEAD
 if (! function_exists('getAllModulesModels')) {
+=======
+if (! \function_exists('getAllModulesModels')) {
+>>>>>>> 9472ad4 (first)
     /**
      * @throws ReflectionException
      *
@@ -513,7 +674,11 @@ if (! function_exists('getAllModulesModels')) {
     }
 }
 
+<<<<<<< HEAD
 if (! function_exists('getModuleModels')) {
+=======
+if (! \function_exists('getModuleModels')) {
+>>>>>>> 9472ad4 (first)
     /**
      * @param string $module
      *
@@ -526,7 +691,11 @@ if (! function_exists('getModuleModels')) {
     }
 }
 
+<<<<<<< HEAD
 if (! function_exists('getModuleModelsMenu')) {
+=======
+if (! \function_exists('getModuleModelsMenu')) {
+>>>>>>> 9472ad4 (first)
     function getModuleModelsMenu(string $module): Collection {
         $models = getModuleModels($module);
         $menu = collect($models)->map(
@@ -535,7 +704,11 @@ if (! function_exists('getModuleModelsMenu')) {
                 $obj = app($item);
                 $panel = PanelService::make()->get($obj);
                 // *
+<<<<<<< HEAD
                 if ('media' === $key) {// media e' singolare ma anche plurale di medium
+=======
+                if ('media' == $key) {// media e' singolare ma anche plurale di medium
+>>>>>>> 9472ad4 (first)
                     $panel->setName('medias');
                 }
                 // */
@@ -553,13 +726,27 @@ if (! function_exists('getModuleModelsMenu')) {
     }
 }
 
+<<<<<<< HEAD
 if (! function_exists('xotModel')) {
     function xotModel(string $name): Model {
+=======
+if (! \function_exists('xotModel')) {
+    /**
+     * @param string $name
+     *
+     * @return array|false|mixed
+     */
+    function xotModel($name) {
+>>>>>>> 9472ad4 (first)
         return TenantService::model($name);
     }
 }
 
+<<<<<<< HEAD
 if (! function_exists('xotModelEager')) {
+=======
+if (! \function_exists('xotModelEager')) {
+>>>>>>> 9472ad4 (first)
     /**
      * @param string $name
      *
@@ -570,7 +757,11 @@ if (! function_exists('xotModelEager')) {
     }
 }
 
+<<<<<<< HEAD
 if (! function_exists('transFields')) {
+=======
+if (! \function_exists('transFields')) {
+>>>>>>> 9472ad4 (first)
     /**
      * @return mixed|stdClass
      */
@@ -580,17 +771,22 @@ if (! function_exists('transFields')) {
             $params_orig['attributes'] = [];
         }
         $name = 'not-set';
+<<<<<<< HEAD
         // $model = Form::getModel();
         /**
          * @var Model
          */
         $model = \Collective\Html\FormFacade::getModel();
+=======
+        $model = Form::getModel();
+>>>>>>> 9472ad4 (first)
         $module_name = '';
         if (is_object($model)) {
             $module_name = getModuleNameFromModel($model);
         }
 
         $ns = Str::lower($module_name);
+<<<<<<< HEAD
         /**
          * @var string
          */
@@ -601,6 +797,11 @@ if (! function_exists('transFields')) {
         /**
          * @phpstan-var view-string
          */
+=======
+        $trans_root = $ns.'::'.Str::snake(class_basename($model));
+        // debug_getter_obj(['obj'=>$module]);
+        // dddx($module_name->getNamespace());
+>>>>>>> 9472ad4 (first)
         $view = 'unknown';
         extract($params);
         // dddx($params);
@@ -627,9 +828,12 @@ if (! function_exists('transFields')) {
         $pattern = '/\.[0-9]+\./m';
         $ris->name_dot = preg_replace($pattern, '.', $ris->name_dot);
         if (! Str::contains($view, '::')) {
+<<<<<<< HEAD
             /**
              * @phpstan-var view-string
              */
+=======
+>>>>>>> 9472ad4 (first)
             $view = 'pub_theme::'.$view;
         }
         list($ns, $key) = explode('::', $view);
@@ -644,14 +848,22 @@ if (! function_exists('transFields')) {
             // if (! isset($ris->$tf)) {
             $ris->$tf = isset($$tf) ? $$tf : trans($trans);
 
+<<<<<<< HEAD
             if ($ris->$tf === $trans && ! config('xra.show_trans_key')) {
+=======
+            if ($ris->$tf == $trans && ! config('xra.show_trans_key')) {
+>>>>>>> 9472ad4 (first)
                 $ris->$tf = $ris->name_dot;
                 // $ris->$tf = $trans;
             }
             // }
         }
         // */
+<<<<<<< HEAD
         if ($ris->help === $ris->name_dot) {
+=======
+        if ($ris->help == $ris->name_dot) {
+>>>>>>> 9472ad4 (first)
             $ris->help = '';
         }
 
@@ -669,7 +881,11 @@ if (! function_exists('transFields')) {
         $ris->attributes = collect($attributes)
             ->filter(
                 function ($item, $key) {
+<<<<<<< HEAD
                     return in_array($key, ['style', 'class', 'placeholder', 'readonly', 'id', 'value', 'name'], true) || Str::startsWith($key, 'data-');
+=======
+                    return in_array($key, ['style', 'class', 'placeholder', 'readonly', 'id', 'value', 'name']) || Str::startsWith($key, 'data-');
+>>>>>>> 9472ad4 (first)
                 }
             )
             // ->only('class','placeholder','readonly')
@@ -679,18 +895,28 @@ if (! function_exists('transFields')) {
         if (! isset($ris->col_size)) {
             $ris->col_size = 12;
         }
+<<<<<<< HEAD
         /**
          * @var array|ArrayAccess
          */
         $row = \Form::getModel();
 
         $ris->value = Arr::get($row, $name);
+=======
+        $row = \Form::getModel();
+
+        $ris->value = (Arr::get($row, $name));
+>>>>>>> 9472ad4 (first)
 
         return $ris;
     }
 }
 
+<<<<<<< HEAD
 if (! function_exists('deltaTime')) {
+=======
+if (! \function_exists('deltaTime')) {
+>>>>>>> 9472ad4 (first)
     /**
      * @return mixed
      */
@@ -699,7 +925,11 @@ if (! function_exists('deltaTime')) {
     }
 }
 
+<<<<<<< HEAD
 if (! function_exists('debug_getter_obj')) {
+=======
+if (! \function_exists('debug_getter_obj')) {
+>>>>>>> 9472ad4 (first)
     /*
     function debug_getter_objOLD(array $params){
         extract($params);
@@ -797,7 +1027,11 @@ if (! function_exists('debug_getter_obj')) {
                     'forceDelete',
                     'forceCreate',
                 ];
+<<<<<<< HEAD
                 if (! Str::startsWith($item, '__') && ! in_array($item, $exclude, true)) {
+=======
+                if (! Str::startsWith($item, '__') && ! in_array($item, $exclude)) {
+>>>>>>> 9472ad4 (first)
                     return true;
                 }
 
@@ -808,11 +1042,16 @@ if (! function_exists('debug_getter_obj')) {
         foreach ($methods as $method) {
             $reflection = new \ReflectionMethod($obj, $method);
             $args = $reflection->getParameters();
+<<<<<<< HEAD
             if (0 === count($args) && $reflection->class === get_class($obj)) {
                 try {
                     /**
                      * @var object|string
                      */
+=======
+            if (0 == count($args) && $reflection->class == get_class($obj)) {
+                try {
+>>>>>>> 9472ad4 (first)
                     $return = $reflection->invoke($obj);
                     // $check = ($return instanceof \Illuminate\Database\Eloquent\Relations\Relation);
                     // if ($check) {
@@ -837,14 +1076,22 @@ if (! function_exists('debug_getter_obj')) {
     }
 } // end exists
 
+<<<<<<< HEAD
 if (! function_exists('bracketsToDotted')) {
+=======
+if (! \function_exists('bracketsToDotted')) {
+>>>>>>> 9472ad4 (first)
     // privacies[111][pivot][title] => privacies.111.pivot.title
 
     function bracketsToDotted(string $str, string $quotation_marks = ''): string {
         return str_replace(['[', ']'], ['.', ''], $str);
     }
 }
+<<<<<<< HEAD
 if (! function_exists('dottedToBrackets')) {
+=======
+if (! \function_exists('dottedToBrackets')) {
+>>>>>>> 9472ad4 (first)
     // privacies.111.pivot.title => privacies[111][pivot][title]
     /**
      * @param string $str
@@ -855,7 +1102,11 @@ if (! function_exists('dottedToBrackets')) {
     function dottedToBrackets($str, $quotation_marks = '') {
         $str = collect(explode('.', $str))->map(
             function ($v, $k) {
+<<<<<<< HEAD
                 return 0 === $k ? $v : '['.$v.']';
+=======
+                return 0 == $k ? $v : '['.$v.']';
+>>>>>>> 9472ad4 (first)
             }
         )->implode('');
 
@@ -863,7 +1114,11 @@ if (! function_exists('dottedToBrackets')) {
     }
 }
 
+<<<<<<< HEAD
 if (! function_exists('array_merge_recursive_distinct')) {
+=======
+if (! \function_exists('array_merge_recursive_distinct')) {
+>>>>>>> 9472ad4 (first)
     /**
      * @return array
      */
@@ -972,10 +1227,17 @@ if (! function_exists('getRelationships')) {
         foreach ($methods as $method) {
             $reflection = new \ReflectionMethod($model, $method);
             $args = $reflection->getParameters();
+<<<<<<< HEAD
             if (0 === count($args) && $reflection->class === get_class($model)) {
                 try {
                     $return = $reflection->invoke($model);
                     $check = $return instanceof \Illuminate\Database\Eloquent\Relations\Relation;
+=======
+            if (0 == count($args) && $reflection->class == get_class($model)) {
+                try {
+                    $return = $reflection->invoke($model);
+                    $check = ($return instanceof \Illuminate\Database\Eloquent\Relations\Relation);
+>>>>>>> 9472ad4 (first)
                     if ($check) {
                         $related_model = (new \ReflectionClass($return->getRelated()))->getName();
                         $msg = [
@@ -1123,6 +1385,7 @@ if (! function_exists('getExcerpt')) {
 
 if (! function_exists('getRouteParameters')) {
     function getRouteParameters(): array {
+<<<<<<< HEAD
         /**
          * @var \Illuminate\Routing\Route|null
          */
@@ -1134,11 +1397,18 @@ if (! function_exists('getRouteParameters')) {
         // if (null === $params) {
         //    return [];
         // }
+=======
+        $params = optional(request()->route())->parameters();
+        if (null == $params) {
+            $params = [];
+        }
+>>>>>>> 9472ad4 (first)
 
         return $params;
     }
 }
 
+<<<<<<< HEAD
 if (! function_exists('getRouteName')) {
     function getRouteName(): ?string {
         // getRouteName();
@@ -1163,6 +1433,8 @@ if (! function_exists('getRouteAction')) {
 }
 */
 
+=======
+>>>>>>> 9472ad4 (first)
 if (! function_exists('getModTradFilepath')) {
     function getModTradFilepath(string $file_path): string {
         $file_path = Str::replace('\\', '/', $file_path);
@@ -1233,6 +1505,7 @@ if (! function_exists('debugStack')) {
             throw new \RuntimeException('XDebug must be installed to use this function');
         }
 
+<<<<<<< HEAD
         xdebug_set_filter(
             XDEBUG_FILTER_TRACING,
             XDEBUG_PATH_EXCLUDE,
@@ -1241,6 +1514,15 @@ if (! function_exists('debugStack')) {
         );
 
         xdebug_print_function_stack();
+=======
+        \xdebug_set_filter(
+            XDEBUG_FILTER_TRACING,
+            XDEBUG_PATH_EXCLUDE,
+            [LARAVEL_DIR.'/vendor/']
+        );
+
+        \xdebug_print_function_stack();
+>>>>>>> 9472ad4 (first)
     }
 }
 
@@ -1248,7 +1530,11 @@ if (! function_exists('secondsToHms')) {
     function secondsToHms(float $seconds): string {
         $hours = floor($seconds / 3600);
         $seconds -= $hours * 3600;
+<<<<<<< HEAD
         $minutes = floor($seconds / 60);
+=======
+        $minutes = floor(($seconds / 60));
+>>>>>>> 9472ad4 (first)
         $seconds -= $minutes * 60;
         $str = '';
         if ($hours > 0) {
@@ -1259,6 +1545,7 @@ if (! function_exists('secondsToHms')) {
         return $str;
     }
 }
+<<<<<<< HEAD
 
 if (! function_exists('rowsToSql')) {
     /**
@@ -1311,3 +1598,5 @@ if (! function_exists('str_limit')) {
         return Str::limit($str, $limit); // per xstream
     }
 }
+=======
+>>>>>>> 9472ad4 (first)

@@ -2,6 +2,7 @@ includes:
     - phpstan-baseline.neon
 
 parameters:
+<<<<<<< HEAD
     level: 9
     paths:
         - .
@@ -11,3 +12,14 @@ parameters:
     checkModelProperties: true
     checkMissingIterableValueType: false
 
+=======
+    level: 4
+    paths:
+        - src
+        - config
+        - database
+    tmpDir: build/phpstan
+    checkOctaneCompatibility: true
+    checkModelProperties: true
+    checkMissingIterableValueType: false
+>>>>>>> 9472ad4 (first)

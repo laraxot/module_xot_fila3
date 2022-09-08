@@ -13,9 +13,15 @@ class ProfileFactory extends Factory {
     /**
      * The name of the factory's corresponding model.
      *
+<<<<<<< HEAD
      * @var class-string<\Illuminate\Database\Eloquent\Model>
      */
     protected $model = Modules\Xot\Models\Profile::class;
+=======
+     * @var string
+     */
+    protected $model = Profile::class;
+>>>>>>> 9472ad4 (first)
 
     /**
      * Define the model's default state.

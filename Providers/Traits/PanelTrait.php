@@ -8,6 +8,7 @@ use Illuminate\Contracts\Container\Container;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\URL;
 
+<<<<<<< HEAD
 // use Modules\Xot\Engines\FullTextSearchEngine;
 
 trait PanelTrait {
@@ -19,6 +20,21 @@ trait PanelTrait {
         // {{ URL::toCurrentRouteWithParameters(['language' => 'az']) }}
         // dddx(optional(\Route::current())->parameters());
         // dddx(request()->route()->parameters());
+=======
+//use Modules\Xot\Engines\FullTextSearchEngine;
+
+trait PanelTrait
+{
+    private function registerPanel(): void
+    {
+        //dddx(get_class_methods($this->app['request']));
+        //dddx(get_class_methods($this->app['route']));
+        //dddx(request()->route()->paremeters());
+        //$request->route()->parameters()
+        //{{ URL::toCurrentRouteWithParameters(['language' => 'az']) }}
+        //dddx(optional(\Route::current())->parameters());
+        //dddx(request()->route()->parameters());
+>>>>>>> 9472ad4 (first)
         /*
         $this->app->singleton(
             PanelService::class,

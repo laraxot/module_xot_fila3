@@ -14,6 +14,7 @@ use Illuminate\Support\Str;
  */
 trait HasSlug {
     public function slug(): ?string {
+<<<<<<< HEAD
         // return $this->slug;
         return $this->guid;
     }
@@ -25,6 +26,13 @@ trait HasSlug {
      * @return void
      */
     public function setSlugAttribute(string $slug):void {
+=======
+        //return $this->slug;
+        return $this->guid;
+    }
+
+    public function setSlugAttribute(string $slug) {
+>>>>>>> 9472ad4 (first)
         $this->attributes['slug'] = $this->generateUniqueSlug($slug);
     }
 

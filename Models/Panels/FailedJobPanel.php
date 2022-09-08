@@ -6,21 +6,44 @@ namespace Modules\Xot\Models\Panels;
 
 use Illuminate\Http\Request;
 
+<<<<<<< HEAD
 // --- Services --
+=======
+//--- Services --
+>>>>>>> 9472ad4 (first)
 
 class FailedJobPanel extends XotBasePanel {
     /**
      * The model the resource corresponds to.
+<<<<<<< HEAD
+=======
+     *
+     * @var string
+>>>>>>> 9472ad4 (first)
      */
     public static string $model = 'Modules\Xot\Models\FailedJob';
 
     /**
      * The single value that should be used to represent the resource when being displayed.
+<<<<<<< HEAD
+=======
+     *
+     * @var string
+>>>>>>> 9472ad4 (first)
      */
     public static string $title = 'title';
 
     /**
      * Get the fields displayed by the resource.
+<<<<<<< HEAD
+=======
+     *
+     * @return array
+        'col_size' => 6,
+        'sortable' => 1,
+        'rules' => 'required',
+        'rules_messages' => ['it'=>['required'=>'Nome Obbligatorio']],
+>>>>>>> 9472ad4 (first)
         'value'=>'..',
      */
     public function fields(): array {
@@ -77,6 +100,11 @@ class FailedJobPanel extends XotBasePanel {
 
     /**
      * Get the tabs available.
+<<<<<<< HEAD
+=======
+     *
+     * @return array
+>>>>>>> 9472ad4 (first)
      */
     public function tabs(): array {
         $tabs_name = [];
@@ -86,6 +114,11 @@ class FailedJobPanel extends XotBasePanel {
 
     /**
      * Get the cards available for the request.
+<<<<<<< HEAD
+=======
+     *
+     * @return array
+>>>>>>> 9472ad4 (first)
      */
     public function cards(Request $request): array {
         return [];
@@ -95,6 +128,11 @@ class FailedJobPanel extends XotBasePanel {
      * Get the filters available for the resource.
      *
      * @param \Illuminate\Http\Request $request
+<<<<<<< HEAD
+=======
+     *
+     * @return array
+>>>>>>> 9472ad4 (first)
      */
     public function filters(Request $request = null): array {
         return [];
@@ -102,6 +140,11 @@ class FailedJobPanel extends XotBasePanel {
 
     /**
      * Get the lenses available for the resource.
+<<<<<<< HEAD
+=======
+     *
+     * @return array
+>>>>>>> 9472ad4 (first)
      */
     public function lenses(Request $request): array {
         return [];
@@ -109,6 +152,11 @@ class FailedJobPanel extends XotBasePanel {
 
     /**
      * Get the actions available for the resource.
+<<<<<<< HEAD
+=======
+     *
+     * @return array
+>>>>>>> 9472ad4 (first)
      */
     public function actions(): array {
         return [

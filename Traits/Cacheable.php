@@ -12,7 +12,12 @@ use Illuminate\Database\Eloquent\Model;
 /**
  * Trait Cacheable.
  */
+<<<<<<< HEAD
 trait Cacheable {
+=======
+trait Cacheable
+{
+>>>>>>> 9472ad4 (first)
     /**
      * Cache instance.
      *
@@ -33,7 +38,12 @@ trait Cacheable {
     /**
      * Set cache manager.
      */
+<<<<<<< HEAD
     public static function setCacheInstance(CacheManager $cache) {
+=======
+    public static function setCacheInstance(CacheManager $cache)
+    {
+>>>>>>> 9472ad4 (first)
         self::$cache = $cache;
     }
 
@@ -42,7 +52,12 @@ trait Cacheable {
      *
      * @return CacheManager
      */
+<<<<<<< HEAD
     public static function getCacheInstance() {
+=======
+    public static function getCacheInstance()
+    {
+>>>>>>> 9472ad4 (first)
         if (null === self::$cache) {
             self::$cache = app('cache');
         }
@@ -55,7 +70,12 @@ trait Cacheable {
      *
      * @return bool
      */
+<<<<<<< HEAD
     public function skippedCache() {
+=======
+    public function skippedCache()
+    {
+>>>>>>> 9472ad4 (first)
         return false === config('repositories.cache_enabled', false)
             || true === app('request')->has(config('repositories.cache_skip_param', 'skipCache'));
     }
@@ -67,7 +87,12 @@ trait Cacheable {
      *
      * @return string
      */
+<<<<<<< HEAD
     public function getCacheKey(string $method, $args, string $tag) {
+=======
+    public function getCacheKey(string $method, $args = null, string $tag)
+    {
+>>>>>>> 9472ad4 (first)
         // Sort through arguments
         foreach ($args as &$a) {
             if ($a instanceof Model) {
@@ -76,32 +101,53 @@ trait Cacheable {
         }
 
         // Create hash from arguments and query
+<<<<<<< HEAD
         $args = serialize($args).serialize($this->getScopeQuery());
 
         return sprintf(
+=======
+        $args = \serialize($args).\serialize($this->getScopeQuery());
+
+        return \sprintf(
+>>>>>>> 9472ad4 (first)
             '%s-%s@%s-%s',
             config('app.locale'),
             $tag,
             $method,
+<<<<<<< HEAD
             md5($args)
+=======
+            \md5($args)
+>>>>>>> 9472ad4 (first)
         );
     }
 
     /**
      * Get an item from the cache, or store the default value.
      *
+<<<<<<< HEAD
      * @param mixed|null $time
      *
      * @return mixed
      */
     public function cacheCallback(string $method, array $args, Closure $callback, $time = null) {
+=======
+     * @return mixed
+     */
+    public function cacheCallback(string $method, array $args, Closure $callback, $time = null)
+    {
+>>>>>>> 9472ad4 (first)
         // Cache disabled, just execute query & return result
         if (true === $this->skippedCache()) {
             return \call_user_func($callback);
         }
 
         // Use the called class name as the tag
+<<<<<<< HEAD
         $tag = static::class;
+=======
+        $tag = \get_called_class();
+>>>>>>> 9472ad4 (first)
 
         return self::getCacheInstance()->tags(['repositories', $tag])->remember(
             $this->getCacheKey($method, $args, $tag),
@@ -115,14 +161,23 @@ trait Cacheable {
      *
      * @return bool
      */
+<<<<<<< HEAD
     public function flushCache() {
+=======
+    public function flushCache()
+    {
+>>>>>>> 9472ad4 (first)
         // Cache disabled, just ignore this
         if (false === $this->eventFlushCache || false === config('repositories.cache_enabled', false)) {
             return false;
         }
 
         // Use the called class name as the tag
+<<<<<<< HEAD
         $tag = static::class;
+=======
+        $tag = \get_called_class();
+>>>>>>> 9472ad4 (first)
 
         return self::getCacheInstance()->tags(['repositories', $tag])->flush();
     }
@@ -134,10 +189,18 @@ trait Cacheable {
      *
      * @return int
      */
+<<<<<<< HEAD
     protected function getCacheExpiresTime($time = null) {
         if (self::EXPIRES_END_OF_DAY === $time) {
             return class_exists(Carbon::class)
                 ? round(Carbon::now()->secondsUntilEndOfDay() / 60)
+=======
+    protected function getCacheExpiresTime($time = null)
+    {
+        if (self::EXPIRES_END_OF_DAY === $time) {
+            return \class_exists(Carbon::class)
+                ? \round(Carbon::now()->secondsUntilEndOfDay() / 60)
+>>>>>>> 9472ad4 (first)
                 : $this->cacheMinutes;
         }
 

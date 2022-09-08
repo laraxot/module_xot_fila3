@@ -3,7 +3,10 @@
 declare(strict_types=1);
 
 use Illuminate\Support\Facades\Route;
+<<<<<<< HEAD
 use Modules\Cms\Services\RouteService;
+=======
+>>>>>>> 9472ad4 (first)
 
 $acts = [
     (object) [
@@ -22,11 +25,14 @@ $acts = [
         'uri' => '/index_edit',
     ],
     (object) [
+<<<<<<< HEAD
         'name' => 'attach',
         'methods' => ['get', 'head', 'post', 'put'],
         'uri' => '/attach',
     ],
     (object) [
+=======
+>>>>>>> 9472ad4 (first)
         'name' => 'detach',
         'methods' => ['get', 'head'],
         'uri' => '/detach',
@@ -45,7 +51,11 @@ $acts = [
         'name' => 'index',
         'methods' => ['get', 'head'],
         'uri' => '',
+<<<<<<< HEAD
         // corretto che sia diverso da name,
+=======
+        //corretto che sia diverso da name,
+>>>>>>> 9472ad4 (first)
         'uri_full' => '/{container0?}/{item0?}/{container1?}/{item1?}/{container2?}/{item2?}/{container3?}/{item3?}/{container4?}',
     ],
     /*(object) [
@@ -69,12 +79,20 @@ $acts = [
 ];
 
 $name = '/{container0?}/{item0?}/{container1?}/{item1?}/{container2?}/{item2?}/{container3?}/{item3?}/{container4?}/{item4?}';
+<<<<<<< HEAD
 // $controller = 'ItemController';
+=======
+//$controller = 'ItemController';
+>>>>>>> 9472ad4 (first)
 $controller = 'ContainersController';
 
 $front_acts = collect($acts)->filter(
     function ($item) {
+<<<<<<< HEAD
         return in_array($item->name, ['index', 'show'], true);
+=======
+        return in_array($item->name, ['index', 'show']);
+>>>>>>> 9472ad4 (first)
     }
 )->all();
 
@@ -84,7 +102,11 @@ $middleware = [
 ];
 $namespace = '\Modules\Xot\Http\Controllers';
 $prefix = '/{lang?}';
+<<<<<<< HEAD
 $as = ''; // null
+=======
+$as = ''; //null
+>>>>>>> 9472ad4 (first)
 if (! config('xra.disable_frontend_dynamic_route', false)) {
     Route::middleware($middleware)
         ->namespace($namespace)
@@ -95,7 +117,11 @@ if (! config('xra.disable_frontend_dynamic_route', false)) {
             }
         );
 
+<<<<<<< HEAD
     RouteService::myRoutes($name, $middleware, $namespace, $prefix, $as, $controller, $front_acts);
+=======
+    myRoutes($name, $middleware, $namespace, $prefix, $as, $controller, $front_acts);
+>>>>>>> 9472ad4 (first)
 }
 
 $middleware = [
@@ -108,10 +134,45 @@ $namespace = '\Modules\Xot\Http\Controllers\Admin';
 $prefix = '/admin/{module?}/{lang?}';
 $as = 'admin.';
 
+<<<<<<< HEAD
 RouteService::myRoutes($name, $middleware, $namespace, $prefix, $as, $controller, $acts);
 
 /*
+=======
+myRoutes($name, $middleware, $namespace, $prefix, $as, $controller, $acts);
+
+/**
+>>>>>>> 9472ad4 (first)
  * Undocumented function.
  *
  * @return void
  */
+<<<<<<< HEAD
+=======
+function myRoutes(
+    string $name,
+    array $middleware,
+    string $namespace,
+    string $prefix,
+    string $as,
+    string $controller,
+    array $acts
+) {
+    Route::middleware($middleware)
+        ->namespace($namespace)
+        ->prefix($prefix)
+        ->as($as)
+        ->group(
+            function () use ($name, $controller, $acts) {
+                foreach ($acts as $act) {
+                    //$uri = ($act->uri_full ?? $name).$act->uri;
+                    $uri = $act->uri.($act->uri_full ?? $name);
+                    Route::match($act->methods, $uri, $controller.'@'.$act->name)
+                    ->name('containers.'.$act->name)
+                    //->where(['container1' => '[0-9]+']) //errato solo per test
+                    ;
+                }
+            }
+        );
+}
+>>>>>>> 9472ad4 (first)

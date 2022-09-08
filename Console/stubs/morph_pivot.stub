@@ -8,6 +8,7 @@ use Modules\Xot\Traits\Updater;
 
 class DummyClass extends MorphPivot{
     use Updater;
+<<<<<<< HEAD
 /**
  * Indicates whether attributes are snake cased on arrays.
  *
@@ -19,6 +20,8 @@ class DummyClass extends MorphPivot{
 
 protected $perPage = 30;
 
+=======
+>>>>>>> 9472ad4 (first)
     protected $fillable = [
         'id','post_id','post_type','related_id','related_type', //-- testare se toglierli 
         'user_id',
