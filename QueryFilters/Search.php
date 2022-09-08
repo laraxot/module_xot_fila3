@@ -15,12 +15,7 @@ use Illuminate\Support\Str;
 /**
  * Undocumented class.
  */
-<<<<<<< HEAD
 class Search {
-=======
-class Search
-{
->>>>>>> 9472ad4 (first)
     /**
      * Undocumented function.
      *
@@ -29,7 +24,6 @@ class Search
      *
      * @return Closure
      */
-<<<<<<< HEAD
     public function handle($query, Closure $next, ...$args) {
         $search_fields = [];
         $model = $query->getModel();
@@ -43,26 +37,12 @@ class Search
         }
         // $table = $model->getTable();
         if (\strlen($q) > 1) {
-=======
-    public function handle($query, Closure $next, ...$args)
-    {
-        $search_fields = [];
-        $model = $query->getModel();
-        $q = request('q', '');
-
-        if (0 == count($search_fields)) { //se non gli passo nulla, cerco in tutti i fillable
-            $search_fields = $model->getFillable();
-        }
-        //$table = $model->getTable();
-        if (strlen($q) > 1) {
->>>>>>> 9472ad4 (first)
             $query = $query->where(
                 function ($subquery) use ($search_fields, $q): void {
                     foreach ($search_fields as $k => $v) {
                         if (Str::contains($v, '.')) {
                             [$rel, $rel_field] = explode('.', $v);
 
-<<<<<<< HEAD
                             // dddx([$rel, $rel_field]);
                             $subquery = $subquery->orWhereHas(
                                 $rel,
@@ -75,20 +55,6 @@ class Search
                             );
 
                         // dddx($subquery);
-=======
-                            //dddx([$rel, $rel_field]);
-                            $subquery = $subquery->orWhereHas(
-                                $rel,
-                                function (Builder $subquery1) use ($rel_field, $q): void {
-                                    //dddx($subquery1->getConnection()->getDatabaseName());
-
-                                    $subquery1->where($rel_field, 'like', '%'.$q.'%');
-                                    //dddx($subquery1);
-                                }
-                            );
-
-                            //dddx($subquery);
->>>>>>> 9472ad4 (first)
                         } else {
                             $subquery = $subquery->orWhere($v, 'like', '%'.$q.'%');
                         }
@@ -96,16 +62,8 @@ class Search
                 }
             );
         }
-<<<<<<< HEAD
         // dddx(['q' => $q, 'sql' => $query->toSql()]);
 
         return $next($query);
     }
 }
-=======
-        //dddx(['q' => $q, 'sql' => $query->toSql()]);
-
-        return $next($query);
-    }
-}
->>>>>>> 9472ad4 (first)

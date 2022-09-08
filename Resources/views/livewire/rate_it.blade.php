@@ -1,11 +1,7 @@
 <div>
     @component('theme::components.modal.simple', ['guid' => $modal_guid, 'title' => $modal_title])
         @slot('content')
-<<<<<<< HEAD
             @livewire('rate_single')
-=======
-            @livewire('rating::rate_single')
->>>>>>> 9472ad4 (first)
 
 
 

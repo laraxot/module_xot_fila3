@@ -5,53 +5,11 @@ declare(strict_types=1);
 $root_path = realpath(dirname(__DIR__));
 
 $config = [];
-<<<<<<< HEAD
-$config['app_title'] = 'Video Editor'; // Title of the application
-=======
 $config['app_title'] = 'Video Editor'; //Title of the application
->>>>>>> 9472ad4 (first)
 $config['app_description'] = 'Online Video Editor where you can cut, join and convert videos.';
 $config['lang'] = 'en';
 $config['version'] = '1.2.4';
 
-<<<<<<< HEAD
-$config['base_url'] = '/codecanyon/public/'; // Base URL (address without "http://domain.com")
-$config['home_url'] = ''; // Home URL
-$config['logo_image'] = $config['base_url'].'assets/img/logo_sm.png'; // Logo image URL
-$config['root_path'] = $root_path.'/'; // Root path
-$config['public_path'] = $root_path.'/public/'; // Path of the "public" folder
-$config['input_dir'] = 'userfiles/input/'; // The address of the folder "input" (without "/" at the beginning)
-$config['output_dir'] = 'userfiles/output/'; // The address of the folder "output" (without "/" at the beginning)
-$config['tmp_dir'] = 'userfiles/tmp/'; // The address of the folder "tmp" (without "/" at the beginning)
-$config['database_dir'] = 'database/'; // The address of the folder "database" (without "/" at the beginning)
-
-$config['max_log_size'] = 700 * 1024; // Log size limit
-$config['log_filename'] = 'log.txt'; // File name of the log
-$config['queue_size'] = 5; // Queue size
-$config['environment'] = 'dev'; // prod | dev
-
-$config['ffmpeg_path'] = 'C:/ffmpeg/bin/ffmpeg.exe'; // FFmpeg path on your server
-$config['ffprobe_path'] = 'C:/ffmpeg/bin/ffprobe.exe'; // FFprobe path on your server
-$config['debug'] = true; // Debug mode
-$config['upload_allowed'] = ['mp4', 'm4v', 'flv', 'avi', 'mov', 'avi', 'mkv', 'mpg', 'webm', '3gp', 'ogv', 'mpg', 'wmv']; // Allowed to upload
-$config['upload_images'] = ['jpg', 'jpeg', 'png'];
-$config['upload_audio'] = ['mp3', 'm4a'];
-
-$config['watermark_text'] = ''; // Watermark text for all processed video
-$config['watermark_text_font_name'] = 'libel-suit-rg.ttf'; // Font file name in folder assets/fonts/
-
-$config['authentication'] = true; // Authentication
-$config['admin_auth_email'] = 'aaa@bbb.cc'; // Email of the Admin (Facebook or Google account)
-$config['user_blocked_default'] = false; // Users blocked by default
-
-$config['facebook_app_id'] = ''; // Facebook App ID
-$config['facebook_secret_key'] = 'xxxxxxxxxxxxxxxxxxxxxxxxxxxx'; // Facebook App Secret
-
-$config['google_client_id'] = ''; // Google Client ID
-$config['google_secret_key'] = 'xxxxxxxxxxxxxxxxxx'; // Google secret key
-
-// Mail settings
-=======
 $config['base_url'] = '/codecanyon/public/'; //Base URL (address without "http://domain.com")
 $config['home_url'] = ''; //Home URL
 $config['logo_image'] = $config['base_url'].'assets/img/logo_sm.png'; //Logo image URL
@@ -88,7 +46,6 @@ $config['google_client_id'] = ''; //Google Client ID
 $config['google_secret_key'] = 'xxxxxxxxxxxxxxxxxx'; //Google secret key
 
 //Mail settings
->>>>>>> 9472ad4 (first)
 $config['email_smtp'] = [
     'host' => 'smtp.postmarkapp.com',
     'port' => '25',
@@ -99,11 +56,7 @@ $config['email_smtp'] = [
     'auth' => true,
 ];
 
-<<<<<<< HEAD
-// FFmpeg conversion parameters
-=======
 //FFmpeg conversion parameters
->>>>>>> 9472ad4 (first)
 $config['ffmpeg_string_arr'] = [
     'flv' => '-c:v flv -b:v {quality} -c:a libmp3lame -b:a 128k -f {format}',
     'mp4' => '-c:v libx264 -b:v {quality} -c:a aac -strict experimental -b:a 128k -f {format}',
@@ -112,16 +65,6 @@ $config['ffmpeg_string_arr'] = [
     'mp3' => '-vn -c:a libmp3lame -ab 192k -f {format}',
 ];
 
-<<<<<<< HEAD
-// Users restrictions
-$config['users_restrictions'] = [
-    'admin' => [
-        'files_size_max' => 0, // Maximum of the files size
-        'show_log' => true, // Show log messages
-    ],
-    'user' => [
-        'files_size_max' => 300 * 1024 * 1024, // 300 MB
-=======
 //Users restrictions
 $config['users_restrictions'] = [
     'admin' => [
@@ -130,7 +73,6 @@ $config['users_restrictions'] = [
     ],
     'user' => [
         'files_size_max' => 300 * 1024 * 1024, //300 MB
->>>>>>> 9472ad4 (first)
         'show_log' => true,
     ],
 ];

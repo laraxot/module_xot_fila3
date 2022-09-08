@@ -13,11 +13,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Intervention\Image\Facades\Image;
 
-<<<<<<< HEAD
 // ---- services ----
-=======
-//---- services ----
->>>>>>> 9472ad4 (first)
 
 /**
  * Class ImageService.
@@ -56,11 +52,7 @@ class ImageService {
     public function setVars(array $params): self {
         foreach ($params as $k => $v) {
             $func = 'set'.Str::studly((string) $k);
-<<<<<<< HEAD
             if (null === $v) {
-=======
-            if (null == $v) {
->>>>>>> 9472ad4 (first)
                 $v = '';
             }
             $this->{$func}($v);
@@ -74,11 +66,7 @@ class ImageService {
      */
     public function setImg(string $val): self {
         $nophoto_path = public_path('img/nophoto.jpg');
-<<<<<<< HEAD
         if ('' === $val) {
-=======
-        if ('' == $val) {
->>>>>>> 9472ad4 (first)
             $val = $nophoto_path;
         }
         if (Str::startsWith($val, '//')) {
@@ -100,7 +88,6 @@ class ImageService {
      * Undocumented function.
      */
     public function setSrc(string $val): self {
-<<<<<<< HEAD
         if ('' === $val) {
             $val = public_path('img/nophoto.jpg');
         }
@@ -110,17 +97,6 @@ class ImageService {
         $str = '/laravel-filemanager/';
         if (Str::startsWith($val, $str)) {
             $val = public_path(substr($val, \strlen($str)));
-=======
-        if ('' == $val) {
-            $val = public_path('img/nophoto.jpg');
-        }
-        if (Str::startsWith($val, url(''))) { //se e' una immagine locale
-            $val = public_path(\substr($val, strlen(url(''))));
-        }
-        $str = '/laravel-filemanager/';
-        if (Str::startsWith($val, $str)) {
-            $val = public_path(\substr($val, strlen($str)));
->>>>>>> 9472ad4 (first)
         }
         $this->src = $val;
 
@@ -157,17 +133,10 @@ class ImageService {
     public function save(): self {
         $filename = $this->getFilename();
         try {
-<<<<<<< HEAD
             // Storage::disk('photos')->put($this->filename, $this->out());
             $this->img->save($filename);
         } catch (Exception $e) {// ftp_mkdir(): Can't create directory: File exists
              // $r = $this->img->save(self::$filename, 75);
-=======
-            //Storage::disk('photos')->put($this->filename, $this->out());
-            $this->img->save($filename);
-        } catch (Exception $e) {//ftp_mkdir(): Can't create directory: File exists
-             //$r = $this->img->save(self::$filename, 75);
->>>>>>> 9472ad4 (first)
         }
 
         return $this;

@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Modules\Xot\Providers;
 
-<<<<<<< HEAD
 use App\Application;
 use Illuminate\Database\Events\MigrationsEnded;
 use Illuminate\Foundation\AliasLoader;
@@ -14,26 +13,14 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\View;
 use Modules\Xot\View\Composers\XotComposer;
-=======
-use Illuminate\Foundation\AliasLoader;
-use Illuminate\Support\Facades\File;
-use Illuminate\Support\Facades\URL;
-use Illuminate\Support\Facades\View;
-use Modules\Xot\Http\View\Composers\XotComposer;
->>>>>>> 9472ad4 (first)
 use Nwidart\Modules\Facades\Module;
 
 /**
  * Class XotServiceProvider.
  */
 class XotServiceProvider extends XotBaseServiceProvider {
-<<<<<<< HEAD
     // use Traits\PresenterTrait;
     use Traits\TranslatorTrait;
-=======
-    use Traits\TranslatorTrait;
-    use Traits\PresenterTrait;
->>>>>>> 9472ad4 (first)
     /**
      * The module directory.
      */
@@ -53,7 +40,6 @@ class XotServiceProvider extends XotBaseServiceProvider {
 
         $this->registerTranslator();
 
-<<<<<<< HEAD
         // $this->registerCacheOPCache();
         // $this->registerScout();
 
@@ -84,28 +70,6 @@ class XotServiceProvider extends XotBaseServiceProvider {
         $this->app->bind('profile', function () {
             return new \Modules\Xot\Services\ProfileTest();
         });
-=======
-        //$this->registerCacheOPCache();
-        //$this->registerScout();
-
-        //$this->registerLivewireComponents();
-        $this->registerViewComposers();
-
-        //$this->registerPanel();
-        //$this->registerDropbox();// PROBLEMA DI COMPOSER
-    }
-
-    //end bootCallback
-
-    public function registerCallback(): void {
-        $this->loadHelpersFrom(__DIR__.'/../Helpers');
-        $loader = AliasLoader::getInstance();
-        $loader->alias('Panel', 'Modules\Xot\Services\PanelService');
-        $this->registerPresenter();
-
-        //$this->registerPanel();
-        //$this->registerBladeDirectives(); //non intercetta
->>>>>>> 9472ad4 (first)
     }
 
     private function redirectSSL(): void {
@@ -127,7 +91,6 @@ class XotServiceProvider extends XotBaseServiceProvider {
 
     /**
      * Undocumented function.
-<<<<<<< HEAD
      *
      * @see https://medium.com/@dobron/running-laravel-ide-helper-generator-automatically-b909e75849d0
      *
@@ -144,13 +107,10 @@ class XotServiceProvider extends XotBaseServiceProvider {
 
     /**
      * Undocumented function.
-=======
->>>>>>> 9472ad4 (first)
      */
     private function registerCommands(): void {
         $this->commands(
             [
-<<<<<<< HEAD
                 // \Modules\Xot\Console\CreateAllRepositoriesCommand::class,
                 // \Modules\Xot\Console\PanelMakeCommand::class,
                 // \Modules\Xot\Console\FixProvidersCommand::class,
@@ -158,31 +118,15 @@ class XotServiceProvider extends XotBaseServiceProvider {
                 // \Modules\Xot\Console\Commands\WorkerCheck::class,
                 // \Modules\Xot\Console\Commands\WorkerRetry::class,
                 // \Modules\Xot\Console\Commands\WorkerStop::class,
-=======
-                //\Modules\Xot\Console\CreateAllRepositoriesCommand::class,
-                //\Modules\Xot\Console\PanelMakeCommand::class,
-                //\Modules\Xot\Console\FixProvidersCommand::class,
-                \Modules\Xot\Console\Commands\DatabaseBackUpCommand::class,
-                \Modules\Xot\Console\Commands\WorkerCheck::class,
-                \Modules\Xot\Console\Commands\WorkerRetry::class,
-                \Modules\Xot\Console\Commands\WorkerStop::class,
->>>>>>> 9472ad4 (first)
             ]
         );
     }
 
     private function registerViewComposers(): void {
-<<<<<<< HEAD
         // Factory $view
         // $view->composer('bootstrap-italia::page', BootstrapItaliaComposer::class);
         View::composer('*', XotComposer::class);
         // dddx($res);
-=======
-        //Factory $view
-        //$view->composer('bootstrap-italia::page', BootstrapItaliaComposer::class);
-        View::composer('*', XotComposer::class);
-        //dddx($res);
->>>>>>> 9472ad4 (first)
     }
 
     /*
@@ -207,8 +151,4 @@ class XotServiceProvider extends XotBaseServiceProvider {
             }
         }
     }
-<<<<<<< HEAD
 } // end class
-=======
-} //end class
->>>>>>> 9472ad4 (first)

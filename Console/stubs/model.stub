@@ -21,47 +21,28 @@ class DummyClass extends BaseModel {
      *
      * @var string
      */
-<<<<<<< HEAD
     protected $primaryKey = 'dummy_id';
-=======
-    protected $primaryKey = 'id';
->>>>>>> 9472ad4 (first)
 
     /**
      * Attributes that should be mass-assignable.
      *
-<<<<<<< HEAD
      * @var array<string>
-=======
-     * @var array
->>>>>>> 9472ad4 (first)
      */
     protected $fillable = dummy_fields ;
 
     /**
      * The attributes excluded from the model's JSON form.
      *
-<<<<<<< HEAD
      * @var array<int, string>
      */
     protected $hidden = [
 
-=======
-     * @var array
-     */
-    protected $hidden = [
-        
->>>>>>> 9472ad4 (first)
     ];
 
     /**
      * The attributes that should be casted to native types.
      * da fare
-<<<<<<< HEAD
      * @var array<string, string>
-=======
-     * @var array
->>>>>>> 9472ad4 (first)
      */
     protected $casts = [];
 
@@ -70,11 +51,7 @@ class DummyClass extends BaseModel {
      * The attributes that should be mutated to dates.
 
      *  da fare
-<<<<<<< HEAD
      * @var array<string>
-=======
-     * @var array
->>>>>>> 9472ad4 (first)
      */
     protected $dates = [
 
@@ -85,11 +62,7 @@ class DummyClass extends BaseModel {
      *
      * @var boolean
      */
-<<<<<<< HEAD
     public $timestamps = dummy_timestamps;
-=======
-    public $timestamps = true;
->>>>>>> 9472ad4 (first)
 
     // Scopes...
 

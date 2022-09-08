@@ -9,12 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 /**
  * Class SqlService.
  */
-<<<<<<< HEAD
 class SqlService {
-=======
-class SqlService
-{
->>>>>>> 9472ad4 (first)
     public static function getCoalesceDateRange(
         Model $model,
         ?int $date_min = null,
@@ -22,7 +17,6 @@ class SqlService
         ?string $from_field = null,
         ?string $to_field = null
     ): string {
-<<<<<<< HEAD
         if (null === $from_field) {
             $from_field = $model->getAttributeValue('from_field');
         }
@@ -30,24 +24,11 @@ class SqlService
             $to_field = $model->getAttributeValue('to_field');
         }
         if (null !== $date_min) {
-=======
-        if (null == $from_field) {
-            $from_field = $model->getAttributeValue('from_field');
-        }
-        if (null == $to_field) {
-            $to_field = $model->getAttributeValue('to_field');
-        }
-        if (null != $date_min) {
->>>>>>> 9472ad4 (first)
             $dal = 'if('.$from_field.'=0 or '.$from_field.'<'.$date_min.' ,'.$date_min.','.$from_field.')';
         } else {
             $dal = $from_field;
         }
-<<<<<<< HEAD
         if (null !== $date_max) {
-=======
-        if (null != $date_max) {
->>>>>>> 9472ad4 (first)
             $al = 'if('.$to_field.'=0 or '.$to_field.'>'.$date_max.' ,'.$date_max.','.$to_field.')';
         } else {
             $al = $from_field;

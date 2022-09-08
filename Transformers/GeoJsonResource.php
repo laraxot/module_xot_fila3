@@ -38,30 +38,17 @@ class GeoJsonResource extends ResCollection {
      */
     public function toArray($request) {
         $lang = app()->getLocale();
-<<<<<<< HEAD
         // 34     Parameter #1 $model of static method Modules\Xot\Services\PanelService::make()->get() expects Illuminate\Database\Eloquent\Model, $this(Modules\Xot\Transformers\GeoJsonResource) given.
 
         // 33     Access to an undefined property Modules\Xot\Transformers\GeoJsonResource::$post_id.
-=======
-        //34     Parameter #1 $model of static method Modules\Xot\Services\PanelService::make()->get() expects Illuminate\Database\Eloquent\Model, $this(Modules\Xot\Transformers\GeoJsonResource) given.
-
-        //33     Access to an undefined property Modules\Xot\Transformers\GeoJsonResource::$post_id.
->>>>>>> 9472ad4 (first)
         return [
             'type' => 'Feature',
             'properties' => [
                 'id' => $this->post_type.'-'.$this->post_id,
-<<<<<<< HEAD
                 // "index"=> 0,
                 'isActive' => true,
                 // "logo"=> "http://placehold.it/32x32",
                 // 'image' => PanelService::make()->get($this)->imgSrc(['width' => 200, 'height' => 200]),
-=======
-                //"index"=> 0,
-                'isActive' => true,
-                //"logo"=> "http://placehold.it/32x32",
-                //'image' => PanelService::make()->get($this)->imgSrc(['width' => 200, 'height' => 200]),
->>>>>>> 9472ad4 (first)
                 'link' => $this->url,
                 'url' => '#',
                 'name' => $this->title,
@@ -73,13 +60,8 @@ class GeoJsonResource extends ResCollection {
                 'about' => $this->subtitle."\r\n",
                 'tags' => [
                     $this->post_type,
-<<<<<<< HEAD
                     // "Restaurant",
                     // "Contemporary"
-=======
-                    //"Restaurant",
-                    //"Contemporary"
->>>>>>> 9472ad4 (first)
                 ],
             ],
             'geometry' => [

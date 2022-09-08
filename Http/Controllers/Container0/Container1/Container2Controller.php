@@ -9,10 +9,5 @@ use Modules\Xot\Http\Controllers\XotBaseContainerController;
 /**
  * Class Container2Controller.
  */
-<<<<<<< HEAD
 class Container2Controller extends XotBaseContainerController {
-=======
-class Container2Controller extends XotBaseContainerController
-{
->>>>>>> 9472ad4 (first)
 }

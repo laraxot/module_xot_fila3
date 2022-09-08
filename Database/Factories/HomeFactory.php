@@ -14,11 +14,7 @@ class HomeFactory extends Factory {
     /**
      * The name of the factory's corresponding model.
      *
-<<<<<<< HEAD
      * @var class-string<\Illuminate\Database\Eloquent\Model>
-=======
-     * @var string
->>>>>>> 9472ad4 (first)
      */
     protected $model = Home::class;
 
@@ -33,8 +29,4 @@ class HomeFactory extends Factory {
             'icon_src' => $this->faker->word,
         ];
     }
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> 9472ad4 (first)

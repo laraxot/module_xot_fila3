@@ -17,8 +17,4 @@ class _ModulePanel extends XotBasePanel {
             new Actions\ModelGeneratorAction(),
         ];
     }
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> 9472ad4 (first)

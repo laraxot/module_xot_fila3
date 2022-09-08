@@ -4,11 +4,7 @@ declare(strict_types=1);
 
 namespace Modules\Xot\Contracts;
 
-<<<<<<< HEAD
 // use Illuminate\Database\Query\Builder;
-=======
-//use Illuminate\Database\Query\Builder;
->>>>>>> 9472ad4 (first)
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\Relation;
@@ -24,11 +20,7 @@ use Modules\Xot\Models\Panels\Actions\XotBasePanelAction;
 interface PanelContract {
     public function setRow(Model $row): self;
 
-<<<<<<< HEAD
     // public function setRows(Relation $rows): self;
-=======
-    //public function setRows(Relation $rows): self;
->>>>>>> 9472ad4 (first)
 
     /**
      * Undocumented function.
@@ -46,11 +38,7 @@ interface PanelContract {
 
     public function setItem(string $guid): self;
 
-<<<<<<< HEAD
     public function setParent(?self $panel): self;
-=======
-    public function setParent(?PanelContract $panel): PanelContract;
->>>>>>> 9472ad4 (first)
 
     /**
      * Undocumented function.
@@ -60,15 +48,9 @@ interface PanelContract {
     public function rows(?array $data = null);
 
     /**
-<<<<<<< HEAD
      * ---.
      */
     public function update(array $data): self;
-=======
-     * @return mixed
-     */
-    public function update(array $data);
->>>>>>> 9472ad4 (first)
 
     /**
      * Ritorna la view.
@@ -80,11 +62,7 @@ interface PanelContract {
     /**
      * Undocumented function.
      *
-<<<<<<< HEAD
      * @return PanelActionContract
-=======
-     * @return mixed
->>>>>>> 9472ad4 (first)
      */
     public function itemAction(string $act);
 
@@ -115,14 +93,11 @@ interface PanelContract {
 
     public function url(string $act = 'show'): string;
 
-<<<<<<< HEAD
     /**
      * Undocumented function.
      *
      * @return Collection<XotBasePanelAction>
      */
-=======
->>>>>>> 9472ad4 (first)
     public function itemActions(array $params = []): Collection;
 
     public function id(?bool $is_admin = null): string;
@@ -144,11 +119,7 @@ interface PanelContract {
 
     public function guid(?bool $is_admin = null): ?string;
 
-<<<<<<< HEAD
     public function getParent(): ?self;
-=======
-    public function getParent(): ?PanelContract;
->>>>>>> 9472ad4 (first)
 
     public function fields(): array;
 
@@ -194,21 +165,14 @@ interface PanelContract {
     public function getParents();
 
     /**
-<<<<<<< HEAD
      * ---.
      */
     public function formLivewireEdit(array $params = []): string;
-=======
-     * @return mixed
-     */
-    public function formLivewireEdit(array $params = []);
->>>>>>> 9472ad4 (first)
 
     public function getFields(array $params = []): Collection;
 
     public function isRevisionBy(UserContract $user): bool;
 
-<<<<<<< HEAD
     public function isAuthoredBy(UserContract $user): bool;
 
     public function isModeratedBy(UserContract $user): bool;
@@ -218,11 +182,6 @@ interface PanelContract {
     public function related(string $relationship): self;
 
     public function relatedName(string $name, ?int $id = null): self;
-=======
-    public function related(string $relationship): PanelContract;
-
-    public function relatedName(string $name, ?int $id = null): PanelContract;
->>>>>>> 9472ad4 (first)
 
     /**
      * @return \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Query\Builder
@@ -243,11 +202,7 @@ interface PanelContract {
 
     public function optionLabel(Model $row): string;
 
-<<<<<<< HEAD
     // public function isInternalPage(): bool;
-=======
-    //public function isInternalPage(): bool;
->>>>>>> 9472ad4 (first)
 
     public function rules(array $params = []): array;
 
@@ -255,11 +210,7 @@ interface PanelContract {
 
     public function rulesMessages(): array;
 
-<<<<<<< HEAD
     // --------------------- ACTIONS -------------------
-=======
-    //--------------------- ACTIONS -------------------
->>>>>>> 9472ad4 (first)
 
     /**
      * @return mixed

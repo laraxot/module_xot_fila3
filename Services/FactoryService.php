@@ -44,10 +44,6 @@ class FactoryService {
         }
 
         throw new Exception('Generating Factory ['.$factory_class.'] press [F5] to refresh page ['.__LINE__.']['.__FILE__.']');
-<<<<<<< HEAD
         // per ora è lasciato come prima
-=======
-        //per ora è lasciato come prima
->>>>>>> 9472ad4 (first)
     }
 }

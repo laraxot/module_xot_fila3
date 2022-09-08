@@ -26,16 +26,7 @@ namespace Modules\Xot\Models;
  * @method static \Illuminate\Database\Eloquent\Builder|Session whereUserAgent($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Session whereUserId($value)
  * @mixin \Eloquent
-<<<<<<< HEAD
  */
 class Session extends BaseModel {
     protected $fillable = ['id', 'user_id', 'ip_address', 'user_agent', 'payload', 'last_activity'];
-=======
- * @mixin IdeHelperSession
- */
-class Session extends BaseModel
-{
-    protected $fillable=['id','user_id','ip_address','user_agent','payload','last_activity'];
-
->>>>>>> 9472ad4 (first)
 }

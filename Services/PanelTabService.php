@@ -81,11 +81,7 @@ class PanelTabService {
         [$containers, $items] = params2ContainerItem();
         $tabs = $bread->tabs();
         $row = [];
-<<<<<<< HEAD
         if ('' !== $bread->guid()) {
-=======
-        if ('' != $bread->guid()) {
->>>>>>> 9472ad4 (first)
             foreach ($tabs as $tab) {
                 $tab_panel = $bread->relatedName($tab);
                 if (Gate::allows('index', $tab_panel)) {
@@ -105,11 +101,7 @@ class PanelTabService {
                         'title' => trans($trans_key.'.label'),
                         'icon' => trans($trans_key.'.icon'),
                         'url' => $tab_panel->url('index'),
-<<<<<<< HEAD
                         'active' => \in_array($tab, $containers, true),
-=======
-                        'active' => in_array($tab, $containers),
->>>>>>> 9472ad4 (first)
                     ];
                     $row[] = $tmp;
                 }
@@ -134,22 +126,14 @@ class PanelTabService {
         $request = \Request::capture();
         $routename = (string) \Route::currentRouteName();
         $act = last(explode('.', $routename));
-<<<<<<< HEAD
         // $routename = \Route::current()->getName();
         $route_current = \Route::current();
         $route_params = [];
         if (null !== $route_current) {
-=======
-        //$routename = \Route::current()->getName();
-        $route_current = \Route::current();
-        $route_params = [];
-        if (null != $route_current) {
->>>>>>> 9472ad4 (first)
             $route_params = $route_current->parameters();
         }
         [$containers, $items] = params2ContainerItem($route_params);
         $data = [];
-<<<<<<< HEAD
         // $items[]=$this->row;
         if (! \is_array($items)) {
             return [];
@@ -165,65 +149,29 @@ class PanelTabService {
             // $item = $panel->getRow();
             $tabs = [];
             if (! \is_object($panel)) {
-=======
-        //$items[]=$this->row;
-        if (! is_array($items)) {
-            return [];
-        }
-        //array_unique($items);
-        $parents = $this->panel->getParents();
-        if ('' != $this->panel->guid()) {
-            $parents->push($this->panel);
-        }
-        //dddx($parents);
-
-        foreach ($parents as $k => $panel) {
-            //$item = $panel->getRow();
-            $tabs = [];
-            if (! is_object($panel)) {
->>>>>>> 9472ad4 (first)
                 return $tabs;
             }
             $tabs = $panel->tabs();
             $row = [];
-<<<<<<< HEAD
             // *
             if (0 === $k) {
                 if (Gate::allows('index', $panel)) {
                     $tmp = new \stdClass();
                     // $tmp->title = '<< Back '; //.'['.get_class($item).']';
                     $tmp->title = 'Back'; // .'['.get_class($item).']';
-=======
-            //*
-            if (0 == $k) {
-                if (Gate::allows('index', $panel)) {
-                    $tmp = new \stdClass();
-                    //$tmp->title = '<< Back '; //.'['.get_class($item).']';
-                    $tmp->title = 'Back'; //.'['.get_class($item).']';
->>>>>>> 9472ad4 (first)
                     $tmp->url = $panel->url('index');
                     $tmp->active = false;
                     $row[] = $tmp;
                 }
-<<<<<<< HEAD
                 // -----------------------
                 $tmp = new \stdClass();
                 if (\in_array($act, ['index_edit', 'edit', 'update'], true)) {
-=======
-                //-----------------------
-                $tmp = new \stdClass();
-                if (in_array($act, ['index_edit', 'edit', 'update'])) {
->>>>>>> 9472ad4 (first)
                     $url = $panel->url('edit');
                 } else {
                     $url = $panel->url('show');
                 }
                 $tmp->url = $url;
-<<<<<<< HEAD
                 $tmp->title = 'Content'; // .'['.request()->url().']['.$url.']';
-=======
-                $tmp->title = 'Content'; //.'['.request()->url().']['.$url.']';
->>>>>>> 9472ad4 (first)
                 /*
                 if ($url_test = 1) {
                     $tmp->active = request()->url() == $url;
@@ -231,7 +179,6 @@ class PanelTabService {
                     $tmp->active = request()->routeIs('admin.containers.'.$act);
                 }
                 */
-<<<<<<< HEAD
                 $tmp->active = request()->url() === $url;
                 if (null !== $panel->guid()) {
                     $row[] = $tmp;
@@ -250,42 +197,15 @@ class PanelTabService {
                     $tmp->panel = $panel;
 
                     if (\in_array($act, ['index_edit', 'edit', 'update'], true)) {
-=======
-                $tmp->active = request()->url() == $url;
-                if (null != $panel->guid()) {
-                    $row[] = $tmp;
-                }
-                //----------------------
-            }
-            //*/
-
-            foreach ($tabs as $tab) {
-                //dddx($tabs);
-                $tmp = new \stdClass();
-
-                if (! is_array($tab)) {
-                    //$tmp = new \stdClass();
-                    $tmp->title = $tab;
-                    $tmp->panel = $panel;
-
-                    if (in_array($act, ['index_edit', 'edit', 'update'])) {
->>>>>>> 9472ad4 (first)
                         $tab_act = 'index_edit';
                     } else {
                         $tab_act = 'index';
                     }
                     $tmp->url = $panel->relatedUrl($tab, $tab_act);
-<<<<<<< HEAD
                     $tmp->active = \in_array($tab, $containers, true);
                 } else {
                     //  dddx($tmp);
                     // $tmp = new \stdClass();
-=======
-                    $tmp->active = in_array($tab, $containers);
-                } else {
-                    //  dddx($tmp);
-                    //$tmp = new \stdClass();
->>>>>>> 9472ad4 (first)
                     $tmp->title = $tab['title'];
                     $panel1 = $panel;
                     if (isset($tab['related'])) {
@@ -294,11 +214,7 @@ class PanelTabService {
                     if (isset($tab['container_action'])) {
                         $tmp->url = $panel1->urlContainerAction($tab['container_action']);
                     }
-<<<<<<< HEAD
                     // $tmp->url = $tab['page'];
-=======
-                    //$tmp->url = $tab['page'];
->>>>>>> 9472ad4 (first)
                     $tmp->active = false;
                 }
                 $row[] = $tmp;
@@ -306,11 +222,7 @@ class PanelTabService {
 
             $data[] = $row;
         }
-<<<<<<< HEAD
         // dddx([$data, $tabs]);
-=======
-        //dddx([$data, $tabs]);
->>>>>>> 9472ad4 (first)
 
         return $data;
     }

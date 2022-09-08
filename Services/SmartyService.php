@@ -48,12 +48,7 @@ namespace Modules\Xot\Services;
 
 use Illuminate\Support\Facades\File;
 
-<<<<<<< HEAD
 class SmartyService {
-=======
-class SmartyService
-{
->>>>>>> 9472ad4 (first)
     /**
      * stack for conditional and closers.
      */
@@ -63,12 +58,7 @@ class SmartyService
      * The core work of parsing a smarty template and converting it into flexy.
      * the contents of the smarty template.
      */
-<<<<<<< HEAD
     public function convert(string $file): string {
-=======
-    public function convert(string $file): string
-    {
->>>>>>> 9472ad4 (first)
         if (! File::exists($file)) {
             dddx(['message' => $file.' not exists']);
         }
@@ -100,13 +90,8 @@ class SmartyService
         if (false === $text) {
             throw new \Exception('text is false');
         }
-<<<<<<< HEAD
         // $max_text = count($text);
         $max_tags = \count($tags);
-=======
-        //$max_text = count($text);
-        $max_tags = count($tags);
->>>>>>> 9472ad4 (first)
         $compiled_tags = [];
         for ($i = 0; $i < $max_tags; ++$i) {
             $compiled_tags[] = $this->compileTag($tags[$i]);
@@ -126,25 +111,14 @@ class SmartyService
         return $data;
     }
 
-<<<<<<< HEAD
     public function compileTag(string $str): string {
         // skip comments
         if (('*' === $str[0]) && ('*' === substr($str, -1, 1))) {
-=======
-    public function compileTag(string $str): string
-    {
-        // skip comments
-        if (('*' == $str[0]) && ('*' == substr($str, -1, 1))) {
->>>>>>> 9472ad4 (first)
             return '';
         }
         switch ($str[0]) {
         case '$':
-<<<<<<< HEAD
             return '{{ '.$this->convertVarToObject($str).' }}'; // .'['.__LINE__.']'; // its a var
-=======
-            return '{{ '.$this->convertVarToObject($str).' }}'; //.'['.__LINE__.']'; // its a var
->>>>>>> 9472ad4 (first)
         case '#':
             return $this->convertConfigVar($str); // its a config var
         case '%':
@@ -170,33 +144,19 @@ class SmartyService
 
             $args = $this->convertAttributesToKeyVal(substr($str, (int) strpos($str, ' ')));
 
-<<<<<<< HEAD
             // return '{plugin(#smartyInclude#,#'.$args['file'].'#)}';
             $blade_file = str_replace('.tpl', '', $args['file']);
             $blade_file = str_replace("'", '', $blade_file);
             if (! \is_string($blade_file)) {
-=======
-            //return '{plugin(#smartyInclude#,#'.$args['file'].'#)}';
-            $blade_file = str_replace('.tpl', '', $args['file']);
-            $blade_file = str_replace("'", '', $blade_file);
-            if (! is_string($blade_file)) {
->>>>>>> 9472ad4 (first)
                 throw new \Exception('blade_file not a string');
             }
 
             return '@include(\''.$blade_file.'\')';
 
-<<<<<<< HEAD
         case 'ldelim' === $str:
             return '{';
 
         case 'rdelim' === $str:
-=======
-        case 'ldelim' == $str:
-            return '{';
-
-        case 'rdelim' == $str:
->>>>>>> 9472ad4 (first)
             return '}';
 
         case preg_match('/^if \$(\S+)$/', $str, $matches):
@@ -210,11 +170,7 @@ class SmartyService
             $var = $this->convertVarToObject('$'.$matches[1]);
 
             return '@if('.$var.')';
-<<<<<<< HEAD
                 // return '@if('.substr($var, 1, -1).')'; //'['.__LINE__.']';
-=======
-                //return '@if('.substr($var, 1, -1).')'; //'['.__LINE__.']';
->>>>>>> 9472ad4 (first)
 
         case preg_match('/^if #(\S+)#$/', $str, $matches):
         case preg_match('/^if #(\S+)#\sne\s""$/', $str, $matches):
@@ -226,13 +182,8 @@ class SmartyService
 
             $var = $this->convertConfigVar('#'.$matches[1].'#');
 
-<<<<<<< HEAD
             // return '{if:'.substr($var, 1);
             return '@if('.substr($var, 1).')'; // .'['.__LINE__.']';//4 debug
-=======
-            //return '{if:'.substr($var, 1);
-            return '@if('.substr($var, 1).')'; //.'['.__LINE__.']';//4 debug
->>>>>>> 9472ad4 (first)
 
                 // negative matches
 
@@ -246,11 +197,7 @@ class SmartyService
 
             $var = $this->convertVar('$'.$matches[1]);
 
-<<<<<<< HEAD
             // return '{if:!'.substr($var, 1);
-=======
-            //return '{if:!'.substr($var, 1);
->>>>>>> 9472ad4 (first)
             return '@if(!'.substr($var, 1).')';
 
         case preg_match('/^elseif (\S+)(==|!=)(\S+)$/', $str, $matches):
@@ -261,37 +208,22 @@ class SmartyService
 
             return '@elseif('.substr($var1, 1, -1).' '.$op.' '.substr($var2, 1, -1).')';
 
-<<<<<<< HEAD
         case 'else' === $str:
-=======
-        case 'else' == $str:
->>>>>>> 9472ad4 (first)
             if (! $this->stack['if']) {
                 break;
             }
 
-<<<<<<< HEAD
             // return '{else:}';
             return '@else';
 
         case '/if' === $str:
-=======
-            //return '{else:}';
-            return '@else';
-
-        case '/if' == $str:
->>>>>>> 9472ad4 (first)
             if (! $this->stack['if']) {
                 break;
             }
 
             --$this->stack['if'];
 
-<<<<<<< HEAD
             // return '{end:}';
-=======
-            //return '{end:}';
->>>>>>> 9472ad4 (first)
             return '@endif';
         case preg_match('/^if \((\S+)\)$/', $str, $matches):
             $this->stack['if']++;
@@ -312,11 +244,7 @@ class SmartyService
         case preg_match('/^foreach from=(\S+) item=(\S+)$/', $str, $matches):
             $this->stack['foreach']++;
 
-<<<<<<< HEAD
             // dddx($matches);
-=======
-            //dddx($matches);
->>>>>>> 9472ad4 (first)
 
             $var = $this->convertVarToObject($matches[1]);
 
@@ -327,11 +255,7 @@ class SmartyService
         case preg_match('/^foreach from=(\S+) item=(\S+) name=(\S+)$/', $str, $matches):
             $this->stack['foreach']++;
 
-<<<<<<< HEAD
             // dddx($matches);
-=======
-            //dddx($matches);
->>>>>>> 9472ad4 (first)
 
             $from = $this->convertVarToObject($matches[1]);
 
@@ -344,11 +268,7 @@ class SmartyService
         case preg_match('/^foreach name=(\S+) from=(\S+) item=(\S+)$/', $str, $matches):
             $this->stack['foreach']++;
 
-<<<<<<< HEAD
             // dddx($matches);
-=======
-            //dddx($matches);
->>>>>>> 9472ad4 (first)
 
             $from = $this->convertVarToObject($matches[2]);
 
@@ -361,11 +281,7 @@ class SmartyService
         case preg_match('/^foreach from=(\S+) item=(\S+) key=(\S+) name=(\S+)$/', $str, $matches):
             $this->stack['foreach']++;
 
-<<<<<<< HEAD
             // dddx($matches);
-=======
-            //dddx($matches);
->>>>>>> 9472ad4 (first)
 
             $from = $this->convertVarToObject($matches[1]);
 
@@ -377,18 +293,13 @@ class SmartyService
 
             return '@foreach('.$from.' as '.$key.'=>'.$item.')';
 
-<<<<<<< HEAD
         case '/foreach' === $str:
-=======
-        case '/foreach' == $str:
->>>>>>> 9472ad4 (first)
             if (! $this->stack['foreach']) {
                 break;
             }
 
             --$this->stack['foreach'];
 
-<<<<<<< HEAD
             // return '{end:}';
             return '@endforeach';
 
@@ -405,24 +316,6 @@ class SmartyService
         case 'strip' === $str:
             return '';
         case '/strip' === $str:
-=======
-            //return '{end:}';
-            return '@endforeach';
-
-                //case preg_match($this->getOpeningTagPattern('if'), $str, $matches):
-                //    dddx($matches);
-        case 'php' == $str:
-            return '@php ';
-        case '/php' == $str:
-            return '@endphp';
-        case 'literal' == $str:
-            return '@verbatim';
-        case '/literal' == $str:
-            return '@endverbatim';
-        case 'strip' == $str:
-            return '';
-        case '/strip' == $str:
->>>>>>> 9472ad4 (first)
             return '';
         }
 
@@ -439,12 +332,7 @@ class SmartyService
      *   $matches[1] should contain a string with all other configuration coming with a tag i.e.
      *   'foo = "bar" something="somevalue"'
      */
-<<<<<<< HEAD
     public function getOpeningTagPattern(string $tagName): string {
-=======
-    public function getOpeningTagPattern(string $tagName): string
-    {
->>>>>>> 9472ad4 (first)
         return sprintf("#\[\{\s*%s\b\s*((?:(?!\[\{|\}\]).(?<!\[\{)(?<!\}\]))+)?\}\]#is", preg_quote($tagName, '#'));
     }
 
@@ -453,12 +341,7 @@ class SmartyService
      * str      the inside of the smart tag
      * return a string a flexy version of it.
      */
-<<<<<<< HEAD
     public function convertVar(string $str): string {
-=======
-    public function convertVar(string $str): string
-    {
->>>>>>> 9472ad4 (first)
         // look for modfiers first.
 
         $mods = explode('|', $str);
@@ -480,11 +363,7 @@ class SmartyService
         $var = array_shift($bits);
 
         foreach ($bits as $k) {
-<<<<<<< HEAD
             // $var .= '['.$k.']';
-=======
-            //$var .= '['.$k.']';
->>>>>>> 9472ad4 (first)
             $var .= '->'.$k;
         }
         /*
@@ -494,19 +373,11 @@ class SmartyService
         */
         $mods = implode('|', $mods);
 
-<<<<<<< HEAD
         if (\strlen($mods)) {
             return '{plugin(#smartyModifiers#,'.$var.',#'.$mods.'#):h}';
         }
 
         return '{'.$var.'}'.$mods; // .'['.__LINE__.']';
-=======
-        if (strlen($mods)) {
-            return '{plugin(#smartyModifiers#,'.$var.',#'.$mods.'#):h}';
-        }
-
-        return '{'.$var.'}'.$mods; //.'['.__LINE__.']';
->>>>>>> 9472ad4 (first)
     }
 
     /**
@@ -514,12 +385,7 @@ class SmartyService
      * str       the inside of the smart tag
      * return string a flexy version of it.
      */
-<<<<<<< HEAD
     public function convertVarToObject(string $str): string {
-=======
-    public function convertVarToObject(string $str): string
-    {
->>>>>>> 9472ad4 (first)
         $var = $str; // strip $
 
         $bits = explode('.', $var);
@@ -539,28 +405,16 @@ class SmartyService
      * str     the key value part of the tag..
      * return array key value array.
      */
-<<<<<<< HEAD
     public function convertAttributesToKeyVal(string $str): array {
-=======
-    public function convertAttributesToKeyVal(string $str): array
-    {
->>>>>>> 9472ad4 (first)
         $atts = explode(' ', $str);
         $ret = [];
         foreach ($atts as $bit) {
             $bits = explode('=', $bit);
             // loose stuff!!!
-<<<<<<< HEAD
             if (2 !== \count($bits)) {
                 continue;
             }
             $ret[$bits[0]] = ('"' === $bits[1][0]) ? substr($bits[1], 1, -1) : $bits[1];
-=======
-            if (2 != count($bits)) {
-                continue;
-            }
-            $ret[$bits[0]] = ('"' == $bits[1][0]) ? substr($bits[1], 1, -1) : $bits[1];
->>>>>>> 9472ad4 (first)
         }
 
         return $ret;
@@ -571,21 +425,12 @@ class SmartyService
      * str       the inside of the smart tag
      * return string a flexy version of it.
      */
-<<<<<<< HEAD
     public function convertConfigVar(string $str): string {
-=======
-    public function convertConfigVar(string $str): string
-    {
->>>>>>> 9472ad4 (first)
         $mods = explode('|', $str);
         $var = array_shift($mods);
         $var = substr($var, 1, -1); // strip #'s
         $mods = implode('|', $mods);
-<<<<<<< HEAD
         if (\strlen($mods)) {
-=======
-        if (strlen($mods)) {
->>>>>>> 9472ad4 (first)
             $mods = "<!-- UNSUPPORTED MODIFIERS: $mods -->";
         }
 

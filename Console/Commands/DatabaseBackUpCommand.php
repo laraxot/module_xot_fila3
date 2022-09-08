@@ -44,24 +44,13 @@ class DatabaseBackUpCommand extends Command {
     public function handle() {
         $filename = 'backup-'.Carbon::now()->format('Y-m-d').'.gz';
         $backup_path = storage_path('app/backup/'.$filename);
-<<<<<<< HEAD
-        $backup_path = Str::replace(['/', '\\'], [\DIRECTORY_SEPARATOR, \DIRECTORY_SEPARATOR], $backup_path);
-=======
         $backup_path = Str::replace(['/', '\\'], [DIRECTORY_SEPARATOR, DIRECTORY_SEPARATOR], $backup_path);
->>>>>>> 9472ad4 (first)
 
         $command = 'mysqldump --user='.env('DB_USERNAME').' --password='.env('DB_PASSWORD').' --host='.env('DB_HOST').' '.env('DB_DATABASE').'  | gzip > '.$backup_path;
 
         $returnVar = null;
         $output = null;
-<<<<<<< HEAD
-        // echo $command;
-        exec($command, $output, $returnVar);
-    }
-}
-=======
         //echo $command;
         exec($command, $output, $returnVar);
     }
 }
->>>>>>> 9472ad4 (first)

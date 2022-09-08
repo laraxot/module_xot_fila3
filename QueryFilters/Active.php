@@ -11,7 +11,6 @@ declare(strict_types=1);
 namespace Modules\Xot\QueryFilters;
 
 use Closure;
-<<<<<<< HEAD
 use Illuminate\Support\Facades\Request;
 
 class Active {
@@ -23,20 +22,6 @@ class Active {
      * @return Closure
      */
     public function handle($request, Closure $next) {
-=======
-
-class Active
-{
-    /**
-     * Undocumented function.
-     *
-     * @param mixed $request
-     *
-     * @return Closure
-     */
-    public function handle($request, Closure $next)
-    {
->>>>>>> 9472ad4 (first)
         if (! request()->has('active')) {
             return $next($request);
         }

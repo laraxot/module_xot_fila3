@@ -10,7 +10,6 @@ use Modules\Xot\Traits\Updater;
 /**
  * Class BaseMorphPivot.
  */
-<<<<<<< HEAD
 abstract class BaseMorphPivot extends MorphPivot {
     use Updater;
     /**
@@ -23,11 +22,6 @@ abstract class BaseMorphPivot extends MorphPivot {
      public static $snakeAttributes = true;
 
     protected $perPage = 30;
-=======
-abstract class BaseMorphPivot extends MorphPivot
-{
-    use Updater;
->>>>>>> 9472ad4 (first)
 
     protected $connection = 'mysql'; // this will use the specified database connection
 
@@ -51,11 +45,7 @@ abstract class BaseMorphPivot extends MorphPivot
      */
     public $timestamps = true;
 
-<<<<<<< HEAD
     // protected $attributes = ['related_type' => 'cuisine_cat'];
-=======
-    //protected $attributes = ['related_type' => 'cuisine_cat'];
->>>>>>> 9472ad4 (first)
 
     /**
      * @var string[]

@@ -40,11 +40,7 @@ class PanelActionService {
                     if (! isset($item->$k)) {
                         $item->$k = false;
                     }
-<<<<<<< HEAD
                     if ($item->$k !== $v) {
-=======
-                    if ($item->$k != $v) {
->>>>>>> 9472ad4 (first)
                         return false;
                     }
                 }
@@ -83,12 +79,9 @@ class PanelActionService {
     public function getAction(string $name): XotBasePanelAction {
         $action = $this->getActions()
             ->firstWhere('name', $name);
-<<<<<<< HEAD
         if (! $action instanceof XotBasePanelAction) {
             throw new Exception('['.__LINE__.']['.__FILE__.']['.gettype($action).']');
         }
-=======
->>>>>>> 9472ad4 (first)
 
         return $action;
     }
@@ -107,18 +100,12 @@ class PanelActionService {
         }
         //$itemAction->setPanel($this); //incerto dovrebbe farlo getActions
         */
-<<<<<<< HEAD
         if (null === $itemAction) {
             throw new Exception('['.$act.'] is not an ItemAction of ['.class_basename($this->panel).']');
         }
         if (! $itemAction instanceof XotBasePanelAction) {
             throw new Exception('['.__LINE__.']['.__FILE__.']');
         }
-=======
-        if (null == $itemAction) {
-            throw new Exception('['.$act.'] is not an ItemAction of ['.class_basename($this->panel).']');
-        }
->>>>>>> 9472ad4 (first)
 
         return $itemAction;
     }
@@ -126,11 +113,7 @@ class PanelActionService {
     public function containerAction(string $act): ?XotBasePanelAction {
         $actions = $this->containerActions();
         $action = $actions->firstWhere('name', $act);
-<<<<<<< HEAD
         if (! \is_object($action)) {
-=======
-        if (! is_object($action)) {
->>>>>>> 9472ad4 (first)
             dddx(
                 [
                     'error' => 'nessuna azione con questo nome',
@@ -142,32 +125,20 @@ class PanelActionService {
                 ]
             );
         }
-<<<<<<< HEAD
         // $action->setPanel($this);
         if (! $action instanceof XotBasePanelAction) {
             throw new Exception('['.__LINE__.']['.__FILE__.']');
         }
-=======
-        //$action->setPanel($this);
->>>>>>> 9472ad4 (first)
 
         return $action;
     }
 
     public function urlContainerAction(string $act, array $params = []): string {
-<<<<<<< HEAD
         // $containerActions = $this->containerActions();
         // $containerAction = $containerActions->firstWhere('name', $act);
         $containerAction = $this->containerAction($act);
         // 123    Call to an undefined method object::urlContainer().
         if (\is_object($containerAction) /* && $containerAction instanceof XotBasePanelAction */) {
-=======
-        //$containerActions = $this->containerActions();
-        //$containerAction = $containerActions->firstWhere('name', $act);
-        $containerAction = $this->containerAction($act);
-        //123    Call to an undefined method object::urlContainer().
-        if (is_object($containerAction) /* && $containerAction instanceof XotBasePanelAction */) {
->>>>>>> 9472ad4 (first)
             return $containerAction->urlContainer();
         }
 
@@ -176,11 +147,7 @@ class PanelActionService {
 
     public function urlItemAction(string $act, array $params = []): string {
         $itemAction = $this->itemAction($act);
-<<<<<<< HEAD
         if (\is_object($itemAction)) {
-=======
-        if (is_object($itemAction)) {
->>>>>>> 9472ad4 (first)
             return $itemAction->urlItem();
         }
 
@@ -192,18 +159,9 @@ class PanelActionService {
      */
     public function btnItemAction(string $act, array $params = []) {
         $itemAction = $this->itemAction($act);
-<<<<<<< HEAD
         if (\is_object($itemAction)) {
             // return $itemAction->btn(['row' => $this->panel->getRow(), 'panel' => $this->panel]);
             return $itemAction->btn($params);
         }
     }
 }
-=======
-        if (is_object($itemAction)) {
-            //return $itemAction->btn(['row' => $this->panel->getRow(), 'panel' => $this->panel]);
-            return $itemAction->btn($params);
-        }
-    }
-}
->>>>>>> 9472ad4 (first)

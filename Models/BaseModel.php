@@ -5,13 +5,8 @@ declare(strict_types=1);
 namespace Modules\Xot\Models;
 
 use GeneaLabs\LaravelModelCaching\Traits\Cachable;
-<<<<<<< HEAD
 // use Laravel\Scout\Searchable;
 // ---------- traits
-=======
-//use Laravel\Scout\Searchable;
-//---------- traits
->>>>>>> 9472ad4 (first)
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -21,7 +16,6 @@ use Modules\Xot\Traits\Updater;
 /**
  * Class BaseModel.
  */
-<<<<<<< HEAD
 abstract class BaseModel extends Model {
     use HasFactory;
     // use Searchable;
@@ -37,14 +31,6 @@ abstract class BaseModel extends Model {
      public static $snakeAttributes = true;
 
     protected $perPage = 30;
-=======
-abstract class BaseModel extends Model
-{
-    use Updater;
-    //use Searchable;
-    //use Cachable;
-    use HasFactory;
->>>>>>> 9472ad4 (first)
 
     /**
      * @var string
@@ -56,17 +42,10 @@ abstract class BaseModel extends Model
      */
     protected $fillable = ['id'];
     /**
-<<<<<<< HEAD
      * @var array<string, string>
      */
     protected $casts = [
         // 'published_at' => 'datetime:Y-m-d', // da verificare
-=======
-     * @var array
-     */
-    protected $casts = [
-        //'published_at' => 'datetime:Y-m-d', // da verificare
->>>>>>> 9472ad4 (first)
     ];
 
     /**
@@ -82,17 +61,10 @@ abstract class BaseModel extends Model
      */
     public $incrementing = true;
     /**
-<<<<<<< HEAD
      * @var array<int, string>
      */
     protected $hidden = [
         // 'password'
-=======
-     * @var array
-     */
-    protected $hidden = [
-        //'password'
->>>>>>> 9472ad4 (first)
     ];
     /**
      * @var bool
@@ -102,12 +74,7 @@ abstract class BaseModel extends Model
     /**
      * @return \Illuminate\Database\Eloquent\Relations\MorphMany
      */
-<<<<<<< HEAD
     public function images() {
-=======
-    public function images()
-    {
->>>>>>> 9472ad4 (first)
         return $this->morphMany(Image::class, 'post');
     }
 
@@ -116,13 +83,7 @@ abstract class BaseModel extends Model
      *
      * @return \Illuminate\Database\Eloquent\Factories\Factory
      */
-<<<<<<< HEAD
     protected static function newFactory() {
         return FactoryService::newFactory(static::class);
-=======
-    protected static function newFactory()
-    {
-        return FactoryService::newFactory(get_called_class());
->>>>>>> 9472ad4 (first)
     }
 }

@@ -8,7 +8,6 @@ use Nwidart\Modules\Facades\Module as NwModule;
 use Sushi\Sushi;
 
 /**
-<<<<<<< HEAD
  * Modules\Xot\Models\Module
  *
  * @property int $id
@@ -22,9 +21,6 @@ use Sushi\Sushi;
  * @method static \Illuminate\Database\Eloquent\Builder|Module whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Module whereName($value)
  * @mixin \Eloquent
-=======
- * @mixin IdeHelperModule
->>>>>>> 9472ad4 (first)
  */
 class Module extends BaseModel {
     use Sushi;
@@ -37,11 +33,7 @@ class Module extends BaseModel {
     ];
 
     public function getRows(): array {
-<<<<<<< HEAD
         $modules = NwModule::getByStatus(1);
-=======
-        $modules = NwModule::all();
->>>>>>> 9472ad4 (first)
         $rows = [];
         $i = 1;
         foreach ($modules as $k => $module) {

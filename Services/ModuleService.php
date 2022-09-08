@@ -9,11 +9,7 @@ use Illuminate\Support\Str;
 use Nwidart\Modules\Facades\Module;
 use ReflectionClass;
 
-<<<<<<< HEAD
 // ----------- Requests ----------
-=======
-//----------- Requests ----------
->>>>>>> 9472ad4 (first)
 
 /**
  * Class ModuleService.
@@ -62,26 +58,17 @@ class ModuleService {
         }
         */
         $mod = Module::find($this->name);
-<<<<<<< HEAD
         if (null === $mod) {
             return [];
         }
         $mod_path = $mod->getPath().'/Models';
         $mod_path = str_replace(['\\', '/'], [\DIRECTORY_SEPARATOR, \DIRECTORY_SEPARATOR], $mod_path);
-=======
-        if (null == $mod) {
-            return [];
-        }
-        $mod_path = $mod->getPath().'/Models';
-        $mod_path = str_replace(['\\', '/'], [DIRECTORY_SEPARATOR, DIRECTORY_SEPARATOR], $mod_path);
->>>>>>> 9472ad4 (first)
         $files = File::files($mod_path);
         $data = [];
         $ns = 'Modules\\'.$mod->getName().'\\Models';  // con la barra davanti non va il search ?
         foreach ($files as $file) {
             $filename = $file->getRelativePathname();
             $ext = '.php';
-<<<<<<< HEAD
             // dddx(['ext' => $file->getExtension(), get_class_methods($file)]);
             if (Str::endsWith($filename, $ext)) {
                 $tmp = new \stdClass();
@@ -99,20 +86,6 @@ class ModuleService {
                 $tmp->name = $name;
                 // 434    Parameter #1 $argument of class ReflectionClass constructor expects class-string<T of object>|T of object, string given.
                 // Class Modules\LU\Models\multi-upload does not exist
-=======
-            //dddx(['ext' => $file->getExtension(), get_class_methods($file)]);
-            if (Str::endsWith($filename, $ext)) {
-                $tmp = new \stdClass();
-
-                $name = substr(($filename), 0, -strlen($ext));
-
-                //dddx(['name' => $name, 'name1' => $file->getFilenameWithoutExtension()]);
-                $tmp->class = $ns.'\\'.$name;
-                $name = Str::snake($name);
-                $tmp->name = $name;
-                // 434    Parameter #1 $argument of class ReflectionClass constructor expects class-string<T of object>|T of object, string given.
-                //Class Modules\LU\Models\multi-upload does not exist
->>>>>>> 9472ad4 (first)
                 try {
                     $reflection_class = new ReflectionClass($tmp->class);
                     if (! $reflection_class->isAbstract()) {

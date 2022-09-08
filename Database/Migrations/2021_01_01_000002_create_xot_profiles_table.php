@@ -18,7 +18,6 @@ class CreateXotProfilesTable extends XotBaseMigration {
      * @return void
      */
     public function up() {
-<<<<<<< HEAD
         // -- CREATE --
         $this->tableCreate(
             function (Blueprint $table) {
@@ -34,23 +33,6 @@ class CreateXotProfilesTable extends XotBaseMigration {
         $this->tableUpdate(
             function (Blueprint $table) {
                 // ------- add
-=======
-        //-- CREATE --
-        $this->tableCreate(
-            function (Blueprint $table) {
-                $table->increments('id'); //->primary();//->primary();
-                $table->string('post_type', 191)->nullable()->index();
-                //$table->string('article_type',50)->nullable();
-                //$table->datetime('published_at')->nullable();
-                $table->text('bio')->nullable();
-                $table->timestamps();
-            }
-        );
-        //-- UPDATE --
-        $this->tableUpdate(
-            function (Blueprint $table) {
-                //------- add
->>>>>>> 9472ad4 (first)
                 if (! $this->hasColumn('created_by')) {
                     $table->string('created_by')->nullable();
                 }
@@ -88,13 +70,10 @@ class CreateXotProfilesTable extends XotBaseMigration {
                     $table->renameColumn('auth_user_id', 'user_id');
                 }
 
-<<<<<<< HEAD
                 if (! $this->hasColumn('bio')) {
                     $table->text('bio')->nullable();
                 }
 
-=======
->>>>>>> 9472ad4 (first)
                 /*
                 $address_components = Place::$address_components;
                 foreach ($address_components as $el) {
@@ -108,21 +87,11 @@ class CreateXotProfilesTable extends XotBaseMigration {
                 */
 
                 if ($this->hasColumn('post_id')) {
-<<<<<<< HEAD
                     // $table->dropPrimary('post_id');
                     $table->renameColumn('post_id', 'id');
                     // $table->primary('id');
-=======
-                    //$table->dropPrimary('post_id');
-                    $table->renameColumn('post_id', 'id');
-                    //$table->primary('id');
->>>>>>> 9472ad4 (first)
                 }
             }
         );
     }
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> 9472ad4 (first)

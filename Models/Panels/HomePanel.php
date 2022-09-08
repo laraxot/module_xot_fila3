@@ -4,11 +4,7 @@ declare(strict_types=1);
 
 namespace Modules\Xot\Models\Panels;
 
-<<<<<<< HEAD
 // --- Services --
-=======
-//--- Services --
->>>>>>> 9472ad4 (first)
 
 /**
  * Class HomePanel.
@@ -37,22 +33,14 @@ class HomePanel extends XotBasePanel {
      * Get the actions available for the resource.
      */
     public function actions(): array {
-<<<<<<< HEAD
         /**
          * @var string
          */
         $cmd = request('cmd','');
-=======
-        $cmd = (string) request('cmd');
->>>>>>> 9472ad4 (first)
 
         return [
             new Actions\ArtisanAction($cmd),
             new Actions\TestAction(),
         ];
     }
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> 9472ad4 (first)

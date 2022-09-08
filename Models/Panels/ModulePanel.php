@@ -6,11 +6,7 @@ namespace Modules\Xot\Models\Panels;
 
 use Illuminate\Http\Request;
 
-<<<<<<< HEAD
 // --- Services --
-=======
-//--- Services --
->>>>>>> 9472ad4 (first)
 
 class ModulePanel extends XotBasePanel {
     /**

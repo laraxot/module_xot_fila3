@@ -6,21 +6,12 @@ namespace Modules\Xot\Models\Panels;
 
 use Illuminate\Http\Request;
 
-<<<<<<< HEAD
 // --- Services --
-=======
-//--- Services --
->>>>>>> 9472ad4 (first)
 
 /**
  * Class ImagePanel.
  */
-<<<<<<< HEAD
 class ImagePanel extends XotBasePanel {
-=======
-class ImagePanel extends XotBasePanel
-{
->>>>>>> 9472ad4 (first)
     /**
      * The model the resource corresponds to.
      */
@@ -34,12 +25,7 @@ class ImagePanel extends XotBasePanel
     /**
      * Get the actions available for the resource.
      */
-<<<<<<< HEAD
     public function actions(Request $request = null): array {
-=======
-    public function actions(Request $request = null): array
-    {
->>>>>>> 9472ad4 (first)
         return [
             new Actions\ChunkUpload(),
         ];

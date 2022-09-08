@@ -10,12 +10,7 @@ use Faker\Generator as Faker;
 use Illuminate\Support\Str;
 use InvalidArgumentException;
 
-<<<<<<< HEAD
 class TypeGuesser {
-=======
-class TypeGuesser
-{
->>>>>>> 9472ad4 (first)
     /**
      * @var \Faker\Generator
      */
@@ -29,12 +24,7 @@ class TypeGuesser
     /**
      * Create a new TypeGuesser instance.
      */
-<<<<<<< HEAD
     public function __construct(Faker $generator) {
-=======
-    public function __construct(Faker $generator)
-    {
->>>>>>> 9472ad4 (first)
         $this->generator = $generator;
     }
 
@@ -44,12 +34,7 @@ class TypeGuesser
      *
      * @return string
      */
-<<<<<<< HEAD
     public function guess($name, Type $type, $size = null) {
-=======
-    public function guess($name, Type $type, $size = null)
-    {
->>>>>>> 9472ad4 (first)
         $name = Str::of($name)->lower();
 
         if ($name->endsWith('_id')) {
@@ -77,12 +62,7 @@ class TypeGuesser
      *
      * @return string
      */
-<<<<<<< HEAD
     private function guessBasedOnName($name, $size = null) {
-=======
-    private function guessBasedOnName($name, $size = null)
-    {
->>>>>>> 9472ad4 (first)
         switch ($name) {
         case 'login':
             return 'userName';
@@ -123,12 +103,7 @@ class TypeGuesser
      *
      * @return bool
      */
-<<<<<<< HEAD
     protected function hasNativeResolverFor($property) {
-=======
-    protected function hasNativeResolverFor($property)
-    {
->>>>>>> 9472ad4 (first)
         try {
             $this->generator->getFormatter($property);
         } catch (InvalidArgumentException $e) {
@@ -145,12 +120,7 @@ class TypeGuesser
      *
      * @return string
      */
-<<<<<<< HEAD
     protected function guessBasedOnType(Type $type, $size) {
-=======
-    protected function guessBasedOnType(Type $type, $size)
-    {
->>>>>>> 9472ad4 (first)
         $typeName = $type->getName();
 
         switch ($typeName) {
@@ -182,14 +152,8 @@ class TypeGuesser
     /**
      * Predicts county type by locale.
      */
-<<<<<<< HEAD
     protected function predictCountyType(): string {
         if ('en_US' === $this->generator->locale) {
-=======
-    protected function predictCountyType(): string
-    {
-        if ('en_US' == $this->generator->locale) {
->>>>>>> 9472ad4 (first)
             return "sprintf('%s County', \$faker->city)";
         }
 
@@ -199,12 +163,7 @@ class TypeGuesser
     /**
      * Predicts country code based on $size.
      */
-<<<<<<< HEAD
     protected function predictCountryType(?int $size): string {
-=======
-    protected function predictCountryType(?int $size): string
-    {
->>>>>>> 9472ad4 (first)
         switch ($size) {
         case 2:
             return 'countryCode';
@@ -221,12 +180,7 @@ class TypeGuesser
     /**
      * Predicts type of title by $size.
      */
-<<<<<<< HEAD
     protected function predictTitleType(?int $size): string {
-=======
-    protected function predictTitleType(?int $size): string
-    {
->>>>>>> 9472ad4 (first)
         if (null === $size || $size <= 10) {
             return 'title';
         }

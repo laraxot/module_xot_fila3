@@ -1,15 +1,8 @@
 @extends('adm_theme::layouts.app')
 @section('content')
-<<<<<<< HEAD
     {{-- <div class="card bg-light mt-3">
         <div class="card-header">
             Import Excel to Database
-=======
-    {{--  
-     <div class="card bg-light mt-3">
-        <div class="card-header">
-            Import Excel to Database 
->>>>>>> 9472ad4 (first)
         </div>
         <div class="card-body">
             <form action="{{ Request::fullUrl() }}" method="POST" enctype="multipart/form-data">
@@ -19,13 +12,6 @@
                 <button class="btn btn-success">Next !</button>
             </form>
         </div>
-<<<<<<< HEAD
     </div> --}}
     <livewire:import.xls.model modelClass="\Modules\LU\Models\User" />
 @endsection
-=======
-    </div>
-    --}}
-    <livewire:theme::import.xls.model modelClass="\Modules\LU\Models\User" />
-@endsection
->>>>>>> 9472ad4 (first)

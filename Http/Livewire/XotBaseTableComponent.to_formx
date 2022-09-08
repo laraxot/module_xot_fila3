@@ -55,12 +55,9 @@ abstract class XotBaseTableComponent extends Component {
     }
 
     public function tableView() {
-<<<<<<< HEAD
-        /** 
+        /**
         * @phpstan-var view-string
         */
-=======
->>>>>>> 9472ad4 (first)
         $view = 'xot::livewire.xot_base_table_component';
         $view_params = [
             'view' => $view,

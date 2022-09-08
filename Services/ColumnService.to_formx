@@ -72,12 +72,9 @@ class ColumnService {
 
     public function freeze($model) {
         $value = Arr::get($model->toArray(), $this->attribute);
-<<<<<<< HEAD
-        /** 
+        /**
         * @phpstan-var view-string
         */
-=======
->>>>>>> 9472ad4 (first)
         $view = 'formx::livewire.fields.'.Str::snake($this->type).'.freeze';
         $view_params = [
             'view' => $view,

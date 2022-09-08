@@ -18,13 +18,8 @@ class CSVService {
     private static ?self $instance = null;
 
     public function __construct() {
-<<<<<<< HEAD
         // ---
         // require_once __DIR__.'/vendor/autoload.php';
-=======
-        //---
-        //require_once __DIR__.'/vendor/autoload.php';
->>>>>>> 9472ad4 (first)
     }
 
     /**
@@ -50,11 +45,7 @@ class CSVService {
      */
     public static function toArray(string $filename): array {
         $lines = file($filename, FILE_IGNORE_NEW_LINES);
-<<<<<<< HEAD
         if (false === $lines) {
-=======
-        if (false == $lines) {
->>>>>>> 9472ad4 (first)
             throw new Exception('['.__LINE__.']['.class_basename(__CLASS__).']');
         }
         $csv = [];
@@ -64,8 +55,4 @@ class CSVService {
 
         return $csv;
     }
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> 9472ad4 (first)
