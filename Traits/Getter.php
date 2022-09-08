@@ -80,12 +80,12 @@ trait Getter {
             if ($reflector->hasProperty($property)) {
                 $property = $reflector->getProperty($property);
                 switch ($match[1]) {
-                case 'get':
-                    return $property->getValue();
-                case 'set':
-                    $property->setValue($args[0]);
+                    case 'get':
+                        return $property->getValue();
+                    case 'set':
+                        $property->setValue($args[0]);
 
-                    return;
+                        return;
                 }
             } else {
                 throw new \InvalidArgumentException("Property {$property} doesn't exist");

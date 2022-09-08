@@ -64,7 +64,7 @@ trait MyLogTrait {
                 $res = $log::create($parz);
 
                 if (Auth::check()) {
-                    $user=Auth::user();
+                    $user = Auth::user();
                     if (null != $user) {
                         $model->updated_by = $user->handle.'';
                     }

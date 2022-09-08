@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace Modules\Xot\Http\Requests;
 
-use Exception;
 use Carbon\Carbon;
+use Exception;
+use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Str;
 use Modules\Xot\Contracts\PanelContract;
-use Illuminate\Foundation\Http\FormRequest;
 
 // use Modules\Food\Models\Profile;
 // --- Rules ---
@@ -119,7 +119,7 @@ abstract class XotBaseRequest extends FormRequest {
 
     /**
      * @param string $field
-     * @param string  $value
+     * @param string $value
      *
      * @return Carbon
      */
@@ -128,15 +128,16 @@ abstract class XotBaseRequest extends FormRequest {
             return $value;
         }
         $value_new = Carbon::createFromFormat('d/m/Y', $value);
-        if($value_new==false){
+        if (false == $value_new) {
             throw new Exception('['.__LINE__.']['.__FILE__.']');
         }
+
         return $value_new;
     }
 
     /**
      * @param string $field
-     * @param string  $value
+     * @param string $value
      *
      * @return Carbon
      */
@@ -145,15 +146,16 @@ abstract class XotBaseRequest extends FormRequest {
             return $value;
         }
         $value_new = Carbon::createFromFormat('d/m/Y H:i', $value);
-        if($value_new==false){
+        if (false == $value_new) {
             throw new Exception('['.__LINE__.']['.__FILE__.']');
         }
+
         return $value_new;
     }
 
     /**
      * @param string $field
-     * @param string  $value
+     * @param string $value
      *
      * @return Carbon
      */
@@ -162,9 +164,10 @@ abstract class XotBaseRequest extends FormRequest {
             return $value;
         }
         $value_new = Carbon::createFromFormat('d/m/Y H:i', $value);
-        if($value_new==false){
+        if (false == $value_new) {
             throw new Exception('['.__LINE__.']['.__FILE__.']');
         }
+
         return $value_new;
     }
 }

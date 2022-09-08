@@ -87,12 +87,12 @@ abstract class XotBaseContainerController extends Controller {
      * @return mixed
      */
     public function __callPanelAct(string $method, array $args) {
-        //$request = request();
-        //$act = $request->_act;
+        // $request = request();
+        // $act = $request->_act;
         /**
          * @var string
          */
-        $act=request('_act');
+        $act = request('_act');
         $method_act = Str::camel($act);
 
         $panel = $this->panel;

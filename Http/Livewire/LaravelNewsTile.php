@@ -48,9 +48,9 @@ class LaravelNewsTile extends Component {
 
         return view('xot::livewire.laravel-news-tile', compact('articleContent', 'articleTitle'));
         */
-        /** 
-        * @phpstan-var view-string
-        */
+        /**
+         * @phpstan-var view-string
+         */
         $view = 'theme::empty';
         $view_params = [
             'view' => $view,

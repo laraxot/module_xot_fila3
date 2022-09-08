@@ -64,7 +64,8 @@ abstract class XotBaseServiceProvider extends ServiceProvider {
         $this->publishes(
             [
                 $this->module_dir.'/../Config/config.php' => config_path($this->module_name.'.php'),
-            ], 'config'
+            ],
+            'config'
         );
         $this->mergeConfigFrom(
             $this->module_dir.'/../Config/config.php',
@@ -153,12 +154,10 @@ abstract class XotBaseServiceProvider extends ServiceProvider {
         return [];
     }
 
-
     /**
-     * Undocumented function
+     * Undocumented function.
+     *
      * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
-     * @param string $path
-     * @return array
      */
     public function getEventsFrom(string $path): array {
         $events = [];
@@ -215,16 +214,15 @@ abstract class XotBaseServiceProvider extends ServiceProvider {
         return $events;
     }
 
-    /** 
+    /**
      * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
      */
     public function loadEventsFrom(string $path): void {
-        $events=$this->getEventsFrom($path);
+        $events = $this->getEventsFrom($path);
         foreach ($events as $v) {
             Event::listen($v->event, $v->listener);
         }
     }
 
     // end function
-    
 }

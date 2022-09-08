@@ -11,8 +11,6 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use Modules\Xot\Contracts\PanelContract;
-use Modules\Xot\Services\ArrayService;
-use Modules\Xot\Services\PanelService;
 
 /**
  * Class UpdateJob.
@@ -149,7 +147,6 @@ class UpdateJob extends XotBaseJob {
 
         // from è la tendina di sinistra, to quella di destra
         if (! empty($data['to'])) {
-
             $row = $this->panel->row;
             $parent_relation_name = Str::camel(class_basename($rows->getParent()));
             $related_relation_name = Str::camel(class_basename($rows->getRelated()));
@@ -161,7 +158,7 @@ class UpdateJob extends XotBaseJob {
             // $bridge_rows->syncWithoutDetaching(666); //ate\Database\Eloquent\Relations\HasMany::syncWithoutDetaching
             throw new \Exception('WIP ['.__LINE__.']['.__FILE__.']');
         // $bridge_rows->save();
-            // $rows->get();
+        // $rows->get();
             /*
             $rows->update(
             [
@@ -232,12 +229,11 @@ class UpdateJob extends XotBaseJob {
      * morphToMany.
      */
     public function updateRelationshipsMorphToMany(Model $model, string $name, array $data): void {
-
         if (\in_array('to', array_keys($data), true) || \in_array('from', array_keys($data), true)) {
-            if(!isset($data['to'])){
-                $data['to']=[];
+            if (! isset($data['to'])) {
+                $data['to'] = [];
             }
-            $data=$data['to'];
+            $data = $data['to'];
         }
 
         if (! Arr::isAssoc($data)) {
@@ -265,12 +261,12 @@ class UpdateJob extends XotBaseJob {
                     ->syncWithoutDetaching([$k => $v['pivot']]);
             } else {
                 // $res = $model->$name()
-                 //   ->syncWithoutDetaching([$v]);
+                //   ->syncWithoutDetaching([$v]);
             }
             // ->where('user_id',1)
             // ->syncWithoutDetaching([$k => $v['pivot']])
 
-                // ->updateOrCreate(['related_id'=>$k,'user_id'=>1],$v['pivot']);
+            // ->updateOrCreate(['related_id'=>$k,'user_id'=>1],$v['pivot']);
             // $model->$name()->touch();
         }
     }
@@ -323,7 +319,7 @@ class UpdateJob extends XotBaseJob {
         /**
          * @var array
          */
-        $data_to=$data['to'];
+        $data_to = $data['to'];
         $items_1 = collect($data_to);
         $items_add = $items_1->diff($items_0);
         $items_sub = $items_0->diff($items_1);
@@ -415,6 +411,5 @@ class UpdateJob extends XotBaseJob {
                 ];
             }
         )->all();
-
     }
 }

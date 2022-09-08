@@ -13,9 +13,9 @@ use Illuminate\View\Component;
  */
 class Item extends Component {
     public function render(): \Illuminate\Contracts\Support\Renderable {
-        /** 
-        * @phpstan-var view-string
-        */
+        /**
+         * @phpstan-var view-string
+         */
         $view = 'xot::components.dashboard.item';
         $view_params = [
             'view' => $view,

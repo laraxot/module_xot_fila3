@@ -52,12 +52,12 @@ class HtmlService {
             $html2pdf->WriteHTML($html);
 
             switch ($out) {
-        case 'content_PDF':
-            return $html2pdf->Output($filename.'.pdf', 'S');
-        case 'file': $html2pdf->Output($filename.'.pdf', 'F');
+                case 'content_PDF':
+                    return $html2pdf->Output($filename.'.pdf', 'S');
+                case 'file': $html2pdf->Output($filename.'.pdf', 'F');
 
-            return $filename;
-        }
+                    return $filename;
+            }
 
             return $html2pdf->Output();
         } catch (Html2PdfException $e) {

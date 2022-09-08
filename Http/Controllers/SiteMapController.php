@@ -14,8 +14,7 @@ use Modules\Blog\Models\Post;
  * https://kaloraat.com/articles/create-a-dynamic-xml-sitemap-in-laravel
  * https://laraget.com/blog/generate-a-simple-xml-sitemap-using-laravel.
  */
-class SiteMapController
-{
+class SiteMapController {
     /*
     public function sitemap()
     {
@@ -69,8 +68,7 @@ class SiteMapController
     }
     */
 
-    public function index(): ?Response
-    {
+    public function index(): ?Response {
         /*
         $limit = 50;
         $lang = app()->getLocale();

@@ -7,11 +7,12 @@ namespace Modules\Xot\Models;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * Modules\Xot\Models\Test
+ * Modules\Xot\Models\Test.
  *
  * @method static \Illuminate\Database\Eloquent\Builder|Test newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Test newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Test query()
+ *
  * @mixin \Eloquent
  */
 class Test extends Model {

@@ -49,9 +49,9 @@ class ManageLangModule extends Component {
             }
         );
 
-        /** 
-        * @phpstan-var view-string
-        */
+        /**
+         * @phpstan-var view-string
+         */
         $view = 'xot::livewire.manage_lang_module';
         $view_params = [
             'view' => $view,

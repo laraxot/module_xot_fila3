@@ -89,7 +89,7 @@ class DbAction extends XotBasePanelAction {
                 echo '<h3>Search: '.$search.'</h3>';
                 echo '<h3>N ['.\count($res).'] Results</h3>';
                 // echo '<pre>'.print_r($v['sql'],true).'</pre>';
-                //$sql = Str::replaceArray('?', $rows->getBindings(), $rows->toSql());
+                // $sql = Str::replaceArray('?', $rows->getBindings(), $rows->toSql());
                 $sql = rowsToSql($rows);
                 echo '<pre>'.print_r($sql, true).'</pre>';
                 echo ArrayService::make()->setArray($res->toArray())->toHtml()->render();
@@ -125,7 +125,7 @@ class DbAction extends XotBasePanelAction {
                 // break;
                 default:
                     $where[] = $name.' = "'.$search.'"';
-                break;
+                    break;
             }
         }
 

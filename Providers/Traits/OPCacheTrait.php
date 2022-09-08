@@ -10,7 +10,8 @@ use Illuminate\Support\Facades\Cache;
 trait OPCacheTrait {
     public function registerCacheOPCache(): void {
         Cache::extend(
-            'opcache', function () {
+            'opcache',
+            function () {
                 $store = new \Modules\Xot\Engines\Opcache\Store();
 
                 return new \Modules\Xot\Engines\Opcache\Repository($store, new TagSet($store));
@@ -26,7 +27,8 @@ trait OPCacheTrait {
         // Extend Collection to implement __set_state magic method
         if (! Collection::hasMacro('__set_state')) {
             Collection::macro(
-                '__set_state', function (array $array) {
+                '__set_state',
+                function (array $array) {
                     return new Collection($array['items']);
                 }
             );

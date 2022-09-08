@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Modules\Xot\Contracts;
 
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
@@ -20,7 +19,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property string|null                     $title
  * @property PivotContract|null              $pivot
  * @property string                          $tennant_name
- * @property-read \Modules\LU\Models\User|null $user
+ * @property \Modules\LU\Models\User|null    $user
  *
  * @method mixed     getKey()
  * @method string    getRouteKey()
@@ -41,6 +40,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @method mixed     bellBoys()
  * @method array     toArray()
  * @method BelongsTo user()
+ *
  * @mixin  \Eloquent
  */
 interface ModelWithUserContract {
