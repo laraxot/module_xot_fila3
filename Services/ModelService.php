@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * @see https:// github.com/spatie/laravel-model-info
+ * @see https://freek.dev/2332-getting-information-about-all-the-models-in-your-laravel-app
+ */
+
 declare(strict_types=1);
 
 namespace Modules\Xot\Services;

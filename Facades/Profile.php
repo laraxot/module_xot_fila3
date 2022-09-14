@@ -1,4 +1,9 @@
 <?php
+/**
+ * per vedere come registra la facade.
+ *
+ * @see https://github.com/spatie/laravel-menu/tree/main/src
+ */
 
 declare(strict_types=1);
 
