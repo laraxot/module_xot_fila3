@@ -1,11 +1,21 @@
 <?php
+<<<<<<< HEAD
+=======
+/**
+ * ---.
+ */
+>>>>>>> ae3a261 (up)
 
 declare(strict_types=1);
 
 namespace Modules\Xot\Models;
 
 /**
+<<<<<<< HEAD
  * Modules\Xot\Models\JobBatch.
+=======
+ * Undocumented class.
+>>>>>>> ae3a261 (up)
  *
  * @property int                                                                  $id
  * @property string                                                               $name
@@ -19,6 +29,7 @@ namespace Modules\Xot\Models;
  * @property int|null                                                             $finished_at
  * @property \Illuminate\Database\Eloquent\Collection|\Modules\Xot\Models\Image[] $images
  * @property int|null                                                             $images_count
+<<<<<<< HEAD
  *
  * @method static \Modules\Xot\Database\Factories\JobBatchFactory factory(...$parameters)
  * @method static \Illuminate\Database\Eloquent\Builder|JobBatch  newModelQuery()
@@ -39,4 +50,36 @@ namespace Modules\Xot\Models;
  */
 class JobBatch extends BaseModel {
     protected $fillable = ['id', 'name', 'total_jobs', 'pending_jobs', 'failed_jobs', 'failed_job_ids', 'options', 'cancelled_at', 'created_at', 'finished_at'];
+=======
+ * @method static \Modules\Xot\Database\Factories\JobBatchFactory factory(...$parameters)
+ * @method static \Illuminate\Database\Eloquent\Builder|JobBatch newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|JobBatch newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|JobBatch query()
+ * @method static \Illuminate\Database\Eloquent\Builder|JobBatch whereCancelledAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|JobBatch whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|JobBatch whereFailedJobIds($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|JobBatch whereFailedJobs($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|JobBatch whereFinishedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|JobBatch whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|JobBatch whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|JobBatch whereOptions($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|JobBatch wherePendingJobs($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|JobBatch whereTotalJobs($value)
+ * @mixin \Eloquent
+ * @mixin IdeHelperJobBatch
+ */
+class JobBatch extends BaseModel {
+    protected $fillable = [
+        'id',
+        'name',
+        'total_jobs',
+        'pending_jobs',
+        'failed_jobs',
+        'failed_job_ids',
+        'options',
+        'cancelled_at',
+        'created_at',
+        'finished_at',
+    ];
+>>>>>>> ae3a261 (up)
 }

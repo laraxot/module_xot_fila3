@@ -5,14 +5,28 @@ declare(strict_types=1);
 namespace Modules\Xot\Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
+<<<<<<< HEAD
 
+=======
+use Modules\Xot\Models\Job;
+
+/**
+ * Undocumented class.
+ */
+>>>>>>> ae3a261 (up)
 class JobFactory extends Factory {
     /**
      * The name of the factory's corresponding model.
      *
+<<<<<<< HEAD
      * @var class-string<\Illuminate\Database\Eloquent\Model>
      */
     protected $model = Modules\Xot\Models\Job::class;
+=======
+     * @var string
+     */
+    protected $model = Job::class;
+>>>>>>> ae3a261 (up)
 
     /**
      * Define the model's default state.
@@ -30,4 +44,8 @@ class JobFactory extends Factory {
             'created_at' => $this->faker->randomNumber,
         ];
     }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> ae3a261 (up)
