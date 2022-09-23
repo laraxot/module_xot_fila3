@@ -151,14 +151,29 @@ class StubService {
         $dummy_id = 'id';
         $search = [];
         $fields = [];
+
+
+       
+
         if (class_exists($this->model_class)) {
             $model = $this->getModel();
             $fields = $this->getFields();
             $dummy_id = $model->getRouteKeyName();
         } else {
             $dummy_id = 'id';
+
+            $splitted_class=explode("\\", $this->model_class);
+            $class=$splitted_class[count($splitted_class)-1];
+            if(substr($class,0,strlen('LimeTokens'))==='LimeTokens'){
+                $dummy_id = 'tid';
+            }
+            
             $fields = $this->getFieldsFromTable();
         }
+
+        
+
+        //dddx($dummy_id);
 
         // $dummy_class = basename($this->getClass());
         $dummy_class = collect(explode('\\', $this->getClass()))->slice(-1)->implode('\\');
