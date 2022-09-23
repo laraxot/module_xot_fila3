@@ -6,10 +6,11 @@ namespace Modules\Xot\Services;
 
 use Exception;
 use Illuminate\Support\Arr;
-use Illuminate\Support\Facades\File;
-use Illuminate\Support\Facades\View;
 use Illuminate\Support\Str;
 use Nwidart\Modules\Facades\Module;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\View;
+use Modules\Xot\Services\FileService;
 
 /**
  * Class FileService.
@@ -810,5 +811,20 @@ class FileService {
         }
 
         return @round($bytes / 1000 ** ($i = floor(log($bytes, 1000))), 2).' '.(isset($unit[$i]) ? $unit[$i] : 'B');
+    }
+
+    /**
+     * Undocumented function
+     *
+     * @param string $class_name
+     * @return string|null
+     */
+    public static function getFileNameByClassName(string $class_name):?string {
+        try{
+            $a = new \ReflectionClass($class_name);
+        }catch(Exception $e){
+            return null;
+        }
+        return $a->getFileName();
     }
 }

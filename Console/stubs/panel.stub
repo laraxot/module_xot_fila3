@@ -4,7 +4,8 @@ namespace DummyNamespace;
 
 use Illuminate\Http\Request;
 use Modules\Xot\Contracts\RowsContract;
-//--- Services --
+use Illuminate\Contracts\Support\Renderable;
+
 
 use Modules\Xot\Models\Panels\XotBasePanel;
 
@@ -67,7 +68,7 @@ class DummyClassName extends XotBasePanel {
     /**
      * index navigation.
      */
-    public function indexNav(): ?\Illuminate\Contracts\Support\Renderable {
+    public function indexNav(): ?Renderable {
         return null;
     }
 

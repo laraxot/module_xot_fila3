@@ -160,18 +160,15 @@ class StubService {
             $fields = $this->getFields();
             $dummy_id = $model->getRouteKeyName();
         } else {
-            $dummy_id = 'id';
-
-            $splitted_class=explode("\\", $this->model_class);
-            $class=$splitted_class[count($splitted_class)-1];
-            if(substr($class,0,strlen('LimeTokens'))==='LimeTokens'){
-                $dummy_id = 'tid';
-            }
-            
             $fields = $this->getFieldsFromTable();
+  
+            $dummy_id = $this->getPrimaryKeyFromTable();
+
+            //dddx($dummy_id );
         }
 
-        
+
+        //dddx([var_export($fields, true),$dummy_id]);
 
         //dddx($dummy_id);
 
@@ -626,6 +623,32 @@ class StubService {
         $path = FileService::fixPath($path);
 
         return $path;
+    }
+
+    public function getPrimaryKeyFromTable(): string {
+        $models = File::files($this->getModelPath());
+        shuffle($models);
+        $brother_file = collect($models)
+        ->filter(function ($file) {
+            return 'php' === $file->getExtension();
+        })
+        ->first();
+        if (null === $brother_file) {
+            throw new Exception('['.__LINE__.']['.__FILE__.']');
+        }
+        $brother_class = $this->getModelNamespace().'\\'.$brother_file->getFilenameWithoutExtension();
+        $brother = app($brother_class);
+        $indexes = $brother->getConnection()->getDoctrineSchemaManager()->listTableIndexes($this->getTable());
+        $columns = $indexes[ 'primary' ]->getColumns();
+        
+
+        $primaryKey='id';
+
+        if(isset($columns[0])){
+            $primaryKey=$columns[0];
+        }
+
+        return $primaryKey;
     }
 
     public function getFieldsFromTable(): array {
