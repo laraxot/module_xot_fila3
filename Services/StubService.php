@@ -639,13 +639,14 @@ class StubService {
         $brother_class = $this->getModelNamespace().'\\'.$brother_file->getFilenameWithoutExtension();
         $brother = app($brother_class);
         $indexes = $brother->getConnection()->getDoctrineSchemaManager()->listTableIndexes($this->getTable());
-        $columns = $indexes[ 'primary' ]->getColumns();
         
-
         $primaryKey='id';
 
-        if(isset($columns[0])){
-            $primaryKey=$columns[0];
+        if(isset($indexes[ 'primary' ])){
+            $columns = $indexes[ 'primary' ]->getColumns();
+            if(isset($columns[0])){
+                $primaryKey=$columns[0];
+            }
         }
 
         return $primaryKey;
