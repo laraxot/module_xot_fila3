@@ -640,6 +640,11 @@ class StubService {
         $brother = app($brother_class);
         $indexes = $brother->getConnection()->getDoctrineSchemaManager()->listTableIndexes($this->getTable());
         
+<<<<<<< HEAD
+=======
+        //dddx($brother->getConnection()->getSchemaBuilder()->getColumnListing($this->getTable()));
+
+>>>>>>> 31aa26f (up)
         $primaryKey='id';
 
         if(isset($indexes[ 'primary' ])){
