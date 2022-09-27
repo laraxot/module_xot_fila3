@@ -36,8 +36,7 @@ class PdfPanelPresenter implements PanelPresenterContract{
     public function index(?Collection $items)    {
     }
 
-    public function out(?array $params = null): string
-    {
+    public function out(?array $params = null): string {
         if (! isset($params['view_params'])) {
             $params['view_params'] = [];
         }
@@ -45,6 +44,15 @@ class PdfPanelPresenter implements PanelPresenterContract{
         $view .= '.pdf';
         $view = str_replace('.store.', '.show.', $view);
         extract($params);
+        /*
+        dddx([
+            'panel'=>$this->panel,
+            'row'=>$this->panel->getRow(),
+            'rows'=>$this->panel->rows(),
+            'rows1'=>$this->panel->getRows(),
+        ]);
+        */
+
         $row = $this->panel->getRow();
         try {
             $rows = $this->panel->rows();

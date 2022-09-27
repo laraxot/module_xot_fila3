@@ -1359,7 +1359,10 @@ abstract class XotBasePanel implements PanelContract {
         $sort = isset($data['sort']) ? $data['sort'] : null;
         $query = $this->getRows();
         // $query = $this->getBuilder();
-
+        if($query==null){
+            return null; // ????
+        }
+        
         $with = $this->with();
         if (method_exists($query, 'with')) {
             $query = $query->with($with);
