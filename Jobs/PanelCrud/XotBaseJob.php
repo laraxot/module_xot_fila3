@@ -99,6 +99,12 @@ abstract class XotBaseJob { /* implements ShouldQueue */
             **/
             if (! \is_object($value)) {
                 $func = 'Conv'.$field->type;
+                /*
+                dddx($field);
+                 +"type": "Date"
+                +"name": "dalf"
+                +"comment": "dal retribuzione"
+                */
                 $value_new = $this->$func($field, $value);
                 // $this->request->add([$field->name => $value_new]);
                 $data[$field->name] = $value_new;
@@ -158,8 +164,9 @@ abstract class XotBaseJob { /* implements ShouldQueue */
 
     /**
      *  Method Modules\Xot\Jobs\PanelCrud\XotBaseJob::ConvDate() should return Carbon\Carbon|false|null but returns 0|0.0|''|'0'|array()|false|null.
+     * @param object $field
      */
-    public function ConvDate(string $field, string $value): ?Carbon {
+    public function ConvDate( $field, string $value): ?Carbon {
         // Strict comparison using === between null and string will always evaluate to false.
         // if (null === $value) {
         //    return null;
