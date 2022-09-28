@@ -28,7 +28,7 @@ trait HasPriceTrait {
      * @return \Cknow\Money\Money
      */
     public function getPriceCurrencyAttribute($value) {
-        return @money((int) $this->price * 100, $this->currency);
+        return @money($this->price, $this->currency);
     }
 
     /**
@@ -37,7 +37,7 @@ trait HasPriceTrait {
      * @return \Cknow\Money\Money
      */
     public function getPriceCompleteCurrencyAttribute($value) {
-        return @money((int) $this->price_complete * 100, $this->currency);
+        return @money($this->price_complete, $this->currency);
     }
 
     /**
@@ -52,7 +52,7 @@ trait HasPriceTrait {
             $value = $this->price;
         }
 
-        return @money((int) $value * 100, $this->currency);
+        return @money($value, $this->currency);
     }
 
     /**
@@ -61,6 +61,6 @@ trait HasPriceTrait {
      * @return \Cknow\Money\Money
      */
     public function getCurrency($number) {
-        return @money((int) $number * 100, $this->currency);
+        return @money($number, $this->currency);
     }
 }
