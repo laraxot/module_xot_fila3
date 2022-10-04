@@ -11,6 +11,8 @@ use Nwidart\Modules\Facades\Module;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\View;
 use Modules\Xot\Services\FileService;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\NamespacedItemResolver;
 
 /**
  * Class FileService.
@@ -156,6 +158,24 @@ class FileService {
             return $viewHints[$ns][0];
         }
 
+        return null;
+    }
+
+    public static function assetPath(string $asset):?string{
+        /*
+        $resolver=app(NamespacedItemResolver::class);
+        dddx($resolver->parseKey($asset));
+        da 'notify::css/ark.css'
+        ret  0 => "notify"
+    1 => "css/ark"
+    2 => "css"
+        */
+        //---------- WIP -----------
+        //dddx(get_class_methods(app()));
+        //dddx(Storage::disk('notify'));
+        //dddx(Module::assetPath('notify')); ///var/www/html/ptvx/public_html/modules/notify
+        //$module=Module::find('notify');
+        //dddx([get_class_methods($module),$module->getPath()]);
         return null;
     }
 
