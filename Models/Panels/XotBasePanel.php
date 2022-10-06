@@ -473,14 +473,13 @@ abstract class XotBasePanel implements PanelContract {
             ->first();
 
         if (null === $row) {
-            // *
+            /*
             $sql = rowsToSql($rows);
             throw new Exception('Not Found ['.$value.'] on ['.$this->getName().']
                 ['.$sql.']
                 ['.__LINE__.']['.basename(__FILE__).']
                 ');
             // */
-            throw new Exception('['.__LINE__.']['.__FILE__.']');
         }
         $this->row = $row;
 
@@ -1359,10 +1358,10 @@ abstract class XotBasePanel implements PanelContract {
         $sort = isset($data['sort']) ? $data['sort'] : null;
         $query = $this->getRows();
         // $query = $this->getBuilder();
-        if($query==null){
+        if (null == $query) {
             return null; // ????
         }
-        
+
         $with = $this->with();
         if (method_exists($query, 'with')) {
             $query = $query->with($with);
@@ -1696,7 +1695,6 @@ abstract class XotBasePanel implements PanelContract {
         // Argument #3 ($subject) must be of type array|string, null given (View: /home/cvfcmxwn/laraxot/multi/laravel/Themes/DirectoryBs4/Resources/views/layouts/widgets/blog_items.blade.php) {"view":{"view":"/home/cvfcmxwn/laraxot/multi/laravel/Modules/Xot/Models/Panels/XotBasePanel.php","data":[]},"
         // url":"http://prosecco-valdobbiadene.it/?page=9","
 
-      
         if (is_null($content)) {
             $content = '';
         }
