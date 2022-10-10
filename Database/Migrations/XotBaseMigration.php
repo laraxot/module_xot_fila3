@@ -85,7 +85,10 @@ abstract class XotBaseMigration extends Migration {
         if (null === $this->model) {
             throw new \Exception('model is null');
         }
+       
         $conn_name = $this->model->getConnectionName();
+
+        //dddx([$this->model, $conn_name]);
         $conn = Schema::connection($conn_name);
 
         return $conn;
