@@ -26,6 +26,7 @@ use Modules\Xot\Contracts\PanelContract;
 use Modules\Xot\Contracts\PanelPresenterContract;
 use Modules\Xot\Contracts\RowsContract;
 use Modules\Xot\Contracts\UserContract;
+use Modules\Xot\Jobs\PanelCrud\StoreJob;
 use Modules\Xot\Models\Panels\Actions\XotBasePanelAction;
 use Modules\Xot\Presenters\PdfPanelPresenter;
 use Modules\Xot\Presenters\XlsPanelPresenter;
@@ -1857,5 +1858,12 @@ abstract class XotBasePanel implements PanelContract {
 
         // return $row->author->is($user);
         return $row->author_id == $user->id;
+    }
+
+    public function store(array $data) {
+        $func = StoreJob::class;
+        $panel = $func::dispatch($data, $this);
+
+        return $panel;
     }
 }
