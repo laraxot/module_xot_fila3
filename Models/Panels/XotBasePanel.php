@@ -192,7 +192,7 @@ abstract class XotBasePanel implements PanelContract {
      */
     public function getRow(): Model {
         if (null === $this->row) {
-            throw new \Exception('Modules/Xot/XotBasePanel::194 Row is null');
+            //throw new Exception('Modules/Xot/XotBasePanel::194 Row is null');
         }
 
         return $this->row;
