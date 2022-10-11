@@ -14,6 +14,18 @@ class MorphOneAction {
     }
 
     public function execute(Model $row, object $relation) {
-        dddx('wip');
+        if(isJson($relation->data)){
+            $relation->data=json_decode($relation->data,true);
+        }
+        $rows = $relation->rows;
+        if ($rows->exists()) {
+            dddx('SI');
+        }else{
+            //dddx($relation->data);
+            $rows->create($relation->data);
+        }
+
+
+
     }
 }

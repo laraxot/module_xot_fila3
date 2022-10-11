@@ -32,6 +32,7 @@ class StoreAction {
         $row->save();
 
         $relations = app(FilterRelationsAction::class)->execute($row, array_keys($data));
+        
         foreach ($relations as $relation) {
             $act = __NAMESPACE__.'\\Store\\'.$relation->relationship_type.'Action';
             $relation->data = $data[$relation->name];
