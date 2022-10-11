@@ -18,12 +18,12 @@ class MorphOneAction {
         // $rows = $model->$name();
         $rows = $relation->rows;
         if ($rows->exists()) {
-            $rows->update($data);
+            $rows->update($relation->data);
         } else {
-            if (! isset($data['lang'])) {
-                $data['lang'] = \App::getLocale();
+            if (! isset($relation->data['lang'])) {
+                $relation->data['lang'] = \App::getLocale();
             }
-            $rows->create($data);
+            $rows->create($relation->data);
         }
     }
 }
