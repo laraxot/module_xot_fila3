@@ -19,12 +19,12 @@ class XotPanelController extends Controller {
      * @return mixed
      */
     public function __call($method, $arg) {
-        // dddx(['name' => $name, 'arg' => $arg]);
+        // dddx(['name' => $method, 'arg' => $arg]);
         /*
          * 0 => xotrequest
          * 1 => userPanel.
          */
-
+        /*
         $func = '\Modules\Xot\Jobs\PanelCrud\\'.Str::studly($method).'Job';
 
         $data = $arg[0];
@@ -32,6 +32,16 @@ class XotPanelController extends Controller {
             $data = $data->all();
         }
         $panel = $func::dispatchNow($data, $arg[1]);
+
+        return $panel->out();
+        */
+        $act = '\Modules\Xot\Actions\Panel\\'.Str::studly($method).'Action';
+        $data = $arg[0];
+        if ($arg[0] instanceof Request) {
+            $data = $data->all();
+        }
+
+        $panel = app($act)->execute($arg[1], $data);
 
         return $panel->out();
     }
