@@ -190,6 +190,9 @@ abstract class XotBasePanel implements PanelContract {
      *
      */
     public function getRow(): Model {
+        if(null===$this->row){
+            throw new \Exception('Modules/Xot/XotBasePanel::194 Row is null');
+        }
         return $this->row;
     }
 
@@ -1695,6 +1698,9 @@ abstract class XotBasePanel implements PanelContract {
         // Argument #3 ($subject) must be of type array|string, null given (View: /home/cvfcmxwn/laraxot/multi/laravel/Themes/DirectoryBs4/Resources/views/layouts/widgets/blog_items.blade.php) {"view":{"view":"/home/cvfcmxwn/laraxot/multi/laravel/Modules/Xot/Models/Panels/XotBasePanel.php","data":[]},"
         // url":"http://prosecco-valdobbiadene.it/?page=9","
 
+        if(null===$content){
+            $content = '';
+        }
         if (is_null($content)) {
             $content = '';
         }

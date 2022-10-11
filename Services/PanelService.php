@@ -285,6 +285,7 @@ class PanelService {
         $panel_parent = $panel;
 
         for ($i = 1; $i < \count($containers); ++$i) {
+            //dddx($panel_parent);
             $row_prev = $panel_parent->getRow();
             $types = Str::camel($containers[$i]);
             // dddx([$row_prev, $panel_parent, $types]);
