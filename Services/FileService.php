@@ -161,7 +161,7 @@ class FileService {
         return null;
     }
 
-    public static function assetPath(string $asset):?string{
+    public static function assetPath(string $asset):string{
         /*
         $resolver=app(NamespacedItemResolver::class);
         dddx($resolver->parseKey($asset));
@@ -176,7 +176,11 @@ class FileService {
         //dddx(Module::assetPath('notify')); ///var/www/html/ptvx/public_html/modules/notify
         //$module=Module::find('notify');
         //dddx([get_class_methods($module),$module->getPath()]);
-        return null;
+        [$ns,$file]=explode('::',$asset);
+        $module_path = Module::getModulePath($ns).'Resources';
+        $path=$module_path.'/'.$file;
+
+        return $path;
     }
 
     public static function getViewNameSpaceUrl(string $ns, string $path1): string {
