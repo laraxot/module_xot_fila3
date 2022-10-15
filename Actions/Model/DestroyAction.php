@@ -9,27 +9,27 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
 use Spatie\QueueableAction\QueueableAction;
 
-class DestroyAction {
+class DestroyAction
+{
     use QueueableAction;
 
-    public function __construct() {
+    public function __construct()
+    {
     }
 
-    public function execute(Model $row, array $data, array $rules): Model {
+    public function execute(Model $row, array $data, array $rules): Model
+    {
 
         //prende la chiave del modello
 
-        $id = $row->getKey();
+        //$id = $row->getKey();
 
         //nel mio caso nella pivot è la chiave 14 ma non nella tabella finale,
         //ma probabilmente è giusto perchè va disassociata se è many to many
         //ma forse il problema è che il modello è Keyword e non KeywordReport
 
-        //$msg = 'cancellato! ['.$id.']!'; // .'['.implode(',',$row->getChanges()).']';
-
-        //cancella il modello $row (ma allora l'id a che gli serve?)
-       
-        //nella belongs to many con delete lo dà cancellato ma non è vero
+        //DA FIXARE: se le tabelle pivot e tabella finale hanno id sfasati allora non CANCELLA giusto
+        //e nemmeno EDIT lo fa giusto
 
         $res = $row->delete();
         if ($res) {

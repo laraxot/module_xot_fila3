@@ -68,7 +68,6 @@ class DestroyAction
         $rules = $panel->rules(['act' => 'edit']);
         $act = str_replace('\Panel\\', '\Model\\', __CLASS__);
         app('\\' . $act)->execute($row, $data, $rules);
-        dddx(['\\' . $act, $row, $data, $rules]);
 
         if (method_exists($panel, 'destroyCallback')) {
             $panel->destroyCallback(['row' => $row]);
