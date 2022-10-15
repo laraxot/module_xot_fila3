@@ -17,7 +17,7 @@ class DestroyAction
 
     public function execute(PanelContract $panel, array $data): PanelContract
     {
-       
+
         $row = $panel->getRow();
         //viene chiamata quest'azione con i dati del pannello da cancellare e richiesta di distruzione
         //la chiamata all'Azione proviene da:
@@ -58,17 +58,17 @@ class DestroyAction
         //se non esistono regole nel campo la mette vuota
         //se le regole sono pivot_rules ti restituisce le regole per disassociare dalla tabella pivot CREDO
         //ma comunque non c'entra con il caso della belongsToMany
-        
+
         //alla fine restituisce il panel a XotPanelController.php che ri-sputa fuori il panel
         //dopo aver richiamato \Modules\Xot\Actions\!!!MODEL!!!\DestroyAction
         //passando modello da cancellare ($row), richiesta dalla route($data) e nomi dei campi da cancellare ($rules)
 
-
+        //Quindi VEDERE \Modules\Xot\Actions\Model\DestroyAction
 
         $rules = $panel->rules(['act' => 'edit']);
         $act = str_replace('\Panel\\', '\Model\\', __CLASS__);
         app('\\' . $act)->execute($row, $data, $rules);
-        dddx(['\\' . $act,$row, $data, $rules]);
+        dddx(['\\' . $act, $row, $data, $rules]);
 
         if (method_exists($panel, 'destroyCallback')) {
             $panel->destroyCallback(['row' => $row]);
