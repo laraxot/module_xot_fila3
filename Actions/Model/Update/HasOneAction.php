@@ -17,7 +17,7 @@ class HasOneAction {
         $rows = $relation->rows;
         // $rows= $row->{$relation->name}();
         if ($rows->exists()) {
-            if (! \is_array($data)) {
+            if (! \is_array($relation->data)) {
                 // variabile uguale alla relazione
             } else {
                 // backtrace(true);
