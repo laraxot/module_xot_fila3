@@ -27,6 +27,7 @@ abstract class XotBasePanelPolicy {
     // *
     public function before($user, $ability) {
         // *
+       
         if (\is_object($user)) {
             $route_params = getRouteParameters();
             $profile = ProfileService::make()->get($user);
@@ -37,8 +38,9 @@ abstract class XotBasePanelPolicy {
                     $module_name = $module->getName();
                 }
                 $has_area = $profile->hasArea($module_name);
+                
 
-                return $has_area && $profile->isSuperAdmin();
+                return $has_area || $profile->isSuperAdmin();
             }
             // this means that if you're superadmin the policy will always returns "true"
             if ($profile->isSuperAdmin()) {
@@ -80,6 +82,7 @@ abstract class XotBasePanelPolicy {
         }
 
         $route_params = $panel->getRouteParams();
+        
         if (isset($route_params['module']) && null != $user) {
             $module = Module::find($route_params['module']);
             $module_name = '';
@@ -88,6 +91,7 @@ abstract class XotBasePanelPolicy {
             }
 
             $profile = ProfileService::make()->get($user);
+            
 
             return $profile->hasArea($module_name);
         }
