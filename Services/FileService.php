@@ -10,7 +10,6 @@ use Illuminate\Support\Str;
 use Nwidart\Modules\Facades\Module;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\View;
-use Modules\Xot\Services\FileService;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\NamespacedItemResolver;
 
