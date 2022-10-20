@@ -67,7 +67,7 @@ class FailedJobPanel extends XotBasePanel {
             ],
 
             (object) [
-                'type' => 'Datetime',
+                'type' => 'DateDateTime',
                 'name' => 'failed_at',
                 'rules' => 'required',
                 'comment' => null,
