@@ -192,7 +192,7 @@ abstract class XotBasePanel implements PanelContract {
      */
     public function getRow(): Model {
         if (null === $this->row) {
-            //throw new Exception('Modules/Xot/XotBasePanel::194 Row is null');
+            // throw new Exception('Modules/Xot/XotBasePanel::194 Row is null');
         }
 
         return $this->row;
@@ -1027,7 +1027,7 @@ abstract class XotBasePanel implements PanelContract {
      *
      * @return RowsContract
      */
-    public function applySort($query, ?array $sort) {
+    public function applySort($query, $sort = null) {
         if (! \is_array($sort)) {
             return $query;
         }

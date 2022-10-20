@@ -15,6 +15,7 @@ class UpdateAction {
 
     public function execute(PanelContract $panel, array $data): PanelContract {
         $row = $panel->getRow();
+
         $rules = $panel->rules(['act' => 'edit']);
         $act = str_replace('\Panel\\', '\Model\\', __CLASS__);
         app('\\'.$act)->execute($row, $data, $rules);
