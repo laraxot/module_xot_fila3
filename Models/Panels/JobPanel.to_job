@@ -47,7 +47,7 @@ class JobPanel extends XotBasePanel {
                 'comment' => null,
             ],
              (object) [
-                'type' => 'Boolean',
+                'type' => 'CheckboxBoolean',
                 'name' => 'attempts',
                 'rules' => 'required',
                 'comment' => null,

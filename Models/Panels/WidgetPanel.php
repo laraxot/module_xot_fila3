@@ -56,7 +56,7 @@ class WidgetPanel extends XotBasePanel {
                 'comment' => null,
             ],
             (object) [
-                'type' => 'Image',
+                'type' => 'UploadImage',
                 'name' => 'image_src',
                 'comment' => null,
             ],

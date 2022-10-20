@@ -70,7 +70,7 @@ class MetatagPanel extends XotBasePanel {
             ],
 
             (object) [
-                'type' => 'Image',
+                'type' => 'UploadImage',
                 'name' => 'logo_src',
                 'comment' => null,
             ],
