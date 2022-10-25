@@ -26,7 +26,8 @@ class BelongsToAction {
         }
 
         if ($rows->exists()) {
-            $model->{$relation->name}()->update($relation->data);
+            // dddx([$row, $relation->name, $row->{$relation->name}(), $relation->data]);
+            $row->{$relation->name}()->update($relation->data);
         } else {
             dddx(['err' => 'wip']);
         }
