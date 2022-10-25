@@ -116,7 +116,14 @@ trait CrudContainerItemRepositoryTrait {
         }
         $this->manageRelationships(['model' => $item, 'data' => $data, 'act' => 'update']);
         \Session::flash('status', 'aggiornato! ['.$row->getKey().']!'); //.implode(',',$row->getChanges())
-        //return view('xot::test'); //4 debug
+        ///**
+* @phpstan-var view-string
+*/
+$view='xot::test';
+$view_params=[
+   'view'=>$view,
+];
+return view($view,$view_params); //4 debug
         return ThemeService::action($request, $row);
     }
 
@@ -260,7 +267,14 @@ trait CrudContainerItemRepositoryTrait {
         self::manageRelationships(['model' => $item_new, 'data' => $data, 'act' => 'store', 'container' => $container, 'item' => $item, 'rows' => $rows]);
 
         \Session::flash('status', 'aggiornato! ['.$row->getKey().']!'); //.implode(',',$row->getChanges())
-        //return view('xot::test');// 4 debug
+        ///**
+* @phpstan-var view-string
+*/
+$view='xot::test';
+$view_params=[
+   'view'=>$view,
+];
+return view($view,$view_params);// 4 debug
         return ThemeService::action($request, $row);
     }
 
@@ -366,7 +380,14 @@ trait CrudContainerItemRepositoryTrait {
         };
         dddx('senza item ?');
         */
-        //return view('xot::test');// 4 debug
+        ///**
+* @phpstan-var view-string
+*/
+$view='xot::test';
+$view_params=[
+   'view'=>$view,
+];
+return view($view,$view_params);// 4 debug
         return ThemeService::action($request, $item);
     }
 
@@ -407,7 +428,14 @@ trait CrudContainerItemRepositoryTrait {
         }
         echo ']</ol>';
         */
-        //return view('xot::test');
+        ///**
+* @phpstan-var view-string
+*/
+$view='xot::test';
+$view_params=[
+   'view'=>$view,
+];
+return view($view,$view_params);
         return back()->withInput();
     }
 
