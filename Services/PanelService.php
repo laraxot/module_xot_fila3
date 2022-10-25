@@ -323,10 +323,10 @@ class PanelService {
     }
 
     /**
-     * @return \Illuminate\Http\RedirectResponse|mixed
-     *
      * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
      * @throws \ReflectionException
+     *
+     * @return \Illuminate\Http\RedirectResponse|mixed
      */
     public function getByModel(Model $model) {
         $class_full = \get_class($model);

@@ -106,9 +106,9 @@ abstract class XotBaseMigration extends Migration {
     }
 
     /**
-     * @return \Doctrine\DBAL\Schema\Table
-     *
      * @throws \Doctrine\DBAL\Exception
+     *
+     * @return \Doctrine\DBAL\Schema\Table
      */
     public function getTableDetails() {
         $table_details = $this->getSchemaManager()
@@ -118,9 +118,9 @@ abstract class XotBaseMigration extends Migration {
     }
 
     /**
-     * @return \Doctrine\DBAL\Schema\Index[]
-     *
      * @throws \Doctrine\DBAL\Exception
+     *
+     * @return \Doctrine\DBAL\Schema\Index[]
      */
     public function getTableIndexes() {
         $table_indexes = $this->getSchemaManager()

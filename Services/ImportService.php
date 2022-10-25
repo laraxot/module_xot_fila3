@@ -644,10 +644,10 @@ class ImportService {
                     'action' => $node->attr('action'),
                     'method' => $node->attr('method'),
                     'fields' => $node->filter('input')->each(
-                            function (Crawler $node1) {
-                                return [$node1->attr('name') => $node1->attr('value')];
-                            }
-                        ),
+                        function (Crawler $node1) {
+                            return [$node1->attr('name') => $node1->attr('value')];
+                        }
+                    ),
                 ];
             }
         );

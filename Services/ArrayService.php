@@ -68,11 +68,11 @@ class ArrayService {
     // ret array|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|string|\Symfony\Component\HttpFoundation\BinaryFileResponse
 
     /**
-     * @return \Symfony\Component\HttpFoundation\BinaryFileResponse|Renderable
-     *
      * @throws \PhpOffice\PhpSpreadsheet\Writer\Exception
      *
      * return array|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|string|\Symfony\Component\HttpFoundation\BinaryFileResponse
+     *
+     * @return \Symfony\Component\HttpFoundation\BinaryFileResponse|Renderable
      */
     public function toXLS() {
         if (1 === request('debug', 0) * 1) {
@@ -168,11 +168,11 @@ class ArrayService {
     // ret array|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|string|\Symfony\Component\HttpFoundation\BinaryFileResponse
 
     /**
-     * @return \Symfony\Component\HttpFoundation\BinaryFileResponse|Renderable
-     *
      * @throws \PhpOffice\PhpSpreadsheet\Writer\Exception
      *
      * return array|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|Illuminate\Contracts\View\View|string|\Symfony\Component\HttpFoundation\BinaryFileResponse
+     *
+     * @return \Symfony\Component\HttpFoundation\BinaryFileResponse|Renderable
      */
     public function toXLS_phpoffice() {
         $spreadsheet = new Spreadsheet();

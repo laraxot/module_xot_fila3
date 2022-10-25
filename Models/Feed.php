@@ -11,18 +11,20 @@ namespace Modules\Xot\Models;
 /**
  * Modules\Xot\Models\Feed.
  *
- * @property int $post_id
- * @property \Illuminate\Support\Carbon|null $created_at
- * @property \Illuminate\Support\Carbon|null $updated_at
- * @property-read \Illuminate\Database\Eloquent\Collection|\Modules\Xot\Models\Image[] $images
- * @property-read int|null $images_count
+ * @property int                                                                  $post_id
+ * @property \Illuminate\Support\Carbon|null                                      $created_at
+ * @property \Illuminate\Support\Carbon|null                                      $updated_at
+ * @property \Illuminate\Database\Eloquent\Collection|\Modules\Xot\Models\Image[] $images
+ * @property int|null                                                             $images_count
+ *
  * @method static \Modules\Xot\Database\Factories\FeedFactory factory(...$parameters)
- * @method static \Illuminate\Database\Eloquent\Builder|Feed newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|Feed newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|Feed query()
- * @method static \Illuminate\Database\Eloquent\Builder|Feed whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Feed wherePostId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Feed whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Feed  newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Feed  newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Feed  query()
+ * @method static \Illuminate\Database\Eloquent\Builder|Feed  whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Feed  wherePostId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Feed  whereUpdatedAt($value)
+ *
  * @mixin \Eloquent
  */
 class Feed extends BaseModel {

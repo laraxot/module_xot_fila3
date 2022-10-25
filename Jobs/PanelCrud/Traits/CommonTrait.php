@@ -164,9 +164,9 @@ trait CommonTrait {
      * @param array         $data
      * @param PanelContract $panel
      *
-     * @return array
-     *
      * @throws \Illuminate\Validation\ValidationException
+     *
+     * @return array
      */
     public function prepareAndValidate($data, $panel) {
         // $data0 = $data;
@@ -182,6 +182,7 @@ trait CommonTrait {
 
     /**
      * @param mixed $value
+     * @param mixed $field
      *
      * @return Carbon|false|null
      */
@@ -196,6 +197,7 @@ trait CommonTrait {
 
     /**
      * @param mixed $value
+     * @param mixed $field
      *
      * @return Carbon|false|null
      */
@@ -210,6 +212,7 @@ trait CommonTrait {
 
     /**
      * @param mixed $value
+     * @param mixed $field
      *
      * @return Carbon|false|null
      */

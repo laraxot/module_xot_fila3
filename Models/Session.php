@@ -7,24 +7,26 @@ namespace Modules\Xot\Models;
 /**
  * Modules\Xot\Models\Session.
  *
- * @property int $id
- * @property int|null $user_id
- * @property string|null $ip_address
- * @property string|null $user_agent
- * @property string $payload
- * @property int $last_activity
- * @property-read \Illuminate\Database\Eloquent\Collection|\Modules\Xot\Models\Image[] $images
- * @property-read int|null $images_count
+ * @property int                                                                  $id
+ * @property int|null                                                             $user_id
+ * @property string|null                                                          $ip_address
+ * @property string|null                                                          $user_agent
+ * @property string                                                               $payload
+ * @property int                                                                  $last_activity
+ * @property \Illuminate\Database\Eloquent\Collection|\Modules\Xot\Models\Image[] $images
+ * @property int|null                                                             $images_count
+ *
  * @method static \Modules\Xot\Database\Factories\SessionFactory factory(...$parameters)
- * @method static \Illuminate\Database\Eloquent\Builder|Session newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|Session newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|Session query()
- * @method static \Illuminate\Database\Eloquent\Builder|Session whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Session whereIpAddress($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Session whereLastActivity($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Session wherePayload($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Session whereUserAgent($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Session whereUserId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Session  newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Session  newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Session  query()
+ * @method static \Illuminate\Database\Eloquent\Builder|Session  whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Session  whereIpAddress($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Session  whereLastActivity($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Session  wherePayload($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Session  whereUserAgent($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Session  whereUserId($value)
+ *
  * @mixin \Eloquent
  */
 class Session extends BaseModel {

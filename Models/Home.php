@@ -12,27 +12,29 @@ use Sushi\Sushi;
 /**
  * Modules\Xot\Models\Home.
  *
- * @property int|null $id
- * @property string|null $name
- * @property string|null $icon_src
- * @property string|null $created_by
- * @property string|null $updated_by
- * @property-read \Illuminate\Database\Eloquent\Collection|\Modules\Xot\Models\Widget[] $containerWidgets
- * @property-read int|null $container_widgets_count
- * @property-read \Illuminate\Database\Eloquent\Collection|\Modules\Xot\Models\Image[] $images
- * @property-read int|null $images_count
- * @property-read \Illuminate\Database\Eloquent\Collection|\Modules\Xot\Models\Widget[] $widgets
- * @property-read int|null $widgets_count
+ * @property int|null                                                              $id
+ * @property string|null                                                           $name
+ * @property string|null                                                           $icon_src
+ * @property string|null                                                           $created_by
+ * @property string|null                                                           $updated_by
+ * @property \Illuminate\Database\Eloquent\Collection|\Modules\Xot\Models\Widget[] $containerWidgets
+ * @property int|null                                                              $container_widgets_count
+ * @property \Illuminate\Database\Eloquent\Collection|\Modules\Xot\Models\Image[]  $images
+ * @property int|null                                                              $images_count
+ * @property \Illuminate\Database\Eloquent\Collection|\Modules\Xot\Models\Widget[] $widgets
+ * @property int|null                                                              $widgets_count
+ *
  * @method static \Modules\Xot\Database\Factories\HomeFactory factory(...$parameters)
- * @method static \Illuminate\Database\Eloquent\Builder|Home newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|Home newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|Home ofLayoutPosition($layout_position)
- * @method static \Illuminate\Database\Eloquent\Builder|Home query()
- * @method static \Illuminate\Database\Eloquent\Builder|Home whereCreatedBy($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Home whereIconSrc($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Home whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Home whereName($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Home whereUpdatedBy($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Home  newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Home  newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Home  ofLayoutPosition($layout_position)
+ * @method static \Illuminate\Database\Eloquent\Builder|Home  query()
+ * @method static \Illuminate\Database\Eloquent\Builder|Home  whereCreatedBy($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Home  whereIconSrc($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Home  whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Home  whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Home  whereUpdatedBy($value)
+ *
  * @mixin \Eloquent
  */
 class Home extends BaseModel {

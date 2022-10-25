@@ -1024,6 +1024,7 @@ abstract class XotBasePanel implements PanelContract {
      * Undocumented function.
      *
      * @param RowsContract $query
+     * @param mixed|null   $sort
      *
      * @return RowsContract
      */

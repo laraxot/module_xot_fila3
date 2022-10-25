@@ -118,9 +118,9 @@ abstract class XotBaseJob { /* implements ShouldQueue */
      * @param array         $data
      * @param PanelContract $panel
      *
-     * @return array
-     *
      * @throws \Illuminate\Validation\ValidationException
+     *
+     * @return array
      */
     public function prepareAndValidate($data, $panel) {
         $data0 = $data;

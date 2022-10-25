@@ -497,9 +497,9 @@ if (! function_exists('getTransformerFromModel')) {
 
 if (! function_exists('getAllModulesModels')) {
     /**
-     * @return array
-     *
      * @throws ReflectionException
+     *
+     * @return array
      */
     function getAllModulesModels() {
         $res = [];
@@ -517,9 +517,9 @@ if (! function_exists('getModuleModels')) {
     /**
      * @param string $module
      *
-     * @return array
-     *
      * @throws ReflectionException
+     *
+     * @return array
      */
     function getModuleModels($module) {
         return ModuleService::make()->setName($module)->getModels();
@@ -775,9 +775,9 @@ if (! function_exists('debug_getter_obj')) {
     */
 
     /**
-     * @return array|null
-     *
      * @throws ReflectionException
+     *
+     * @return array|null
      */
     function debug_getter_obj(array $params) {
         extract($params);
@@ -958,9 +958,9 @@ if (! function_exists('build_url')) {
 
 if (! function_exists('getRelationships')) {
     /**
-     * @return array
-     *
      * @throws ReflectionException
+     *
+     * @return array
      */
     function getRelationships(Model $model) {
         // working
