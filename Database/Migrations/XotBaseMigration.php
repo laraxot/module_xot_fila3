@@ -54,7 +54,7 @@ abstract class XotBaseMigration extends Migration {
         $mod_name = explode(\DIRECTORY_SEPARATOR, $mod_name)[1];
 
         $model_ns = '\Modules\\'.$mod_name.'\Models\\'.$name;
-        $model_dir = $mod_path.'/'.$mod_name.'/'.'Models'.'/'.$name.'.php';
+        $model_dir = $mod_path.'/'.$mod_name.'/Models/'.$name.'.php';
         $model_dir = Str::replace('/', \DIRECTORY_SEPARATOR, $model_dir);
 
         return $model_ns;
@@ -85,10 +85,10 @@ abstract class XotBaseMigration extends Migration {
         if (null === $this->model) {
             throw new \Exception('model is null');
         }
-       
+
         $conn_name = $this->model->getConnectionName();
 
-        //dddx([$this->model, $conn_name]);
+        // dddx([$this->model, $conn_name]);
         $conn = Schema::connection($conn_name);
 
         return $conn;
@@ -106,9 +106,9 @@ abstract class XotBaseMigration extends Migration {
     }
 
     /**
-     * @throws \Doctrine\DBAL\Exception
-     *
      * @return \Doctrine\DBAL\Schema\Table
+     *
+     * @throws \Doctrine\DBAL\Exception
      */
     public function getTableDetails() {
         $table_details = $this->getSchemaManager()
@@ -118,9 +118,9 @@ abstract class XotBaseMigration extends Migration {
     }
 
     /**
-     * @throws \Doctrine\DBAL\Exception
-     *
      * @return \Doctrine\DBAL\Schema\Index[]
+     *
+     * @throws \Doctrine\DBAL\Exception
      */
     public function getTableIndexes() {
         $table_indexes = $this->getSchemaManager()

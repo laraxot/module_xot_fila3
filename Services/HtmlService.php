@@ -62,7 +62,7 @@ class HtmlService {
             return $html2pdf->Output();
         } catch (Html2PdfException $e) {
             $html2pdf->clean();
-            
+
             $formatter = new ExceptionFormatter($e);
             dddx($formatter->getHtmlMessage());
             echo $formatter->getHtmlMessage();

@@ -29,14 +29,14 @@ class ModuleController extends Controller {
      */
     public function index(Request $request) {
         $panel = PanelService::make()->getRequestPanel();
-        if (null == $panel) {
+        if (null === $panel) {
             throw new Exception('['.__LINE__.']['.__FILE__.']');
         }
         /**
          * @var string
          */
         $act = $request->_act;
-        if ('' !== $act && null != $panel) {
+        if ('' !== $act && null !== $panel) {
             // return $panel->callItemActionWithGate($request->_act);
             // return $panel->callContainerAction($request->_act);
             return $panel->callAction($act);
@@ -61,12 +61,12 @@ class ModuleController extends Controller {
      */
     public function home(Request $request) {
         $panel = PanelService::make()->getRequestPanel();
-        if (null == $panel) {
+        if (null === $panel) {
             throw new Exception('['.__LINE__.']['.__FILE__.']');
         }
         $act = $request->input('_act', '');
         if ('' !== $act) {
-            if (! is_string($act)) {
+            if (! \is_string($act)) {
                 throw new Exception('['.__LINE__.']['.class_basename(__CLASS__).']');
             }
 
@@ -85,12 +85,12 @@ class ModuleController extends Controller {
      */
     public function dashboard(Request $request) {
         $panel = PanelService::make()->getRequestPanel();
-        if (null == $panel) {
+        if (null === $panel) {
             throw new Exception('['.__LINE__.']['.__FILE__.']');
         }
         $act = $request->input('_act', '');
         if ('' !== $act) {
-            if (! is_string($act)) {
+            if (! \is_string($act)) {
                 throw new Exception('['.__LINE__.']['.class_basename(__CLASS__).']');
             }
 

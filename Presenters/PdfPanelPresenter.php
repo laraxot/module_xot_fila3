@@ -13,18 +13,18 @@ use Modules\Xot\Services\HtmlService;
 /**
  * Class JsonPanelPresenter.
  */
-class PdfPanelPresenter implements PanelPresenterContract{
+class PdfPanelPresenter implements PanelPresenterContract {
     protected PanelContract $panel;
 
     public array $view_params = [];
 
-    public function setPanel(PanelContract &$panel): self    {
+    public function setPanel(PanelContract &$panel): self {
         $this->panel = $panel;
 
         return $this;
     }
 
-    public function setViewParams(array $view_params): self    {
+    public function setViewParams(array $view_params): self {
         $this->view_params = $view_params;
 
         return $this;
@@ -33,14 +33,14 @@ class PdfPanelPresenter implements PanelPresenterContract{
     /**
      * @return mixed|void
      */
-    public function index(?Collection $items)    {
+    public function index(?Collection $items) {
     }
 
     public function out(?array $params = null): string {
         if (! isset($params['view_params'])) {
             $params['view_params'] = [];
         }
-        $view = ThemeService::getView(); //progressioni::admin.schede.show
+        $view = ThemeService::getView(); // progressioni::admin.schede.show
         $view .= '.pdf';
         $view = str_replace('.store.', '.show.', $view);
         extract($params);
@@ -59,14 +59,14 @@ class PdfPanelPresenter implements PanelPresenterContract{
         } catch (\Exception $e) {
             $rows = collect([]);
         }
-        if (null == $row->getKey()) { //utile per le cose a containers
-            //if (null == $row) { //utile per le cose a containers
-            //$row = tap($this->panel->rows())->first();
-            //$row = $this->panel->rows()->first();
-            //dddx($row);
-            $tmp=$this->panel->rows()->get()->first();
-            if($tmp!=null){
-                $row=$tmp;
+        if (null === $row->getKey()) { // utile per le cose a containers
+            // if (null == $row) { //utile per le cose a containers
+            // $row = tap($this->panel->rows())->first();
+            // $row = $this->panel->rows()->first();
+            // dddx($row);
+            $tmp = $this->panel->rows()->get()->first();
+            if (null !== $tmp) {
+                $row = $tmp;
             }
         }
 
@@ -80,7 +80,7 @@ class PdfPanelPresenter implements PanelPresenterContract{
 
         $html = view()->make($view, $view_params);
         $html = $html->render();
-        //dddx($this->rows->get());
+        // dddx($this->rows->get());
         if (request()->input('debug')) {
             return $html;
         }

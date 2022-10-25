@@ -4,17 +4,14 @@ declare(strict_types=1);
 
 namespace Modules\Xot\Models\Policies;
 
-
 use Modules\Xot\Contracts\UserContract;
 
 /**
  * Class MetatagPolicy.
  */
-class MetatagPolicy extends XotBasePolicy
-{
-    public function storeFileMetatag(UserContract $user, \Illuminate\Database\Eloquent\Model $post): bool
-    {
-        //return ($metatag->tennant_name=='foodlocal');
+class MetatagPolicy extends XotBasePolicy {
+    public function storeFileMetatag(UserContract $user, \Illuminate\Database\Eloquent\Model $post): bool {
+        // return ($metatag->tennant_name=='foodlocal');
         return false;
     }
 }

@@ -101,7 +101,7 @@ abstract class XotBaseServiceProvider extends ServiceProvider {
      */
     public function registerTranslations(): void {
         $langPath = realpath($this->module_dir.'/../Resources/lang');
-        if (false == $langPath) {
+        if (false === $langPath) {
             throw new Exception('['.__LINE__.']['.__FILE__.']');
         }
         // echo '<hr>'.$langPath.'  :  '.$this->module_name.' <hr/>';
@@ -168,7 +168,7 @@ abstract class XotBaseServiceProvider extends ServiceProvider {
         $force_recreate = request()->input('force_recreate', true);
         if (! File::exists($events_file) || $force_recreate) {
             $filenames = glob($path.'/*.php');
-            if (false == $filenames) {
+            if (false === $filenames) {
                 $filenames = [];
             }
             foreach ($filenames as $filename) {

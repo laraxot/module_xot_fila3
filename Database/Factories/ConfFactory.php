@@ -5,8 +5,6 @@ declare(strict_types=1);
 namespace Modules\Xot\Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Illuminate\Support\Str;
-
 use Modules\Xot\Models\Conf;
 
 class ConfFactory extends Factory {
@@ -23,11 +21,9 @@ class ConfFactory extends Factory {
      * @return array
      */
     public function definition() {
-       
-
         return [
             'id' => $this->faker->randomNumber,
-            'name' => $this->faker->name
+            'name' => $this->faker->name,
         ];
     }
 }

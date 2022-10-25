@@ -404,13 +404,13 @@ if (! function_exists('getModelByName')) {
             function ($file) use ($name) {
                 $info = pathinfo($file);
 
-                return Str::snake($info['filename'] ?? '') == $name;
+                return Str::snake($info['filename'] ?? '') === $name;
             }
         );
 
         // dddx($registered);
 
-        if (null == $path) {
+        if (null === $path) {
             throw new Exception('['.$name.'] not in morph_map ['.__LINE__.']['.__FILE__.']');
         }
         $path = FileService::fixPath($path);
@@ -497,9 +497,9 @@ if (! function_exists('getTransformerFromModel')) {
 
 if (! function_exists('getAllModulesModels')) {
     /**
-     * @throws ReflectionException
-     *
      * @return array
+     *
+     * @throws ReflectionException
      */
     function getAllModulesModels() {
         $res = [];
@@ -517,9 +517,9 @@ if (! function_exists('getModuleModels')) {
     /**
      * @param string $module
      *
-     * @throws ReflectionException
-     *
      * @return array
+     *
+     * @throws ReflectionException
      */
     function getModuleModels($module) {
         return ModuleService::make()->setName($module)->getModels();
@@ -633,7 +633,7 @@ if (! function_exists('transFields')) {
             $view = 'pub_theme::'.$view;
         }
         list($ns, $key) = explode('::', $view);
-        if (null == $module_name) {
+        if (null === $module_name) {
             $trans_root = $ns.'::'.implode('.', array_slice(explode('.', $key), $start, -1));
         }
         // *
@@ -775,9 +775,9 @@ if (! function_exists('debug_getter_obj')) {
     */
 
     /**
-     * @throws ReflectionException
-     *
      * @return array|null
+     *
+     * @throws ReflectionException
      */
     function debug_getter_obj(array $params) {
         extract($params);
@@ -958,9 +958,9 @@ if (! function_exists('build_url')) {
 
 if (! function_exists('getRelationships')) {
     /**
-     * @throws ReflectionException
-     *
      * @return array
+     *
+     * @throws ReflectionException
      */
     function getRelationships(Model $model) {
         // working
@@ -1127,7 +1127,7 @@ if (! function_exists('getRouteParameters')) {
          * @var \Illuminate\Routing\Route|null
          */
         $route = request()->route();
-        if (null == $route) {
+        if (null === $route) {
             return [];
         }
         $params = $route->parameters();
@@ -1146,7 +1146,7 @@ if (! function_exists('getRouteName')) {
          * @var \Illuminate\Routing\Route|null
          */
         $route = request()->route();
-        if (null == $route) {
+        if (null === $route) {
             return null;
         }
         $name = $route->getName();
@@ -1282,7 +1282,7 @@ if (! function_exists('rowsToSql')) {
 if (! function_exists('getServerName')) {
     function getServerName(): string {
         $default = env('APP_URL');
-        if (! \is_string($default)) {
+        if (! is_string($default)) {
             // throw new Exception('['.$default.']['.__LINE__.']['.class_basename(__CLASS__).']');
             $default = 'localhost';
         }

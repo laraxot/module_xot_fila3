@@ -12,12 +12,10 @@ use Modules\Xot\Services\StubService;
 /**
  * Class JsonPanelPresenter.
  */
-class JsonPanelPresenter implements PanelPresenterContract
-{
+class JsonPanelPresenter implements PanelPresenterContract {
     protected PanelContract $panel;
 
-    public function setPanel(PanelContract &$panel): self
-    {
+    public function setPanel(PanelContract &$panel): self {
         $this->panel = $panel;
 
         return $this;
@@ -26,18 +24,16 @@ class JsonPanelPresenter implements PanelPresenterContract
     /**
      * @return mixed|void
      */
-    public function index(?Collection $items)
-    {
+    public function index(?Collection $items) {
     }
 
     /**
+     * @return mixed
+     *
      * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
      * @throws \ReflectionException
-     *
-     * @return mixed
      */
-    public function outContainer(?array $params = null)
-    {
+    public function outContainer(?array $params = null) {
         $model = $this->panel->getRow();
         $transformer = StubService::make()->setModelAndName($model, 'transformer_collection')->get();
         $rows = $this->panel->rows()->paginate(20);
@@ -47,13 +43,12 @@ class JsonPanelPresenter implements PanelPresenterContract
     }
 
     /**
+     * @return mixed
+     *
      * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
      * @throws \ReflectionException
-     *
-     * @return mixed
      */
-    public function outItem(?array $params = null)
-    {
+    public function outItem(?array $params = null) {
         $model = $this->panel->getRow();
         $transformer = StubService::make()->setModelAndName($model, 'transformer_resource')->get();
         $out = new $transformer($model);
@@ -64,8 +59,7 @@ class JsonPanelPresenter implements PanelPresenterContract
     /**
      * @return mixed
      */
-    public function out(?array $params = null)
-    {
+    public function out(?array $params = null) {
         if (isContainer()) {
             return $this->outContainer($params);
         }

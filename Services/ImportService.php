@@ -198,7 +198,7 @@ class ImportService {
     // ret \Exception|GuzzleException|string|Crawler
 
     public function gRequest(string $method, string $url, array $attrs = [], string $out = 'res'): ?string {
-        if (null == $this->client) {
+        if (null === $this->client) {
             $this->importInit();
         }
         if (! isset($this->client_options['base_uri'])) {
@@ -643,8 +643,7 @@ class ImportService {
                 return [
                     'action' => $node->attr('action'),
                     'method' => $node->attr('method'),
-                    'fields' =>
-                        $node->filter('input')->each(
+                    'fields' => $node->filter('input')->each(
                             function (Crawler $node1) {
                                 return [$node1->attr('name') => $node1->attr('value')];
                             }

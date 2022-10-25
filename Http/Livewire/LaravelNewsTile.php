@@ -26,7 +26,7 @@ class LaravelNewsTile extends Component {
 
         $this->title = $title;
 
-        $this->refreshIntervalInSeconds = intval(config('dashboard.tiles.laravelnews.refresh_interval_in_seconds', 60));
+        $this->refreshIntervalInSeconds = (int) (config('dashboard.tiles.laravelnews.refresh_interval_in_seconds', 60));
 
         $this->configurationName = $configurationName;
     }

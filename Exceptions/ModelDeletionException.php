@@ -26,7 +26,7 @@ class ModelDeletionException extends ApplicationException {
 
     public function help(): string {
         $res = trans('exception.model_not_deleted.help');
-        if (! is_string($res)) {
+        if (! \is_string($res)) {
             throw new Exception('['.__LINE__.']['.__FILE__.']');
         }
 
@@ -38,7 +38,7 @@ class ModelDeletionException extends ApplicationException {
             'id' => $this->id,
             'model' => $this->model,
         ]);
-        if (! is_string($res)) {
+        if (! \is_string($res)) {
             throw new Exception('['.__LINE__.']['.__FILE__.']');
         }
 

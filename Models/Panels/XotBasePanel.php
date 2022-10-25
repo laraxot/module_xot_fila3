@@ -314,7 +314,7 @@ abstract class XotBasePanel implements PanelContract {
         $check = ['_ModulePanel'/* 'HomePanel' */];
 
         $empty = [];
-        if (in_array($class, $check, true)) {
+        if (\in_array($class, $check, true)) {
             return collect($empty);
         }
         if ($this->getParents()->count() > 0 && \in_array($class, ['HomePanel'], true)) {
@@ -366,7 +366,7 @@ abstract class XotBasePanel implements PanelContract {
      */
     public function optionId(Model $row) {
         $id = $row->getKey();
-        if (is_int($id) || is_string($id)) {
+        if (\is_int($id) || \is_string($id)) {
             return $id;
         }
 
@@ -534,7 +534,7 @@ abstract class XotBasePanel implements PanelContract {
         // Access to protected property Illuminate\Database\Eloquent\Model
         // return $this->row->attributes['txt'];
         $txt = $this->row->getAttributeValue('txt');
-        if (! is_string($txt)) {
+        if (! \is_string($txt)) {
             return null;
         }
 
@@ -862,7 +862,7 @@ abstract class XotBasePanel implements PanelContract {
          */
         $models = config('morph_map');
         $res = collect($models)->search(static::$model);
-        if (! is_string($res)) {
+        if (! \is_string($res)) {
             return null;
         }
 
@@ -1189,7 +1189,7 @@ abstract class XotBasePanel implements PanelContract {
     public function guid(?bool $is_admin = null): ?string {
         if (isset($is_admin) && $is_admin) {
             $id = $this->row->getKey();
-            if (! is_int($id) && ! is_string($id)) {
+            if (! \is_int($id) && ! \is_string($id)) {
                 throw new Exception('['.__LINE__.']['.__FILE__.']');
             }
 
@@ -1201,7 +1201,7 @@ abstract class XotBasePanel implements PanelContract {
         */
         if (inAdmin()) {
             $id = $this->row->getKey();
-            if (! is_int($id) && ! is_string($id) && ! is_null($id)) {
+            if (! \is_int($id) && ! \is_string($id) && null !== $id) {
                 throw new Exception('['.__LINE__.']['.__FILE__.'] - '.$id);
             }
 
@@ -1363,7 +1363,7 @@ abstract class XotBasePanel implements PanelContract {
         $sort = isset($data['sort']) ? $data['sort'] : null;
         $query = $this->getRows();
         // $query = $this->getBuilder();
-        if (null == $query) {
+        if (null === $query) {
             return null; // ????
         }
 
@@ -1703,11 +1703,11 @@ abstract class XotBasePanel implements PanelContract {
         if (null === $content) {
             $content = '';
         }
-        if (is_null($content)) {
+        if (null === $content) {
             $content = '';
         }
 
-        if (! is_string($content)) {
+        if (! \is_string($content)) {
             throw new Exception('['.__LINE__.']['.__FILE__.']');
         }
 
@@ -1828,11 +1828,11 @@ abstract class XotBasePanel implements PanelContract {
          * @var ModelWithAuthorContract
          */
         $row = $this->getRow();
-        if (null == $row->author) {
+        if (null === $row->author) {
             return false;
         }
         // return $row->author->is($user);
-        return $row->author_id == $user->id;
+        return $row->author_id === $user->id;
     }
 
     /**
@@ -1843,12 +1843,12 @@ abstract class XotBasePanel implements PanelContract {
          * @var ModelWithAuthorContract
          */
         $row = $this->getRow();
-        if (null == $row->author) {
+        if (null === $row->author) {
             return false;
         }
 
         // return $row->author->is($user);
-        return $row->author_id == $user->id;
+        return $row->author_id === $user->id;
     }
 
     /**
@@ -1859,12 +1859,12 @@ abstract class XotBasePanel implements PanelContract {
          * @var ModelWithAuthorContract
          */
         $row = $this->getRow();
-        if (null == $row->author) {
+        if (null === $row->author) {
             return false;
         }
 
         // return $row->author->is($user);
-        return $row->author_id == $user->id;
+        return $row->author_id === $user->id;
     }
 
     public function store(array $data) {

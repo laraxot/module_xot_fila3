@@ -27,10 +27,10 @@ class ZipService {
     }
 
     /**
+     * @return string|\Symfony\Component\HttpFoundation\BinaryFileResponse|void
+     *
      * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
      * @throws \ReflectionException
-     *
-     * @return string|\Symfony\Component\HttpFoundation\BinaryFileResponse|void
      */
     public static function fromRowsPdf(array $params) {
         ini_set('max_execution_time', '3600');

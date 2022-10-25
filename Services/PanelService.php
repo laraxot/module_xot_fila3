@@ -247,7 +247,7 @@ class PanelService {
             $module_models = getModuleModels($route_params['module']);
             $model_class = collect($module_models)
                 ->get($first_container);
-            if (null == $model_class) {
+            if (null === $model_class) {
                 $model_class = collect($module_models)
                     ->get(Str::singular($first_container));
             }
@@ -285,7 +285,7 @@ class PanelService {
         $panel_parent = $panel;
 
         for ($i = 1; $i < \count($containers); ++$i) {
-            //dddx($panel_parent);
+            // dddx($panel_parent);
             $row_prev = $panel_parent->getRow();
             $types = Str::camel($containers[$i]);
             // dddx([$row_prev, $panel_parent, $types]);
@@ -323,10 +323,10 @@ class PanelService {
     }
 
     /**
+     * @return \Illuminate\Http\RedirectResponse|mixed
+     *
      * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
      * @throws \ReflectionException
-     *
-     * @return \Illuminate\Http\RedirectResponse|mixed
      */
     public function getByModel(Model $model) {
         $class_full = \get_class($model);

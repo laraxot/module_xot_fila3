@@ -8,14 +8,14 @@ use Tests\TestCase;
 
 class ArrayServiceTest extends TestCase {
     public function testToXLS() {
-        $this->assertTrue(true);
+        static::assertTrue(true);
     }
 
     public function testToXLSPhpoffice() {
-        $this->assertTrue(true);
+        static::assertTrue(true);
     }
 
     public function testSave() {
-        $this->assertTrue(true);
+        static::assertTrue(true);
     }
 }

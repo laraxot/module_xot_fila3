@@ -19,7 +19,7 @@ class FilterRelationsAction {
         $res = collect($data)
         ->filter(
             function ($item) use ($methods) {
-                return in_array($item, $methods, true);
+                return \in_array($item, $methods, true);
             }
         )
         ->filter(

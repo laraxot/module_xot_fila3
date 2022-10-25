@@ -63,7 +63,7 @@ class XLSService {
      * @throws \PhpOffice\PhpSpreadsheet\Exception
      */
     public function fromRequestFile($file): self {
-        if (! is_object($file)) {
+        if (! \is_object($file)) {
             throw new Exception('[.__LINE__.]['.class_basename(__CLASS__).']');
         }
 

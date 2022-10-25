@@ -64,10 +64,10 @@ class DocxService {
     }
 
     /**
+     * @return \Symfony\Component\HttpFoundation\BinaryFileResponse
+     *
      * @throws \PhpOffice\PhpWord\Exception\CopyFileException
      * @throws \PhpOffice\PhpWord\Exception\CreateTemporaryFileException
-     *
-     * @return \Symfony\Component\HttpFoundation\BinaryFileResponse
      */
     public function out(array $params = []) {
         extract($params);

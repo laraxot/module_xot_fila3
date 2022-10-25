@@ -57,7 +57,7 @@ abstract class XotBaseComposer {
                 return method_exists($class, $name);
             }
         );
-        if (! is_object($module)) {
+        if (! \is_object($module)) {
             throw new Exception('create a View\Composers\ThemeComposer.php inside a module with ['.$name.'] method');
         }
         $class = '\Modules\\'.$module->getName().'\View\Composers\ThemeComposer';
@@ -68,7 +68,7 @@ abstract class XotBaseComposer {
          */
         $callback = [$app, $name];
 
-        return call_user_func_array($callback, $arguments);
+        return \call_user_func_array($callback, $arguments);
     }
 
     /**
@@ -89,7 +89,7 @@ abstract class XotBaseComposer {
      */
     public function call(string $func, ...$args) {
         $module = Module::find($this->module_name);
-        if (! is_object($module)) {
+        if (! \is_object($module)) {
             throw new Exception('not find ['.$this->module_name.'] on Modules ['.__LINE__.']['.__FILE__.']');
         }
 

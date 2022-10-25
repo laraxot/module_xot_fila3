@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Modules\Xot\Models\Policies;
 
 use Illuminate\Auth\Access\HandlesAuthorization;
-//use Illuminate\Database\Eloquent\Model as Post;
-//use Modules\LU\Models\User;
+// use Illuminate\Database\Eloquent\Model as Post;
+// use Modules\LU\Models\User;
 use Illuminate\Database\Eloquent\Model;
 use Modules\Xot\Contracts\UserContract;
 use Modules\Xot\Services\PanelService;
@@ -32,7 +32,7 @@ abstract class XotBasePolicy {
 
         return false;
         */
-        if (null == $user) {
+        if (null === $user) {
             return null;
         }
 
@@ -52,7 +52,7 @@ abstract class XotBasePolicy {
     }
 
     public function edit(UserContract $user, Model $post): bool {
-        //return true;
+        // return true;
         return PanelService::make()->get($post)->isRevisionBy($user);
     }
 
@@ -83,7 +83,7 @@ abstract class XotBasePolicy {
      * @return false
      */
     public function updateTranslate(UserContract $user, Model $post): bool {
-        return false; //update-translate di @can()
+        return false; // update-translate di @can()
     }
 
     public function destroy(UserContract $user, Model $post): bool {

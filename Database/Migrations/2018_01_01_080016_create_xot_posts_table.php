@@ -4,15 +4,14 @@ declare(strict_types=1);
 
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-//--- models --
-use Modules\Xot\Database\Migrations\XotBaseMigration;
+// --- models --
 use Modules\Lang\Models\Post;
+use Modules\Xot\Database\Migrations\XotBaseMigration;
 
 /**
  * Class CreatePostsTable.
  */
-class CreateXotPostsTable extends XotBaseMigration
-{
+class CreateXotPostsTable extends XotBaseMigration {
     protected ?string $model_class = Post::class;
 
     /**
@@ -20,36 +19,34 @@ class CreateXotPostsTable extends XotBaseMigration
      *
      * @return void
      */
-    public function up()
-    {
-        //-- CREATE --
+    public function up() {
+        // -- CREATE --
         $this->tableCreate(
             function (Blueprint $table) {
-                    $table->increments('id');
-                    $table->nullableMorphs('post');
-                    $table->string('lang', 2)->nullable();
-                    $table->string('title')->nullable()->index();
-                    $table->string('subtitle')->nullable();
-                    $table->string('guid')->index()->nullable();
-                    $table->text('txt')->nullable();
-                    $table->string('image_src')->nullable();
-                    $table->string('image_alt')->nullable();
-                    $table->string('image_title')->nullable();
-                    $table->text('meta_description')->nullable();
-                    $table->text('meta_keywords')->nullable();
-                    $table->integer('author_id')->nullable();
-                    $table->timestamps();
+                $table->increments('id');
+                $table->nullableMorphs('post');
+                $table->string('lang', 2)->nullable();
+                $table->string('title')->nullable()->index();
+                $table->string('subtitle')->nullable();
+                $table->string('guid')->index()->nullable();
+                $table->text('txt')->nullable();
+                $table->string('image_src')->nullable();
+                $table->string('image_alt')->nullable();
+                $table->string('image_title')->nullable();
+                $table->text('meta_description')->nullable();
+                $table->text('meta_keywords')->nullable();
+                $table->integer('author_id')->nullable();
+                $table->timestamps();
             }
         );
 
-
-        //-- UPDATE --
+        // -- UPDATE --
         $this->tableUpdate(
             function (Blueprint $table) {
                 // if (!$this->hasColumn( 'post_type')) {
                 //     $table->string('post_type', 40)->after('type')->index()->nullable();
                 // }
-                //Class 'Doctrine\DBAL\Driver\PDOMySql\Driver' not found
+                // Class 'Doctrine\DBAL\Driver\PDOMySql\Driver' not found
                 /*
                 $schema_builder = Schema::getConnection()
                     ->getDoctrineSchemaManager()
@@ -125,16 +122,16 @@ class CreateXotPostsTable extends XotBaseMigration
                 }
 
                 if (! $this->hasColumn('views_count')) {
-                    $table->integer('views_count')->nullable(); //contatore di visualizzazioni
+                    $table->integer('views_count')->nullable(); // contatore di visualizzazioni
                 }
 
                 if (! $this->hasColumn('user_id')) {
                     $table->integer('user_id')->nullable()->after('id');
                 }
 
-                //------- CHANGE INDEX-------
+                // ------- CHANGE INDEX-------
 
-                //Doctrine\DBAL\Driver\PDOMySql\Driver
+                // Doctrine\DBAL\Driver\PDOMySql\Driver
                 /*
                 $schema_builder = Schema::getConnection()
                     ->getDoctrineSchemaManager()
@@ -150,13 +147,13 @@ class CreateXotPostsTable extends XotBaseMigration
                     $table->string('lang', 3)->nullable()->index()->change();
                 }
                 */
-                //-------- CHANGE FIELD -------------
+                // -------- CHANGE FIELD -------------
                 $table->text('subtitle')->nullable()->change();
             }
         );
     }
 
-    //end up
+    // end up
 
-    //end down
-}//end class
+    // end down
+}// end class

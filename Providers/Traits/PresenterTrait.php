@@ -9,17 +9,15 @@ use Modules\Xot\Presenters\GeoJsonPanelPresenter;
 use Modules\Xot\Presenters\HtmlPanelPresenter;
 use Modules\Xot\Presenters\JsonPanelPresenter;
 
-trait PresenterTrait
-{
-    private function registerPresenter(): void
-    {
+trait PresenterTrait {
+    private function registerPresenter(): void {
         $responseType = request()->input('responseType');
         $responses = [
-            //'html'=> HtmlPanelPresenter::class,//default
+            // 'html'=> HtmlPanelPresenter::class,//default
             'json' => JsonPanelPresenter::class,
             'geoJson' => GeoJsonPanelPresenter::class,
-            //'pdf'=>PdfPanelPresenter::class,
-            //'xls'=>XlsPanelPresenter::class,
+            // 'pdf'=>PdfPanelPresenter::class,
+            // 'xls'=>XlsPanelPresenter::class,
         ];
         $response = HtmlPanelPresenter::class;
         if (isset($responses[$responseType])) {
@@ -28,7 +26,7 @@ trait PresenterTrait
 
         $this->app->bind(
             PanelPresenterContract::class,
-            //HtmlPanelPresenter::class,
+            // HtmlPanelPresenter::class,
             $response,
         );
     }

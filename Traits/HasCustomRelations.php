@@ -19,8 +19,6 @@ use Modules\Xot\Relations\CustomRelation;
  */
 trait HasCustomRelations {
     /**
-     * @param $related
-     *
      * @return CustomRelation
      */
     public function customRelation($related, Closure $baseConstraints, Closure $eagerConstraints = null, Closure $eagerMatcher = null) {

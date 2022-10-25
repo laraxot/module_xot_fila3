@@ -77,10 +77,10 @@ class DbAction extends XotBasePanelAction {
                     $res = $rows->get();
                 }
             } catch (QueryException $e) {
-                $msg = '<pre>'.$v['sql'].'</pre>'.'<pre>'.$e->getMessage().'</pre>';
+                $msg = '<pre>'.$v['sql'].'</pre><pre>'.$e->getMessage().'</pre>';
                 throw new Exception($msg.'['.__LINE__.']['.__FILE__.']');
             } catch (Exception $e) {
-                $msg = '<pre>'.$v['sql'].'</pre>'.'<pre>'.$e->getMessage().'</pre>';
+                $msg = '<pre>'.$v['sql'].'</pre><pre>'.$e->getMessage().'</pre>';
                 throw new Exception($msg.'['.__LINE__.']['.__FILE__.']');
             }
             if ($res->count() > 0 && $valid && isset($rows)) {

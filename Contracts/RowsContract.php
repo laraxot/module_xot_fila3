@@ -18,9 +18,9 @@ interface RowsContract {
      * @param string   $pageName
      * @param int|null $page
      *
-     * @throws \InvalidArgumentException
-     *
      * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
+     *
+     * @throws \InvalidArgumentException
      */
     public function paginate($perPage = null, $columns = ['*'], $pageName = 'page', $page = null);
 
@@ -71,9 +71,9 @@ interface RowsContract {
      * @param \Closure|\Illuminate\Database\Query\Builder|\Illuminate\Database\Query\Expression|string $column
      * @param string                                                                                   $direction
      *
-     * @throws \InvalidArgumentException
-     *
      * @return $this
+     *
+     * @throws \InvalidArgumentException
      */
     public function orderBy($column, $direction = 'asc');
 

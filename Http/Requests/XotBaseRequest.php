@@ -128,7 +128,7 @@ abstract class XotBaseRequest extends FormRequest {
             return $value;
         }
         $value_new = Carbon::createFromFormat('d/m/Y', $value);
-        if (false == $value_new) {
+        if (false === $value_new) {
             throw new Exception('['.__LINE__.']['.__FILE__.']');
         }
 
@@ -146,7 +146,7 @@ abstract class XotBaseRequest extends FormRequest {
             return $value;
         }
         $value_new = Carbon::createFromFormat('d/m/Y H:i', $value);
-        if (false == $value_new) {
+        if (false === $value_new) {
             throw new Exception('['.__LINE__.']['.__FILE__.']');
         }
 
@@ -164,7 +164,7 @@ abstract class XotBaseRequest extends FormRequest {
             return $value;
         }
         $value_new = Carbon::createFromFormat('d/m/Y H:i', $value);
-        if (false == $value_new) {
+        if (false === $value_new) {
             throw new Exception('['.__LINE__.']['.__FILE__.']');
         }
 

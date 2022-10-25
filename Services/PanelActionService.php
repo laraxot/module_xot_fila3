@@ -80,7 +80,7 @@ class PanelActionService {
         $action = $this->getActions()
             ->firstWhere('name', $name);
         if (! $action instanceof XotBasePanelAction) {
-            throw new Exception('['.__LINE__.']['.__FILE__.']['.gettype($action).']');
+            throw new Exception('['.__LINE__.']['.__FILE__.']['.\gettype($action).']');
         }
 
         return $action;

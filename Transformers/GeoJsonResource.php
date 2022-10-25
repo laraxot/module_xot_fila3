@@ -31,10 +31,10 @@ class GeoJsonResource extends ResCollection {
     /**
      * @param \Illuminate\Http\Request $request
      *
+     * @return array
+     *
      * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
      * @throws \ReflectionException
-     *
-     * @return array
      */
     public function toArray($request) {
         $lang = app()->getLocale();

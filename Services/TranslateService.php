@@ -1,7 +1,6 @@
 <?php
 
 /**
- *
  * da guardare
  * https://github.com/themsaid/laravel-langman.
  * https://blog.quickadminpanel.com/10-best-laravel-packages-for-multi-language-translations/.

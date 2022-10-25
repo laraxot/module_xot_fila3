@@ -152,25 +152,21 @@ class StubService {
         $search = [];
         $fields = [];
 
-
-       
-
         if (class_exists($this->model_class)) {
             $model = $this->getModel();
             $fields = $this->getFields();
             $dummy_id = $model->getRouteKeyName();
         } else {
             $fields = $this->getFieldsFromTable();
-  
+
             $dummy_id = $this->getPrimaryKeyFromTable();
 
-            //dddx($dummy_id );
+            // dddx($dummy_id );
         }
 
+        // dddx([var_export($fields, true),$dummy_id]);
 
-        //dddx([var_export($fields, true),$dummy_id]);
-
-        //dddx($dummy_id);
+        // dddx($dummy_id);
 
         // $dummy_class = basename($this->getClass());
         $dummy_class = collect(explode('\\', $this->getClass()))->slice(-1)->implode('\\');
@@ -348,7 +344,7 @@ class StubService {
             function ($input_name) use ($conn, $model) {
                 try {
                     $table_name = $conn->getTablePrefix().$model->getTable();
-                    if (! is_string($input_name)) {
+                    if (! \is_string($input_name)) {
                         throw new Exception('['.__LINE__.']['.__FILE__.']');
                     }
 
@@ -639,14 +635,14 @@ class StubService {
         $brother_class = $this->getModelNamespace().'\\'.$brother_file->getFilenameWithoutExtension();
         $brother = app($brother_class);
         $indexes = $brother->getConnection()->getDoctrineSchemaManager()->listTableIndexes($this->getTable());
-        
-        //dddx($brother->getConnection()->getSchemaBuilder()->getColumnListing($this->getTable()));
-        $primaryKey='id';
 
-        if(isset($indexes[ 'primary' ])){
-            $columns = $indexes[ 'primary' ]->getColumns();
-            if(isset($columns[0])){
-                $primaryKey=$columns[0];
+        // dddx($brother->getConnection()->getSchemaBuilder()->getColumnListing($this->getTable()));
+        $primaryKey = 'id';
+
+        if (isset($indexes['primary'])) {
+            $columns = $indexes['primary']->getColumns();
+            if (isset($columns[0])) {
+                $primaryKey = $columns[0];
             }
         }
 

@@ -68,11 +68,11 @@ class ArrayService {
     // ret array|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|string|\Symfony\Component\HttpFoundation\BinaryFileResponse
 
     /**
+     * @return \Symfony\Component\HttpFoundation\BinaryFileResponse|Renderable
+     *
      * @throws \PhpOffice\PhpSpreadsheet\Writer\Exception
      *
      * return array|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|string|\Symfony\Component\HttpFoundation\BinaryFileResponse
-     *
-     * @return \Symfony\Component\HttpFoundation\BinaryFileResponse|Renderable
      */
     public function toXLS() {
         if (1 === request('debug', 0) * 1) {
@@ -168,11 +168,11 @@ class ArrayService {
     // ret array|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|string|\Symfony\Component\HttpFoundation\BinaryFileResponse
 
     /**
+     * @return \Symfony\Component\HttpFoundation\BinaryFileResponse|Renderable
+     *
      * @throws \PhpOffice\PhpSpreadsheet\Writer\Exception
      *
      * return array|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|Illuminate\Contracts\View\View|string|\Symfony\Component\HttpFoundation\BinaryFileResponse
-     *
-     * @return \Symfony\Component\HttpFoundation\BinaryFileResponse|Renderable
      */
     public function toXLS_phpoffice() {
         $spreadsheet = new Spreadsheet();
@@ -249,7 +249,7 @@ class ArrayService {
         // HHVM fails at __set_state, so just use object cast for now
         $content = str_replace('stdClass::__set_state', '(object)', $content);
 
-        $content = '<'.'?php '.\chr(13).'return '.$content.';'.\chr(13);
+        $content = '<?php '.\chr(13).'return '.$content.';'.\chr(13);
         // $content = str_replace('stdClass::__set_state', '(object)', $content);
         File::makeDirectory(\dirname($filename), 0775, true, true);
         File::put($filename, $content);

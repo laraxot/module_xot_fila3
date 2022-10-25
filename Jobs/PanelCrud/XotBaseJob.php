@@ -81,7 +81,7 @@ abstract class XotBaseJob { /* implements ShouldQueue */
             }
         }
         if (isset($data['pivot'])) {
-            $func = $act.'Relationships'.'Pivot';
+            $func = $act.'RelationshipsPivot';
             static::$func($model, 'pivot', $data['pivot']);
         }
     }
@@ -118,9 +118,9 @@ abstract class XotBaseJob { /* implements ShouldQueue */
      * @param array         $data
      * @param PanelContract $panel
      *
-     * @throws \Illuminate\Validation\ValidationException
-     *
      * @return array
+     *
+     * @throws \Illuminate\Validation\ValidationException
      */
     public function prepareAndValidate($data, $panel) {
         $data0 = $data;
@@ -164,9 +164,10 @@ abstract class XotBaseJob { /* implements ShouldQueue */
 
     /**
      *  Method Modules\Xot\Jobs\PanelCrud\XotBaseJob::ConvDate() should return Carbon\Carbon|false|null but returns 0|0.0|''|'0'|array()|false|null.
+     *
      * @param object $field
      */
-    public function ConvDate( $field, string $value): ?Carbon {
+    public function ConvDate($field, string $value): ?Carbon {
         // Strict comparison using === between null and string will always evaluate to false.
         // if (null === $value) {
         //    return null;
@@ -189,7 +190,7 @@ abstract class XotBaseJob { /* implements ShouldQueue */
         // }
 
         $value_new = Carbon::createFromFormat('d/m/Y H:i', $value);
-        if (false == $value_new) {
+        if (false === $value_new) {
             // throw new Exception('['.__LINE__.']['.class_basename(__CLASS__).']');
             return null;
         }
@@ -206,7 +207,7 @@ abstract class XotBaseJob { /* implements ShouldQueue */
         //    return $value;
         // }
         $value_new = Carbon::createFromFormat('d/m/Y H:i', $value);
-        if (false == $value_new) {
+        if (false === $value_new) {
             return null;
         }
 

@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Modules\Xot\Services;
 
-use Exception;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;

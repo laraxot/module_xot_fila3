@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Modules\Xot\Contracts\RowsContract;
 
-//--- Services --
+// --- Services --
 
 class JobBatchPanel extends XotBasePanel {
     /**
@@ -74,7 +74,7 @@ class JobBatchPanel extends XotBasePanel {
      * @return RowsContract
      */
     public static function indexQuery(array $data, $query) {
-        //return $query->where('user_id', $request->user()->id);
+        // return $query->where('user_id', $request->user()->id);
         return $query;
     }
 

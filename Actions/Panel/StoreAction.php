@@ -17,8 +17,8 @@ class StoreAction {
         $row = $panel->getRow();
         $rules = [];
         $act = str_replace('\Panel\\', '\Model\\', __CLASS__);
-        $row=app('\\'.$act)->execute($row, $data, $rules);
-        $panel=$panel->setRow($row);
+        $row = app('\\'.$act)->execute($row, $data, $rules);
+        $panel = $panel->setRow($row);
         $parent = $panel->getParent();
         if (\is_object($parent)) {
             $parent_row = $parent->getRow();

@@ -115,7 +115,7 @@ abstract class XotBasePanelAction {
             $title = $trans;
         }
 
-        if (! is_string($title)) {
+        if (! \is_string($title)) {
             return '---';
         }
 

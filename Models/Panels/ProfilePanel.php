@@ -7,7 +7,7 @@ namespace Modules\Xot\Models\Panels;
 use Illuminate\Http\Request;
 use Modules\LU\Models\User;
 
-//--- Services --
+// --- Services --
 
 class ProfilePanel extends XotBasePanel {
     /**
@@ -82,16 +82,16 @@ class ProfilePanel extends XotBasePanel {
      * Undocumented function.
      */
     public function isSuperAdmin(): bool {
-        //232 Access to an undefined property Illuminate\Database\Eloquent\Model::$user.
+        // 232 Access to an undefined property Illuminate\Database\Eloquent\Model::$user.
 
-        //$user = $this->row->getRelationValue('user');
+        // $user = $this->row->getRelationValue('user');
         // 89     Access to an undefined property object::$perm_type
-        //$user_id = $this->row->getAttributeValue('user_id');
-        //$user = User::where('id', $user_id)->first();
-        //coi metodi sopra fa contento phpstan ma fa troppe query
+        // $user_id = $this->row->getAttributeValue('user_id');
+        // $user = User::where('id', $user_id)->first();
+        // coi metodi sopra fa contento phpstan ma fa troppe query
         $user = $this->row->user;
         try {
-            if (\is_object($user->perm) && $user->perm->perm_type >= 4) {  //superadmin
+            if (\is_object($user->perm) && $user->perm->perm_type >= 4) {  // superadmin
                 return true;
             }
         } catch (\Exception $e) {
@@ -117,7 +117,7 @@ class ProfilePanel extends XotBasePanel {
             if (isset($this->row->user_id) && method_exists($this->row, 'user')) {
                 $this->row->user()->create();
             }
-            //dddx($this->row);
+            // dddx($this->row);
             return null;
         }
 

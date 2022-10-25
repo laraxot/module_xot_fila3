@@ -27,18 +27,17 @@ abstract class XotBasePanelPolicy {
     // *
     public function before($user, $ability) {
         // *
-       
+
         if (\is_object($user)) {
             $route_params = getRouteParameters();
             $profile = ProfileService::make()->get($user);
             if (isset($route_params['module'])) {
                 $module = Module::find($route_params['module']);
                 $module_name = '';
-                if (null != $module) {
+                if (null !== $module) {
                     $module_name = $module->getName();
                 }
                 $has_area = $profile->hasArea($module_name);
-                
 
                 return $has_area || $profile->isSuperAdmin();
             }
@@ -82,16 +81,15 @@ abstract class XotBasePanelPolicy {
         }
 
         $route_params = $panel->getRouteParams();
-        
-        if (isset($route_params['module']) && null != $user) {
+
+        if (isset($route_params['module']) && null !== $user) {
             $module = Module::find($route_params['module']);
             $module_name = '';
-            if (null != $module) {
+            if (null !== $module) {
                 $module_name = $module->getName();
             }
 
             $profile = ProfileService::make()->get($user);
-            
 
             return $profile->hasArea($module_name);
         }

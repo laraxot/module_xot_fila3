@@ -5,8 +5,6 @@ declare(strict_types=1);
 namespace Modules\Xot\Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Illuminate\Support\Str;
-
 use Modules\Xot\Models\Module;
 
 class ModuleFactory extends Factory {

@@ -7,7 +7,6 @@ declare(strict_types=1);
 
 namespace Modules\Xot\Services;
 
-use Exception;
 use Illuminate\Support\Collection;
 
 /**
@@ -18,8 +17,8 @@ class ConfigService {
     private static ?self $instance = null;
 
     public function __construct() {
-        //---
-        //require_once __DIR__.'/vendor/autoload.php';
+        // ---
+        // require_once __DIR__.'/vendor/autoload.php';
     }
 
     /**
@@ -39,5 +38,4 @@ class ConfigService {
     public static function make(): self {
         return static::getInstance();
     }
-
 }

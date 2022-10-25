@@ -6,12 +6,12 @@ namespace Modules\Xot\Services;
 
 use Exception;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\View;
+use Illuminate\Support\NamespacedItemResolver;
 use Illuminate\Support\Str;
 use Nwidart\Modules\Facades\Module;
-use Illuminate\Support\Facades\File;
-use Illuminate\Support\Facades\View;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\NamespacedItemResolver;
 
 /**
  * Class FileService.
@@ -160,7 +160,7 @@ class FileService {
         return null;
     }
 
-    public static function assetPath(string $asset):string{
+    public static function assetPath(string $asset): string {
         /*
         $resolver=app(NamespacedItemResolver::class);
         dddx($resolver->parseKey($asset));
@@ -169,15 +169,15 @@ class FileService {
     1 => "css/ark"
     2 => "css"
         */
-        //---------- WIP -----------
-        //dddx(get_class_methods(app()));
-        //dddx(Storage::disk('notify'));
-        //dddx(Module::assetPath('notify')); ///var/www/html/ptvx/public_html/modules/notify
-        //$module=Module::find('notify');
-        //dddx([get_class_methods($module),$module->getPath()]);
-        [$ns,$file]=explode('::',$asset);
+        // ---------- WIP -----------
+        // dddx(get_class_methods(app()));
+        // dddx(Storage::disk('notify'));
+        // dddx(Module::assetPath('notify')); ///var/www/html/ptvx/public_html/modules/notify
+        // $module=Module::find('notify');
+        // dddx([get_class_methods($module),$module->getPath()]);
+        [$ns,$file] = explode('::', $asset);
         $module_path = Module::getModulePath($ns).'Resources';
-        $path=$module_path.'/'.$file;
+        $path = $module_path.'/'.$file;
 
         return $path;
     }
@@ -837,17 +837,15 @@ class FileService {
     }
 
     /**
-     * Undocumented function
-     *
-     * @param string $class_name
-     * @return string|null
+     * Undocumented function.
      */
-    public static function getFileNameByClassName(string $class_name):?string {
-        try{
+    public static function getFileNameByClassName(string $class_name): ?string {
+        try {
             $a = new \ReflectionClass($class_name);
-        }catch(Exception $e){
+        } catch (Exception $e) {
             return null;
         }
+
         return $a->getFileName();
     }
 }

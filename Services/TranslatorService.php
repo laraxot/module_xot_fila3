@@ -37,7 +37,7 @@ class TranslatorService extends BaseTranslator {
         // superdump([$key, $replace , $locale , $fallback ]);
 
         // *
-        if (null == $locale) {
+        if (null === $locale) {
             $locale = app()->getLocale();
         }
         // */
@@ -96,8 +96,8 @@ class TranslatorService extends BaseTranslator {
         $trans = trans();
         $path = collect($trans->getLoader()->namespaces())->flip()->search($namespace);
         $filename = $path.'/'.$lang.'/'.$group.'.php';
-        $filename = str_replace(['/', '\\'], [DIRECTORY_SEPARATOR, DIRECTORY_SEPARATOR], $filename);
-        $lang_dir = dirname(dirname($filename));
+        $filename = str_replace(['/', '\\'], [\DIRECTORY_SEPARATOR, \DIRECTORY_SEPARATOR], $filename);
+        $lang_dir = \dirname($filename, 2);
 
         return [
             'key' => str_replace(['[', ']'], ['.', ''], $key),
@@ -127,7 +127,7 @@ class TranslatorService extends BaseTranslator {
         // ->dd()
             ->filter(
                 function ($v, $k) {
-                    return $v['dir_exists'] && strlen($v['lang_dir']) > 3;
+                    return $v['dir_exists'] && \strlen($v['lang_dir']) > 3;
                 }
             )
         ->groupBy(['ns_group'])  // risparmio salvataggi
@@ -136,7 +136,7 @@ class TranslatorService extends BaseTranslator {
         foreach ($data as $ns_group => $data0) {
             $rows = trans($ns_group);
 
-            if (! is_array($rows)) {
+            if (! \is_array($rows)) {
                 // dddx($rows);  //---- dovrei leggere il file o controllarlo intanto lo blokko non voglio sovrascrivere
                 $rows = [];
             }
@@ -166,7 +166,7 @@ class TranslatorService extends BaseTranslator {
      */
     public static function set($key, $value) {
         $lang = app()->getLocale();
-        if (trans($key) == $value) {
+        if (trans($key) === $value) {
             return;
         } // non serve salvare
 
@@ -177,7 +177,7 @@ class TranslatorService extends BaseTranslator {
         $item = $tmp[2];
         $trans = trans();
         $path = collect($trans->getLoader()->namespaces())->flip()->search($namespace);
-        $filename = $path.DIRECTORY_SEPARATOR.$lang.DIRECTORY_SEPARATOR.$group.'.php';
+        $filename = $path.\DIRECTORY_SEPARATOR.$lang.\DIRECTORY_SEPARATOR.$group.'.php';
 
         $trad = $namespace.'::'.$group;
         $rows = trans($trad);
@@ -211,7 +211,7 @@ class TranslatorService extends BaseTranslator {
         [$namespace,$group,$item] = $translator->parseKey($key);
         $trans = trans();
         $path = collect($trans->getLoader()->namespaces())->flip()->search($namespace);
-        $file_path = $path.DIRECTORY_SEPARATOR.$lang.DIRECTORY_SEPARATOR.$group.'.php';
+        $file_path = $path.\DIRECTORY_SEPARATOR.$lang.\DIRECTORY_SEPARATOR.$group.'.php';
         $file_path = FileService::fixPath($file_path);
 
         return $file_path;
@@ -230,7 +230,7 @@ class TranslatorService extends BaseTranslator {
             // $original = Lang::get($key, []);
         }
 
-        if (! is_array($original)) {
+        if (! \is_array($original)) {
             dddx(
                 [
                     'message' => 'original is not an array',
@@ -247,7 +247,7 @@ class TranslatorService extends BaseTranslator {
             ->merge($data)
             ->all();
 
-        if ($original != $merged) {
+        if ($original !== $merged) {
             ArrayService::save(['data' => $merged, 'filename' => $file_path]);
             Session::flash('status', 'Modifica Eseguita! ['.$file_path.']');
         }
@@ -265,7 +265,7 @@ class TranslatorService extends BaseTranslator {
                     $k = $key.'.'.$item;
                     $v = trans($k);
 
-                    return $k == $v;
+                    return $k === $v;
                 }
             )->all();
         $missing = array_combine($missing, $missing);
@@ -273,7 +273,7 @@ class TranslatorService extends BaseTranslator {
     }
 
     public static function getArrayTranslated(string $key, array $data): array {
-        TranslatorService::addMissing($key, $data);
+        self::addMissing($key, $data);
 
         $data = collect($data)->map(
             function ($item) use ($key) {

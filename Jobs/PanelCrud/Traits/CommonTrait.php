@@ -123,7 +123,7 @@ trait CommonTrait {
         }
 
         if (isset($data['pivot'])) {
-            $func = $act.'Relationships'.'Pivot'; // updateRelationshipsMorphOne
+            $func = $act.'RelationshipsPivot'; // updateRelationshipsMorphOne
             // $this->$func(['model'=>$model,'name'=>'pivot','data'=>$data['pivot']]);
             // self::$func(['model'=>$model,'name'=>'pivot','data'=>$data['pivot']]);
             $params['name'] = 'pivot';
@@ -164,9 +164,9 @@ trait CommonTrait {
      * @param array         $data
      * @param PanelContract $panel
      *
-     * @throws \Illuminate\Validation\ValidationException
-     *
      * @return array
+     *
+     * @throws \Illuminate\Validation\ValidationException
      */
     public function prepareAndValidate($data, $panel) {
         // $data0 = $data;
@@ -181,7 +181,6 @@ trait CommonTrait {
     }
 
     /**
-     * @param $field
      * @param mixed $value
      *
      * @return Carbon|false|null
@@ -196,7 +195,6 @@ trait CommonTrait {
     }
 
     /**
-     * @param $field
      * @param mixed $value
      *
      * @return Carbon|false|null
@@ -211,7 +209,6 @@ trait CommonTrait {
     }
 
     /**
-     * @param $field
      * @param mixed $value
      *
      * @return Carbon|false|null

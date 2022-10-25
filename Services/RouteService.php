@@ -23,18 +23,18 @@ class RouteService {
         if (isset($params['in_admin'])) {
             return $params['in_admin'];
         }
-        //dddx(ThemeService::__getStatic('in_admin'));
+        // dddx(ThemeService::__getStatic('in_admin'));
         /* Cannot call method get() on mixed
         if (null !== config()->get('in_admin')) {
             return config()->get('in_admin');
         }
         */
-        if ('admin' == \Request::segment(1)) {
+        if ('admin' === \Request::segment(1)) {
             return true;
         }
-        $segments = (\Request::segments());
-        if (count($segments) > 0 && 'livewire' == $segments[0]) {
-            if (true == session('in_admin')) {
+        $segments = \Request::segments();
+        if (\count($segments) > 0 && 'livewire' === $segments[0]) {
+            if (true === session('in_admin')) {
                 return true;
             }
         }
@@ -42,7 +42,7 @@ class RouteService {
         return false;
     }
 
-    //--- sarebbe deprecata ma il mal di testa
+    // --- sarebbe deprecata ma il mal di testa
 
     public static function urlAct(array $params): string {
         $query = [];
@@ -59,17 +59,17 @@ class RouteService {
         */
         $route_action = (string) \Route::currentRouteAction();
         $old_act = Str::snake(Str::after($route_action, '@'));
-        //Cannot call method getName() on mixed.
-        $routename = ''; //Request::route()->getName();
+        // Cannot call method getName() on mixed.
+        $routename = ''; // Request::route()->getName();
         $old_act_route = last(explode('.', $routename));
-        if (! is_string($old_act_route)) {
+        if (! \is_string($old_act_route)) {
             throw new Exception('['.__LINE__.']['.class_basename(__CLASS__).']');
         }
 
         $routename_act = Str::before($routename, $old_act_route).''.$act;
         $route_current = \Route::current();
         $route_params = [];
-        if (null != $route_current) {
+        if (null !== $route_current) {
             $route_params = $route_current->parameters();
             $routename = $route_current->getName();
         }
@@ -190,19 +190,19 @@ class RouteService {
         return $url;
     }
     */
-    //se n=0 => 'container0'
+    // se n=0 => 'container0'
     // se n=1 => 'containers.container1'
 
     /**
      * @return string
      */
     public static function getRoutenameN(array $params) {
-        //default vars
+        // default vars
         $n = 0;
         $act = 'show';
         extract($params);
         $tmp = [];
-        //dddx(inAdmin());
+        // dddx(inAdmin());
         if (inAdmin($params)) {
             $tmp[] = 'admin';
         }
@@ -369,12 +369,12 @@ class RouteService {
      */
     public static function getAct(): string {
         $route_action = \Route::currentRouteAction();
-        if (null == $route_action) {
+        if (null === $route_action) {
             throw new \Exception('$route_action is null');
         }
-        $act = (Str::after($route_action, '@'));
+        $act = Str::after($route_action, '@');
 
-        //--- i prossimi 2 if son per i controller con metodo invoke
+        // --- i prossimi 2 if son per i controller con metodo invoke
         if (Str::contains($act, '\\')) {
             $act = Str::afterLast($act, '\\');
         }
@@ -393,7 +393,7 @@ class RouteService {
      */
     public static function getModuleName(): string {
         $route_action = \Route::currentRouteAction();
-        if (null == $route_action) {
+        if (null === $route_action) {
             throw new \Exception('$route_action is null');
         }
         $mod_name = Str::between($route_action, 'Modules\\', '\Http');
@@ -408,7 +408,7 @@ class RouteService {
      */
     public static function getControllerName(): string {
         $route_action = \Route::currentRouteAction();
-        if (null == $route_action) {
+        if (null === $route_action) {
             throw new \Exception('$route_action is null');
         }
         $name = Str::between($route_action, 'Http\Controllers\\', 'Controller');
@@ -427,7 +427,7 @@ class RouteService {
         $path = collect($tmp_arr)
             ->filter(
                 function ($item) {
-                    return ! in_array($item, ['Module', 'Item']);
+                    return ! \in_array($item, ['Module', 'Item'], true);
                 }
             )
             ->map(
