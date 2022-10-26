@@ -118,22 +118,13 @@ class PanelFormService {
         $row = isset($params['row']) ? $params['row'] : $this->panel->getRow();
         foreach ($fields as $field) {
             $value = Arr::get($row, $field->name);
-<<<<<<< HEAD
             if (\is_object($value)) {
                 switch (\get_class($value)) {
-=======
-            if (is_object($value)) {
-                switch (get_class($value)) {
->>>>>>> d34c029 (up)
                     case 'Illuminate\Support\Carbon':
                         $value = $value->format('Y-m-d\TH:i');
                         break;
                     default:
-<<<<<<< HEAD
                         dddx(\get_class($value));
-=======
-                        dddx(get_class($value));
->>>>>>> d34c029 (up)
                         break;
                 }
             }
@@ -221,11 +212,7 @@ class PanelFormService {
             $trans_key = $module_name_low.'::'.strtolower(class_basename($row)).'.act.'.$params['method'];
             $trans = trans($trans_key);
             $title = $trans;
-<<<<<<< HEAD
             if ($trans === $trans_key && ! config('xra.show_trans_key')) {
-=======
-            if ($trans == $trans_key && ! config('xra.show_trans_key')) {
->>>>>>> d34c029 (up)
                 $title = class_basename($row); // .' '.$params['method'];
             }
 
@@ -336,11 +323,7 @@ class PanelFormService {
                 'getRelatedPivotKeyName', // relation  BelongsToMany
                 'getRelatedKeyName', // relation  BelongsToMany
             ];
-<<<<<<< HEAD
             if ('index' !== $act) { // nella lista voglio visualizzare l'id
-=======
-            if ('index' != $act) { // nella lista voglio visualizzare l'id
->>>>>>> d34c029 (up)
                 $methods[] = 'getLocalKeyName';
             }
 
@@ -359,14 +342,8 @@ class PanelFormService {
                         $item->except = [];
                     }
 
-                    // !in_array($item->type,['Password']) &&
-<<<<<<< HEAD
                     return ! \in_array($act, $item->except, true) &&
                         ! \in_array($item->name, $excepts, true);
-=======
-                    return ! in_array($act, $item->except) &&
-                        ! in_array($item->name, $excepts);
->>>>>>> d34c029 (up)
                 }
             );
 

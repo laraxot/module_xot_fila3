@@ -82,11 +82,7 @@ abstract class XotBasePanelPolicy {
 
         $route_params = $panel->getRouteParams();
 
-<<<<<<< HEAD
         if (isset($route_params['module']) && null !== $user) {
-=======
-        if (isset($route_params['module']) && null != $user) {
->>>>>>> d34c029 (up)
             $module = Module::find($route_params['module']);
             $module_name = '';
             if (null !== $module) {

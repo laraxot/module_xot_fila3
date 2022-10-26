@@ -11,10 +11,6 @@ namespace Modules\Xot\Models;
  * Modules\Xot\Models\FailedJob.
  *
  * @property int                                                                  $id
-<<<<<<< HEAD
-=======
- * @property string                                                               $uuid
->>>>>>> d34c029 (up)
  * @property string                                                               $connection
  * @property string                                                               $queue
  * @property string                                                               $payload
@@ -33,10 +29,6 @@ namespace Modules\Xot\Models;
  * @method static \Illuminate\Database\Eloquent\Builder|FailedJob  whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|FailedJob  wherePayload($value)
  * @method static \Illuminate\Database\Eloquent\Builder|FailedJob  whereQueue($value)
-<<<<<<< HEAD
-=======
- * @method static \Illuminate\Database\Eloquent\Builder|FailedJob  whereUuid($value)
->>>>>>> d34c029 (up)
  *
  * @mixin \Eloquent
  */

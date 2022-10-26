@@ -222,11 +222,7 @@ class ProfileService {
     }
 
     public function getPanel(): PanelContract {
-<<<<<<< HEAD
         if (null === $this->profile) {
-=======
-        if (null == $this->profile) {
->>>>>>> d34c029 (up)
             // dddx(['message' => 'to fix', 'user' => $this->user, 'profile' => $this->profile]);
             throw new Exception('['.__LINE__.']['.class_basename(__CLASS__).']');
         }
@@ -237,11 +233,7 @@ class ProfileService {
     }
 
     public function getProfilePanel(): PanelContract {
-<<<<<<< HEAD
         if (null === $this->profile) {
-=======
-        if (null == $this->profile) {
->>>>>>> d34c029 (up)
             // dddx(['message' => 'to fix', 'user' => $this->user, 'profile' => $this->profile]);
             throw new Exception('['.__LINE__.']['.class_basename(__CLASS__).']');
         }
