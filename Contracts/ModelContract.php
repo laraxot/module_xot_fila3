@@ -44,6 +44,5 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  *
  * @mixin  \Eloquent
  */
-interface ModelContract
-{
+interface ModelContract {
 }

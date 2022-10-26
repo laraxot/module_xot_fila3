@@ -9,8 +9,7 @@ use Illuminate\Http\Request;
 
 use Modules\Xot\Models\Panels\XotBasePanel;
 
-class GeoJsonResourcePanel extends XotBasePanel
-{
+class GeoJsonResourcePanel extends XotBasePanel {
     /**
      * The model the resource corresponds to.
      */
@@ -29,8 +28,7 @@ class GeoJsonResourcePanel extends XotBasePanel
      *   'rules_messages' => ['it'=>['required'=>'Nome Obbligatorio']],
      *   'value'=>'..',.
      */
-    public function fields(): array
-    {
+    public function fields(): array {
         return [];
     }
 
@@ -39,8 +37,7 @@ class GeoJsonResourcePanel extends XotBasePanel
      *
      * @return array<array-key, mixed>
      */
-    public function tabs(): array
-    {
+    public function tabs(): array {
         $tabs_name = [];
 
         return $tabs_name;
@@ -51,8 +48,7 @@ class GeoJsonResourcePanel extends XotBasePanel
      *
      * @return array
      */
-    public function cards(Request $request)
-    {
+    public function cards(Request $request) {
         return [];
     }
 
@@ -63,8 +59,7 @@ class GeoJsonResourcePanel extends XotBasePanel
      *
      * @return array<array-key, mixed>
      */
-    public function filters(Request $request = null): array
-    {
+    public function filters(Request $request = null): array {
         return [];
     }
 
@@ -73,8 +68,7 @@ class GeoJsonResourcePanel extends XotBasePanel
      *
      * @return array
      */
-    public function lenses(Request $request)
-    {
+    public function lenses(Request $request) {
         return [];
     }
 
@@ -83,8 +77,7 @@ class GeoJsonResourcePanel extends XotBasePanel
      *
      * @return array<array-key, mixed>
      */
-    public function actions(): array
-    {
+    public function actions(): array {
         return [];
     }
 }

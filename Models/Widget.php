@@ -56,8 +56,7 @@ use Modules\Xot\Models\Traits\WidgetTrait;
  *
  * @mixin \Eloquent
  */
-class Widget extends BaseModel
-{
+class Widget extends BaseModel {
     use WidgetTrait;
 
     /**
@@ -75,8 +74,7 @@ class Widget extends BaseModel
     /**
      * @return \Illuminate\Database\Eloquent\Relations\MorphTo
      */
-    public function linked()
-    {
+    public function linked() {
         return $this->morphTo('post');
     }
 
@@ -85,8 +83,7 @@ class Widget extends BaseModel
      *
      * @return int|mixed
      */
-    public function getPosAttribute($value)
-    {
+    public function getPosAttribute($value) {
         if (null !== $value) {
             return $value;
         }
@@ -98,8 +95,7 @@ class Widget extends BaseModel
     /**
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
-    public function toHtml(array $params = null)
-    {
+    public function toHtml(array $params = null) {
         /**
          * @phpstan-var view-string
          */

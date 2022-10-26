@@ -12,13 +12,11 @@ use Modules\Xot\Models\Panels\Actions\XotBasePanelAction;
 /**
  * Undocumented class.
  */
-class TreeService
-{
+class TreeService {
     /**
      * @param \Illuminate\Database\Eloquent\Collection|Model[] $coll
      */
-    public static function mapItems(Collection $coll, ?PanelContract $parent, /* bool $in_admin, */ array $route_params): Collection
-    {
+    public static function mapItems(Collection $coll, ?PanelContract $parent, /* bool $in_admin, */ array $route_params): Collection {
         return $coll->map(
             function ($item) use ($parent, $route_params) {
                 $panel = PanelService::make()->get($item)->setParent($parent);

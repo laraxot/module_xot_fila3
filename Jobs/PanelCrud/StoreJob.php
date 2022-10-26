@@ -16,13 +16,11 @@ use Modules\Xot\Services\PanelService;
 /**
  * Class StoreJob.
  */
-class StoreJob extends XotBaseJob
-{
+class StoreJob extends XotBaseJob {
     /**
      * Execute the job.
      */
-    public function handle(): PanelContract
-    {
+    public function handle(): PanelContract {
         $row = $this->panel->getRow();
         $this->data = $this->prepareAndValidate($this->data, $this->panel);
         $data = $this->data;
@@ -102,8 +100,7 @@ class StoreJob extends XotBaseJob
         return $this->panel;
     }
 
-    public function saveParentHasManyDeep(): void
-    {
+    public function saveParentHasManyDeep(): void {
     }
 
     /*
@@ -182,8 +179,7 @@ class StoreJob extends XotBaseJob
     //end handle
     */
 
-    public function storeRelationshipsPivot(Model $model, string $name, array $data): void
-    {
+    public function storeRelationshipsPivot(Model $model, string $name, array $data): void {
         /*
         extract($params);
         $types=Str::plural($container);
@@ -195,8 +191,7 @@ class StoreJob extends XotBaseJob
         */
     }
 
-    public function storeRelationshipsHasOne(Model $model, string $name, array $data): void
-    {
+    public function storeRelationshipsHasOne(Model $model, string $name, array $data): void {
         $rows = $model->$name();
         $related = $rows->getRelated();
 
@@ -232,8 +227,7 @@ class StoreJob extends XotBaseJob
     /**
      * Undocumented function.
      */
-    public function storeRelationshipsHasMany(Model $model, string $name, array $data): void
-    {
+    public function storeRelationshipsHasMany(Model $model, string $name, array $data): void {
         // $rows = $model->$name();
     }
 
@@ -242,8 +236,7 @@ class StoreJob extends XotBaseJob
      *
      * @param array|string|int $data
      */
-    public function storeRelationshipsBelongsTo(Model $model, string $name, $data): void
-    {
+    public function storeRelationshipsBelongsTo(Model $model, string $name, $data): void {
         if (\is_string($data) || \is_int($data)) {
             $model->$name()->associate($data);
             // $model->save(); //non dovrebbe essere necessario
@@ -291,8 +284,7 @@ class StoreJob extends XotBaseJob
     /**
      * Undocumented function.
      */
-    public function storeRelationshipsMorphOne(Model $model, string $name, array $data): void
-    {
+    public function storeRelationshipsMorphOne(Model $model, string $name, array $data): void {
         if (! isset($data['lang']) /* && in_array('lang', $row->getFillable()) */) {
             $data['lang'] = app()->getLocale();
         }
@@ -303,8 +295,7 @@ class StoreJob extends XotBaseJob
         }
     }
 
-    public function storeRelationshipsMorphToMany(Model $model, string $name, array $data): void
-    {
+    public function storeRelationshipsMorphToMany(Model $model, string $name, array $data): void {
         // dddx(\Request::all());
         // return ;
 
@@ -355,8 +346,7 @@ class StoreJob extends XotBaseJob
         }
     }
 
-    public function storeRelationshipsHasManyThrough(Model $model, string $name, array $data): void
-    {
+    public function storeRelationshipsHasManyThrough(Model $model, string $name, array $data): void {
         $rows = $model->$name();
         $throughKey = $model->$name()->getRelated()->getKeyName();
 
@@ -375,8 +365,7 @@ class StoreJob extends XotBaseJob
     /**
      * Undocumented function.
      */
-    public function storeRelationshipsBelongsToMany(Model $model, string $name, array $data): void
-    {
+    public function storeRelationshipsBelongsToMany(Model $model, string $name, array $data): void {
         if (isset($data['from']) || isset($data['to'])) {
             $this->saveMultiselectTwoSides($model, $name, $data);
 
@@ -388,8 +377,7 @@ class StoreJob extends XotBaseJob
     /**
      * Undocumented function.
      */
-    public function saveMultiselectTwoSides(Model $model, string $name, array $data): void
-    {
+    public function saveMultiselectTwoSides(Model $model, string $name, array $data): void {
         // passo request o direttamente data ?
 
         $items = $model->$name();

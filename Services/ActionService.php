@@ -11,8 +11,7 @@ use Exception;
 /**
  * Class ActionService.
  */
-class ActionService
-{
+class ActionService {
     /**
      * Undocumented function.
      *
@@ -21,8 +20,7 @@ class ActionService
      *
      * @return mixed
      */
-    public static function __callStatic($name, $arguments)
-    {
+    public static function __callStatic($name, $arguments) {
         // $xot = TenantService::config('xra');
         $xot = config('xra');
         if (! \is_array($xot)) {

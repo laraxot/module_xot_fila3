@@ -7,6 +7,5 @@ namespace Modules\Xot\Models\Policies;
 /**
  * Class WidgetPolicy.
  */
-class WidgetPolicy extends XotBasePolicy
-{
+class WidgetPolicy extends XotBasePolicy {
 }

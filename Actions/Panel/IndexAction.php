@@ -7,16 +7,13 @@ namespace Modules\Xot\Actions\Panel;
 use Modules\Xot\Contracts\PanelContract;
 use Spatie\QueueableAction\QueueableAction;
 
-class IndexAction
-{
+class IndexAction {
     use QueueableAction;
 
-    public function __construct()
-    {
+    public function __construct() {
     }
 
-    public function execute(PanelContract $panel, array $data): PanelContract
-    {
+    public function execute(PanelContract $panel, array $data): PanelContract {
         return $panel;
     }
 }

@@ -12,10 +12,8 @@ use Modules\Xot\Contracts\PanelContract;
 /**
  * Class DestroyJob.
  */
-class DestroyJob extends XotBaseJob
-{
-    public function handle(): PanelContract
-    {
+class DestroyJob extends XotBaseJob {
+    public function handle(): PanelContract {
         $row = $this->panel->getRow();
         // per cancellare tabelle collegate esempio se cancello "profilo" voglio cancellare anche "utente"
         if (method_exists($this->panel, 'destroyCallback')) {

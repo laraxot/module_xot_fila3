@@ -7,16 +7,13 @@ namespace Modules\Xot\Actions\Model\Update;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\QueueableAction\QueueableAction;
 
-class HasOneAction
-{
+class HasOneAction {
     use QueueableAction;
 
-    public function __construct()
-    {
+    public function __construct() {
     }
 
-    public function execute(Model $row, object $relation)
-    {
+    public function execute(Model $row, object $relation) {
         $rows = $relation->rows;
         // $rows= $row->{$relation->name}();
         if ($rows->exists()) {

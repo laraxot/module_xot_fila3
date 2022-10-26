@@ -11,14 +11,12 @@ use Nwidart\Modules\Facades\Module;
 /**
  * Class ClearDuplicatesTransAction.
  */
-class ClearDuplicatesTransAction extends XotBasePanelAction
-{
+class ClearDuplicatesTransAction extends XotBasePanelAction {
     public bool $onContainer = true;
 
     public string $icon = '<i class="fas fa-hammer"></i>';
 
-    public function handle(): void
-    {
+    public function handle(): void {
         // return 'qui';
         $modules = Module::all();
         foreach ($modules as $module) {
@@ -32,8 +30,7 @@ class ClearDuplicatesTransAction extends XotBasePanelAction
         }
     }
 
-    public function fixFiles(array $files): void
-    {
+    public function fixFiles(array $files): void {
         foreach ($files as $file) {
             $path = $file->getRealPath();
             try {

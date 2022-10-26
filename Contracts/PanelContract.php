@@ -17,8 +17,7 @@ use Modules\Xot\Models\Panels\Actions\XotBasePanelAction;
  *
  * @property Model $row
  */
-interface PanelContract
-{
+interface PanelContract {
     public function setRow(Model $row): self;
 
     // public function setRows(Relation $rows): self;

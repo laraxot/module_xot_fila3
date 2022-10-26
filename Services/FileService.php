@@ -16,13 +16,11 @@ use Nwidart\Modules\Facades\Module;
 /**
  * Class FileService.
  */
-class FileService
-{
+class FileService {
     /**
      * 18     Method Modules\Xot\Services\FileService::asset() should return string but return statement is missing.
      */
-    public static function asset(string $path): string
-    {
+    public static function asset(string $path): string {
         /*
             to DOOOO
             viewNamespaceToPath     => /images/prova.png
@@ -122,8 +120,7 @@ class FileService
      *
      * @return void
      */
-    public static function createDirectoryForFilename(string $filename)
-    {
+    public static function createDirectoryForFilename(string $filename) {
         if (! File::exists(\dirname($filename))) {
             File::makeDirectory(\dirname($filename), 0755, true, true);
         }
@@ -132,8 +129,7 @@ class FileService
     /**
      * @return string|string[]
      */
-    public static function viewNamespaceToDir(string $view)
-    {
+    public static function viewNamespaceToDir(string $view) {
         $ns = Str::before($view, '::');
         // dddx(Str::after($view, '::'));
         $relative_path = str_replace('.', '/', Str::after($view, '::'));
@@ -147,8 +143,7 @@ class FileService
     /**
      * @return string
      */
-    public static function getViewNameSpacePath(string $ns): ?string
-    {
+    public static function getViewNameSpacePath(string $ns): ?string {
         // Strict comparison using === between null and string will always evaluate to false.
         // if (null === $ns) {
         //    return null;
@@ -165,8 +160,7 @@ class FileService
         return null;
     }
 
-    public static function assetPath(string $asset): string
-    {
+    public static function assetPath(string $asset): string {
         /*
         $resolver=app(NamespacedItemResolver::class);
         dddx($resolver->parseKey($asset));
@@ -188,8 +182,7 @@ class FileService
         return $path;
     }
 
-    public static function getViewNameSpaceUrl(string $ns, string $path1): string
-    {
+    public static function getViewNameSpaceUrl(string $ns, string $path1): string {
         if (\in_array($ns, ['pub_theme', 'adm_theme'], true)) {
             $path = self::getViewNameSpacePath($ns);
         } else {
@@ -247,8 +240,7 @@ class FileService
         return $url;
     }
 
-    public static function getViewNameSpaceUrl_nomodule(string $ns, string $path1): string
-    {
+    public static function getViewNameSpaceUrl_nomodule(string $ns, string $path1): string {
         $path = (string) self::getViewNameSpacePath($ns);
         /* 4 debug
         if(basename($path1)=='font-awesome.min.css'){
@@ -301,8 +293,7 @@ class FileService
         return asset($path_pub);
     }
 
-    public static function path2Url(string $path, string $ns): string
-    {
+    public static function path2Url(string $path, string $ns): string {
         if (Str::startsWith($path, public_path('/'))) {
             $relative = mb_substr($path, mb_strlen(public_path('/')));
 
@@ -335,8 +326,7 @@ class FileService
         return asset($path_pub);
     }
 
-    public static function viewThemeNamespaceToAsset(string $key): string
-    {
+    public static function viewThemeNamespaceToAsset(string $key): string {
         $ns_name = Str::before($key, '::');
         // $ns_dir = View::getFinder()->getHints()[$ns_name][0];
         $ns_dir = self::getViewNameSpacePath($ns_name);
@@ -384,8 +374,7 @@ class FileService
         return $asset;
     }
 
-    public static function viewNamespaceToAsset(string $key): string
-    {
+    public static function viewNamespaceToAsset(string $key): string {
         $ns_name = Str::before($key, '::');
 
         // $ns_dir = View::getFinder()->getHints()[$ns_name][0];
@@ -504,8 +493,7 @@ class FileService
     */
     // *
 
-    public static function getFileUrl(string $path): string
-    {
+    public static function getFileUrl(string $path): string {
         if (Str::startsWith($path, '//')) {
         } elseif (Str::startsWith($path, '/')) {
             $path = mb_substr($path, 1);
@@ -540,8 +528,7 @@ class FileService
     /**
      * @param string[] $files
      */
-    public static function viewNamespaceToUrl($files): array
-    {
+    public static function viewNamespaceToUrl($files): array {
         foreach ($files as $k => $filePath) {
             // TODO testare con ARTISAN vendor:publish
             $pos = mb_strpos($filePath, '::');
@@ -603,8 +590,7 @@ class FileService
 
     // */
 
-    public static function getRealFile(string $path): string
-    {
+    public static function getRealFile(string $path): string {
         $filename = '';
         if (Str::startsWith($path, asset(''))) {
             return public_path(substr($path, \strlen(asset(''))));
@@ -659,8 +645,7 @@ class FileService
         return ''.$path;
     }
 
-    public static function allDirectories(string $path, array $except = [], string $dir = ''): array
-    {
+    public static function allDirectories(string $path, array $except = [], string $dir = ''): array {
         $dirs = File::directories($path);
         $data = [];
         foreach ($dirs as $v) {
@@ -678,8 +663,7 @@ class FileService
         return $data;
     }
 
-    public static function fixPath(string $path): string
-    {
+    public static function fixPath(string $path): string {
         $path = str_replace(['/', '\\'], [\DIRECTORY_SEPARATOR, \DIRECTORY_SEPARATOR], $path);
 
         return $path;
@@ -690,8 +674,7 @@ class FileService
      *
      * @return int|float|string|array|null
      */
-    public static function config(string $key)
-    {
+    public static function config(string $key) {
         $ns_name = Str::before($key, '::');
         $group = Str::of($key)->after('::')->before('.');
         $item = Str::after($key, $ns_name.'::'.$group.'.');
@@ -717,8 +700,7 @@ class FileService
         return $value;
     }
 
-    public static function viewPath(string $key): string
-    {
+    public static function viewPath(string $key): string {
         $ns_name = Str::before($key, '::');
         $group = (string) Str::of($key)->after('::');
         $ns_dir = self::getViewNameSpacePath($ns_name);
@@ -731,8 +713,7 @@ class FileService
      * Undocumented function
      *  Execute copy with makedirectory.
      */
-    public static function copy(string $from, string $to): void
-    {
+    public static function copy(string $from, string $to): void {
         if (! File::exists(\dirname($to))) {
             try {
                 File::makeDirectory(\dirname($to), 0755, true, true);
@@ -751,8 +732,7 @@ class FileService
      * from : theme::errors.500
      * to  : pub_theme:errors.500
      */
-    public static function viewCopy(string $from, string $to): void
-    {
+    public static function viewCopy(string $from, string $to): void {
         $from_path = self::viewPath($from);
         $to_path = self::viewPath($to);
         self::copy($from_path, $to_path);
@@ -761,8 +741,7 @@ class FileService
     /**
      * Undocumented function.
      */
-    public static function getComponents(string $path, string $namespace, string $prefix, bool $force_recreate = false): array
-    {
+    public static function getComponents(string $path, string $namespace, string $prefix, bool $force_recreate = false): array {
         $namespace = Str::replace('/', '\\', $namespace);
         $components_json = $path.'/_components.json';
         $path = self::fixPath($path);
@@ -840,8 +819,7 @@ class FileService
     /**
      * Undocumented function.
      */
-    public static function getNiceFileSize(int $bytes, bool $binaryPrefix = true): string
-    {
+    public static function getNiceFileSize(int $bytes, bool $binaryPrefix = true): string {
         if ($binaryPrefix) {
             $unit = ['B', 'KiB', 'MiB', 'GiB', 'TiB', 'PiB'];
             if (0 === $bytes) {
@@ -861,8 +839,7 @@ class FileService
     /**
      * Undocumented function.
      */
-    public static function getFileNameByClassName(string $class_name): ?string
-    {
+    public static function getFileNameByClassName(string $class_name): ?string {
         try {
             $a = new \ReflectionClass($class_name);
         } catch (Exception $e) {

@@ -15,8 +15,7 @@ use Modules\Xot\Services\XLSService;
 /**
  * Class XlsImportAction.
  */
-class XlsImportAction extends XotBasePanelAction
-{
+class XlsImportAction extends XotBasePanelAction {
     public bool $onItem = true;
 
     public string $icon = '<i class="far fa-file-excel fa-1x"></i>';
@@ -24,8 +23,7 @@ class XlsImportAction extends XotBasePanelAction
     /**
      * @return mixed
      */
-    public function handle()
-    {
+    public function handle() {
         // $view = ThemeService::getView(); // xot::admin.home.acts.xls_import
         $view = 'xot::admin.home.acts.xls_import';
         $view_params = [
@@ -40,16 +38,14 @@ class XlsImportAction extends XotBasePanelAction
      *
      * @return mixed
      */
-    public function postHandle()
-    {
+    public function postHandle() {
         $step = request('input', 1);
         $func = 'step'.$step;
 
         return $this->{$func}();
     }
 
-    public function step1(): Renderable
-    {
+    public function step1(): Renderable {
         // Excel::import(new UsersImport,request()->file('file'));
         $step = 1;
         // $c = request()->file('file'); // Illuminate\Http\UploadedFile
@@ -87,8 +83,7 @@ class XlsImportAction extends XotBasePanelAction
      *
      * @return mixed
      */
-    public function step2()
-    {
+    public function step2() {
         // Excel::import(new UsersImport,request()->file('file'));
     }
 }

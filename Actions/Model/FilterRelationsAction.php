@@ -8,16 +8,13 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
 use Spatie\QueueableAction\QueueableAction;
 
-class FilterRelationsAction
-{
+class FilterRelationsAction {
     use QueueableAction;
 
-    public function __construct()
-    {
+    public function __construct() {
     }
 
-    public function execute(Model $model, array $data): Collection
-    {
+    public function execute(Model $model, array $data): Collection {
         $methods = get_class_methods($model);
         $res = collect($data)
         ->filter(

@@ -16,13 +16,11 @@ use Modules\Xot\Services\PanelService;
 /**
  * Trait CommonTrait.
  */
-trait CommonTrait
-{
+trait CommonTrait {
     /**
      * @return array
      */
-    public function getData()
-    {
+    public function getData() {
         $panel = PanelService::make()->get($this->row);
         if (! \is_object($panel)) {
             // dddx($this->row);
@@ -43,8 +41,7 @@ trait CommonTrait
      * https://hackernoon.com/eloquent-relationships-cheat-sheet-5155498c209
      * https://laracasts.com/discuss/channels/eloquent/cleanest-way-to-save-model-and-relationships.
      */
-    public function manageRelationships(array $params): void
-    {
+    public function manageRelationships(array $params): void {
         $act = 'show';
         extract($params);
         if (! isset($model)) {
@@ -141,8 +138,7 @@ trait CommonTrait
      *
      * @return mixed
      */
-    public function prepareForValidation($data, $panel)
-    {
+    public function prepareForValidation($data, $panel) {
         $date_fields = collect($panel->fields())->filter(
             function ($item) use ($data) {
                 return Str::startsWith($item->type, 'Date') && isset($data[$item->name]);
@@ -172,8 +168,7 @@ trait CommonTrait
      *
      * @return array
      */
-    public function prepareAndValidate($data, $panel)
-    {
+    public function prepareAndValidate($data, $panel) {
         // $data0 = $data;
         $data = $this->prepareForValidation($data, $panel);
         // dddx($data0, $data);
@@ -191,8 +186,7 @@ trait CommonTrait
      *
      * @return Carbon|false|null
      */
-    public function ConvDate($field, $value)
-    {
+    public function ConvDate($field, $value) {
         if (null === $value) {
             return $value;
         }
@@ -207,8 +201,7 @@ trait CommonTrait
      *
      * @return Carbon|false|null
      */
-    public function ConvDateTime($field, $value)
-    {
+    public function ConvDateTime($field, $value) {
         if (null === $value) {
             return $value;
         }
@@ -223,8 +216,7 @@ trait CommonTrait
      *
      * @return Carbon|false|null
      */
-    public function ConvDateTime2Fields($field, $value)
-    {
+    public function ConvDateTime2Fields($field, $value) {
         if (null === $value) {
             return $value;
         }

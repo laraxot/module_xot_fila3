@@ -4,6 +4,5 @@ declare(strict_types=1);
 
 namespace Modules\Xot\Models\Panels\Policies;
 
-class JobBatchPanelPolicy extends XotBasePanelPolicy
-{
+class JobBatchPanelPolicy extends XotBasePanelPolicy {
 }

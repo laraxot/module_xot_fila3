@@ -9,8 +9,7 @@ namespace Modules\Xot\Models\Panels;
 /**
  * Class SettingsPanel.
  */
-class SettingsPanel extends XotBasePanel
-{
+class SettingsPanel extends XotBasePanel {
     /**
      * The model the resource corresponds to.
      */
@@ -22,8 +21,7 @@ class SettingsPanel extends XotBasePanel
     public static string $title = 'title';
 
     /** @return object[] */
-    public function fields(): array
-    {
+    public function fields(): array {
         return [
             (object) [
                 'type' => 'Id',

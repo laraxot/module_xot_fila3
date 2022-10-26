@@ -13,10 +13,8 @@ use Modules\Xot\Contracts\PanelContract;
 /**
  * Class IndexStoreAttachJob.
  */
-class IndexStoreAttachJob extends XotBaseJob
-{
-    public function handle(): PanelContract
-    {
+class IndexStoreAttachJob extends XotBaseJob {
+    public function handle(): PanelContract {
         $name = Str::plural($this->panel->postType());
         $rows = $this->panel->getRows();
         $to = $this->data[$name]['to'];

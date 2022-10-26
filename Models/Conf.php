@@ -24,8 +24,7 @@ use Sushi\Sushi;
  *
  * @mixin \Eloquent
  */
-class Conf extends BaseModel
-{
+class Conf extends BaseModel {
     use Sushi;
 
     /**
@@ -35,8 +34,7 @@ class Conf extends BaseModel
         'id', 'name',
     ];
 
-    public function getRows(): array
-    {
+    public function getRows(): array {
         return TenantService::getConfigNames(); //  local/ptvx
     }
 
@@ -51,8 +49,7 @@ class Conf extends BaseModel
      *
      * @return string
      */
-    public function getRouteKeyName()
-    {
+    public function getRouteKeyName() {
         return 'name';
     }
 }

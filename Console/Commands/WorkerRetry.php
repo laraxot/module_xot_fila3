@@ -10,8 +10,7 @@ namespace Modules\Xot\Console\Commands;
 use Illuminate\Console\Command;
 use Illuminate\Support\Arr;
 
-class WorkerRetry extends Command
-{
+class WorkerRetry extends Command {
     /**
      * The name and signature of the console command.
      *
@@ -31,8 +30,7 @@ class WorkerRetry extends Command
      *
      * @return void
      */
-    public function __construct()
-    {
+    public function __construct() {
         parent::__construct();
     }
 
@@ -41,16 +39,14 @@ class WorkerRetry extends Command
      *
      * @return mixed
      */
-    public function handle()
-    {
+    public function handle() {
         $ids = Arr::pluck($this->laravel['queue.failer']->all(), 'id');
         foreach ($ids as $id) {
             $this->retryJob($id);
         }
     }
 
-    protected function retryJob($id)
-    {
+    protected function retryJob($id) {
         $failed = $this->laravel['queue.failer']->find($id);
 
         if (null !== $failed) {
@@ -69,8 +65,7 @@ class WorkerRetry extends Command
         }
     }
 
-    protected function resetAttempts($payload)
-    {
+    protected function resetAttempts($payload) {
         $payload = json_decode($payload, true);
 
         if (isset($payload['attempts'])) {

@@ -9,8 +9,7 @@ namespace Modules\Xot\Models\Panels;
 /**
  * Class HomePanel.
  */
-class HomePanel extends XotBasePanel
-{
+class HomePanel extends XotBasePanel {
     /**
      * The model the resource corresponds to.
      */
@@ -25,8 +24,7 @@ class HomePanel extends XotBasePanel
      * Get the fields displayed by the resource.
         'value'=>'..',
      */
-    public function fields(): array
-    {
+    public function fields(): array {
         return [
         ];
     }
@@ -34,8 +32,7 @@ class HomePanel extends XotBasePanel
     /**
      * Get the actions available for the resource.
      */
-    public function actions(): array
-    {
+    public function actions(): array {
         /**
          * @var string
          */
