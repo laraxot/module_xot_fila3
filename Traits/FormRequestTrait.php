@@ -7,13 +7,15 @@ namespace Modules\Xot\Traits;
 /**
  * Trait FormRequestTrait.
  */
-trait FormRequestTrait {
+trait FormRequestTrait
+{
     /**
      * Get the error messages for the defined validation rules.
      *
      * @return array
      */
-    public function messages() {
+    public function messages()
+    {
         $pieces = explode('\\', __CLASS__);
         $pack = mb_strtolower($pieces[1]);
         // dddx($pieces);

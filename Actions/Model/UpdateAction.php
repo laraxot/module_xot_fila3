@@ -9,13 +9,16 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
 use Spatie\QueueableAction\QueueableAction;
 
-class UpdateAction {
+class UpdateAction
+{
     use QueueableAction;
 
-    public function __construct() {
+    public function __construct()
+    {
     }
 
-    public function execute(Model $row, array $data, array $rules): Model {
+    public function execute(Model $row, array $data, array $rules): Model
+    {
         $validator = Validator::make($data, $rules);
         $validator->validate();
 

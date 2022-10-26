@@ -4,5 +4,6 @@ declare(strict_types=1);
 
 namespace Modules\Xot\Models\Panels\Policies;
 
-class ProfilePanelPolicy extends XotBasePanelPolicy {
+class ProfilePanelPolicy extends XotBasePanelPolicy
+{
 }

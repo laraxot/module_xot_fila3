@@ -10,7 +10,8 @@ use Modules\Xot\Models\Feed;
 /**
  * Undocumented class.
  */
-class FeedFactory extends Factory {
+class FeedFactory extends Factory
+{
     /**
      * The name of the factory's corresponding model.
      *
@@ -23,7 +24,8 @@ class FeedFactory extends Factory {
      *
      * @return array
      */
-    public function definition() {
+    public function definition()
+    {
         return [
             'id' => $this->faker->randomNumber(5, false),
             'created_at' => $this->faker->dateTime,

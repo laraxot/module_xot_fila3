@@ -12,8 +12,10 @@ use Modules\Xot\Contracts\PanelContract;
 /**
  * Class AttachJob.
  */
-class AttachJob extends XotBaseJob {
-    public function handle(): PanelContract {
+class AttachJob extends XotBaseJob
+{
+    public function handle(): PanelContract
+    {
         return $this->panel;
     }
 }

@@ -16,7 +16,8 @@ use Modules\Xot\Contracts\PanelContract;
 /**
  * Class XotBaseRequest.
  */
-abstract class XotBaseRequest extends FormRequest {
+abstract class XotBaseRequest extends FormRequest
+{
     // use FormRequestTrait;
 
     // public function __construct(){
@@ -31,7 +32,8 @@ abstract class XotBaseRequest extends FormRequest {
      *
      * @return bool
      */
-    public function authorize() {
+    public function authorize()
+    {
         return true;
     }
 
@@ -40,11 +42,13 @@ abstract class XotBaseRequest extends FormRequest {
      *
      * @return array
      */
-    public function rules() {
+    public function rules()
+    {
         return [];
     }
 
-    public function setPanel(PanelContract $panel): self {
+    public function setPanel(PanelContract $panel): self
+    {
         $this->panel = $panel;
 
         return $this;
@@ -54,7 +58,8 @@ abstract class XotBaseRequest extends FormRequest {
      * @param PanelContract $panel
      * @param string        $act
      */
-    public function validatePanel($panel, $act = ''): void {
+    public function validatePanel($panel, $act = ''): void
+    {
         $this->setPanel($panel);
         $this->prepareForValidation();
         $rules = $panel->rules(['act' => $act]);
@@ -82,11 +87,13 @@ abstract class XotBaseRequest extends FormRequest {
     /**
      * Cerco di rilevare quando viene chiamato.
      */
-    public function modifyInput(array $data): void {
+    public function modifyInput(array $data): void
+    {
         dddx($data);
     }
 
-    public function prepareForValidation() {
+    public function prepareForValidation()
+    {
         $data = $this->request->all();
         $date_fields = collect($this->panel->fields())->filter(
             function ($item) use ($data) {
@@ -111,7 +118,8 @@ abstract class XotBaseRequest extends FormRequest {
      *
      * @return array
      */
-    public function validationData() {
+    public function validationData()
+    {
         dddx('aaa');
 
         return [];
@@ -123,7 +131,8 @@ abstract class XotBaseRequest extends FormRequest {
      *
      * @return Carbon
      */
-    public function ConvDate($field, $value) {
+    public function ConvDate($field, $value)
+    {
         if (null === $value) {
             return $value;
         }
@@ -141,7 +150,8 @@ abstract class XotBaseRequest extends FormRequest {
      *
      * @return Carbon
      */
-    public function ConvDateTime($field, $value) {
+    public function ConvDateTime($field, $value)
+    {
         if (null === $value) {
             return $value;
         }
@@ -159,7 +169,8 @@ abstract class XotBaseRequest extends FormRequest {
      *
      * @return Carbon
      */
-    public function ConvDateTime2Fields($field, $value) {
+    public function ConvDateTime2Fields($field, $value)
+    {
         if (null === $value) {
             return $value;
         }

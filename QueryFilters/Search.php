@@ -15,7 +15,8 @@ use Illuminate\Support\Str;
 /**
  * Undocumented class.
  */
-class Search {
+class Search
+{
     /**
      * Undocumented function.
      *
@@ -24,7 +25,8 @@ class Search {
      *
      * @return Closure
      */
-    public function handle($query, Closure $next, ...$args) {
+    public function handle($query, Closure $next, ...$args)
+    {
         $search_fields = [];
         $model = $query->getModel();
         /**

@@ -9,7 +9,8 @@ use Modules\LU\Models\User;
 
 // --- Services --
 
-class ProfilePanel extends XotBasePanel {
+class ProfilePanel extends XotBasePanel
+{
     /**
      * The model the resource corresponds to.
      */
@@ -24,7 +25,8 @@ class ProfilePanel extends XotBasePanel {
      * Get the fields displayed by the resource.
         'value'=>'..',
      */
-    public function fields(): array {
+    public function fields(): array
+    {
         return [
             (object) [
                 'type' => 'Id',
@@ -42,7 +44,8 @@ class ProfilePanel extends XotBasePanel {
     /**
      * Get the tabs available.
      */
-    public function tabs(): array {
+    public function tabs(): array
+    {
         $tabs_name = [];
 
         return $tabs_name;
@@ -51,7 +54,8 @@ class ProfilePanel extends XotBasePanel {
     /**
      * Get the cards available for the request.
      */
-    public function cards(Request $request): array {
+    public function cards(Request $request): array
+    {
         return [];
     }
 
@@ -60,28 +64,32 @@ class ProfilePanel extends XotBasePanel {
      *
      * @param \Illuminate\Http\Request $request
      */
-    public function filters(Request $request = null): array {
+    public function filters(Request $request = null): array
+    {
         return [];
     }
 
     /**
      * Get the lenses available for the resource.
      */
-    public function lenses(Request $request): array {
+    public function lenses(Request $request): array
+    {
         return [];
     }
 
     /**
      * Get the actions available for the resource.
      */
-    public function actions(): array {
+    public function actions(): array
+    {
         return [];
     }
 
     /**
      * Undocumented function.
      */
-    public function isSuperAdmin(): bool {
+    public function isSuperAdmin(): bool
+    {
         // 232 Access to an undefined property Illuminate\Database\Eloquent\Model::$user.
 
         // $user = $this->row->getRelationValue('user');
@@ -104,7 +112,8 @@ class ProfilePanel extends XotBasePanel {
     /**
      * Avatar function.
      */
-    public function avatar(int $size = 100): ?string {
+    public function avatar(int $size = 100): ?string
+    {
         if (null === $this->row) {
             throw new \Exception('row is null');
         }

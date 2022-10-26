@@ -13,11 +13,13 @@ use Reflection;
 use ReflectionClass;
 use ReflectionMethod;
 
-abstract class XotBaseViewModel implements Arrayable {
+abstract class XotBaseViewModel implements Arrayable
+{
     /**
      * Undocumented function.
      */
-    public function toArray(): array {
+    public function toArray(): array
+    {
         return collect((new ReflectionClass($this))->getMethods())
       ->reject(
           fn (ReflectionMethod $method) => \in_array($method->getName(), ['__construct', 'toArray'], true)
@@ -25,7 +27,8 @@ abstract class XotBaseViewModel implements Arrayable {
       ->filter(
           fn (ReflectionMethod $method) => \in_array(
               'public',
-              Reflection::getModifierNames($method->getModifiers()), true
+              Reflection::getModifierNames($method->getModifiers()),
+              true
           )
       )
       ->mapWithKeys(fn (ReflectionMethod $method) => [

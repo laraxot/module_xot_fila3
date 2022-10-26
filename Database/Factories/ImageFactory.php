@@ -7,7 +7,8 @@ namespace Modules\Xot\Database\Factories;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Modules\Xot\Models\Image;
 
-class ImageFactory extends Factory {
+class ImageFactory extends Factory
+{
     /**
      * The name of the factory's corresponding model.
      *
@@ -20,7 +21,8 @@ class ImageFactory extends Factory {
      *
      * @return array
      */
-    public function definition() {
+    public function definition()
+    {
         return [
             'src' => $this->faker->word,
         ];

@@ -14,13 +14,15 @@ use Illuminate\Support\Facades\URL;
 /**
  * Class SetDefaultLocaleForUrlsMiddleware.
  */
-class SetDefaultLocaleForUrlsMiddleware {
+class SetDefaultLocaleForUrlsMiddleware
+{
     /**
      * Handle the incoming request.
      *
      * @return \Illuminate\Http\Response
      */
-    public function handle(\Illuminate\Http\Request $request, Closure $next) {
+    public function handle(\Illuminate\Http\Request $request, Closure $next)
+    {
         URL::defaults(
             [
                 'lang' => app()->getLocale(),

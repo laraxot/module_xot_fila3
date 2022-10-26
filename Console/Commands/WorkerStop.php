@@ -11,14 +11,16 @@ namespace Modules\Xot\Console\Commands;
 use Illuminate\Console\Command;
 use Illuminate\Queue\Worker;
 
-class WorkerStop extends Command {
+class WorkerStop extends Command
+{
     protected $signature = 'worker:stop';
 
     protected $description = 'Demonstration worker that gracefully stops on exit';
 
     private $run = true;
 
-    public function fire() {
+    public function fire()
+    {
         // PHP 7.0 and before can handle asynchronous signals with ticks
         declare(ticks=1);
 
@@ -38,7 +40,8 @@ class WorkerStop extends Command {
         $this->info('Worker stopped');
     }
 
-    public function shutdown() {
+    public function shutdown()
+    {
         $this->info('Gracefully stopping worker...');
 
         // When set to false, worker will finish current item and stop.

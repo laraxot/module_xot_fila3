@@ -49,7 +49,8 @@ namespace Modules\Xot\Models;
  *
  * @mixin \Eloquent
  */
-class Metatag extends BaseModel {
+class Metatag extends BaseModel
+{
     /**
      * @var string[]
      */

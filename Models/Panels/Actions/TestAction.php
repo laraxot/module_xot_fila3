@@ -15,7 +15,8 @@ use Illuminate\Support\Facades\Storage;
 /**
  * Class TestAction.
  */
-class TestAction extends XotBasePanelAction {
+class TestAction extends XotBasePanelAction
+{
     public bool $onItem = true;
 
     public bool $onContainer = true;
@@ -23,7 +24,8 @@ class TestAction extends XotBasePanelAction {
     /**
      * @return mixed
      */
-    public function handle() {
+    public function handle()
+    {
         // Storage::disk('dropbox')->put('file.txt', 'Contents');
         // return 'preso';
         // return $this->panel->view();

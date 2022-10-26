@@ -9,7 +9,8 @@ namespace Modules\Xot\Models\Panels;
 /**
  * Class WidgetPanel.
  */
-class WidgetPanel extends XotBasePanel {
+class WidgetPanel extends XotBasePanel
+{
     /**
      * The model the resource corresponds to.
      */
@@ -23,7 +24,8 @@ class WidgetPanel extends XotBasePanel {
     /**
      * @return object[]
      */
-    public function fields(): array {
+    public function fields(): array
+    {
         return [
             (object) [
                 'type' => 'Id',

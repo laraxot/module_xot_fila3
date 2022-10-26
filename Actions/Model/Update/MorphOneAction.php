@@ -7,13 +7,16 @@ namespace Modules\Xot\Actions\Model\Update;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\QueueableAction\QueueableAction;
 
-class MorphOneAction {
+class MorphOneAction
+{
     use QueueableAction;
 
-    public function __construct() {
+    public function __construct()
+    {
     }
 
-    public function execute(Model $row, object $relation) {
+    public function execute(Model $row, object $relation)
+    {
         /* con update or create crea sempre uno nuovo, con update e basta se non esiste non va a crearlo */
         // $rows = $model->$name();
         $rows = $relation->rows;

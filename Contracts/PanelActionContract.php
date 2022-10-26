@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace Modules\Xot\Contracts;
 
-interface PanelActionContract {
+interface PanelActionContract
+{
     /**
      * Undocumented function.
      */

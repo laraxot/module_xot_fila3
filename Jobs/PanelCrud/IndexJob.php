@@ -12,8 +12,10 @@ use Modules\Xot\Contracts\PanelContract;
 /**
  * Class IndexJob.
  */
-class IndexJob extends XotBaseJob {
-    public function handle(): PanelContract {
+class IndexJob extends XotBaseJob
+{
+    public function handle(): PanelContract
+    {
         return $this->panel;
     }
 }

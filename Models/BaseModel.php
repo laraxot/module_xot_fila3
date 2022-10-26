@@ -16,7 +16,8 @@ use Modules\Xot\Traits\Updater;
 /**
  * Class BaseModel.
  */
-abstract class BaseModel extends Model {
+abstract class BaseModel extends Model
+{
     use HasFactory;
     // use Searchable;
     // use Cachable;
@@ -74,7 +75,8 @@ abstract class BaseModel extends Model {
     /**
      * @return \Illuminate\Database\Eloquent\Relations\MorphMany
      */
-    public function images() {
+    public function images()
+    {
         return $this->morphMany(Image::class, 'post');
     }
 
@@ -83,7 +85,8 @@ abstract class BaseModel extends Model {
      *
      * @return \Illuminate\Database\Eloquent\Factories\Factory
      */
-    protected static function newFactory() {
+    protected static function newFactory()
+    {
         return FactoryService::newFactory(static::class);
     }
 }

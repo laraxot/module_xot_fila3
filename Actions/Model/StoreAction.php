@@ -9,13 +9,16 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
 use Spatie\QueueableAction\QueueableAction;
 
-class StoreAction {
+class StoreAction
+{
     use QueueableAction;
 
-    public function __construct() {
+    public function __construct()
+    {
     }
 
-    public function execute(Model $row, array $data, array $rules): Model {
+    public function execute(Model $row, array $data, array $rules): Model
+    {
         if (! isset($data['lang']) && \in_array('lang', $row->getFillable(), true)) {
             $data['lang'] = app()->getLocale();
         }

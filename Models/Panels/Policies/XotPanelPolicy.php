@@ -9,5 +9,6 @@ namespace Modules\Xot\Models\Panels\Policies;
 /**
  * Class XotPanelPolicy.
  */
-class XotPanelPolicy extends XotBasePanelPolicy {
+class XotPanelPolicy extends XotBasePanelPolicy
+{
 }

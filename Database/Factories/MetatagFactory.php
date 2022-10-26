@@ -7,7 +7,8 @@ namespace Modules\Xot\Database\Factories;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Modules\Xot\Models\Metatag;
 
-class MetatagFactory extends Factory {
+class MetatagFactory extends Factory
+{
     /**
      * The name of the factory's corresponding model.
      *
@@ -20,7 +21,8 @@ class MetatagFactory extends Factory {
      *
      * @return array
      */
-    public function definition() {
+    public function definition()
+    {
         return [
             'id' => $this->faker->randomNumber(5, false),
             'title' => $this->faker->sentence,

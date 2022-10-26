@@ -12,8 +12,10 @@ use Modules\Xot\Contracts\PanelContract;
 /**
  * Class ShowJob.
  */
-class HomeJob extends XotBaseJob {
-    public function handle(): PanelContract {
+class HomeJob extends XotBaseJob
+{
+    public function handle(): PanelContract
+    {
         return $this->panel;
     }
 }

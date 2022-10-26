@@ -17,10 +17,12 @@ use Modules\Xot\Contracts\PanelContract;
 /**
  * Class PanelFormService.
  */
-class PanelFormService {
+class PanelFormService
+{
     protected PanelContract $panel;
 
-    public function __construct(PanelContract &$panel) {
+    public function __construct(PanelContract &$panel)
+    {
         $this->panel = $panel;
     }
 
@@ -29,7 +31,8 @@ class PanelFormService {
      *
      * @return $this
      */
-    public function setPanel(PanelContract &$panel) {
+    public function setPanel(PanelContract &$panel)
+    {
         $this->panel = $panel;
 
         return $this;
@@ -38,7 +41,8 @@ class PanelFormService {
     /**
      * @return string
      */
-    public function formCreate(array $params = []) {
+    public function formCreate(array $params = [])
+    {
         $fields = $this->getFields(['act' => 'create']);
         $row = $this->panel->getRow();
         $res = '';
@@ -61,7 +65,8 @@ class PanelFormService {
     /**
      * @return string
      */
-    public function formEdit(array $params = []) {
+    public function formEdit(array $params = [])
+    {
         $submit_btn = '<p class="form-submit">
             <input name="submit" type="submit" id="submit" value="Post your answer" class="button small color">
         </p>';
@@ -91,7 +96,8 @@ class PanelFormService {
         return $res;
     }
 
-    public function formLivewireEdit(array $params = []): string {
+    public function formLivewireEdit(array $params = []): string
+    {
         $fields = $this->editObjFields();
 
         $col_size = 0;
@@ -112,7 +118,8 @@ class PanelFormService {
         return $html;
     }
 
-    public function getFormData(array $params = []): array {
+    public function getFormData(array $params = []): array
+    {
         $form_data = [];
         $fields = $this->getFields($params);
         $row = isset($params['row']) ? $params['row'] : $this->panel->getRow();
@@ -166,7 +173,8 @@ class PanelFormService {
     }
     */
 
-    public function btnCrud(array $params = []): string {
+    public function btnCrud(array $params = []): string
+    {
         extract($params);
         $acts = ['edit', 'destroy', 'show'];
         if (\is_object($this->panel->getRow()->getRelationValue('pivot'))) {
@@ -191,7 +199,8 @@ class PanelFormService {
         return $html;
     }
 
-    public function btnHtml(array $params): ?string {
+    public function btnHtml(array $params): ?string
+    {
         $params['url'] = $this->panel->url($params['act']);
         // dddx([$this->panel->route, $params['panel'], $params['url']]);
         $params['method'] = Str::camel($params['act']);
@@ -308,7 +317,8 @@ class PanelFormService {
     /**
      * exceptFields.
      */
-    public function exceptFields(array $params = []): Collection {
+    public function exceptFields(array $params = []): Collection
+    {
         $act = 'show';
         extract($params);
         $panel = $this->panel;
@@ -351,7 +361,8 @@ class PanelFormService {
         return $fields;
     }
 
-    public function getFields(array $params = []): Collection {
+    public function getFields(array $params = []): Collection
+    {
         $act = isset($params['act']) ? $params['act'] : 'index';
 
         $fields = $this->exceptFields(['act' => $act]);
@@ -359,7 +370,8 @@ class PanelFormService {
         return $fields;
     }
 
-    public function editObjFields(): array {
+    public function editObjFields(): array
+    {
         $fields = collect($this->getFields(['act' => 'edit']))->map(
             function ($field) {
                 return FieldService::make()

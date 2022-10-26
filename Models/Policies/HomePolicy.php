@@ -9,12 +9,15 @@ use Modules\Xot\Contracts\UserContract;
 /**
  * Class HomePolicy.
  */
-class HomePolicy extends XotBasePolicy {
-    public function index(?UserContract $user, \Illuminate\Database\Eloquent\Model $post): bool {
+class HomePolicy extends XotBasePolicy
+{
+    public function index(?UserContract $user, \Illuminate\Database\Eloquent\Model $post): bool
+    {
         return true; // da aggiungere pezzi
     }
 
-    public function show(?UserContract $user, \Illuminate\Database\Eloquent\Model $post): bool {
+    public function show(?UserContract $user, \Illuminate\Database\Eloquent\Model $post): bool
+    {
         return true; // da aggiungere pezzi
     }
 }
