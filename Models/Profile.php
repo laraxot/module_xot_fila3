@@ -14,6 +14,7 @@ use Spatie\Tags\HasTags;
 /**
  * Modules\Xot\Models\Profile.
  *
+<<<<<<< HEAD
  * @property int                                                                      $id
  * @property string|null                                                              $post_type
  * @property string|null                                                              $bio
@@ -67,10 +68,32 @@ use Spatie\Tags\HasTags;
  * @property \Illuminate\Database\Eloquent\Collection|\Modules\Tag\Models\Tag[]       $tags
  * @property int|null                                                                 $tags_count
  * @property \Modules\LU\Models\User|null                                             $user
+=======
+ * @property int                                                                  $id
+ * @property string|null                                                          $post_type
+ * @property string|null                                                          $bio
+ * @property \Illuminate\Support\Carbon|null                                      $created_at
+ * @property \Illuminate\Support\Carbon|null                                      $updated_at
+ * @property string|null                                                          $created_by
+ * @property string|null                                                          $updated_by
+ * @property string|null                                                          $deleted_by
+ * @property string|null                                                          $firstname
+ * @property string|null                                                          $surname
+ * @property string|null                                                          $email
+ * @property string|null                                                          $phone
+ * @property string|null                                                          $address
+ * @property int|null                                                             $user_id
+ * @property \Illuminate\Database\Eloquent\Collection|\Modules\Xot\Models\Image[] $images
+ * @property int|null                                                             $images_count
+ * @property \Illuminate\Database\Eloquent\Collection|\Spatie\Tags\Tag[]          $tags
+ * @property int|null                                                             $tags_count
+ * @property \Modules\LU\Models\User|null                                         $user
+>>>>>>> d34c029 (up)
  *
  * @method static \Modules\Xot\Database\Factories\ProfileFactory factory(...$parameters)
  * @method static \Illuminate\Database\Eloquent\Builder|Profile  newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Profile  newQuery()
+<<<<<<< HEAD
  * @method static \Illuminate\Database\Eloquent\Builder|Profile  permission($permissions)
  * @method static \Illuminate\Database\Eloquent\Builder|Profile  query()
  * @method static \Illuminate\Database\Eloquent\Builder|Profile  role($roles, $guard = null)
@@ -86,11 +109,17 @@ use Spatie\Tags\HasTags;
  * @method static \Illuminate\Database\Eloquent\Builder|Profile  whereCampgroundShort($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Profile  whereCountry($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Profile  whereCountryShort($value)
+=======
+ * @method static \Illuminate\Database\Eloquent\Builder|Profile  query()
+ * @method static \Illuminate\Database\Eloquent\Builder|Profile  whereAddress($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Profile  whereBio($value)
+>>>>>>> d34c029 (up)
  * @method static \Illuminate\Database\Eloquent\Builder|Profile  whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Profile  whereCreatedBy($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Profile  whereDeletedBy($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Profile  whereEmail($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Profile  whereFirstname($value)
+<<<<<<< HEAD
  * @method static \Illuminate\Database\Eloquent\Builder|Profile  whereGithubUsername($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Profile  whereGoogleplaceUrl($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Profile  whereGoogleplaceUrlShort($value)
@@ -115,6 +144,12 @@ use Spatie\Tags\HasTags;
  * @method static \Illuminate\Database\Eloquent\Builder|Profile  whereStreetNumberShort($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Profile  whereSurname($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Profile  whereTwitter($value)
+=======
+ * @method static \Illuminate\Database\Eloquent\Builder|Profile  whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Profile  wherePhone($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Profile  wherePostType($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Profile  whereSurname($value)
+>>>>>>> d34c029 (up)
  * @method static \Illuminate\Database\Eloquent\Builder|Profile  whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Profile  whereUpdatedBy($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Profile  whereUserId($value)

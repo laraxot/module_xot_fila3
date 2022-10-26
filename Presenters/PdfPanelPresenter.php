@@ -59,13 +59,21 @@ class PdfPanelPresenter implements PanelPresenterContract {
         } catch (\Exception $e) {
             $rows = collect([]);
         }
+<<<<<<< HEAD
         if (null === $row->getKey()) { // utile per le cose a containers
+=======
+        if (null == $row->getKey()) { // utile per le cose a containers
+>>>>>>> d34c029 (up)
             // if (null == $row) { //utile per le cose a containers
             // $row = tap($this->panel->rows())->first();
             // $row = $this->panel->rows()->first();
             // dddx($row);
             $tmp = $this->panel->rows()->get()->first();
+<<<<<<< HEAD
             if (null !== $tmp) {
+=======
+            if (null != $tmp) {
+>>>>>>> d34c029 (up)
                 $row = $tmp;
             }
         }

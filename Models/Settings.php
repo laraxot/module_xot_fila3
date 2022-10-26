@@ -20,6 +20,7 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|Settings newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Settings newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Settings query()
+<<<<<<< HEAD
  * @method static \Illuminate\Database\Eloquent\Builder|Settings whereAppname($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Settings whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Settings whereCreatedBy($value)
@@ -27,6 +28,8 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|Settings whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Settings whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Settings whereUpdatedBy($value)
+=======
+>>>>>>> d34c029 (up)
  *
  * @mixin \Eloquent
  */

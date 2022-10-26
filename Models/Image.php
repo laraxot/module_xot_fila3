@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 /**
  * Modules\Xot\Models\Image.
  *
+<<<<<<< HEAD
  * @property int                                              $id
  * @property string|null                                      $post_type
  * @property int|null                                         $post_id
@@ -25,6 +26,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property string|null                                      $deleted_by
  * @property \Illuminate\Support\Carbon|null                  $created_at
  * @property \Illuminate\Support\Carbon|null                  $updated_at
+=======
+>>>>>>> d34c029 (up)
  * @property \Illuminate\Database\Eloquent\Collection|Image[] $images
  * @property int|null                                         $images_count
  * @property \Modules\LU\Models\User|null                     $user
@@ -33,6 +36,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @method static \Illuminate\Database\Eloquent\Builder|Image  newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Image  newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Image  query()
+<<<<<<< HEAD
  * @method static \Illuminate\Database\Eloquent\Builder|Image  whereAuthUserId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Image  whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Image  whereCreatedBy($value)
@@ -47,6 +51,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @method static \Illuminate\Database\Eloquent\Builder|Image  whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Image  whereUpdatedBy($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Image  whereWidth($value)
+=======
+>>>>>>> d34c029 (up)
  *
  * @mixin \Eloquent
  */

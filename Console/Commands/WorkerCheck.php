@@ -80,8 +80,11 @@ class WorkerCheck extends Command {
     /**
      * Save the queue listener PID to a file.
      *
+<<<<<<< HEAD
      * @param mixed $pid
      *
+=======
+>>>>>>> d34c029 (up)
      * @return void
      */
     private function saveQueueListenerPID($pid) {

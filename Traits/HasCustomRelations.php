@@ -19,8 +19,11 @@ use Modules\Xot\Relations\CustomRelation;
  */
 trait HasCustomRelations {
     /**
+<<<<<<< HEAD
      * @param mixed $related
      *
+=======
+>>>>>>> d34c029 (up)
      * @return CustomRelation
      */
     public function customRelation($related, Closure $baseConstraints, Closure $eagerConstraints = null, Closure $eagerMatcher = null) {

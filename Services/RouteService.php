@@ -33,8 +33,13 @@ class RouteService {
             return true;
         }
         $segments = \Request::segments();
+<<<<<<< HEAD
         if (\count($segments) > 0 && 'livewire' === $segments[0]) {
             if (true === session('in_admin')) {
+=======
+        if (count($segments) > 0 && 'livewire' == $segments[0]) {
+            if (true == session('in_admin')) {
+>>>>>>> d34c029 (up)
                 return true;
             }
         }
