@@ -13,10 +13,8 @@ use Modules\Xot\Contracts\PanelContract;
 /**
  * Class IndexEditJob.
  */
-class IndexEditJob extends XotBaseJob
-{
-    public function handle(): PanelContract
-    {
+class IndexEditJob extends XotBaseJob {
+    public function handle(): PanelContract {
         if ('POST' === \Request::getMethod()) {
             // return IndexUpdateJob::dispatchNow($this->data, $this->panel);
             throw new Exception('['.__LINE__.']['.__FILE__.']');

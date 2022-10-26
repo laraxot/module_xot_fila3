@@ -13,15 +13,13 @@ doesn't exist (SQL: select count(*) as aggregate from `feeds` where (`feeds`.`id
 url":"https://www.test sitename.com/it/feed/restaurant"
 */
 
-class CreateFeedsTable extends XotBaseMigration
-{
+class CreateFeedsTable extends XotBaseMigration {
     /**
      * Run the migrations.
      *
      * @return void
      */
-    public function up()
-    {
+    public function up() {
         // -- CREATE --
         $this->tableCreate(
             function (Blueprint $table) {

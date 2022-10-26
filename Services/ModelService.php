@@ -25,8 +25,7 @@ use ReflectionMethod;
 /**
  * Class ModelService.
  */
-class ModelService
-{
+class ModelService {
     private static ?self $_instance = null;
 
     protected Model $model;
@@ -36,8 +35,7 @@ class ModelService
      *
      * this method will return instance of the class
      */
-    public static function getInstance(): self
-    {
+    public static function getInstance(): self {
         if (! self::$_instance) {
             self::$_instance = new self();
         }
@@ -48,20 +46,17 @@ class ModelService
     /**
      * Undocumented function.
      */
-    public static function make(): self
-    {
+    public static function make(): self {
         return static::getInstance();
     }
 
-    public function setModel(Model $model): self
-    {
+    public function setModel(Model $model): self {
         $this->model = $model;
 
         return $this;
     }
 
-    public function setModelClass(string $class): self
-    {
+    public function setModelClass(string $class): self {
         $this->model = app($class);
 
         return $this;
@@ -70,8 +65,7 @@ class ModelService
     /**
      * Undocumented function.
      */
-    public function getRelationshipsAndData(array $data): array
-    {
+    public function getRelationshipsAndData(array $data): array {
         $model = $this->model;
         $methods = get_class_methods($model);
 
@@ -117,8 +111,7 @@ class ModelService
         return $data;
     }
 
-    public function getPostType(): string
-    {
+    public function getPostType(): string {
         $model = $this->model;
         // da trovare la funzione che fa l'inverso
         // static string|null getMorphedModel(string $alias) Get the model associated with a custom polymorphic type.
@@ -141,8 +134,7 @@ class ModelService
      * Undocumented function
      * funziona leggendo o il "commento" prima della funzione o quello che si dichiara come returnType.
      */
-    public function getRelations(): array
-    {
+    public function getRelations(): array {
         $model = $this->model;
         $reflector = new ReflectionClass($model);
         $relations = [];
@@ -175,8 +167,7 @@ class ModelService
 
      *              https://laracasts.com/discuss/channels/eloquent/get-all-model-relationships.
      */
-    public function getRelationships(): array
-    {
+    public function getRelationships(): array {
         $model = $this->model;
         $relationships = [];
 
@@ -205,8 +196,7 @@ class ModelService
         return $relationships;
     }
 
-    public function getNameRelationships(): array
-    {
+    public function getNameRelationships(): array {
         $model = $this->model;
         $relations = self::getRelationships();
         $names = collect($relations)->map(
@@ -221,8 +211,7 @@ class ModelService
     /**
      * @param array|string $index
      */
-    public function indexIfNotExists($index): void
-    {
+    public function indexIfNotExists($index): void {
         $model = $this->model;
         if (\is_array($index)) {
             foreach ($index as $i) {
@@ -245,15 +234,13 @@ class ModelService
         }
     }
 
-    public function fieldExists(string $field_name): bool
-    {
+    public function fieldExists(string $field_name): bool {
         $model = $this->model;
 
         return \Schema::connection($model->getConnectionName())->hasColumn($model->getTable(), $field_name);
     }
 
-    public function addField(Model $model, string $field_name, string $field_type, array $attrs = []): void
-    {
+    public function addField(Model $model, string $field_name, string $field_type, array $attrs = []): void {
         $model = $this->model;
         if (! \Schema::connection($model->getConnectionName())->hasColumn($model->getTable(), $field_name)) {
             \Schema::connection($model->getConnectionName())
@@ -271,8 +258,7 @@ class ModelService
      *
      * @return bool
      */
-    public function query(string $sql)
-    {
+    public function query(string $sql) {
         $model = $this->model;
         $res = $model->getConnection()->statement($sql);
         // $res=$model->getConnection()->select($sql);
@@ -284,8 +270,7 @@ class ModelService
      *
      * @return array
      */
-    public function select(string $sql)
-    {
+    public function select(string $sql) {
         $model = $this->model;
         // $res=$model->getConnection()->statement($sql);
         $res = $model->getConnection()->select($sql);
@@ -298,8 +283,7 @@ class ModelService
      *
      * get all tables and fields of the same collection
      */
-    public function getAllTablesAndFields(): Collection
-    {
+    public function getAllTablesAndFields(): Collection {
         $model = $this->model;
         $connection = $model->getConnection();
 
@@ -323,8 +307,7 @@ class ModelService
         return $data;
     }
 
-    public function modelExistsByTableName(string $table_name): bool
-    {
+    public function modelExistsByTableName(string $table_name): bool {
         $model_ns = \get_class($this->model);
         $model_ns = collect(explode('\\', $model_ns))->slice(0, -1)->implode('\\');
 

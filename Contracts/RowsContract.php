@@ -9,8 +9,7 @@ use Closure;
 /**
  * Modules\Xot\Contracts\RowsContract.
  */
-interface RowsContract
-{
+interface RowsContract {
     /**
      * Paginate the given query.
      *

@@ -10,8 +10,7 @@ namespace Modules\Xot\Console\Commands;
 
 use Illuminate\Console\Command;
 
-class WorkerCheck extends Command
-{
+class WorkerCheck extends Command {
     /**
      * The name and signature of the console command.
      *
@@ -29,8 +28,7 @@ class WorkerCheck extends Command
     /**
      * Create a new command instance.
      */
-    public function __construct()
-    {
+    public function __construct() {
         parent::__construct();
     }
 
@@ -39,8 +37,7 @@ class WorkerCheck extends Command
      *
      * @return void
      */
-    public function handle()
-    {
+    public function handle() {
         if (! $this->isQueueListenerRunning()) {
             $this->comment('Queue listener is being started.');
             $pid = $this->startQueueListener();
@@ -55,8 +52,7 @@ class WorkerCheck extends Command
      *
      * @return bool
      */
-    private function isQueueListenerRunning()
-    {
+    private function isQueueListenerRunning() {
         if (! $pid = $this->getLastQueueListenerPID()) {
             return false;
         }
@@ -73,8 +69,7 @@ class WorkerCheck extends Command
      *
      * @return bool|string
      */
-    private function getLastQueueListenerPID()
-    {
+    private function getLastQueueListenerPID() {
         if (! file_exists(__DIR__.'/queue.pid')) {
             return false;
         }
@@ -89,8 +84,7 @@ class WorkerCheck extends Command
      *
      * @return void
      */
-    private function saveQueueListenerPID($pid)
-    {
+    private function saveQueueListenerPID($pid) {
         file_put_contents(__DIR__.'/queue.pid', $pid);
     }
 
@@ -99,8 +93,7 @@ class WorkerCheck extends Command
      *
      * @return int
      */
-    private function startQueueListener()
-    {
+    private function startQueueListener() {
         // $command = 'php-cli ' . base_path() . '/artisan queue:listen --timeout=60 --sleep=5 --tries=3 > /dev/null & echo $!'; // 5.1
         $command = 'php-cli '.base_path().'/artisan queue:work --timeout=60 --sleep=5 --tries=3 > /dev/null & echo $!'; // 5.6 - see comments
         $pid = exec($command);

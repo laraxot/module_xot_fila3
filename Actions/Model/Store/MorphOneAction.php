@@ -7,16 +7,13 @@ namespace Modules\Xot\Actions\Model\Store;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\QueueableAction\QueueableAction;
 
-class MorphOneAction
-{
+class MorphOneAction {
     use QueueableAction;
 
-    public function __construct()
-    {
+    public function __construct() {
     }
 
-    public function execute(Model $row, object $relation)
-    {
+    public function execute(Model $row, object $relation) {
         if (isJson($relation->data)) {
             $relation->data = json_decode($relation->data, true);
         }

@@ -11,8 +11,7 @@ use Illuminate\Http\Request;
 /**
  * Class ImagePanel.
  */
-class ImagePanel extends XotBasePanel
-{
+class ImagePanel extends XotBasePanel {
     /**
      * The model the resource corresponds to.
      */
@@ -26,8 +25,7 @@ class ImagePanel extends XotBasePanel
     /**
      * Get the actions available for the resource.
      */
-    public function actions(Request $request = null): array
-    {
+    public function actions(Request $request = null): array {
         return [
             new Actions\ChunkUpload(),
         ];

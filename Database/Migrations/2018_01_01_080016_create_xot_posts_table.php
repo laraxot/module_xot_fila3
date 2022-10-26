@@ -11,8 +11,7 @@ use Modules\Xot\Database\Migrations\XotBaseMigration;
 /**
  * Class CreatePostsTable.
  */
-class CreateXotPostsTable extends XotBaseMigration
-{
+class CreateXotPostsTable extends XotBaseMigration {
     protected ?string $model_class = Post::class;
 
     /**
@@ -20,8 +19,7 @@ class CreateXotPostsTable extends XotBaseMigration
      *
      * @return void
      */
-    public function up()
-    {
+    public function up() {
         // -- CREATE --
         $this->tableCreate(
             function (Blueprint $table) {

@@ -50,15 +50,13 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  *
  * @mixin \Eloquent
  */
-class Image extends BaseModel
-{
+class Image extends BaseModel {
     /**
      * @var string[]
      */
     protected $fillable = ['src', 'width', 'height', 'src_out'];
 
-    public function user(): BelongsTo
-    {
+    public function user(): BelongsTo {
         $user_class = getUserClass();
 
         return $this->belongsTo($user_class);

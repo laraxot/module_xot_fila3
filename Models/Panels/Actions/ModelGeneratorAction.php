@@ -12,8 +12,7 @@ use Modules\Theme\Services\ThemeService;
 /**
  * Class ModelGeneratorAction.
  */
-class ModelGeneratorAction extends XotBasePanelAction
-{
+class ModelGeneratorAction extends XotBasePanelAction {
     public bool $onItem = true;
 
     public string $icon = '<i class="fa fa-table"></i>';
@@ -21,8 +20,7 @@ class ModelGeneratorAction extends XotBasePanelAction
     /**
      * @return mixed
      */
-    public function handle()
-    {
+    public function handle() {
         /*
         $view = ThemeService::getView(); // xot::admin.home.acts.xls_import
         $view_params = [
@@ -39,7 +37,6 @@ class ModelGeneratorAction extends XotBasePanelAction
      *
      * @return mixed
      */
-    public function postHandle()
-    {
+    public function postHandle() {
     }
 }

@@ -15,8 +15,7 @@ use Modules\Xot\Services\ProfileService;
 /**
  * Class XotBasePolicy.
  */
-abstract class XotBasePolicy
-{
+abstract class XotBasePolicy {
     use HandlesAuthorization;
 
     /**
@@ -25,8 +24,7 @@ abstract class XotBasePolicy
      *
      * @return bool|null
      */
-    public function before(?UserContract $user, $ability)
-    {
+    public function before(?UserContract $user, $ability) {
         /*
         if (is_object($user) && PanelService::make()->get($user)->isSuperAdmin()) {
             return true;
@@ -41,34 +39,28 @@ abstract class XotBasePolicy
         return ProfileService::make()->get($user)->isSuperAdmin();
     }
 
-    public function index(?UserContract $user, Model $post): bool
-    {
+    public function index(?UserContract $user, Model $post): bool {
         return true;
     }
 
-    public function show(?UserContract $user, Model $post): bool
-    {
+    public function show(?UserContract $user, Model $post): bool {
         return true;
     }
 
-    public function create(UserContract $user, Model $post): bool
-    {
+    public function create(UserContract $user, Model $post): bool {
         return true;
     }
 
-    public function edit(UserContract $user, Model $post): bool
-    {
+    public function edit(UserContract $user, Model $post): bool {
         // return true;
         return PanelService::make()->get($post)->isRevisionBy($user);
     }
 
-    public function update(UserContract $user, Model $post): bool
-    {
+    public function update(UserContract $user, Model $post): bool {
         return PanelService::make()->get($post)->isRevisionBy($user);
     }
 
-    public function store(UserContract $user, Model $post): bool
-    {
+    public function store(UserContract $user, Model $post): bool {
         /*
         if ($post->created_by == $user->handle || $post->updated_by == $user->handle) {
             return true;
@@ -79,36 +71,30 @@ abstract class XotBasePolicy
         return true;
     }
 
-    public function indexAttach(UserContract $user, Model $post): bool
-    {
+    public function indexAttach(UserContract $user, Model $post): bool {
         return true;
     }
 
-    public function indexEdit(UserContract $user, Model $post): bool
-    {
+    public function indexEdit(UserContract $user, Model $post): bool {
         return true;
     }
 
     /**
      * @return false
      */
-    public function updateTranslate(UserContract $user, Model $post): bool
-    {
+    public function updateTranslate(UserContract $user, Model $post): bool {
         return false; // update-translate di @can()
     }
 
-    public function destroy(UserContract $user, Model $post): bool
-    {
+    public function destroy(UserContract $user, Model $post): bool {
         return PanelService::make()->get($post)->isRevisionBy($user);
     }
 
-    public function delete(UserContract $user, Model $post): bool
-    {
+    public function delete(UserContract $user, Model $post): bool {
         return PanelService::make()->get($post)->isRevisionBy($user);
     }
 
-    public function restore(UserContract $user, Model $post): bool
-    {
+    public function restore(UserContract $user, Model $post): bool {
         return PanelService::make()->get($post)->isRevisionBy($user);
     }
 
@@ -116,13 +102,11 @@ abstract class XotBasePolicy
     public function forceDelete(UserContract $user, Model $post): bool {
     }
     */
-    public function detach(UserContract $user, Model $post): bool
-    {
+    public function detach(UserContract $user, Model $post): bool {
         return PanelService::make()->get($post)->isRevisionBy($user);
     }
 
-    public function clone(UserContract $user, Model $post): bool
-    {
+    public function clone(UserContract $user, Model $post): bool {
         return true;
     }
 

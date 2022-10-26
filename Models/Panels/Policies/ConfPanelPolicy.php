@@ -7,6 +7,5 @@ namespace Modules\Xot\Models\Panels\Policies;
 /**
  * Class ConfPanelPolicy.
  */
-class ConfPanelPolicy extends XotBasePanelPolicy
-{
+class ConfPanelPolicy extends XotBasePanelPolicy {
 }

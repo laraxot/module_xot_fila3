@@ -14,8 +14,7 @@ use Nwidart\Modules\Facades\Module;
 /**
  * Class ArtisanAction.
  */
-class UpdateLangModuleAction extends XotBasePanelAction
-{
+class UpdateLangModuleAction extends XotBasePanelAction {
     public bool $onContainer = true; // onlyContainer
 
     public bool $onItem = true; // onlyContainer
@@ -32,8 +31,7 @@ class UpdateLangModuleAction extends XotBasePanelAction
     /**
      * @return mixed
      */
-    public function handle()
-    {
+    public function handle() {
         return 'preso';
     }
 

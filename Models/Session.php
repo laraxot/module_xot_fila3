@@ -29,7 +29,6 @@ namespace Modules\Xot\Models;
  *
  * @mixin \Eloquent
  */
-class Session extends BaseModel
-{
+class Session extends BaseModel {
     protected $fillable = ['id', 'user_id', 'ip_address', 'user_agent', 'payload', 'last_activity'];
 }

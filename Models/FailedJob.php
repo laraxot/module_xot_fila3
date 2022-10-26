@@ -32,8 +32,7 @@ namespace Modules\Xot\Models;
  *
  * @mixin \Eloquent
  */
-class FailedJob extends BaseModel
-{
+class FailedJob extends BaseModel {
     protected $fillable = [
         'id',
         'uuid',

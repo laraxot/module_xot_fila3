@@ -15,8 +15,7 @@ use Exception;
 /**
  * Class ChunkUpload.
  */
-class ChunkUpload extends XotBasePanelAction
-{
+class ChunkUpload extends XotBasePanelAction {
     public bool $onContainer = true; // onlyContainer
 
     public string $icon = '<i class="fas fa-puzzle-piece"></i>';
@@ -24,8 +23,7 @@ class ChunkUpload extends XotBasePanelAction
     /**
      * @return \Illuminate\Http\JsonResponse
      */
-    public function handle()
-    {
+    public function handle() {
         $filename = $_POST['dir'].\DIRECTORY_SEPARATOR.$_POST['name'];
         $fp_method = 'w';
         if ($_POST['seek'] > 0) {
@@ -54,8 +52,7 @@ class ChunkUpload extends XotBasePanelAction
     /**
      * @return \Illuminate\Http\JsonResponse
      */
-    public function postHandle()
-    {
+    public function postHandle() {
         $filename = $_POST['dir'].\DIRECTORY_SEPARATOR.$_POST['name'];
 
         $fp_method = 'w';

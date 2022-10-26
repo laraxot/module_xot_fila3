@@ -9,8 +9,7 @@ use Modules\Xot\Models\Profile;
 /**
  * Class CreateProfilesTable.
  */
-class CreateXotProfilesTable extends XotBaseMigration
-{
+class CreateXotProfilesTable extends XotBaseMigration {
     protected ?string $model_class = Profile::class;
 
     /**
@@ -18,8 +17,7 @@ class CreateXotProfilesTable extends XotBaseMigration
      *
      * @return void
      */
-    public function up()
-    {
+    public function up() {
         // -- CREATE --
         $this->tableCreate(
             function (Blueprint $table) {

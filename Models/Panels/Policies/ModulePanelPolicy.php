@@ -10,13 +10,11 @@ use Modules\Xot\Contracts\UserContract;
 /**
  * --.
  */
-class ModulePanelPolicy extends XotBasePanelPolicy
-{
+class ModulePanelPolicy extends XotBasePanelPolicy {
     /**
      * ---.
      */
-    public function downloadDbModule(UserContract $user, PanelContract $panel): bool
-    {
+    public function downloadDbModule(UserContract $user, PanelContract $panel): bool {
         return true;
     }
 }

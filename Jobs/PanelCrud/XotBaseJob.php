@@ -26,8 +26,7 @@ use stdClass;
  * Class XotBaseJob.
  * NON DEVE ESSERE ShouldQueue, se no non lo esegue subito con dispatchSync, dispatchNow sara' deprecato.
  */
-abstract class XotBaseJob
-{ /* implements ShouldQueue */
+abstract class XotBaseJob { /* implements ShouldQueue */
     // use Traits\CommonTrait;
     use Dispatchable;
     use InteractsWithQueue;
@@ -41,8 +40,7 @@ abstract class XotBaseJob
     /**
      * __construct.
      */
-    public function __construct(array $data, PanelContract $panel)
-    {
+    public function __construct(array $data, PanelContract $panel) {
         $this->panel = $panel;
         $this->data = $data;
     }
@@ -50,16 +48,14 @@ abstract class XotBaseJob
     /**
      * Execute the job.
      */
-    public function handle(): PanelContract
-    {
+    public function handle(): PanelContract {
         return $this->panel;
     }
 
     /**
      * manage the relationships.
      */
-    public function manageRelationships(Model $model, array $data, string $act): void
-    {
+    public function manageRelationships(Model $model, array $data, string $act): void {
         $relationships = ModelService::make()->setModel($model)->getRelationshipsAndData($data);
         /*
         dddx([
@@ -90,8 +86,7 @@ abstract class XotBaseJob
         }
     }
 
-    public function prepareForValidation(array $data, PanelContract $panel): array
-    {
+    public function prepareForValidation(array $data, PanelContract $panel): array {
         $date_fields = collect($panel->fields())->filter(
             function ($item) use ($data) {
                 return Str::startsWith($item->type, 'Date') && isset($data[$item->name]);
@@ -127,8 +122,7 @@ abstract class XotBaseJob
      *
      * @return array
      */
-    public function prepareAndValidate($data, $panel)
-    {
+    public function prepareAndValidate($data, $panel) {
         $data0 = $data;
         /**
          * @var array
@@ -164,8 +158,7 @@ abstract class XotBaseJob
      *
      * @return mixed
      */
-    public function ConvDateList($field, $value)
-    {
+    public function ConvDateList($field, $value) {
         return $value;
     }
 
@@ -174,8 +167,7 @@ abstract class XotBaseJob
      *
      * @param object $field
      */
-    public function ConvDate($field, string $value): ?Carbon
-    {
+    public function ConvDate($field, string $value): ?Carbon {
         // Strict comparison using === between null and string will always evaluate to false.
         // if (null === $value) {
         //    return null;
@@ -191,8 +183,7 @@ abstract class XotBaseJob
     /**
      * Method Modules\Xot\Jobs\PanelCrud\XotBaseJob::ConvDateTime() should return Carbon\Carbon|false|null but returns 0|0.0|''|'0'|array()|false|null.
      */
-    public function ConvDateTime(stdClass $field, string $value): ?Carbon
-    {
+    public function ConvDateTime(stdClass $field, string $value): ?Carbon {
         // Strict comparison using === between null and string will always evaluate to false.
         // if (null === $value) {
         //    return null;
@@ -210,8 +201,7 @@ abstract class XotBaseJob
     /**
      *  Method Modules\Xot\Jobs\PanelCrud\XotBaseJob::ConvDateTime2Fields() should return Carbon\Carbon|false|null but returns 0|0.0|''|'0'|array()|false|null.
      */
-    public function ConvDateTime2Fields(stdClass $field, string $value): ?Carbon
-    {
+    public function ConvDateTime2Fields(stdClass $field, string $value): ?Carbon {
         // Strict comparison using === between null and string will always evaluate to false.
         // if (null === $value) {
         //    return $value;

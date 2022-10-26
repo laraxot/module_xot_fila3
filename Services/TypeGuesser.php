@@ -10,8 +10,7 @@ use Faker\Generator as Faker;
 use Illuminate\Support\Str;
 use InvalidArgumentException;
 
-class TypeGuesser
-{
+class TypeGuesser {
     /**
      * @var \Faker\Generator
      */
@@ -25,8 +24,7 @@ class TypeGuesser
     /**
      * Create a new TypeGuesser instance.
      */
-    public function __construct(Faker $generator)
-    {
+    public function __construct(Faker $generator) {
         $this->generator = $generator;
     }
 
@@ -36,8 +34,7 @@ class TypeGuesser
      *
      * @return string
      */
-    public function guess($name, Type $type, $size = null)
-    {
+    public function guess($name, Type $type, $size = null) {
         $name = Str::of($name)->lower();
 
         if ($name->endsWith('_id')) {
@@ -65,8 +62,7 @@ class TypeGuesser
      *
      * @return string
      */
-    private function guessBasedOnName($name, $size = null)
-    {
+    private function guessBasedOnName($name, $size = null) {
         switch ($name) {
             case 'login':
                 return 'userName';
@@ -107,8 +103,7 @@ class TypeGuesser
      *
      * @return bool
      */
-    protected function hasNativeResolverFor($property)
-    {
+    protected function hasNativeResolverFor($property) {
         try {
             $this->generator->getFormatter($property);
         } catch (InvalidArgumentException $e) {
@@ -125,8 +120,7 @@ class TypeGuesser
      *
      * @return string
      */
-    protected function guessBasedOnType(Type $type, $size)
-    {
+    protected function guessBasedOnType(Type $type, $size) {
         $typeName = $type->getName();
 
         switch ($typeName) {
@@ -158,8 +152,7 @@ class TypeGuesser
     /**
      * Predicts county type by locale.
      */
-    protected function predictCountyType(): string
-    {
+    protected function predictCountyType(): string {
         if ('en_US' === $this->generator->locale) {
             return "sprintf('%s County', \$faker->city)";
         }
@@ -170,8 +163,7 @@ class TypeGuesser
     /**
      * Predicts country code based on $size.
      */
-    protected function predictCountryType(?int $size): string
-    {
+    protected function predictCountryType(?int $size): string {
         switch ($size) {
             case 2:
                 return 'countryCode';
@@ -188,8 +180,7 @@ class TypeGuesser
     /**
      * Predicts type of title by $size.
      */
-    protected function predictTitleType(?int $size): string
-    {
+    protected function predictTitleType(?int $size): string {
         if (null === $size || $size <= 10) {
             return 'title';
         }

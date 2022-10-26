@@ -11,8 +11,7 @@ namespace Modules\Xot\QueryFilters;
 use Closure;
 use Illuminate\Support\Facades\Request;
 
-class Sort
-{
+class Sort {
     /**
      * Undocumented function.
      *
@@ -20,8 +19,7 @@ class Sort
      *
      * @return Closure
      */
-    public function handle($request, Closure $next)
-    {
+    public function handle($request, Closure $next) {
         if (! request()->has('sort')) {
             return $next($request);
         }

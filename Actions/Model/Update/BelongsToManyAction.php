@@ -7,16 +7,13 @@ namespace Modules\Xot\Actions\Model\Update;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\QueueableAction\QueueableAction;
 
-class BelongsToManyAction
-{
+class BelongsToManyAction {
     use QueueableAction;
 
-    public function __construct()
-    {
+    public function __construct() {
     }
 
-    public function execute(Model $row, object $relation)
-    {
+    public function execute(Model $row, object $relation) {
         // dddx(['row' => $row, 'relation' => $relation]);
         if (\in_array('to', array_keys($relation->data), true) || \in_array('from', array_keys($relation->data), true)) {
             // $this->saveMultiselectTwoSides($row, $relation->name, $relation->data);

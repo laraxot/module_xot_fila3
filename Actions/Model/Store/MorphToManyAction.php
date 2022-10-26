@@ -8,16 +8,13 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Arr;
 use Spatie\QueueableAction\QueueableAction;
 
-class MorphToManyAction
-{
+class MorphToManyAction {
     use QueueableAction;
 
-    public function __construct()
-    {
+    public function __construct() {
     }
 
-    public function execute(Model $row, object $relation)
-    {
+    public function execute(Model $row, object $relation) {
         $data = $relation->data;
         // dddx(['row' => $row, 'relation' => $relation, 't1' => Arr::isAssoc($data)]);
 

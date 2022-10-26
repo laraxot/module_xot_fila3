@@ -125,8 +125,7 @@ use Spatie\Tags\HasTags;
  *
  * @mixin \Eloquent
  */
-class Profile extends BaseModel implements ModelWithUserContract
-{
+class Profile extends BaseModel implements ModelWithUserContract {
     // spatie
     use HasRoles;
     use HasTags;
@@ -141,8 +140,7 @@ class Profile extends BaseModel implements ModelWithUserContract
     /*
      * Undocumented function.
      */
-    public function user(): BelongsTo
-    {
+    public function user(): BelongsTo {
         // $user = TenantService::model('user'); //no bisgna guardare dentro config(auth  etc etc
         // $user_class = \get_class($user);
         $user_class = getUserClass();

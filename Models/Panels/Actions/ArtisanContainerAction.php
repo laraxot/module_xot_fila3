@@ -13,8 +13,7 @@ use Modules\Xot\Services\ArtisanService;
 /**
  * Class ArtisanAction.
  */
-class ArtisanContainerAction extends XotBasePanelAction
-{
+class ArtisanContainerAction extends XotBasePanelAction {
     public bool $onContainer = true; // onlyContainer
 
     public bool $onItem = false; // onlyContainer
@@ -28,8 +27,7 @@ class ArtisanContainerAction extends XotBasePanelAction
     /**
      * ArtisanAction constructor.
      */
-    public function __construct(string $cmd, array $cmd_params = [])
-    {
+    public function __construct(string $cmd, array $cmd_params = []) {
         $this->cmd = $cmd;
         $this->cmd_params = $cmd_params;
     }
@@ -37,8 +35,7 @@ class ArtisanContainerAction extends XotBasePanelAction
     /**
      * @return mixed
      */
-    public function handle()
-    {
+    public function handle() {
         $out = ArtisanService::act($this->cmd);
 
         return $out.'<h3>+Done</h3>';

@@ -11,20 +11,17 @@ use Illuminate\Support\Str;
 /**
  * Class PdfService.
  */
-class PdfService
-{
+class PdfService {
     public array $filenames = [];
 
     private static ?self $instance = null;
 
-    public function __construct()
-    {
+    public function __construct() {
         // ---
         include_once __DIR__.'/vendor/autoload.php';
     }
 
-    public static function getInstance(): self
-    {
+    public static function getInstance(): self {
         if (null === self::$instance) {
             self::$instance = new self();
         }
@@ -32,15 +29,13 @@ class PdfService
         return self::$instance;
     }
 
-    public static function make(): self
-    {
+    public static function make(): self {
         return static::getInstance();
     }
 
     // include __DIR__.'/vendor/autoload.php';
 
-    public function mergePdf(string $path): self
-    {
+    public function mergePdf(string $path): self {
         include __DIR__.'/vendor/autoload.php';
         // $path = $this->get('path');
         if (! class_exists(\Jurosh\PDFMerge\PDFMerger::class)) {
@@ -69,8 +64,7 @@ class PdfService
         return $this;
     }
 
-    public function addFilenames(array $filenames): self
-    {
+    public function addFilenames(array $filenames): self {
         $this->filenames = array_merge($this->filenames, $filenames);
 
         return $this;
