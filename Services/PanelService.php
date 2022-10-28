@@ -16,7 +16,8 @@ use Nwidart\Modules\Facades\Module;
 /**
  * Class PanelService.
  */
-class PanelService {
+class PanelService
+{
     // private static ?PanelService $_instance = null;
 
     private Model $model;
@@ -25,11 +26,13 @@ class PanelService {
 
     private static ?self $instance = null;
 
-    public function __construct() {
+    public function __construct()
+    {
         // ---
     }
 
-    public static function getInstance(): self {
+    public static function getInstance(): self
+    {
         if (null === self::$instance) {
             self::$instance = new self();
         }
@@ -37,7 +40,8 @@ class PanelService {
         return self::$instance;
     }
 
-    public static function make(): self {
+    public static function make(): self
+    {
         return static::getInstance();
     }
 
@@ -71,13 +75,15 @@ class PanelService {
         return static::$panel;
     }
     */
-    public function setRequestPanel(?PanelContract $panel): self {
+    public function setRequestPanel(?PanelContract $panel): self
+    {
         $this->panel = $panel;
 
         return $this;
     }
 
-    public function getRequestPanel(): ?PanelContract {
+    public function getRequestPanel(): ?PanelContract
+    {
         return $this->panel;
     }
 
@@ -85,7 +91,8 @@ class PanelService {
      * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
      * @throws \ReflectionException
      */
-    public function get(Model $model): PanelContract {
+    public function get(Model $model): PanelContract
+    {
         $panel = $this->setModel($model)->panel();
         $post_type = $panel->postType();
         $name = Str::plural($post_type); // standard
@@ -95,13 +102,15 @@ class PanelService {
         return $panel;
     }
 
-    public function getByUser(UserContract $user): PanelContract {
+    public function getByUser(UserContract $user): PanelContract
+    {
         $model = $user->newInstance();
 
         return $this->get($model);
     }
 
-    public function setModel(Model $model): self {
+    public function setModel(Model $model): self
+    {
         $this->model = $model;
 
         return $this->getInstance();
@@ -113,9 +122,10 @@ class PanelService {
      * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
      * @throws \ReflectionException
      */
-    public function panel(): PanelContract {
-        if (! \is_object($this->model)) {
-            throw new \Exception('model is not an object url:'.url()->current());
+    public function panel(): PanelContract
+    {
+        if (!\is_object($this->model)) {
+            throw new \Exception('model is not an object url:' . url()->current());
         }
         /*
         $class_full = get_class($this->model);
@@ -138,31 +148,34 @@ class PanelService {
         ;
     }
 
-    public function imageHtml(?array $params): string {
+    public function imageHtml(?array $params): string
+    {
         $res = $this->model->getAttributeValue('image_src');
-        if (! \is_string($res)) {
-            throw new Exception('['.__LINE__.']['.class_basename(__CLASS__).']');
+        if (!\is_string($res)) {
+            throw new Exception('[' . __LINE__ . '][' . class_basename(__CLASS__) . ']');
         }
 
         return $res;
     }
 
-    public function tabs(): array {
+    public function tabs(): array
+    {
         return $this->panel()->tabs();
     }
 
     // esempio parametro stringa 'area-1-menu-1'
     // rilascia il pannello dell'ultimo container (nell'esempio menu),
     // con parent il pannello del precedente container (nell'esempio area)
-    public function getById(string $id): PanelContract {
+    public function getById(string $id): PanelContract
+    {
         $piece = explode('-', $id);
         $route_params = [];
         $j = 0;
         for ($i = 0; $i < \count($piece); ++$i) {
             if (0 === $i % 2) {
-                $route_params['container'.$j] = $piece[$i];
+                $route_params['container' . $j] = $piece[$i];
             } else {
-                $route_params['item'.$j] = $piece[$i];
+                $route_params['item' . $j] = $piece[$i];
                 ++$j;
             }
         }
@@ -173,7 +186,8 @@ class PanelService {
         return $this->getByParams($route_params);
     }
 
-    public function getHomePanel(): PanelContract {
+    public function getHomePanel(): PanelContract
+    {
         /*
         $name = 'home';
 
@@ -188,14 +202,14 @@ class PanelService {
         try {
             $home = $home->firstOrCreate(['id' => 1]);
         } catch (\Exception $e) {
-            echo '<h3>'.$e->getMessage().'</h3>';
+            echo '<h3>' . $e->getMessage() . '</h3>';
         }
         if (inAdmin() && isset($params['module'])) {
             $module = Module::find($params['module']);
             if (null === $module) {
-                throw new \Exception('module ['.$params['module'].'] not found');
+                throw new \Exception('module [' . $params['module'] . '] not found');
             }
-            $panel = '\Modules\\'.$module->getName().'\Models\Panels\_ModulePanel';
+            $panel = '\Modules\\' . $module->getName() . '\Models\Panels\_ModulePanel';
             $panel = app($panel);
             $panel->setRow($home);
             $panel->setName($params['module']);
@@ -224,7 +238,8 @@ class PanelService {
     /**
      * Function getByParams.
      */
-    public function getByParams(?array $route_params): PanelContract {
+    public function getByParams(?array $route_params): PanelContract
+    {
         [$containers, $items] = params2ContainerItem($route_params);
         $in_admin = null;
         if (isset($route_params['in_admin'])) {
@@ -262,7 +277,6 @@ class PanelService {
 
         $rows = new CustomRelation(
             $row->newQuery(),
-            // $home_row,
             $row,
             function ($relation): void {
                 $relation->getQuery();
@@ -288,8 +302,9 @@ class PanelService {
             // dddx($panel_parent);
             $row_prev = $panel_parent->getRow();
             $types = Str::camel($containers[$i]);
-            // dddx([$row_prev, $panel_parent, $types]);
+            // 
             $rows = $row_prev->{$types}(); // Relazione
+            // dddx(['row_prev' => $row_prev, 'panel_parent' => $panel_parent, 'types' => $types, 'rows' => $rows]);
             try {
                 $row = $rows->getRelated(); // se relazione
             } catch (\Exception $e) {  // se builder
@@ -311,8 +326,9 @@ class PanelService {
             $panel->setRows($rows);
             $panel->setName($types);
             $panel->setParent($panel_parent);
-
+            //echo '<pre>' . print_r($panel_parent->getRow()->getKey(), true) . '</pre>';
             if (isset($items[$i])) {
+                //dddx(['panel' => $panel, 'item' => $items[$i]]);
                 $panel->setInAdmin($in_admin)
                     ->setItem($items[$i]);
             }
@@ -328,13 +344,14 @@ class PanelService {
      *
      * @return \Illuminate\Http\RedirectResponse|mixed
      */
-    public function getByModel(Model $model) {
+    public function getByModel(Model $model)
+    {
         $class_full = \get_class($model);
         $class_name = class_basename($model);
         $class = Str::before($class_full, $class_name);
-        $panel = $class.'Panels\\'.$class_name.'Panel';
+        $panel = $class . 'Panels\\' . $class_name . 'Panel';
         if (class_exists($panel)) {
-            if (! method_exists($panel, 'tabs')) {
+            if (!method_exists($panel, 'tabs')) {
                 $this->updatePanel(['panel' => $panel, 'func' => 'tabs']);
             }
 
@@ -350,12 +367,13 @@ class PanelService {
      * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
      * @throws \ReflectionException
      */
-    public function createPanel(Model $model): void {
+    public function createPanel(Model $model): void
+    {
         $class_full = \get_class($model);
         $class_name = class_basename($model);
         $class = Str::before($class_full, $class_name);
-        $panel_namespace = $class.'Panels';
-        $panel = $panel_namespace.'\\'.$class_name.'Panel';
+        $panel_namespace = $class . 'Panels';
+        $panel = $panel_namespace . '\\' . $class_name . 'Panel';
         // ---- creazione panel
         $autoloader_reflector = new \ReflectionClass($model);
         $class_filename = $autoloader_reflector->getFileName();
@@ -363,7 +381,7 @@ class PanelService {
             throw new \Exception('autoloader_reflector err');
         }
         $model_dir = \dirname($class_filename); // /home/vagrant/code/htdocs/lara/multi/laravel/Modules/LU/Models
-        $stub_file = __DIR__.'/../Console/stubs/panel.stub';
+        $stub_file = __DIR__ . '/../Console/stubs/panel.stub';
         $stub = File::get($stub_file);
         $search = [];
         $fillables = $model->getFillable();
@@ -391,7 +409,7 @@ class PanelService {
         */
         $replace = [
             'DummyNamespace' => $panel_namespace,
-            'DummyClass' => $class_name.'Panel',
+            'DummyClass' => $class_name . 'Panel',
             'DummyFullModel' => $class_full,
             'dummy_id' => $dummy_id,
             'dummy_title' => 'title', // prendo il primo campo stringa
@@ -399,9 +417,9 @@ class PanelService {
             'dummy_fields' => var_export($fields, true),
         ];
         $stub = str_replace(array_keys($replace), array_values($replace), $stub);
-        $panel_dir = $model_dir.'/Panels';
+        $panel_dir = $model_dir . '/Panels';
         File::makeDirectory($panel_dir, $mode = 0777, true, true);
-        $panel_file = $panel_dir.'/'.$class_name.'Panel.php';
+        $panel_file = $panel_dir . '/' . $class_name . 'Panel.php';
         File::put($panel_file, $stub);
     }
 
@@ -409,19 +427,20 @@ class PanelService {
      * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
      * @throws \ReflectionException
      */
-    public function updatePanel(array $params = []): void {
+    public function updatePanel(array $params = []): void
+    {
         extract($params);
-        if (! isset($func)) {
+        if (!isset($func)) {
             dddx(['err' => 'func is missing']);
 
             return;
         }
-        if (! isset($panel)) {
+        if (!isset($panel)) {
             dddx(['err' => 'panel is missing']);
 
             return;
         }
-        $func_file = __DIR__.'/../Console/stubs/panels/'.$func.'.stub';
+        $func_file = __DIR__ . '/../Console/stubs/panels/' . $func . '.stub';
         $func_stub = File::get($func_file);
         $autoloader_reflector = new \ReflectionClass($panel);
         $panel_file = $autoloader_reflector->getFileName();
@@ -430,7 +449,7 @@ class PanelService {
         }
 
         $panel_stub = File::get($panel_file);
-        $panel_stub = Str::replaceLast('}', $func_stub.\chr(13).\chr(10).'}', $panel_stub);
+        $panel_stub = Str::replaceLast('}', $func_stub . \chr(13) . \chr(10) . '}', $panel_stub);
         File::put($panel_file, $panel_stub);
     }
 }
