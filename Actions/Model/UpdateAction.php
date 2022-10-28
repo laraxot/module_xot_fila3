@@ -19,8 +19,16 @@ class UpdateAction {
         $validator = Validator::make($data, $rules);
         $validator->validate();
 
-        $row = tap($row)->update($data);
-        $relations = app(FilterRelationsAction::class)->execute($row, array_keys($data));
+        try {
+            $row = tap($row)->update($data);
+        } catch (\Exception $e) {
+            if ('Node must exists.' === $e->getMessage()) {
+                app($row::class)->fixTree();
+                $row = tap($row)->update($data);
+            }
+        }
+
+            $relations = app(FilterRelationsAction::class)->execute($row, array_keys($data));
         foreach ($relations as $relation) {
             $act = __NAMESPACE__.'\\Update\\'.$relation->relationship_type.'Action';
             $relation->data = $data[$relation->name];
