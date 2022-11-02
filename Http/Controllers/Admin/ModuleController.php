@@ -8,21 +8,7 @@ use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Modules\Xot\Services\PanelService;
-use Nwidart\Modules\Facades\Module;
 
-/*
-* gestisce i module
-*/
-
-// /*
-
-/**
- * Class ModuleController.
- */
-// class ModuleController extends XotBaseContainerController {
-// }
-// */
-// *
 class ModuleController extends Controller {
     /**
      * @return mixed
