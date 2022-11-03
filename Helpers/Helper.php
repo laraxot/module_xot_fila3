@@ -1311,3 +1311,13 @@ if (! function_exists('str_limit')) {
         return Str::limit($str, $limit); // per xstream
     }
 }
+
+function inArrayBetween(int $curr, array $data, ?string $field_start = 'start', ?string $field_end = 'end'): bool {
+    foreach ($data as $v) {
+        if ($curr >= $v[$field_start] && $curr <= $v[$field_end]) {
+            return true;
+        }
+    }
+
+    return false;
+}

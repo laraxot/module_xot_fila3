@@ -91,7 +91,7 @@ interface PanelContract {
 
     public function getXotModelName(): ?string;
 
-    public function url(string $act = 'show'): string;
+    public function url(string $act = 'show'/* , ?array $params = [] */): string;
 
     /**
      * Undocumented function.

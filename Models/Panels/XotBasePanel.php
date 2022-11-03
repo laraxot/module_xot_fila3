@@ -12,6 +12,7 @@ use Illuminate\Database\Eloquent\Relations\Relation;
 // ----------  SERVICES --------------------------
 use Illuminate\Http\Request;
 use Illuminate\Pipeline\Pipeline;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
@@ -1157,8 +1158,15 @@ abstract class XotBasePanel implements PanelContract {
         return $this->route->{__FUNCTION__}(['lang' => $lang]);
     }
 
-    public function url(string $act = 'show'): string {
-        return $this->route->{__FUNCTION__}($act);
+    public function url(string $act = 'show'/* , ?array $params = [] */): string {
+        // dddx($this->route);
+
+        $url = $this->route->{__FUNCTION__}($act);
+        /*if ([] !== $params) {
+            $url .= '?'.Arr::query($params);
+        }*/
+
+        return $url;
     }
 
     public function relatedName(string $name, ?int $id = null): PanelContract {
