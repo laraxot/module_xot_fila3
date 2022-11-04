@@ -1158,13 +1158,21 @@ abstract class XotBasePanel implements PanelContract {
         return $this->route->{__FUNCTION__}(['lang' => $lang]);
     }
 
-    public function url(string $act = 'show'/* , ?array $params = [] */): string {
-        // dddx($this->route);
-
+    public function url(string $act = 'show', ?array $params = []): string {
         $url = $this->route->{__FUNCTION__}($act);
-        /*if ([] !== $params) {
-            $url .= '?'.Arr::query($params);
-        }*/
+
+        if ([] !== $params) {
+            $url_components = parse_url($url);
+            $url = $url_components['path'];
+
+            $merged = $params;
+            if (isset($url_components['query'])) {
+                parse_str($url_components['query'], $originalParams);
+                $merged = array_merge($params, $originalParams);
+            }
+
+            $url .= '?'.Arr::query($merged);
+        }
 
         return $url;
     }
