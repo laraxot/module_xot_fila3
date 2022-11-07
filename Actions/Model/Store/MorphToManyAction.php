@@ -16,6 +16,12 @@ class MorphToManyAction {
 
     public function execute(Model $row, object $relation) {
         $data = $relation->data;
+        if (\in_array('to', array_keys($data), true) || \in_array('from', array_keys($data), true)) {
+            if (! isset($data['to'])) {
+                $data['to'] = [];
+            }
+            $data = $data['to'];
+        }
         // dddx(['row' => $row, 'relation' => $relation, 't1' => Arr::isAssoc($data)]);
 
         if (! Arr::isAssoc($data)) {
@@ -23,6 +29,15 @@ class MorphToManyAction {
 
             return;
         }
+
+        dddx([
+            'message' => 'wip',
+            'row' => $row,
+            'relation' => $relation,
+            'relation_rows' => $relation->rows->exists(),
+            't' => $row->{$relation->name},
+        ]);
+
         dddx('wip');
         /*
         foreach ($data as $k => $v) {
