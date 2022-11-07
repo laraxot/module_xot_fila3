@@ -25,11 +25,20 @@ class BelongsToAction {
             return;
         }
 
+        $fillable = collect($relation->related->getFillable())->merge($relation->related->getHidden());
+        $data = collect($relation->data)->only($fillable)->all();
+
         if ($rows->exists()) {
-            // dddx([$row, $relation->name, $row->{$relation->name}(), $relation->data]);
-            $row->{$relation->name}()->update($relation->data);
-        } else {
-            dddx(['err' => 'wip']);
+            // $rows->update($data); // non passa per il mutator
+            $row->{$relation->name}->update($data);
+
+            return;
         }
+
+        $related = $relation->related->create($data);
+        $res = $rows->associate($related);
+        $res->save();
+
+        return;
     }
 }
