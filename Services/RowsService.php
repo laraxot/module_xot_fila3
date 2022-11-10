@@ -69,15 +69,19 @@ class RowsService {
                                     [$rel, $rel_field] = explode('.', $v);
 
                                     // dddx([$rel, $rel_field]);
-                                    $subquery = $subquery->orWhereHas(
-                                        $rel,
-                                        function (Builder $subquery1) use ($rel_field, $q): void {
-                                            // dddx($subquery1->getConnection()->getDatabaseName());
 
-                                            $subquery1->where($rel_field, 'like', '%'.$q.'%');
-                                            // dddx($subquery1);
-                                        }
-                                    );
+                                    $subquery = $subquery
+                                        // ->with([$rel])
+                                        // ->setConnection('liveuser_general')
+                                        ->orWhereHas(
+                                            $rel,
+                                            function (Builder $subquery1) use ($rel_field, $q): void {
+                                                // dddx($subquery1->getConnection()->getDatabaseName());
+
+                                                $subquery1->where($rel_field, 'like', '%'.$q.'%');
+                                                // dddx($subquery1);
+                                            }
+                                        );
 
                                 // dddx($subquery);
                                 } else {
