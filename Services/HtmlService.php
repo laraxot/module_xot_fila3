@@ -11,6 +11,7 @@ namespace Modules\Xot\Services;
 
 use Exception;
 // use Mpdf\Mpdf;
+use Illuminate\Support\Facades\Storage;
 use Spipu\Html2Pdf\Exception\ExceptionFormatter;
 use Spipu\Html2Pdf\Exception\Html2PdfException;
 use Spipu\Html2Pdf\Html2Pdf;
@@ -37,7 +38,7 @@ class HtmlService {
         include_once __DIR__.'/vendor/autoload.php';
         $pdforientation = 'L'; // default;
         $out = 'show';
-        $filename = 'test';
+        $filename = Storage::disk('local')->path('test.pdf');
         extract($params);
         if (! isset($html)) {
             throw new Exception('err html is missing');
@@ -54,7 +55,7 @@ class HtmlService {
             switch ($out) {
                 case 'content_PDF':
                     return $html2pdf->Output($filename.'.pdf', 'S');
-                case 'file': $html2pdf->Output($filename.'.pdf', 'F');
+                case 'file': $html2pdf->Output($filename, 'F');
 
                     return $filename;
             }
