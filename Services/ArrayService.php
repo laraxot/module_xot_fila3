@@ -174,7 +174,7 @@ class ArrayService {
      *
      * @return \Symfony\Component\HttpFoundation\BinaryFileResponse|Renderable
      */
-    public function toXLS_phpoffice() {
+    public function toXLS_phpoffice(?string $out = 'download') {
         $spreadsheet = new Spreadsheet();
         // ----
         $ltr = 'A1';
@@ -207,7 +207,8 @@ class ArrayService {
         ];
 
         // if (! isset($out)) {
-        $out = 'download';
+        //    $out = 'download';
+        // }
         // return response()->download($pathToFile);
         // $out='link';
         // exit(response()->download($pathToFile));
@@ -216,6 +217,7 @@ class ArrayService {
         // if (! isset($text)) {
         //    $text = 'text';
         // }
+
         switch ($out) {
             case 'link':
                 return view()->make('theme::download_icon', $view_params);
