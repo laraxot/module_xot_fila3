@@ -1168,7 +1168,7 @@ abstract class XotBasePanel implements PanelContract {
             $merged = $params;
             if (isset($url_components['query'])) {
                 parse_str($url_components['query'], $originalParams);
-                $merged = array_merge($params, $originalParams);
+                $merged = array_replace_recursive($originalParams, $params);
             }
 
             $url .= '?'.Arr::query($merged);
