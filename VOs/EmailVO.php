@@ -9,12 +9,16 @@ This decrease amount of guard logic within the system.
 
 namespace Modules\Xot\VOs;
 
-class EmailVO {
+use InvalidArgumentException;
 
-    public function __construct(public readonly string $email) {
+class EmailVO {
+    //public readonly string $email;
+    public string $email;
+
+    public function __construct(string $email) {
         $this->email=$email;
         if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-            throw new \InvalidArgumentException(sprintf("Email address %s is considered valid.", $address));
+            throw new InvalidArgumentException(sprintf("Email address %s is considered valid.", $address));
         }
     }
 }
