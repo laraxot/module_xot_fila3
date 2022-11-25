@@ -1245,7 +1245,7 @@ if (! function_exists('debugStack')) {
 }
 
 if (! function_exists('secondsToHms')) {
-    function secondsToHms(float $seconds): string {
+    function secondsToHms(float $seconds, int $decimal = 0): string {
         $hours = floor($seconds / 3600);
         $seconds -= $hours * 3600;
         $minutes = floor($seconds / 60);
@@ -1254,7 +1254,7 @@ if (! function_exists('secondsToHms')) {
         if ($hours > 0) {
             $str .= ($hours < 9 ? '0'.$hours : $hours).':';
         }
-        $str .= ($minutes < 9 ? '0'.$minutes : $minutes).':'.round($seconds, 3);
+        $str .= ($minutes < 9 ? '0'.$minutes : $minutes).':'.round($seconds, $decimal);
 
         return $str;
     }
