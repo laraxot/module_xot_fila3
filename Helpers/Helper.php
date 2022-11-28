@@ -1321,3 +1321,13 @@ function inArrayBetween(int $curr, array $data, ?string $field_start = 'start', 
 
     return false;
 }
+
+function inArrayBetweenKey(int $curr, array $data, ?string $field_start = 'start', ?string $field_end = 'end'): int|bool {
+    foreach ($data as $k => $v) {
+        if ($curr >= $v[$field_start] && $curr <= $v[$field_end]) {
+            return $k;
+        }
+    }
+
+    return false;
+}
