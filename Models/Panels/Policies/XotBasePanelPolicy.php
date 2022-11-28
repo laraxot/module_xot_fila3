@@ -38,8 +38,10 @@ abstract class XotBasePanelPolicy {
                     $module_name = $module->getName();
                 }
                 $has_area = $profile->hasArea($module_name);
-
-                return $has_area || $profile->isSuperAdmin();
+                if(!$has_area){
+                    return false;
+                }
+                //return $has_area && $profile->isSuperAdmin();
             }
             // this means that if you're superadmin the policy will always returns "true"
             if ($profile->isSuperAdmin()) {
