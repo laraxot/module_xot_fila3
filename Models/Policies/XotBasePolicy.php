@@ -8,9 +8,9 @@ use Illuminate\Auth\Access\HandlesAuthorization;
 // use Illuminate\Database\Eloquent\Model as Post;
 // use Modules\LU\Models\User;
 use Illuminate\Database\Eloquent\Model;
+use Modules\LU\Services\ProfileService;
 use Modules\Xot\Contracts\UserContract;
 use Modules\Xot\Services\PanelService;
-use Modules\Xot\Services\ProfileService;
 
 /**
  * Class XotBasePolicy.
