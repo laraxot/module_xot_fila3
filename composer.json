@@ -6,7 +6,8 @@
         "email": "marco.sottana@gmail.com"
     }],
     "require": {
-        "livewire/livewire": "^2.9"
+        "livewire/livewire": "*",
+        "mcamara/laravel-localization": "*"
     },
     "extra": {
         "laravel": {
