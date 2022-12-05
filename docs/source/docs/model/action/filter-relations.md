@@ -61,7 +61,16 @@ If the previously filtered model method is a relation instance then it is return
     })
 ```
 
-The returned relations 
+* The returned relations will be mapped.
+* *related* variable starts *null*
+* If the method $model->relation()->getRelated() esists then *related* get the related model of the relation.
+
+###  It returns for every discovered Relation:
+
+* the relation type (belongsTo, hasMany, ecc)
+* the related model
+* the relation name (user, profile)
+* the relation itself
 
 ```php
 ->map(function ($item) use ($model) {
