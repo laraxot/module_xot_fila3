@@ -23,7 +23,7 @@
             "Modules\\Xot\\": ""
         },
         "files": [
-            "Modules/Xot/Helpers/Helper.php"
+            "Helpers/Helper.php"
         ]
     }
 }

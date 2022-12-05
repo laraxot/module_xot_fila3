@@ -17,9 +17,10 @@ laravel/Modules/Xot/Actions/Model/StoreAction.php
 ## What it does:
 
 It takes three params:
-* the model calling the store action
-* the data array to store
-* the rules needed to validate data
+
+* the *model* calling the store action
+* the *data* array to store
+*  the *rules* needed to validate data
 
 ```php
 public function execute(Model $row, array $data, array $rules): Model {
