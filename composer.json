@@ -21,6 +21,9 @@
     "autoload": {
         "psr-4": {
             "Modules\\Xot\\": ""
-        }
+        },
+        "files": [
+            "Modules/Xot/Helpers/Helper.php"
+        ]
     }
 }

@@ -14,17 +14,18 @@ class BelongsToAction {
     }
 
     public function execute(Model $row, object $relation) {
-        if (null == $row->{$relation->name}) {
+        // dd([$relation->name]);
+        if (! null == $row->{$relation->name}) {
             $row->{$relation->name}()->create($relation->data);
 
             return;
         }
-        dddx([
+        /*dddx([
             'message' => 'wip',
             'row' => $row,
             'relation' => $relation,
             'relation_rows' => $relation->rows->exists(),
             't' => $row->{$relation->name},
-        ]);
+        ]);*/
     }
 }
