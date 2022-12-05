@@ -10,7 +10,6 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Str;
-use Modules\Cms\Services\RouteService;
 use Modules\Tenant\Services\TenantService;
 use Modules\Xot\Services\ArrayService;
 use Modules\Xot\Services\FileService;
@@ -245,7 +244,26 @@ if (! function_exists('inAdmin')) {
      * ---.
      */
     function inAdmin(array $params = []): bool {
-        return RouteService::inAdmin($params);
+        if (isset($params['in_admin'])) {
+            return (bool) $params['in_admin'];
+        }
+        // dddx(ThemeService::__getStatic('in_admin'));
+        /* Cannot call method get() on mixed
+        if (null !== config()->get('in_admin')) {
+            return config()->get('in_admin');
+        }
+        */
+        if ('admin' === \Request::segment(1)) {
+            return true;
+        }
+        $segments = \Request::segments();
+        if (\count($segments) > 0 && 'livewire' === $segments[0]) {
+            if (true === session('in_admin')) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }
 
