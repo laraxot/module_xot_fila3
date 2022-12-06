@@ -130,7 +130,7 @@ function ($item, $key) use ($methods) {
     })
 ```
 
-### Returns the class associated with its name
+### Returns the class associated with its name (morphmapped)
 
 ```php
 public function getPostType(): string {
@@ -200,3 +200,52 @@ Returns the previous name => class association
 ```php
 return (string) $post_type;
 ```
+
+### Get relation names from *model* property
+
+```php
+public function getRelations(): array {
+```
+
+Example
+
+* The reflection class is used to get information about the current state of the application. 
+* It's called reflection, because it looks at itself, and can tell you information about the program your running, at runtime.
+
+```php
+$reflector = new ReflectionClass($model);
+```
+
+Get the methods from the reflected $model class
+
+```php
+$methods = $reflector->getMethods();
+```
+
+Get the doc comment if it exists, otherwise false
+
+```php
+foreach ($methods as $method) {
+    $doc = $method->getDocComment();
+```
+
+Get the method name (inside foreach)
+
+```php
+    $res = $method->getName();
+```  
+* If the number of required parameters for this methos are Zero
+* If the class of this method is $model
+* If the method's $doc isn't false and strpos has the substring *\\Relations\\*
+
+* Then the array $relations adds the method name ($method->getName())
+
+```php
+if (0 === $method->getNumberOfRequiredParameters() && $method->class === \get_class($model)) {
+        if ($doc && false !== strpos($doc, '\\Relations\\')) {
+        $relations[] = $res;
+    }
+}
+
+return $relations;
+``` 
