@@ -130,6 +130,7 @@ class PanelService {
 
         return app($panel_class)->setRow($this->model);
         */
+        // backtrace(true);
         $panel_class = StubService::make()->setModelAndName($this->model, 'panel')->get();
 
         return app($panel_class)
@@ -234,6 +235,7 @@ class PanelService {
             $in_admin = inAdmin();
         }
 
+        // dddx([$containers, $items]);
         if (0 === \count($containers)) {
             $panel = $this->getHomePanel();
 
@@ -243,6 +245,9 @@ class PanelService {
         $row = null;
         // $first_container = Str::singular($containers[0]);
         $first_container = $containers[0];
+
+        // dddx($route_params);
+
         if (isset($route_params['module'])) {
             $module_models = getModuleModels($route_params['module']);
             $model_class = collect($module_models)
@@ -259,6 +264,10 @@ class PanelService {
         if (null === $row) {
             $row = getModelByName(Str::singular($first_container));
         }
+
+        /*if (isset($items[0])) {
+            $row = $row->find($items[0]);
+        }*/
 
         $rows = new CustomRelation(
             $row->newQuery(),

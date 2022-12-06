@@ -14,13 +14,21 @@ return [
     ],
     'Jigsaw Docs' => 'https://jigsaw.tighten.co/docs/installation',
     'Model Actions' => [
-        'url' => 'docs/getting-started',
+        'url' => 'docs/model',
         'children' => [
             'Destroy' => 'docs/model/action/destroy',
             'Detach' => 'docs/model/action/detach',
             'Filter Relations' => 'docs/model/action/filter-relations',
             'Store' => 'docs/model/action/store',
             'Update' => 'docs/model/action/update',
+        ],
+    ],
+    'Services' => [
+        'url' => 'docs/service',
+        'children' => [
+            'Model' => 'docs/service/model',
+            'Panel' => 'docs/service/panel',
+            'Profile' => 'docs/service/profile',
         ],
     ],
 ];

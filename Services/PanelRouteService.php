@@ -143,6 +143,7 @@ class PanelRouteService {
             );
         }
         $panel = $this->panel;
+
         /**
          * @var Collection<PanelContract>
          */

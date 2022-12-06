@@ -74,7 +74,7 @@ class ModelService {
             throw new \Exception('in ['.get_class($model).'] property [post_type] is missing');
         }
         */
-        $post_type = $this->getPostType();
+        // $post_type = $this->getPostType();
         // Relation::morphMap([$post_type => get_class($model)]);
         $data = collect($data)->filter(
             function ($item, $key) use ($methods) {
@@ -120,8 +120,9 @@ class ModelService {
          * @var array
          */
         $models = config('morph_map');
-        $post_type = collect($models)
-            ->search(\get_class($model));
+
+        $post_type = collect($models)->search(\get_class($model));
+
         if (false === $post_type) {
             $post_type = snake_case(class_basename($model));
             Relation::morphMap([$post_type => \get_class($model)]);

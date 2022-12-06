@@ -1159,6 +1159,7 @@ abstract class XotBasePanel implements PanelContract {
     }
 
     public function url(string $act = 'show', ?array $params = []): string {
+        // throw new \Exception('ciao');
         $url = $this->route->{__FUNCTION__}($act);
 
         if ([] !== $params) {
