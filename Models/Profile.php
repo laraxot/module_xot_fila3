@@ -22,8 +22,8 @@ use Spatie\Tags\HasTags;
  * @property string|null                                                          $created_by
  * @property string|null                                                          $updated_by
  * @property string|null                                                          $deleted_by
- * @property string|null                                                          $firstname
- * @property string|null                                                          $surname
+ * @property string|null                                                          $first_name
+ * @property string|null                                                          $last_name
  * @property string|null                                                          $email
  * @property string|null                                                          $phone
  * @property string|null                                                          $address

@@ -375,7 +375,7 @@ class GenerateFactoryCommand extends Command
             'email' => $this->fakerPrefix('safeEmail'),
             'email_address' => $this->fakerPrefix('safeEmail'),
             'first_name' => $this->fakerPrefix('firstName'),
-            'firstname' => $this->fakerPrefix('firstName'),
+            'first_name' => $this->fakerPrefix('firstName'),
             'last_name' => $this->fakerPrefix('lastName'),
             'lastname' => $this->fakerPrefix('lastName'),
             'name' => $this->fakerPrefix('name'),

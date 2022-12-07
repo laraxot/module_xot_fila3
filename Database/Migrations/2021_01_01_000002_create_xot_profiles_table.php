@@ -42,11 +42,11 @@ class CreateXotProfilesTable extends XotBaseMigration {
                 if (! $this->hasColumn('deleted_by')) {
                     $table->string('deleted_by')->nullable();
                 }
-                if (! $this->hasColumn('firstname')) {
-                    $table->string('firstname')->nullable();
+                if (! $this->hasColumn('first_name')) {
+                    $table->string('first_name')->nullable();
                 }
-                if (! $this->hasColumn('surname')) {
-                    $table->string('surname')->nullable();
+                if (! $this->hasColumn('last_name')) {
+                    $table->string('last_name')->nullable();
                 }
                 if (! $this->hasColumn('email')) {
                     $table->string('email')->nullable();
