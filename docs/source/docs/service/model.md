@@ -269,6 +269,15 @@ $profile=PressPost::get()->first();
 ModelService::make()->setModel($profile)->getRelationships();
 ```
 
+* Gets the reflection class from $model
+* Gets the public methods from reflection class, and iterates on themù
+
+
+* If the current function name (getRelationships) is equal to the method name
+* OR If the method has more then 0 parameters
+* OR if the method class name is different then model class name
+* Then the cycle stops and continue the next iteration
+
 ```php
 $model = $this->model;
 $relationships = [];
