@@ -20,6 +20,8 @@
             <meta name="generator" content="tighten_jigsaw_doc">
         @endif
 
+        <base href="{{ $page->getUrl() }}" />
+
         <title>{{ $page->siteName }}{{ $page->title ? ' | ' . $page->title : '' }}</title>
 
         <link rel="home" href="{{ $page->baseUrl }}">
