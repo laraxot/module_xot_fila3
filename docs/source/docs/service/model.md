@@ -209,6 +209,11 @@ public function getRelations(): array {
 
 Example
 
+```php
+$profile=PressPost::get()->first();
+ModelService::make()->setModel($profile)->getRelations();
+```
+
 * The reflection class is used to get information about the current state of the application. 
 * It's called reflection, because it looks at itself, and can tell you information about the program your running, at runtime.
 
@@ -249,3 +254,30 @@ if (0 === $method->getNumberOfRequiredParameters() && $method->class === \get_cl
 
 return $relations;
 ``` 
+
+### Get relationships from *model*
+
+```php
+public function getRelationships(): array {
+```
+
+Example
+
+
+```php
+$profile=PressPost::get()->first();
+ModelService::make()->setModel($profile)->getRelationships();
+```
+
+```php
+$model = $this->model;
+$relationships = [];
+
+foreach ((new ReflectionClass($model))->getMethods(ReflectionMethod::IS_PUBLIC) as $method) {
+    if ($method->class !== \get_class($model)
+    || ! empty($method->getParameters())
+    || __FUNCTION__ === $method->getName()
+    ) {
+        continue;
+    }
+```
