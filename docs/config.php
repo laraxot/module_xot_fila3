@@ -5,7 +5,7 @@ declare(strict_types=1);
 use Illuminate\Support\Str;
 
 return [
-    'baseUrl' => 'module_xot',
+    'baseUrl' => 'https://laraxot.github.io/module_xot',
     'production' => false,
     'siteName' => 'Docs Starter Template',
     'siteDescription' => 'Beautiful docs powered by Jigsaw',
