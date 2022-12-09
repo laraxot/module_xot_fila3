@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
 /**
@@ -165,26 +166,20 @@ class ArrayService {
         return $header;
     }
 
-    /**
-     * Pass array of XLS data.
-     * It sets hyperlinks in XLS.
-     */
-    public function setHyperlinks(array $rows, Spreadsheet $spreadsheet): void {
-        $row_col = XLSService::make()->checkValidUrls($rows);
-        foreach ($row_col as $value) {
-            // dddx($value);
-            // $spreadsheet->getActiveSheet()->getCellByColumnAndRow($value['col'], $value['row'])->getHyperlink()->setUrl($value['url']);
+    // ret array|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|string|\Symfony\Component\HttpFoundation\BinaryFileResponse
 
-            // set the value of the cell
-            $this->phpExcelObj->getActiveSheet()->SetCellValue($value['row'].$value['col'], $value['link']);
-            // change the data type of the cell
-            $this->phpExcelObj->getActiveSheet()->getCell('A1')->setDataType(PHPExcel_Cell_DataType::TYPE_STRING2);
-            // /now set the link
-            $this->phpExcelObj->getActiveSheet()->getCell('A1')->getHyperlink()->setUrl(strip_tags($link));
+    public function fixCellsType(Worksheet &$sheet): void {
+        foreach ($sheet->getRowIterator() as $row) {
+            $cellIterator = $row->getCellIterator();
+            $cellIterator->setIterateOnlyExistingCells(false);
+
+            foreach ($cellIterator as $cell) {
+                if (filter_var($cell->getValue(), FILTER_VALIDATE_URL)) {
+                    $sheet->getCell($cell->getCoordinate())->getHyperlink()->setUrl($cell->getValue());
+                }
+            }
         }
     }
-
-    // ret array|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|string|\Symfony\Component\HttpFoundation\BinaryFileResponse
 
     /**
      * @throws \PhpOffice\PhpSpreadsheet\Writer\Exception
@@ -207,7 +202,8 @@ class ArrayService {
 
         $sheet->fromArray($header, null, 'A1');
 
-        $this->setHyperlinks($data, $spreadsheet);
+        // $this->setHyperlinks($data, $spreadsheet);
+        // $sheet->getCell('B2')->getHyperlink()->setUrl('https://www.google.com/');
 
         $sheet->fromArray(
             $data,      // The data to set
@@ -215,6 +211,9 @@ class ArrayService {
             'A2'         // Top left coordinate of the worksheet range where
             //    we want to set these values (default is A1)
         );
+
+        $this->fixCellsType($sheet);
+
         // $sheet->setCellValue('A1', 'Hello World !');
         $writer = new Xlsx($spreadsheet);
 

@@ -28,4 +28,11 @@ class _ModulePanelPolicy extends XotBasePanelPolicy {
     public function modelGenerator(UserContract $user, PanelContract $panel): bool {
         return true;
     }
+
+    /**
+     * Undocumented function.
+     */
+    public function tryArrayToXls(UserContract $user, PanelContract $panel): bool {
+        return true;
+    }
 }

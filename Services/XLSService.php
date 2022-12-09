@@ -43,6 +43,20 @@ class XLSService {
     }
 
     /**
+     * Converts column number to letter.
+     */
+    public function getNameFromNumber($num) {
+        $numeric = $num % 26;
+        $letter = chr(65 + $numeric);
+        $num2 = intval($num / 26);
+        if ($num2 > 0) {
+            return $this->getNameFromNumber($num2 - 1).$letter;
+        } else {
+            return $letter;
+        }
+    }
+
+    /**
      * Checks valid urls from XLS import array.
      */
     public function checkValidUrls(array $rows): array {
@@ -51,7 +65,7 @@ class XLSService {
             $int_col_key = 0;
             foreach ($row as $col_key => $column) {
                 if (UrlService::make()->checkValidUrl((string) $column)) {
-                    $col_row[] = ['col' => $int_col_key, 'row' => $row_key, 'url' => $column];
+                    $col_row[] = ['col' => $col_key, 'int_col' => $int_col_key, 'row' => $row_key, 'url' => $column];
                 }
                 ++$int_col_key;
             }

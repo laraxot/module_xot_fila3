@@ -15,6 +15,7 @@ class _ModulePanel extends XotBasePanel {
         return [
             new Actions\XlsImportAction(),
             new Actions\ModelGeneratorAction(),
+            new Actions\Try\TryArrayToXlsAction(),
         ];
     }
 }
