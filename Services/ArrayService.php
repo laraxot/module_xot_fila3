@@ -165,6 +165,25 @@ class ArrayService {
         return $header;
     }
 
+    /**
+     * Pass array of XLS data.
+     * It sets hyperlinks in XLS.
+     */
+    public function setHyperlinks(array $rows, Spreadsheet $spreadsheet): void {
+        $row_col = XLSService::make()->checkValidUrls($rows);
+        foreach ($row_col as $value) {
+            // dddx($value);
+            // $spreadsheet->getActiveSheet()->getCellByColumnAndRow($value['col'], $value['row'])->getHyperlink()->setUrl($value['url']);
+
+            // set the value of the cell
+            $this->phpExcelObj->getActiveSheet()->SetCellValue($value['row'].$value['col'], $value['link']);
+            // change the data type of the cell
+            $this->phpExcelObj->getActiveSheet()->getCell('A1')->setDataType(PHPExcel_Cell_DataType::TYPE_STRING2);
+            // /now set the link
+            $this->phpExcelObj->getActiveSheet()->getCell('A1')->getHyperlink()->setUrl(strip_tags($link));
+        }
+    }
+
     // ret array|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|string|\Symfony\Component\HttpFoundation\BinaryFileResponse
 
     /**
@@ -187,6 +206,9 @@ class ArrayService {
         $filename = $this->getFilename();
 
         $sheet->fromArray($header, null, 'A1');
+
+        $this->setHyperlinks($data, $spreadsheet);
+
         $sheet->fromArray(
             $data,      // The data to set
             null,        // Array values with this value will not be set

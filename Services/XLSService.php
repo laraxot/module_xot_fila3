@@ -43,6 +43,24 @@ class XLSService {
     }
 
     /**
+     * Checks valid urls from XLS import array.
+     */
+    public function checkValidUrls(array $rows): array {
+        $col_row = [];
+        foreach ($rows as $row_key => $row) {
+            $int_col_key = 0;
+            foreach ($row as $col_key => $column) {
+                if (UrlService::make()->checkValidUrl((string) $column)) {
+                    $col_row[] = ['col' => $int_col_key, 'row' => $row_key, 'url' => $column];
+                }
+                ++$int_col_key;
+            }
+        }
+
+        return $col_row;
+    }
+
+    /**
      * Undocumented function.
      */
     public function fromInputFileName(string $name): self {
