@@ -722,7 +722,12 @@ class FileService {
             }
         }
         if (! File::exists($to)) {// not rewite
+        
+            try{
             File::copy($from, $to);
+            }catch( \Exception $e){
+                throw new \Exception('The theme '.config('xra.pub_theme','unknown').' is not working properly');
+            }
         }
     }
 
@@ -735,6 +740,7 @@ class FileService {
     public static function viewCopy(string $from, string $to): void {
         $from_path = self::viewPath($from);
         $to_path = self::viewPath($to);
+        
         self::copy($from_path, $to_path);
     }
 
