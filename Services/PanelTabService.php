@@ -79,6 +79,7 @@ class PanelTabService {
 
     public function getBreadTabs(PanelContract $bread): array {
         [$containers, $items] = params2ContainerItem();
+        //dddx( [$bread,$containers, $items]);
         $tabs = $bread->tabs();
         $row = [];
         if ('' !== $bread->guid()) {
