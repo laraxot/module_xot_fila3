@@ -9,7 +9,6 @@ namespace Modules\Xot\Traits;
  * https://github.com/johnnyfreeman/laravel-custom-relation
  */
 
-use Closure;
 use Modules\Xot\Relations\CustomRelation;
 
 // use Illuminate\Database\Eloquent\Builder;
@@ -21,7 +20,7 @@ trait HasCustomRelations {
     /**
      * @return CustomRelation
      */
-    public function customRelation($related, Closure $baseConstraints, Closure $eagerConstraints = null, Closure $eagerMatcher = null) {
+    public function customRelation($related, \Closure $baseConstraints, \Closure $eagerConstraints = null, \Closure $eagerMatcher = null) {
         $instance = new $related();
         $query = $instance->newQuery();
 

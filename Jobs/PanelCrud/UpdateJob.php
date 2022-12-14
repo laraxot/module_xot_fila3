@@ -6,7 +6,6 @@ namespace Modules\Xot\Jobs\PanelCrud;
 
 // ----------- Requests ----------
 // ------------ services ----------
-use ArgumentCountError;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
@@ -401,7 +400,7 @@ class UpdateJob extends XotBaseJob {
                     $value = $rows->{$item}();
                 } catch (\Exception $e) {
                     $value = $e->getMessage();
-                } catch (ArgumentCountError $e) {
+                } catch (\ArgumentCountError $e) {
                     $value = $e->getMessage();
                 }
 

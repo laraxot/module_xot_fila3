@@ -235,7 +235,7 @@ class RouteDynService {
             $group_opts = self::getGroupOpts($v, $namespace);
             $v['group_opts'] = $group_opts;
             self::createRouteResource($v, $namespace);
-            Route::group(
+            \Route::group(
                 $group_opts,
                 function () use ($v, $namespace, $curr) {
                     self::createRouteActs($v, $namespace, $curr);
@@ -256,7 +256,7 @@ class RouteDynService {
         $opts = self::getResourceOpts($v, $namespace);
         $controller = self::getController($v, $namespace);
         $name = mb_strtolower($v['name']);
-        Route::resource($name, $controller, $opts)
+        \Route::resource($name, $controller, $opts)
             // ->where(['container1' => "^((?!create|edit).)*$"])  //BadMethodCallException Method Illuminate\Routing\PendingResourceRegistration::where does not exist.
             //  ->middleware('manageContainer','container1')
         ; // ->where(['id_'.$v['name'] => '[0-9]+']);
@@ -321,7 +321,7 @@ class RouteDynService {
                 Route::$method($uri, $callback);
             }
             */
-            Route::match($method, $uri, $callback);
+            \Route::match($method, $uri, $callback);
         } // endforeach
     }
 

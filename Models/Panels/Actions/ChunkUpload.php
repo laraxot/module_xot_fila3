@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace Modules\Xot\Models\Panels\Actions;
 
-use Exception;
-
 // -------- models -----------
 
 // -------- services --------
@@ -31,7 +29,7 @@ class ChunkUpload extends XotBasePanelAction {
         }
         $fp = fopen($filename, $fp_method);
         if (false === $fp) {
-            throw new Exception('can not open '.$filename);
+            throw new \Exception('can not open '.$filename);
         }
 
         if ($_POST['seek'] > 0) {
@@ -61,7 +59,7 @@ class ChunkUpload extends XotBasePanelAction {
         }
         $fp = fopen($filename, $fp_method);
         if (false === $fp) {
-            throw new Exception('can not open '.$filename);
+            throw new \Exception('can not open '.$filename);
         }
 
         if ($_POST['seek'] > 0) {

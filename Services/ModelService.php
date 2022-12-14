@@ -10,14 +10,11 @@ declare(strict_types=1);
 namespace Modules\Xot\Services;
 
 // ----------- Requests ----------
-use ErrorException;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Str;
-use ReflectionClass;
-use ReflectionMethod;
 
 // per dizionario morph
 // ------------ services ----------
@@ -137,7 +134,7 @@ class ModelService {
      */
     public function getRelations(): array {
         $model = $this->model;
-        $reflector = new ReflectionClass($model);
+        $reflector = new \ReflectionClass($model);
         $relations = [];
         $methods = $reflector->getMethods();
 
@@ -172,7 +169,7 @@ class ModelService {
         $model = $this->model;
         $relationships = [];
 
-        foreach ((new ReflectionClass($model))->getMethods(ReflectionMethod::IS_PUBLIC) as $method) {
+        foreach ((new \ReflectionClass($model))->getMethods(\ReflectionMethod::IS_PUBLIC) as $method) {
             if ($method->class !== \get_class($model)
                 || ! empty($method->getParameters())
                 || __FUNCTION__ === $method->getName()
@@ -186,11 +183,11 @@ class ModelService {
                 if ($return instanceof Relation) {
                     $relationships[$method->getName()] = [
                         'name' => $method->getName(),
-                        'type' => (new ReflectionClass($return))->getShortName(),
-                        'model' => (new ReflectionClass($return->getRelated()))->getName(),
+                        'type' => (new \ReflectionClass($return))->getShortName(),
+                        'model' => (new \ReflectionClass($return->getRelated()))->getName(),
                     ];
                 }
-            } catch (ErrorException $e) {
+            } catch (\ErrorException $e) {
             }
         }
 

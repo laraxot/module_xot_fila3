@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Modules\Xot\Models\Traits;
 
-use Exception;
 use Illuminate\Database\Eloquent\Collection as EloquentCollection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -13,7 +12,6 @@ use Illuminate\Support\Arr;
 use Kalnoy\Nestedset\Collection;
 use Kalnoy\Nestedset\NestedSet;
 use Kalnoy\Nestedset\QueryBuilder;
-use LogicException;
 
 trait HasParent {
     /**
@@ -699,7 +697,7 @@ trait HasParent {
      *
      * @param int $value
      *
-     * @throws Exception If parent node doesn't exists
+     * @throws \Exception If parent node doesn't exists
      */
     public function setParentIdAttribute($value) {
         if ($this->getParentId() == $value) {
@@ -989,7 +987,7 @@ trait HasParent {
      */
     protected function assertNotDescendant(self $node) {
         if ($node == $this || $node->isDescendantOf($this)) {
-            throw new LogicException('Node must not be a descendant.');
+            throw new \LogicException('Node must not be a descendant.');
         }
 
         return $this;
@@ -1000,7 +998,7 @@ trait HasParent {
      */
     protected function assertNodeExists(self $node) {
         if (! $node->getLft() || ! $node->getRgt()) {
-            throw new LogicException('Node must exists.');
+            throw new \LogicException('Node must exists.');
         }
 
         return $this;
@@ -1013,7 +1011,7 @@ trait HasParent {
 
         foreach ($scoped as $attr) {
             if ($this->getAttribute($attr) != $node->getAttribute($attr)) {
-                throw new LogicException('Nodes must be in the same scope');
+                throw new \LogicException('Nodes must be in the same scope');
             }
         }
     }

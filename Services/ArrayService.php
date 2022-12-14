@@ -98,7 +98,7 @@ class ArrayService {
                 // case 3:return self::toXLS_phpexcel($params); //break;
             default:
                 $msg = 'unknown export_processor ['.$this->export_processor.']';
-                throw new Exception($msg.'['.__LINE__.']['.__FILE__.']');
+                throw new \Exception($msg.'['.__LINE__.']['.__FILE__.']');
         }
     }
 

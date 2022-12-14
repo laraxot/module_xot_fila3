@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Modules\Xot\Services;
 
-use Exception;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Route;
@@ -123,7 +122,7 @@ class PanelRouteService {
 
         $request_query = request()->query();
         if (! \is_array($request_query)) {
-            throw new Exception('['.__LINE__.']['.class_basename(__CLASS__).']');
+            throw new \Exception('['.__LINE__.']['.class_basename(__CLASS__).']');
         }
         $queries = array_merge($request_query, $queries);
         $queries = collect($queries)->except(['_act'])->all();

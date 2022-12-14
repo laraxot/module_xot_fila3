@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Modules\Xot\Services;
 
-use Exception;
 use Illuminate\Support\Collection;
 use Modules\Xot\Contracts\PanelContract;
 use Modules\Xot\Models\Panels\Actions\XotBasePanelAction;
@@ -80,7 +79,7 @@ class PanelActionService {
         $action = $this->getActions()
             ->firstWhere('name', $name);
         if (! $action instanceof XotBasePanelAction) {
-            throw new Exception('['.__LINE__.']['.__FILE__.']['.\gettype($action).']');
+            throw new \Exception('['.__LINE__.']['.__FILE__.']['.\gettype($action).']');
         }
 
         return $action;
@@ -101,10 +100,10 @@ class PanelActionService {
         //$itemAction->setPanel($this); //incerto dovrebbe farlo getActions
         */
         if (null === $itemAction) {
-            throw new Exception('['.$act.'] is not an ItemAction of ['.class_basename($this->panel).']');
+            throw new \Exception('['.$act.'] is not an ItemAction of ['.class_basename($this->panel).']');
         }
         if (! $itemAction instanceof XotBasePanelAction) {
-            throw new Exception('['.__LINE__.']['.__FILE__.']');
+            throw new \Exception('['.__LINE__.']['.__FILE__.']');
         }
 
         return $itemAction;
@@ -127,7 +126,7 @@ class PanelActionService {
         }
         // $action->setPanel($this);
         if (! $action instanceof XotBasePanelAction) {
-            throw new Exception('['.__LINE__.']['.__FILE__.']');
+            throw new \Exception('['.__LINE__.']['.__FILE__.']');
         }
 
         return $action;

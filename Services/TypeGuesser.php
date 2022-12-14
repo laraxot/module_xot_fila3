@@ -8,7 +8,6 @@ use Doctrine\DBAL\Types\Type;
 use Doctrine\DBAL\Types\Types;
 use Faker\Generator as Faker;
 use Illuminate\Support\Str;
-use InvalidArgumentException;
 
 class TypeGuesser {
     /**
@@ -106,7 +105,7 @@ class TypeGuesser {
     protected function hasNativeResolverFor($property) {
         try {
             $this->generator->getFormatter($property);
-        } catch (InvalidArgumentException $e) {
+        } catch (\InvalidArgumentException $e) {
             return false;
         }
 

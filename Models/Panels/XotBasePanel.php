@@ -136,7 +136,7 @@ abstract class XotBasePanel implements PanelContract {
 
         $res = $this->getRows()->getQuery();
         if (! $res instanceof \Illuminate\Database\Eloquent\Builder) {
-            throw new Exception('['.__LINE__.']['.class_basename(__CLASS__).']');
+            throw new \Exception('['.__LINE__.']['.class_basename(__CLASS__).']');
         }
 
         return $res;
@@ -193,7 +193,7 @@ abstract class XotBasePanel implements PanelContract {
      */
     public function getRow(): Model {
         if (null === $this->row) {
-            throw new Exception('Row is null (route for container->item might be null)');
+            throw new \Exception('Row is null (route for container->item might be null)');
         }
 
         return $this->row;
@@ -1219,7 +1219,7 @@ abstract class XotBasePanel implements PanelContract {
         if (isset($is_admin) && $is_admin) {
             $id = $this->row->getKey();
             if (! \is_int($id) && ! \is_string($id)) {
-                throw new Exception('['.__LINE__.']['.__FILE__.']');
+                throw new \Exception('['.__LINE__.']['.__FILE__.']');
             }
 
             return (string) $id;
@@ -1231,7 +1231,7 @@ abstract class XotBasePanel implements PanelContract {
         if (inAdmin()) {
             $id = $this->row->getKey();
             if (! \is_int($id) && ! \is_string($id) && null !== $id) {
-                throw new Exception('['.__LINE__.']['.__FILE__.'] - '.$id);
+                throw new \Exception('['.__LINE__.']['.__FILE__.'] - '.$id);
             }
 
             return (string) $id;
@@ -1737,7 +1737,7 @@ abstract class XotBasePanel implements PanelContract {
         }
 
         if (! \is_string($content)) {
-            throw new Exception('['.__LINE__.']['.__FILE__.']');
+            throw new \Exception('['.__LINE__.']['.__FILE__.']');
         }
 
         // 1737   Parameter #1 $str of function strip_tags expects string, array|string|null given.

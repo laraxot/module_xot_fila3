@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Modules\Xot\Services;
 
 use Carbon\Carbon;
-use Exception;
 use Illuminate\Contracts\Support\Renderable;
 
 /**
@@ -43,7 +42,7 @@ class NavService {
             }
 
             if (null === $routename) {
-                throw new Exception('routename is null');
+                throw new \Exception('routename is null');
             }
             $tmp['url'] = route($routename, $params);
             $nav[] = (object) $tmp;
@@ -78,7 +77,7 @@ class NavService {
         $q = 2;
         $date = Carbon::create($year, $month, 1);
         if (false === $date) {
-            throw new Exception('carbon error');
+            throw new \Exception('carbon error');
         }
         $d = $date->subMonths($q);
         $nav = [];
@@ -96,7 +95,7 @@ class NavService {
                 $tmp['active'] = 0;
             }
             if (null === $routename) {
-                throw new Exception('routename is null');
+                throw new \Exception('routename is null');
             }
             $tmp['url'] = route($routename, $params);
             $nav[] = (object) $tmp;

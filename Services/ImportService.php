@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Modules\Xot\Services;
 
-use Exception;
 use GuzzleHttp\Client as GuzzleClient;
 use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Cookie\CookieJar;
@@ -314,7 +313,7 @@ class ImportService {
         );
         $this->client_options['headers']['referer'] = $url;
         if (! \is_string($value)) {
-            throw new Exception('['.__LINE__.']['.class_basename(__CLASS__).']');
+            throw new \Exception('['.__LINE__.']['.class_basename(__CLASS__).']');
         }
 
         return $value;
@@ -459,7 +458,7 @@ class ImportService {
         }
         $resource = fopen($filename, 'w');
         if (false === $resource) {
-            throw new Exception('can open '.$filename);
+            throw new \Exception('can open '.$filename);
         }
         $stream = \GuzzleHttp\Psr7\Utils::streamFor($resource);
         $this->gRequest(
@@ -605,7 +604,7 @@ class ImportService {
         $url = 'http://'.$host.'/get?q='.$q.'&langpair='.$from.'|'.$to.'';
         $urldata = file_get_contents($url);
         if (false === $urldata) {
-            throw new Exception('can not get '.$urldata);
+            throw new \Exception('can not get '.$urldata);
         }
         $data = (array) json_decode($urldata, true);
         // $data = Json::decode($urldata, Json::FORCE_ARRAY);

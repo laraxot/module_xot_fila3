@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Modules\Xot\Http\Requests;
 
 use Carbon\Carbon;
-use Exception;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Str;
 use Modules\Xot\Contracts\PanelContract;
@@ -129,7 +128,7 @@ abstract class XotBaseRequest extends FormRequest {
         }
         $value_new = Carbon::createFromFormat('d/m/Y', $value);
         if (false === $value_new) {
-            throw new Exception('['.__LINE__.']['.__FILE__.']');
+            throw new \Exception('['.__LINE__.']['.__FILE__.']');
         }
 
         return $value_new;
@@ -147,7 +146,7 @@ abstract class XotBaseRequest extends FormRequest {
         }
         $value_new = Carbon::createFromFormat('d/m/Y H:i', $value);
         if (false === $value_new) {
-            throw new Exception('['.__LINE__.']['.__FILE__.']');
+            throw new \Exception('['.__LINE__.']['.__FILE__.']');
         }
 
         return $value_new;
@@ -165,7 +164,7 @@ abstract class XotBaseRequest extends FormRequest {
         }
         $value_new = Carbon::createFromFormat('d/m/Y H:i', $value);
         if (false === $value_new) {
-            throw new Exception('['.__LINE__.']['.__FILE__.']');
+            throw new \Exception('['.__LINE__.']['.__FILE__.']');
         }
 
         return $value_new;

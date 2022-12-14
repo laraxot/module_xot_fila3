@@ -9,9 +9,8 @@ namespace Modules\Xot\Exceptions;
 
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Contracts\Support\Jsonable;
-use JsonSerializable;
 
-class ApplicationError implements Arrayable, Jsonable, JsonSerializable {
+class ApplicationError implements Arrayable, Jsonable, \JsonSerializable {
     public function __construct(private string $help = '', private string $error = '') {
     }
 

@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Modules\Xot\Traits;
 
 use Carbon\Carbon;
-use Closure;
 use Illuminate\Cache\CacheManager;
 use Illuminate\Database\Eloquent\Model;
 
@@ -94,7 +93,7 @@ trait Cacheable {
      *
      * @return mixed
      */
-    public function cacheCallback(string $method, array $args, Closure $callback, $time = null) {
+    public function cacheCallback(string $method, array $args, \Closure $callback, $time = null) {
         // Cache disabled, just execute query & return result
         if (true === $this->skippedCache()) {
             return \call_user_func($callback);

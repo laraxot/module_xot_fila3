@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Modules\Xot\Providers;
 
-use Exception;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\File;
@@ -79,7 +78,7 @@ abstract class XotBaseServiceProvider extends ServiceProvider {
     public function registerViews(): void {
         $sourcePath = realpath($this->module_dir.'/../Resources/views');
         if (false === $sourcePath) {
-            throw new Exception('realpath not find dir');
+            throw new \Exception('realpath not find dir');
         }
         /*
         $viewPath = resource_path('views/modules/'.$this->module_name);
@@ -102,7 +101,7 @@ abstract class XotBaseServiceProvider extends ServiceProvider {
     public function registerTranslations(): void {
         $langPath = realpath($this->module_dir.'/../Resources/lang');
         if (false === $langPath) {
-            throw new Exception('['.__LINE__.']['.__FILE__.']');
+            throw new \Exception('['.__LINE__.']['.__FILE__.']');
         }
         // echo '<hr>'.$langPath.'  :  '.$this->module_name.' <hr/>';
         $this->loadTranslationsFrom($langPath, $this->module_name);
@@ -200,7 +199,7 @@ abstract class XotBaseServiceProvider extends ServiceProvider {
             try {
                 $events_content = json_encode($events);
                 if (false === $events_content) {
-                    throw new Exception('can not encode json');
+                    throw new \Exception('can not encode json');
                 }
                 File::put($events_file, $events_content);
             } catch (\Exception $e) {

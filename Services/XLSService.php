@@ -8,7 +8,6 @@ declare(strict_types=1);
 
 namespace Modules\Xot\Services;
 
-use Exception;
 use Illuminate\Support\Collection;
 use Maatwebsite\Excel\Facades\Excel;
 
@@ -80,7 +79,7 @@ class XLSService {
     public function fromInputFileName(string $name): self {
         $file = request()->file('file');
         if (null === $file) {
-            throw new Exception('[.__LINE__.]['.class_basename(__CLASS__).']');
+            throw new \Exception('[.__LINE__.]['.class_basename(__CLASS__).']');
         }
 
         return $this->fromRequestFile($file);
@@ -96,16 +95,16 @@ class XLSService {
      */
     public function fromRequestFile($file): self {
         if (! \is_object($file)) {
-            throw new Exception('[.__LINE__.]['.class_basename(__CLASS__).']');
+            throw new \Exception('[.__LINE__.]['.class_basename(__CLASS__).']');
         }
 
         if (! method_exists($file, 'getRealPath')) {
-            throw new Exception('[.__LINE__.]['.class_basename(__CLASS__).']');
+            throw new \Exception('[.__LINE__.]['.class_basename(__CLASS__).']');
         }
         $path = $file->getRealPath();
 
         if (false === $path) {
-            throw new Exception('[.__LINE__.]['.class_basename(__CLASS__).']');
+            throw new \Exception('[.__LINE__.]['.class_basename(__CLASS__).']');
         }
 
         return $this->fromFilePath($path);

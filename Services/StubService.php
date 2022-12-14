@@ -5,8 +5,6 @@ declare(strict_types=1);
 namespace Modules\Xot\Services;
 
 use Doctrine\DBAL\Schema\Column;
-use ErrorException;
-use Exception;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\File;
@@ -95,7 +93,7 @@ class StubService {
         }
         try {
             $this->generate();
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             dddx(
                 [
                     'e' => $e,
@@ -209,7 +207,7 @@ class StubService {
                 // function (Column $column) {
                 function ($column) {
                     if (! $column instanceof Column) {
-                        throw new Exception('['.__LINE__.']['.__FILE__.']');
+                        throw new \Exception('['.__LINE__.']['.__FILE__.']');
                     }
 
                     return $this->mapTableProperties($column);
@@ -345,7 +343,7 @@ class StubService {
                 try {
                     $table_name = $conn->getTablePrefix().$model->getTable();
                     if (! \is_string($input_name)) {
-                        throw new Exception('['.__LINE__.']['.__FILE__.']');
+                        throw new \Exception('['.__LINE__.']['.__FILE__.']');
                     }
 
                     return $conn->getDoctrineColumn($table_name, $input_name);
@@ -403,12 +401,12 @@ class StubService {
         }
         try {
             File::put($file, $stub);
-        } catch (ErrorException $e) {
+        } catch (\ErrorException $e) {
             $msg = '['.$file.'] '.$e->getMessage().'
                 ['.__LINE__.']
                 ['.class_basename(__CLASS__).']
                 ';
-            throw new Exception($msg);
+            throw new \Exception($msg);
         }
         $msg = (' ['.$file.'] is under creating , refresh page');
 
@@ -630,7 +628,7 @@ class StubService {
         })
         ->first();
         if (null === $brother_file) {
-            throw new Exception('['.__LINE__.']['.__FILE__.']');
+            throw new \Exception('['.__LINE__.']['.__FILE__.']');
         }
         $brother_class = $this->getModelNamespace().'\\'.$brother_file->getFilenameWithoutExtension();
         $brother = app($brother_class);
@@ -662,7 +660,7 @@ class StubService {
         // dddx(get_class_methods($brother_file));
         // dddx($brother_file->getFilenameWithoutExtension());
         if (null === $brother_file) {
-            throw new Exception('['.__LINE__.']['.__FILE__.']');
+            throw new \Exception('['.__LINE__.']['.__FILE__.']');
         }
         $brother_class = $this->getModelNamespace().'\\'.$brother_file->getFilenameWithoutExtension();
         // getRandomBrotherModel

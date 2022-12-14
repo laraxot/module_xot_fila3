@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Modules\Xot\Models\Panels\Actions;
 
-use Exception;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\QueryException;
@@ -78,10 +77,10 @@ class DbAction extends XotBasePanelAction {
                 }
             } catch (QueryException $e) {
                 $msg = '<pre>'.$v['sql'].'</pre><pre>'.$e->getMessage().'</pre>';
-                throw new Exception($msg.'['.__LINE__.']['.__FILE__.']');
-            } catch (Exception $e) {
+                throw new \Exception($msg.'['.__LINE__.']['.__FILE__.']');
+            } catch (\Exception $e) {
                 $msg = '<pre>'.$v['sql'].'</pre><pre>'.$e->getMessage().'</pre>';
-                throw new Exception($msg.'['.__LINE__.']['.__FILE__.']');
+                throw new \Exception($msg.'['.__LINE__.']['.__FILE__.']');
             }
             if ($res->count() > 0 && $valid && isset($rows)) {
                 echo '<hr>';

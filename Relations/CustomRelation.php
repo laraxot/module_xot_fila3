@@ -22,26 +22,26 @@ class CustomRelation extends Relation {
     /**
      * The baseConstraints callback.
      */
-    protected Closure $baseConstraints;
+    protected \Closure $baseConstraints;
 
     /**
      * The eagerConstraints callback.
      *
      * @var \Closure
      */
-    protected ?Closure $eagerConstraints;
+    protected ?\Closure $eagerConstraints;
 
     /**
      * The eager constraints model matcher.
      *
      * @var \Closure
      */
-    protected ?Closure $eagerMatcher;
+    protected ?\Closure $eagerMatcher;
 
     /**
      * Create a new belongs to relationship instance.
      */
-    public function __construct(Builder $query, Model $parent, Closure $baseConstraints, ?Closure $eagerConstraints, ?Closure $eagerMatcher) {
+    public function __construct(Builder $query, Model $parent, \Closure $baseConstraints, ?\Closure $eagerConstraints, ?\Closure $eagerMatcher) {
         $this->baseConstraints = $baseConstraints;
         $this->eagerConstraints = $eagerConstraints;
         $this->eagerMatcher = $eagerMatcher;

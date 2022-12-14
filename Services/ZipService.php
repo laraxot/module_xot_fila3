@@ -6,9 +6,9 @@ namespace Modules\Xot\Services;
 
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
+
 // ----services ---
 // ---- pear
-use ZipArchive;
 
 /**
  * Class ZipService.
@@ -60,11 +60,11 @@ class ZipService {
         ];
         // $filename_zip = '_'.$this->year.'.zip';
 
-        $zip = new ZipArchive();
+        $zip = new \ZipArchive();
         $filename_zip = Storage::disk('cache')->path($filename_zip);
         $filename_zip = str_replace(['/', '\\'], [\DIRECTORY_SEPARATOR, \DIRECTORY_SEPARATOR], $filename_zip);
 
-        if (true !== $zip->open($filename_zip, ZipArchive::CREATE)) {
+        if (true !== $zip->open($filename_zip, \ZipArchive::CREATE)) {
             throw new \Exception('cannot create zip ['.$filename_zip.']');
         }
 
@@ -169,13 +169,13 @@ class ZipService {
         return $filename_zip;
     }
 
-    public static function getZipArchive(): ZipArchive {
-        $zip = new ZipArchive();
+    public static function getZipArchive(): \ZipArchive {
+        $zip = new \ZipArchive();
         $filename_zip = self::getFilenameZipPath();
         if (File::exists($filename_zip)) {
             File::delete($filename_zip);
         }
-        if (true !== $zip->open($filename_zip, ZipArchive::CREATE)) {
+        if (true !== $zip->open($filename_zip, \ZipArchive::CREATE)) {
             throw new \Exception('cannot create zip ['.$filename_zip.']');
         }
 

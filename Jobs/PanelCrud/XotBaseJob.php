@@ -17,7 +17,6 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 use Modules\Xot\Contracts\PanelContract;
 use Modules\Xot\Services\ModelService;
-use stdClass;
 
 // ----------- Requests ----------
 // ------------ services ----------
@@ -174,7 +173,7 @@ abstract class XotBaseJob { /* implements ShouldQueue */
         // }
         $value_new = Carbon::createFromFormat('d/m/Y', $value);
         if (false === $value_new) {
-            throw new Exception('['.__LINE__.']['.class_basename(__CLASS__).']');
+            throw new \Exception('['.__LINE__.']['.class_basename(__CLASS__).']');
         }
 
         return $value_new;
@@ -183,7 +182,7 @@ abstract class XotBaseJob { /* implements ShouldQueue */
     /**
      * Method Modules\Xot\Jobs\PanelCrud\XotBaseJob::ConvDateTime() should return Carbon\Carbon|false|null but returns 0|0.0|''|'0'|array()|false|null.
      */
-    public function ConvDateTime(stdClass $field, string $value): ?Carbon {
+    public function ConvDateTime(\stdClass $field, string $value): ?Carbon {
         // Strict comparison using === between null and string will always evaluate to false.
         // if (null === $value) {
         //    return null;
@@ -201,7 +200,7 @@ abstract class XotBaseJob { /* implements ShouldQueue */
     /**
      *  Method Modules\Xot\Jobs\PanelCrud\XotBaseJob::ConvDateTime2Fields() should return Carbon\Carbon|false|null but returns 0|0.0|''|'0'|array()|false|null.
      */
-    public function ConvDateTime2Fields(stdClass $field, string $value): ?Carbon {
+    public function ConvDateTime2Fields(\stdClass $field, string $value): ?Carbon {
         // Strict comparison using === between null and string will always evaluate to false.
         // if (null === $value) {
         //    return $value;

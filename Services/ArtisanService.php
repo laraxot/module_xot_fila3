@@ -251,7 +251,7 @@ class ArtisanService {
             $output .= '[<pre>'.Artisan::output().'</pre>]';
 
             return $output;  // dato che mi carico solo le route minime menufull.delete non esiste.. impostare delle route comuni.
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             // throw new Exception('['.__LINE__.']['.class_basename(__CLASS__).']');
             return '[<pre>'.$e->getMessage().'</pre>]';
             // dddx(get_class_methods($e));

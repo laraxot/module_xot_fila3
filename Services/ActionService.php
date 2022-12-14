@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace Modules\Xot\Services;
 
-use Exception;
-
 // use Modules\Tenant\Services\TenantService;
 
 /**
@@ -24,7 +22,7 @@ class ActionService {
         // $xot = TenantService::config('xra');
         $xot = config('xra');
         if (! \is_array($xot)) {
-            throw new Exception('['.__LINE__.']['.class_basename(__CLASS__).']');
+            throw new \Exception('['.__LINE__.']['.class_basename(__CLASS__).']');
         }
         $theme = inAdmin() ? $xot['adm_theme'] : $xot['pub_theme'];
         // $theme = 'AdminLTE';

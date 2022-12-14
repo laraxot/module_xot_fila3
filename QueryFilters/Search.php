@@ -8,7 +8,6 @@ declare(strict_types=1);
 
 namespace Modules\Xot\QueryFilters;
 
-use Closure;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Str;
 
@@ -22,9 +21,9 @@ class Search {
      * @param Builder $query
      * @param array   ...$args
      *
-     * @return Closure
+     * @return \Closure
      */
-    public function handle($query, Closure $next, ...$args) {
+    public function handle($query, \Closure $next, ...$args) {
         $search_fields = [];
         $model = $query->getModel();
         /**
