@@ -1,0 +1,2 @@
+providers:
+  - Modules\Xot\Providers\XotServiceProvider
