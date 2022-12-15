@@ -721,7 +721,8 @@ class FileService {
                 dd('Caught exception: ', $e->getMessage(), '\n['.__LINE__.']['.__FILE__.']');
             }
         }
-        if (! File::exists($to)) {// not rewite
+
+        if (! File::exists($to) && ! app()->runningInConsole()) {// not rewite
             try {
                 File::copy($from, $to);
             } catch (\Exception $e) {
