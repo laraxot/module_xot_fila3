@@ -5,9 +5,12 @@ parameters:
     level: 1
     paths:
         - .
-    checkOctaneCompatibility: true
-    checkModelProperties: true
-    checkMissingIterableValueType: false
     excludePaths:
         - ./vendor/*
         - ./docs/*
+        - ./Tests/*
+
+    checkOctaneCompatibility: false
+    checkModelProperties: false
+    checkMissingIterableValueType: false
+   
