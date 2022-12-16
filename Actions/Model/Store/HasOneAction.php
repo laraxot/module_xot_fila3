@@ -15,6 +15,7 @@ class HasOneAction {
 
     public function execute(Model $row, object $relation) {
         dddx('wip');
+        /*
         $rows = $relation->rows;
 
         try {
@@ -30,5 +31,6 @@ class HasOneAction {
             $data1 = [$pk_local => $related->$pk_fore];
             $model->update($data1);
         }
+        */
     }
 }

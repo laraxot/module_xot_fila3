@@ -29,9 +29,10 @@ class WorkerStop extends Command {
         pcntl_signal(SIGTERM, [$this, 'shutdown']); // Call $this->shutdown() on SIGTERM
 
         $this->info('Worker started');
-
+        // 33     Class Illuminate\Queue\Worker constructor invoked with 0 parameters, 4-5 required.
         $worker = new Worker();
         while ($this->run) {
+            // 35     Call to an undefined method Illuminate\Queue\Worker::work().
             $worker->work();
         }
 

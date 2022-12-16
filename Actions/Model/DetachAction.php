@@ -14,6 +14,9 @@ class DetachAction {
     }
 
     public function execute(Model $row, array $data, array $rules): Model {
+        if (! isset($row->pivot)) {
+            return $row;
+        }
         $res = $row->pivot->delete();
         if ($res) {
             \Session::flash('status', 'scollegato');
