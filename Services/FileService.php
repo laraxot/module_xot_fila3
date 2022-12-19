@@ -730,7 +730,10 @@ class FileService {
             try {
                 File::copy($from, $to);
             } catch (\Exception $e) {
-                throw new \Exception('The theme '.config('xra.pub_theme', 'unknown').' is not working properly ['.$e.']');
+                throw new \Exception('Unable to copy 
+                    from ['.$form.'] 
+                    to ['.$to.']
+                    message ['.$e->getMessage().']');
             }
         }
     }
