@@ -144,21 +144,28 @@ class FileService {
      * @return string
      */
     public static function getViewNameSpacePath(string $ns): ?string {
-        // Strict comparison using === between null and string will always evaluate to false.
-        // if (null === $ns) {
-        //    return null;
-        // }
         $finder = view()->getFinder();
+<<<<<<< HEAD
 
         $viewHints = [];
         if (method_exists($finder, 'getHints')) {
             $viewHints = $finder->getHints();
             // dddx($viewHints);
+=======
+        $viewHints = [];
+        if (method_exists($finder, 'getHints')) {
+            $viewHints = $finder->getHints();
+>>>>>>> 2d0741c... up
         }
         if (isset($viewHints[$ns])) {
             return $viewHints[$ns][0];
         }
 
+        if (\in_array($ns, ['pub_theme', 'adm_theme'], true)) {
+            $theme_name=config('xra.'.$ns);
+            return base_path('Themes/'.$theme_name);
+        }
+        
         return null;
     }
 
@@ -729,7 +736,7 @@ class FileService {
                 File::copy($from, $to);
             } catch (\Exception $e) {
                 throw new \Exception('Unable to copy 
-                    from ['.$form.'] 
+                    from ['.$from.'] 
                     to ['.$to.']
                     message ['.$e->getMessage().']');
             }
@@ -745,10 +752,13 @@ class FileService {
     public static function viewCopy(string $from, string $to): void {
         $from_path = self::viewPath($from);
         $to_path = self::viewPath($to);
+<<<<<<< HEAD
 
         // theme lo prende nel percorso giusto ma pub_theme no
         // dddx([$from_path,$to_path]);
 
+=======
+>>>>>>> 2d0741c... up
         self::copy($from_path, $to_path);
     }
 
