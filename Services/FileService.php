@@ -145,17 +145,9 @@ class FileService {
      */
     public static function getViewNameSpacePath(string $ns): ?string {
         $finder = view()->getFinder();
-<<<<<<< HEAD
-
         $viewHints = [];
         if (method_exists($finder, 'getHints')) {
             $viewHints = $finder->getHints();
-            // dddx($viewHints);
-=======
-        $viewHints = [];
-        if (method_exists($finder, 'getHints')) {
-            $viewHints = $finder->getHints();
->>>>>>> 2d0741c... up
         }
         if (isset($viewHints[$ns])) {
             return $viewHints[$ns][0];
@@ -752,13 +744,6 @@ class FileService {
     public static function viewCopy(string $from, string $to): void {
         $from_path = self::viewPath($from);
         $to_path = self::viewPath($to);
-<<<<<<< HEAD
-
-        // theme lo prende nel percorso giusto ma pub_theme no
-        // dddx([$from_path,$to_path]);
-
-=======
->>>>>>> 2d0741c... up
         self::copy($from_path, $to_path);
     }
 
