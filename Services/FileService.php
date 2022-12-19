@@ -150,12 +150,10 @@ class FileService {
         // }
         $finder = view()->getFinder();
 
-   
-
         $viewHints = [];
         if (method_exists($finder, 'getHints')) {
             $viewHints = $finder->getHints();
-           // dddx($viewHints);
+            // dddx($viewHints);
         }
         if (isset($viewHints[$ns])) {
             return $viewHints[$ns][0];
@@ -748,8 +746,8 @@ class FileService {
         $from_path = self::viewPath($from);
         $to_path = self::viewPath($to);
 
-        //theme lo prende nel percorso giusto ma pub_theme no
-//dddx([$from_path,$to_path]);
+        // theme lo prende nel percorso giusto ma pub_theme no
+        // dddx([$from_path,$to_path]);
 
         self::copy($from_path, $to_path);
     }
