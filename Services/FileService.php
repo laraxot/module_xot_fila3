@@ -149,9 +149,13 @@ class FileService {
         //    return null;
         // }
         $finder = view()->getFinder();
+
+   
+
         $viewHints = [];
         if (method_exists($finder, 'getHints')) {
             $viewHints = $finder->getHints();
+           // dddx($viewHints);
         }
         if (isset($viewHints[$ns])) {
             return $viewHints[$ns][0];
@@ -726,7 +730,7 @@ class FileService {
             try {
                 File::copy($from, $to);
             } catch (\Exception $e) {
-                throw new \Exception('The theme '.config('xra.pub_theme', 'unknown').' is not working properly');
+                throw new \Exception('The theme '.config('xra.pub_theme', 'unknown').' is not working properly ['.$e.']');
             }
         }
     }
@@ -740,6 +744,9 @@ class FileService {
     public static function viewCopy(string $from, string $to): void {
         $from_path = self::viewPath($from);
         $to_path = self::viewPath($to);
+
+        //theme lo prende nel percorso giusto ma pub_theme no
+//dddx([$from_path,$to_path]);
 
         self::copy($from_path, $to_path);
     }
