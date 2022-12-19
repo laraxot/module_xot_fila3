@@ -154,10 +154,11 @@ class FileService {
         }
 
         if (\in_array($ns, ['pub_theme', 'adm_theme'], true)) {
-            $theme_name=config('xra.'.$ns);
+            $theme_name = config('xra.'.$ns);
+
             return base_path('Themes/'.$theme_name);
         }
-        
+
         return null;
     }
 
