@@ -16,9 +16,11 @@ use Illuminate\Database\Eloquent\Model;
  * @property string                          $updated_by
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
+ *
  * @method static \Illuminate\Database\Eloquent\Builder|Settings newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Settings newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Settings query()
+ *
  * @mixin \Eloquent
  */
 class Settings extends Model {

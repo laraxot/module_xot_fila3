@@ -32,6 +32,7 @@ use Modules\Xot\Models\Traits\WidgetTrait;
  * @property \Illuminate\Database\Eloquent\Model|\Eloquent                        $linked
  * @property \Illuminate\Database\Eloquent\Collection|Widget[]                    $widgets
  * @property int|null                                                             $widgets_count
+ *
  * @method static \Modules\Xot\Database\Factories\WidgetFactory factory(...$parameters)
  * @method static \Illuminate\Database\Eloquent\Builder|Widget  newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Widget  newQuery()
@@ -52,6 +53,7 @@ use Modules\Xot\Models\Traits\WidgetTrait;
  * @method static \Illuminate\Database\Eloquent\Builder|Widget  whereTitle($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Widget  whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Widget  whereUpdatedBy($value)
+ *
  * @mixin \Eloquent
  */
 class Widget extends BaseModel {

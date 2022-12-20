@@ -19,6 +19,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property string|null                     $updated_by
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
+ *
  * @method static \Illuminate\Database\Eloquent\Builder|Translation newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Translation newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Translation query()
@@ -30,6 +31,7 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|Translation whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Translation whereUpdatedBy($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Translation whereValue($value)
+ *
  * @mixin \Eloquent
  */
 class Translation extends Model {

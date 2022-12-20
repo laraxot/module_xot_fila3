@@ -426,8 +426,9 @@ if (! function_exists('getModelByName')) {
         $path = collect(glob($files))->first(
             function ($file) use ($name) {
                 $info = pathinfo($file);
-                //Offset 'filename' on array{dirname?: string, basename: string, extension?: string, filename: string} on left side of ?? always exists and is not nullable.
-                $filename=$info['filename'];// ?? '';
+                // Offset 'filename' on array{dirname?: string, basename: string, extension?: string, filename: string} on left side of ?? always exists and is not nullable.
+                $filename = $info['filename']; // ?? '';
+
                 return Str::snake($filename) == $name;
             }
         );
@@ -559,11 +560,11 @@ if (! function_exists('getModuleModelsMenu')) {
                 // $obj = new $item();
                 $obj = app($item);
                 $panel = PanelService::make()->get($obj);
-               
+
                 if ('media' === $key) {// media e' singolare ma anche plurale di medium
                     $panel->setName('medias');
                 }
-               
+
                 $url = $panel->url('index');
 
                 return (object) [
@@ -579,17 +580,16 @@ if (! function_exists('getModuleModelsMenu')) {
 }
 */
 
-
 if (! function_exists('xotModel')) {
     function xotModel(string $name): Model {
-        //return TenantService::model($name);
+        // return TenantService::model($name);
         return app(config('morph_map.'.$name));
     }
 }
 
 /*
 if (! function_exists('xotModelEager')) {
-    
+
     function xotModelEager($name) {
         return TenantService::modelEager($name);
     }

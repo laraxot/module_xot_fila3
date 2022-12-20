@@ -33,6 +33,7 @@ use Spatie\Tags\HasTags;
  * @property \Illuminate\Database\Eloquent\Collection|\Spatie\Tags\Tag[]          $tags
  * @property int|null                                                             $tags_count
  * @property \Modules\LU\Models\User|null                                         $user
+ *
  * @method static \Modules\Xot\Database\Factories\ProfileFactory factory(...$parameters)
  * @method static \Illuminate\Database\Eloquent\Builder|Profile  newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Profile  newQuery()
@@ -55,11 +56,14 @@ use Spatie\Tags\HasTags;
  * @method static \Illuminate\Database\Eloquent\Builder|Profile  withAllTagsOfAnyType($tags)
  * @method static \Illuminate\Database\Eloquent\Builder|Profile  withAnyTags(\ArrayAccess|\Spatie\Tags\Tag|array $tags, ?string $type = null)
  * @method static \Illuminate\Database\Eloquent\Builder|Profile  withAnyTagsOfAnyType($tags)
+ *
  * @mixin \Eloquent
- * @property-read \Illuminate\Database\Eloquent\Collection|\Spatie\Permission\Models\Permission[] $permissions
- * @property-read int|null $permissions_count
- * @property-read \Illuminate\Database\Eloquent\Collection|\Spatie\Permission\Models\Role[] $roles
- * @property-read int|null $roles_count
+ *
+ * @property \Illuminate\Database\Eloquent\Collection|\Spatie\Permission\Models\Permission[] $permissions
+ * @property int|null                                                                        $permissions_count
+ * @property \Illuminate\Database\Eloquent\Collection|\Spatie\Permission\Models\Role[]       $roles
+ * @property int|null                                                                        $roles_count
+ *
  * @method static \Illuminate\Database\Eloquent\Builder|Profile permission($permissions)
  * @method static \Illuminate\Database\Eloquent\Builder|Profile role($roles, $guard = null)
  * @method static \Illuminate\Database\Eloquent\Builder|Profile whereFirstName($value)
@@ -72,7 +76,7 @@ class Profile extends BaseModel implements ModelWithUserContract {
     use HasTags;
 
     /**
-     * Undocumented variable
+     * Undocumented variable.
      *
      * @var string
      */

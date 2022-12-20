@@ -14,10 +14,8 @@ class MorphManyAction {
     }
 
     /**
-     * Undocumented function
+     * Undocumented function.
      *
-     * @param Model $row
-     * @param object $relation
      * @return void
      */
     public function execute(Model $row, object $relation) {

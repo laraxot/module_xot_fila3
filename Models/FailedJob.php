@@ -18,6 +18,7 @@ namespace Modules\Xot\Models;
  * @property string                                                               $failed_at
  * @property \Illuminate\Database\Eloquent\Collection|\Modules\Xot\Models\Image[] $images
  * @property int|null                                                             $images_count
+ *
  * @method static \Modules\Xot\Database\Factories\FailedJobFactory factory(...$parameters)
  * @method static \Illuminate\Database\Eloquent\Builder|FailedJob  newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|FailedJob  newQuery()
@@ -28,8 +29,11 @@ namespace Modules\Xot\Models;
  * @method static \Illuminate\Database\Eloquent\Builder|FailedJob  whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|FailedJob  wherePayload($value)
  * @method static \Illuminate\Database\Eloquent\Builder|FailedJob  whereQueue($value)
+ *
  * @mixin \Eloquent
+ *
  * @property string $uuid
+ *
  * @method static \Illuminate\Database\Eloquent\Builder|FailedJob whereUuid($value)
  */
 class FailedJob extends BaseModel {

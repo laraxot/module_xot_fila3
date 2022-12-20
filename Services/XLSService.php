@@ -44,7 +44,7 @@ class XLSService {
     /**
      * Converts column number to letter.
      */
-    public function getNameFromNumber(int $num):string {
+    public function getNameFromNumber(int $num): string {
         $numeric = $num % 26;
         $letter = chr(65 + $numeric);
         $num2 = intval($num / 26);

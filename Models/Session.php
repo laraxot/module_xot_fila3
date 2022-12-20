@@ -15,6 +15,7 @@ namespace Modules\Xot\Models;
  * @property int                                                                  $last_activity
  * @property \Illuminate\Database\Eloquent\Collection|\Modules\Xot\Models\Image[] $images
  * @property int|null                                                             $images_count
+ *
  * @method static \Modules\Xot\Database\Factories\SessionFactory factory(...$parameters)
  * @method static \Illuminate\Database\Eloquent\Builder|Session  newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Session  newQuery()
@@ -25,6 +26,7 @@ namespace Modules\Xot\Models;
  * @method static \Illuminate\Database\Eloquent\Builder|Session  wherePayload($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Session  whereUserAgent($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Session  whereUserId($value)
+ *
  * @mixin \Eloquent
  */
 class Session extends BaseModel {

@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Modules\Xot\Services;
 
-use Exception;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
@@ -175,9 +174,9 @@ class ArrayService {
 
             foreach ($cellIterator as $cell) {
                 if (filter_var($cell->getValue(), FILTER_VALIDATE_URL)) {
-                    $cell_value=$cell->getValue();
-                    if(!is_string($cell_value)){
-                        throw new Exception('['.__LINE__.']['.__FILE__.']');
+                    $cell_value = $cell->getValue();
+                    if (! is_string($cell_value)) {
+                        throw new \Exception('['.__LINE__.']['.__FILE__.']');
                     }
                     $sheet->getCell($cell->getCoordinate())->getHyperlink()->setUrl($cell_value);
                 }
@@ -256,7 +255,7 @@ class ArrayService {
                 // return [$link, $pathToFile];
         }
         // 231    Unreachable statement - code above always terminates.
-        throw new Exception('['.__LINE__.']['.__FILE__.']');
+        throw new \Exception('['.__LINE__.']['.__FILE__.']');
     }
 
     public static function save(array $params): void {
