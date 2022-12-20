@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Modules\Xot\Actions\Panel;
+namespace Modules\Cms\Actions\Panel;
 
 use Modules\Cms\Contracts\PanelContract;
 use Spatie\QueueableAction\QueueableAction;
