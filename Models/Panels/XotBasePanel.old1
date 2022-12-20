@@ -38,7 +38,7 @@ use Spatie\QueryBuilder\QueryBuilder;
 /**
  * Class XotBasePanel.
  *
- * Modules\Xot\Models\Panels\XotBasePanel.
+ * Modules\Cms\Models\Panels\XotBasePanel.
  */
 abstract class XotBasePanel implements PanelContract {
     protected static string $model;
@@ -837,7 +837,7 @@ abstract class XotBasePanel implements PanelContract {
         return $query;
     }
 
-    //Method Modules\Xot\Models\Panels\XotBasePanelService::indexRows() has parameter $query with no typehint specified.
+    //Method Modules\Cms\Models\Panels\XotBasePanelService::indexRows() has parameter $query with no typehint specified.
     /* deprecated ??
     public function indexRows(Request $request, $query): Builder {
         dddx([get_class($query)]);
@@ -1607,7 +1607,7 @@ abstract class XotBasePanel implements PanelContract {
         return $presenter->out($params);
     }
 
-    //Method Modules\Xot\Models\Panels\XotBasePanelService::related() should return Modules\Xot\Models\Panels\XotBasePanel but returns Modules\Xot\Contracts\PanelContract|null.
+    //Method Modules\Cms\Models\Panels\XotBasePanelService::related() should return Modules\Cms\Models\Panels\XotBasePanel but returns Modules\Xot\Contracts\PanelContract|null.
     public function related(string $relationship): PanelContract {
         $related = $this->row->$relationship()->getRelated();
         $panel_related = PanelService::make()->get($related);
