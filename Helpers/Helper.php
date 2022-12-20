@@ -14,7 +14,7 @@ use Modules\Tenant\Services\TenantService;
 use Modules\Xot\Services\ArrayService;
 use Modules\Xot\Services\FileService;
 use Modules\Xot\Services\ModuleService;
-use Modules\Xot\Services\PanelService;
+use Modules\Cms\Services\PanelService;
 use Nwidart\Modules\Facades\Module;
 
 // ------------------------------------------------

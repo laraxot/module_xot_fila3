@@ -8,7 +8,7 @@ use Exception;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
-use Modules\Xot\Contracts\PanelContract;
+use Modules\Cms\Contracts\PanelContract;
 use Modules\Xot\Contracts\UserContract;
 use Modules\Xot\Relations\CustomRelation;
 use Nwidart\Modules\Facades\Module;
@@ -41,7 +41,7 @@ class PanelService {
         return static::getInstance();
     }
 
-    // 26     Property Modules\Xot\Services\PanelService::make()->$route_params is never read, only written.
+    // 26     Property Modules\Cms\Services\PanelService::make()->$route_params is never read, only written.
     // private static array $route_params;
 
     /*

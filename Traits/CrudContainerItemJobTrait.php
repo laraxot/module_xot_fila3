@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Modules\Xot\Traits;
 
 use Illuminate\Support\Str;
-use Modules\Xot\Contracts\PanelContract;
+use Modules\Cms\Contracts\PanelContract;
 
 /**
  * Trait CrudContainerItemJobTrait.

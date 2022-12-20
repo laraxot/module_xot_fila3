@@ -11,7 +11,7 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 //----------- Requests ----------
 //------------ services ----------
-use Modules\Xot\Services\PanelService as Panel;
+use Modules\Cms\Services\PanelService as Panel;
 
 class StoreJob implements ShouldQueue {
     use Dispatchable;

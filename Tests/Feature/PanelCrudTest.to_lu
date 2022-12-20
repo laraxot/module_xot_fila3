@@ -4,7 +4,7 @@ namespace Modules\Xot\Tests\Feature;
 
 use Modules\LU\Models\Area;
 use Modules\LU\Models\User;
-use Modules\Xot\Services\PanelService;
+use Modules\Cms\Services\PanelService;
 use Nwidart\Modules\Facades\Module;
 use Tests\TestCase;
 

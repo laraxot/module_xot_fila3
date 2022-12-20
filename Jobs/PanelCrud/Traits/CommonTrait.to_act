@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str; // per dizionario morph
 // ------------ services ----------
 use Modules\Xot\Http\Requests\XotRequest;
-use Modules\Xot\Services\PanelService;
+use Modules\Cms\Services\PanelService;
 
 /**
  * Trait CommonTrait.

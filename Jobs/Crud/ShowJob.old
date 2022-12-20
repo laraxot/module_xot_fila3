@@ -9,7 +9,7 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 //----------- Requests ----------
 //------------ services ----------
-use Modules\Xot\Services\PanelService as Panel;
+use Modules\Cms\Services\PanelService as Panel;
 
 class ShowJob implements ShouldQueue {
     use Dispatchable;

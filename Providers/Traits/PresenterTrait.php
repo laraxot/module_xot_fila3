@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Modules\Xot\Providers\Traits;
 
-use Modules\Xot\Contracts\PanelPresenterContract;
+use Modules\Cms\Contracts\PanelPresenterContract;
 use Modules\Xot\Presenters\GeoJsonPanelPresenter;
 use Modules\Xot\Presenters\HtmlPanelPresenter;
 use Modules\Xot\Presenters\JsonPanelPresenter;

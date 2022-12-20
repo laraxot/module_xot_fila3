@@ -6,7 +6,7 @@ namespace Modules\Xot\Services;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
-use Modules\Xot\Contracts\PanelContract;
+use Modules\Cms\Contracts\PanelContract;
 use Modules\Xot\Models\Panels\Actions\XotBasePanelAction;
 
 /**

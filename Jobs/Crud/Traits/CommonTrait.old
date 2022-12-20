@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Relations\Relation; // per dizionario morph
 //----------- Requests ----------
 use Modules\Xot\Http\Requests\XotRequest;
 //------------ services ----------
-use Modules\Xot\Services\PanelService as Panel;
+use Modules\Cms\Services\PanelService as Panel;
 
 trait CommonTrait {
     public function getData() {

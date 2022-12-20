@@ -13,7 +13,7 @@ use Modules\Food\Models\Restaurant;
 use Modules\Food\Models\RestaurantOwner;
 use Modules\LU\Models\User;
 //use Tests\TestCase;
-use Modules\Xot\Services\PanelService;
+use Modules\Cms\Services\PanelService;
 use Tests\BrowserKitTestCase as TestCase;
 
 class RouteBrowserTest extends TestCase {

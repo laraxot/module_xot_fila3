@@ -9,7 +9,7 @@ namespace Modules\Xot\Jobs\PanelCrud;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
-use Modules\Xot\Contracts\PanelContract;
+use Modules\Cms\Contracts\PanelContract;
 
 /**
  * Class UpdateJob.

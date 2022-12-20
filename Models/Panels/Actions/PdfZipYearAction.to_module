@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 //-------- models -----------
 //-------- services --------
-use Modules\Xot\Services\PanelService;
+use Modules\Cms\Services\PanelService;
 //-------- bases -----------
 use ZipArchive;
 

@@ -10,7 +10,7 @@ use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Str;
 //----------- Requests ----------
 //------------ services ----------
-use Modules\Xot\Services\PanelService as Panel;
+use Modules\Cms\Services\PanelService as Panel;
 
 class IndexJob implements ShouldQueue {
     use Dispatchable;

@@ -3,7 +3,7 @@
 namespace Modules\Xot\Http\Livewire;
 
 use Modules\Xot\Services\ColumnService;
-use Modules\Xot\Services\PanelService;
+use Modules\Cms\Services\PanelService;
 
 //use Illuminate\Support\Carbon;
 

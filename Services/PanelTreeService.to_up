@@ -6,7 +6,7 @@ namespace Modules\Xot\Services;
 
 use Illuminate\Support\Str;
 use Modules\Tenant\Services\TenantService;
-use Modules\Xot\Contracts\PanelTreeContract;
+use Modules\Cms\Contracts\PanelTreeContract;
 use Modules\Xot\Relations\CustomRelation;
 use Nwidart\Modules\Facades\Module;
 

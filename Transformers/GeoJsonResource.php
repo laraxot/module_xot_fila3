@@ -10,7 +10,7 @@ namespace Modules\Xot\Transformers;
 **/
 
 use Illuminate\Http\Resources\Json\JsonResource as ResCollection;
-use Modules\Xot\Services\PanelService;
+use Modules\Cms\Services\PanelService;
 
 /**
  * Class GeoJsonResource.
@@ -38,7 +38,7 @@ class GeoJsonResource extends ResCollection {
      */
     public function toArray($request) {
         $lang = app()->getLocale();
-        // 34     Parameter #1 $model of static method Modules\Xot\Services\PanelService::make()->get() expects Illuminate\Database\Eloquent\Model, $this(Modules\Xot\Transformers\GeoJsonResource) given.
+        // 34     Parameter #1 $model of static method Modules\Cms\Services\PanelService::make()->get() expects Illuminate\Database\Eloquent\Model, $this(Modules\Xot\Transformers\GeoJsonResource) given.
 
         // 33     Access to an undefined property Modules\Xot\Transformers\GeoJsonResource::$post_id.
         return [

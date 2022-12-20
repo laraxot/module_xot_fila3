@@ -11,7 +11,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Modules\Xot\Models\Widget;
 
 // ---- services -----
-// use Modules\Xot\Services\PanelService;
+// use Modules\Cms\Services\PanelService;
 
 // ------ traits ---
 

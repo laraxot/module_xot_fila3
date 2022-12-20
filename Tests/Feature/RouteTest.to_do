@@ -9,7 +9,7 @@ namespace Modules\Xot\Tests\Feature;
 
 use Illuminate\Support\Facades\App;
 use Modules\Blog\Models\Post;
-use Modules\Xot\Services\PanelService;
+use Modules\Cms\Services\PanelService;
 use Tests\TestCase;
 
 //use Tests\BrowserKitTestCase as TestCase;

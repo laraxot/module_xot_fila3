@@ -8,8 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 //----------- Requests ----------
 //------------ services ----------
 use Illuminate\Support\Arr;
-use Modules\Xot\Contracts\PanelContract;
-use Modules\Xot\Services\PanelService as Panel;
+use Modules\Cms\Contracts\PanelContract;
+use Modules\Cms\Services\PanelService as Panel;
 
 /**
  * Class UpdateJob.

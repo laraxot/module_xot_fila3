@@ -8,7 +8,7 @@ namespace Modules\Xot\Models\Traits;
 use Modules\Xot\Models\Widget;
 
 //---- services -----
-//use Modules\Xot\Services\PanelService as Panel;
+//use Modules\Cms\Services\PanelService as Panel;
 
 //------ traits ---
 

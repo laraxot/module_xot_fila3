@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 use Modules\LU\Models\Area;
-use Modules\Xot\Contracts\PanelContract;
+use Modules\Cms\Contracts\PanelContract;
 use Modules\Xot\Contracts\UserContract;
 use Nwidart\Modules\Facades\Module;
 

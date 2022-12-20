@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Modules\Xot\Actions\Panel;
 
-use Modules\Xot\Contracts\PanelContract;
+use Modules\Cms\Contracts\PanelContract;
 use Spatie\QueueableAction\QueueableAction;
 
 class EditAction {

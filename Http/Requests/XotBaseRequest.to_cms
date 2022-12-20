@@ -7,7 +7,7 @@ namespace Modules\Xot\Http\Requests;
 use Carbon\Carbon;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Str;
-use Modules\Xot\Contracts\PanelContract;
+use Modules\Cms\Contracts\PanelContract;
 
 // use Modules\Food\Models\Profile;
 // --- Rules ---

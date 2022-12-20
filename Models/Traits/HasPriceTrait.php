@@ -9,7 +9,7 @@ namespace Modules\Xot\Models\Traits;
 // ----- models------
 
 // ---- services -----
-// use Modules\Xot\Services\PanelService;
+// use Modules\Cms\Services\PanelService;
 
 // ------ traits ---
 
