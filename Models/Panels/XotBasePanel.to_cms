@@ -28,7 +28,7 @@ use Modules\Cms\Contracts\PanelPresenterContract;
 use Modules\Xot\Contracts\RowsContract;
 use Modules\Xot\Contracts\UserContract;
 use Modules\Xot\Jobs\PanelCrud\StoreJob;
-use Modules\Xot\Models\Panels\Actions\XotBasePanelAction;
+use Modules\Cms\Models\Panels\Actions\XotBasePanelAction;
 use Modules\Xot\Presenters\PdfPanelPresenter;
 use Modules\Xot\Presenters\XlsPanelPresenter;
 use Modules\Xot\Services\ChainService;
