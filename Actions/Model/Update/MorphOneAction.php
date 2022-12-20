@@ -13,6 +13,13 @@ class MorphOneAction {
     public function __construct() {
     }
 
+    /**
+     * Undocumented function
+     *
+     * @param Model $row
+     * @param object $relation
+     * @return void
+     */
     public function execute(Model $row, object $relation) {
         /* con update or create crea sempre uno nuovo, con update e basta se non esiste non va a crearlo */
         // $rows = $model->$name();

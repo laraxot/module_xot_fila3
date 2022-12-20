@@ -18,7 +18,6 @@ namespace Modules\Xot\Models;
  * @property \Illuminate\Support\Carbon|null                                      $updated_at
  * @property \Illuminate\Database\Eloquent\Collection|\Modules\Xot\Models\Image[] $images
  * @property int|null                                                             $images_count
- *
  * @method static \Modules\Xot\Database\Factories\FeedFactory factory(...$parameters)
  * @method static \Illuminate\Database\Eloquent\Builder|Feed  newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Feed  newQuery()
@@ -28,7 +27,6 @@ namespace Modules\Xot\Models;
  * @method static \Illuminate\Database\Eloquent\Builder|Feed  whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Feed  whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Feed  whereUpdatedBy($value)
- *
  * @mixin \Eloquent
  */
 class Feed extends BaseModel {

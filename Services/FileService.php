@@ -848,11 +848,20 @@ class FileService {
 
     /**
      * Undocumented function.
+     * @param class-string $class_name
      */
     public static function getFileNameByClassName(string $class_name): ?string {
-        try {
+        if(!class_exists($class_name)){
+            return null;
+        }
+        //try {
             $a = new \ReflectionClass($class_name);
-        } catch (\Exception $e) {
+        //856    Dead catch - Exception is never thrown in the try block.
+
+        //} catch (\Exception $e) {
+        //    return null;
+        //}
+        if($a->getFileName() === false){ 
             return null;
         }
 

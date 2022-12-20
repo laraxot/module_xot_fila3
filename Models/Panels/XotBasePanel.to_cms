@@ -46,7 +46,7 @@ use Spatie\QueryBuilder\Filters\Filter;
 /**
  * Class XotBasePanel.
  *
- * Modules\Xot\Models\Panels\XotBasePanel.
+ * Modules\Cms\Models\Panels\XotBasePanel.
  */
 abstract class XotBasePanel implements PanelContract {
     protected static string $model;
@@ -54,7 +54,7 @@ abstract class XotBasePanel implements PanelContract {
     // public Model $row;
 
     // e se fosse relation ?
-    // Typed property Modules\Xot\Models\Panels\XotBasePanelService::$rows must not be accessed before initialization
+    // Typed property Modules\Cms\Models\Panels\XotBasePanelService::$rows must not be accessed before initialization
 
     /**
      * Undocumented variable.
@@ -1358,7 +1358,7 @@ abstract class XotBasePanel implements PanelContract {
         return (new PanelTabService($this))->{__FUNCTION__}();
     }
 
-    // Return value of Modules\Xot\Models\Panels\XotBasePanelService::rows()
+    // Return value of Modules\Cms\Models\Panels\XotBasePanelService::rows()
     // must be an instance of Illuminate\Database\Eloquent\Builder,
     // instance of Illuminate\Database\Eloquent\Relations\MorphToMany returned
 
@@ -1643,7 +1643,7 @@ abstract class XotBasePanel implements PanelContract {
         return $presenter->out($params);
     }
 
-    // Method Modules\Xot\Models\Panels\XotBasePanelService::related() should return Modules\Xot\Models\Panels\XotBasePanel but returns Modules\Xot\Contracts\PanelContract|null.
+    // Method Modules\Cms\Models\Panels\XotBasePanelService::related() should return Modules\Cms\Models\Panels\XotBasePanel but returns Modules\Xot\Contracts\PanelContract|null.
     public function related(string $relationship): PanelContract {
         $related = $this->row->$relationship()->getRelated();
         $panel_related = PanelService::make()->get($related);
@@ -1726,7 +1726,7 @@ abstract class XotBasePanel implements PanelContract {
         }
 
         // [2022-05-20 00:22:19] local.ERROR: preg_replace():
-        // Argument #3 ($subject) must be of type array|string, null given (View: /home/cvfcmxwn/laraxot/multi/laravel/Themes/DirectoryBs4/Resources/views/layouts/widgets/blog_items.blade.php) {"view":{"view":"/home/cvfcmxwn/laraxot/multi/laravel/Modules/Xot/Models/Panels/XotBasePanel.php","data":[]},"
+        // Argument #3 ($subject) must be of type array|string, null given (View: /home/cvfcmxwn/laraxot/multi/laravel/Themes/DirectoryBs4/Resources/views/layouts/widgets/blog_items.blade.php) {"view":{"view":"/home/cvfcmxwn/laraxot/multi/laravel/Modules/Cms/Models/Panels/XotBasePanel.php","data":[]},"
         // url":"http://prosecco-valdobbiadene.it/?page=9","
 
         if (null === $content) {

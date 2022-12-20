@@ -13,6 +13,13 @@ class MorphToOneAction {
     public function __construct() {
     }
 
+    /**
+     * Undocumented function
+     *
+     * @param Model $row
+     * @param object $relation
+     * @return void
+     */
     public function execute(Model $row, object $relation) {
         // dddx(['row' => $row, 'relation' => $relation]);
         $rows = $relation->rows;

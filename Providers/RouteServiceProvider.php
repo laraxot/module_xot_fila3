@@ -52,14 +52,13 @@ class RouteServiceProvider extends XotBaseRouteServiceProvider {
      * Undocumented function.
      */
     public function registerLang(): void {
+        $langs = ['it', 'en'];
         /**
          * @var array
          */
         $locales = config('laravellocalization.supportedLocales');
         if (is_array($locales)) {
             $langs = array_keys($locales);
-        } else {
-            $langs = ['it', 'en'];
         }
 
         if (! \is_array($langs)) {

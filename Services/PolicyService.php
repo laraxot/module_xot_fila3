@@ -42,9 +42,11 @@ class PolicyService {
 
         self::$in_vars['class_name'] = $class_name;
         self::$in_vars['class_type'] = '';
-        if ($obj instanceof \Modules\Xot\Models\Panels\XotBasePanel) {
-            self::$in_vars['class_type'] = 'panel';
-        }
+        //if ($obj instanceof \Modules\Cms\Models\Panels\XotBasePanel) {
+            //46     If condition is always false.
+        //if (get_class($obj)=='Modules\Cms\Models\Panels\XotBasePanel') {
+        //    self::$in_vars['class_type'] = 'panel';
+        //}
 
         self::$in_vars['namespace'] = $class_ns;
         self::$in_vars['class'] = $class;

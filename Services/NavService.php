@@ -86,7 +86,7 @@ class NavService {
             $params['month'] = (int) $d->format('m');
             $params['year'] = (int) $d->format('Y');
             $tmp['title'] = $d->isoFormat('MMMM YYYY');
-            if (date('Y') === $params['year'] && date('m') === $params['month']) {
+            if (date('Y') == $params['year'] && date('m') == $params['month']) {
                 $tmp['title'] = '['.$tmp['title'].']';
             }
             if ($year === $params['year'] && $month === $params['month']) {

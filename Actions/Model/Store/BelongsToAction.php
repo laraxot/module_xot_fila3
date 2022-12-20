@@ -15,7 +15,7 @@ class BelongsToAction {
 
     public function execute(Model $row, object $relation) {
         // dd([$relation->name]);
-        if (! null == $row->{$relation->name}) {
+        if (null == $row->{$relation->name}) {
             $row->{$relation->name}()->create($relation->data);
 
             return;

@@ -13,6 +13,13 @@ class MorphToManyAction {
     public function __construct() {
     }
 
+    /**
+     * Undocumented function
+     *
+     * @param Model $row
+     * @param object $relation
+     * @return void
+     */
     public function execute(Model $row, object $relation) {
         $data = $relation->data;
         $name = $relation->name;

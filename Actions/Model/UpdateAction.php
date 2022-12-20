@@ -28,7 +28,7 @@ class UpdateAction {
             }
         }
 
-            $relations = app(FilterRelationsAction::class)->execute($row, array_keys($data));
+        $relations = app(FilterRelationsAction::class)->execute($row, array_keys($data));
         foreach ($relations as $relation) {
             $act = __NAMESPACE__.'\\Update\\'.$relation->relationship_type.'Action';
             $relation->data = $data[$relation->name];

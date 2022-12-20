@@ -14,12 +14,10 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property \Illuminate\Database\Eloquent\Collection|Image[] $images
  * @property int|null                                         $images_count
  * @property \Modules\LU\Models\User|null                     $user
- *
  * @method static \Modules\Xot\Database\Factories\ImageFactory factory(...$parameters)
  * @method static \Illuminate\Database\Eloquent\Builder|Image  newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Image  newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Image  query()
- *
  * @mixin \Eloquent
  */
 class Image extends BaseModel {

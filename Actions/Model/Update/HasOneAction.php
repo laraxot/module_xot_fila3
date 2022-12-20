@@ -13,6 +13,13 @@ class HasOneAction {
     public function __construct() {
     }
 
+    /**
+     * Undocumented function
+     *
+     * @param Model $row
+     * @param object $relation
+     * @return void
+     */
     public function execute(Model $row, object $relation) {
         $rows = $relation->rows;
         // $rows= $row->{$relation->name}();

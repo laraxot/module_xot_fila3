@@ -2,18 +2,27 @@ includes:
     - phpstan-baseline.neon
 
 parameters:
-    level: 2
+    level: 5
     paths:
         - .
     excludePaths:
         - ./build/*
         - ./vendor/*
+        - ./*/vendor/*
         - ./docs/*
         - ./Tests/*
+        - ./_ide_helper.php
+    
+    bootstrapFiles:
+        - ./Services/vendor/autoload.php
+    
+    scanFiles:
+        - ./Helpers/Helper.php
 
     tmpDir: build/phpstan
-    reportUnmatchedIgnoredErrors: true
-    checkOctaneCompatibility: true
-    checkModelProperties: true
-    checkMissingIterableValueType: true
+    reportUnmatchedIgnoredErrors: false
+    checkOctaneCompatibility: false
+    checkModelProperties: false
+    checkMissingIterableValueType: false
+    checkGenericClassInNonGenericObjectType: false
    

@@ -13,7 +13,7 @@ class BelongsToAction {
     public function __construct() {
     }
 
-    public function execute(Model $row, object $relation) {
+    public function execute(Model $row, object $relation):void {
         $rows = $relation->rows;
         // $rows= $row->{$relation->name}();
         if (! \is_array($relation->data)) {

@@ -426,8 +426,9 @@ if (! function_exists('getModelByName')) {
         $path = collect(glob($files))->first(
             function ($file) use ($name) {
                 $info = pathinfo($file);
-
-                return Str::snake($info['filename'] ?? '') === $name;
+                //Offset 'filename' on array{dirname?: string, basename: string, extension?: string, filename: string} on left side of ?? always exists and is not nullable.
+                $filename=$info['filename'];// ?? '';
+                return Str::snake($filename) == $name;
             }
         );
 
@@ -492,7 +493,7 @@ if (! function_exists('getModuleNameFromModel')) {
 
 if (! function_exists('getModuleNameFromModelName')) {
     function getModuleNameFromModelName(string $model_name): string {
-        $model = TenantService::model($model_name);
+        $model = app(config('morph_map.'.$model_name));
 
         return getModuleNameFromModel($model);
     }
@@ -549,6 +550,7 @@ if (! function_exists('getModuleModels')) {
     }
 }
 
+/* --- XOT NON DEVE DIPENDERE DA NESSUNO PANEL E' in CMS questa sara' un helper di cms
 if (! function_exists('getModuleModelsMenu')) {
     function getModuleModelsMenu(string $module): Collection {
         $models = getModuleModels($module);
@@ -557,11 +559,11 @@ if (! function_exists('getModuleModelsMenu')) {
                 // $obj = new $item();
                 $obj = app($item);
                 $panel = PanelService::make()->get($obj);
-                // *
+               
                 if ('media' === $key) {// media e' singolare ma anche plurale di medium
                     $panel->setName('medias');
                 }
-                // */
+               
                 $url = $panel->url('index');
 
                 return (object) [
@@ -575,23 +577,24 @@ if (! function_exists('getModuleModelsMenu')) {
         return $menu;
     }
 }
+*/
+
 
 if (! function_exists('xotModel')) {
     function xotModel(string $name): Model {
-        return TenantService::model($name);
+        //return TenantService::model($name);
+        return app(config('morph_map.'.$name));
     }
 }
 
+/*
 if (! function_exists('xotModelEager')) {
-    /**
-     * @param string $name
-     *
-     * @return array|false|mixed
-     */
+    
     function xotModelEager($name) {
         return TenantService::modelEager($name);
     }
 }
+*/
 
 if (! function_exists('transFields')) {
     /**
@@ -656,7 +659,7 @@ if (! function_exists('transFields')) {
             $view = 'pub_theme::'.$view;
         }
         list($ns, $key) = explode('::', $view);
-        if (null === $module_name) {
+        if (null == $module_name) {
             $trans_root = $ns.'::'.implode('.', array_slice(explode('.', $key), $start, -1));
         }
         // *

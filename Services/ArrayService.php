@@ -175,7 +175,11 @@ class ArrayService {
 
             foreach ($cellIterator as $cell) {
                 if (filter_var($cell->getValue(), FILTER_VALIDATE_URL)) {
-                    $sheet->getCell($cell->getCoordinate())->getHyperlink()->setUrl($cell->getValue());
+                    $cell_value=$cell->getValue();
+                    if(!is_string($cell_value)){
+                        throw new Exception('['.__LINE__.']['.__FILE__.']');
+                    }
+                    $sheet->getCell($cell->getCoordinate())->getHyperlink()->setUrl($cell_value);
                 }
             }
         }
@@ -252,7 +256,7 @@ class ArrayService {
                 // return [$link, $pathToFile];
         }
         // 231    Unreachable statement - code above always terminates.
-        // throw new Exception('['.__LINE__.']['.__FILE__.']');
+        throw new Exception('['.__LINE__.']['.__FILE__.']');
     }
 
     public static function save(array $params): void {

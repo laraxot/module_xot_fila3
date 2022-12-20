@@ -217,8 +217,5 @@ interface PanelContract {
      */
     public function urlContainerAction(string $act, array $params = []);
 
-    /**
-     * crea l'oggetto del pannello Container (quello dove passi $rowS).
-     */
-    public function containerAction(string $act): XotBasePanelAction;
+    //public function containerAction(string $act): XotBasePanelAction;
 }
