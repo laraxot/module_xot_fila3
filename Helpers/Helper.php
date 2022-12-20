@@ -10,11 +10,11 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Str;
+use Modules\Cms\Services\PanelService;
 use Modules\Tenant\Services\TenantService;
 use Modules\Xot\Services\ArrayService;
 use Modules\Xot\Services\FileService;
 use Modules\Xot\Services\ModuleService;
-use Modules\Cms\Services\PanelService;
 use Nwidart\Modules\Facades\Module;
 
 // ------------------------------------------------
