@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
-use Modules\Xot\Contracts\PanelContract;
+use Modules\Cms\Contracts\PanelContract;
 use Modules\Xot\Contracts\PanelPresenterContract;
 use Modules\Cms\Presenters\PdfPanelPresenter;
 use Modules\Cms\Presenters\XlsPanelPresenter;
@@ -25,7 +25,7 @@ use Modules\Xot\Services\ImageService;
 use Modules\Xot\Services\PanelActionService;
 use Modules\Xot\Services\PanelFormService;
 use Modules\Xot\Services\PanelRouteService;
-use Modules\Xot\Services\PanelService;
+use Modules\Cms\Services\PanelService;
 use Modules\Xot\Services\PanelTabService;
 use Modules\Xot\Services\PolicyService;
 use Modules\Xot\Services\RouteService;
@@ -140,9 +140,9 @@ abstract class XotBasePanel implements PanelContract {
     }
     */
 
-    //Parameter #1 $panel of method Modules\Xot\Contracts\PanelContract::setParent()
-    //expects Modules\Xot\Contracts\PanelContract,
-    //        Modules\Xot\Contracts\PanelContract|null given.
+    //Parameter #1 $panel of method Modules\Cms\Contracts\PanelContract::setParent()
+    //expects Modules\Cms\Contracts\PanelContract,
+    //        Modules\Cms\Contracts\PanelContract|null given.
     public function setParent(?PanelContract $parent): self {
         $this->parent = $parent;
 
@@ -1607,7 +1607,7 @@ abstract class XotBasePanel implements PanelContract {
         return $presenter->out($params);
     }
 
-    //Method Modules\Cms\Models\Panels\XotBasePanelService::related() should return Modules\Cms\Models\Panels\XotBasePanel but returns Modules\Xot\Contracts\PanelContract|null.
+    //Method Modules\Cms\Models\Panels\XotBasePanelService::related() should return Modules\Cms\Models\Panels\XotBasePanel but returns Modules\Cms\Contracts\PanelContract|null.
     public function related(string $relationship): PanelContract {
         $related = $this->row->$relationship()->getRelated();
         $panel_related = PanelService::make()->get($related);
