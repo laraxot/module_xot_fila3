@@ -56,9 +56,9 @@ interface UserContract extends MustVerifyEmail {
      */
     public function newInstance();
 
-
     /**
-     * Summary of getKey
+     * Summary of getKey.
+     *
      *  @return mixed
      */
     public function getKey();
