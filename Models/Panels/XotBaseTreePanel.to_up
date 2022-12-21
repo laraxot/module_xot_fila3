@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Modules\Xot\Models\Panels;
+namespace Modules\Cms\Models\Panels;
 
 use Modules\Cms\Contracts\PanelTreeContract;
 

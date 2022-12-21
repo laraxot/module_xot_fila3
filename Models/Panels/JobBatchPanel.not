@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Modules\Xot\Models\Panels;
+namespace Modules\Cms\Models\Panels;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
@@ -14,7 +14,7 @@ class JobBatchPanel extends XotBasePanel {
     /**
      * The model the resource corresponds to.
      */
-    public static string $model = 'Modules\Xot\Models\Panels\JobBatchPanel';
+    public static string $model = 'Modules\Cms\Models\Panels\JobBatchPanel';
 
     /**
      * The single value that should be used to represent the resource when being displayed.

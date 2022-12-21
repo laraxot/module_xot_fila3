@@ -1,6 +1,6 @@
 <?php
 
-namespace Modules\Xot\Models\Panels;
+namespace Modules\Cms\Models\Panels;
 
 use Carbon\Carbon;
 use Collective\Html\FormFacade as Form;

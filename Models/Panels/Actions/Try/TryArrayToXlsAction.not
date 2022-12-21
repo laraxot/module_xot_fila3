@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Modules\Xot\Models\Panels\Actions\Try;
+namespace Modules\Cms\Models\Panels\Actions\Try;
 
 use Modules\Cms\Models\Panels\Actions\XotBasePanelAction;
 use Modules\Xot\Services\ArrayService;
