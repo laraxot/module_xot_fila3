@@ -71,12 +71,11 @@ abstract class BaseModel extends Model {
      */
     public $timestamps = true;
 
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\MorphMany
-     */
-    public function images() {
+    /* -- spatie
+    public function images():MorphMany {
         return $this->morphMany(Image::class, 'post');
     }
+    */
 
     /**
      * Create a new factory instance for the model.
