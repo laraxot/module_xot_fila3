@@ -13,7 +13,7 @@ class MorphedByManyAction {
     public function __construct() {
     }
 
-    public function execute(Model $row, object $relation): void {
+    public function execute(Model $row, \Modules\Xot\DTOs\RelationDTO $relation): void {
         dddx('wip');
     }
 }

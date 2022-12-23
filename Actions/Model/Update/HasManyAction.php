@@ -18,7 +18,7 @@ class HasManyAction {
      *
      * @return void
      */
-    public function execute(Model $row, object $relation) {
+    public function execute(Model $row, \Modules\Xot\DTOs\RelationDTO $relation) {
         dddx('wip');
     }
 }

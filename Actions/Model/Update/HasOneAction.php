@@ -18,7 +18,7 @@ class HasOneAction {
      *
      * @return void
      */
-    public function execute(Model $row, object $relation) {
+    public function execute(Model $row, \Modules\Xot\DTOs\RelationDTO $relation) {
         $rows = $relation->rows;
         // $rows= $row->{$relation->name}();
         if ($rows->exists()) {

@@ -4,14 +4,15 @@ declare(strict_types=1);
 
 namespace Modules\Xot\DTOs;
 
-use Illuminate\Database\Eloquent\Collection;
 use Spatie\LaravelData\Data;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
 
 /**
  * Undocumented class.
  */
 class RelationDTO extends Data {
-    public Collection $rows;
+    public $rows;
 
     /**
      * @var int|string|array|null
@@ -19,4 +20,8 @@ class RelationDTO extends Data {
     public $data;
 
     public string $name;
+
+    public string $relationship_type;
+
+    public $related;
 }

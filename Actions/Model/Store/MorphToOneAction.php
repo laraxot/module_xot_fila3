@@ -13,7 +13,7 @@ class MorphToOneAction {
     public function __construct() {
     }
 
-    public function execute(Model $row, object $relation): void {
+    public function execute(Model $row, \Modules\Xot\DTOs\RelationDTO $relation): void {
         // dddx(['row' => $row, 'relation' => $relation, 'relation_data' => $relation->data]);
 
         $rows = $relation->rows;

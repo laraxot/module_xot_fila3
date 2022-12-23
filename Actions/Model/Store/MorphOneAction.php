@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Modules\Xot\Actions\Model\Store;
 
+use Modules\Xot\DTOs\RelationDTO;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\QueueableAction\QueueableAction;
 
@@ -13,8 +14,8 @@ class MorphOneAction {
     public function __construct() {
     }
 
-    public function execute(Model $row, object $relation): void {
-        if (isJson($relation->data)) {
+    public function execute(Model $row, RelationDTO $relation): void {
+        if (is_string($relation->data) && isJson($relation->data)) {
             $relation->data = json_decode($relation->data, true);
         }
         $rows = $relation->rows;
