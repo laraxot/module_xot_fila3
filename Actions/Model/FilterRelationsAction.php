@@ -4,12 +4,11 @@ declare(strict_types=1);
 
 namespace Modules\Xot\Actions\Model;
 
-use Modules\Xot\DTOs\RelationDTO;
-use Illuminate\Support\Collection;
-use Spatie\LaravelData\DataCollection;
 use Illuminate\Database\Eloquent\Model;
-use Spatie\QueueableAction\QueueableAction;
 use Illuminate\Database\Eloquent\Relations\Relation;
+use Modules\Xot\DTOs\RelationDTO;
+use Spatie\LaravelData\DataCollection;
+use Spatie\QueueableAction\QueueableAction;
 
 class FilterRelationsAction {
     use QueueableAction;
@@ -38,11 +37,11 @@ class FilterRelationsAction {
             $rows = $model->$item();
             $related = null;
             if (method_exists($rows, 'getRelated')) {
-                //Cannot call method getRelated() on class-string|object
+                // Cannot call method getRelated() on class-string|object
                 $related = $rows->getRelated();
             }
 
-            return  [
+            return [
                 'relationship_type' => class_basename($rows),
                 'related' => $related,
                 'name' => $item,

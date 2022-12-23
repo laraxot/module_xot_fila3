@@ -4,9 +4,8 @@ declare(strict_types=1);
 
 namespace Modules\Xot\Actions\Model\Update;
 
-use Exception;
-use Modules\Xot\DTOs\RelationDTO;
 use Illuminate\Database\Eloquent\Model;
+use Modules\Xot\DTOs\RelationDTO;
 use Spatie\QueueableAction\QueueableAction;
 
 class MorphToManyAction {
@@ -24,8 +23,8 @@ class MorphToManyAction {
         $data = $relation->data;
         $name = $relation->name;
         $model = $row;
-        if(!is_array($data)){
-            throw new Exception('['.__LINE__.']['.__FILE__.']');
+        if (! is_array($data)) {
+            throw new \Exception('['.__LINE__.']['.__FILE__.']');
         }
         if (\in_array('to', array_keys($data), true) || \in_array('from', array_keys($data), true)) {
             if (! isset($data['to'])) {
