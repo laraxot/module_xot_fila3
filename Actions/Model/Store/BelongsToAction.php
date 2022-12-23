@@ -13,7 +13,7 @@ class BelongsToAction {
     public function __construct() {
     }
 
-    public function execute(Model $row, object $relation) {
+    public function execute(Model $row, object $relation):void {
         // dd([$relation->name]);
         if (null == $row->{$relation->name}) {
             $row->{$relation->name}()->create($relation->data);

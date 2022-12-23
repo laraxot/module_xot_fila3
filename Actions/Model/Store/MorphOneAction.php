@@ -13,7 +13,7 @@ class MorphOneAction {
     public function __construct() {
     }
 
-    public function execute(Model $row, object $relation) {
+    public function execute(Model $row, object $relation):void {
         if (isJson($relation->data)) {
             $relation->data = json_decode($relation->data, true);
         }

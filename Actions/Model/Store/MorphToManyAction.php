@@ -14,7 +14,7 @@ class MorphToManyAction {
     public function __construct() {
     }
 
-    public function execute(Model $row, object $relation) {
+    public function execute(Model $row, object $relation):void {
         $data = $relation->data;
         if (\in_array('to', array_keys($data), true) || \in_array('from', array_keys($data), true)) {
             if (! isset($data['to'])) {

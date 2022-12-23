@@ -13,7 +13,7 @@ class HasManyDeepAction {
     public function __construct() {
     }
 
-    public function execute(Model $row, object $relation) {
+    public function execute(Model $row, object $relation):void {
         dddx('wip');
     }
 }
