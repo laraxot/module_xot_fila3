@@ -13,7 +13,7 @@ class HasManyThroughAction {
     public function __construct() {
     }
 
-    public function execute(Model $row, object $relation):void {
+    public function execute(Model $row, object $relation): void {
         dddx('wip');
     }
 }
