@@ -4,9 +4,10 @@ declare(strict_types=1);
 
 namespace Modules\Xot\Actions\Model;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
+use Illuminate\Database\Eloquent\Model;
 use Spatie\QueueableAction\QueueableAction;
+use Illuminate\Database\Eloquent\Relations\Relation;
 
 class FilterRelationsAction {
     use QueueableAction;
@@ -26,7 +27,7 @@ class FilterRelationsAction {
             function ($item) use ($model) {
                 $rows = $model->$item();
 
-                return $rows instanceof \Illuminate\Database\Eloquent\Relations\Relation;
+                return $rows instanceof Relation;
             }
         )->map(function ($item) use ($model) {
             $rows = $model->$item();
