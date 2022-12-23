@@ -7,5 +7,5 @@ use NamespacedDummyModel as Post;
 
 use Modules\Cms\Models\Panels\Policies\XotBasePanelPolicy;
 
-class DummyClass extends XotBasePolicy {
+class DummyClass extends XotBasePanelPolicy {
 }
