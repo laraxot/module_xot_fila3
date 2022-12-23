@@ -9,7 +9,7 @@ use Modules\LU\Models\User;
 
 /*-- se faccio l'extends
 Declaration of Modules\B log\Models\Policies\EventPolicy::index(Modules\LU\Models\User $user,
-Modules\B log\Models\Event $post) should be compatible with Modules\Xot\Models\Policies\XotBasePolicy::index(Modules\LU\Models\User $user,Post $post)
+Modules\B log\Models\Event $post) should be compatible with Modules\Cms\Models\Panels\Policies\XotBasePanelPolicy::index(Modules\LU\Models\User $user,Post $post)
 -- */
 
 trait XotBasePolicyTrait {
