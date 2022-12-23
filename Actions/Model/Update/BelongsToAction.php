@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Modules\Xot\Actions\Model\Update;
 
+use Modules\Xot\DTOs\RelationDTO;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\QueueableAction\QueueableAction;
 
@@ -13,7 +14,7 @@ class BelongsToAction {
     public function __construct() {
     }
 
-    public function execute(Model $row, \Modules\Xot\DTOs\RelationDTO $relation): void {
+    public function execute(Model $row, RelationDTO $relation): void {
         $rows = $relation->rows;
         // $rows= $row->{$relation->name}();
         if (! \is_array($relation->data)) {

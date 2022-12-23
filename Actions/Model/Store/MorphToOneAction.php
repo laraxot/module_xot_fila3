@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Modules\Xot\Actions\Model\Store;
 
+use Modules\Xot\DTOs\RelationDTO;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\QueueableAction\QueueableAction;
 
@@ -13,19 +14,19 @@ class MorphToOneAction {
     public function __construct() {
     }
 
-    public function execute(Model $row, \Modules\Xot\DTOs\RelationDTO $relation): void {
+    public function execute(Model $row, RelationDTO $relation): void {
         // dddx(['row' => $row, 'relation' => $relation, 'relation_data' => $relation->data]);
 
         $rows = $relation->rows;
 
-        if (is_array($relation->data)) {
+        //if (is_array($relation->data)) {
             if (! isset($relation->data['lang'])) {
                 $relation->data['lang'] = \App::getLocale();
             }
             $rows->create($relation->data);
-        } else {
-            $rows->sync($relation->data);
-        }
+        //} else {
+        //    $rows->sync($relation->data);
+        //}
 
         return;
         /*
