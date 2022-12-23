@@ -23,14 +23,14 @@ class MorphToOneAction {
         // dddx(['row' => $row, 'relation' => $relation]);
         $rows = $relation->rows;
 
-        //if (is_array($relation->data)) {
-            if (! isset($relation->data['lang'])) {
-                $relation->data['lang'] = \App::getLocale();
-            }
-            $rows->create($relation->data);
-        //}
-        //else {
+        // if (is_array($relation->data)) {
+        if (! isset($relation->data['lang'])) {
+            $relation->data['lang'] = \App::getLocale();
+        }
+        $rows->create($relation->data);
+        // }
+        // else {
         //    $rows->sync($relation->data);
-        //}
+        // }
     }
 }
