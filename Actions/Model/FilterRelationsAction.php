@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Modules\Xot\Actions\Model;
 
-use Illuminate\Support\Collection;
 use Illuminate\Database\Eloquent\Model;
-use Spatie\QueueableAction\QueueableAction;
 use Illuminate\Database\Eloquent\Relations\Relation;
+use Illuminate\Support\Collection;
+use Spatie\QueueableAction\QueueableAction;
 
 class FilterRelationsAction {
     use QueueableAction;
