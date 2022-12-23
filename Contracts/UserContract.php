@@ -18,6 +18,8 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
  * @property string                                                             $handle
  * @property string|null                                                        $first_name
  * @property string|null                                                        $last_name
+ * @property string|null                                                        $full_name
+ * @property string|null                                                        $phone
  * @property string|null                                                        $email
  * @property \Illuminate\Database\Eloquent\Collection|\Modules\LU\Models\Area[] $areas
  * @property \Modules\LU\Models\PermUser|null                                   $perm
