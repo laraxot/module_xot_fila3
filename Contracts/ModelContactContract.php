@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Modules\Xot\Contracts;
 
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+
 /**
  * Modules\Xot\Contracts\ModelContract.
  *
@@ -20,7 +21,6 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property bool                            $table_enable
  * @property PivotContract|null              $pivot
  * @property string                          $tennant_name
- * 
  * @property string                          $mail_subject
  * @property string                          $mail_body
  * @property string                          $sms_from
@@ -53,5 +53,5 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 interface ModelContactContract {
     public function getNotifyVia(): array;
 
-    public function sendEmailCallback():mixed;
+    public function sendEmailCallback(): mixed;
 }
