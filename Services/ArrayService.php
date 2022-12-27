@@ -4,14 +4,13 @@ declare(strict_types=1);
 
 namespace Modules\Xot\Services;
 
-use Exception;
-use Illuminate\Support\Str;
+use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
-use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
-use Illuminate\Contracts\Support\Renderable;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
 /**
  * Class ArrayService.
@@ -342,15 +341,13 @@ class ArrayService {
 
     /**
      * Undocumented function.
-     *
-     
      */
     public static function fixType(array $data): array {
         $res = collect($data)
             ->map(
                 function ($item) {
-                    if(!is_array($item)){
-                        throw new Exception('['.__LINE__.']['.__FILE__.']');
+                    if (! is_array($item)) {
+                        throw new \Exception('['.__LINE__.']['.__FILE__.']');
                     }
                     $item = collect($item)
                         ->map(
