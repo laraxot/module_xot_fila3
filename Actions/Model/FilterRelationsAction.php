@@ -35,11 +35,11 @@ class FilterRelationsAction {
             }
         )->map(function ($item) use ($model) {
             $rows = $model->$item();
-            $related = null;
-            if (method_exists($rows, 'getRelated')) {
+            //$related = null;
+            //if (method_exists($rows, 'getRelated')) {
                 // Cannot call method getRelated() on class-string|object
                 $related = $rows->getRelated();
-            }
+            //}
 
             return [
                 'relationship_type' => class_basename($rows),
