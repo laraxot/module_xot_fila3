@@ -422,8 +422,12 @@ if (! function_exists('getModelByName')) {
         }
 
         // getFirst..
-        $files = base_path('Modules').'/*/Models/*.php';
-        $path = collect(glob($files))->first(
+        $files_path = base_path('Modules').'/*/Models/*.php';
+        $files=glob($files_path);
+        if($files==false){
+            throw new Exception('['.__LINE__.']['.__FILE__.']');
+        }
+        $path = collect($files)->first(
             function ($file) use ($name) {
                 $info = pathinfo($file);
                 // Offset 'filename' on array{dirname?: string, basename: string, extension?: string, filename: string} on left side of ?? always exists and is not nullable.
@@ -494,7 +498,11 @@ if (! function_exists('getModuleNameFromModel')) {
 
 if (! function_exists('getModuleNameFromModelName')) {
     function getModuleNameFromModelName(string $model_name): string {
-        $model = app(config('morph_map.'.$model_name));
+        $model_class=config('morph_map.'.$model_name);
+        if(!is_string($model_class)){
+            throw new Exception('['.__LINE__.']['.__FILE__.']');
+        }
+        $model = app($model_class);
 
         return getModuleNameFromModel($model);
     }
@@ -583,7 +591,11 @@ if (! function_exists('getModuleModelsMenu')) {
 if (! function_exists('xotModel')) {
     function xotModel(string $name): Model {
         // return TenantService::model($name);
-        return app(config('morph_map.'.$name));
+        $model_class=config('morph_map.'.$name);
+        if(!is_string($model_class)){
+            throw new Exception('['.__LINE__.']['.__FILE__.']');
+        }
+        return app($model_class);
     }
 }
 

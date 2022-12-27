@@ -7,14 +7,14 @@ namespace Modules\Xot\DTOs;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\LaravelData\Data;
 
-// use Illuminate\Database\Eloquent\Relations\Relation;
+use Illuminate\Database\Eloquent\Relations\Relation;
 // use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 /**
  * Undocumented class.
  */
 class RelationDTO extends Data {
-    public $rows;
+    public Relation $rows;
 
     public array $data;
 

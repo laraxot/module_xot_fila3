@@ -4,9 +4,12 @@ declare(strict_types=1);
 
 namespace Modules\Xot\Actions\Model\Store;
 
-use Illuminate\Database\Eloquent\Model;
+use Exception;
 use Illuminate\Support\Arr;
+use Modules\Xot\DTOs\RelationDTO;
+use Illuminate\Database\Eloquent\Model;
 use Spatie\QueueableAction\QueueableAction;
+use Illuminate\Database\Eloquent\Relations\MorphToMany;
 
 class MorphToManyAction {
     use QueueableAction;
@@ -14,7 +17,10 @@ class MorphToManyAction {
     public function __construct() {
     }
 
-    public function execute(Model $row, \Modules\Xot\DTOs\RelationDTO $relation): void {
+    public function execute(Model $row, RelationDTO $relation): void {
+        if(!$relation->rows instanceof MorphToMany){
+            throw new Exception('['.__LINE__.']['.__FILE__.']');
+        }
         $data = $relation->data;
         if (\in_array('to', array_keys($data), true) || \in_array('from', array_keys($data), true)) {
             if (! isset($data['to'])) {

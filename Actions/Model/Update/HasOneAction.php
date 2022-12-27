@@ -4,8 +4,11 @@ declare(strict_types=1);
 
 namespace Modules\Xot\Actions\Model\Update;
 
+use Exception;
+use Modules\Xot\DTOs\RelationDTO;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\QueueableAction\QueueableAction;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class HasOneAction {
     use QueueableAction;
@@ -18,7 +21,10 @@ class HasOneAction {
      *
      * @return void
      */
-    public function execute(Model $row, \Modules\Xot\DTOs\RelationDTO $relation) {
+    public function execute(Model $row, RelationDTO $relation) {
+        if(!$relation->rows instanceof HasOne){
+            throw new Exception('['.__LINE__.']['.__FILE__.']');
+        }
         $rows = $relation->rows;
         // $rows= $row->{$relation->name}();
         if ($rows->exists()) {
