@@ -48,7 +48,7 @@ class FilterRelationsAction {
                 'rows' => $rows,
             ];
         })->all();
-        
+
         return RelationDTO::collection($res);
     }
 }

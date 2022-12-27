@@ -9,24 +9,18 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
 use Spatie\QueueableAction\QueueableAction;
 
-class StoreAction
-{
+class StoreAction {
     use QueueableAction;
 
-    public function __construct()
-    {
+    public function __construct() {
     }
 
-    public function execute(Model $row, array $data, array $rules): Model
-    {
-
-
-
-        if (!isset($data['lang']) && \in_array('lang', $row->getFillable(), true)) {
+    public function execute(Model $row, array $data, array $rules): Model {
+        if (! isset($data['lang']) && \in_array('lang', $row->getFillable(), true)) {
             $data['lang'] = app()->getLocale();
         }
         if (
-            !isset($data['user_id'])
+            ! isset($data['user_id'])
             && \in_array('user_id', $row->getFillable(), true)
             && 'user_id' !== $row->getKeyName()
         ) {
@@ -35,24 +29,22 @@ class StoreAction
         $validator = Validator::make($data, $rules);
         $validator->validate();
 
-
-
         $row = $row->fill($data);
         $row->save();
 
         $relations = app(FilterRelationsAction::class)->execute($row, array_keys($data));
 
         foreach ($relations as $relation) {
-            $act = __NAMESPACE__ . '\\Store\\' . $relation->relationship_type . 'Action';
+            $act = __NAMESPACE__.'\\Store\\'.$relation->relationship_type.'Action';
 
-            //CONTROLLARE. NON SONO SICURO CHE VADA BENE
+            // CONTROLLARE. NON SONO SICURO CHE VADA BENE
             if (\is_array($data[$relation->name])) {
                 $relation->data = $data[$relation->name];
                 app($act)->execute($row, $relation);
             }
         }
 
-        $msg = 'created! [' . $row->getKey() . ']!';
+        $msg = 'created! ['.$row->getKey().']!';
 
         Session::flash('status', $msg); // .
 
