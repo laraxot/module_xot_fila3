@@ -4,13 +4,14 @@ declare(strict_types=1);
 
 namespace Modules\Xot\Services;
 
-use Illuminate\Contracts\Support\Renderable;
+use Exception;
+use Illuminate\Support\Str;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Str;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
-use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
+use Illuminate\Contracts\Support\Renderable;
+use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 
 /**
  * Class ArrayService.
@@ -342,19 +343,15 @@ class ArrayService {
     /**
      * Undocumented function.
      *
-     * @param array<int, mixed> $data
+     
      */
     public static function fixType(array $data): array {
         $res = collect($data)
             ->map(
                 function ($item) {
-                    // Unable to resolve the template type TKey in call to function collect
-                    // Unable to resolve the template type TValue in call to function collect
-                    /**
-                     * @phpstan-param \Illuminate\Contracts\Support\Arrayable<(int|string), mixed>|iterable<(int|string), mixed>|null $item
-                     *
-                     * @param \Illuminate\Contracts\Support\Arrayable<(int|string), mixed>|iterable<(int|string), mixed>|null $item
-                     */
+                    if(!is_array($item)){
+                        throw new Exception('['.__LINE__.']['.__FILE__.']');
+                    }
                     $item = collect($item)
                         ->map(
                             function ($item0) {
