@@ -423,8 +423,8 @@ if (! function_exists('getModelByName')) {
 
         // getFirst..
         $files_path = base_path('Modules').'/*/Models/*.php';
-        $files=glob($files_path);
-        if($files==false){
+        $files = glob($files_path);
+        if (false == $files) {
             throw new Exception('['.__LINE__.']['.__FILE__.']');
         }
         $path = collect($files)->first(
@@ -498,8 +498,8 @@ if (! function_exists('getModuleNameFromModel')) {
 
 if (! function_exists('getModuleNameFromModelName')) {
     function getModuleNameFromModelName(string $model_name): string {
-        $model_class=config('morph_map.'.$model_name);
-        if(!is_string($model_class)){
+        $model_class = config('morph_map.'.$model_name);
+        if (! is_string($model_class)) {
             throw new Exception('['.__LINE__.']['.__FILE__.']');
         }
         $model = app($model_class);
@@ -591,10 +591,11 @@ if (! function_exists('getModuleModelsMenu')) {
 if (! function_exists('xotModel')) {
     function xotModel(string $name): Model {
         // return TenantService::model($name);
-        $model_class=config('morph_map.'.$name);
-        if(!is_string($model_class)){
+        $model_class = config('morph_map.'.$name);
+        if (! is_string($model_class)) {
             throw new Exception('['.__LINE__.']['.__FILE__.']');
         }
+
         return app($model_class);
     }
 }

@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace Modules\Xot\DTOs;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\Relation;
 use Spatie\LaravelData\Data;
 
-use Illuminate\Database\Eloquent\Relations\Relation;
 // use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 /**

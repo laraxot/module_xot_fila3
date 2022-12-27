@@ -4,10 +4,9 @@ declare(strict_types=1);
 
 namespace Modules\Xot\Actions\Model\Store;
 
-use Exception;
-use Modules\Xot\DTOs\RelationDTO;
-use Illuminate\Database\Eloquent\Model;
 use Fidum\EloquentMorphToOne\MorphToOne;
+use Illuminate\Database\Eloquent\Model;
+use Modules\Xot\DTOs\RelationDTO;
 use Spatie\QueueableAction\QueueableAction;
 
 class MorphToOneAction {
@@ -18,8 +17,8 @@ class MorphToOneAction {
 
     public function execute(Model $row, RelationDTO $relation): void {
         // dddx(['row' => $row, 'relation' => $relation, 'relation_data' => $relation->data]);
-        if(!$relation->rows instanceof MorphToOne){
-            throw new Exception('['.__LINE__.']['.__FILE__.']');
+        if (! $relation->rows instanceof MorphToOne) {
+            throw new \Exception('['.__LINE__.']['.__FILE__.']');
         }
         $rows = $relation->rows;
 

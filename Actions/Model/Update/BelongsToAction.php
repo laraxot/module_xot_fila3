@@ -4,11 +4,10 @@ declare(strict_types=1);
 
 namespace Modules\Xot\Actions\Model\Update;
 
-use Exception;
-use Modules\Xot\DTOs\RelationDTO;
 use Illuminate\Database\Eloquent\Model;
-use Spatie\QueueableAction\QueueableAction;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Modules\Xot\DTOs\RelationDTO;
+use Spatie\QueueableAction\QueueableAction;
 
 class BelongsToAction {
     use QueueableAction;
@@ -17,8 +16,8 @@ class BelongsToAction {
     }
 
     public function execute(Model $row, RelationDTO $relation): void {
-        if(!$relation->rows instanceof BelongsTo){
-            throw new Exception('['.__LINE__.']['.__FILE__.']');
+        if (! $relation->rows instanceof BelongsTo) {
+            throw new \Exception('['.__LINE__.']['.__FILE__.']');
         }
         $rows = $relation->rows;
         // $rows= $row->{$relation->name}();
