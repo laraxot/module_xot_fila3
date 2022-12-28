@@ -11,5 +11,4 @@ use Spatie\LaravelData\Data;
  */
 class XotData extends Data {
     public string $param_name;
-    
 }
