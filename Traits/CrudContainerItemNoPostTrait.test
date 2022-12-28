@@ -11,7 +11,7 @@ use Illuminate\Support\Str;
 use Modules\Blog\Models\Post;
 //-------- models ------
 //------- services -------
-use Modules\Theme\Services\ThemeService;
+use Modules\UI\Services\ThemeService;
 //use Modules\Cms\Services\PanelService;
 //use Modules\Xot\Services\PolicyService;
 use Modules\Xot\Services\StubService;

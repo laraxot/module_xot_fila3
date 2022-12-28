@@ -6,7 +6,7 @@ use Cache;
 use Illuminate\Http\Request;
 use Modules\Blog\Models\Post;
 //--------- services--------
-use Modules\Theme\Services\ThemeService as Theme;
+use Modules\UI\Services\ThemeService as Theme;
 //------traits-------
 use Modules\Xot\Traits\CrudSimpleTrait as CrudTrait;
 //------models----------

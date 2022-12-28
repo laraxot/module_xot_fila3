@@ -8,7 +8,7 @@ use Illuminate\Support\Str;
 //-------- models ------
 
 //------- services -------
-//use Modules\Theme\Services\ThemeService;  // qui restituisco il Panel che poi mostrera' i dati
+//use Modules\UI\Services\ThemeService;  // qui restituisco il Panel che poi mostrera' i dati
 //use Modules\Xot\Services\PolicyService;
 use Modules\Cms\Services\PanelService as Panel;
 use Modules\Xot\Services\StubService;

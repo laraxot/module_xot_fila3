@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Str;
 use Modules\Tenant\Services\TenantService;
-use Modules\Theme\Services\ThemeService;
+use Modules\UI\Services\ThemeService;
 
 if (! \defined('STDIN')) {
     \define('STDIN', fopen('php://stdin', 'r'));

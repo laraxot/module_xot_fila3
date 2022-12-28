@@ -5,7 +5,7 @@ namespace Modules\Xot\Traits;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
-use Modules\Theme\Services\ThemeService;
+use Modules\UI\Services\ThemeService;
 use Modules\Xot\library\Resource;
 // il crud simple non ha il lock sui record, ne salva e continua, salva ed esci, ne esci e basta
 //------- services -------

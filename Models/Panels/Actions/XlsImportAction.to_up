@@ -8,7 +8,7 @@ declare(strict_types=1);
 namespace Modules\Cms\Models\Panels\Actions;
 
 use Illuminate\Contracts\Support\Renderable;
-use Modules\Theme\Services\ThemeService;
+use Modules\UI\Services\ThemeService;
 use Modules\Xot\Services\ArrayService;
 use Modules\Xot\Services\XLSService;
 

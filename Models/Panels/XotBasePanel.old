@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\View;
 //----------  SERVICES --------------------------
 use Illuminate\Support\Str;
 use Modules\FormX\Services\FormXService;
-use Modules\Theme\Services\ThemeService;
+use Modules\UI\Services\ThemeService;
 use Modules\Xot\Services\ChainService;
 use Modules\Xot\Services\HtmlService;
 use Modules\Xot\Services\ImageService;
@@ -1159,7 +1159,7 @@ abstract class XotBasePanel {
             }
         }
 
-        return FormXService::btnHtml($params);
+        return FormService::btnHtml($params);
     }
 
     public function btn($act, $params = []) {

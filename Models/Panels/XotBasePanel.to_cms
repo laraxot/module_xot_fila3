@@ -21,7 +21,7 @@ use Illuminate\Support\Str;
 use Modules\Cms\Presenters\HtmlPanelPresenter;
 use Modules\Cms\Services\PanelFormService;
 use Modules\Cms\Services\RouteService;
-use Modules\Theme\Services\FieldService;
+use Modules\UI\Services\FieldService;
 use Modules\Xot\Contracts\ModelWithAuthorContract;
 use Modules\Cms\Contracts\PanelContract;
 use Modules\Cms\Contracts\PanelPresenterContract;

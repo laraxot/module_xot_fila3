@@ -9,7 +9,7 @@ use Modules\Blog\Models\Post;
 //-------- models ------
 use Modules\Blog\Models\PostRelated;
 //------- services -------
-use Modules\Theme\Services\ThemeService;
+use Modules\UI\Services\ThemeService;
 use Modules\Xot\Services\ScoutService;
 
 trait CrudContainerItemTrait {

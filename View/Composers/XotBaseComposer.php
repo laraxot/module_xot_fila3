@@ -6,7 +6,7 @@ namespace Modules\Xot\View\Composers;
 
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
-use Modules\Theme\Models\Menu;
+use Modules\UI\Models\Menu;
 use Nwidart\Modules\Facades\Module;
 
 /**

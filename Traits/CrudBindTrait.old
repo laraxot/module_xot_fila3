@@ -5,7 +5,7 @@ namespace Modules\Xot\Traits;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 //------services---------
-use Modules\Theme\Services\ThemeService;
+use Modules\UI\Services\ThemeService;
 use Modules\Xot\Services\ScoutService;
 
 //use Laravel\Scout\Searchable;

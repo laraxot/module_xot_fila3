@@ -14,7 +14,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Str;
-use Modules\Theme\Services\FormXService;
+use Modules\UI\Services\FormXService;
 use Modules\Cms\Contracts\PanelContract;
 use Modules\Xot\Contracts\RowsContract;
 use Modules\Cms\Services\PanelService;
@@ -252,7 +252,7 @@ abstract class XotBasePanelAction {
             $params['class'] = $this->class;
         }
 
-        return FormXService::btnHtml($params);
+        return FormService::btnHtml($params);
     }
 
     public function btnContainer(array $params = []): string {

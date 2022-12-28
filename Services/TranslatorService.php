@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
 use Illuminate\Translation\Translator as BaseTranslator;
-use Modules\Theme\Services\ThemeService;
+use Modules\UI\Services\ThemeService;
 
 // dddx('leggo');
 

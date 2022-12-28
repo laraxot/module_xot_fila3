@@ -3,7 +3,7 @@
 namespace Modules\Xot\Traits;
 
 use Illuminate\Http\Request;
-use Modules\Theme\Services\ThemeService;
+use Modules\UI\Services\ThemeService;
 //--- services
 use Modules\Xot\Library\Array_op;
 
