@@ -40,6 +40,9 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @method mixed     bellBoys()
  * @method array     toArray()
  * @method BelongsTo user()
+ * @method HasMany alerts()
+ * @method HasMany presses()
+ * @method BelongsToMany channels()
  *
  * @mixin  \Eloquent
  */
