@@ -4,14 +4,16 @@ declare(strict_types=1);
 
 namespace Modules\Xot\Models\Traits;
 
-use Illuminate\Database\Eloquent\Collection as EloquentCollection;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Arr;
-use Kalnoy\Nestedset\Collection;
 use Kalnoy\Nestedset\NestedSet;
+use Kalnoy\Nestedset\Collection;
 use Kalnoy\Nestedset\QueryBuilder;
+use Illuminate\Database\Eloquent\Model;
+use Kalnoy\Nestedset\AncestorsRelation;
+use Kalnoy\Nestedset\DescendantsRelation;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Collection as EloquentCollection;
 
 trait HasParent {
     /**
