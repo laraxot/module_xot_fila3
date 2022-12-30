@@ -792,7 +792,7 @@ abstract class XotBasePanel {
         $res .= Form::bsOpenPanel($this, 'store');
         $res .= '<div class="clearfix">';
         foreach ($fields as $field) {
-            $res .= ThemeService::inputHtml(['row' => $row, 'field' => $field]);
+            $res .= ThemeService::inputHtml($field,$row);
         }
         $res .= '</div>';
         //$res.=Form::bsSubmit('save');
@@ -816,7 +816,7 @@ abstract class XotBasePanel {
         $res .= Form::bsOpenPanel($this, 'update');
         $res .= '<div class="clearfix">';
         foreach ($fields as $field) {
-            $res .= ThemeService::inputHtml(['row' => $row, 'field' => $field]);
+            $res .= ThemeService::inputHtml($field,$row);
         }
         $res .= '</div>';
         //$res.=Form::bsSubmit('save');

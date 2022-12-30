@@ -46,7 +46,7 @@ class PanelFormService {
         $res .= Form::bsOpenPanel($this, 'store');
         $res .= '<div class="clearfix">';
         foreach ($fields as $field) {
-            $res .= ThemeService::inputHtml(['row' => $row, 'field' => $field]);
+            $res .= ThemeService::inputHtml($field,$row);
         }
         $res .= '</div>';
         // $res.=Form::bsSubmit('save');
@@ -81,7 +81,7 @@ class PanelFormService {
                 $col_size = 0;
             }
             $col_size += $field->col_size ?? 12;
-            $res .= ThemeService::inputHtml(['row' => $row, 'field' => $field]);
+            $res .= ThemeService::inputHtml($field,$row);
         }
         $res .= '</div>';
         // $res.=Form::bsSubmit('save');
@@ -102,7 +102,7 @@ class PanelFormService {
                 $col_size = 0;
             }
             $col_size += $field->col_size ?? 12;
-            // $res .= ThemeService::inputHtml(['row' => $row, 'field' => $field]);
+            // $res .= ThemeService::inputHtml($field,$row);
             $html .= $field->toHtml();
         }
         $html .= '</div>';
