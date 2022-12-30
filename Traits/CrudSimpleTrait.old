@@ -678,7 +678,7 @@ trait CrudSimpleTrait {
         if (\View::exists($view)) {
             return $view;
         }
-        $view_general=str_replace($pack.'::','theme::general.',$view);
+        $view_general=str_replace($pack.'::','ui::general.',$view);
 
         if (!\View::exists($view_general)) {
             echo '<h3>'.\Route::currentRouteAction().'</h3>';

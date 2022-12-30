@@ -331,7 +331,7 @@ abstract class XotBasePanel {
         if (! \is_array($rules_msg)) {
             $rules_msg = [];
         }
-        $rules_msg_generic = trans('theme::generic');
+        $rules_msg_generic = trans('ui::generic');
         if (! \is_array($rules_msg_generic)) {
             $rules_msg_generic = [];
         }

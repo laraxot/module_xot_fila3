@@ -75,12 +75,12 @@ class ArrayService {
             $text = 'text';
         }
         switch ($out) {
-            case 'link': return view('theme::download_icon')->with('file', $pathToFile)->with('ext', 'xls')->with('text', $text);
+            case 'link': return view('ui::download_icon')->with('file', $pathToFile)->with('ext', 'xls')->with('text', $text);
             case 'download': response()->download($pathToFile);
             // no break
             case 'file':  return $pathToFile;
             case 'link_file':
-                $link = view('theme::download_icon')->with('file', $pathToFile)->with('ext', 'xls')->with('text', $text);
+                $link = view('ui::download_icon')->with('file', $pathToFile)->with('ext', 'xls')->with('text', $text);
 
                 return [$link, $pathToFile];
         }
@@ -148,12 +148,12 @@ class ArrayService {
             $text = 'testo ';
         }
         switch ($out) {
-            case 'link': return view('theme::download_icon')->with('file', $pathToFile)->with('ext', 'xls')->with('text', $text);
+            case 'link': return view('ui::download_icon')->with('file', $pathToFile)->with('ext', 'xls')->with('text', $text);
             case 'download': response()->download($pathToFile);
             // no break
             case 'file':  return $pathToFile;
             case 'link_file':
-                $link = view('theme::download_icon')->with('file', $pathToFile)->with('ext', 'xls')->with('text', $text);
+                $link = view('ui::download_icon')->with('file', $pathToFile)->with('ext', 'xls')->with('text', $text);
 
                 return [$link, $pathToFile];
         }
@@ -286,12 +286,12 @@ class ArrayService {
             return response()->download($pathToFile);
         }
         switch ($out) {
-            case 'link': return view('theme::download_icon')->with('file', $pathToFile)->with('ext', 'csv')->with('text', $text);
+            case 'link': return view('ui::download_icon')->with('file', $pathToFile)->with('ext', 'csv')->with('text', $text);
             case 'download': response()->download($pathToFile);
             // no break
             case 'file':  return $pathToFile;
             case 'link_file':
-                $link = view('theme::download_icon')->with('file', $pathToFile)->with('ext', 'csv')->with('text', $text);
+                $link = view('ui::download_icon')->with('file', $pathToFile)->with('ext', 'csv')->with('text', $text);
 
                 return [$link, $pathToFile];
         }

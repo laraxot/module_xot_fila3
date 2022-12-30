@@ -88,7 +88,7 @@ class FileService {
         if (null == $ns) {
             return null;
         }
-        //dirname(\View::getFinder()->find('theme::includes.components.form.text'));
+        //dirname(\View::getFinder()->find('ui::includes.components.form.text'));
         //View::getFinder()
         // View finder.
         $finder = view()->getFinder();

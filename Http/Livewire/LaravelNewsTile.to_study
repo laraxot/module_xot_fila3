@@ -51,7 +51,7 @@ class LaravelNewsTile extends Component {
         /**
          * @phpstan-var view-string
          */
-        $view = 'theme::empty';
+        $view = 'ui::empty';
         $view_params = [
             'view' => $view,
         ];

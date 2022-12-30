@@ -191,7 +191,7 @@ class ImportService {
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
     public function jqueryRequest(string $method, string $url, array $attrs = []) {
-        return view()->make('theme::jquery_request');
+        return view()->make('ui::jquery_request');
     }
 
     // ret \Exception|GuzzleException|string|Crawler

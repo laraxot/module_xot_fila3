@@ -126,7 +126,7 @@ class HtmlPanelPresenter implements PanelPresenterContract {
             'layouts.partials.modal',
         ];
         foreach ($pieces as $piece) {
-            FileService::viewCopy('theme::'.$piece, 'pub_theme::'.$piece);
+            FileService::viewCopy('ui::'.$piece, 'pub_theme::'.$piece);
         }
 
         return view()->make($view_work, $view_params); // ->render(); //se metto render , non mi prende piu' i parametri passati con with

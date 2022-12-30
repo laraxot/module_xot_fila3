@@ -29,7 +29,7 @@ trait FormRequestTrait {
             //    dddx($trad_name.' is not an array');
             $trad = [];
         }
-        $tradGeneric = trans('theme::generic'); // deve funzionare anche senza il pacchetto "food", invece "extend" e' un pacchetto primario
+        $tradGeneric = trans('ui::generic'); // deve funzionare anche senza il pacchetto "food", invece "extend" e' un pacchetto primario
         if (! \is_array($tradGeneric)) {
             $tradGeneric = [];
         }

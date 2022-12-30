@@ -244,13 +244,13 @@ class ArrayService {
 
         switch ($out) {
             case 'link':
-                return view()->make('theme::download_icon', $view_params);
+                return view()->make('ui::download_icon', $view_params);
             case 'download':
                 return response()->download($pathToFile);
                 // case 'file':
         //    return $pathToFile;
             case 'link_file':
-                return view()->make('theme::download_icon', $view_params);
+                return view()->make('ui::download_icon', $view_params);
 
                 // return [$link, $pathToFile];
         }
