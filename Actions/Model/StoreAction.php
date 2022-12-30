@@ -37,11 +37,11 @@ class StoreAction {
         foreach ($relations as $relation) {
             $act = __NAMESPACE__.'\\Store\\'.$relation->relationship_type.'Action';
 
-            //dddx(['act'=>$act,'row'=>$row,'relation'=>$relation,'data'=>$data]);
-            //if (\is_array($data[$relation->name])) {
-                //$relation->data = $data[$relation->name];
-                app($act)->execute($row, $relation);
-            //}
+            // dddx(['act'=>$act,'row'=>$row,'relation'=>$relation,'data'=>$data]);
+            // if (\is_array($data[$relation->name])) {
+            // $relation->data = $data[$relation->name];
+            app($act)->execute($row, $relation);
+            // }
         }
 
         $msg = 'created! ['.$row->getKey().']!';

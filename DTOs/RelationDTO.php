@@ -16,7 +16,7 @@ use Spatie\LaravelData\Data;
 class RelationDTO extends Data {
     public Relation $rows;
 
-    public array $data=[];
+    public array $data = [];
 
     public string $name;
 

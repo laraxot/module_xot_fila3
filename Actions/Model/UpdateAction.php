@@ -32,11 +32,10 @@ class UpdateAction {
         foreach ($relations as $relation) {
             $act = __NAMESPACE__.'\\Update\\'.$relation->relationship_type.'Action';
 
-            
-            //if (\is_array($data[$relation->name])) {
-                //$relation->data = $data[$relation->name];
-                app($act)->execute($row, $relation);
-            //}
+            // if (\is_array($data[$relation->name])) {
+            // $relation->data = $data[$relation->name];
+            app($act)->execute($row, $relation);
+            // }
         }
 
         $msg = 'aggiornato! ['.$row->getKey().']!'; // .'['.implode(',',$row->getChanges()).']';
