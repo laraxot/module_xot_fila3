@@ -21,7 +21,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property string|null                     $title
  * @property string|null                     $full_name
  * @property string|null                     $org_info
- * @property array|null                     $children
+ * @property array|null                      $children
  * @property string|null                     $title
  * @property PivotContract|null              $pivot
  * @property string                          $tennant_name
