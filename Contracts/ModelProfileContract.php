@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace Modules\Xot\Contracts;
 
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
  * Modules\Xot\Contracts\ModelContract.
@@ -16,6 +18,10 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property string|null                     $created_by
  * @property string|null                     $updated_by
+ * @property string|null                     $title
+ * @property string|null                     $full_name
+ * @property string|null                     $org_info
+ * @property array|null                     $children
  * @property string|null                     $title
  * @property PivotContract|null              $pivot
  * @property string                          $tennant_name
