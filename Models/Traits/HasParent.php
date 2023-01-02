@@ -8,46 +8,39 @@ declare(strict_types=1);
 namespace Modules\Xot\Models\Traits;
 
 use Carbon\Carbon;
-use Illuminate\Support\Arr;
-use Kalnoy\Nestedset\NestedSet;
-use Kalnoy\Nestedset\Collection;
-use Kalnoy\Nestedset\QueryBuilder;
-use Illuminate\Database\Eloquent\Model;
-use Kalnoy\Nestedset\AncestorsRelation;
-use Kalnoy\Nestedset\DescendantsRelation;
-use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Collection as EloquentCollection;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Arr;
+use Kalnoy\Nestedset\AncestorsRelation;
+use Kalnoy\Nestedset\Collection;
+use Kalnoy\Nestedset\DescendantsRelation;
+use Kalnoy\Nestedset\NestedSet;
+use Kalnoy\Nestedset\QueryBuilder;
 
 trait HasParent {
     /**
      * Pending operation.
-     *
      */
-    protected array $pending=[];
+    protected array $pending = [];
 
     /**
      * Whether the node has moved since last save.
-     *
      */
     protected bool $moved = false;
 
-    /**
-     */
     public static Carbon $deletedAt;
 
     /**
      * Keep track of the number of performed operations.
-     *
      */
     public static int $actionsPerformed = 0;
 
     /**
      * Set an action.
-     *
-     *
      */
-    protected function setNodeAction(string $action):self {
+    protected function setNodeAction(string $action): self {
         $this->pending = func_get_args();
 
         return $this;
@@ -71,7 +64,7 @@ trait HasParent {
         $parameters = $this->pending;
 
         $this->pending = null;
-        //77     Parameter #1 $callback of function call_user_func_array expects callable(): mixed, array{$this(Modules\Mediamonitor\Models\Press), non-falsy-string} given.
+        // 77     Parameter #1 $callback of function call_user_func_array expects callable(): mixed, array{$this(Modules\Mediamonitor\Models\Press), non-falsy-string} given.
         /**
          * @var callable
          */
@@ -79,14 +72,14 @@ trait HasParent {
         $this->moved = call_user_func_array($callback, $parameters);
     }
 
-    protected function actionRaw():bool {
+    protected function actionRaw(): bool {
         return true;
     }
 
     /**
      * Make a root node.
      */
-    protected function actionRoot():bool {
+    protected function actionRoot(): bool {
         // Simplest case that do not affect other nodes.
         if (! $this->exists) {
             $cut = $this->getLowerBound() + 1;
@@ -102,18 +95,16 @@ trait HasParent {
 
     /**
      * Get the lower bound.
-     *
      */
-    protected function getLowerBound():int {
+    protected function getLowerBound(): int {
         // Call to private method max() of parent class Illuminate\Database\Eloquent\Builder<Illuminate\Database\Eloquent\Model>
         return (int) $this->newNestedSetQuery()->max($this->getRgtName());
     }
 
     /**
      * Append or prepend a node to the parent.
-     *
      */
-    protected function actionAppendOrPrepend(self $parent, bool $prepend = false):bool {
+    protected function actionAppendOrPrepend(self $parent, bool $prepend = false): bool {
         $parent->refreshNode();
 
         $cut = $prepend ? $parent->getLft() + 1 : $parent->getRgt();
@@ -131,9 +122,8 @@ trait HasParent {
      * Apply parent model.
      *
      * @param Model|null $value
-     *
      */
-    protected function setParent($value):self {
+    protected function setParent($value): self {
         $this->setParentId($value ? $value->getKey() : null)
             ->setRelation('parent', $value);
 
@@ -142,9 +132,8 @@ trait HasParent {
 
     /**
      * Insert node before or after another node.
-     *
      */
-    protected function actionBeforeOrAfter(self $node,bool $after = false):bool {
+    protected function actionBeforeOrAfter(self $node, bool $after = false): bool {
         $node->refreshNode();
 
         return $this->insertAt($after ? $node->getRgt() + 1 : $node->getLft());
@@ -152,9 +141,8 @@ trait HasParent {
 
     /**
      * Refresh node's crucial attributes.
-     *
      */
-    public function refreshNode():void {
+    public function refreshNode(): void {
         if (! $this->exists || 0 === static::$actionsPerformed) {
             return;
         }
@@ -166,27 +154,24 @@ trait HasParent {
 
     /**
      * Relation to the parent.
-     *
      */
-    public function parent():BelongsTo {
+    public function parent(): BelongsTo {
         return $this->belongsTo(get_class($this), $this->getParentIdName())
             ->setModel($this);
     }
 
     /**
      * Relation to children.
-     *
      */
-    public function children():HasMany {
+    public function children(): HasMany {
         return $this->hasMany(get_class($this), $this->getParentIdName())
             ->setModel($this);
     }
 
     /**
      * Get query for descendants of the node.
-     *
      */
-    public function descendants():DescendantsRelation {
+    public function descendants(): DescendantsRelation {
         return new DescendantsRelation($this->newQuery(), $this);
     }
 
@@ -213,65 +198,54 @@ trait HasParent {
 
     /**
      * Get query for the node siblings and the node itself.
-     *
      */
-    public function getSiblingsAndSelf(array $columns = ['*']):EloquentCollection {
+    public function getSiblingsAndSelf(array $columns = ['*']): EloquentCollection {
         return $this->siblingsAndSelf()->get($columns);
     }
 
     /**
      * Get query for siblings after the node.
-     *
-
      */
-    public function nextSiblings():QueryBuilder {
+    public function nextSiblings(): QueryBuilder {
         return $this->nextNodes()
             ->where($this->getParentIdName(), '=', $this->getParentId());
     }
 
     /**
      * Get query for siblings before the node.
-     *
-
      */
-    public function prevSiblings():QueryBuilder {
+    public function prevSiblings(): QueryBuilder {
         return $this->prevNodes()
             ->where($this->getParentIdName(), '=', $this->getParentId());
     }
 
     /**
      * Get query for nodes after current node.
-     *
-
      */
-    public function nextNodes():QueryBuilder {
+    public function nextNodes(): QueryBuilder {
         return $this->newScopedQuery()
             ->where($this->getLftName(), '>', $this->getLft());
     }
 
     /**
      * Get query for nodes before current node in reversed order.
-     *
-     * @return QueryBuilder
      */
-    public function prevNodes():QueryBuilder {
+    public function prevNodes(): QueryBuilder {
         return $this->newScopedQuery()
             ->where($this->getLftName(), '<', $this->getLft());
     }
 
     /**
      * Get query ancestors of the node.
-     *
-
      */
-    public function ancestors():AncestorsRelation {
+    public function ancestors(): AncestorsRelation {
         return new AncestorsRelation($this->newQuery(), $this);
     }
 
     /**
      * Make this node a root node.
      */
-    public function makeRoot():self {
+    public function makeRoot(): self {
         $this->setParent(null)->dirtyBounds();
 
         return $this->setNodeAction('root');
@@ -279,10 +253,8 @@ trait HasParent {
 
     /**
      * Save node as root.
-     *
-
      */
-    public function saveAsRoot() :bool{
+    public function saveAsRoot(): bool {
         if ($this->exists && $this->isRoot()) {
             return $this->save();
         }
@@ -292,43 +264,33 @@ trait HasParent {
 
     /**
      * Append and save a node.
-     *
-
      */
-    public function appendNode(self $node):bool {
+    public function appendNode(self $node): bool {
         return $node->appendToNode($this)->save();
     }
 
     /**
      * Prepend and save a node.
-     *
-
      */
-    public function prependNode(self $node):bool {
+    public function prependNode(self $node): bool {
         return $node->prependToNode($this)->save();
     }
 
     /**
      * Append a node to the new parent.
-     *
-
      */
-    public function appendToNode(self $parent) :self{
+    public function appendToNode(self $parent): self {
         return $this->appendOrPrependTo($parent);
     }
 
     /**
      * Prepend a node to the new parent.
-     *
-
      */
-    public function prependToNode(self $parent) :self{
+    public function prependToNode(self $parent): self {
         return $this->appendOrPrependTo($parent, true);
     }
 
-    /**
-     */
-    public function appendOrPrependTo(self $parent, bool $prepend = false):self {
+    public function appendOrPrependTo(self $parent, bool $prepend = false): self {
         $this->assertNodeExists($parent)
             ->assertNotDescendant($parent)
             ->assertSameScope($parent);
@@ -741,17 +703,15 @@ trait HasParent {
 
     /**
      * Get the value of the model's lft key.
-     *
      */
-    public function getLft():int {
+    public function getLft(): int {
         return intval($this->getAttributeValue($this->getLftName()));
     }
 
     /**
      * Get the value of the model's rgt key.
-     *
      */
-    public function getRgt():int {
+    public function getRgt(): int {
         return intval($this->getAttributeValue($this->getRgtName()));
     }
 
