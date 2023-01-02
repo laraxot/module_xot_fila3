@@ -26,6 +26,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property PivotContract|null              $pivot
  * @property string                          $tennant_name
  * @property \Modules\LU\Models\User|null    $user
+ * @property string                          $activity_report_interval
  *
  * @method mixed         getKey()
  * @method string        getRouteKey()
