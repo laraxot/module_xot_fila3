@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
- * Modules\Xot\Contracts\ModelContract.
+ * Modules\Xot\Contracts\ModelProfileContract.
  *
  * @property int                             $id
  * @property int|null                        $user_id
