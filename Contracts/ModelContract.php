@@ -41,7 +41,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @method mixed     bellBoys()
  * @method array     toArray()
  * @method BelongsTo user()
- * @method mixed     getAttributeValue(string $key) 
+ * @method mixed     getAttributeValue(string $key)
  *
  * @mixin  \Eloquent
  */

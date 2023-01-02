@@ -58,7 +58,7 @@ trait HasParent {
     /**
      * Call pending action.
      */
-    protected function callPendingAction():void {
+    protected function callPendingAction(): void {
         $this->moved = false;
 
         if (! $this->pending && ! $this->exists) {
@@ -86,9 +86,8 @@ trait HasParent {
 
     /**
      * Make a root node.
-     * 
+     *
      * @return bool
-     * 
      */
     protected function actionRoot() {
         // Simplest case that do not affect other nodes.
@@ -163,9 +162,8 @@ trait HasParent {
 
     /**
      * Refresh node's crucial attributes.
-     * 
+     *
      * @return void
-     * 
      */
     public function refreshNode() {
         if (! $this->exists || 0 === static::$actionsPerformed) {
@@ -832,8 +830,6 @@ trait HasParent {
     }
 
     /**
-     * @param array $columns
-     *
      * @return Collection|self[]
      */
     public function getNextSiblings(array $columns = ['*']) {
@@ -841,8 +837,6 @@ trait HasParent {
     }
 
     /**
-     * @param array $columns
-     *
      * @return Collection|self[]
      */
     public function getPrevSiblings(array $columns = ['*']) {
@@ -1022,9 +1016,10 @@ trait HasParent {
     }
 
     /**
-     * Summary of assertSameScope
-     * @param self $node
+     * Summary of assertSameScope.
+     *
      * @throws \LogicException
+     *
      * @return void
      */
     protected function assertSameScope(self $node) {

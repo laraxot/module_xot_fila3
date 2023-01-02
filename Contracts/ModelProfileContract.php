@@ -49,7 +49,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @method HasMany       alerts()
  * @method HasMany       presses()
  * @method BelongsToMany channels()
- * @method mixed         getAttributeValue(string $key) 
+ * @method mixed         getAttributeValue(string $key)
  *
  * @mixin  \Eloquent
  */
