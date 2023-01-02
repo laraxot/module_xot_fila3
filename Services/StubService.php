@@ -60,9 +60,10 @@ class StubService {
 
         return $this;
     }
-
     /**
-     * @param \Illuminate\Database\Eloquent\Model|\Modules\Xot\Contracts\ModelContract|\Modules\Xot\Contracts\ModelProfileContract
+     * Summary of setModel
+     * @param Model|ModelContract|ModelProfileContract $model
+     * @return StubService
      */
     public function setModel($model): self {
         $this->model_class = \get_class($model);
