@@ -60,10 +60,11 @@ class StubService {
 
         return $this;
     }
+
     /**
-     * Summary of setModel
+     * Summary of setModel.
+     *
      * @param Model|ModelContract|ModelProfileContract $model
-     * @return StubService
      */
     public function setModel($model): self {
         $this->model_class = \get_class($model);
