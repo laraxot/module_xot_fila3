@@ -4,11 +4,13 @@ declare(strict_types=1);
 
 namespace Modules\Xot\Services;
 
+use Illuminate\Support\Str;
 use Doctrine\DBAL\Schema\Column;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\File;
-use Illuminate\Support\Str;
+use Illuminate\Database\Eloquent\Model;
+use Modules\Xot\Contracts\ModelContract;
+use Modules\Xot\Contracts\ModelProfileContract;
 
 /**
  * Class StubService.
@@ -77,7 +79,14 @@ class StubService {
         return $this;
     }
 
-    public function setModelAndName(Model $model, string $name): self {
+    /**
+     * Summary of setModelAndName
+     * @param Model|ModelContract|ModelProfileContract $model
+     * @param string $name
+     * @return StubService
+     * 
+     */
+    public function setModelAndName($model, string $name): self {
         $this->setModel($model);
         $this->setName($name);
 

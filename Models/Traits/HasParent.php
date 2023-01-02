@@ -19,14 +19,14 @@ trait HasParent {
     /**
      * Pending operation.
      *
-     * @var array
+     * @var array|null
      */
     protected $pending;
 
     /**
      * Whether the node has moved since last save.
      *
-     * @var bool
+     * @var mixed
      */
     protected $moved = false;
 
@@ -58,7 +58,7 @@ trait HasParent {
     /**
      * Call pending action.
      */
-    protected function callPendingAction() {
+    protected function callPendingAction():void {
         $this->moved = false;
 
         if (! $this->pending && ! $this->exists) {
@@ -86,6 +86,9 @@ trait HasParent {
 
     /**
      * Make a root node.
+     * 
+     * @return bool
+     * 
      */
     protected function actionRoot() {
         // Simplest case that do not affect other nodes.
@@ -134,7 +137,7 @@ trait HasParent {
     /**
      * Apply parent model.
      *
-     * @param Model|null $value
+     * @param mixed $value
      *
      * @return $this
      */
@@ -160,6 +163,9 @@ trait HasParent {
 
     /**
      * Refresh node's crucial attributes.
+     * 
+     * @return void
+     * 
      */
     public function refreshNode() {
         if (! $this->exists || 0 === static::$actionsPerformed) {
@@ -169,7 +175,6 @@ trait HasParent {
         $attributes = $this->newNestedSetQuery()->getNodeData($this->getKey());
 
         $this->attributes = array_merge($this->attributes, $attributes);
-//        $this->original = array_merge($this->original, $attributes);
     }
 
     /**
@@ -827,6 +832,8 @@ trait HasParent {
     }
 
     /**
+     * @param array $columns
+     *
      * @return Collection|self[]
      */
     public function getNextSiblings(array $columns = ['*']) {
@@ -834,6 +841,8 @@ trait HasParent {
     }
 
     /**
+     * @param array $columns
+     *
      * @return Collection|self[]
      */
     public function getPrevSiblings(array $columns = ['*']) {
@@ -948,6 +957,8 @@ trait HasParent {
     }
 
     /**
+     * @param mixed $value
+     *
      * @return $this
      */
     public function setLft($value) {
@@ -957,6 +968,8 @@ trait HasParent {
     }
 
     /**
+     * @param mixed $value
+     *
      * @return $this
      */
     public function setRgt($value) {
@@ -966,6 +979,8 @@ trait HasParent {
     }
 
     /**
+     * @param mixed $value
+     *
      * @return $this
      */
     public function setParentId($value) {
@@ -1006,6 +1021,12 @@ trait HasParent {
         return $this;
     }
 
+    /**
+     * Summary of assertSameScope
+     * @param self $node
+     * @throws \LogicException
+     * @return void
+     */
     protected function assertSameScope(self $node) {
         if (! $scoped = $this->getScopeAttributes()) {
             return;

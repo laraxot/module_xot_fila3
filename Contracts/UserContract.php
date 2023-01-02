@@ -13,7 +13,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 /**
  * Modules\LU\Contracts\UserContract.
  *
- * @property Model|null                                                         $profile
+ * @property ModelProfileContract|null                                          $profile
  * @property int                                                                $id
  * @property string                                                             $handle
  * @property string|null                                                        $first_name
