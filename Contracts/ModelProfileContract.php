@@ -7,9 +7,12 @@ namespace Modules\Xot\Contracts;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\MorphToMany;
+use Illuminate\Support\Collection;
+use Modules\Mediamonitor\Models\Clip;
 
 /**
- * Modules\Xot\Contracts\ModelContract.
+ * Modules\Xot\Contracts\ModelProfileContract.
  *
  * @property int                             $id
  * @property int|null                        $user_id
@@ -26,7 +29,10 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property PivotContract|null              $pivot
  * @property string                          $tennant_name
  * @property \Modules\LU\Models\User|null    $user
+ * @property string                          $activity_report_interval
+ * @property Collection<Clip>                $clips
  *
+ * @method MorphToMany   notifyThemes()
  * @method mixed         getKey()
  * @method string        getRouteKey()
  * @method string        getRouteKeyName()
