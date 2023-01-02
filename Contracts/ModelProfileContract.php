@@ -4,9 +4,12 @@ declare(strict_types=1);
 
 namespace Modules\Xot\Contracts;
 
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Support\Collection;
+use Modules\Mediamonitor\Models\Clip;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\MorphToMany;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 /**
  * Modules\Xot\Contracts\ModelProfileContract.
@@ -27,7 +30,10 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property string                          $tennant_name
  * @property \Modules\LU\Models\User|null    $user
  * @property string                          $activity_report_interval
+ * @property Collection<Clip> $clips
+
  *
+ * @method MorphToMany   notifyThemes()
  * @method mixed         getKey()
  * @method string        getRouteKey()
  * @method string        getRouteKeyName()
