@@ -1,55 +1,53 @@
 <?php
+/**
+ * @see https://github.com/lazychaser/laravel-nestedset/blob/v5/src/NodeTrait.php
+ */
 
 declare(strict_types=1);
 
 namespace Modules\Xot\Models\Traits;
 
-use Illuminate\Database\Eloquent\Collection as EloquentCollection;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasMany;
+use Carbon\Carbon;
 use Illuminate\Support\Arr;
-use Kalnoy\Nestedset\AncestorsRelation;
-use Kalnoy\Nestedset\Collection;
-use Kalnoy\Nestedset\DescendantsRelation;
 use Kalnoy\Nestedset\NestedSet;
+use Kalnoy\Nestedset\Collection;
 use Kalnoy\Nestedset\QueryBuilder;
+use Illuminate\Database\Eloquent\Model;
+use Kalnoy\Nestedset\AncestorsRelation;
+use Kalnoy\Nestedset\DescendantsRelation;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Collection as EloquentCollection;
 
 trait HasParent {
     /**
      * Pending operation.
      *
-     * @var array|null
      */
-    protected $pending;
+    protected array $pending=[];
 
     /**
      * Whether the node has moved since last save.
      *
-     * @var mixed
      */
-    protected $moved = false;
+    protected bool $moved = false;
 
     /**
-     * @var \Carbon\Carbon
      */
-    public static $deletedAt;
+    public static Carbon $deletedAt;
 
     /**
      * Keep track of the number of performed operations.
      *
-     * @var int
      */
-    public static $actionsPerformed = 0;
+    public static int $actionsPerformed = 0;
 
     /**
      * Set an action.
      *
-     * @param string $action
      *
-     * @return $this
      */
-    protected function setNodeAction($action) {
+    protected function setNodeAction(string $action):self {
         $this->pending = func_get_args();
 
         return $this;
@@ -73,23 +71,22 @@ trait HasParent {
         $parameters = $this->pending;
 
         $this->pending = null;
-
-        $this->moved = call_user_func_array([$this, $method], $parameters);
+        //77     Parameter #1 $callback of function call_user_func_array expects callable(): mixed, array{$this(Modules\Mediamonitor\Models\Press), non-falsy-string} given.
+        /**
+         * @var callable
+         */
+        $callback = [$this, $method];
+        $this->moved = call_user_func_array($callback, $parameters);
     }
 
-    /**
-     * @return bool
-     */
-    protected function actionRaw() {
+    protected function actionRaw():bool {
         return true;
     }
 
     /**
      * Make a root node.
-     *
-     * @return bool
      */
-    protected function actionRoot() {
+    protected function actionRoot():bool {
         // Simplest case that do not affect other nodes.
         if (! $this->exists) {
             $cut = $this->getLowerBound() + 1;
@@ -106,20 +103,17 @@ trait HasParent {
     /**
      * Get the lower bound.
      *
-     * @return int
      */
-    protected function getLowerBound() {
+    protected function getLowerBound():int {
+        // Call to private method max() of parent class Illuminate\Database\Eloquent\Builder<Illuminate\Database\Eloquent\Model>
         return (int) $this->newNestedSetQuery()->max($this->getRgtName());
     }
 
     /**
      * Append or prepend a node to the parent.
      *
-     * @param bool $prepend
-     *
-     * @return bool
      */
-    protected function actionAppendOrPrepend(self $parent, $prepend = false) {
+    protected function actionAppendOrPrepend(self $parent, bool $prepend = false):bool {
         $parent->refreshNode();
 
         $cut = $prepend ? $parent->getLft() + 1 : $parent->getRgt();
@@ -136,11 +130,10 @@ trait HasParent {
     /**
      * Apply parent model.
      *
-     * @param mixed $value
+     * @param Model|null $value
      *
-     * @return $this
      */
-    protected function setParent($value) {
+    protected function setParent($value):self {
         $this->setParentId($value ? $value->getKey() : null)
             ->setRelation('parent', $value);
 
@@ -150,11 +143,8 @@ trait HasParent {
     /**
      * Insert node before or after another node.
      *
-     * @param bool $after
-     *
-     * @return bool
      */
-    protected function actionBeforeOrAfter(self $node, $after = false) {
+    protected function actionBeforeOrAfter(self $node,bool $after = false):bool {
         $node->refreshNode();
 
         return $this->insertAt($after ? $node->getRgt() + 1 : $node->getLft());
@@ -163,9 +153,8 @@ trait HasParent {
     /**
      * Refresh node's crucial attributes.
      *
-     * @return void
      */
-    public function refreshNode() {
+    public function refreshNode():void {
         if (! $this->exists || 0 === static::$actionsPerformed) {
             return;
         }
@@ -178,9 +167,8 @@ trait HasParent {
     /**
      * Relation to the parent.
      *
-     * @return BelongsTo
      */
-    public function parent() {
+    public function parent():BelongsTo {
         return $this->belongsTo(get_class($this), $this->getParentIdName())
             ->setModel($this);
     }
@@ -188,9 +176,8 @@ trait HasParent {
     /**
      * Relation to children.
      *
-     * @return HasMany
      */
-    public function children() {
+    public function children():HasMany {
         return $this->hasMany(get_class($this), $this->getParentIdName())
             ->setModel($this);
     }
@@ -198,9 +185,8 @@ trait HasParent {
     /**
      * Get query for descendants of the node.
      *
-     * @return DescendantsRelation
      */
-    public function descendants() {
+    public function descendants():DescendantsRelation {
         return new DescendantsRelation($this->newQuery(), $this);
     }
 
@@ -228,18 +214,17 @@ trait HasParent {
     /**
      * Get query for the node siblings and the node itself.
      *
-     * @return \Illuminate\Database\Eloquent\Collection
      */
-    public function getSiblingsAndSelf(array $columns = ['*']) {
+    public function getSiblingsAndSelf(array $columns = ['*']):EloquentCollection {
         return $this->siblingsAndSelf()->get($columns);
     }
 
     /**
      * Get query for siblings after the node.
      *
-     * @return QueryBuilder
+
      */
-    public function nextSiblings() {
+    public function nextSiblings():QueryBuilder {
         return $this->nextNodes()
             ->where($this->getParentIdName(), '=', $this->getParentId());
     }
@@ -247,9 +232,9 @@ trait HasParent {
     /**
      * Get query for siblings before the node.
      *
-     * @return QueryBuilder
+
      */
-    public function prevSiblings() {
+    public function prevSiblings():QueryBuilder {
         return $this->prevNodes()
             ->where($this->getParentIdName(), '=', $this->getParentId());
     }
@@ -257,9 +242,9 @@ trait HasParent {
     /**
      * Get query for nodes after current node.
      *
-     * @return QueryBuilder
+
      */
-    public function nextNodes() {
+    public function nextNodes():QueryBuilder {
         return $this->newScopedQuery()
             ->where($this->getLftName(), '>', $this->getLft());
     }
@@ -269,7 +254,7 @@ trait HasParent {
      *
      * @return QueryBuilder
      */
-    public function prevNodes() {
+    public function prevNodes():QueryBuilder {
         return $this->newScopedQuery()
             ->where($this->getLftName(), '<', $this->getLft());
     }
@@ -277,18 +262,16 @@ trait HasParent {
     /**
      * Get query ancestors of the node.
      *
-     * @return AncestorsRelation
+
      */
-    public function ancestors() {
+    public function ancestors():AncestorsRelation {
         return new AncestorsRelation($this->newQuery(), $this);
     }
 
     /**
      * Make this node a root node.
-     *
-     * @return $this
      */
-    public function makeRoot() {
+    public function makeRoot():self {
         $this->setParent(null)->dirtyBounds();
 
         return $this->setNodeAction('root');
@@ -297,9 +280,9 @@ trait HasParent {
     /**
      * Save node as root.
      *
-     * @return bool
+
      */
-    public function saveAsRoot() {
+    public function saveAsRoot() :bool{
         if ($this->exists && $this->isRoot()) {
             return $this->save();
         }
@@ -310,45 +293,42 @@ trait HasParent {
     /**
      * Append and save a node.
      *
-     * @return bool
+
      */
-    public function appendNode(self $node) {
+    public function appendNode(self $node):bool {
         return $node->appendToNode($this)->save();
     }
 
     /**
      * Prepend and save a node.
      *
-     * @return bool
+
      */
-    public function prependNode(self $node) {
+    public function prependNode(self $node):bool {
         return $node->prependToNode($this)->save();
     }
 
     /**
      * Append a node to the new parent.
      *
-     * @return $this
+
      */
-    public function appendToNode(self $parent) {
+    public function appendToNode(self $parent) :self{
         return $this->appendOrPrependTo($parent);
     }
 
     /**
      * Prepend a node to the new parent.
      *
-     * @return $this
+
      */
-    public function prependToNode(self $parent) {
+    public function prependToNode(self $parent) :self{
         return $this->appendOrPrependTo($parent, true);
     }
 
     /**
-     * @param bool $prepend
-     *
-     * @return self
      */
-    public function appendOrPrependTo(self $parent, $prepend = false) {
+    public function appendOrPrependTo(self $parent, bool $prepend = false):self {
         $this->assertNodeExists($parent)
             ->assertNotDescendant($parent)
             ->assertSameScope($parent);
@@ -762,25 +742,23 @@ trait HasParent {
     /**
      * Get the value of the model's lft key.
      *
-     * @return int
      */
-    public function getLft() {
-        return $this->getAttributeValue($this->getLftName());
+    public function getLft():int {
+        return intval($this->getAttributeValue($this->getLftName()));
     }
 
     /**
      * Get the value of the model's rgt key.
      *
-     * @return int
      */
-    public function getRgt() {
-        return $this->getAttributeValue($this->getRgtName());
+    public function getRgt():int {
+        return intval($this->getAttributeValue($this->getRgtName()));
     }
 
     /**
      * Get the value of the model's parent id key.
      *
-     * @return int
+     * @return mixed
      */
     public function getParentId() {
         return $this->getAttributeValue($this->getParentIdName());
