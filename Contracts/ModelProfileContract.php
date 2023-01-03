@@ -56,6 +56,7 @@ use Modules\Mediamonitor\Models\Clip;
  * @method HasMany       presses()
  * @method BelongsToMany channels()
  * @method mixed         getAttributeValue(string $key)
+ * @method Collection    tagsWithType(string $type=null)
  *
  * @mixin  \Eloquent
  */
