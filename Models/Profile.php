@@ -5,11 +5,12 @@ declare(strict_types=1);
 namespace Modules\Xot\Models;
 
 // use Illuminate\Database\Eloquent\Relations\HasOne;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Modules\Tenant\Services\TenantService;
-use Modules\Xot\Contracts\ModelWithUserContract;
-use Spatie\Permission\Traits\HasRoles;
 use Spatie\Tags\HasTags;
+use Spatie\Permission\Traits\HasRoles;
+use Modules\Tenant\Services\TenantService;
+use Modules\Xot\Contracts\ModelProfileContract;
+use Modules\Xot\Contracts\ModelWithUserContract;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
  * Modules\Xot\Models\Profile.
@@ -70,7 +71,7 @@ use Spatie\Tags\HasTags;
  * @method static \Illuminate\Database\Eloquent\Builder|Profile whereLastName($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Profile withoutTags(\ArrayAccess|\Spatie\Tags\Tag|array|string $tags, ?string $type = null)
  */
-class Profile extends BaseModel implements ModelWithUserContract {
+class Profile extends BaseModel implements ModelWithUserContract,ModelProfileContract {
     // spatie
     use HasRoles;
     use HasTags;
