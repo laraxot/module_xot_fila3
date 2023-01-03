@@ -477,7 +477,9 @@ if (! function_exists('getModuleFromModel')) {
         // $mod = Module::get($module_name);
         // Static call to instance method Nwidart\Modules\Module::get()
         // $mod = \Nwidart\Modules\Module::get($module_name);
-        $mod = app('module')->get($module_name);
+        // 480    Call to an undefined method Nwidart\Modules\Facades\Module::get()
+        // $mod = app('module')->get($module_name);
+        $mod = app('module')->find($module_name);
 
         return $mod;
     }
