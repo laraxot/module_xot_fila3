@@ -193,7 +193,7 @@ use Modules\Mediamonitor\Models\Clip;
  * @property string|null                                                      $org_info
  * @property Collection|NotifyTheme[]                                         $notifyThemes
  * @property int|null                                                         $notify_themes_count
- * @property Profile|null                                                     $parent
+ * @property ModelProfileContract|null                                        $parent
  *
  * @method static \Kalnoy\Nestedset\Collection|static[]  all($columns = ['*'])
  * @method static \Kalnoy\Nestedset\QueryBuilder|Profile ancestorsAndSelf($id, array $columns = [])
