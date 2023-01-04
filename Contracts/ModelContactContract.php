@@ -53,5 +53,5 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 interface ModelContactContract {
     public function getNotifyVia(): array;
 
-    public function sendEmailCallback(): mixed;
+    public function sendEmailCallback(): void;
 }
