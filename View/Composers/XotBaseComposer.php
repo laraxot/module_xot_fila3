@@ -45,7 +45,7 @@ abstract class XotBaseComposer {
         );
         */
         $modules = Module::getOrdered();
-    
+
         /**
          * @var \Nwidart\Modules\Module|null
          */
