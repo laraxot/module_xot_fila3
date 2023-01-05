@@ -19,13 +19,13 @@ class StoreAction {
         if (! isset($data['lang']) && \in_array('lang', $row->getFillable(), true)) {
             $data['lang'] = app()->getLocale();
         }
-        if (
+        /*if (
             ! isset($data['user_id'])
             && \in_array('user_id', $row->getFillable(), true)
             && 'user_id' !== $row->getKeyName()
         ) {
             $data['user_id'] = \Auth::id();
-        }
+        }*/
         $validator = Validator::make($data, $rules);
         $validator->validate();
 

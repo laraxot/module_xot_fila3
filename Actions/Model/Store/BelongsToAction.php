@@ -4,8 +4,11 @@ declare(strict_types=1);
 
 namespace Modules\Xot\Actions\Model\Store;
 
+use Exception;
+use Modules\Xot\DTOs\RelationDTO;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\QueueableAction\QueueableAction;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class BelongsToAction {
     use QueueableAction;
@@ -13,19 +16,34 @@ class BelongsToAction {
     public function __construct() {
     }
 
-    public function execute(Model $row, \Modules\Xot\DTOs\RelationDTO $relation): void {
+    public function execute(Model $row, RelationDTO $relation): void {
+        if (! $relation->rows instanceof BelongsTo) {
+            throw new Exception('['.__LINE__.']['.__FILE__.']');
+        }
+
+        $related=$relation->rows->create($relation->data);
+
+        $relation->rows->associate($related);
+
+        //$rows = $relation->rows;
+        
         // dd([$relation->name]);
+        /*
         if (null == $row->{$relation->name}) {
             $row->{$relation->name}()->create($relation->data);
 
             return;
         }
-        /*dddx([
+        */
+        /*
+        dddx([
             'message' => 'wip',
             'row' => $row,
             'relation' => $relation,
             'relation_rows' => $relation->rows->exists(),
             't' => $row->{$relation->name},
-        ]);*/
+            't1'=>$rows,
+        ]);
+        */
     }
 }
