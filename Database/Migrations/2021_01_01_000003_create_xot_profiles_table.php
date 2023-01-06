@@ -42,7 +42,7 @@ class CreateXotProfilesTable extends XotBaseMigration {
                 if (! $this->hasColumn('deleted_by')) {
                     $table->string('deleted_by')->nullable();
                 }
-                if (! $this->hasColumn('first_name')) {
+                if (! $this->hasColumn('first_name') && !$this->hasColumn('firstname')) {
                     $table->string('first_name')->nullable();
                 }
                 if (! $this->hasColumn('last_name')) {
@@ -92,7 +92,7 @@ class CreateXotProfilesTable extends XotBaseMigration {
                     // $table->primary('id');
                 }
 
-                if ($this->hasColumn('firstname')) {
+                if ($this->hasColumn('firstname') && ! $this->hasColumn('first_name')) {
                     $table->renameColumn('firstname', 'first_name');
                 }
                 if ($this->hasColumn('lastname')) {
