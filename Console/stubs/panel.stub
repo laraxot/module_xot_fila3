@@ -55,14 +55,20 @@ class DummyClassName extends XotBasePanel {
      * @return int|string|null
      */
     public function optionId($row) {
-        return $row->getKey();
+        $key = $row->getKey();
+        if(null===$key||(!is_string($key)&&!is_int($key))){
+            throw new \Exception('['.__LINE__.']['.class_basename(__CLASS__).']');
+        }
+        return $key;
     }
 
     /**
      * on select the option label.
+     *
+     * @param DummyModelClass $row
      */
     public function optionLabel($row):string {
-        return (string)$row->title;
+        return 'To Set';
     }
 
     /**
