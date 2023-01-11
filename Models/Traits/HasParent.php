@@ -64,7 +64,7 @@ trait HasParent {
         $parameters = $this->pending;
 
         $this->pending = null;
-        // 77     Parameter #1 $callback of function call_user_func_array expects callable(): mixed, array{$this(Modules\Mediamonitor\Models\Press), non-falsy-string} given.
+
         /**
          * @var callable
          */
