@@ -28,7 +28,7 @@ class Edit extends XotBaseFormComponent {
 
     public function columns() {
         $columns = [];
-        $this->index_fields = $this->panel->getFields(['act'=>'index']);
+        $this->index_fields = $this->panel->getFields('index');
 
         foreach ($this->index_fields as $field) {
             if (is_array($field)) {

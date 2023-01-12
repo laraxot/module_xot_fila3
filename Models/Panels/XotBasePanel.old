@@ -242,10 +242,10 @@ abstract class XotBasePanel {
         }
         switch ($act) {
             case 'store':
-                $fields = $this->getFields(['act'=>'create']);
+                $fields = $this->getFields('create');
                 break;
             case 'update':
-                $fields = $this->getFields(['act'=>'edit']);
+                $fields = $this->getFields('edit');
                 break;
             default:
                 $fields = $this->fields();
@@ -785,7 +785,7 @@ abstract class XotBasePanel {
     }
 
     public function formCreate(array $params = []) {
-        $fields = $this->getFields(['act'=>'create']);
+        $fields = $this->getFields('create');
         $row = $this->row;
         $res = '';
         //$res.='<h3>'.$this->url('store').'</h3>'; //4 debug
@@ -809,7 +809,7 @@ abstract class XotBasePanel {
             <input name="submit" type="submit" id="submit" value="Post your answer" class="button small color">
         </p>';
         extract($params);
-        $fields = $this->getFields(['act'=>'edit']);
+        $fields = $this->getFields('edit');
         $row = $this->row;
         $res = '';
         //$res.='<h3>'.$this->url('store').'</h3>'; //4 debug

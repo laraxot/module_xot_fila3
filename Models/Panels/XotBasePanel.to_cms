@@ -702,10 +702,10 @@ abstract class XotBasePanel implements PanelContract {
         }
         switch ($act) {
             case 'store':
-                $fields = $this->getFields(['act' => 'create']);
+                $fields = $this->getFields('create');
                 break;
             case 'update':
-                $fields = $this->getFields(['act' => 'edit']);
+                $fields = $this->getFields('edit');
                 break;
             default:
                 $fields = $this->fields();
@@ -1099,7 +1099,7 @@ abstract class XotBasePanel implements PanelContract {
         return $this->form->{__FUNCTION__}();
     }
 
-    public function getFields(array $params = []): Collection {
+    public function getFields(string $act): Collection {
         return $this->form->{__FUNCTION__}($params);
     }
 
