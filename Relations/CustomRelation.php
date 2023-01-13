@@ -41,7 +41,7 @@ class CustomRelation extends Relation {
     /**
      * Create a new belongs to relationship instance.
      */
-    public function __construct(Builder $query, Model $parent, Closure $baseConstraints, ?Closure $eagerConstraints, ?Closure $eagerMatcher) {
+    public function __construct(Builder $query, Model $parent, \Closure $baseConstraints, ?\Closure $eagerConstraints, ?\Closure $eagerMatcher) {
         $this->baseConstraints = $baseConstraints;
         $this->eagerConstraints = $eagerConstraints;
         $this->eagerMatcher = $eagerMatcher;
