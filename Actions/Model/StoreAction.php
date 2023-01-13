@@ -16,7 +16,6 @@ class StoreAction {
     }
 
     public function execute(Model $row, array $data, array $rules): Model {
-        
         if (! isset($data['lang']) && \in_array('lang', $row->getFillable(), true)) {
             $data['lang'] = app()->getLocale();
         }
@@ -27,14 +26,14 @@ class StoreAction {
         ) {
             $data['user_id'] = \Auth::id();
         }*/
-       
+
         $validator = Validator::make($data, $rules);
         $validator->validate();
 
         $row = $row->fill($data);
-        
+
         $row->save();
-       
+
         $relations = app(FilterRelationsAction::class)->execute($row, $data);
 
         foreach ($relations as $relation) {
@@ -46,7 +45,7 @@ class StoreAction {
             app($act)->execute($row, $relation);
             // }
         }
-        
+
         $msg = 'created! ['.$row->getKey().']!';
 
         Session::flash('status', $msg); // .
