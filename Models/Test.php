@@ -15,7 +15,6 @@ use Illuminate\Database\Eloquent\Model;
  *
  * @mixin \Eloquent
  */
-class Test extends Model
-{
+class Test extends Model {
     protected $fillable = [''];
 }
