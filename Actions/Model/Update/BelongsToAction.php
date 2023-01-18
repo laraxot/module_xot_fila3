@@ -6,6 +6,7 @@ namespace Modules\Xot\Actions\Model\Update;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Support\Arr;
 use Modules\Xot\DTOs\RelationDTO;
 use Spatie\QueueableAction\QueueableAction;
 
@@ -19,11 +20,24 @@ class BelongsToAction {
         if (! $relation->rows instanceof BelongsTo) {
             throw new \Exception('['.__LINE__.']['.__FILE__.']');
         }
+        // dddx([
+        //    'row' => $row,
+        //    'relation' => $relation,
+        // ]);
         $rows = $relation->rows;
         // $rows= $row->{$relation->name}();
         if (! \is_array($relation->data)) {
             $related = $rows->getRelated();
             $related = $related->find($relation->data);
+            $res = $rows->associate($related);
+            $res->save();
+
+            return;
+        }
+
+        if (! Arr::isAssoc($relation->data) && 1 == count($relation->data)) {
+            $related_id = $relation->data[0];
+            $related = $relation->related->find($related_id);
             $res = $rows->associate($related);
             $res->save();
 
@@ -39,6 +53,8 @@ class BelongsToAction {
 
             return;
         }
+
+        dddx('a');
 
         $related = $relation->related->create($data);
         $res = $rows->associate($related);
