@@ -23,7 +23,8 @@ use Illuminate\Database\Eloquent\Model;
  *
  * @mixin \Eloquent
  */
-class Settings extends Model {
+class Settings extends Model
+{
     /**
      * @var string[]
      */

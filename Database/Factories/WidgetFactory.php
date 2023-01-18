@@ -10,7 +10,8 @@ use Modules\Xot\Models\Widget;
 /**
  * Undocumented class.
  */
-class WidgetFactory extends Factory {
+class WidgetFactory extends Factory
+{
     /**
      * The name of the factory's corresponding model.
      *
@@ -23,7 +24,8 @@ class WidgetFactory extends Factory {
      *
      * @return array
      */
-    public function definition() {
+    public function definition()
+    {
         return [
             'id' => $this->faker->randomNumber(5, false),
             'post_type' => $this->faker->word,
