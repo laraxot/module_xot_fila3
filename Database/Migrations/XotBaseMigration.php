@@ -16,15 +16,13 @@ use Nwidart\Modules\Facades\Module;
 /**
  * Class XotBaseMigration.
  */
-abstract class XotBaseMigration extends Migration
-{
+abstract class XotBaseMigration extends Migration {
     protected ?Model $model = null;
 
     protected ?string $model_class = null;
 
     // *
-    public function __construct()
-    {
+    public function __construct() {
         if (null === $this->model) {
             $model = $this->getModel();
             // 37     Dead catch - Exception is never thrown in the try block.
@@ -40,8 +38,7 @@ abstract class XotBaseMigration extends Migration
 
     // */
 
-    public function getModel(): string
-    {
+    public function getModel(): string {
         if (null !== $this->model_class) {
             return $this->model_class;
         }
@@ -62,8 +59,7 @@ abstract class XotBaseMigration extends Migration
         return $model_ns;
     }
 
-    public function getTable(): string
-    {
+    public function getTable(): string {
         if (null === $this->model) {
             return '';
         }
@@ -79,8 +75,7 @@ abstract class XotBaseMigration extends Migration
     /**
      * @return \Illuminate\Database\Schema\Builder
      */
-    public function getConn()
-    {
+    public function getConn() {
         // $conn_name=with(new MyModel())->getConnectionName();
         // \DB::reconnect('mysql');
         // dddx(config('database'));
@@ -101,8 +96,7 @@ abstract class XotBaseMigration extends Migration
     /**
      * @return \Doctrine\DBAL\Schema\AbstractSchemaManager
      */
-    public function getSchemaManager()
-    {
+    public function getSchemaManager() {
         $schema_manager = $this->getConn()
             ->getConnection()
             ->getDoctrineSchemaManager();
@@ -115,8 +109,7 @@ abstract class XotBaseMigration extends Migration
      *
      * @return \Doctrine\DBAL\Schema\Table
      */
-    public function getTableDetails()
-    {
+    public function getTableDetails() {
         $table_details = $this->getSchemaManager()
             ->listTableDetails($this->getTable());
 
@@ -128,8 +121,7 @@ abstract class XotBaseMigration extends Migration
      *
      * @return \Doctrine\DBAL\Schema\Index[]
      */
-    public function getTableIndexes()
-    {
+    public function getTableIndexes() {
         $table_indexes = $this->getSchemaManager()
             ->listTableIndexes($this->getTable());
 
@@ -139,8 +131,7 @@ abstract class XotBaseMigration extends Migration
     /**
      * @return bool
      */
-    public function tableExists(string $table = null)
-    {
+    public function tableExists(string $table = null) {
         if (null === $table) {
             $table = $this->getTable();
         }
@@ -148,24 +139,21 @@ abstract class XotBaseMigration extends Migration
         return $this->getConn()->hasTable($table);
     }
 
-    public function hasColumn(string $col): bool
-    {
+    public function hasColumn(string $col): bool {
         return $this->getConn()->hasColumn($this->getTable(), $col);
     }
 
     /**
      * Get the data type for the given column name.
      */
-    public function getColumnType(string $column): string
-    {
+    public function getColumnType(string $column): string {
         return $this->getConn()->getColumnType($this->getTable(), $column);
     }
 
     /**
      * Undocumented function.
      */
-    public function isColumnType(string $column, string $type): bool
-    {
+    public function isColumnType(string $column, string $type): bool {
         if (! $this->hasColumn($column)) {
             return false;
         }
@@ -176,13 +164,11 @@ abstract class XotBaseMigration extends Migration
     /**
      * @param string $sql
      */
-    public function query($sql): void
-    {
+    public function query($sql): void {
         $this->getConn()->getConnection()->statement($sql);
     }
 
-    public function hasIndex(string $index): bool
-    {
+    public function hasIndex(string $index): bool {
         $tbl = $this->getTable();
         $conn = $this->getConn()->getConnection();
         $dbSchemaManager = $conn->getDoctrineSchemaManager();
@@ -197,15 +183,13 @@ abstract class XotBaseMigration extends Migration
     /**
      * ---.
      */
-    public function hasPrimaryKey(): bool
-    {
+    public function hasPrimaryKey(): bool {
         $table_details = $this->getTableDetails();
 
         return $table_details->hasPrimaryKey();
     }
 
-    public function dropPrimaryKey(): void
-    {
+    public function dropPrimaryKey(): void {
         $table_details = $this->getTableDetails();
         $table_details->dropPrimaryKey();
         $sql = 'ALTER TABLE '.$this->getTable().' DROP PRIMARY KEY;';
@@ -218,24 +202,20 @@ abstract class XotBaseMigration extends Migration
      * @return void
      * @return void
      */
-    public function down()
-    {
+    public function down() {
         $this->getConn()->dropIfExists($this->getTable());
     }
 
-    public function tableDrop(string $table): void
-    {
+    public function tableDrop(string $table): void {
         $this->getConn()->dropIfExists($table);
     }
 
-    public function rename(string $from, string $to): void
-    {
+    public function rename(string $from, string $to): void {
         $this->getConn()->rename($from, $to);
     }
 
     // da rivedere
-    public function renameColumn(string $from, string $to): void
-    {
+    public function renameColumn(string $from, string $to): void {
         // Call to an undefined method Illuminate\Database\Schema\Builder::renameColumn().
         /**
          * @var \Illuminate\Database\Schema\Blueprint
@@ -249,8 +229,7 @@ abstract class XotBaseMigration extends Migration
      *
      * @return void
      */
-    public function tableCreate(\Closure $next)
-    {
+    public function tableCreate(\Closure $next) {
         if (! $this->tableExists()) {
             $this->getConn()->create(
                 $this->getTable(),
@@ -264,8 +243,7 @@ abstract class XotBaseMigration extends Migration
      *
      * @return void
      */
-    public function tableUpdate(\Closure $next)
-    {
+    public function tableUpdate(\Closure $next) {
         $this->getConn()->table(
             $this->getTable(),
             $next

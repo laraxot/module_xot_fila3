@@ -7,16 +7,13 @@ namespace Modules\Xot\Actions\Model;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\QueueableAction\QueueableAction;
 
-class DestroyAction
-{
+class DestroyAction {
     use QueueableAction;
 
-    public function __construct()
-    {
+    public function __construct() {
     }
 
-    public function execute(Model $row, array $data, array $rules): Model
-    {
+    public function execute(Model $row, array $data, array $rules): Model {
         // prende la chiave del modello
 
         // $id = $row->getKey();

@@ -9,13 +9,11 @@ namespace Modules\Xot\Filters\Images;
 use Intervention\Image\Filters\FilterInterface;
 use Intervention\Image\Image;
 
-class Small implements FilterInterface
-{
+class Small implements FilterInterface {
     /**
      * @return \Intervention\Image\Image
      */
-    public function applyFilter(Image $image)
-    {
+    public function applyFilter(Image $image) {
         // return $image->fit(120, 90);
         $width = $height = 120;
 

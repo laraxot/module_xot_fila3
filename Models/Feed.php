@@ -31,8 +31,7 @@ namespace Modules\Xot\Models;
  *
  * @mixin \Eloquent
  */
-class Feed extends BaseModel
-{
+class Feed extends BaseModel {
     /**
      * @var string[]
      */

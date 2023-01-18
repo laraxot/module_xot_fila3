@@ -20,8 +20,7 @@ use Modules\Xot\DTOs\FieldFilterDTO;
 /**
  * Class ModelService.
  */
-class RowsService
-{
+class RowsService {
     /**
      * Undocumented function.
      *
@@ -29,8 +28,7 @@ class RowsService
      *
      * @return RowsContract
      */
-    public static function search($query, ?string $q, array $search_fields = [])
-    {
+    public static function search($query, ?string $q, array $search_fields = []) {
         // backtrace(true);
         // dddx([$query, $q, $search_fields]);
 
@@ -120,8 +118,7 @@ class RowsService
      *
      * @return RowsContract
      */
-    public static function filter($query, array $filters, array $filters_fields)
-    {
+    public static function filter($query, array $filters, array $filters_fields) {
         $filters_fields = FieldFilterDTO::collection($filters_fields);
         $filters_rules = [];
 
