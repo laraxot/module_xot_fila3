@@ -9,10 +9,12 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 use Modules\Xot\DTOs\RelationDTO;
 use Spatie\QueueableAction\QueueableAction;
 
-class HasOneAction {
+class HasOneAction
+{
     use QueueableAction;
 
-    public function __construct() {
+    public function __construct()
+    {
     }
 
     /**
@@ -20,7 +22,8 @@ class HasOneAction {
      *
      * @return void
      */
-    public function execute(Model $row, RelationDTO $relation) {
+    public function execute(Model $row, RelationDTO $relation)
+    {
         if (! $relation->rows instanceof HasOne) {
             throw new \Exception('['.__LINE__.']['.__FILE__.']');
         }

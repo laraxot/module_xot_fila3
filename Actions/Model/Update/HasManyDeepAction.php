@@ -7,10 +7,12 @@ namespace Modules\Xot\Actions\Model\Update;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\QueueableAction\QueueableAction;
 
-class HasManyDeepAction {
+class HasManyDeepAction
+{
     use QueueableAction;
 
-    public function __construct() {
+    public function __construct()
+    {
     }
 
     /**
@@ -18,7 +20,8 @@ class HasManyDeepAction {
      *
      * @return void
      */
-    public function execute(Model $row, \Modules\Xot\DTOs\RelationDTO $relation) {
+    public function execute(Model $row, \Modules\Xot\DTOs\RelationDTO $relation)
+    {
         dddx('wip');
     }
 }

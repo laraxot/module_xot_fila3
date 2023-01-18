@@ -12,8 +12,10 @@ use Illuminate\Support\Str;
 /**
  * HasSlug.
  */
-trait HasSlug {
-    public function slug(): ?string {
+trait HasSlug
+{
+    public function slug(): ?string
+    {
         // return $this->slug;
         return $this->guid;
     }
@@ -21,15 +23,18 @@ trait HasSlug {
     /**
      * Undocumented function.
      */
-    public function setSlugAttribute(string $slug): void {
+    public function setSlugAttribute(string $slug): void
+    {
         $this->attributes['slug'] = $this->generateUniqueSlug($slug);
     }
 
-    public static function findBySlug(string $slug): self {
+    public static function findBySlug(string $slug): self
+    {
         return static::where('slug', $slug)->firstOrFail();
     }
 
-    private function generateUniqueSlug(string $value): string {
+    private function generateUniqueSlug(string $value): string
+    {
         $slug = $originalSlug = Str::slug($value) ?: Str::random(5);
         $counter = 0;
 
@@ -41,7 +46,8 @@ trait HasSlug {
         return $slug;
     }
 
-    private function slugExists(string $slug, int $ignoreId = null): bool {
+    private function slugExists(string $slug, int $ignoreId = null): bool
+    {
         $query = $this->where('slug', $slug);
 
         if ($ignoreId) {
