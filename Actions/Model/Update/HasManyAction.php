@@ -6,6 +6,7 @@ namespace Modules\Xot\Actions\Model\Update;
 
 use Illuminate\Database\Eloquent\Model;
 use Spatie\QueueableAction\QueueableAction;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class HasManyAction {
     use QueueableAction;
@@ -19,6 +20,12 @@ class HasManyAction {
      * @return void
      */
     public function execute(Model $row, \Modules\Xot\DTOs\RelationDTO $relation) {
-        dddx('wip');
+         
+        if (! $relation->rows instanceof HasMany) {
+            throw new \Exception('['.__LINE__.']['.__FILE__.']');
+        }
+
+        $rows = $relation->rows;
+        $rows->update($relation->data);
     }
 }

@@ -24,10 +24,8 @@ class MorphOneAction {
         }
         $rows = $relation->rows;
         if ($rows->exists()) {
-            // dddx('SI');
             $rows->update($relation->data);
         } else {
-            // dddx($relation->data);
             $rows->create($relation->data);
         }
     }
