@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Modules\Xot\Actions\Model\Update;
 
 use Illuminate\Database\Eloquent\Model;
-use Spatie\QueueableAction\QueueableAction;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Spatie\QueueableAction\QueueableAction;
 
 class HasManyAction {
     use QueueableAction;
@@ -20,7 +20,6 @@ class HasManyAction {
      * @return void
      */
     public function execute(Model $row, \Modules\Xot\DTOs\RelationDTO $relation) {
-         
         if (! $relation->rows instanceof HasMany) {
             throw new \Exception('['.__LINE__.']['.__FILE__.']');
         }

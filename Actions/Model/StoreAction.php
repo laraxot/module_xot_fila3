@@ -35,8 +35,8 @@ class StoreAction {
         $row->save();
 
         $relations = app(FilterRelationsAction::class)->execute($row, $data);
-        
-        foreach ($relations as $relation) {    
+
+        foreach ($relations as $relation) {
             $act = __NAMESPACE__.'\\Store\\'.$relation->relationship_type.'Action';
             // dddx(['act'=>$act,'row'=>$row,'relation'=>$relation,'data'=>$data]);
             // if (\is_array($data[$relation->name])) {
