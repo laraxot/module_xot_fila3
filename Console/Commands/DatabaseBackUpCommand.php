@@ -12,8 +12,7 @@ use Carbon\Carbon;
 use Illuminate\Console\Command;
 use Illuminate\Support\Str;
 
-class DatabaseBackUpCommand extends Command
-{
+class DatabaseBackUpCommand extends Command {
     /**
      * The name and signature of the console command.
      *
@@ -33,8 +32,7 @@ class DatabaseBackUpCommand extends Command
      *
      * @return void
      */
-    public function __construct()
-    {
+    public function __construct() {
         parent::__construct();
     }
 
@@ -43,8 +41,7 @@ class DatabaseBackUpCommand extends Command
      *
      * @return void
      */
-    public function handle()
-    {
+    public function handle() {
         $filename = 'backup-'.Carbon::now()->format('Y-m-d').'.gz';
         $backup_path = storage_path('app/backup/'.$filename);
         $backup_path = Str::replace(['/', '\\'], [\DIRECTORY_SEPARATOR, \DIRECTORY_SEPARATOR], $backup_path);

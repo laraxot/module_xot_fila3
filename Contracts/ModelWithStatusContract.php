@@ -48,8 +48,7 @@ use Spatie\ModelStatus\Status;
  *
  * @mixin  \Eloquent
  */
-interface ModelWithStatusContract
-{
+interface ModelWithStatusContract {
     public function statuses(): MorphMany;
 
     public function status(): ?Status;
