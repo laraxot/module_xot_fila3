@@ -11,13 +11,15 @@ use Illuminate\Notifications\Notification;
 /**
  * Class Test1Notification.
  */
-class Test1Notification extends Notification {
+class Test1Notification extends Notification
+{
     use Queueable;
 
     /**
      * Create a new notification instance.
      */
-    public function __construct() {
+    public function __construct()
+    {
     }
 
     /**
@@ -27,7 +29,8 @@ class Test1Notification extends Notification {
      *
      * @return array
      */
-    public function via($notifiable) {
+    public function via($notifiable)
+    {
         return ['mail'];
     }
 
@@ -38,7 +41,8 @@ class Test1Notification extends Notification {
      *
      * @return \Illuminate\Notifications\Messages\MailMessage
      */
-    public function toMail($notifiable) {
+    public function toMail($notifiable)
+    {
         return (new MailMessage())
             ->line('The introduction to the notification.')
             ->action('Notification Action', 'https://laravel.com')
@@ -52,7 +56,8 @@ class Test1Notification extends Notification {
      *
      * @return array
      */
-    public function toArray($notifiable) {
+    public function toArray($notifiable)
+    {
         return [
         ];
     }

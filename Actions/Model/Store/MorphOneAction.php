@@ -9,13 +9,16 @@ use Illuminate\Database\Eloquent\Relations\MorphOne;
 use Modules\Xot\DTOs\RelationDTO;
 use Spatie\QueueableAction\QueueableAction;
 
-class MorphOneAction {
+class MorphOneAction
+{
     use QueueableAction;
 
-    public function __construct() {
+    public function __construct()
+    {
     }
 
-    public function execute(Model $row, RelationDTO $relation): void {
+    public function execute(Model $row, RelationDTO $relation): void
+    {
         // if (is_string($relation->data) && isJson($relation->data)) {
         //    $relation->data = json_decode($relation->data, true);
         // }
