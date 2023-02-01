@@ -57,7 +57,7 @@ class HasManyDeepAction {
                     'user_id' => Auth::id(),
                 ];
                 $test = $model->$name()->getParent()->fill($pivot_data);
-                dddx($test);
+
                 $test->save();
             }
         }
