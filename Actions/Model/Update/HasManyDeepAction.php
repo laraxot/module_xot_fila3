@@ -24,8 +24,12 @@ class HasManyDeepAction {
         $name = $relation->name;
         $model = $row;
 
+        $modelReflected = new \ReflectionClass($model);
+        $modelName = strtolower($modelReflected->getShortName());
+
         // bisogna prima cancellare le relazioni esistenti per quel model?
-        $model->$name()->delete();
+        // $model->$name()->detach();
+        $model->$name()->getParent()->where('model_type', $modelName)->where('model_id', $model->id)->delete();
 
         if (! is_array($data)) {
             throw new \Exception('['.__LINE__.']['.__FILE__.']');
@@ -44,9 +48,6 @@ class HasManyDeepAction {
             $penlastKeyName = collect($model->$name()->getLocalKeys())->values()->slice(-2)->first();
 
             $related_ids_to_link = collect($relation->rows->getThroughParents())->last()->where($lastKeyName, $model_id_to_link)->get();
-
-            $modelReflected = new \ReflectionClass($model);
-            $modelName = strtolower($modelReflected->getShortName());
 
             foreach ($related_ids_to_link as $related_id_to_link) {
                 // dati da mettere nella pivot
