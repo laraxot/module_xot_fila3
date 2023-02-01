@@ -39,10 +39,6 @@ class MorphToManyAction {
         if (! \Arr::isAssoc($data)) {
             $model->$name()->sync($data);
         }
-        // dddx($data);
-        //
-        // $model->$name()->attach($data);
-        // }
 
         foreach ($data as $k => $v) {
             if (\is_array($v)) {
