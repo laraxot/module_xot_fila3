@@ -6,6 +6,7 @@ namespace Modules\Xot\Actions\Model\Update;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 use Spatie\QueueableAction\QueueableAction;
 
 class HasManyDeepAction {
@@ -33,14 +34,14 @@ class HasManyDeepAction {
             $data = $data['to'];
         }
 
-        // dddx(collect($relation->rows->getThroughParents())->values()->slice(-2)->first());
-
         // model_id_to_link = id del modello da collegare (es. group_id di extrafield group)
-
         foreach ($data as $model_id_to_link) {
             // related id da collegare (es. quello di extra field)
             $related_ids_to_link = collect($relation->rows->getThroughParents())->last()->where('group_id', $model_id_to_link)->get();
-            $secondKeyName = str_replace('.', '_', collect($relation->rows->getThroughParents())->last()->getQualifiedKeyName());
+            $secondKeyName = implode('_', collect(explode('.', collect($relation->rows->getThroughParents())->last()->getQualifiedKeyName()))->map(function ($item) {
+                return Str::singular($item);
+            })->toArray());
+
             $modelReflected = new \ReflectionClass($model);
             $modelName = strtolower($modelReflected->getShortName());
 
@@ -53,10 +54,9 @@ class HasManyDeepAction {
                     'user_id' => Auth::id(),
                 ];
                 $test = $model->$name()->getParent()->fill($pivot_data);
+
                 $test->save();
             }
         }
-
-        // dddx(['data' => $data, 'name' => $name, 'model' => $model]);
     }
 }
