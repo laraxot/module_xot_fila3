@@ -6,7 +6,6 @@ namespace Modules\Xot\Actions\Model\Update;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Str;
 use Spatie\QueueableAction\QueueableAction;
 
 class HasManyDeepAction {
@@ -24,6 +23,10 @@ class HasManyDeepAction {
         $data = $relation->data;
         $name = $relation->name;
         $model = $row;
+
+        // bisogna prima cancellare le relazioni esistenti per quel model?
+        $model->$name()->delete();
+
         if (! is_array($data)) {
             throw new \Exception('['.__LINE__.']['.__FILE__.']');
         }
@@ -37,10 +40,10 @@ class HasManyDeepAction {
         // model_id_to_link = id del modello da collegare (es. group_id di extrafield group)
         foreach ($data as $model_id_to_link) {
             // related id da collegare (es. quello di extra field)
-            $related_ids_to_link = collect($relation->rows->getThroughParents())->last()->where('group_id', $model_id_to_link)->get();
-            $secondKeyName = implode('_', collect(explode('.', collect($relation->rows->getThroughParents())->last()->getQualifiedKeyName()))->map(function ($item) {
-                return Str::singular($item);
-            })->toArray());
+            $lastKeyName = collect($model->$name()->getLocalKeys())->last();
+            $penlastKeyName = collect($model->$name()->getLocalKeys())->values()->slice(-2)->first();
+
+            $related_ids_to_link = collect($relation->rows->getThroughParents())->last()->where($lastKeyName, $model_id_to_link)->get();
 
             $modelReflected = new \ReflectionClass($model);
             $modelName = strtolower($modelReflected->getShortName());
@@ -50,11 +53,11 @@ class HasManyDeepAction {
                 $pivot_data = [
                     'model_id' => $model->id,
                     'model_type' => $modelName,
-                    $secondKeyName => $related_id_to_link->id,
+                    $penlastKeyName => $related_id_to_link->id,
                     'user_id' => Auth::id(),
                 ];
                 $test = $model->$name()->getParent()->fill($pivot_data);
-
+                dddx($test);
                 $test->save();
             }
         }
