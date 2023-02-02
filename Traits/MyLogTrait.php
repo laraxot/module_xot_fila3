@@ -16,8 +16,10 @@ use Illuminate\Support\Facades\Auth;
 /**
  * Trait MyLogTrait.
  */
-trait MyLogTrait {
-    protected static function boot() {
+trait MyLogTrait
+{
+    protected static function boot()
+    {
         parent::boot();
         /*
          \Event::listen(['eloquent.*'], function ($a){
