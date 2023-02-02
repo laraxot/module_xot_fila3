@@ -11,19 +11,16 @@ use Modules\Xot\DTOs\RelationDTO;
 use Spatie\LaravelData\DataCollection;
 use Spatie\QueueableAction\QueueableAction;
 
-class FilterRelationsAction
-{
+class FilterRelationsAction {
     use QueueableAction;
 
-    public function __construct()
-    {
+    public function __construct() {
     }
 
     /**
      * @return \Spatie\LaravelData\DataCollection<(int|string), \Modules\Xot\DTOs\RelationDTO>
      */
-    public function execute(Model $model, array $data): DataCollection
-    {
+    public function execute(Model $model, array $data): DataCollection {
         $methods = get_class_methods($model);
         $res = collect($data)
         ->filter(
