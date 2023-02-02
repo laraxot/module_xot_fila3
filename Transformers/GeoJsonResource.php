@@ -27,7 +27,8 @@ use Modules\Cms\Services\PanelService;
  * @property float  $latitude
  * @property float  $longitude
  */
-class GeoJsonResource extends ResCollection {
+class GeoJsonResource extends ResCollection
+{
     /**
      * @param \Illuminate\Http\Request $request
      *
@@ -36,7 +37,8 @@ class GeoJsonResource extends ResCollection {
      *
      * @return array
      */
-    public function toArray($request) {
+    public function toArray($request)
+    {
         $lang = app()->getLocale();
         // 34     Parameter #1 $model of static method Modules\Cms\Services\PanelService::make()->get() expects Illuminate\Database\Eloquent\Model, $this(Modules\Xot\Transformers\GeoJsonResource) given.
 

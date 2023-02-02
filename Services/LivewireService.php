@@ -9,11 +9,13 @@ use Livewire\Livewire;
 /**
  * LivewireService.
  */
-class LivewireService {
+class LivewireService
+{
     /**
      * Undocumented function.
      */
-    public static function registerComponents(string $path, string $namespace, string $prefix = ''): void {
+    public static function registerComponents(string $path, string $namespace, string $prefix = ''): void
+    {
         $comps = FileService::getComponents($path, $namespace.'\Http\Livewire', $prefix);
         /*
         if(count($comps)>1){

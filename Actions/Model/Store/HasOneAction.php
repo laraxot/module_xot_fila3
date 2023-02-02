@@ -9,12 +9,15 @@ use Illuminate\Support\Arr;
 use Modules\Xot\DTOs\RelationDTO;
 use Spatie\QueueableAction\QueueableAction;
 
-class HasOneAction {
+class HasOneAction
+{
     use QueueableAction;
 
-    public function __construct() {
+    public function __construct()
+    {
     }
 
+<<<<<<< HEAD
     public function execute(Model $row, RelationDTO $relation): void {
         // dddx(['row' => $row, 'relation' => $relation]);
 
@@ -30,6 +33,11 @@ class HasOneAction {
 
             return;
         }
+=======
+    public function execute(Model $row, \Modules\Xot\DTOs\RelationDTO $relation): void
+    {
+        dddx('wip');
+>>>>>>> 636f226e (up)
         /*
         $rows = $relation->rows;
 

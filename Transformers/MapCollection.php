@@ -9,7 +9,8 @@ use Illuminate\Http\Resources\Json\ResourceCollection;
 /**
  * Class MapCollection.
  */
-class MapCollection extends ResourceCollection {
+class MapCollection extends ResourceCollection
+{
     /**
      * @var string
      */
@@ -20,7 +21,8 @@ class MapCollection extends ResourceCollection {
      *
      * @return array
      */
-    public function toArray($request) {
+    public function toArray($request)
+    {
         return [
             'type' => 'FeatureCollection',
             'features' => $this->collection,

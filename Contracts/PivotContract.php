@@ -21,5 +21,6 @@ use Illuminate\Database\Eloquent\Collection;
  *
  * @mixin  \Eloquent
  */
-interface PivotContract {
+interface PivotContract
+{
 }
