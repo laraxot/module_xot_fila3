@@ -10,16 +10,14 @@ namespace Modules\Xot\Exceptions;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
-abstract class ApplicationException extends \Exception
-{
+abstract class ApplicationException extends \Exception {
     abstract public function status(): int;
 
     abstract public function help(): string;
 
     abstract public function error(): string;
 
-    public function render(Request $request): Response
-    {
+    public function render(Request $request): Response {
         $error = new ApplicationError($this->help(), $this->error());
 
         return response($error->toArray(), $this->status());

@@ -50,8 +50,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  *
  * @mixin  \Eloquent
  */
-interface ModelContactContract
-{
+interface ModelContactContract {
     public function getNotifyVia(): array;
 
     public function sendEmailCallback(): void;

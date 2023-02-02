@@ -238,6 +238,5 @@ use Illuminate\Support\Collection;
  * @method static \Kalnoy\Nestedset\QueryBuilder|Profile withoutRoot()
  * @method static \Kalnoy\Nestedset\QueryBuilder|Profile withoutTags(\ArrayAccess|\Spatie\Tags\Tag|array|string $tags, ?string $type = null)
  */
-interface ModelProfileContract
-{
+interface ModelProfileContract {
 }

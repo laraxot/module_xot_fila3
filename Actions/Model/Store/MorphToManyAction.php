@@ -10,16 +10,13 @@ use Illuminate\Support\Arr;
 use Modules\Xot\DTOs\RelationDTO;
 use Spatie\QueueableAction\QueueableAction;
 
-class MorphToManyAction
-{
+class MorphToManyAction {
     use QueueableAction;
 
-    public function __construct()
-    {
+    public function __construct() {
     }
 
-    public function execute(Model $row, RelationDTO $relation): void
-    {
+    public function execute(Model $row, RelationDTO $relation): void {
         if (! $relation->rows instanceof MorphToMany) {
             throw new \Exception('['.__LINE__.']['.__FILE__.']');
         }

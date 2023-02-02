@@ -8,12 +8,10 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
 use Spatie\QueueableAction\QueueableAction;
 
-class HasManyDeepAction
-{
+class HasManyDeepAction {
     use QueueableAction;
 
-    public function __construct()
-    {
+    public function __construct() {
     }
 
     /**
@@ -21,8 +19,7 @@ class HasManyDeepAction
      *
      * @return void
      */
-    public function execute(Model $row, \Modules\Xot\DTOs\RelationDTO $relation)
-    {
+    public function execute(Model $row, \Modules\Xot\DTOs\RelationDTO $relation) {
         $data = $relation->data;
         $name = $relation->name;
         $model = $row;
