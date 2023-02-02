@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Modules\Xot\Actions\Model\Store;
 
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Arr;
 use Modules\Xot\DTOs\RelationDTO;
-use Illuminate\Database\Eloquent\Model;
 use Spatie\QueueableAction\QueueableAction;
 
 class HasOneAction {
@@ -16,13 +16,14 @@ class HasOneAction {
     }
 
     public function execute(Model $row, RelationDTO $relation): void {
-        //dddx(['row' => $row, 'relation' => $relation]);
+        // dddx(['row' => $row, 'relation' => $relation]);
 
         $rows = $relation->rows;
 
         if (! Arr::isAssoc($relation->data) && 1 == count($relation->data)) {
             $related_id = $relation->data[0];
             $related = $relation->related->find($related_id);
+
             $rows->save($related);
 
             return;
