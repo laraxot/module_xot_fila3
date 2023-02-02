@@ -48,8 +48,7 @@ namespace Modules\Xot\Services;
 
 use Illuminate\Support\Facades\File;
 
-class SmartyService
-{
+class SmartyService {
     /**
      * stack for conditional and closers.
      */
@@ -59,8 +58,7 @@ class SmartyService
      * The core work of parsing a smarty template and converting it into flexy.
      * the contents of the smarty template.
      */
-    public function convert(string $file): string
-    {
+    public function convert(string $file): string {
         if (! File::exists($file)) {
             dddx(['message' => $file.' not exists']);
         }
@@ -113,8 +111,7 @@ class SmartyService
         return $data;
     }
 
-    public function compileTag(string $str): string
-    {
+    public function compileTag(string $str): string {
         // skip comments
         if (('*' === $str[0]) && ('*' === substr($str, -1, 1))) {
             return '';
@@ -335,8 +332,7 @@ class SmartyService
      *   $matches[1] should contain a string with all other configuration coming with a tag i.e.
      *   'foo = "bar" something="somevalue"'
      */
-    public function getOpeningTagPattern(string $tagName): string
-    {
+    public function getOpeningTagPattern(string $tagName): string {
         return sprintf("#\[\{\s*%s\b\s*((?:(?!\[\{|\}\]).(?<!\[\{)(?<!\}\]))+)?\}\]#is", preg_quote($tagName, '#'));
     }
 
@@ -345,8 +341,7 @@ class SmartyService
      * str      the inside of the smart tag
      * return a string a flexy version of it.
      */
-    public function convertVar(string $str): string
-    {
+    public function convertVar(string $str): string {
         // look for modfiers first.
 
         $mods = explode('|', $str);
@@ -390,8 +385,7 @@ class SmartyService
      * str       the inside of the smart tag
      * return string a flexy version of it.
      */
-    public function convertVarToObject(string $str): string
-    {
+    public function convertVarToObject(string $str): string {
         $var = $str; // strip $
 
         $bits = explode('.', $var);
@@ -411,8 +405,7 @@ class SmartyService
      * str     the key value part of the tag..
      * return array key value array.
      */
-    public function convertAttributesToKeyVal(string $str): array
-    {
+    public function convertAttributesToKeyVal(string $str): array {
         $atts = explode(' ', $str);
         $ret = [];
         foreach ($atts as $bit) {
@@ -432,8 +425,7 @@ class SmartyService
      * str       the inside of the smart tag
      * return string a flexy version of it.
      */
-    public function convertConfigVar(string $str): string
-    {
+    public function convertConfigVar(string $str): string {
         $mods = explode('|', $str);
         $var = array_shift($mods);
         $var = substr($var, 1, -1); // strip #'s
