@@ -15,8 +15,6 @@ class HasOneAction {
     public function __construct() {
     }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
     public function execute(Model $row, RelationDTO $relation): void {
         // dddx(['row' => $row, 'relation' => $relation]);
 
@@ -25,21 +23,11 @@ class HasOneAction {
         if (! Arr::isAssoc($relation->data) && 1 == count($relation->data)) {
             $related_id = $relation->data[0];
             $related = $relation->related->find($related_id);
-            dddx(['methods' => get_class_methods($row)]);
-            $res = $rows->hasOne($related);
-            // dddx(['res' => $res]);
-            $res->save();
+
+            $rows->save($related);
 
             return;
         }
-=======
-    public function execute(Model $row, \Modules\Xot\DTOs\RelationDTO $relation): void
-    {
-=======
-    public function execute(Model $row, \Modules\Xot\DTOs\RelationDTO $relation): void {
->>>>>>> 39660147 (Fix styling)
-        dddx('wip');
->>>>>>> 636f226e (up)
         /*
         $rows = $relation->rows;
 
