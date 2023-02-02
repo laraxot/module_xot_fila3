@@ -23,10 +23,7 @@ class HasOneAction {
         if (! Arr::isAssoc($relation->data) && 1 == count($relation->data)) {
             $related_id = $relation->data[0];
             $related = $relation->related->find($related_id);
-            dddx(['methods' => get_class_methods($row)]);
-            $res = $rows->hasOne($related);
-            //dddx(['res' => $res]);
-            $res->save();
+            $rows->save($related);
 
             return;
         }
