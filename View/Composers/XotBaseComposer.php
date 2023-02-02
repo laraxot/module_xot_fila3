@@ -12,8 +12,7 @@ use Nwidart\Modules\Facades\Module;
 /**
  * --.
  */
-abstract class XotBaseComposer
-{
+abstract class XotBaseComposer {
     /**
      * Undocumented variable.
      */
@@ -27,8 +26,7 @@ abstract class XotBaseComposer
      *
      * @return mixed
      */
-    public function __call($name, $arguments)
-    {
+    public function __call($name, $arguments) {
         // Note: value of $name is case sensitive.
         // echo "Calling object method '$name' "
         //     . implode(', ', $arguments). "\n";
@@ -76,8 +74,7 @@ abstract class XotBaseComposer
     /**
      * Undocumented function.
      */
-    public function setModule(string $module_name): self
-    {
+    public function setModule(string $module_name): self {
         $this->module_name = $module_name;
 
         return $this;
@@ -90,8 +87,7 @@ abstract class XotBaseComposer
      *
      * @return mixed
      */
-    public function call(string $func, ...$args)
-    {
+    public function call(string $func, ...$args) {
         $module = Module::find($this->module_name);
         if (! \is_object($module)) {
             throw new \Exception('not find ['.$this->module_name.'] on Modules ['.__LINE__.']['.__FILE__.']');
