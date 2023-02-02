@@ -23,7 +23,6 @@ class HasOneAction {
         if (! Arr::isAssoc($relation->data) && 1 == count($relation->data)) {
             $related_id = $relation->data[0];
             $related = $relation->related->find($related_id);
-
             $rows->save($related);
 
             return;
