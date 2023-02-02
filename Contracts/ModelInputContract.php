@@ -52,5 +52,6 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  *
  * @mixin  \Eloquent
  */
-interface ModelInputContract {
+interface ModelInputContract
+{
 }
