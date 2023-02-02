@@ -34,5 +34,6 @@ use Illuminate\Database\Eloquent\Model;
  *
  * @mixin \Eloquent
  */
-class Translation extends Model {
+class Translation extends Model
+{
 }

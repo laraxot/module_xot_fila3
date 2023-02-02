@@ -17,7 +17,8 @@ use Intervention\Image\Facades\Image;
 /**
  * Class ImageService.
  */
-class ImageService {
+class ImageService
+{
     protected \Intervention\Image\Image $img;
     protected int $width;
     protected int $height;
@@ -30,7 +31,8 @@ class ImageService {
     /**
      * Undocumented function.
      */
-    public static function getInstance(): self {
+    public static function getInstance(): self
+    {
         if (null === self::$_instance) {
             self::$_instance = new self();
         }
@@ -41,14 +43,16 @@ class ImageService {
     /**
      * Undocumented function.
      */
-    public static function make(): self {
+    public static function make(): self
+    {
         return static::getInstance();
     }
 
     /**
      * Undocumented function.
      */
-    public function setVars(array $params): self {
+    public function setVars(array $params): self
+    {
         foreach ($params as $k => $v) {
             $func = 'set'.Str::studly((string) $k);
             if (null === $v) {
@@ -63,7 +67,8 @@ class ImageService {
     /**
      * Undocumented function.
      */
-    public function setImg(string $val): self {
+    public function setImg(string $val): self
+    {
         $nophoto_path = public_path('img/nophoto.jpg');
         if ('' === $val) {
             $val = $nophoto_path;
@@ -86,7 +91,8 @@ class ImageService {
     /**
      * Undocumented function.
      */
-    public function setSrc(string $val): self {
+    public function setSrc(string $val): self
+    {
         if ('' === $val) {
             $val = public_path('img/nophoto.jpg');
         }
@@ -107,13 +113,15 @@ class ImageService {
     /**
      * Undocumented function.
      */
-    public function fit(): self {
+    public function fit(): self
+    {
         $this->img->fit($this->width, $this->height);
 
         return $this;
     }
 
-    public function getFilename(): string {
+    public function getFilename(): string
+    {
         $info = pathinfo($this->src);
         if (! isset($info['extension'])) {
             $info['extension'] = 'jpg';
@@ -129,7 +137,8 @@ class ImageService {
     /**
      * Undocumented function.
      */
-    public function save(): self {
+    public function save(): self
+    {
         $filename = $this->getFilename();
         try {
             // Storage::disk('photos')->put($this->filename, $this->out());
@@ -144,7 +153,8 @@ class ImageService {
     /**
      * Undocumented function.
      */
-    public function url(): string {
+    public function url(): string
+    {
         $filename = $this->getFilename();
 
         return Storage::disk('photos')->url($filename);
@@ -153,14 +163,16 @@ class ImageService {
     /**
      * Undocumented function.
      */
-    public function out(array $params = []): \Intervention\Image\Image {
+    public function out(array $params = []): \Intervention\Image\Image
+    {
         return $this->img->encode('jpg', 60);
     }
 
     /**
      * Undocumented function.
      */
-    public function src(): string {
+    public function src(): string
+    {
         if (null === $this->filename) {
             throw new \Exception('[.__LINE__.]['.class_basename(__CLASS__).']');
         }
@@ -173,7 +185,8 @@ class ImageService {
     /**
      * Undocumented function.
      */
-    public function setWidth(int $val): self {
+    public function setWidth(int $val): self
+    {
         $this->width = $val;
 
         return $this;
@@ -182,7 +195,8 @@ class ImageService {
     /**
      * Undocumented function.
      */
-    public function setHeight(int $val): self {
+    public function setHeight(int $val): self
+    {
         $this->height = $val;
 
         return $this;
@@ -191,7 +205,8 @@ class ImageService {
     /**
      * Undocumented function.
      */
-    public function setDirname(string $dirname): self {
+    public function setDirname(string $dirname): self
+    {
         $this->dirname = $dirname;
 
         return $this;
