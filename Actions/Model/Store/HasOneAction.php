@@ -15,6 +15,7 @@ class HasOneAction {
     public function __construct() {
     }
 
+<<<<<<< HEAD
     public function execute(Model $row, RelationDTO $relation): void {
         //dddx(['row' => $row, 'relation' => $relation]);
 
@@ -30,6 +31,10 @@ class HasOneAction {
 
             return;
         }
+=======
+    public function execute(Model $row, \Modules\Xot\DTOs\RelationDTO $relation): void {
+        dddx('wip');
+>>>>>>> 382ac27d (Fix styling)
         /*
         $rows = $relation->rows;
 
