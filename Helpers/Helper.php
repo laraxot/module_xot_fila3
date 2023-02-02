@@ -19,7 +19,7 @@ use Nwidart\Modules\Facades\Module;
 
 // ------------------------------------------------
 
-if (! function_exists('get:current_theme_name')) {
+if (! function_exists('get_current_theme_name')) {
     /**
      * @param string $str
      *
