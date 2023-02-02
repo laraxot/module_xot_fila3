@@ -7,16 +7,13 @@ namespace Modules\Xot\Actions\Model\Store;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\QueueableAction\QueueableAction;
 
-class HasOneAction
-{
+class HasOneAction {
     use QueueableAction;
 
-    public function __construct()
-    {
+    public function __construct() {
     }
 
-    public function execute(Model $row, \Modules\Xot\DTOs\RelationDTO $relation): void
-    {
+    public function execute(Model $row, \Modules\Xot\DTOs\RelationDTO $relation): void {
         dddx('wip');
         /*
         $rows = $relation->rows;

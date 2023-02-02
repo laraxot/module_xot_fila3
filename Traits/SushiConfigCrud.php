@@ -7,15 +7,13 @@ namespace Modules\Xot\Traits;
 /**
  * https://dev.to/hasanmn/automatically-update-createdby-and-updatedby-in-laravel-using-bootable-traits-28g9.
  */
-trait SushiConfigCrud
-{
+trait SushiConfigCrud {
     /**
      * bootUpdater function.
      *
      * @return void
      */
-    protected static function bootSushiConfigCrud()
-    {
+    protected static function bootSushiConfigCrud() {
         // parent::boot();
         /*
          * During a model create Eloquent will also update the updated_at field so
