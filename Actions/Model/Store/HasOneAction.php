@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Modules\Xot\Actions\Model\Store;
 
+use Illuminate\Support\Arr;
+use Modules\Xot\DTOs\RelationDTO;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\QueueableAction\QueueableAction;
 
@@ -13,8 +15,21 @@ class HasOneAction {
     public function __construct() {
     }
 
-    public function execute(Model $row, \Modules\Xot\DTOs\RelationDTO $relation): void {
-        dddx('wip');
+    public function execute(Model $row, RelationDTO $relation): void {
+        //dddx(['row' => $row, 'relation' => $relation]);
+
+        $rows = $relation->rows;
+
+        if (! Arr::isAssoc($relation->data) && 1 == count($relation->data)) {
+            $related_id = $relation->data[0];
+            $related = $relation->related->find($related_id);
+            dddx(['methods' => get_class_methods($row)]);
+            $res = $rows->hasOne($related);
+            //dddx(['res' => $res]);
+            $res->save();
+
+            return;
+        }
         /*
         $rows = $relation->rows;
 
