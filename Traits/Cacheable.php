@@ -11,8 +11,7 @@ use Illuminate\Database\Eloquent\Model;
 /**
  * Trait Cacheable.
  */
-trait Cacheable
-{
+trait Cacheable {
     /**
      * Cache instance.
      *
@@ -33,8 +32,7 @@ trait Cacheable
     /**
      * Set cache manager.
      */
-    public static function setCacheInstance(CacheManager $cache)
-    {
+    public static function setCacheInstance(CacheManager $cache) {
         self::$cache = $cache;
     }
 
@@ -43,8 +41,7 @@ trait Cacheable
      *
      * @return CacheManager
      */
-    public static function getCacheInstance()
-    {
+    public static function getCacheInstance() {
         if (null === self::$cache) {
             self::$cache = app('cache');
         }
@@ -57,8 +54,7 @@ trait Cacheable
      *
      * @return bool
      */
-    public function skippedCache()
-    {
+    public function skippedCache() {
         return false === config('repositories.cache_enabled', false)
             || true === app('request')->has(config('repositories.cache_skip_param', 'skipCache'));
     }
@@ -70,8 +66,7 @@ trait Cacheable
      *
      * @return string
      */
-    public function getCacheKey(string $method, $args, string $tag)
-    {
+    public function getCacheKey(string $method, $args, string $tag) {
         // Sort through arguments
         foreach ($args as &$a) {
             if ($a instanceof Model) {
@@ -98,8 +93,7 @@ trait Cacheable
      *
      * @return mixed
      */
-    public function cacheCallback(string $method, array $args, \Closure $callback, $time = null)
-    {
+    public function cacheCallback(string $method, array $args, \Closure $callback, $time = null) {
         // Cache disabled, just execute query & return result
         if (true === $this->skippedCache()) {
             return \call_user_func($callback);
@@ -120,8 +114,7 @@ trait Cacheable
      *
      * @return bool
      */
-    public function flushCache()
-    {
+    public function flushCache() {
         // Cache disabled, just ignore this
         if (false === $this->eventFlushCache || false === config('repositories.cache_enabled', false)) {
             return false;
@@ -140,8 +133,7 @@ trait Cacheable
      *
      * @return int
      */
-    protected function getCacheExpiresTime($time = null)
-    {
+    protected function getCacheExpiresTime($time = null) {
         if (self::EXPIRES_END_OF_DAY === $time) {
             return class_exists(Carbon::class)
                 ? round(Carbon::now()->secondsUntilEndOfDay() / 60)

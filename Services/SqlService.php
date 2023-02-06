@@ -9,8 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 /**
  * Class SqlService.
  */
-class SqlService
-{
+class SqlService {
     public static function getCoalesceDateRange(
         Model $model,
         ?int $date_min = null,

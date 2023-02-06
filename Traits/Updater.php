@@ -10,8 +10,7 @@ use Illuminate\Support\Facades\Auth;
  * Trait Updater.
  * https://dev.to/hasanmn/automatically-update-createdby-and-updatedby-in-laravel-using-bootable-traits-28g9.
  */
-trait Updater
-{
+trait Updater {
     /**
      * Undocumented function.
      * move to modelservice.
@@ -36,8 +35,7 @@ trait Updater
      *
      * @return void
      */
-    protected static function bootUpdater()
-    {
+    protected static function bootUpdater() {
         // parent::boot();
         /*
          * During a model create Eloquent will also update the updated_at field so

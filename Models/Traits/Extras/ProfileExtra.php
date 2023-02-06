@@ -7,6 +7,5 @@ namespace Modules\Xot\Models\Traits\Extras;
 /*
  * Undocumented trait.
  */
-trait ProfileExtra
-{
+trait ProfileExtra {
 }

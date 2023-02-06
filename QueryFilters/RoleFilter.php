@@ -12,8 +12,7 @@ use Illuminate\Support\Facades\Request;
 /**
  * Undocumented class.
  */
-class RoleFilter
-{
+class RoleFilter {
     /**
      * we need to use laravel convention so we need to create the
      * method name 'handle' because when we use pipeline in laravel
@@ -28,8 +27,7 @@ class RoleFilter
      *
      * @return mixed => you need to return your filtered data to next element
      */
-    public function handle($request, \Closure $next)
-    {
+    public function handle($request, \Closure $next) {
         if (! request()->has('role')) {
             return $next($request);
         }
