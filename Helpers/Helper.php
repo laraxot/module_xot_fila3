@@ -121,7 +121,9 @@ if (! function_exists('backtrace')) {
         $dbg_backtrace = debug_backtrace();
 
         if (true === $exclude_vendor) {
-            $dbg_backtrace = array_filter($dbg_backtrace, 'filter_vendor');
+            if (isset($dbg_backtrace['file'])) {
+                $dbg_backtrace = array_filter($dbg_backtrace, 'filter_vendor');
+            }
         }
 
         dd(
