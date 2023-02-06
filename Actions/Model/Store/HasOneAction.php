@@ -9,13 +9,16 @@ use Illuminate\Support\Arr;
 use Modules\Xot\DTOs\RelationDTO;
 use Spatie\QueueableAction\QueueableAction;
 
-class HasOneAction {
+class HasOneAction
+{
     use QueueableAction;
 
-    public function __construct() {
+    public function __construct()
+    {
     }
 
-    public function execute(Model $row, RelationDTO $relation): void {
+    public function execute(Model $row, RelationDTO $relation): void
+    {
         // dddx(['row' => $row, 'relation' => $relation]);
 
         $rows = $relation->rows;

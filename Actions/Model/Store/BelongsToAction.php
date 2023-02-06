@@ -9,13 +9,16 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Modules\Xot\DTOs\RelationDTO;
 use Spatie\QueueableAction\QueueableAction;
 
-class BelongsToAction {
+class BelongsToAction
+{
     use QueueableAction;
 
-    public function __construct() {
+    public function __construct()
+    {
     }
 
-    public function execute(Model $row, RelationDTO $relation): void {
+    public function execute(Model $row, RelationDTO $relation): void
+    {
         if (! $relation->rows instanceof BelongsTo) {
             throw new \Exception('['.__LINE__.']['.__FILE__.']');
         }
