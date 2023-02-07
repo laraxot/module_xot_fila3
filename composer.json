@@ -28,6 +28,7 @@
         "spatie/laravel-queueable-action": "^2.14",
         "spatie/laravel-tags": "^4.3",
         "spipu/html2pdf": "^5.2",
+        "staudenmeir/eloquent-has-many-deep": "^1.17",
         "symfony/dom-crawler": "^6.2"
     },
     "require-dev": {

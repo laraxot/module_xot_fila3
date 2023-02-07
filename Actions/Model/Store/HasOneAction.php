@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Modules\Xot\Actions\Model\Store;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Support\Arr;
 use Modules\Xot\DTOs\RelationDTO;
 use Spatie\QueueableAction\QueueableAction;
@@ -17,12 +18,18 @@ class HasOneAction {
 
     public function execute(Model $row, RelationDTO $relation): void {
         // dddx(['row' => $row, 'relation' => $relation]);
+        if (! $relation->rows instanceof HasOne) {
+            throw new \Exception('['.__LINE__.']['.__FILE__.']');
+        }
 
         $rows = $relation->rows;
 
         if (! Arr::isAssoc($relation->data) && 1 == count($relation->data)) {
             $related_id = $relation->data[0];
             $related = $relation->related->find($related_id);
+            if (! $related instanceof Model) {
+                throw new \Exception('['.__LINE__.']['.__FILE__.']');
+            }
             $rows->save($related);
 
             return;

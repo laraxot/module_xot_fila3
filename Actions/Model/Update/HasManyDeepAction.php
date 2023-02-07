@@ -6,7 +6,9 @@ namespace Modules\Xot\Actions\Model\Update;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
+use Modules\Xot\DTOs\RelationDTO;
 use Spatie\QueueableAction\QueueableAction;
+use Staudenmeir\EloquentHasManyDeep\HasManyDeep;
 
 class HasManyDeepAction {
     use QueueableAction;
@@ -19,7 +21,10 @@ class HasManyDeepAction {
      *
      * @return void
      */
-    public function execute(Model $row, \Modules\Xot\DTOs\RelationDTO $relation) {
+    public function execute(Model $row, RelationDTO $relation) {
+        if (! $relation->rows instanceof HasManyDeep) {
+            throw new \Exception('['.__LINE__.']['.__FILE__.']');
+        }
         $data = $relation->data;
         $name = $relation->name;
         $model = $row;
@@ -29,7 +34,7 @@ class HasManyDeepAction {
 
         // bisogna prima cancellare le relazioni esistenti per quel model?
         // $model->$name()->detach();
-        $model->$name()->getParent()->where('model_type', $modelName)->where('model_id', $model->id)->delete();
+        $model->$name()->getParent()->where('model_type', $modelName)->where('model_id', $model->getKey())->delete();
 
         if (! is_array($data)) {
             throw new \Exception('['.__LINE__.']['.__FILE__.']');
@@ -52,9 +57,9 @@ class HasManyDeepAction {
             foreach ($related_ids_to_link as $related_id_to_link) {
                 // dati da mettere nella pivot
                 $pivot_data = [
-                    'model_id' => $model->id,
+                    'model_id' => $model->getKey(),
                     'model_type' => $modelName,
-                    $penlastKeyName => $related_id_to_link->id,
+                    $penlastKeyName => $related_id_to_link->getKey(),
                     'user_id' => Auth::id(),
                 ];
                 $test = $model->$name()->getParent()->fill($pivot_data);

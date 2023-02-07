@@ -20,12 +20,7 @@ use Nwidart\Modules\Facades\Module;
 // ------------------------------------------------
 
 if (! function_exists('get_current_theme_name')) {
-    /**
-     * @param string $str
-     *
-     * @return string
-     */
-    function current_theme_name() {
+    function current_theme_name(): string {
         $theme_name = config('xra.pub_theme');
 
         if (inAdmin()) {
@@ -106,7 +101,7 @@ if (! function_exists('str_contains')) {
 }
 
 // -------------------------------------------
-
+/*
 if (! function_exists('backtrace')) {
     function filter_vendor(array $obj): bool {
         $tmp = str_replace('/', DIRECTORY_SEPARATOR, $obj['file']);
@@ -133,7 +128,7 @@ if (! function_exists('backtrace')) {
         );
     }
 }
-
+*/
 // --------------------------------------------
 /*
 if (! \function_exists('superdump')) {
