@@ -10,10 +10,12 @@ use Modules\Xot\DTOs\RelationDTO;
 use Spatie\QueueableAction\QueueableAction;
 use Staudenmeir\EloquentHasManyDeep\HasManyDeep;
 
-class HasManyDeepAction {
+class HasManyDeepAction
+{
     use QueueableAction;
 
-    public function __construct() {
+    public function __construct()
+    {
     }
 
     /**
@@ -21,6 +23,7 @@ class HasManyDeepAction {
      *
      * @return void
      */
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
     public function execute(Model $row, RelationDTO $relation) {
@@ -34,6 +37,10 @@ class HasManyDeepAction {
 =======
     public function execute(Model $row, \Modules\Xot\DTOs\RelationDTO $relation) {
 >>>>>>> 3966014 (Fix styling)
+=======
+    public function execute(Model $row, \Modules\Xot\DTOs\RelationDTO $relation)
+    {
+>>>>>>> 2d482b6 (rebase)
         $data = $relation->data;
         $name = $relation->name;
         $model = $row;

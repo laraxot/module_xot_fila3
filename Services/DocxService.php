@@ -25,17 +25,20 @@ use PhpOffice\PhpWord\TemplateProcessor;
 /**
  * Class DocxService.
  */
-class DocxService {
+class DocxService
+{
     public string $docx_input;
 
     public array $values;
 
     private static ?self $instance = null;
 
-    public function __construct() {
+    public function __construct()
+    {
     }
 
-    public static function getInstance(): self {
+    public static function getInstance(): self
+    {
         if (null === self::$instance) {
             self::$instance = new self();
         }
@@ -43,7 +46,8 @@ class DocxService {
         return self::$instance;
     }
 
-    public static function make(): self {
+    public static function make(): self
+    {
         return static::getInstance();
     }
 
@@ -51,13 +55,15 @@ class DocxService {
     // should return Modules\Xot\Services\DocxService
     // but returns Modules\Xot\Services\DocxService|null.
 
-    public function setDocxInput(string $filename): self {
+    public function setDocxInput(string $filename): self
+    {
         $this->docx_input = $filename;
 
         return $this;
     }
 
-    public function setValues(array $values): self {
+    public function setValues(array $values): self
+    {
         $this->values = $values;
 
         return $this;
@@ -69,7 +75,8 @@ class DocxService {
      *
      * @return \Symfony\Component\HttpFoundation\BinaryFileResponse
      */
-    public function out(array $params = []) {
+    public function out(array $params = [])
+    {
         extract($params);
         include __DIR__.'/vendor/autoload.php'; // carico la mia libreria che uso solo qui..
 
@@ -97,7 +104,8 @@ class DocxService {
      *
      * @return array
      */
-    public function rows2Data_test($row, $prefix) {
+    public function rows2Data_test($row, $prefix)
+    {
         if (! \is_object($row)) {
             return [];
         }
@@ -147,7 +155,8 @@ class DocxService {
      *
      * @return array
      */
-    public function rows2Data($row, $prefix) {
+    public function rows2Data($row, $prefix)
+    {
         if (! \is_object($row)) {
             return [];
         }
