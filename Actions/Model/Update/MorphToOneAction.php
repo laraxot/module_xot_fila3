@@ -9,12 +9,10 @@ use Illuminate\Database\Eloquent\Model;
 use Modules\Xot\DTOs\RelationDTO;
 use Spatie\QueueableAction\QueueableAction;
 
-class MorphToOneAction
-{
+class MorphToOneAction {
     use QueueableAction;
 
-    public function __construct()
-    {
+    public function __construct() {
     }
 
     /**
@@ -22,8 +20,7 @@ class MorphToOneAction
      *
      * @return void
      */
-    public function execute(Model $row, RelationDTO $relation)
-    {
+    public function execute(Model $row, RelationDTO $relation) {
         // dddx(['row' => $row, 'relation' => $relation]);
         if (! $relation->rows instanceof MorphToOne) {
             throw new \Exception('['.__LINE__.']['.__FILE__.']');

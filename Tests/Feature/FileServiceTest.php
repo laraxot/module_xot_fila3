@@ -6,60 +6,48 @@ namespace Modules\Xot\Tests\Feature;
 
 use Tests\TestCase;
 
-class FileServiceTest extends TestCase
-{
-    public function testAsset()
-    {
+class FileServiceTest extends TestCase {
+    public function testAsset() {
         static::assertTrue(true);
     }
 
-    public function testViewNamespaceToDir()
-    {
+    public function testViewNamespaceToDir() {
         static::assertTrue(true);
     }
 
-    public function testGetViewNameSpacePath()
-    {
+    public function testGetViewNameSpacePath() {
         static::assertTrue(true);
     }
 
-    public function testGetViewNameSpaceUrl()
-    {
+    public function testGetViewNameSpaceUrl() {
         static::assertTrue(true);
     }
 
-    public function testGetViewNameSpaceUrlNomodule()
-    {
+    public function testGetViewNameSpaceUrlNomodule() {
         static::assertTrue(true);
     }
 
-    public function testPath2Url()
-    {
+    public function testPath2Url() {
         static::assertTrue(true);
     }
 
-    public function testViewThemeNamespaceToAsset()
-    {
+    public function testViewThemeNamespaceToAsset() {
         static::assertTrue(true);
     }
 
-    public function testViewNamespaceToAsset()
-    {
+    public function testViewNamespaceToAsset() {
         static::assertTrue(true);
     }
 
-    public function testGetFileUrl()
-    {
+    public function testGetFileUrl() {
         static::assertTrue(true);
     }
 
-    public function testViewNamespaceToUrl()
-    {
+    public function testViewNamespaceToUrl() {
         static::assertTrue(true);
     }
 
-    public function testGetRealFile()
-    {
+    public function testGetRealFile() {
         static::assertTrue(true);
     }
 }
