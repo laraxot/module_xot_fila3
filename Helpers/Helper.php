@@ -21,6 +21,7 @@ use Nwidart\Modules\Facades\Module;
 
 if (! function_exists('get_current_theme_name')) {
 <<<<<<< HEAD
+<<<<<<< HEAD
     function current_theme_name(): string {
 =======
     /**
@@ -57,6 +58,9 @@ if (! function_exists('get_current_theme_name')) {
 =======
     function current_theme_name() {
 >>>>>>> 3c639c1 (Fix styling)
+=======
+    function current_theme_name(): string {
+>>>>>>> 5d06246 (.)
         $theme_name = config('xra.pub_theme');
 
         if (inAdmin()) {
