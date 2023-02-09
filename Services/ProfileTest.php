@@ -7,20 +7,16 @@ namespace Modules\Xot\Services;
 /**
  * Class ProfileTest.
  */
-class ProfileTest
-{
-    public function hello(): void
-    {
+class ProfileTest {
+    public function hello(): void {
         echo 'ciao';
     }
 
-    public function hasArea(): bool
-    {
+    public function hasArea(): bool {
         return true;
     }
 
-    public function isSuperAdmin(): bool
-    {
+    public function isSuperAdmin(): bool {
         return true;
     }
 }

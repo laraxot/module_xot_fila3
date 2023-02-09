@@ -7,10 +7,8 @@ namespace Modules\Xot\Providers\Traits;
 use Illuminate\Cache\TagSet;
 use Illuminate\Support\Facades\Cache;
 
-trait OPCacheTrait
-{
-    public function registerCacheOPCache(): void
-    {
+trait OPCacheTrait {
+    public function registerCacheOPCache(): void {
         Cache::extend(
             'opcache',
             function () {

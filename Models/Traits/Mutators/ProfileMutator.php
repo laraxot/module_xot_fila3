@@ -7,6 +7,5 @@ namespace Modules\Xot\Models\Traits\Mutators;
 /*
  * Undocumented trait.
  */
-trait ProfileMutator
-{
+trait ProfileMutator {
 }

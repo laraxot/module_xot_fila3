@@ -7,8 +7,7 @@ namespace Modules\Xot\Database\Factories;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Modules\Xot\Models\Session;
 
-class SessionFactory extends Factory
-{
+class SessionFactory extends Factory {
     /**
      * The name of the factory's corresponding model.
      *
@@ -21,8 +20,7 @@ class SessionFactory extends Factory
      *
      * @return array
      */
-    public function definition()
-    {
+    public function definition() {
         return [
             'id' => $this->faker->word,
         ];
