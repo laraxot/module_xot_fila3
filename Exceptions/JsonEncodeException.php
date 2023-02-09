@@ -9,12 +9,15 @@ namespace Modules\Xot\Exceptions;
 
 use Illuminate\Http\Response;
 
-class JsonEncodeException extends ApplicationException {
-    public function status(): int {
+class JsonEncodeException extends ApplicationException
+{
+    public function status(): int
+    {
         return Response::HTTP_BAD_REQUEST;
     }
 
-    public function help(): string {
+    public function help(): string
+    {
         $res = trans('exception.json_not_encoded.help');
         if (! \is_string($res)) {
             throw new \Exception('['.__LINE__.']['.__FILE__.']');
@@ -23,7 +26,8 @@ class JsonEncodeException extends ApplicationException {
         return $res;
     }
 
-    public function error(): string {
+    public function error(): string
+    {
         $res = trans('exception.json_not_encoded.error');
         if (! \is_string($res)) {
             throw new \Exception('['.__LINE__.']['.__FILE__.']');

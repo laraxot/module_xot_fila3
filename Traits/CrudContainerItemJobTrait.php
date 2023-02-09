@@ -10,14 +10,16 @@ use Modules\Cms\Contracts\PanelContract;
 /**
  * Trait CrudContainerItemJobTrait.
  */
-trait CrudContainerItemJobTrait {
+trait CrudContainerItemJobTrait
+{
     /**
      * @param string $name
      * @param array  $arg
      *
      * @return PanelContract
      */
-    public function __call($name, $arg) {
+    public function __call($name, $arg)
+    {
         $func = '\Modules\Xot\Jobs\Crud\\'.Str::studly($name).'Job';
         $panel = $func::dispatchNow($arg[1], $arg[2]);
 
