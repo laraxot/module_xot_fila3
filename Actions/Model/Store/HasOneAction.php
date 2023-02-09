@@ -20,10 +20,13 @@ class HasOneAction {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> 2d482b6 (rebase)
 =======
 >>>>>>> fe629a8 (rebase)
+=======
+>>>>>>> 3af4a48 (rebase)
     public function execute(Model $row, RelationDTO $relation): void {
         // dddx(['row' => $row, 'relation' => $relation]);
         if (! $relation->rows instanceof HasOne) {
@@ -35,13 +38,18 @@ class HasOneAction {
         if (! Arr::isAssoc($relation->data) && 1 == count($relation->data)) {
             $related_id = $relation->data[0];
             $related = $relation->related->find($related_id);
+<<<<<<< HEAD
             if (! $related instanceof Model) {
                 throw new \Exception('['.__LINE__.']['.__FILE__.']');
             }
+=======
+
+>>>>>>> 3af4a48 (rebase)
             $rows->save($related);
 
             return;
         }
+<<<<<<< HEAD
 =======
     public function execute(Model $row, \Modules\Xot\DTOs\RelationDTO $relation): void
     {
@@ -61,6 +69,8 @@ class HasOneAction {
         dddx('wip');
 >>>>>>> 636f226e (up)
 >>>>>>> 2d482b6 (rebase)
+=======
+>>>>>>> 3af4a48 (rebase)
         /*
         $rows = $relation->rows;
 
