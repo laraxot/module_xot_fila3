@@ -22,7 +22,7 @@ class ModelGeneratorAction extends XotBasePanelAction {
      */
     public function handle() {
         /*
-        $view = ThemeService::getView(); // xot::admin.home.acts.xls_import
+        $view = ThemeService::g1etView(); // xot::admin.home.acts.xls_import
         $view_params = [
             'view' => $view,
         ];

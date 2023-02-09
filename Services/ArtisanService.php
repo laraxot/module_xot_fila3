@@ -152,7 +152,7 @@ class ArtisanService {
     public static function showRouteList(): string {
         $routeCollection = Route::getRoutes();
         /*
-        $view = ThemeService::getViewModule();
+        $view = ThemeService::g1etViewModule();
 
         dddx([
             'view' => $view,
