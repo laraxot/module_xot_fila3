@@ -71,8 +71,7 @@ use Spatie\Tags\HasTags;
  * @method static \Illuminate\Database\Eloquent\Builder|Profile whereLastName($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Profile withoutTags(\ArrayAccess|\Spatie\Tags\Tag|array|string $tags, ?string $type = null)
  */
-class Profile extends BaseModel implements ModelWithUserContract, ModelProfileContract
-{
+class Profile extends BaseModel implements ModelWithUserContract, ModelProfileContract {
     // spatie
     use HasRoles;
     use HasTags;
@@ -92,8 +91,7 @@ class Profile extends BaseModel implements ModelWithUserContract, ModelProfileCo
     /*
      * Undocumented function.
      */
-    public function user(): BelongsTo
-    {
+    public function user(): BelongsTo {
         // $user = TenantService::model('user'); //no bisgna guardare dentro config(auth  etc etc
         // $user_class = \get_class($user);
         $user_class = getUserClass();
