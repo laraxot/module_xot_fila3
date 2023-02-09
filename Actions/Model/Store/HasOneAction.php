@@ -10,10 +10,12 @@ use Illuminate\Support\Arr;
 use Modules\Xot\DTOs\RelationDTO;
 use Spatie\QueueableAction\QueueableAction;
 
-class HasOneAction {
+class HasOneAction
+{
     use QueueableAction;
 
-    public function __construct() {
+    public function __construct()
+    {
     }
 
 <<<<<<< HEAD
@@ -26,8 +28,11 @@ class HasOneAction {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> 60b8b58 (rebase)
+=======
+>>>>>>> fb97723 (rebase)
 =======
 >>>>>>> 2d482b6 (rebase)
 =======
@@ -48,9 +53,12 @@ class HasOneAction {
     public function execute(Model $row, RelationDTO $relation): void
     {
 >>>>>>> 92fd6e1 (up)
+<<<<<<< HEAD
 =======
     public function execute(Model $row, RelationDTO $relation): void {
 >>>>>>> 3c639c1 (Fix styling)
+=======
+>>>>>>> fb97723 (rebase)
         // dddx(['row' => $row, 'relation' => $relation]);
         if (! $relation->rows instanceof HasOne) {
             throw new \Exception('['.__LINE__.']['.__FILE__.']');
