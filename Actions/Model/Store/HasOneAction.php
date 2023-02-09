@@ -10,12 +10,15 @@ use Illuminate\Support\Arr;
 use Modules\Xot\DTOs\RelationDTO;
 use Spatie\QueueableAction\QueueableAction;
 
-class HasOneAction {
+class HasOneAction
+{
     use QueueableAction;
 
-    public function __construct() {
+    public function __construct()
+    {
     }
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -32,6 +35,10 @@ class HasOneAction {
 >>>>>>> 3af4a48 (rebase)
 =======
 >>>>>>> 925bba7 (rebase)
+=======
+=======
+>>>>>>> 2d482b6 (rebase)
+>>>>>>> 5f05462 (rebase)
     public function execute(Model $row, RelationDTO $relation): void {
 =======
     public function execute(Model $row, RelationDTO $relation): void
@@ -77,14 +84,18 @@ class HasOneAction {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> 925bba7 (rebase)
+=======
+>>>>>>> 5f05462 (rebase)
 =======
     public function execute(Model $row, \Modules\Xot\DTOs\RelationDTO $relation): void {
 >>>>>>> 3966014 (Fix styling)
         dddx('wip');
 >>>>>>> 636f226 (up)
 =======
+<<<<<<< HEAD
 =======
 =======
     public function execute(Model $row, \Modules\Xot\DTOs\RelationDTO $relation): void {
@@ -95,6 +106,11 @@ class HasOneAction {
 >>>>>>> 2d482b6 (rebase)
 =======
 >>>>>>> 3af4a48 (rebase)
+=======
+        dddx('wip');
+>>>>>>> 636f226e (up)
+>>>>>>> 2d482b6 (rebase)
+>>>>>>> 5f05462 (rebase)
         /*
         $rows = $relation->rows;
 

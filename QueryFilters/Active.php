@@ -12,7 +12,8 @@ namespace Modules\Xot\QueryFilters;
 
 use Illuminate\Support\Facades\Request;
 
-class Active {
+class Active
+{
     /**
      * Undocumented function.
      *
@@ -20,7 +21,8 @@ class Active {
      *
      * @return \Closure
      */
-    public function handle($request, \Closure $next) {
+    public function handle($request, \Closure $next)
+    {
         if (! request()->has('active')) {
             return $next($request);
         }
