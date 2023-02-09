@@ -39,12 +39,15 @@ class HasOneAction {
             $related_id = $relation->data[0];
             $related = $relation->related->find($related_id);
 <<<<<<< HEAD
+<<<<<<< HEAD
             if (! $related instanceof Model) {
                 throw new \Exception('['.__LINE__.']['.__FILE__.']');
             }
 =======
 
 >>>>>>> 3af4a48 (rebase)
+=======
+>>>>>>> a003cf4 (up)
             $rows->save($related);
 
             return;
