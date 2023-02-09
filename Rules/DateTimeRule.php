@@ -10,10 +10,8 @@ use Illuminate\Contracts\Validation\Rule;
 /**
  * Class DateTimeRule.
  */
-class DateTimeRule implements Rule
-{
-    public function __construct()
-    {
+class DateTimeRule implements Rule {
+    public function __construct() {
     }
 
     /**
@@ -22,8 +20,7 @@ class DateTimeRule implements Rule
      *
      * @return bool
      */
-    public function passes($attribute, $value)
-    {
+    public function passes($attribute, $value) {
         // dddx($attribute); //published_at
         // dddx($value);//10/10/2019 13:43
         // return 5 === strlen($value);
@@ -44,8 +41,7 @@ class DateTimeRule implements Rule
     /**
      * @return string
      */
-    public function message()
-    {
+    public function message() {
         return 'The :attribute is not a valid datetime';
         //    return trans('validation.only_uppercase');
     }
