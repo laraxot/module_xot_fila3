@@ -10,10 +10,12 @@ use Modules\Xot\DTOs\RelationDTO;
 use Spatie\QueueableAction\QueueableAction;
 use Staudenmeir\EloquentHasManyDeep\HasManyDeep;
 
-class HasManyDeepAction {
+class HasManyDeepAction
+{
     use QueueableAction;
 
-    public function __construct() {
+    public function __construct()
+    {
     }
 
     /**
@@ -21,10 +23,15 @@ class HasManyDeepAction {
      *
      * @return void
      */
+<<<<<<< HEAD
     public function execute(Model $row, RelationDTO $relation) {
         if (! $relation->rows instanceof HasManyDeep) {
             throw new \Exception('['.__LINE__.']['.__FILE__.']');
         }
+=======
+    public function execute(Model $row, \Modules\Xot\DTOs\RelationDTO $relation)
+    {
+>>>>>>> 636f226 (up)
         $data = $relation->data;
         $name = $relation->name;
         $model = $row;

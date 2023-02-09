@@ -6,5 +6,10 @@ namespace Modules\Xot\Models\Panels\Policies;
 
 use Modules\Cms\Models\Panels\Policies\XotBasePanelPolicy;
 
+<<<<<<< HEAD:Models/Panels/Policies/ProfilePanelPolicy.not1
 class ProfilePanelPolicy extends XotBasePanelPolicy {
+=======
+class TestPanelPolicy extends XotBasePanelPolicy
+{
+>>>>>>> 636f226 (up):Models/Panels/Policies/TestPanelPolicy.php
 }

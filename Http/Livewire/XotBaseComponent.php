@@ -11,11 +11,13 @@ use Livewire\Component;
 /**
  * Class XotBaseComponent.
  */
-abstract class XotBaseComponent extends Component {
+abstract class XotBaseComponent extends Component
+{
     /**
      * @return string
      */
-    public function getView() {
+    public function getView()
+    {
         $class = static::class;
         $module_name = Str::between($class, 'Modules\\', '\Http\\');
         $module_name_low = Str::lower($module_name);
@@ -43,7 +45,8 @@ abstract class XotBaseComponent extends Component {
     /**
      * Render the component.
      */
-    public function render(): \Illuminate\Contracts\Support\Renderable {
+    public function render(): \Illuminate\Contracts\Support\Renderable
+    {
         // per fare copia ed incolla
         $view = $this->getView();
         $view_params = [

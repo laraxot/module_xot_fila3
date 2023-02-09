@@ -10,11 +10,13 @@ use Illuminate\Support\Str;
  * Undocumented trait
  * https://www.larashout.com/using-uuids-in-laravel-models.
  */
-trait HasUuid {
+trait HasUuid
+{
     /**
      * Boot function from Laravel.
      */
-    protected static function bootHasUuid() {
+    protected static function bootHasUuid()
+    {
         // parent::boot();
         static::creating(
             function ($model) {
@@ -30,7 +32,8 @@ trait HasUuid {
      *
      * @return bool
      */
-    public function getIncrementing() {
+    public function getIncrementing()
+    {
         return false;
     }
 
@@ -39,7 +42,8 @@ trait HasUuid {
      *
      * @return string
      */
-    public function getKeyType() {
+    public function getKeyType()
+    {
         return 'string';
     }
 }
