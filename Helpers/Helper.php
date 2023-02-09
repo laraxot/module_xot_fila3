@@ -35,6 +35,9 @@ if (! function_exists('get_current_theme_name')) {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 925bba7 (rebase)
     function current_theme_name() {
 >>>>>>> f17e0c2 (.)
 =======
@@ -44,6 +47,7 @@ if (! function_exists('get_current_theme_name')) {
 =======
     function current_theme_name() {
 >>>>>>> 3966014 (Fix styling)
+<<<<<<< HEAD
 =======
     function current_theme_name()
     {
@@ -61,6 +65,8 @@ if (! function_exists('get_current_theme_name')) {
 =======
     function current_theme_name(): string {
 >>>>>>> 5d06246 (.)
+=======
+>>>>>>> 925bba7 (rebase)
         $theme_name = config('xra.pub_theme');
 
         if (inAdmin()) {

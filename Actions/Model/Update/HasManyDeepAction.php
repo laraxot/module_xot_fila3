@@ -28,8 +28,11 @@ class HasManyDeepAction {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> 5d06246 (.)
+=======
+>>>>>>> 925bba7 (rebase)
     public function execute(Model $row, RelationDTO $relation) {
         if (! $relation->rows instanceof HasManyDeep) {
             throw new \Exception('['.__LINE__.']['.__FILE__.']');
@@ -42,6 +45,7 @@ class HasManyDeepAction {
 =======
     public function execute(Model $row, \Modules\Xot\DTOs\RelationDTO $relation) {
 >>>>>>> 3966014 (Fix styling)
+<<<<<<< HEAD
 =======
     public function execute(Model $row, \Modules\Xot\DTOs\RelationDTO $relation)
     {
@@ -58,6 +62,8 @@ class HasManyDeepAction {
 >>>>>>> 3c639c1 (Fix styling)
 =======
 >>>>>>> 5d06246 (.)
+=======
+>>>>>>> 925bba7 (rebase)
         $data = $relation->data;
         $name = $relation->name;
         $model = $row;

@@ -23,12 +23,15 @@ class HasOneAction {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> 2d482b6 (rebase)
 =======
 >>>>>>> fe629a8 (rebase)
 =======
 >>>>>>> 3af4a48 (rebase)
+=======
+>>>>>>> 925bba7 (rebase)
     public function execute(Model $row, RelationDTO $relation): void {
 =======
     public function execute(Model $row, RelationDTO $relation): void
@@ -73,6 +76,9 @@ class HasOneAction {
     {
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 925bba7 (rebase)
 =======
     public function execute(Model $row, \Modules\Xot\DTOs\RelationDTO $relation): void {
 >>>>>>> 3966014 (Fix styling)
