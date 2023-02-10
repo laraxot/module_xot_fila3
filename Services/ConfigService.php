@@ -12,13 +12,11 @@ use Illuminate\Support\Collection;
 /**
  * Class ConfigService.
  */
-class ConfigService
-{
+class ConfigService {
     protected Collection $data;
     private static ?self $instance = null;
 
-    public function __construct()
-    {
+    public function __construct() {
         // ---
         // require_once __DIR__.'/vendor/autoload.php';
     }
@@ -26,8 +24,7 @@ class ConfigService
     /**
      * Undocumented function.
      */
-    public static function getInstance(): self
-    {
+    public static function getInstance(): self {
         if (null === self::$instance) {
             self::$instance = new self();
         }
@@ -38,8 +35,7 @@ class ConfigService
     /**
      * Undocumented function.
      */
-    public static function make(): self
-    {
+    public static function make(): self {
         return static::getInstance();
     }
 }
