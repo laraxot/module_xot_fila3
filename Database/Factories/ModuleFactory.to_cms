@@ -7,7 +7,8 @@ namespace Modules\Xot\Database\Factories;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Modules\Xot\Models\Module;
 
-class ModuleFactory extends Factory {
+class ModuleFactory extends Factory
+{
     /**
      * The name of the factory's corresponding model.
      *
@@ -20,7 +21,8 @@ class ModuleFactory extends Factory {
      *
      * @return array
      */
-    public function definition() {
+    public function definition()
+    {
         return [
             'id' => $this->faker->randomNumber(5, false),
             'name' => $this->faker->name,
