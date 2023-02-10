@@ -20,57 +20,12 @@ use Nwidart\Modules\Facades\Module;
 // ------------------------------------------------
 
 if (! function_exists('get_current_theme_name')) {
-    function current_theme_name(): string {
-<<<<<<< HEAD
-=======
-=======
     /**
      * @param string $str
      *
      * @return string
      */
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
     function current_theme_name() {
->>>>>>> f17e0c2 (.)
-=======
-    function current_theme_name()
-    {
->>>>>>> 636f226 (up)
-=======
-    function current_theme_name() {
->>>>>>> 3966014 (Fix styling)
-<<<<<<< HEAD
->>>>>>> b8cbe73 (rebase)
-=======
-=======
-    function current_theme_name()
-    {
->>>>>>> 2d482b6 (rebase)
-<<<<<<< HEAD
->>>>>>> fea9c61 (rebase)
-=======
-=======
-    function current_theme_name() {
->>>>>>> fe629a8 (rebase)
-<<<<<<< HEAD
->>>>>>> beabd20 (rebase)
-=======
-=======
-    function current_theme_name()
-    {
->>>>>>> 92fd6e1 (up)
-<<<<<<< HEAD
->>>>>>> a61f31f (rebase)
-=======
-=======
-    function current_theme_name() {
->>>>>>> 3c639c1 (Fix styling)
->>>>>>> b80e387 (rebase)
         $theme_name = config('xra.pub_theme');
 
         if (inAdmin()) {
@@ -149,67 +104,6 @@ if (! function_exists('str_contains')) {
         return Str::contains($str, $str1);
     }
 }
-
-// -------------------------------------------
-/*
-if (! function_exists('backtrace')) {
-    function filter_vendor(array $obj): bool {
-        $tmp = str_replace('/', DIRECTORY_SEPARATOR, $obj['file']);
-        if (is_array($tmp)) {
-            $tmp = implode(' ', $tmp);
-        }
-        return false === strpos($tmp, 'vendor');
-    }
-<<<<<<< HEAD
-=======
-
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
->>>>>>> b8cbe73 (rebase)
-    function backtrace(bool $exclude_vendor = false): void {
-=======
-    function backtrace(bool $exclude_vendor = false): void
-    {
->>>>>>> fea9c61 (rebase)
-=======
-    function backtrace(bool $exclude_vendor = false): void {
->>>>>>> beabd20 (rebase)
-=======
-    function backtrace(bool $exclude_vendor = false): void
-    {
->>>>>>> a61f31f (rebase)
-=======
-    function backtrace(bool $exclude_vendor = false): void {
->>>>>>> b80e387 (rebase)
-        $dbg_backtrace = debug_backtrace();
-        if (true === $exclude_vendor) {
-            if (isset($dbg_backtrace['file'])) {
-                $dbg_backtrace = array_filter($dbg_backtrace, 'filter_vendor');
-            }
-        }
-        dd(
-            [
-                $dbg_backtrace,
-            ]
-        );
-    }
-}
-*/
-// --------------------------------------------
-/*
-if (! \function_exists('superdump')) {
-    function superdump($params) {
-        if (! is_array($params)) {
-            $params = [$params];
-        }
-        echo '<br>-------------------------------------<br>';
-        var_dump($params);
-        echo '<br>-------------------------------------<br>';
-    }
-}
-*/
 
 if (! function_exists('dddx')) {
     /**

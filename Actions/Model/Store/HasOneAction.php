@@ -16,39 +16,7 @@ class HasOneAction {
     public function __construct() {
     }
 
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
->>>>>>> b8cbe73 (rebase)
-=======
-=======
->>>>>>> 2d482b6 (rebase)
->>>>>>> fea9c61 (rebase)
-=======
-=======
-<<<<<<< HEAD
->>>>>>> a61f31f (rebase)
-=======
-<<<<<<< HEAD
->>>>>>> b80e387 (rebase)
-=======
->>>>>>> 2d482b6 (rebase)
-=======
->>>>>>> fe629a8 (rebase)
->>>>>>> beabd20 (rebase)
     public function execute(Model $row, RelationDTO $relation): void {
-=======
-    public function execute(Model $row, RelationDTO $relation): void
-    {
->>>>>>> 92fd6e1 (up)
-=======
-    public function execute(Model $row, RelationDTO $relation): void {
->>>>>>> 3c639c1 (Fix styling)
         // dddx(['row' => $row, 'relation' => $relation]);
         if (! $relation->rows instanceof HasOne) {
             throw new \Exception('['.__LINE__.']['.__FILE__.']');
@@ -66,31 +34,6 @@ class HasOneAction {
 
             return;
         }
-<<<<<<< HEAD
-=======
-=======
-    public function execute(Model $row, \Modules\Xot\DTOs\RelationDTO $relation): void
-    {
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-    public function execute(Model $row, \Modules\Xot\DTOs\RelationDTO $relation): void {
->>>>>>> 3966014 (Fix styling)
-        dddx('wip');
->>>>>>> 636f226 (up)
-<<<<<<< HEAD
->>>>>>> b8cbe73 (rebase)
-=======
-=======
-=======
-=======
-    public function execute(Model $row, \Modules\Xot\DTOs\RelationDTO $relation): void {
->>>>>>> 39660147 (Fix styling)
->>>>>>> fe629a8 (rebase)
-        dddx('wip');
->>>>>>> 636f226e (up)
->>>>>>> 2d482b6 (rebase)
->>>>>>> fea9c61 (rebase)
         /*
         $rows = $relation->rows;
         try {
