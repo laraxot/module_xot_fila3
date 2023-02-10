@@ -8,12 +8,10 @@ namespace Modules\Xot\Actions\Model\Store;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\QueueableAction\QueueableAction;
 
-class HasManyDeepAction
-{
+class HasManyDeepAction {
     use QueueableAction;
 
-    public function __construct()
-    {
+    public function __construct() {
     }
 
 <<<<<<< HEAD
@@ -25,6 +23,7 @@ class HasManyDeepAction
      *
      * @return void
      */
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -52,6 +51,9 @@ class HasManyDeepAction
     public function execute(Model $row, \Modules\Xot\DTOs\RelationDTO $relation)
     {
 >>>>>>> 92fd6e1 (up)
+=======
+    public function execute(Model $row, \Modules\Xot\DTOs\RelationDTO $relation) {
+>>>>>>> 3c639c1 (Fix styling)
         $data = $relation->data;
         $name = $relation->name;
         $model = $row;

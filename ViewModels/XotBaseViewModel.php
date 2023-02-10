@@ -10,13 +10,11 @@ namespace Modules\Xot\ViewModels;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Support\Str;
 
-abstract class XotBaseViewModel implements Arrayable
-{
+abstract class XotBaseViewModel implements Arrayable {
     /**
      * Undocumented function.
      */
-    public function toArray(): array
-    {
+    public function toArray(): array {
         return collect((new \ReflectionClass($this))->getMethods())
       ->reject(
           fn (\ReflectionMethod $method) => \in_array($method->getName(), ['__construct', 'toArray'], true)

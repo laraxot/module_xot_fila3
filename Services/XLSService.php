@@ -14,13 +14,11 @@ use Maatwebsite\Excel\Facades\Excel;
 /**
  * Undocumented class.
  */
-class XLSService
-{
+class XLSService {
     protected Collection $data;
     private static ?self $instance = null;
 
-    public function __construct()
-    {
+    public function __construct() {
         // ---
         require_once __DIR__.'/vendor/autoload.php';
     }
@@ -28,8 +26,7 @@ class XLSService
     /**
      * Undocumented function.
      */
-    public static function getInstance(): self
-    {
+    public static function getInstance(): self {
         if (null === self::$instance) {
             self::$instance = new self();
         }
@@ -40,16 +37,14 @@ class XLSService
     /**
      * Undocumented function.
      */
-    public static function make(): self
-    {
+    public static function make(): self {
         return static::getInstance();
     }
 
     /**
      * Converts column number to letter.
      */
-    public function getNameFromNumber(int $num): string
-    {
+    public function getNameFromNumber(int $num): string {
         $numeric = $num % 26;
         $letter = chr(65 + $numeric);
         $num2 = intval($num / 26);
@@ -63,8 +58,7 @@ class XLSService
     /**
      * Checks valid urls from XLS import array.
      */
-    public function checkValidUrls(array $rows): array
-    {
+    public function checkValidUrls(array $rows): array {
         $col_row = [];
         foreach ($rows as $row_key => $row) {
             $int_col_key = 0;
@@ -82,8 +76,7 @@ class XLSService
     /**
      * Undocumented function.
      */
-    public function fromInputFileName(string $name): self
-    {
+    public function fromInputFileName(string $name): self {
         $file = request()->file('file');
         if (null === $file) {
             throw new \Exception('[.__LINE__.]['.class_basename(__CLASS__).']');
@@ -100,8 +93,7 @@ class XLSService
      * @throws \Illuminate\Validation\ValidationException
      * @throws \PhpOffice\PhpSpreadsheet\Exception
      */
-    public function fromRequestFile($file): self
-    {
+    public function fromRequestFile($file): self {
         if (! \is_object($file)) {
             throw new \Exception('[.__LINE__.]['.class_basename(__CLASS__).']');
         }
@@ -121,8 +113,7 @@ class XLSService
     /**
      * Undocumented function.
      */
-    public function fromFilePath(string $path): self
-    {
+    public function fromFilePath(string $path): self {
         // $reader = \Maatwebsite\Excel\Facades\Excel::load($path);
         /*
          * Excel::load() is removed and replaced by Excel::import($yourImport)
@@ -153,8 +144,7 @@ class XLSService
         return $this;
     }
 
-    public function getData(): Collection
-    {
+    public function getData(): Collection {
         return $this->data;
     }
 

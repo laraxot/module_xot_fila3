@@ -16,13 +16,11 @@ use Modules\Xot\Relations\CustomRelation;
 /**
  * Trait HasCustomRelations.
  */
-trait HasCustomRelations
-{
+trait HasCustomRelations {
     /**
      * @return CustomRelation
      */
-    public function customRelation($related, \Closure $baseConstraints, \Closure $eagerConstraints = null, \Closure $eagerMatcher = null)
-    {
+    public function customRelation($related, \Closure $baseConstraints, \Closure $eagerConstraints = null, \Closure $eagerMatcher = null) {
         $instance = new $related();
         $query = $instance->newQuery();
 
