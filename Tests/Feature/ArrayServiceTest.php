@@ -6,16 +6,20 @@ namespace Modules\Xot\Tests\Feature;
 
 use Tests\TestCase;
 
-class ArrayServiceTest extends TestCase {
-    public function testToXLS() {
+class ArrayServiceTest extends TestCase
+{
+    public function testToXLS()
+    {
         static::assertTrue(true);
     }
 
-    public function testToXLSPhpoffice() {
+    public function testToXLSPhpoffice()
+    {
         static::assertTrue(true);
     }
 
-    public function testSave() {
+    public function testSave()
+    {
         static::assertTrue(true);
     }
 }

@@ -6,5 +6,10 @@ namespace Modules\Xot\Models\Panels\Policies;
 
 use Modules\Cms\Models\Panels\Policies\XotBasePanelPolicy;
 
+<<<<<<< HEAD
 class TestPanelPolicy extends XotBasePanelPolicy {
+=======
+class TestPanelPolicy extends XotBasePanelPolicy
+{
+>>>>>>> fea9c61 (rebase)
 }

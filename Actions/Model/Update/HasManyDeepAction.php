@@ -8,10 +8,12 @@ namespace Modules\Xot\Actions\Model\Store;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\QueueableAction\QueueableAction;
 
-class HasManyDeepAction {
+class HasManyDeepAction
+{
     use QueueableAction;
 
-    public function __construct() {
+    public function __construct()
+    {
     }
 
 <<<<<<< HEAD
@@ -25,6 +27,7 @@ class HasManyDeepAction {
      */
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     public function execute(Model $row, RelationDTO $relation) {
         if (! $relation->rows instanceof HasManyDeep) {
             throw new \Exception('['.__LINE__.']['.__FILE__.']');
@@ -36,6 +39,10 @@ class HasManyDeepAction {
 =======
     public function execute(Model $row, \Modules\Xot\DTOs\RelationDTO $relation) {
 >>>>>>> 3966014 (Fix styling)
+=======
+    public function execute(Model $row, \Modules\Xot\DTOs\RelationDTO $relation)
+    {
+>>>>>>> 2d482b6 (rebase)
         $data = $relation->data;
         $name = $relation->name;
         $model = $row;

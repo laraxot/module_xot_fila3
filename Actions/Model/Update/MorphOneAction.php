@@ -9,10 +9,12 @@ use Illuminate\Database\Eloquent\Relations\MorphOne;
 use Modules\Xot\DTOs\RelationDTO;
 use Spatie\QueueableAction\QueueableAction;
 
-class MorphOneAction {
+class MorphOneAction
+{
     use QueueableAction;
 
-    public function __construct() {
+    public function __construct()
+    {
     }
 
     /**
@@ -20,7 +22,8 @@ class MorphOneAction {
      *
      * @return void
      */
-    public function execute(Model $row, RelationDTO $relation) {
+    public function execute(Model $row, RelationDTO $relation)
+    {
         /* con update or create crea sempre uno nuovo, con update e basta se non esiste non va a crearlo */
         // $rows = $model->$name();
         if (! $relation->rows instanceof MorphOne) {
