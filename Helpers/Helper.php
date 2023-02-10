@@ -20,86 +20,7 @@ use Nwidart\Modules\Facades\Module;
 // ------------------------------------------------
 
 if (! function_exists('get_current_theme_name')) {
-<<<<<<< HEAD
-<<<<<<< HEAD
     function current_theme_name(): string {
-=======
-    /**
-     * @param string $str
-     *
-     * @return string
-     */
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 925bba7 (rebase)
-=======
->>>>>>> 5f05462 (rebase)
-=======
->>>>>>> 60b8b58 (rebase)
-=======
->>>>>>> fb97723 (rebase)
-=======
->>>>>>> 17a0f7d (rebase)
-    function current_theme_name() {
->>>>>>> f17e0c2 (.)
-=======
-    function current_theme_name()
-    {
->>>>>>> 636f226 (up)
-=======
-    function current_theme_name() {
->>>>>>> 3966014 (Fix styling)
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 5f05462 (rebase)
-=======
-    function current_theme_name()
-    {
->>>>>>> 2d482b6 (rebase)
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-    function current_theme_name() {
->>>>>>> fe629a8 (rebase)
-=======
-    function current_theme_name()
-    {
->>>>>>> 92fd6e1 (up)
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-    function current_theme_name() {
->>>>>>> 3c639c1 (Fix styling)
-=======
-    function current_theme_name(): string {
->>>>>>> 5d06246 (.)
-=======
->>>>>>> 925bba7 (rebase)
-=======
->>>>>>> 5f05462 (rebase)
-=======
-=======
-    function current_theme_name() {
->>>>>>> fe629a8 (rebase)
->>>>>>> 60b8b58 (rebase)
-=======
->>>>>>> fb97723 (rebase)
-=======
-=======
-    function current_theme_name() {
->>>>>>> 3c639c1 (Fix styling)
->>>>>>> 17a0f7d (rebase)
         $theme_name = config('xra.pub_theme');
 
         if (inAdmin()) {
@@ -187,19 +108,15 @@ if (! function_exists('backtrace')) {
         if (is_array($tmp)) {
             $tmp = implode(' ', $tmp);
         }
-
         return false === strpos($tmp, 'vendor');
     }
-
     function backtrace(bool $exclude_vendor = false): void {
         $dbg_backtrace = debug_backtrace();
-
         if (true === $exclude_vendor) {
             if (isset($dbg_backtrace['file'])) {
                 $dbg_backtrace = array_filter($dbg_backtrace, 'filter_vendor');
             }
         }
-
         dd(
             [
                 $dbg_backtrace,
@@ -664,13 +581,10 @@ if (! function_exists('getModuleModelsMenu')) {
                 // $obj = new $item();
                 $obj = app($item);
                 $panel = PanelService::make()->get($obj);
-
                 if ('media' === $key) {// media e' singolare ma anche plurale di medium
                     $panel->setName('medias');
                 }
-
                 $url = $panel->url('index');
-
                 return (object) [
                     'title' => $key,
                     'url' => $url,
@@ -678,7 +592,6 @@ if (! function_exists('getModuleModelsMenu')) {
                 ];
             }
         );
-
         return $menu;
     }
 }
@@ -698,7 +611,6 @@ if (! function_exists('xotModel')) {
 
 /*
 if (! function_exists('xotModelEager')) {
-
     function xotModelEager($name) {
         return TenantService::modelEager($name);
     }
@@ -840,7 +752,6 @@ if (! function_exists('debug_getter_obj')) {
         extract($params);
         if (! isset($obj)) {
             dddx(['err' => 'obj is missing']);
-
             return null;
         }
         $methods = collect(get_class_methods($obj))->filter(function ($item) {
@@ -869,7 +780,6 @@ if (! function_exists('debug_getter_obj')) {
                 'getMacro',
                 //--altri errori --
             ];
-
             return Str::startsWith($item, 'get') && ! in_array($item, $exclude);
         })->map(function ($item) use ($obj) {
             $tmp = [];
@@ -879,7 +789,6 @@ if (! function_exists('debug_getter_obj')) {
             } catch (\Exception $e) {
                 $tmp['ris'] = $e->getMessage();
             }
-
             return $tmp;
         });
         //->dd();
@@ -1134,17 +1043,14 @@ if (! function_exists('getRelationships')) {
 /*
     public function getRelationshipsV2($model){
         $relationships = [];
-
         foreach((new \ReflectionClass($model))->getMethods(\ReflectionMethod::IS_PUBLIC) as $method){
             if ($method->class != get_class($model) ||
                 !empty($method->getParameters()) ||
                 $method->getName() == __FUNCTION__) {
                 continue;
             }
-
             try {
                 $return = $method->invoke($model);
-
                 if ($return instanceof \Illuminate\Database\Eloquent\Relations\Relation) {
                     $relationships[$method->getName()] = [
                         'name' => $method->getName(),
@@ -1154,7 +1060,6 @@ if (! function_exists('getRelationships')) {
                 }
             } catch(ErrorException $e) {}
         }
-
         return $relationships;
     }
     */
@@ -1293,7 +1198,6 @@ if (! function_exists('getRouteName')) {
 /*
 if (! function_exists('getRouteAction')) {
     function getRouteAction(): string {
-
     }
 }
 */
@@ -1312,7 +1216,6 @@ if (! function_exists('getModTradFilepath')) {
 }
 
 /*
-
     function is_iterable($var)
 {
     return $var !== null
