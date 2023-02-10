@@ -21,6 +21,26 @@ use Nwidart\Modules\Facades\Module;
 
 if (! function_exists('get_current_theme_name')) {
     function current_theme_name(): string {
+<<<<<<< HEAD
+=======
+=======
+    /**
+     * @param string $str
+     *
+     * @return string
+     */
+<<<<<<< HEAD
+<<<<<<< HEAD
+    function current_theme_name() {
+>>>>>>> f17e0c2 (.)
+=======
+    function current_theme_name()
+    {
+>>>>>>> 636f226 (up)
+=======
+    function current_theme_name() {
+>>>>>>> 3966014 (Fix styling)
+>>>>>>> b8cbe73 (rebase)
         $theme_name = config('xra.pub_theme');
 
         if (inAdmin()) {
@@ -110,6 +130,10 @@ if (! function_exists('backtrace')) {
         }
         return false === strpos($tmp, 'vendor');
     }
+<<<<<<< HEAD
+=======
+
+>>>>>>> b8cbe73 (rebase)
     function backtrace(bool $exclude_vendor = false): void {
         $dbg_backtrace = debug_backtrace();
         if (true === $exclude_vendor) {

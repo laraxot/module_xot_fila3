@@ -16,6 +16,11 @@ class HasOneAction {
     public function __construct() {
     }
 
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+>>>>>>> b8cbe73 (rebase)
     public function execute(Model $row, RelationDTO $relation): void {
         // dddx(['row' => $row, 'relation' => $relation]);
         if (! $relation->rows instanceof HasOne) {
@@ -34,6 +39,17 @@ class HasOneAction {
 
             return;
         }
+<<<<<<< HEAD
+=======
+=======
+    public function execute(Model $row, \Modules\Xot\DTOs\RelationDTO $relation): void
+    {
+=======
+    public function execute(Model $row, \Modules\Xot\DTOs\RelationDTO $relation): void {
+>>>>>>> 3966014 (Fix styling)
+        dddx('wip');
+>>>>>>> 636f226 (up)
+>>>>>>> b8cbe73 (rebase)
         /*
         $rows = $relation->rows;
         try {
