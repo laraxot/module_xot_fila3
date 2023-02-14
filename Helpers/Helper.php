@@ -1338,7 +1338,7 @@ if (! function_exists('inArrayBetweenKey')) {
 }
 
 if (! function_exists('is_base64')) {
-    function is_base64($s): bool {
+    function is_base64(string $s): bool {
         return (bool) preg_match('/^[a-zA-Z0-9\/\r\n+]*={0,2}$/', $s);
     }
 }
