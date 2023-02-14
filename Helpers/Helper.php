@@ -19,6 +19,7 @@ use Nwidart\Modules\Facades\Module;
 
 // ------------------------------------------------
 
+/* --- MAH
 if (! function_exists('get_current_theme_name')) {
     function current_theme_name(): string {
         $theme_name = config('xra.pub_theme');
@@ -30,6 +31,7 @@ if (! function_exists('get_current_theme_name')) {
         return '_'.Str::lower($theme_name);
     }
 }
+*/
 
 if (! function_exists('snake_case')) {
     /**
@@ -1336,13 +1338,13 @@ if (! function_exists('inArrayBetweenKey')) {
 }
 
 if (! function_exists('is_base64')) {
-    function is_base64($s) {
+    function is_base64($s): bool {
         return (bool) preg_match('/^[a-zA-Z0-9\/\r\n+]*={0,2}$/', $s);
     }
 }
 
 if (! function_exists('recursive_unset')) {
-    function recursive_unset(&$array, $unwanted_key) {
+    function recursive_unset(array &$array, array $unwanted_key): void {
         unset($array[$unwanted_key]);
         foreach ($array as &$value) {
             if (is_array($value)) {
