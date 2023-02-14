@@ -20,11 +20,7 @@ use Nwidart\Modules\Facades\Module;
 // ------------------------------------------------
 
 if (! function_exists('get_current_theme_name')) {
-    /**
-     *
-     * @return string
-     */
-    function current_theme_name():string {
+    function current_theme_name(): string {
         $theme_name = config('xra.pub_theme');
 
         if (inAdmin()) {
