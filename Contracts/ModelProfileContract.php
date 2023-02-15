@@ -239,4 +239,47 @@ use Illuminate\Support\Collection;
  * @method static \Kalnoy\Nestedset\QueryBuilder|Profile withoutTags(\ArrayAccess|\Spatie\Tags\Tag|array|string $tags, ?string $type = null)
  */
 interface ModelProfileContract {
+    /**
+     * Grant the given permission(s) to a role.
+     *
+     * @param string|int|array|\Spatie\Permission\Contracts\Permission|\Illuminate\Support\Collection $permissions
+     *
+     * @return $this
+     */
+    public function givePermissionTo(...$permissions);
+
+    /**
+     * Assign the given role to the model.
+     *
+     * @param array|string|int|\Spatie\Permission\Contracts\Role|\Illuminate\Support\Collection ...$roles
+     *
+     * @return $this
+     */
+    public function assignRole(...$roles);
+
+    /**
+     * Determine if the model has (one of) the given role(s).
+     *
+     * @param string|int|array|\Spatie\Permission\Contracts\Role|\Illuminate\Support\Collection $roles
+     */
+    public function hasRole($roles, string $guard = null): bool;
+
+    /**
+     * Determine if the model has any of the given role(s).
+     *
+     * Alias to hasRole() but without Guard controls
+     *
+     * @param string|int|array|\Spatie\Permission\Contracts\Role|\Illuminate\Support\Collection $roles
+     */
+    public function hasAnyRole(...$roles): bool;
+
+    /**
+     * Determine if the model may perform the given permission.
+     *
+     * @param string|int|\Spatie\Permission\Contracts\Permission $permission
+     * @param string|null                                        $guardName
+     *
+     * @throws PermissionDoesNotExist
+     */
+    public function hasPermissionTo($permission, $guardName = null): bool;
 }
