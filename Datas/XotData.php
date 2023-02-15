@@ -22,4 +22,5 @@ class XotData extends Data {
     public string $pub_theme; // ' => 'BsItalia',
     public string $search_action = 'it/videos';
     public bool $show_trans_key = false;
+    public string $register_type = '0';
 }
