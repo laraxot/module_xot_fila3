@@ -4,13 +4,14 @@ declare(strict_types=1);
 
 namespace Modules\Xot\Providers;
 
+use Illuminate\Support\Str;
+use Nwidart\Modules\Facades\Module;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Event;
-use Illuminate\Support\Facades\File;
+use Modules\Xot\Services\BladeService;
 use Illuminate\Support\ServiceProvider;
-use Illuminate\Support\Str;
 use Modules\Xot\Services\LivewireService;
-use Nwidart\Modules\Facades\Module;
 
 // use Modules;
 
@@ -129,6 +130,15 @@ abstract class XotBaseServiceProvider extends ServiceProvider {
         */
         $namespace = $this->module_ns.'\View\Components';
         Blade::componentNamespace($namespace, $this->module_name);
+        /*
+        dddx([
+            'module_ns'=>$this->module_ns,
+            'module_dir'=>$this->module_dir,
+            'this'=>$this,
+        ])
+        ;
+        */
+        BladeService::registerComponents($this->module_dir.'/../View/Components', $this->module_ns);
     }
 
     /**
