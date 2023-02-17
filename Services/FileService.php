@@ -711,12 +711,12 @@ class FileService {
         return self::fixPath($res);
     }
 
-
     public static function configPath(string $key): string {
         $ns_name = Str::before($key, '::');
         $group = (string) Str::of($key)->after('::')->before('.');
         $ns_dir = self::getViewNameSpacePath($ns_name);
         $res = $ns_dir.'/../../Config/'.$group.'.php';
+
         return self::fixPath($res);
     }
 
@@ -757,45 +757,40 @@ class FileService {
         self::copy($from_path, $to_path);
     }
 
-    public static function  getConfigKey($key):string{
+    public static function getConfigKey($key): string {
         $ns_name = Str::before($key, '::');
         $group = Str::of($key)->after('::')->before('.');
         $key = Str::after($key, $ns_name.'::'.$group.'.');
+
         return $key;
     }
 
-
-     /**
+    /**
      * Undocumented function.
      *
      * from : theme::errors.500
      * to  : pub_theme:errors.500
      */
-    public static function configCopy(string $from, string $to,bool $force=false): void {
-
+    public static function configCopy(string $from, string $to, bool $force = false): void {
         $from_path = self::configPath($from);
         $to_path = self::configPath($to);
-        //self::copy($from_path, $to_path);
+        // self::copy($from_path, $to_path);
 
-        $from_value=self::config($from);
-        $to_value=self::config($to);
+        $from_value = self::config($from);
+        $to_value = self::config($to);
 
-
-        if($to_value!=null){
+        if (null != $to_value) {
             return;
         }
-
-
-
 
         $data = File::getRequire($to_path);
         if (! \is_array($data)) {
             throw new \Exception('['.__LINE__.']['.class_basename(__CLASS__).']');
         }
 
-        $key=self::getConfigKey($to);
+        $key = self::getConfigKey($to);
 
-        Arr::set($data, $key,$from_value);
+        Arr::set($data, $key, $from_value);
         /*
         dddx([
             'from_value'=>$from_value,
@@ -807,8 +802,6 @@ class FileService {
         ]);
         */
         ArrayService::save(['filename' => $to_path, 'data' => $data]);
-
-
     }
 
     /**
