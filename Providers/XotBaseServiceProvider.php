@@ -4,14 +4,14 @@ declare(strict_types=1);
 
 namespace Modules\Xot\Providers;
 
-use Illuminate\Support\Str;
-use Nwidart\Modules\Facades\Module;
-use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Event;
-use Modules\Xot\Services\BladeService;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Str;
+use Modules\Xot\Services\BladeService;
 use Modules\Xot\Services\LivewireService;
+use Nwidart\Modules\Facades\Module;
 
 // use Modules;
 
