@@ -704,10 +704,19 @@ class FileService {
 
     public static function viewPath(string $key): string {
         $ns_name = Str::before($key, '::');
-        $group = (string) Str::of($key)->after('::');
+        $group = Str::of($key)->after('::');
         $ns_dir = self::getViewNameSpacePath($ns_name);
         $res = $ns_dir.'/'.Str::replace('.', '/', $group).'.blade.php';
 
+        return self::fixPath($res);
+    }
+
+
+    public static function configPath(string $key): string {
+        $ns_name = Str::before($key, '::');
+        $group = (string) Str::of($key)->after('::')->before('.');
+        $ns_dir = self::getViewNameSpacePath($ns_name);
+        $res = $ns_dir.'/../../Config/'.$group.'.php';
         return self::fixPath($res);
     }
 
@@ -728,8 +737,8 @@ class FileService {
             try {
                 File::copy($from, $to);
             } catch (\Exception $e) {
-                throw new \Exception('Unable to copy 
-                    from ['.$from.'] 
+                throw new \Exception('Unable to copy
+                    from ['.$from.']
                     to ['.$to.']
                     message ['.$e->getMessage().']');
             }
@@ -746,6 +755,60 @@ class FileService {
         $from_path = self::viewPath($from);
         $to_path = self::viewPath($to);
         self::copy($from_path, $to_path);
+    }
+
+    public static function  getConfigKey($key):string{
+        $ns_name = Str::before($key, '::');
+        $group = Str::of($key)->after('::')->before('.');
+        $key = Str::after($key, $ns_name.'::'.$group.'.');
+        return $key;
+    }
+
+
+     /**
+     * Undocumented function.
+     *
+     * from : theme::errors.500
+     * to  : pub_theme:errors.500
+     */
+    public static function configCopy(string $from, string $to,bool $force=false): void {
+
+        $from_path = self::configPath($from);
+        $to_path = self::configPath($to);
+        //self::copy($from_path, $to_path);
+
+        $from_value=self::config($from);
+        $to_value=self::config($to);
+
+
+        if($to_value!=null){
+            return;
+        }
+
+
+
+
+        $data = File::getRequire($to_path);
+        if (! \is_array($data)) {
+            throw new \Exception('['.__LINE__.']['.class_basename(__CLASS__).']');
+        }
+
+        $key=self::getConfigKey($to);
+
+        Arr::set($data, $key,$from_value);
+        /*
+        dddx([
+            'from_value'=>$from_value,
+            'from_path'=>$from_path,
+            'to_value'=>$to_value,
+            'to_path'=>$to_path,
+            'value'=>$value,
+            'data' => $data,
+        ]);
+        */
+        ArrayService::save(['filename' => $to_path, 'data' => $data]);
+
+
     }
 
     /**
