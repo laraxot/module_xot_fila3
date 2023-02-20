@@ -57,6 +57,7 @@ class XotServiceProvider extends XotBaseServiceProvider {
         // $this->loadHelpersFrom(__DIR__.'/../Helpers'); //non serve piu
         $loader = AliasLoader::getInstance();
         $loader->alias('Panel', 'Modules\Cms\Services\PanelService');
+
         // $loader->alias(\Modules\Xot\Facades\Profile::class,
         // $this->registerPresenter();
 
