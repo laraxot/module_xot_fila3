@@ -184,6 +184,30 @@ class ArrayService {
         }
     }
 
+    public function toCsv() {
+        $filename = $this->getFilename();
+
+        $headers = [
+            'Content-type' => 'text/csv',
+            'Content-Disposition' => "attachment; filename=$filename",
+            'Pragma' => 'no-cache',
+            'Cache-Control' => 'must-revalidate, post-check=0, pre-check=0',
+            'Expires' => '0',
+        ];
+
+        $columns = ['Title', 'Assign', 'Description', 'Start Date', 'Due Date'];
+
+        $callback = function () {
+            $file = fopen('php://output', 'w');
+
+            fputcsv($file, $this->array);
+
+            fclose($file);
+        };
+
+        return response()->stream($callback, 200, $headers);
+    }
+
     /**
      * @throws \PhpOffice\PhpSpreadsheet\Writer\Exception
      *
