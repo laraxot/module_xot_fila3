@@ -39,33 +39,33 @@ class ProfilePanel extends XotBasePanel {
         return [];
     }
 
-    /**
-     * on select the option id.
-     *
-     * quando aggiungi un campo select, è il numero della chiave
-     * che viene messo come valore su value="id"
-     *
-     * @param Modules\Xot\Models\Profile $row
-     *
-     * @return int|string|null
-     */
-    public function optionId($row) {
-        $key = $row->getKey();
-        if (null === $key || (! is_string($key) && ! is_int($key))) {
-            throw new \Exception('['.__LINE__.']['.class_basename(__CLASS__).']');
-        }
+    // /**
+    //  * on select the option id.
+    //  *
+    //  * quando aggiungi un campo select, è il numero della chiave
+    //  * che viene messo come valore su value="id"
+    //  *
+    //  * @param Modules\Xot\Models\Profile $row
+    //  *
+    //  * @return int|string|null
+    //  */
+    // public function optionId($row) {
+    //     $key = $row->getKey();
+    //     if (null === $key || (! is_string($key) && ! is_int($key))) {
+    //         throw new \Exception('['.__LINE__.']['.class_basename(__CLASS__).']');
+    //     }
 
-        return $key;
-    }
+    //     return $key;
+    // }
 
-    /**
-     * on select the option label.
-     *
-     * @param Modules\Xot\Models\Profile $row
-     */
-    public function optionLabel($row): string {
-        return 'To Set';
-    }
+    // /**
+    //  * on select the option label.
+    //  *
+    //  * @param Modules\Xot\Models\Profile $row
+    //  */
+    // public function optionLabel($row): string {
+    //     return 'To Set';
+    // }
 
     /**
      * index navigation.
