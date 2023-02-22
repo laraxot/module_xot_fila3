@@ -184,7 +184,7 @@ class ArrayService {
         }
     }
 
-    public function toCsv() {
+    public function toCsv(): \Symfony\Component\HttpFoundation\StreamedResponse {
         $filename = $this->getFilename();
 
         $headers = [
@@ -198,6 +198,9 @@ class ArrayService {
         $columns = ['Title', 'Assign', 'Description', 'Start Date', 'Due Date'];
 
         $callback = function () {
+            /**
+             * @var resource
+             */
             $file = fopen('php://output', 'w');
 
             fputcsv($file, $this->array);

@@ -704,6 +704,9 @@ class FileService {
 
     public static function viewPath(string $key): string {
         $ns_name = Str::before($key, '::');
+        /**
+         * @var iterable<string>|string
+         */
         $group = Str::of($key)->after('::');
         $ns_dir = self::getViewNameSpacePath($ns_name);
         $res = $ns_dir.'/'.Str::replace('.', '/', $group).'.blade.php';
@@ -757,7 +760,7 @@ class FileService {
         self::copy($from_path, $to_path);
     }
 
-    public static function getConfigKey($key): string {
+    public static function getConfigKey(string $key): string {
         $ns_name = Str::before($key, '::');
         $group = Str::of($key)->after('::')->before('.');
         $key = Str::after($key, $ns_name.'::'.$group.'.');
