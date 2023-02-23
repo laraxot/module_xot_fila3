@@ -1344,7 +1344,7 @@ if (! function_exists('is_base64')) {
 }
 
 if (! function_exists('recursive_unset')) {
-    function recursive_unset(array &$array, array $unwanted_key): void {
+    function recursive_unset(array &$array, string $unwanted_key): void {
         unset($array[$unwanted_key]);
         foreach ($array as &$value) {
             if (is_array($value)) {
