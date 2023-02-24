@@ -55,7 +55,9 @@ class HtmlService {
             switch ($out) {
                 case 'content_PDF':
                     return $html2pdf->Output($filename.'.pdf', 'S');
-                case 'file': $html2pdf->Output($filename, 'F');
+
+                case 'file':
+                    $html2pdf->Output($filename, 'F');
 
                     return $filename;
             }
