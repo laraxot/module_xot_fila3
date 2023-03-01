@@ -55,6 +55,6 @@ abstract class XotBaseComponent extends IlluminateComponent {
             'view' => $view,
         ];
 
-        return view()->make($view, $view_params);
+        return view($view, $view_params);
     }
 }

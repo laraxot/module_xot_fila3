@@ -57,7 +57,7 @@ class NavService {
             'nav' => $nav,
         ];
 
-        return view()->make($view, $view_params);
+        return view($view, $view_params);
     }
 
     public static function monthYearNav(): Renderable {
@@ -110,7 +110,7 @@ class NavService {
             'nav' => $nav,
         ];
 
-        return view()->make($view, $view_params);
+        return view($view, $view_params);
     }
 
     /* deprecated

@@ -117,7 +117,7 @@ class Widget extends BaseModel {
             dddx(['View ['.$view.'] Not Exists !']);
         }
         try {
-            return view()->make($view, $view_params);
+            return view($view, $view_params);
         } catch (\Exception $e) {
             dddx([$e]);
         }

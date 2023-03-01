@@ -146,7 +146,7 @@ class ArtisanService {
             'urls' => $urls,
         ];
 
-        return view()->make($view, $view_params);
+        return view($view, $view_params);
     }
 
     public static function showRouteList(): string {
@@ -180,7 +180,7 @@ class ArtisanService {
             'lang' => app()->getLocale(),
         ];
 
-        $out = view()->make($view, $view_params);
+        $out = view($view, $view_params);
 
         return $out->render();
     }
