@@ -86,4 +86,7 @@ class HtmlService {
         $mpdf = new Mpdf();
         $mpdf->WriteHTML($html);
 
-        return $mpdf->Output
+        return $mpdf->Output();
+    }
+    */
+}
