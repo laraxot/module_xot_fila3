@@ -23,4 +23,5 @@ class XotData extends Data {
     public string $search_action = 'it/videos';
     public bool $show_trans_key = false;
     public string $register_type = '0';
+    public bool $login_verified = false;
 }
