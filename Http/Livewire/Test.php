@@ -6,6 +6,7 @@ namespace Modules\Xot\Http\Livewire;
 
 // use Illuminate\Support\Carbon;
 use Livewire\Component;
+use Modules\Cms\Actions\GetViewAction;
 
 /**
  * Class Test.
@@ -64,6 +65,8 @@ class Test extends Component {
         $this->change_cats = $this->fix($this->change_cats);
         $this->changes = $this->fix($this->changes);
 
-        return view()->make('xot::livewire.test', $view_params);
+        $view = app(GetViewAction::class)->execute();
+
+        return view($view, $view_params);
     }
 }
