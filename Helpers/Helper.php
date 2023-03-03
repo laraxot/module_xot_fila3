@@ -119,11 +119,10 @@ if (! function_exists('dddx')) {
         $dir_copy = implode(DIRECTORY_SEPARATOR, $dir_piece);
         $file = str_replace($dir_copy, $doc_root, $file);
 
-        $start = 0;
         if (! defined('LARAVEL_START')) {
             define('LARAVEL_START', microtime(true));
         }
-
+        $start = LARAVEL_START;
         $data = [
             '_' => $params,
             'line' => $tmp[0]['line'] ?? 'line-unknows',
