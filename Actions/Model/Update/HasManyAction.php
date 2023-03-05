@@ -24,6 +24,27 @@ class HasManyAction {
             throw new \Exception('['.__LINE__.']['.__FILE__.']');
         }
 
+        if (isset($relation->data['from']) && isset($relation->data['to'])) {
+            // dddx([
+            //     'row' => $row,
+            //     'relation' => $relation,
+            //     'methods' => get_class_methods($relation->rows),
+            //     'getForeignKeyName' => $relation->rows->getForeignKeyName(),
+            // ]);
+            $f_key = $relation->rows->getForeignKeyName();
+            $res = $relation->related->where($f_key, $row->getKey())
+                ->update([$f_key => null])
+            ;
+            foreach ($relation->data['to'] as $item) {
+                $row0 = $relation->related
+                ->where('id', $item)
+                ->update([$f_key => $row->getKey()])
+                ;
+            }
+
+            return;
+        }
+
         $rows = $relation->rows;
         $rows->update($relation->data);
     }
