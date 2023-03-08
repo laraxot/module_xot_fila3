@@ -53,6 +53,7 @@ class MorphToManyAction {
                         ->where('user_id',$v['pivot']['user_id'])
                         ->update($v['pivot']);
                 */
+
                 $res = $model->$name()
                     ->syncWithoutDetaching([$k => $v['pivot']]);
             } else {
