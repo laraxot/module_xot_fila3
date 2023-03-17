@@ -9,16 +9,13 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
 use Spatie\QueueableAction\QueueableAction;
 
-class UpdateAction
-{
+class UpdateAction {
     use QueueableAction;
 
-    public function __construct()
-    {
+    public function __construct() {
     }
 
-    public function execute(Model $row, array $data, array $rules): Model
-    {
+    public function execute(Model $row, array $data, array $rules): Model {
         $validator = Validator::make($data, $rules);
         $validator->validate();
 
@@ -36,7 +33,7 @@ class UpdateAction
         $relations = app(FilterRelationsAction::class)->execute($row, $data);
 
         foreach ($relations as $relation) {
-            $act = __NAMESPACE__ . '\\Update\\' . $relation->relationship_type . 'Action';
+            $act = __NAMESPACE__.'\\Update\\'.$relation->relationship_type.'Action';
 
             // if (\is_array($data[$relation->name])) {
             // $relation->data = $data[$relation->name];
@@ -44,7 +41,7 @@ class UpdateAction
             // }
         }
 
-        $msg = 'aggiornato! [' . $row->getKey() . ']!'; // .'['.implode(',',$row->getChanges()).']';
+        $msg = 'aggiornato! ['.$row->getKey().']!'; // .'['.implode(',',$row->getChanges()).']';
 
         Session::flash('status', $msg); // .
 
