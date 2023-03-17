@@ -9,14 +9,17 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
 use Spatie\QueueableAction\QueueableAction;
 
-class StoreAction {
+class StoreAction
+{
     use QueueableAction;
 
-    public function __construct() {
+    public function __construct()
+    {
     }
 
-    public function execute(Model $row, array $data, array $rules): Model {
-        if (! isset($data['lang']) && \in_array('lang', $row->getFillable(), true)) {
+    public function execute(Model $row, array $data, array $rules): Model
+    {
+        if (!isset($data['lang']) && \in_array('lang', $row->getFillable(), true)) {
             $data['lang'] = app()->getLocale();
         }
         /*if (
@@ -37,7 +40,7 @@ class StoreAction {
         $relations = app(FilterRelationsAction::class)->execute($row, $data);
 
         foreach ($relations as $relation) {
-            $act = __NAMESPACE__.'\\Store\\'.$relation->relationship_type.'Action';
+            $act = __NAMESPACE__ . '\\Store\\' . $relation->relationship_type . 'Action';
             // dddx(['act'=>$act,'row'=>$row,'relation'=>$relation,'data'=>$data]);
             // if (\is_array($data[$relation->name])) {
             // $relation->data = $data[$relation->name];
@@ -45,7 +48,7 @@ class StoreAction {
             // }
         }
 
-        $msg = 'created! ['.$row->getKey().']!';
+        $msg = 'created! [' . $row->getKey() . ']!';
 
         Session::flash('status', $msg); // .
 
