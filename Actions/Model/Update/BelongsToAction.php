@@ -26,6 +26,7 @@ class BelongsToAction {
         // ]);
         $rows = $relation->rows;
         // $rows= $row->{$relation->name}();
+
         if (! \is_array($relation->data)) {
             $related = $rows->getRelated();
             $related = $related->find($relation->data);
