@@ -35,6 +35,5 @@ use Illuminate\Database\Eloquent\Model;
  * @mixin \Eloquent
  */
 class Translation extends Model {
-    protected $fillable=[''];
-
+    protected $fillable = [''];
 }
