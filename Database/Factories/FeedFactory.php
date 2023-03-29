@@ -5,8 +5,6 @@ declare(strict_types=1);
 namespace Modules\Xot\Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Illuminate\Support\Str;
-
 use Modules\Xot\Models\Feed;
 
 class FeedFactory extends Factory {
@@ -23,11 +21,9 @@ class FeedFactory extends Factory {
      * @return array
      */
     public function definition() {
-
-
         return [
             'created_at' => $this->faker->dateTime,
-            'updated_at' => $this->faker->dateTime
+            'updated_at' => $this->faker->dateTime,
         ];
     }
 }
