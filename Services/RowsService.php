@@ -20,7 +20,8 @@ use Modules\Xot\DTOs\FieldFilterDTO;
 /**
  * Class ModelService.
  */
-class RowsService {
+class RowsService
+{
     /**
      * Undocumented function.
      *
@@ -28,7 +29,8 @@ class RowsService {
      *
      * @return RowsContract
      */
-    public static function search($query, ?string $q, array $search_fields = []) {
+    public static function search($query, ?string $q, array $search_fields = [])
+    {
         // backtrace(true);
         // dddx([$query, $q, $search_fields]);
 
@@ -55,9 +57,9 @@ class RowsService {
         $tipo = 0; // 0 a mano , 1 repository, 2 = scout
         switch ($tipo) {
             case 0:
-            // $search_fields = $this->search(); //campi di ricerca
+                // $search_fields = $this->search(); //campi di ricerca
                 if (0 === \count($search_fields)) { // se non gli passo nulla, cerco in tutti i fillable
-                // 61     Call to an undefined method Illuminate\Database\Eloquent\Model|Modules\Xot\Contracts\RowsContract::getFillable().
+                    // 61     Call to an undefined method Illuminate\Database\Eloquent\Model|Modules\Xot\Contracts\RowsContract::getFillable().
                     $search_fields = $model->getFillable();
                 }
                 // $table = $model->getTable();
@@ -118,7 +120,8 @@ class RowsService {
      *
      * @return RowsContract
      */
-    public static function filter($query, array $filters, array $filters_fields) {
+    public static function filter($query, array $filters, array $filters_fields)
+    {
         $filters_fields = FieldFilterDTO::collection($filters_fields);
         $filters_rules = [];
 

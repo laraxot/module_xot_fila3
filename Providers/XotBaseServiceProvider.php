@@ -18,7 +18,8 @@ use Nwidart\Modules\Facades\Module;
 /**
  * Class XotBaseServiceProvider.
  */
-abstract class XotBaseServiceProvider extends ServiceProvider {
+abstract class XotBaseServiceProvider extends ServiceProvider
+{
     protected string $module_dir = __DIR__;
 
     protected string $module_ns = __NAMESPACE__;
@@ -30,7 +31,8 @@ abstract class XotBaseServiceProvider extends ServiceProvider {
     /**
      * Boot the application events.
      */
-    public function boot(): void {
+    public function boot(): void
+    {
         $this->registerTranslations();
         $this->registerConfig();
         $this->registerViews();
@@ -48,7 +50,8 @@ abstract class XotBaseServiceProvider extends ServiceProvider {
     /**
      * Register the service provider.
      */
-    public function register(): void {
+    public function register(): void
+    {
         $this->module_ns = collect(explode('\\', $this->module_ns))->slice(0, -1)->implode('\\');
         $this->app->register(''.$this->module_ns.'\Providers\RouteServiceProvider');
         if (method_exists($this, 'registerCallback')) {
@@ -60,7 +63,8 @@ abstract class XotBaseServiceProvider extends ServiceProvider {
     /**
      * Register config.
      */
-    protected function registerConfig(): void {
+    protected function registerConfig(): void
+    {
         $this->publishes(
             [
                 $this->module_dir.'/../Config/config.php' => config_path($this->module_name.'.php'),
@@ -76,7 +80,8 @@ abstract class XotBaseServiceProvider extends ServiceProvider {
     /**
      * Register views.
      */
-    public function registerViews(): void {
+    public function registerViews(): void
+    {
         $sourcePath = realpath($this->module_dir.'/../Resources/views');
         if (false === $sourcePath) {
             throw new \Exception('realpath not find dir');
@@ -99,7 +104,8 @@ abstract class XotBaseServiceProvider extends ServiceProvider {
     /**
      * Register translations.
      */
-    public function registerTranslations(): void {
+    public function registerTranslations(): void
+    {
         $langPath = realpath($this->module_dir.'/../Resources/lang');
         if (false === $langPath) {
             throw new \Exception('['.__LINE__.']['.__FILE__.']');
@@ -111,13 +117,15 @@ abstract class XotBaseServiceProvider extends ServiceProvider {
     /**
      * Register an additional directory of factories.
      */
-    public function registerFactories(): void {
+    public function registerFactories(): void
+    {
         if (! app()->environment('production')) {
             // app(Factory::class)->load($this->module_dir.'/../Database/factories');
         }
     }
 
-    public function registerBladeComponents(): void {
+    public function registerBladeComponents(): void
+    {
         /*
         $module = Module::find($this->module_name);
         if (null == $module) {
@@ -144,7 +152,8 @@ abstract class XotBaseServiceProvider extends ServiceProvider {
     /**
      * Undocumented function.
      */
-    public function registerLivewireComponents(): void {
+    public function registerLivewireComponents(): void
+    {
         // $prefix=$this->module_name.'::';
         $prefix = '';
         LivewireService::registerComponents(
@@ -159,7 +168,8 @@ abstract class XotBaseServiceProvider extends ServiceProvider {
      *
      * @return array
      */
-    public function provides() {
+    public function provides()
+    {
         return [];
     }
 
@@ -168,7 +178,8 @@ abstract class XotBaseServiceProvider extends ServiceProvider {
      *
      * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
      */
-    public function getEventsFrom(string $path): array {
+    public function getEventsFrom(string $path): array
+    {
         $events = [];
         if (! File::isDirectory($path)) {
             File::makeDirectory($path, 0777, true, true);
@@ -226,7 +237,8 @@ abstract class XotBaseServiceProvider extends ServiceProvider {
     /**
      * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
      */
-    public function loadEventsFrom(string $path): void {
+    public function loadEventsFrom(string $path): void
+    {
         $events = $this->getEventsFrom($path);
         foreach ($events as $v) {
             Event::listen($v->event, $v->listener);

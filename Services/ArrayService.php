@@ -15,7 +15,8 @@ use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 /**
  * Class ArrayService.
  */
-class ArrayService {
+class ArrayService
+{
     protected int $export_processor = 1;
 
     public array $array;
@@ -23,12 +24,14 @@ class ArrayService {
 
     private static ?self $instance = null;
 
-    public function __construct() {
+    public function __construct()
+    {
         // ---
         include_once __DIR__.'/vendor/autoload.php';
     }
 
-    public static function getInstance(): self {
+    public static function getInstance(): self
+    {
         if (null === self::$instance) {
             self::$instance = new self();
         }
@@ -36,27 +39,32 @@ class ArrayService {
         return self::$instance;
     }
 
-    public static function make(): self {
+    public static function make(): self
+    {
         return static::getInstance();
     }
 
-    public function getArray(): array {
+    public function getArray(): array
+    {
         return $this->array;
     }
 
-    public function setArray(array $array): self {
+    public function setArray(array $array): self
+    {
         $this->array = $array;
 
         return $this;
     }
 
-    public function setFilename(string $filename): self {
+    public function setFilename(string $filename): self
+    {
         $this->filename = $filename;
 
         return $this;
     }
 
-    public function getFilename(): string {
+    public function getFilename(): string
+    {
         $filename = $this->filename;
         if (null !== $filename) {
             return $filename;
@@ -74,7 +82,8 @@ class ArrayService {
      *
      * @return \Symfony\Component\HttpFoundation\BinaryFileResponse|Renderable
      */
-    public function toXLS() {
+    public function toXLS()
+    {
         if (1 === request('debug', 0) * 1) {
             return self::toHtml();
         }
@@ -101,7 +110,8 @@ class ArrayService {
         }
     }
 
-    public function toHtml(): Renderable {
+    public function toHtml(): Renderable
+    {
         /*
         $header = $this->getHeader();
         $data = $this->getArray();
@@ -147,7 +157,8 @@ class ArrayService {
         return view($view, $view_params);
     }
 
-    public function getHeader(): array {
+    public function getHeader(): array
+    {
         $data = $this->array;
         $firstrow = collect($data)->first();
         if (! \is_array($firstrow)) {
@@ -167,7 +178,8 @@ class ArrayService {
 
     // ret array|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|string|\Symfony\Component\HttpFoundation\BinaryFileResponse
 
-    public function fixCellsType(Worksheet &$sheet): void {
+    public function fixCellsType(Worksheet &$sheet): void
+    {
         foreach ($sheet->getRowIterator() as $row) {
             $cellIterator = $row->getCellIterator();
             $cellIterator->setIterateOnlyExistingCells(false);
@@ -184,7 +196,8 @@ class ArrayService {
         }
     }
 
-    public function toCsv(): \Symfony\Component\HttpFoundation\StreamedResponse {
+    public function toCsv(): \Symfony\Component\HttpFoundation\StreamedResponse
+    {
         $filename = $this->getFilename();
 
         $headers = [
@@ -218,7 +231,8 @@ class ArrayService {
      *
      * @return \Symfony\Component\HttpFoundation\BinaryFileResponse|Renderable
      */
-    public function toXLS_phpoffice(?string $out = 'download') {
+    public function toXLS_phpoffice(?string $out = 'download')
+    {
         $spreadsheet = new Spreadsheet();
         // ----
         $ltr = 'A1';
@@ -275,7 +289,7 @@ class ArrayService {
             case 'download':
                 return response()->download($pathToFile);
                 // case 'file':
-        //    return $pathToFile;
+                //    return $pathToFile;
             case 'link_file':
                 return view()->make('ui::download_icon', $view_params);
 
@@ -285,7 +299,8 @@ class ArrayService {
         throw new \Exception('['.__LINE__.']['.__FILE__.']');
     }
 
-    public static function save(array $params): void {
+    public static function save(array $params): void
+    {
         extract($params);
         if (! isset($data)) {
             dddx(['err' => 'data is missing']);
@@ -316,7 +331,8 @@ class ArrayService {
      *
      * @return array
      */
-    public static function fromObjects($arrObjData, $arrSkipIndices = []) {
+    public static function fromObjects($arrObjData, $arrSkipIndices = [])
+    {
         $arrData = [];
 
         // if input is object, convert into array
@@ -349,7 +365,8 @@ class ArrayService {
      *
      * @return array|bool
      */
-    public static function rangeIntersect($a0, $b0, $a1, $b1) {
+    public static function rangeIntersect($a0, $b0, $a1, $b1)
+    {
         if ($a1 >= $a0 && $a1 <= $b0 && $b0 <= $b1) {
             return [$a1, $b0];
         }
@@ -369,7 +386,8 @@ class ArrayService {
     /**
      * Undocumented function.
      */
-    public static function fixType(array $data): array {
+    public static function fixType(array $data): array
+    {
         $res = collect($data)
             ->map(
                 function ($item) {
@@ -397,7 +415,8 @@ class ArrayService {
     /**
      * Undocumented function.
      */
-    public static function diff_assoc_recursive(array $arr_1, array $arr_2): array {
+    public static function diff_assoc_recursive(array $arr_1, array $arr_2): array
+    {
         $coll_1 = collect(self::fixType($arr_1));
         $arr_2 = self::fixType($arr_2);
 

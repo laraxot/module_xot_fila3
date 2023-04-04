@@ -23,11 +23,13 @@ if (! \defined('STDIN')) {
 /**
  * Class ArtisanService.
  */
-class ArtisanService {
+class ArtisanService
+{
     /**
      * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
      */
-    public static function act(string $act): string {
+    public static function act(string $act): string
+    {
         // echo '<h3>['.TenantService::getName().']</h3>';
         // echo '<pre>'.print_r(TenantService::config('database'), true).'</pre>';
         // da fare anche in noconsole, e magari mettere un policy
@@ -117,7 +119,8 @@ class ArtisanService {
         return '';
     }
 
-    public static function errorShow(): Renderable {
+    public static function errorShow(): Renderable
+    {
         /**
          * @phpstan-var view-string
          */
@@ -149,7 +152,8 @@ class ArtisanService {
         return view($view, $view_params);
     }
 
-    public static function showRouteList(): string {
+    public static function showRouteList(): string
+    {
         $routeCollection = Route::getRoutes();
         /*
         $view = ThemeService::g1etViewModule();
@@ -188,7 +192,8 @@ class ArtisanService {
     /**
      * @return string
      */
-    public static function errorClear() {
+    public static function errorClear()
+    {
         $files = File::files(storage_path('logs'));
 
         foreach ($files as $file) {
@@ -206,7 +211,8 @@ class ArtisanService {
     /**
      * @return string
      */
-    public static function sessionClear() {
+    public static function sessionClear()
+    {
         $files = File::files(storage_path('framework/sessions'));
 
         foreach ($files as $file) {
@@ -225,7 +231,8 @@ class ArtisanService {
     /**
      * @return string
      */
-    public static function debugbarClear() {
+    public static function debugbarClear()
+    {
         $files = File::files(storage_path('debugbar'));
         foreach ($files as $file) {
             if ('json' === $file->getExtension() && false !== $file->getRealPath()) {
@@ -243,7 +250,8 @@ class ArtisanService {
     /**
      * @param string $command
      */
-    public static function exe($command, array $arguments = []): string {
+    public static function exe($command, array $arguments = []): string
+    {
         try {
             $output = '';
 

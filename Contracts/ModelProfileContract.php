@@ -239,7 +239,8 @@ use Spatie\Permission\Exceptions\PermissionDoesNotExist;
  * @method static \Kalnoy\Nestedset\QueryBuilder|Profile withoutRoot()
  * @method static \Kalnoy\Nestedset\QueryBuilder|Profile withoutTags(\ArrayAccess|\Spatie\Tags\Tag|array|string $tags, ?string $type = null)
  */
-interface ModelProfileContract {
+interface ModelProfileContract
+{
     /**
      * Grant the given permission(s) to a role.
      *

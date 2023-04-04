@@ -12,16 +12,19 @@ use Illuminate\View\Component as IlluminateComponent;
 /**
  * Class XotBaseComponent.
  */
-abstract class XotBaseComponent extends IlluminateComponent {
+abstract class XotBaseComponent extends IlluminateComponent
+{
     protected static array $assets = [];
 
     public array $attrs = [];
 
-    public static function assets(): array {
+    public static function assets(): array
+    {
         return static::$assets;
     }
 
-    public function getView(): string {
+    public function getView(): string
+    {
         $class = static::class;
 
         $module_name = Str::between($class, 'Modules\\', '\Views\\');
@@ -48,7 +51,8 @@ abstract class XotBaseComponent extends IlluminateComponent {
 
     // ret \Closure|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Support\Htmlable|\Illuminate\Contracts\View\Factory|View|string
 
-    public function render(): Renderable {
+    public function render(): Renderable
+    {
         // per fare copia ed incolla
         $view = $this->getView();
         $view_params = [
