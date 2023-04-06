@@ -8,10 +8,12 @@ use Illuminate\Database\Eloquent\Model;
 use Modules\Xot\Actions\Model\FilterRelationsAction;
 use Spatie\QueueableAction\QueueableAction;
 
-class RelationAction {
+class RelationAction
+{
     use QueueableAction;
 
-    public function __construct() {
+    public function __construct()
+    {
     }
 
     /**
@@ -19,7 +21,8 @@ class RelationAction {
      *
      * @return void
      */
-    public function execute(Model $row, array $data) {
+    public function execute(Model $row, array $data)
+    {
         $relations = app(FilterRelationsAction::class)->execute($row, $data);
         /*
         if ('CompanyService' != class_basename($row)) {
