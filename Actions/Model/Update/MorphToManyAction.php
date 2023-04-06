@@ -9,14 +9,12 @@ use Illuminate\Support\Collection;
 use Modules\Xot\DTOs\RelationDTO;
 use Spatie\QueueableAction\QueueableAction;
 
-class MorphToManyAction
-{
+class MorphToManyAction {
     use QueueableAction;
 
     public Collection $res;
 
-    public function __construct()
-    {
+    public function __construct() {
     }
 
     /**
@@ -24,8 +22,7 @@ class MorphToManyAction
      *
      * @return void
      */
-    public function execute(Model $row, RelationDTO $relation)
-    {
+    public function execute(Model $row, RelationDTO $relation) {
         $data = $relation->data;
         $name = $relation->name;
         $model = $row;
@@ -36,11 +33,13 @@ class MorphToManyAction
             if (! isset($data['to'])) {
                 $data['to'] = [];
             }
+
             $data = $data['to'];
         }
 
         if (! \Arr::isAssoc($data)) {
-            $model->$name()->sync($data);
+            // dddx(['model' => $model, 'name' => $name, 'data' => $data]);
+            $model->{$name}()->sync($data);
         }
 
         foreach ($data as $k => $v) {
