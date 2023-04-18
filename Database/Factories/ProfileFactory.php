@@ -7,8 +7,7 @@ namespace Modules\Xot\Database\Factories;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Modules\Xot\Models\Profile;
 
-class ProfileFactory extends Factory
-{
+class ProfileFactory extends Factory {
     /**
      * The name of the factory's corresponding model.
      *
@@ -21,11 +20,10 @@ class ProfileFactory extends Factory
      *
      * @return array
      */
-    public function definition()
-    {
+    public function definition() {
         return [
-            'id' => $this->faker->randomNumber,
-            'user_id' => $this->faker->integer,
+            // 'id' => $this->faker->randomNumber,
+            // 'user_id' => $this->faker->integer,
         ];
     }
 }
