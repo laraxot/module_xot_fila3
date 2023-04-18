@@ -8,13 +8,15 @@ namespace Modules\Xot\Actions;
 
 use Spatie\QueueableAction\QueueableAction;
 
-class GetModelClassByModelTypeAction {
+class GetModelClassByModelTypeAction
+{
     use QueueableAction;
 
     /**
      * Execute the action.
      */
-    public function execute(string $model_type): string {
+    public function execute(string $model_type): string
+    {
         $morph_map = config('morph_map');
         if (! is_array($morph_map)) {
             throw new \Exception('['.__LINE__.']['.__FILE__.']');
