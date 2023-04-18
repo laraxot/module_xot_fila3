@@ -64,7 +64,6 @@ use Spatie\Tags\HasTags;
  * @property \Illuminate\Database\Eloquent\Collection<int, \Modules\Tag\Models\Tag>       $tags
  * @property int|null                                                                     $tags_count
  * @property \Modules\LU\Models\User|null                                                 $user
- *
  * @method static \Modules\Xot\Database\Factories\ProfileFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder|Profile  newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Profile  newQuery()
@@ -118,7 +117,27 @@ use Spatie\Tags\HasTags;
  * @method static \Illuminate\Database\Eloquent\Builder|Profile  withAnyTags(\ArrayAccess|\Spatie\Tags\Tag|array|string $tags, ?string $type = null)
  * @method static \Illuminate\Database\Eloquent\Builder|Profile  withAnyTagsOfAnyType($tags)
  * @method static \Illuminate\Database\Eloquent\Builder|Profile  withoutTags(\ArrayAccess|\Spatie\Tags\Tag|array|string $tags, ?string $type = null)
- *
+ * @property string|null $first_name
+ * @property string|null $last_name
+ * @property string|null $emails
+ * @property string|null $mobiles
+ * @property string|null $envelope_id
+ * @property int|null $is_signed
+ * @property int $company_selected_id
+ * @property string $company_data_requests
+ * @property string|null $nexi_transaction_code
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \Modules\LU\Models\Permission> $permissions
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \Modules\LU\Models\Role> $roles
+ * @property \Illuminate\Database\Eloquent\Collection<int, \Spatie\Tags\Tag> $tags
+ * @method static \Illuminate\Database\Eloquent\Builder|Profile whereCompanyDataRequests($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Profile whereCompanySelectedId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Profile whereEmails($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Profile whereEnvelopeId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Profile whereFirstName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Profile whereIsSigned($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Profile whereLastName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Profile whereMobiles($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Profile whereNexiTransactionCode($value)
  * @mixin \Eloquent
  */
 class Profile extends BaseModel implements ModelWithUserContract, ModelProfileContract

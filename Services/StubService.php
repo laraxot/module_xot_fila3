@@ -121,7 +121,7 @@ class StubService
                     'e' => $e,
                     'class' => $class,
                     'model_class' => $this->getModelClass(),
-                    'back' => debug_backtrace(),
+                    // 'back' => debug_backtrace(),
                 ]
             );
         }

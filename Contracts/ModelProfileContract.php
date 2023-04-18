@@ -15,6 +15,7 @@ use Spatie\Permission\Exceptions\PermissionDoesNotExist;
  * Modules\Xot\Contracts\ModelProfileContract.
  *
  * @property int                             $id
+ * @property string                          $nexi_transaction_code
  * @property int|null                        $user_id
  * @property string|null                     $post_type
  * @property \Illuminate\Support\Carbon|null $created_at

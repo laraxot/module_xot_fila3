@@ -14,7 +14,6 @@ namespace Modules\Xot\Models;
  * @property int                             $post_id
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
- *
  * @method static \Modules\Xot\Database\Factories\FeedFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder|Feed  newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Feed  newQuery()
@@ -22,7 +21,6 @@ namespace Modules\Xot\Models;
  * @method static \Illuminate\Database\Eloquent\Builder|Feed  whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Feed  wherePostId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Feed  whereUpdatedAt($value)
- *
  * @mixin \Eloquent
  */
 class Feed extends BaseModel
