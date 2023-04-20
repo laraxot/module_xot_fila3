@@ -53,7 +53,8 @@ class DbAction extends XotBasePanelAction {
     public function postHandle() {
         $search = request('search');
         $data = $this->getAllTablesAndFields();
-        $data = $data->map(function ($item) {
+        $data = $data->map(
+function ($item) {
             // $item['sql']=$this->makeSql($item,$search);
             return $item;
         });

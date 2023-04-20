@@ -39,15 +39,16 @@ trait SushiConfigCrud
                 }
                 $new = array_merge($original, [$data]);
                 $fillable = $model->getFillable();
-                $new = collect($new)->map(function ($item) use ($fillable) {
-                    foreach ($fillable as $v) {
-                        if (! isset($item[$v])) {
-                            $item[$v] = null;
+                $new = collect($new)->map(
+                    function ($item) use ($fillable) {
+                        foreach ($fillable as $v) {
+                            if (! isset($item[$v])) {
+                                $item[$v] = null;
+                            }
                         }
-                    }
 
-                    return $item;
-                })->all();
+                        return $item;
+                    })->all();
 
                 file_put_contents($config_path, '<?php
                     return '.var_export($new, true).';');
@@ -72,9 +73,10 @@ trait SushiConfigCrud
                 if (! \is_array($original)) {
                     $original = [];
                 }
-                $up = collect($original)->groupBy('id')->map(function ($item) {
-                    return $item->first();
-                })->all();
+                $up = collect($original)->groupBy('id')->map(
+                    function ($item) {
+                        return $item->first();
+                    })->all();
                 $id = $data['id'];
                 $up[$id] = $data;
 
@@ -101,9 +103,10 @@ trait SushiConfigCrud
             if (! \is_array($original)) {
                 $original = [];
             }
-            $up = collect($original)->groupBy('id')->map(function ($item) {
-                return $item->first();
-            })->all();
+            $up = collect($original)->groupBy('id')->map(
+                function ($item) {
+                    return $item->first();
+                })->all();
             $id = $data['id'];
             unset($up['id']);
 

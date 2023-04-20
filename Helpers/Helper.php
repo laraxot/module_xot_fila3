@@ -784,7 +784,8 @@ if (! function_exists('debug_getter_obj')) {
                 //--altri errori --
             ];
             return Str::startsWith($item, 'get') && ! in_array($item, $exclude);
-        })->map(function ($item) use ($obj) {
+        })->map(
+function ($item) use ($obj) {
             $tmp = [];
             $tmp['name'] = $item;
             try {

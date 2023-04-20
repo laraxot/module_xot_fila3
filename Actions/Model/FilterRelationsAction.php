@@ -37,24 +37,25 @@ class FilterRelationsAction
 
                 return $rows instanceof Relation;
             }
-        )->map(function ($value, $item) use ($model) {
-            $rows = $model->$item();
-            // $related = null;
-            // if (method_exists($rows, 'getRelated')) {
-            // Cannot call method getRelated() on class-string|object
-            $related = $rows->getRelated();
-            // }
-            // if(!is_array($value)){
-            //    dddx(['item'=>$item,'value'=>$value]);
-            // }
-            return [
-                'relationship_type' => class_basename($rows),
-                'related' => $related,
-                'name' => $item,
-                'rows' => $rows,
-                'data' => Arr::wrap($value),
-            ];
-        })->all();
+        )->map(
+            function ($value, $item) use ($model) {
+                $rows = $model->$item();
+                // $related = null;
+                // if (method_exists($rows, 'getRelated')) {
+                // Cannot call method getRelated() on class-string|object
+                $related = $rows->getRelated();
+                // }
+                // if(!is_array($value)){
+                //    dddx(['item'=>$item,'value'=>$value]);
+                // }
+                return [
+                    'relationship_type' => class_basename($rows),
+                    'related' => $related,
+                    'name' => $item,
+                    'rows' => $rows,
+                    'data' => Arr::wrap($value),
+                ];
+            })->all();
 
         return RelationDTO::collection($res);
     }

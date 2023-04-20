@@ -73,7 +73,8 @@ If the previously filtered model method is a relation instance then it is return
 * the relation itself
 
 ```php
-->map(function ($item) use ($model) {
+->map(
+function ($item) use ($model) {
             $rows = $model->$item();
             $related = null;
             if (method_exists($rows, 'getRelated')) {

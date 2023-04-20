@@ -304,19 +304,21 @@ class ModelService
         $dbSchemaManager = $connection->getDoctrineSchemaManager();
         $table_names = $dbSchemaManager->listTableNames();
 
-        $data = collect($table_names)->map(function ($table_name) use ($dbSchemaManager) {
-            $doctrineTable = $dbSchemaManager->listTableDetails($table_name);
-            $columns = $doctrineTable->getColumns();
+        $data = collect($table_names)->map(
+            function ($table_name) use ($dbSchemaManager) {
+                $doctrineTable = $dbSchemaManager->listTableDetails($table_name);
+                $columns = $doctrineTable->getColumns();
 
-            $fields = collect($columns)->map(function ($col) {
-                return [
-                    'name' => $col->getName(),
-                    'type' => $col->getType()->getName(),
-                ];
+                $fields = collect($columns)->map(
+                    function ($col) {
+                        return [
+                            'name' => $col->getName(),
+                            'type' => $col->getType()->getName(),
+                        ];
+                    });
+
+                return ['name' => $table_name, 'fields' => $fields];
             });
-
-            return ['name' => $table_name, 'fields' => $fields];
-        });
 
         return $data;
     }

@@ -102,7 +102,8 @@ trait FilterTrait {
         }
         */
 
-        $tmp = $model->search($q)->get()->map(function ($item) {
+        $tmp = $model->search($q)->get()->map(
+function ($item) {
             return $item->id;
         });
         //dddx($tmp->all());
@@ -146,7 +147,8 @@ trait FilterTrait {
 
         $parz = collect(\array_keys($params));
         /*
-        $parz=$parz->map(function ($item, $key) use ($lang) {
+        $parz=$parz->map(
+function ($item, $key) use ($lang) {
             if (isset($lang[$item])) {
                 return $lang[$item];
             }
@@ -258,7 +260,8 @@ trait FilterTrait {
         //echo '<pre>';print_r($lang);echo '</pre>';
         $parz = collect(\array_keys($params));
         //dd($parz);
-        $parz = $parz->map(function ($item, $key) use ($lang) {
+        $parz = $parz->map(
+function ($item, $key) use ($lang) {
             if (isset($lang[$item])) {
                 return $lang[$item];
             }
