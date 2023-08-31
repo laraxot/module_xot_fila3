@@ -8,12 +8,12 @@ namespace Modules\Xot\Filament\Resources;
 
 use Filament\Resources\Resource;
 use Illuminate\Support\Str;
-use Savannabits\FilamentModules\Concerns\ContextualResource;
+//use Savannabits\FilamentModules\Concerns\ContextualResource;
 use Webmozart\Assert\Assert;
 
 abstract class XotBaseResource extends Resource
 {
-    use ContextualResource;
+    //use ContextualResource;
 
     protected static ?string $model = null;
     // protected static ?string $navigationIcon = 'heroicon-o-bell';
@@ -22,6 +22,12 @@ abstract class XotBaseResource extends Resource
     // protected static bool $shouldRegisterNavigation = false;
     // protected static ?string $navigationGroup = 'Parametri di Sistema';
     protected static ?int $navigationSort = 3;
+
+
+    public static function getModuleName(): string
+    {
+        return (Str::between(get_called_class(), 'Modules\\', '\Filament'));
+    }
 
     public static function trans(string $key): string
     {
@@ -39,7 +45,7 @@ abstract class XotBaseResource extends Resource
         // if (null != static::$model) {
         //    return static::$model;
         // }
-        $moduleName = static::getModuleName()->toString();
+        $moduleName = static::getModuleName();
         $modelName = Str::before(class_basename(get_called_class()), 'Resource');
         $res = 'Modules\\'.$moduleName.'\Models\\'.$modelName;
         static::$model = $res;
