@@ -7,7 +7,6 @@ namespace Modules\Xot\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
-use InvalidArgumentException;
 use Sushi\Sushi;
 
 /**
@@ -120,7 +119,7 @@ class InformationSchemaTable extends Model
      */
     public function getRows(): array
     {
-        $query = "SELECT 
+        $query = 'SELECT 
             TABLE_CATALOG,
             TABLE_SCHEMA,
             TABLE_NAME,
@@ -143,12 +142,13 @@ class InformationSchemaTable extends Model
             CREATE_OPTIONS,
             TABLE_COMMENT
         FROM information_schema.TABLES
-        WHERE TABLE_SCHEMA = ?";
+        WHERE TABLE_SCHEMA = ?';
 
         $results = collect(DB::select($query, [DB::connection()->getDatabaseName()]))
             ->map(function ($row, $index) {
                 $data = (array) $row;
                 $data['id'] = $index + 1; // Aggiungi un ID incrementale
+
                 return $data;
             })
             ->toArray();
@@ -160,7 +160,7 @@ class InformationSchemaTable extends Model
      * Get table statistics from Sushi or information_schema as fallback.
      *
      * @param string $tableName The name of the table
-     * @param string $database The database name
+     * @param string $database  The database name
      */
     public static function getTableStats(string $tableName, string $database): ?self
     {
@@ -170,18 +170,17 @@ class InformationSchemaTable extends Model
             ->where('TABLE_NAME', $tableName)
             ->first();
 
-       
         if ($stats) {
             return $stats;
         }
 
         // Se non trova nulla, prova da information_schema
-        $query = "SELECT * FROM information_schema.TABLES 
-                 WHERE TABLE_SCHEMA = ? AND TABLE_NAME = ?";
-        
+        $query = 'SELECT * FROM information_schema.TABLES 
+                 WHERE TABLE_SCHEMA = ? AND TABLE_NAME = ?';
+
         $result = DB::selectOne($query, [$database, $tableName]);
 
-        if (!$result) {
+        if (! $result) {
             return null;
         }
 
@@ -195,19 +194,19 @@ class InformationSchemaTable extends Model
      *
      * @param class-string<Model> $modelClass The fully qualified model class name
      *
-     * @throws InvalidArgumentException If model class is invalid or not found
+     * @throws \InvalidArgumentException If model class is invalid or not found
      */
     public static function getModelCount(string $modelClass): int
     {
         if (! class_exists($modelClass)) {
-            throw new InvalidArgumentException("Model class [$modelClass] does not exist");
+            throw new \InvalidArgumentException("Model class [$modelClass] does not exist");
         }
 
         /** @var Model $model */
         $model = app($modelClass);
 
         if (! $model instanceof Model) {
-            throw new InvalidArgumentException("Class [$modelClass] must be an instance of ".Model::class);
+            throw new \InvalidArgumentException("Class [$modelClass] must be an instance of ".Model::class);
         }
 
         $connection = $model->getConnection();
@@ -232,19 +231,19 @@ class InformationSchemaTable extends Model
      * Get accurate row count for a table.
      *
      * @param string $tableName The name of the table
-     * @param string $database The database name
+     * @param string $database  The database name
      */
     public static function getAccurateRowCount(string $tableName, string $database): int
     {
         $stats = static::getTableStats($tableName, $database);
-        
-        if (!$stats) {
+
+        if (! $stats) {
             return 0;
         }
 
         // For InnoDB tables with less than 1000 rows or when TABLE_ROWS is 0,
         // use COUNT(*) for better accuracy
-        if ($stats->ENGINE === 'InnoDB' && ($stats->TABLE_ROWS < 1000 || $stats->TABLE_ROWS === 0)) {
+        if ('InnoDB' === $stats->ENGINE && ($stats->TABLE_ROWS < 1000 || 0 === $stats->TABLE_ROWS)) {
             try {
                 return (int) DB::table($tableName)->count();
             } catch (\Exception $e) {
@@ -260,13 +259,13 @@ class InformationSchemaTable extends Model
      * Get table size in bytes.
      *
      * @param string $tableName The name of the table
-     * @param string $database The database name
+     * @param string $database  The database name
      */
     public static function getTableSize(string $tableName, string $database): int
     {
         $stats = static::getTableStats($tableName, $database);
-        
-        if (!$stats) {
+
+        if (! $stats) {
             return 0;
         }
 
@@ -277,13 +276,13 @@ class InformationSchemaTable extends Model
      * Refresh the Sushi cache for a specific table.
      *
      * @param string $tableName The name of the table
-     * @param string $database The database name
+     * @param string $database  The database name
      */
     public static function refreshCache(string $tableName, string $database): void
     {
-        $query = "SELECT * FROM information_schema.TABLES 
-                 WHERE TABLE_SCHEMA = ? AND TABLE_NAME = ?";
-        
+        $query = 'SELECT * FROM information_schema.TABLES 
+                 WHERE TABLE_SCHEMA = ? AND TABLE_NAME = ?';
+
         $result = DB::selectOne($query, [$database, $tableName]);
 
         if ($result) {
@@ -297,4 +296,4 @@ class InformationSchemaTable extends Model
             );
         }
     }
-} 
+}
