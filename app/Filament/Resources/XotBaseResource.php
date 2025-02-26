@@ -96,9 +96,7 @@ abstract class XotBaseResource extends FilamentResource
     }
 
     /**
-     * Undocumented function
-     *
-     * @return array
+     * Undocumented function.
      */
     public static function getPages(): array
     {
