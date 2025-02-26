@@ -8,7 +8,7 @@ use Filament\Forms\Form;
 use Filament\Resources\Pages\EditRecord as FilamentEditRecord;
 
 /**
- * Undocumented class
+ * Undocumented class.
  */
 abstract class XotBaseEditRecord extends FilamenEditRecord
 {
