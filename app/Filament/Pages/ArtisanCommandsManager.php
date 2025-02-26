@@ -152,14 +152,14 @@ class ArtisanCommandsManager extends Page
         if ($event['processId'] === $this->processId) {
             $this->output[] = $event['output'];
 
-            if ($event['type'] === 'completed') {
+            if ('completed' === $event['type']) {
                 $this->isRunning = false;
                 $this->status = 'completed';
                 Notification::make()
                     ->title(__('xot::artisan-commands-manager.notifications.success'))
                     ->success()
                     ->send();
-            } elseif ($event['type'] === 'error') {
+            } elseif ('error' === $event['type']) {
                 $this->isRunning = false;
                 $this->status = 'failed';
                 Notification::make()

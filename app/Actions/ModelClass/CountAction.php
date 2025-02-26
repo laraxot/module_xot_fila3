@@ -26,10 +26,11 @@ class CountAction
     /**
      * Execute the count action for the given model class.
      *
-     * @param  class-string<Model>  $modelClass  The fully qualified model class name
-     * @return int The total count of records
+     * @param class-string<Model> $modelClass The fully qualified model class name
      *
      * @throws \InvalidArgumentException If model class is invalid or not found
+     *
+     * @return int The total count of records
      */
     public function execute(string $modelClass): int
     {
@@ -50,7 +51,7 @@ class CountAction
         $table = $model->getTable();
 
         // Handle special cases
-        if ($database === ':memory:' || $driver === 'sqlite') {
+        if (':memory:' === $database || 'sqlite' === $driver) {
             return (int) $model->count();
         }
 
@@ -65,7 +66,8 @@ class CountAction
     /**
      * Load all table counts for a database in a single query.
      *
-     * @param  string  $database  Database name
+     * @param string $database Database name
+     *
      * @return array<string, int> Array of table counts indexed by table name
      */
     protected function loadTableCounts(string $database): array
