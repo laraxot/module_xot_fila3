@@ -7,7 +7,7 @@ namespace Modules\Xot\Filament\Resources\Pages;
 use Filament\Resources\Pages\CreateRecord as FilamentCreateRecord;
 
 /**
- * Undocumented class
+ * Undocumented class.
  */
 abstract class XotBaseCreateRecord extends FilamentCreateRecord
 {
