@@ -8,6 +8,9 @@ use Filament\Panel;
 use Modules\Xot\Datas\MetatagData;
 use Spatie\QueueableAction\QueueableAction;
 
+/**
+ * Undocumented class
+ */
 class ApplyMetatagToPanelAction
 {
     use QueueableAction;
