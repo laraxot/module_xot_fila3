@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Modules\Xot\Providers\Filament;
 
 /**
- * Undocumented class
+ * Undocumented class.
  */
 class AdminPanelProvider extends XotBasePanelProvider
 {
