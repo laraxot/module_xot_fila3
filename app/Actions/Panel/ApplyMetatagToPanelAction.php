@@ -9,7 +9,7 @@ use Modules\Xot\Datas\MetatagData;
 use Spatie\QueueableAction\QueueableAction;
 
 /**
- * Undocumented class
+ * Undocumented class.
  */
 class ApplyMetatagToPanelAction
 {
