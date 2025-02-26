@@ -26,7 +26,7 @@ use Modules\Xot\Datas\XotData;
 use Webmozart\Assert\Assert;
 
 /**
- * Undocumented class
+ * Undocumented class.
  */
 abstract class XotBasePanelProvider extends PanelProvider
 {
