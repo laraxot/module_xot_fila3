@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Database\Query\Builder;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Route;
@@ -20,7 +21,6 @@ use Nwidart\Modules\Facades\Module;
 use function Safe\define;
 use function Safe\glob;
 use function Safe\json_decode;
-use function Safe\parse_url;
 use function Safe\preg_match;
 use function Safe\realpath;
 
@@ -67,6 +67,7 @@ if (! function_exists('isRunningTestBench')) {
         $res = Str::endsWith($base, $path);
 
         return $res;
+        // return false;
     }
 }
 
@@ -405,6 +406,7 @@ if (! function_exists('params2ContainerItem')) {
             if (is_array($matches) && isset($matches[1]) && isset($matches[2])) {
                 $sk = $matches[1];
                 $sv = $matches[2];
+                // @phpstan-ignore offsetAccess.nonOffsetAccessible
                 ${$sk}[$sv] = $v;
             }
         }
@@ -427,7 +429,9 @@ if (! function_exists('getModelByName')) {
     {
         $registered = config('morph_map.'.$name);
         if (is_string($registered) && class_exists($registered)) {
-            return app($registered);
+            Assert::isInstanceOf($res = app($registered), Model::class);
+
+            return $res;
         }
 
         // getFirst..
@@ -437,22 +441,23 @@ if (! function_exists('getModelByName')) {
         //    throw new Exception('['.__LINE__.']['.__FILE__.']');
         // }
 
-        $path = collect($files)->first(
-            static function ($file) use ($name): bool {
-                $info = pathinfo((string) $file);
-                // Offset 'filename' on array{dirname?: string, basename: string, extension?: string, filename: string} on left side of ?? always exists and is not nullable.
-                $filename = $info['filename'];
+        $path = Arr::first(
+            $files,
+            function ($file) use ($name): bool {
+                Assert::string($file);
+                $info = pathinfo($file);
 
-                // ?? '';
+                // Accedi direttamente a 'filename', che esiste sempre in pathinfo
+                $filename = $info['filename'] ?? '';
+
                 return Str::snake($filename) === $name;
             }
         );
 
-        // dddx($registered);
-
         if (null === $path) {
             throw new Exception('['.$name.'] not in morph_map ['.__LINE__.']['.__FILE__.']');
         }
+        Assert::string($path);
 
         $path = app(Modules\Xot\Actions\File\FixPathAction::class)->execute($path);
         $info = pathinfo($path);
@@ -460,7 +465,9 @@ if (! function_exists('getModelByName')) {
 
         $class = 'Modules\\'.$module_name.'\Models\\'.$info['filename'];
 
-        return app($class);
+        Assert::isInstanceOf($res = app($class), Model::class);
+
+        return $res;
     }
 }
 
@@ -492,7 +499,11 @@ if (! function_exists('getModuleFromModel')) {
         // $mod = \Nwidart\Modules\Module::get($module_name);
         // 480    Call to an undefined method Nwidart\Modules\Facades\Module::get()
         // $mod = app('module')->get($module_name);
-        return app('module')->find($module_name);
+
+        // @phpstan-ignore method.nonObject
+        Assert::isInstanceOf($res = app('module')->find($module_name), Nwidart\Modules\Module::class);
+
+        return $res;
     }
 }
 
@@ -513,7 +524,7 @@ if (! function_exists('getModuleNameFromModelName')) {
             throw new Exception('['.__LINE__.']['.__FILE__.']');
         }
 
-        $model = app($model_class);
+        Assert::isInstanceOf($model = app($model_class), Model::class);
 
         return getModuleNameFromModel($model);
     }
@@ -543,17 +554,41 @@ if (! function_exists('getAllModules')) {
 
 if (! function_exists('getAllModulesModels')) {
     /**
+     * Get all models from all enabled modules.
+     *
      * @throws ReflectionException
+     *
+     * @return array<string, string>
      */
     function getAllModulesModels(): array
     {
         $res = [];
+
+        /** @var Nwidart\Modules\Laravel\Module[] $modules */
         $modules = Module::all();
+
         foreach ($modules as $module) {
-            $tmp = getModuleModels($module->getName());
-            $res = array_merge($res, $tmp);
+            if (! $module instanceof Nwidart\Modules\Laravel\Module) {
+                continue;
+            }
+
+            $moduleName = $module->get('name');
+            if (! is_string($moduleName)) {
+                continue;
+            }
+
+            try {
+                /** @var array<string, string> $moduleModels */
+                $moduleModels = getModuleModels($moduleName);
+                $res = array_merge($res, $moduleModels);
+            } catch (Exception $e) {
+                Log::error('[Module:'.$moduleName.'] Error getting models: '.$e->getMessage());
+
+                continue;
+            }
         }
 
+        /* @var array<string, string> */
         return $res;
     }
 }
@@ -601,7 +636,9 @@ if (! function_exists('xotModel')) {
             throw new Exception('['.__LINE__.']['.__FILE__.']');
         }
 
-        return app($model_class);
+        Assert::isInstanceOf($res = app($model_class), Model::class);
+
+        return $res;
     }
 }
 
@@ -645,88 +682,6 @@ if (! function_exists('array_merge_recursive_distinct')) {
         }
 
         return $merged;
-    }
-}
-
-/*
-|--------------------------------------------------------------------------
-| Laravel 5 - URL Query String Helper
-|--------------------------------------------------------------------------
-|
-| A helper function to take a URL string then quickly and easily add query
-| string parameters to it, or change existing ones.
-|
-| url_queries(['order' => 'desc', 'page' => 2],
-|             'https://app.dev/users/?sort=username&order=asc');
-| // https://app.dev/users/?sort=username&order=desc&page=2
-|
-https://gist.github.com/ImLiam/49c420ddb2db881afd59d77635d039f8
-*/
-if (! function_exists('url_queries')) {
-    /**
-     * Modifies the query strings in a given (or the current) URL.
-     *
-     * @param array       $queries Indexed array of query parameters
-     * @param string|null $url     URL to use parse. If none is supplied, the current URL of the page load will be used
-     *
-     * @return string The updated query string
-     */
-    function url_queries(array $queries, ?string $url = null): string
-    {
-        // If a URL isn't supplied, use the current one
-        if (! $url) {
-            $url = Request::fullUrl();
-        }
-
-        // Split the URL down into an array with all the parts separated out
-        $url_parsed = parse_url($url);
-
-        if (false === $url_parsed) {
-            throw new Exception('error parsing url ['.$url.']');
-        }
-
-        // Turn the query string into an array
-        $url_params = [];
-        // Cannot access offset 'query' on array(?'scheme' => string, ?'host' => string, ?'port' => int, ?'user' => string, ?'pass' => string, ?'path' => string, ?'query' => string, ?'fragment' => string)|false.
-        if (isset($url_parsed['query'])) {
-            // if (in_array('query', array_keys($url_parsed))) {
-            parse_str((string) $url_parsed['query'], $url_params);
-        }
-
-        // Merge the existing URL's query parameters with our new ones
-        $url_params = array_merge($url_params, $queries);
-
-        // Build a new query string from our updated array
-        $string_query = http_build_query($url_params);
-        // Add the new query string back into our URL
-        Assert::isArray($url_parsed, 'wip');
-        $url_parsed['query'] = $string_query;
-
-        // Build the array back into a complete URL string
-        return build_url($url_parsed);
-    }
-}
-
-if (! function_exists('build_url')) {
-    /**
-     * Rebuilds the URL parameters into a string from the native parse_url() function.
-     *
-     * @param array $parts The parts of a URL
-     *
-     * @return string The constructed URL
-     */
-    function build_url(array $parts): string
-    {
-        return (isset($parts['scheme']) ? sprintf('%s:', $parts['scheme']) : '').
-            (isset($parts['user']) || isset($parts['host']) ? '//' : '').
-            ($parts['user'] ?? '').
-            (isset($parts['pass']) ? sprintf(':%s', $parts['pass']) : '').
-            (isset($parts['user']) ? '@' : '').
-            ($parts['host'] ?? '').
-            (isset($parts['port']) ? sprintf(':%s', $parts['port']) : '').
-            ($parts['path'] ?? '').
-            (isset($parts['query']) ? sprintf('?%s', $parts['query']) : '').
-            (isset($parts['fragment']) ? sprintf('#%s', $parts['fragment']) : '');
     }
 }
 
@@ -817,7 +772,7 @@ if (! function_exists('removeQueryParams')) {
     {
         $url = url()->current(); // get the base URL - everything to the left of the "?"
         $query = request()->query(); // get the query parameters (what follows the "?")
-
+        Assert::isArray($query);
         foreach ($params as $param) {
             unset($query[$param]); // loop through the array of parameters we wish to remove and unset the parameter from the query array
         }
@@ -1041,15 +996,14 @@ if (! function_exists('rowsToSql')) {
         return Str::replaceArray('?', $bindings, $sql);
     }
 }
-
+/*
 if (! function_exists('getServerName')) {
     function getServerName(): string
     {
-        $default = env('APP_URL');
+        $default = config('app.url', 'localhost');
         if (! is_string($default)) {
             $default = 'localhost';
         }
-
         $default = Str::after($default, '//');
 
         $server_name = $default;
@@ -1064,7 +1018,7 @@ if (! function_exists('getServerName')) {
         return $server_name;
     }
 }
-
+*/
 /*
 if (! function_exists('getLang')) {
     function getLang(): string {
@@ -1084,6 +1038,7 @@ if (! function_exists('inArrayBetween')) {
     function inArrayBetween(int $curr, array $data, ?string $field_start = 'start', ?string $field_end = 'end'): bool
     {
         foreach ($data as $v) {
+            Assert::isArray($v);
             if ($curr < $v[$field_start]) {
                 continue;
             }
@@ -1103,6 +1058,7 @@ if (! function_exists('inArrayBetweenKey')) {
     function inArrayBetweenKey(int $curr, array $data, ?string $field_start = 'start', ?string $field_end = 'end'): int|bool
     {
         foreach ($data as $k => $v) {
+            Assert::isArray($v);
             if ($curr < $v[$field_start]) {
                 continue;
             }
