@@ -88,43 +88,7 @@ class XotServiceProvider extends XotBaseServiceProvider
         DatePicker::configureUsing(fn (DatePicker $component) => $component->timezone($timezone)->displayFormat($date_format));
         TimePicker::configureUsing(fn (TimePicker $component) => $component->timezone($timezone));
         TextColumn::configureUsing(fn (TextColumn $column) => $column->timezone($timezone));
-        TextInput::configureUsing(fn (TextInput $component) => $component->validationMessages(__('user::validation')));
-
-        Field::configureUsing(function (Field $component) {
-            $backtrace = debug_backtrace();
-            Assert::string($class = Arr::get($backtrace, '4.class'));
-            $trans_key = app(GetTransKeyAction::class)->execute($class);
-            $label_key = $trans_key.'.fields.'.$component->getName().'.label';
-            $label = trans($label_key);
-            if (is_string($label)) {
-                $component->label($label);
-            }
-            $component->validationMessages(__('user::validation'));
-
-            return $component;
-        });
-
-        Column::configureUsing(function (Column $component) {
-            $backtrace = debug_backtrace();
-            Assert::string($class = Arr::get($backtrace, '4.class'));
-            $trans_key = app(GetTransKeyAction::class)->execute($class);
-            $label_key = $trans_key.'.fields.'.$component->getName().'.label';
-            try {
-                $label = trans($label_key);
-            } catch (\TypeError $e) {
-                $label = $label_key;
-            }
-
-            if (is_string($label)) {
-                $component->label($label);
-            }
-
-            // $tooltip = trans($trans_key.'.fields.'.$component->getName().'.tooltip');
-            // $component->tooltip($tooltip);
-
-            return $component;
-        });
-        // ->validationMessages(__('xot::validation'))
+        // TextInput::configureUsing(fn (TextInput $component) => $component->validationMessages($validationMessages));
     }
 
     /**
