@@ -197,9 +197,6 @@ trait HasXotTable
      * mantenendo la retrocompatibilità e prevenendo errori.
      *
      * Ultimo aggiornamento: 10/2023
-     *
-     * @param  Table  $table
-     * @return Table
      */
     public function table(Table $table): Table
     {

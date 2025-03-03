@@ -7,14 +7,13 @@ namespace Modules\Xot\Actions\View;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use Spatie\QueueableAction\QueueableAction;
-use Modules\Xot\Actions\Module\GetModuleNameByModelClassAction;
 
 class GetViewByClassAction
 {
     use QueueableAction;
 
     /**
-     * "Modules\UI\Filament\Widgets\GroupWidget" => "ui::filament.widgets.group"
+     * "Modules\UI\Filament\Widgets\GroupWidget" => "ui::filament.widgets.group".
      */
     public function execute(string $class, string $suffix = ''): string
     {
@@ -32,6 +31,7 @@ class GetViewByClassAction
                     $value = Str::of($value)->beforeLast($singular)->toString();
                 }
             }
+
             return Str::of($value)->slug()->toString();
         });
 
@@ -39,6 +39,5 @@ class GetViewByClassAction
         $view = $module_low.'::'.$implode.$suffix;
 
         return $view;
-
     }
 }

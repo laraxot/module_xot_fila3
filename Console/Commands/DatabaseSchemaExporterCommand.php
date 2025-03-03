@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
@@ -42,7 +44,7 @@ class DatabaseSchemaExporterCommand extends Command
         $tables = $this->getTables('mysql');
 
         // Ora puoi utilizzare $tables come preferisci
-        $this->info('Tabelle trovate: ' . implode(', ', $tables));
+        $this->info('Tabelle trovate: '.implode(', ', $tables));
 
         return 0;
     }
@@ -55,14 +57,14 @@ class DatabaseSchemaExporterCommand extends Command
         // Utilizziamo un approccio alternativo che funziona con qualunque connessione
         $tables = DB::connection($connection)
             ->select('SHOW TABLES');
-        
+
         $databaseName = config("database.connections.{$connection}.database");
-        
+
         // Il risultato contiene un array di oggetti con una proprietà del tipo Tables_in_{database}
         $tableKey = "Tables_in_{$databaseName}";
-        
+
         return array_map(function ($table) use ($tableKey) {
             return $table->$tableKey;
         }, $tables);
     }
-} 
+}
