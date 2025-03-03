@@ -88,7 +88,6 @@ class XotServiceProvider extends XotBaseServiceProvider
         DatePicker::configureUsing(fn (DatePicker $component) => $component->timezone($timezone)->displayFormat($date_format));
         TimePicker::configureUsing(fn (TimePicker $component) => $component->timezone($timezone));
         TextColumn::configureUsing(fn (TextColumn $column) => $column->timezone($timezone));
-<<<<<<< HEAD:Providers/XotServiceProvider.php
         TextInput::configureUsing(fn (TextInput $component) => $component->validationMessages(__('user::validation')));
 
         Field::configureUsing(function (Field $component) {
@@ -126,9 +125,6 @@ class XotServiceProvider extends XotBaseServiceProvider
             return $component;
         });
         // ->validationMessages(__('xot::validation'))
-=======
-        // TextInput::configureUsing(fn (TextInput $component) => $component->validationMessages($validationMessages));
->>>>>>> origin/dev:app/Providers/XotServiceProvider.php
     }
 
     /**
