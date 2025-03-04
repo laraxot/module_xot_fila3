@@ -46,11 +46,7 @@ class ViewDatabaseConfigCommand extends Command
         Assert::isArray($connections = config('database.connections'));
         $database = Arr::map(
             $connections,
-<<<<<<< HEAD:Console/Commands/ViewDatabaseConfigCommand.php
-            function ($item) {
-=======
             function (array $item) {
->>>>>>> origin/dev:app/Console/Commands/ViewDatabaseConfigCommand.php
                 $item['password'] = '********';
 
                 return $item;

@@ -94,15 +94,9 @@ class GenerateTableColumnsByFileAction
             'getFilename' => $file->getFilename(), // = AssenzeResource.php
             'getExtension' => $file->getExtension(), // php
             'getBasename' => $file->getBasename(), // AssenzeResource.php
-<<<<<<< HEAD:Actions/Filament/GenerateTableColumnsByFileAction.php
             'getPathname' => $file->getPathname(), // "/var/www/html/ptvx/laravel/Modules/Progressioni/Filament/Resources/AssenzeResource.php
             'isFile' => $file->isFile(), // true
             'getRealPath' => $file->getRealPath(), // /var/www/html/ptvx/laravel/Modules/Progressioni/Filament/Resources/AssenzeResource.php
-=======
-            'getPathname' => $file->getPathname(), // "/var/www/html/ptvx/laravel/Modules/Progressioni/Filament/resources/AssenzeResource.php
-            'isFile' => $file->isFile(), // true
-            'getRealPath' => $file->getRealPath(), // /var/www/html/ptvx/laravel/Modules/Progressioni/Filament/resources/AssenzeResource.php
->>>>>>> origin/dev:app/Actions/Filament/GenerateTableColumnsByFileAction.php
             // 'getFileInfo' => $file->getFileInfo(),
             // 'getPathInfo' => $file->getPathInfo(),
             'methods' => get_class_methods($file),

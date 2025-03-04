@@ -24,25 +24,17 @@ class MetatagData extends Data implements Wireable
 
     public string $subtitle;
 
-<<<<<<< HEAD:Datas/MetatagData.php
     // ' => 'Find restaurants, specials, and coupons for free',
-=======
->>>>>>> origin/dev:app/Datas/MetatagData.php
     public ?string $generator = 'xot';
 
     public string $charset = 'UTF-8';
 
     public ?string $author = 'xot';
 
-<<<<<<< HEAD:Datas/MetatagData.php
     // ' => '',
     public ?string $description;
 
     // ' => '',
-=======
-    public ?string $description;
-
->>>>>>> origin/dev:app/Datas/MetatagData.php
     public ?string $keywords;
 
     public string $nome_regione;
@@ -127,7 +119,6 @@ class MetatagData extends Data implements Wireable
         return app(\Modules\Xot\Actions\File\AssetAction::class)->execute($this->favicon);
     }
 
-<<<<<<< HEAD:Datas/MetatagData.php
     public function getFilamentColors(): array
     {
         return [
@@ -149,12 +140,6 @@ class MetatagData extends Data implements Wireable
     }
 
     public function getColors(): array
-=======
-    /**
-     * @return array<array<string>|string>
-     */
-    public function getFilamentColors(): array
->>>>>>> origin/dev:app/Datas/MetatagData.php
     {
         $mapped = Arr::mapWithKeys(
             $this->colors,

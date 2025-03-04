@@ -37,15 +37,9 @@ class ExportXlsAction extends Action
                 // ->getQuery(); // Staudenmeir\LaravelCte\Query\Builder
                 $rows = $query->get();
                 $resource = $livewire->getResource();
-<<<<<<< HEAD:Filament/Actions/Header/ExportXlsAction.php
                 $fields = null;
                 if (method_exists($resource, 'getXlsFields')) {
                     $fields = $resource::getXlsFields($livewire->tableFilters);
-=======
-                $fields = [];
-                if (method_exists($resource, 'getXlsFields')) {
-                    Assert::isArray($fields = $resource::getXlsFields($livewire->tableFilters));
->>>>>>> origin/dev:app/Filament/Actions/Header/ExportXlsAction.php
                 }
 
                 return app(ExportXlsByCollection::class)->execute($rows, $filename, $transKey, $fields);

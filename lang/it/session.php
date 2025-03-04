@@ -4,29 +4,6 @@ declare(strict_types=1);
 
 return [
     'navigation' => [
-<<<<<<< HEAD:Resources/lang/it/session.php
-        'name' => 'sessione',
-        'plural' => 'sessioni',
-        'group' => [
-            'name' => 'Admin',
-        ],
-    ],
-    'pages' => [
-        'health_check_results' => [
-            'buttons' => [
-                'refresh' => 'Refresh',
-            ],
-
-            'heading' => 'Application Health',
-
-            'navigation' => [
-                'group' => 'Settings',
-                'label' => 'Application Health',
-            ],
-
-            'notifications' => [
-                'check_results' => 'Check results from',
-=======
         'name' => 'Sessioni',
         'plural' => 'Sessioni',
         'group' => [
@@ -189,7 +166,6 @@ return [
             'cleanup' => [
                 'label' => 'Pulizia Automatica',
                 'help' => 'Rimozione sessioni scadute',
->>>>>>> origin/dev:lang/it/session.php
             ],
         ],
     ],

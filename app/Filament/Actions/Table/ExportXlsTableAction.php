@@ -34,15 +34,9 @@ class ExportXlsTableAction extends Action
                 $query = $livewire->getFilteredTableQuery();
                 // ->getQuery(); // Staudenmeir\LaravelCte\Query\Builder
                 $rows = $query->get();
-<<<<<<< HEAD:Filament/Actions/Table/ExportXlsTableAction.php
                 $fields = null;
                 if (method_exists($livewire_class, 'getXlsFields')) {
                     $fields = $livewire_class::getXlsFields($livewire->tableFilters);
-=======
-                $fields = [];
-                if (method_exists($livewire_class, 'getXlsFields')) {
-                    Assert::isArray($fields = $livewire_class::getXlsFields($livewire->tableFilters));
->>>>>>> origin/dev:app/Filament/Actions/Table/ExportXlsTableAction.php
                 }
 
                 return app(ExportXlsByCollection::class)->execute($rows, $filename, $transKey, $fields);

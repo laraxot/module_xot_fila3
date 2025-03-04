@@ -32,10 +32,7 @@ trait RelationX
         ?string $relatedKey = null,
         ?string $relation = null,
     ): BelongsToMany {
-<<<<<<< HEAD:Models/Traits/RelationX.php
-=======
         Assert::isInstanceOf($related_model = app($related), Model::class, '['.__LINE__.']['.class_basename($this).']');
->>>>>>> origin/dev:app/Models/Traits/RelationX.php
         $pivot = $this->guessPivot($related);
         $table = $pivot->getTable();
         $pivotFields = $pivot->getFillable();

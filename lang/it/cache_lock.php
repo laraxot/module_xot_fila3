@@ -4,31 +4,6 @@ declare(strict_types=1);
 
 return [
     'navigation' => [
-<<<<<<< HEAD:Resources/lang/it/cache_lock.php
-        'name' => 'cache lock',
-        'plural' => 'cache locks',
-        'group' => [
-            'name' => 'Admin',
-        ],
-    ],
-    'pages' => [
-        'health_check_results' => [
-            'buttons' => [
-                'refresh' => 'Refresh',
-            ],
-
-            'heading' => 'Application Health',
-
-            'navigation' => [
-                'group' => 'Settings',
-                'label' => 'Application Health',
-            ],
-
-            'notifications' => [
-                'check_results' => 'Check results from',
-            ],
-        ],
-=======
         'name' => 'Lock Cache',
         'plural' => 'Lock Cache',
         'group' => [
@@ -182,6 +157,5 @@ return [
     ],
     'model' => [
         'label' => 'cache lock.model',
->>>>>>> origin/dev:lang/it/cache_lock.php
     ],
 ];

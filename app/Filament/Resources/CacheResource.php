@@ -4,12 +4,9 @@ declare(strict_types=1);
 
 namespace Modules\Xot\Filament\Resources;
 
-<<<<<<< HEAD:Filament/Resources/CacheResource.php
 use Filament\Forms\Form;
-=======
 use Filament\Forms\Components\KeyValue;
 use Filament\Forms\Components\TextInput;
->>>>>>> origin/dev:app/Filament/Resources/CacheResource.php
 use Modules\Xot\Filament\Resources\CacheResource\Pages;
 use Modules\Xot\Models\Cache;
 

@@ -4,12 +4,6 @@ declare(strict_types=1);
 
 return [
     'navigation' => [
-<<<<<<< HEAD:Resources/lang/it/cache.php
-        'name' => 'cache',
-        'plural' => 'cache',
-        'group' => [
-            'name' => 'Admin',
-=======
         'name' => 'Cache',
         'plural' => 'Cache',
         'group' => [
@@ -107,26 +101,11 @@ return [
             'auto_cleanup' => 'Gli elementi scaduti verranno rimossi automaticamente',
             'memory_usage' => 'Utilizzo memoria cache: :usage',
             'hit_ratio' => 'Rapporto hit/miss: :ratio',
->>>>>>> origin/dev:lang/it/cache.php
         ],
     ],
     'pages' => [
         'health_check_results' => [
             'buttons' => [
-<<<<<<< HEAD:Resources/lang/it/cache.php
-                'refresh' => 'Refresh',
-            ],
-
-            'heading' => 'Application Health',
-
-            'navigation' => [
-                'group' => 'Settings',
-                'label' => 'Application Health',
-            ],
-
-            'notifications' => [
-                'check_results' => 'Check results from',
-=======
                 'refresh' => 'Aggiorna',
             ],
             'heading' => 'Stato del Sistema',
@@ -136,7 +115,6 @@ return [
             ],
             'notifications' => [
                 'check_results' => 'Risultati verifica da',
->>>>>>> origin/dev:lang/it/cache.php
             ],
         ],
     ],

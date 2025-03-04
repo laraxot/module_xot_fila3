@@ -4,31 +4,6 @@ declare(strict_types=1);
 
 return [
     'navigation' => [
-<<<<<<< HEAD:Resources/lang/it/extra.php
-        'name' => 'extra',
-        'plural' => 'estras',
-        'group' => [
-            'name' => 'Admin',
-        ],
-    ],
-    'pages' => [
-        'health_check_results' => [
-            'buttons' => [
-                'refresh' => 'Refresh',
-            ],
-
-            'heading' => 'Application Health',
-
-            'navigation' => [
-                'group' => 'Settings',
-                'label' => 'Application Health',
-            ],
-
-            'notifications' => [
-                'check_results' => 'Check results from',
-            ],
-        ],
-=======
         'name' => 'Extra',
         'plural' => 'Extra',
         'group' => [
@@ -215,6 +190,5 @@ return [
     ],
     'model' => [
         'label' => 'extra.model',
->>>>>>> origin/dev:lang/it/extra.php
     ],
 ];

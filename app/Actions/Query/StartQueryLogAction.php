@@ -1,13 +1,10 @@
 <?php
 
 declare(strict_types=1);
-<<<<<<< HEAD:Actions/Query/StartQueryLogAction.php
 
 /**
  * @see  https://fajarwz.com/blog/laravel-database-transaction-for-data-consistency/
  */
-=======
->>>>>>> origin/dev:app/Actions/Query/StartQueryLogAction.php
 
 namespace Modules\Xot\Actions\Query;
 
