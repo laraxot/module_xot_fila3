@@ -209,4 +209,18 @@ class MetatagData extends Data implements Wireable
 
         return $mapped;
     }
+
+    public static function fromMeta(array $meta): self
+    {
+        return new self(
+            title: $meta['title'] ?? null,
+            description: $meta['description'] ?? null,
+            image: $meta['image'] ?? null,
+            url: $meta['url'] ?? null,
+            type: $meta['type'] ?? 'website',
+            site_name: $meta['site_name'] ?? null,
+            locale: $meta['locale'] ?? null,
+            custom: $meta['custom'] ?? [],
+        );
+    }
 }
