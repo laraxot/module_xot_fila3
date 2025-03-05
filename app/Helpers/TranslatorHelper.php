@@ -77,8 +77,4 @@ class TranslatorHelper
             return $default;
         }
     }
-<<<<<<< HEAD
 } 
-=======
-} 
->>>>>>> fb6d42c3 (.)
