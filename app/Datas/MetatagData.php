@@ -17,7 +17,6 @@ use Spatie\LaravelData\Data;
 class MetatagData extends Data implements Wireable
 {
     use WireableData;
-
     public string $title;
 
     public string $sitename;

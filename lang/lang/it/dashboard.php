@@ -15,6 +15,7 @@ return [
     ],
     'fields' => [
         'name' => 'Nome',
+<<<<<<< HEAD
         'title' => ['label' => 'Titolo', 'placeholder' => 'Titolo'],
         'description' => ['label' => 'Descrizione', 'placeholder' => 'Descrizione'],
         'url' => ['label' => 'URL', 'placeholder' => 'URL'],
@@ -51,6 +52,8 @@ return [
         'contact_email' => ['label' => 'Email contatto', 'placeholder' => 'Email contatto'],
         'contact_phone' => ['label' => 'Telefono contatto', 'placeholder' => 'Telefono contatto'],
         'contact_address' => ['label' => 'Indirizzo contatto', 'placeholder' => 'Indirizzo contatto'],
+=======
+>>>>>>> laraxot/master
         'guard_name' => 'Guard',
         'permissions' => 'Permessi',
         'updated_at' => 'Aggiornato il',

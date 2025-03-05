@@ -10,6 +10,7 @@ return [
             'name' => 'Admin',
         ],
     ],
+<<<<<<< HEAD
     'fields' => [
         'name' => ['label' => 'Nome', 'placeholder' => 'Nome'],
         'description' => ['label' => 'Descrizione', 'placeholder' => 'Descrizione'],
@@ -26,6 +27,8 @@ return [
         'icon' => ['label' => 'Icona', 'placeholder' => 'Icona'],
         'timezone' => ['label' => 'Fuso orario', 'placeholder' => 'Fuso orario'],
     ],
+=======
+>>>>>>> laraxot/master
     'pages' => [
         'health_check_results' => [
             'buttons' => [
