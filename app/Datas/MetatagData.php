@@ -17,69 +17,37 @@ use Spatie\LaravelData\Data;
 class MetatagData extends Data implements Wireable
 {
     use WireableData;
-
     public string $title;
-
     public string $sitename;
-
     public string $subtitle;
-
     public ?string $generator = 'xot';
-
     public string $charset = 'UTF-8';
-
     public ?string $author = 'xot';
-
     public ?string $description;
-
     public ?string $keywords;
-
     public string $nome_regione;
-
     public string $nome_comune;
-
     public string $site_title;
-
     public string $logo;
-
     public string $logo_square;
-
     public string $logo_header;
-
     public string $logo_header_dark;
-
     public string $logo_height = '2em';
-
     public string $logo_footer;
-
     public string $logo_alt;
-
     public string $hide_megamenu;
-
     public string $hero_type;
-
     public string $facebook_href;
-
     public string $twitter_href;
-
     public string $youtube_href;
-
     public string $fastlink;
-
     public string $color_primary;
-
     public string $color_title;
-
     public string $color_megamenu;
-
     public string $color_hamburger;
-
     public string $color_banner;
-
     public string $favicon = '/favicon.ico';
-
     public array $colors = [];
-
     private static ?self $instance = null;
 
     public static function make(): self
