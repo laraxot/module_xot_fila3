@@ -9,7 +9,7 @@ use Filament\Infolists\Infolist;
 use Filament\Resources\Pages\ViewRecord as FilamentViewRecord;
 
 /**
- * Undocumented class
+ * Undocumented class.
  */
 abstract class XotBaseViewRecord extends FilamentViewRecord
 {
