@@ -7,7 +7,10 @@ namespace Modules\Xot\Filament\Resources\Pages;
 use Filament\Forms\Form;
 use Filament\Resources\Pages\EditRecord as FilamentEditRecord;
 
-abstract class XotBaseEditRecord extends FilamentEditRecord
+/**
+ * Undocumented class
+ */
+abstract class XotBaseEditRecord extends FilamenEditRecord
 {
     // ...
 
