@@ -25,11 +25,11 @@ use Modules\Xot\Filament\Pages\MainDashboard;
 use Nwidart\Modules\Facades\Module;
 
 /**
-<<<<<<< HEAD
+ * <<<<<<< HEAD
  * Undocumented class.
-=======
+ * =======
  * Undocumented class
->>>>>>> de5354b8 (up)
+ * >>>>>>> de5354b8 (up).
  */
 abstract class XotBaseMainPanelProvider extends PanelProvider
 {
