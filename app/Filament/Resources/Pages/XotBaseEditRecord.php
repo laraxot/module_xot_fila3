@@ -9,7 +9,7 @@ use Filament\Forms\Form;
 /**
  * Undocumented class.
  */
-abstract class XotBaseEditRecord extends FilamenEditRecord
+abstract class XotBaseEditRecord extends FilamentEditRecord
 {
     // ...
 
