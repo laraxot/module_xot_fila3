@@ -25,7 +25,11 @@ use Modules\Xot\Filament\Pages\MainDashboard;
 use Nwidart\Modules\Facades\Module;
 
 /**
+<<<<<<< HEAD
  * Undocumented class.
+=======
+ * Undocumented class
+>>>>>>> de5354b8 (up)
  */
 abstract class XotBaseMainPanelProvider extends PanelProvider
 {
@@ -52,7 +56,8 @@ abstract class XotBaseMainPanelProvider extends PanelProvider
 
         app(ApplyMetatagToPanelAction::class)->execute(panel: $panel);
         // ---------------------
-        $panel->discoverResources(in: app_path('Filament/Resources'), for: 'App\\Filament\\Resources')
+        $panel
+            ->discoverResources(in: app_path('Filament/Resources'), for: 'App\\Filament\\Resources')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\\Filament\\Pages')
             ->pages(
                 [
