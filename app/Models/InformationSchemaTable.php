@@ -210,7 +210,7 @@ class InformationSchemaTable extends Model
      * Get the row count for a model class.
      * This method incorporates the logic from CountAction.
      *
-     * @param class-string<Model> $modelClass The fully qualified model class name
+     * @param  class-string<Model>  $modelClass  The fully qualified model class name
      *
      * @throws \InvalidArgumentException If model class is invalid or not found
      */
@@ -233,12 +233,12 @@ class InformationSchemaTable extends Model
         $table = $model->getTable();
 
         // Handle in-memory database
-        if (':memory:' === $database) {
+        if ($database === ':memory:') {
             return (int) $model->count();
         }
 
         // Handle SQLite specifically
-        if ('sqlite' === $driver) {
+        if ($driver === 'sqlite') {
             return (int) $model->count();
         }
 
@@ -248,8 +248,8 @@ class InformationSchemaTable extends Model
     /**
      * Get accurate row count for a table.
      *
-     * @param string $tableName The name of the table
-     * @param string $database  The database name
+     * @param  string  $tableName  The name of the table
+     * @param  string  $database  The database name
      */
     public static function getAccurateRowCount(string $tableName, string $database): int
     {
@@ -261,7 +261,7 @@ class InformationSchemaTable extends Model
 
         // For InnoDB tables with less than 1000 rows or when TABLE_ROWS is 0,
         // use COUNT(*) for better accuracy
-        if ('InnoDB' === $stats->ENGINE && ($stats->TABLE_ROWS < 1000 || 0 === $stats->TABLE_ROWS)) {
+        if ($stats->ENGINE === 'InnoDB' && ($stats->TABLE_ROWS < 1000 || $stats->TABLE_ROWS === 0)) {
             try {
                 return (int) DB::table($tableName)->count();
             } catch (\Exception $e) {
@@ -276,8 +276,8 @@ class InformationSchemaTable extends Model
     /**
      * Get table size in bytes.
      *
-     * @param string $tableName The name of the table
-     * @param string $database  The database name
+     * @param  string  $tableName  The name of the table
+     * @param  string  $database  The database name
      */
     public static function getTableSize(string $tableName, string $database): int
     {
@@ -293,8 +293,8 @@ class InformationSchemaTable extends Model
     /**
      * Refresh the Sushi cache for a specific table.
      *
-     * @param string $tableName The name of the table
-     * @param string $database  The database name
+     * @param  string  $tableName  The name of the table
+     * @param  string  $database  The database name
      */
     public static function refreshCache(string $tableName, string $database): void
     {

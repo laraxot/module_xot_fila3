@@ -14,8 +14,11 @@ use Modules\Xot\Actions\View\GetViewByClassAction;
 abstract class XotBaseWidget extends FilamentWidget
 {
     use InteractsWithPageFilters;
+
     public string $title = '';
+
     public string $icon = '';
+
     protected static string $view = 'ui::empty';
 
     public function __construct()
