@@ -59,10 +59,6 @@
         
     },
     "require-comment": {
-<<<<<<< HEAD
-=======
-       
->>>>>>> laraxot/master
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.14",

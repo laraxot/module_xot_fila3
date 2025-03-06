@@ -80,7 +80,6 @@ class MetatagPage extends Page implements HasForms
                         ->helperText('logo for dark css'),
                     TextInput::make('logo_height'),
                     Repeater::make('colors')
-<<<<<<< HEAD
                     ->schema([
                         Select::make('key')
                             // ->label('Color Key')
@@ -96,23 +95,6 @@ class MetatagPage extends Page implements HasForms
                             ->visible(fn (Get $get): bool => 'custom' == $get('color'))
                             ->required(), // e.g., '#0071b0'
                     ])
-=======
-                        ->schema([
-                            Select::make('key')
-
-                                ->required()
-                                ->options($metatag->getFilamentColors()),
-                            Select::make('color')
-
-                                ->required()
-                                ->reactive()
-                                ->options(array_merge(['custom' => '--- custom ---'], $metatag->getAllColors())),
-                            ColorPicker::make('hex')
-
-                                ->visible(fn (Get $get): bool => 'custom' == $get('color'))
-                                ->required(), // e.g., '#0071b0'
-                        ])
->>>>>>> laraxot/master
                     // ->keyValueArray(true) // Store as key-value pairs in the 'colors' array
                         ->columns(3),
                 ]
